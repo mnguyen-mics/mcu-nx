@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface ErrorProps {
+interface ErrorProps {
   message: string;
 }
 
