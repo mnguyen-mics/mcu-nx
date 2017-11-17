@@ -3,7 +3,7 @@ import { Dropdown, Button, DatePicker, Menu, Icon } from 'antd';
 import moment from 'moment';
 import { ClickParam } from 'antd/lib/menu';
 
-import withTranslations, { TranslationProps } from '../containers/Helpers/withTranslations';
+import withTranslations, { TranslationProps } from './Helpers/withTranslations';
 
 export interface McsDateRangeValue {
   rangeType: string;

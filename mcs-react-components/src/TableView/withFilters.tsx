@@ -22,9 +22,9 @@ export interface FiltersState<T> {
   visibilitySelectedColumns: DataColumnDefinition<T>[]
 }
 
-type ReactCtor<P> = new(props: P) => React.Component<P, any>
+export type ReactCtor<P> = new(props: P) => React.Component<P, any>
 
-function withFilters<T>(ViewComponent: ReactCtor<TableViewProps<T>>) {
+function withFilters<T>(ViewComponent: ReactCtor<TableViewProps<T>>) : ReactCtor<ViewComponentWithFiltersProps<T>> {
 
   type VisibilityMultiSelectProps = MultiSelectProps<DataColumnDefinition<T>>;
   const VisibilityMultiSelect: ReactCtor<VisibilityMultiSelectProps> = MultiSelect;
