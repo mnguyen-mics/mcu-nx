@@ -1,69 +1,63 @@
 import * as React from 'react';
-import { Icon, Row, Col, Input } from 'antd';
+import {Icon, Row, Col, Input} from 'antd';
 
-import { SearchProps } from 'antd/lib/input/Search';
+import {SearchProps} from 'antd/lib/input/Search';
 
-import McsDateRangePicker, { McsDateRangePickerProps } from '../McsDateRangePicker';
-import MultiSelect, { MultiSelectProps } from '../MultiSelect';
-import { TableViewProps, VisibilitySelectedColumn } from './TableView';
+import McsDateRangePicker, {McsDateRangePickerProps} from '../McsDateRangePicker';
+import MultiSelect, {MultiSelectProps} from '../MultiSelect';
+import {DataColumnDefinition, TableViewProps} from './TableView';
 
 const Search = Input.Search;
 
-interface ViewComponentWithFiltersProps {
+export interface ViewComponentWithFiltersProps<T> extends TableViewProps<T> {
   searchOptions?: SearchProps;
   dateRangePickerOptions?: McsDateRangePickerProps;
-  filtersOptions?: MultiSelectProps[];
+  filtersOptions?: MultiSelectProps<any>[];
   columnsVisibilityOptions?: {
     isEnabled?: boolean;
-    onChange?: () => void;
   };
 }
 
-interface State {
-  visibilitySelectedColumns: VisibilitySelectedColumn[];
+export interface FiltersState<T> {
+  visibilitySelectedColumns: DataColumnDefinition<T>[]
 }
 
-type JoinedProps = TableViewProps & ViewComponentWithFiltersProps;
-type HOCWrapped<P> = React.ComponentClass<P> | React.SFC<P>;
+type ReactCtor<P> = new(props: P) => React.Component<P, any>
 
-function withFilters(ViewComponent: HOCWrapped<TableViewProps>): React.ComponentClass<JoinedProps> {
+function withFilters<T>(ViewComponent: ReactCtor<TableViewProps<T>>) {
 
-  class ViewComponentWithFilters extends React.Component<JoinedProps, State> {
+  type VisibilityMultiSelectProps = MultiSelectProps<DataColumnDefinition<T>>;
+  const VisibilityMultiSelect: ReactCtor<VisibilityMultiSelectProps> = MultiSelect;
 
-    static defaultProps: Partial<ViewComponentWithFiltersProps> = {
+  class ViewComponentWithFilters extends React.Component<ViewComponentWithFiltersProps<T>, FiltersState<T>> {
+
+    static defaultProps: Partial<ViewComponentWithFiltersProps<T>> = {
       columnsVisibilityOptions: {
         isEnabled: false,
       },
     };
 
-    constructor(props: JoinedProps) {
-      super(props);
-      this.state = {
-        visibilitySelectedColumns: this.props.columnsDefinitions ?
-          (this.props.columnsDefinitions.dataColumnsDefinition
-            .filter(column => column.isHideable && column.isVisibleByDefault)
-            .map(column => ({ key: column.translationKey, value: column.key }))
-          ) : [],
-      };
-    }
+    state = {
+      visibilitySelectedColumns: this.props.columns ?
+        (this.props.columns.filter(column => column.isHideable)
+        ) : [],
+    };
 
-    getHideableColumns = () => {
+    getHideableColumns = () : DataColumnDefinition<T>[] => {
       const {
-        columnsDefinitions: {
-          dataColumnsDefinition,
-        },
+        columns,
       } = this.props;
 
-      return dataColumnsDefinition.filter(column => column.isHideable);
-    }
+      return columns ? columns.filter(column => column.isHideable) : [];
+    };
 
-    changeColumnVisibility = (selectedColumns: { [name: string]: object[] }) => {
+    changeColumnVisibility = (selectedColumns: DataColumnDefinition<T>[]) => {
+
       this.setState({
-        visibilitySelectedColumns: selectedColumns.columns as any,
+        visibilitySelectedColumns: selectedColumns,
       });
-      // const onChange = this.props.columnsVisibilityOptions!.onChange;
-      // if (onChange) onChange(selectedColumns);
-    }
+
+    };
 
     render() {
 
@@ -75,61 +69,54 @@ function withFilters(ViewComponent: HOCWrapped<TableViewProps>): React.Component
       } = this.props;
 
       const searchInput = searchOptions
-      ? (
-        <Col span={6}>
-          <Search
-            className="mcs-search-input"
-            {...searchOptions}
-          />
-        </Col>
-      )
-      : null;
+        ? (
+          <Col span={6}>
+            <Search
+              className="mcs-search-input"
+              {...searchOptions}
+            />
+          </Col>
+        )
+        : null;
 
       const dateRangePicker = dateRangePickerOptions
-      ? (
-        <McsDateRangePicker
-          values={dateRangePickerOptions.values}
-          format={dateRangePickerOptions.format}
-          onChange={dateRangePickerOptions.onChange}
-        />
-      )
-      : null;
+        ? (
+          <McsDateRangePicker
+            values={dateRangePickerOptions.values}
+            format={dateRangePickerOptions.format}
+            onChange={dateRangePickerOptions.onChange}
+          />
+        )
+        : null;
 
       const filtersMultiSelect = filtersOptions ? filtersOptions.map(filterOptions => {
         return (
           <MultiSelect
-            key={filterOptions.name}
-            name={filterOptions.name}
-            displayElement={filterOptions.displayElement}
-            buttonClass={'mcs-table-filters-item'}
-            menuItems={filterOptions.menuItems}
+            {...filterOptions}
+            buttonClass='mcs-table-filters-item'
           />
         );
       }) : null;
 
       const visibilityMultiSelect = columnsVisibilityOptions!.isEnabled
-      ? (
-        <MultiSelect
-          name="columns"
-          displayElement={<Icon type="layout" />}
-          buttonClass={'mcs-table-filters-item'}
-          menuItems={({
-            handleMenuClick: this.changeColumnVisibility,
-            selectedItems: this.state.visibilitySelectedColumns,
-            items: this.getHideableColumns().map(column => ({
-              key: column.translationKey,
-              value: column.key,
-            })),
-          })}
-        />
-      )
-      : null;
+        ? (
+          <VisibilityMultiSelect
+            displayElement={<Icon type="layout"/>}
+            items={this.getHideableColumns()}
+            getKey={c => c.key}
+            display={c => c.key}
+            selectedItems={this.state.visibilitySelectedColumns}
+            handleMenuClick={this.changeColumnVisibility}
+            buttonClass={'mcs-table-filters-item'}
+          />
+        )
+        : null;
 
       return (
         <Row>
           <Row className="mcs-table-header">
             {searchInput}
-            <Col span={18} className="text-right" >
+            <Col span={18} className="text-right">
               {dateRangePicker}
               {filtersMultiSelect}
               {visibilityMultiSelect}
@@ -137,7 +124,7 @@ function withFilters(ViewComponent: HOCWrapped<TableViewProps>): React.Component
           </Row>
           <Row className="mcs-table-body">
             <Col span={24}>
-              <ViewComponent {...this.props} visibilitySelectedColumns={this.state.visibilitySelectedColumns} />
+              <ViewComponent {...this.props} visibilitySelectedColumns={this.state.visibilitySelectedColumns}/>
             </Col>
           </Row>
         </Row>

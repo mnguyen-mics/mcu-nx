@@ -1,5 +1,5 @@
 import { compose, withProps } from 'recompose';
-import { injectIntl, defineMessages } from 'react-intl';
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
 
 const defaultErrorMessages = defineMessages({
   required: {
@@ -28,31 +28,33 @@ const defaultErrorMessages = defineMessages({
   }
 });
 
-const isRequired = formatMessage => value => {
+type Formatter = (desc: FormattedMessage.MessageDescriptor) => string;
+
+const isRequired = (formatMessage: Formatter) => (value: string) => {
   return (!value || (value.length !== undefined && !value.length)
-    ? formatMessage(defaultErrorMessages.required)
-    : undefined
+      ? formatMessage(defaultErrorMessages.required)
+      : undefined
   );
 };
 
-const isNotZero = formatMessage => value => {
+const isNotZero = (formatMessage: Formatter) => (value: string) => {
   return (value && value === '0'
-    ? formatMessage(defaultErrorMessages.positiveNumber)
-    : undefined
+      ? formatMessage(defaultErrorMessages.positiveNumber)
+      : undefined
   );
 };
 
-const isValidEmail = formatMessage => value => {
+const isValidEmail = (formatMessage: Formatter) => (value: string) => {
   return value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value) ?
     formatMessage(defaultErrorMessages.invalidEmail) : undefined;
 };
 
-const isValidFloat = formatMessage => value => {
+const isValidFloat = (formatMessage: Formatter) => (value: string) => {
   return value && !/^[0-9]+(\.[0-9]{1,2})?$/i.test(value) ?
     formatMessage(defaultErrorMessages.invalidNumber) : undefined;
 };
 
-const isValidInteger = formatMessage => value => {
+const isValidInteger = (formatMessage: Formatter) => (value: string) => {
   return value && !/^\d+$/.test(value) ?
     formatMessage(defaultErrorMessages.invalidNumber) : undefined;
 };

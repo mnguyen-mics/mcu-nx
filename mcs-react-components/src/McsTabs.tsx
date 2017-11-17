@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { Tabs } from 'antd';
 
-interface McTabsProps {
-  items: [{
+export interface McsPane{
     title: string;
-    display?: JSX.Element;
+    display?: React.ReactNode;
     forceRender?: boolean;
-  }];
+}
+
+export interface McTabsProps {
+  items: Array<McsPane>;
   isCard?: boolean;
 }
 

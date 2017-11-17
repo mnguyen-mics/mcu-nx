@@ -1,6 +1,6 @@
 import * as React from 'react';
 import TreeSelect, { TreeData } from './TreeSelect';
-import generateGuid from '../utils/generateGuid';
+import generateGuid from './utils/generateGuid';
 
 interface SearchAndTreeSelectProps {
   onChange: (checkedIds: string[]) => void;

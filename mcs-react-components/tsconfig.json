@@ -8,9 +8,9 @@
     "sourceMap": true,
     "outDir": "lib",
     "rootDir": "src",
-    "allowJs": false,
+    "allowJs": true,
+    "declaration": false,
     "jsx": "preserve",
-    "declaration": true,
     "lib": [
       "dom",
       "es2016",
