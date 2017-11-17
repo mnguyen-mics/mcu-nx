@@ -13,8 +13,7 @@
  * @param {*} arr input array of object to convert
  * @param {*} key object key to extract
  */
-
-export type Index<T>= { [key:string]: T}
+import {Index} from './index';
 
 export function normalizeArrayOfObject<T, K extends keyof T>(arr: Array<T>, key: K): Index<T> {
   if (!Array.isArray(arr)) throw new Error(`${arr} is not an array`);
