@@ -12,8 +12,6 @@ import FormTagSelect from './FormTagSelect';
 import FormTitle from './FormTitle';
 import FormBoolean from './FormBoolean';
 import SwitchInput from './SwitchInput';
-import withNormalizer from './withNormalizer';
-import withValidators from './withValidators';
 import FormUpload from './FormUpload';
 import FormTextArea from './FormTextArea';
 
@@ -34,8 +32,6 @@ export default {
   FormUpload,
   FormTextArea,
   SwitchInput,
-  withNormalizer,
-  withValidators,
 };
 
 export {
@@ -55,6 +51,4 @@ export {
   SwitchInput,
   FormUpload,
   FormTextArea,
-  withNormalizer,
-  withValidators,
 };
