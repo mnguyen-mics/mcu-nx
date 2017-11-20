@@ -8,7 +8,7 @@ import log from 'mcs-services/lib/Log';
 import * as notifyActions from '../Notifications';
 import {Notification} from '../Notifications';
 
-import logoUrl from '../Logo/logo-mediarithmics.png';
+import logoUrl from '../assets/images/logo-mediarithmics.png';
 
 import {logIn, LoginRequestMeta, LoginRequestPayload, LoginStore, RedirectCallback} from './LoginState';
 import {WrappedFormUtils} from "antd/lib/form/Form";

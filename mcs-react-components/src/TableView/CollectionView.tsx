@@ -51,5 +51,4 @@ function CollectionView<T>(props: CollectionViewProps<T>) {
     );
 }
 
-
 export default CollectionView;

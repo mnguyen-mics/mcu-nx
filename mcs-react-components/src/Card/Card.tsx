@@ -32,8 +32,6 @@ const Card: React.SFC<CardProps> = (props) => {
 };
 
 Card.defaultProps = {
-  buttons: undefined,
-  title: undefined,
   isLoading: false,
 };
 

@@ -7,7 +7,7 @@ import api from 'mcs-services/lib/MicsApi';
 import {
   sendPassword,
   PASSWORD_FORGOT,
-} from './ForgotPasswordState';
+} from './ForgotPasswordState.ts';
 
 
 function* sendPasswordLoop({ payload }) {

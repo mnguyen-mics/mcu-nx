@@ -1,5 +1,5 @@
 import * as React from 'react';
-import logoUrl from './logo-mediarithmics.png';
+import logoUrl from '../assets/images/logo-mediarithmics.png';
 import {LayoutMode} from '../Layout';
 
 interface LogoProps {

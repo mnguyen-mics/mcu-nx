@@ -6,10 +6,12 @@ import { Link } from 'react-router-dom';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Form, Icon, Input, Button } from 'antd';
 import Alert from 'mcs-react-alert';
-import { sendPassword, passwordForgotReset } from './ForgotPasswordState';
-import messages from './messages';
+import { sendPassword, passwordForgotReset } from './ForgotPasswordState.ts';
+import messages from './messages.ts';
+import logoUrl from '../assets/images/logo-mediarithmics.png';
 
 const FormItem = Form.Item;
+
 
 class ForgotPassword extends Component {
 
