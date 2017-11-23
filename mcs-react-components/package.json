@@ -31,6 +31,7 @@
     "redux-actions": "^2.2.1",
     "redux-form": "^6.8.0",
     "redux-saga": "^0.16.0",
+    "rimraf": "^2.6.2",
     "typescript": "^2.6.1"
   },
   "engines": {
@@ -40,6 +41,8 @@
     "lib": "lib"
   },
   "scripts": {
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "prebuild": "rimraf lib",
     "build": "tsc"
   }
 }
