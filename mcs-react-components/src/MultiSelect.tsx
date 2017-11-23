@@ -22,7 +22,7 @@ export interface MultiSelectProps<T> {
   buttonClass?: string;
 }
 
-interface MultiSelectState<T> {
+export interface MultiSelectState<T> {
   selectedItems: T[];
   overlayVisible: boolean;
 }

@@ -12,7 +12,7 @@ import messages from './messages';
 
 const {Header} = Layout;
 
-interface NavigatorHeaderProps {
+export interface NavigatorHeaderProps {
   match?: any,
   history?: any,
 }

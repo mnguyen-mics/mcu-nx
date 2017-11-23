@@ -1,5 +1,5 @@
 
-import { compose, withProps } from 'recompose';
+import { compose, withProps, ComponentEnhancer } from 'recompose';
 
 function normalizeFloat(value:string , prevValue:string ) {
   return (!value || (value && value.length < 16 && /^[0-9]+(\.([0-9]{1,2})?)?$/i.test(value))
@@ -15,12 +15,14 @@ function normalizeInteger(value:string , prevValue:string ) {
   );
 }
 
-export default compose(
-  withProps(() => ({
-    fieldNormalizer: {
-      normalizeFloat,
-      normalizeInteger,
-    },
-  })),
-);
+export default function<TInner, TOutter> (): ComponentEnhancer<TInner, TOutter>{ 
+  return compose(
+    withProps(() => ({
+      fieldNormalizer: {
+        normalizeFloat,
+        normalizeInteger,
+      },
+    })),
+  );
+};
 

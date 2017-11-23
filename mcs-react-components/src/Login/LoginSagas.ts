@@ -1,5 +1,5 @@
 import { delay } from 'redux-saga';
-import { call, put, take, race, fork } from 'redux-saga/effects';
+import { call, put, take, race, fork, ForkEffect } from 'redux-saga/effects';
 import * as moment from 'moment';
 
 import log from 'mcs-services/lib/Log';
@@ -139,7 +139,7 @@ function* redirectAfterLogin() {
   }
 }
 
-export const loginSagas = [
+export const loginSagas : ForkEffect[] = [
   fork(redirectAfterLogin),
   fork(authentication),
 ];

@@ -10,22 +10,23 @@ import {Notification} from '../Notifications';
 
 import logoUrl from '../assets/images/logo-mediarithmics.png';
 
-import {logIn, LoginRequestMeta, LoginRequestPayload, LoginStore, RedirectCallback} from './LoginState';
+import {logIn, LoginRequestMeta, LoginRequestPayload, LoginStore} from './LoginState';
 import {WrappedFormUtils} from "antd/lib/form/Form";
 import {compose} from "recompose";
-import {Action, ActionMeta} from 'redux-actions';
+import {Action} from 'redux-actions';
+import { ActionFunctionMeta } from '../utils/ReduxHelper';
 
 const FormItem = Form.Item;
 
 
-interface LoginProps {}
+export interface LoginProps {}
 
 
 interface LoginProvidedProps extends LoginProps{
   form: WrappedFormUtils,
   hasError: boolean,
   location: any,
-  logInRequest: (p: LoginRequestPayload, cb: RedirectCallback) => ActionMeta<LoginRequestPayload, LoginRequestMeta>,
+  logInRequest: ActionFunctionMeta<LoginRequestPayload,LoginRequestMeta>,
   isRequesting: boolean,
   history: any,
   match: any,
@@ -113,7 +114,7 @@ class Login extends React.Component<LoginProvidedProps, LoginState> {
           email: values.email,
           password: values.password,
           remember: values.remember,
-        }, redirect );
+        }, { redirect });
       }
     });
   }

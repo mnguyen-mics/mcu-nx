@@ -1,21 +1,36 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { Link } from 'react-router-dom';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Form, Icon, Input, Button } from 'antd';
-import Alert from 'mcs-react-alert';
-import { sendPassword, passwordForgotReset } from './ForgotPasswordState.ts';
-import messages from './messages.ts';
+import { injectIntl, FormattedMessage, InjectedIntlProps } from 'react-intl';
+import { Form, Icon, Input, Button, Alert } from 'antd';
+import { FormComponentProps } from 'antd/lib/form/Form';
+import {
+  sendPassword,
+  passwordForgotReset,
+  ForgotPasswordState,
+  ForgotPasswordRequestPayload 
+} from './ForgotPasswordState';
+import messages from './messages';
 import logoUrl from '../assets/images/logo-mediarithmics.png';
 
 const FormItem = Form.Item;
 
+interface DispatchProps {
+  sendPasswordRequest: (payload: ForgotPasswordRequestPayload) => Dispatch<{}>;
+  passwordForgotReset: () => Dispatch<{}>;
+}
 
-class ForgotPassword extends Component {
+type JoinedProps = 
+  ForgotPasswordState &
+  InjectedIntlProps &
+  FormComponentProps &
+  DispatchProps
 
-  constructor(props) {
+class ForgotPassword extends React.Component<JoinedProps> {
+
+  constructor(props: JoinedProps) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -38,7 +53,7 @@ class ForgotPassword extends Component {
      } = this.props;
 
     const hasFieldError = this.props.form.getFieldError('email');
-    const errorMsg = !hasFieldError && hasError ? <Alert type="danger" text={<FormattedMessage {...messages.resetPasswordTitle} />} /> : null;
+    const errorMsg = !hasFieldError && hasError ? <Alert type="error" message={<FormattedMessage {...messages.resetPasswordTitle} />} /> : null;
 
     return (
       <div className="mcs-reset-password-container">
@@ -97,38 +112,18 @@ class ForgotPassword extends Component {
 
 }
 
-
-ForgotPassword.propTypes = {
-  form: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  hasError: PropTypes.bool.isRequired,
-  sendPasswordRequest: PropTypes.func.isRequired,
-  passwordForgotReset: PropTypes.func.isRequired,
-  isRequesting: PropTypes.bool.isRequired,
-  passwordSentSuccess: PropTypes.bool.isRequired,
-  intl: intlShape.isRequired,
-};
-
-const mapStateToProps = state => ({
-  hasError: state.forgotPassword.hasError,
-  isRequesting: state.forgotPassword.isRequesting,
-  passwordSentSuccess: state.forgotPassword.passwordSentSuccess,
-});
-
-const mapDispatchToProps = {
-  sendPasswordRequest: sendPassword.request,
-  passwordForgotReset: passwordForgotReset,
-};
-
-ForgotPassword = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ForgotPassword);
-
-ForgotPassword = Form.create()(ForgotPassword);
-
-ForgotPassword = compose(
+export default compose(
   injectIntl,
+  Form.create(),
+  connect(
+    (state: { forgotPassword: ForgotPasswordState }) => ({
+      hasError: state.forgotPassword.hasError,
+      isRequesting: state.forgotPassword.isRequesting,
+      passwordSentSuccess: state.forgotPassword.passwordSentSuccess,
+    }),
+    {
+      sendPasswordRequest: sendPassword.request,
+      passwordForgotReset: passwordForgotReset,    
+    }
+  )
 )(ForgotPassword);
-
-
-export default ForgotPassword;

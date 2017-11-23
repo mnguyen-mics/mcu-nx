@@ -1,13 +1,19 @@
 import {Action, createAction} from 'redux-actions';
-import {createRequestTypes} from '../utils/ReduxHelper';
+import { ErrorResponse } from 'mcs-services/lib/MicsApi';
 
-export const PASSWORD_FORGOT = createRequestTypes('PASSWORD_FORGOT');
+import { createRequestTypes, RequestTypes } from '../utils/ReduxHelper';
+
+export const PASSWORD_FORGOT: RequestTypes = createRequestTypes('PASSWORD_FORGOT');
 export const PASSWORD_FORGOT_RESET = 'PASSWORD_FORGOT_RESET';
 
+export interface ForgotPasswordRequestPayload {
+  email: string;
+}
+
 const sendPassword = {
-  request: createAction<string>(PASSWORD_FORGOT.REQUEST),
-  success: createAction(PASSWORD_FORGOT.SUCCESS),
-  failure: createAction(PASSWORD_FORGOT.FAILURE),
+  request: createAction<ForgotPasswordRequestPayload>(PASSWORD_FORGOT.REQUEST),
+  success: createAction<any>(PASSWORD_FORGOT.SUCCESS),
+  failure: createAction<ErrorResponse>(PASSWORD_FORGOT.FAILURE),
 
 };
 
@@ -18,6 +24,13 @@ export {
   sendPassword,
   passwordForgotReset,
 };
+
+export interface ForgotPasswordState {
+  isRequesting: boolean;
+  hasError: boolean;
+  passwordSentSuccess: boolean;
+  error: Error; 
+}
 
 
 const defaultForgotPasswordState = {

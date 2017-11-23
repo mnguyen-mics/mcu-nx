@@ -55,7 +55,7 @@ export type McsIconType =
   'video' |
   'warning';
 
-interface McsIconsProps {
+export interface McsIconsProps {
     type: McsIconType;
     additionalClass?: string;
 }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import EmptyRecords, { EmptyRecordsProps } from './EmptyRecords';
 
-interface RelatedRecordsProps {
+export interface RelatedRecordsProps {
   emptyOption: EmptyRecordsProps;
 }
 

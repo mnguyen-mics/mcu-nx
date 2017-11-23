@@ -1,11 +1,11 @@
 import { withRouter } from 'react-router-dom';
-import { compose, withProps } from 'recompose';
+import { compose, withProps, ComponentEnhancer } from 'recompose';
 
-const withMcsRouter = compose(
-  withRouter,
-  withProps(({ match }) => ({
-    organisationId: match.params.organisationId,
-  })),
-);
-
-export default withMcsRouter;
+export default function<TInner, TOutter> (): ComponentEnhancer<TInner, TOutter>{ 
+  return compose(
+    withRouter,
+    withProps(({ match }) => ({
+      organisationId: match.params.organisationId,
+    })),
+  )
+};

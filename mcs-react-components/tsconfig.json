@@ -2,12 +2,12 @@
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es5",
+    "target": "es6",
     "outDir": "lib",
     "rootDirs": ["lib"],
     "rootDir": "src",
-    "declaration": false,
-    "allowJs": true,
+    "declaration": true,
+    "allowJs": false,
     "jsx": "preserve",
     "lib": [
       "dom",

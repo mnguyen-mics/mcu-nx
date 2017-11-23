@@ -15,25 +15,6 @@ import SwitchInput from './SwitchInput';
 import FormUpload from './FormUpload';
 import FormTextArea from './FormTextArea';
 
-export default {
-  FormCheckbox,
-  FormDatePicker,
-  FormFieldWrapper,
-  FormInput,
-  FormBoolean,
-  FormRadio,
-  FormRadioGroup,
-  FormRangePicker,
-  FormSection,
-  FormSelect,
-  FormSelectAddon,
-  FormTagSelect,
-  FormTitle,
-  FormUpload,
-  FormTextArea,
-  SwitchInput,
-};
-
 export {
   FormCheckbox,
   FormDatePicker,

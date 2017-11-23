@@ -1,6 +1,6 @@
 
 import {Action, createAction} from 'redux-actions';
-import {LayoutMode} from '../Layout/View';
+// import {LayoutMode} from '../Layout/View';
 
 export const MENU_OPEN_CLOSE = 'MENU_OPEN_CLOSE';
 export const openCloseMenu = createAction<MenuState>(MENU_OPEN_CLOSE);
@@ -23,7 +23,7 @@ export interface MenuItem extends Tree<MenuItem>, Partial<RouteDesc> {
 
 export interface MenuState {
   collapsed: boolean,
-  mode: LayoutMode
+  mode: 'vertical' | 'horizontal' | 'inline'
 }
 
 const openMenuDefaultState : MenuState = {

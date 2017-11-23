@@ -1,4 +1,4 @@
-import { compose, withProps } from 'recompose';
+import { compose, withProps, ComponentEnhancer } from 'recompose';
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl';
 
 const defaultErrorMessages = defineMessages({
@@ -59,17 +59,17 @@ const isValidInteger = (formatMessage: Formatter) => (value: string) => {
     formatMessage(defaultErrorMessages.invalidNumber) : undefined;
 };
 
-const withValidators = compose(
-  injectIntl,
-  withProps(({ intl: { formatMessage } }) => ({
-    fieldValidators: {
-      isNotZero: isNotZero(formatMessage),
-      isRequired: isRequired(formatMessage),
-      isValidEmail: isValidEmail(formatMessage),
-      isValidFloat: isValidFloat(formatMessage),
-      isValidInteger: isValidInteger(formatMessage),
-    },
-  })),
-);
-
-export default withValidators;
+export default function<TInner, TOutter> (): ComponentEnhancer<TInner, TOutter>{ 
+  return compose(
+    injectIntl,
+    withProps(({ intl: { formatMessage } }) => ({
+      fieldValidators: {
+        isNotZero: isNotZero(formatMessage),
+        isRequired: isRequired(formatMessage),
+        isValidEmail: isValidEmail(formatMessage),
+        isValidFloat: isValidFloat(formatMessage),
+        isValidInteger: isValidInteger(formatMessage),
+      },
+    })),
+  );
+};

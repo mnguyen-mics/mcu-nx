@@ -2,7 +2,6 @@ import * as React from 'react';
 import {Icon, Row, Col, Input} from 'antd';
 
 import {SearchProps} from 'antd/lib/input/Search';
-import { ReactCtor } from '../utils';
 
 import McsDateRangePicker, {McsDateRangePickerProps} from '../McsDateRangePicker';
 import MultiSelect, {MultiSelectProps} from '../MultiSelect';
@@ -25,10 +24,10 @@ export interface FiltersState<T> {
 
 
 
-function withFilters<T>(ViewComponent: ReactCtor<TableViewProps<T>>) : ReactCtor<ViewComponentWithFiltersProps<T>> {
+function withFilters<T>(ViewComponent: React.ComponentClass<TableViewProps<T>>) : React.ComponentClass<ViewComponentWithFiltersProps<T>> {
 
   type VisibilityMultiSelectProps = MultiSelectProps<DataColumnDefinition<T>>;
-  const VisibilityMultiSelect: ReactCtor<VisibilityMultiSelectProps> = MultiSelect;
+  const VisibilityMultiSelect: React.ComponentClass<VisibilityMultiSelectProps> = MultiSelect;
 
   class ViewComponentWithFilters extends React.Component<ViewComponentWithFiltersProps<T>, FiltersState<T>> {
 

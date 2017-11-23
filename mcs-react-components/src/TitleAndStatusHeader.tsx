@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-interface TitleAndStatusHeaderProps {
+export interface TitleAndStatusHeaderProps {
   headerTitle: string;
   headerStatus?: {
     value?: string;

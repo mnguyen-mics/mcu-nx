@@ -11,7 +11,7 @@ const messages = defineMessages({
   },
 });
 
-interface EmptyTableViewProps {
+export interface EmptyTableViewProps {
   text?: string;
   intlMessage?: {
     id?: string;

@@ -1,11 +1,10 @@
 import * as React from 'react';
 import logoUrl from '../assets/images/logo-mediarithmics.png';
-import {LayoutMode} from '../Layout';
+// import {LayoutMode} from '../Layout';
 
-interface LogoProps {
-    mode: LayoutMode
+export interface LogoProps {
+    mode: string
 }
-
 
 class Logo extends React.Component<LogoProps> {
 

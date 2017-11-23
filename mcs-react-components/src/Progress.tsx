@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-interface ProgressProps {
+export interface ProgressProps {
   percent: number;
   label?: string;
 }

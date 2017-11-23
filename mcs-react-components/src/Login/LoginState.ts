@@ -1,4 +1,4 @@
-import {Action} from 'redux-actions';
+import { Action } from 'redux-actions';
 
 import {
   UserProfileResource,
@@ -6,11 +6,11 @@ import {
 } from 'mcs-services/lib/MicsApi';
 
 import {createAction} from 'redux-actions';
-import {createRequestTypes} from '../utils/ReduxHelper';
+import {createRequestTypes, RequestTypes, RequestActions, ActionFunctionMeta, ActionFunction} from '../utils/ReduxHelper';
 
-export const LOG_IN = createRequestTypes('LOG_IN');
+export const LOG_IN: RequestTypes = createRequestTypes('LOG_IN');
 export const LOG_OUT = 'LOG_OUT';
-export const CONNECTED_USER = createRequestTypes('CONNECTED_USER');
+export const CONNECTED_USER: RequestTypes = createRequestTypes('CONNECTED_USER');
 
 
 
@@ -36,13 +36,19 @@ export interface LoginRequestMeta {
   redirect: RedirectCallback
 }
 
-export const logIn = {
+export type LogInRequestType = RequestActions<
+ActionFunctionMeta<LoginRequestPayload,LoginRequestMeta>, 
+ActionFunction<AccessToken>, 
+ActionFunction<Error>
+>
+export const logIn: LogInRequestType = {
   request: createAction<LoginRequestPayload, LoginRequestMeta>(LOG_IN.REQUEST, x => x, (_, cb: RedirectCallback) => ({ redirect: cb })),
   success: createAction<AccessToken>(LOG_IN.SUCCESS),
   failure: createAction<Error>(LOG_IN.FAILURE),
 };
 
-export const logOut = createAction<undefined, LoginRequestMeta>(LOG_OUT, x => x, (_, cb: RedirectCallback) => ({ redirect: cb }));
+export const logOut: ActionFunctionMeta<undefined, LoginRequestMeta> = 
+  createAction<undefined, LoginRequestMeta>(LOG_OUT, x => x, (_, cb: RedirectCallback) => ({ redirect: cb }));
 
 
 export interface LoginStore {

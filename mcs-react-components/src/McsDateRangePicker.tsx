@@ -1,15 +1,21 @@
 import * as React from 'react';
-import { Dropdown, Button, DatePicker, Menu, Icon } from 'antd';
-import moment from 'moment';
-import { ClickParam } from 'antd/lib/menu';
+// import { Dropdown, Button, DatePicker, Menu, Icon } from 'antd';
+import * as moment from 'moment';
+// import { ClickParam } from 'antd/lib/menu';
+// import { FormattedMessage, injectIntl, InjectedIntlProps, defineMessages } from 'react-intl';
+import { injectIntl, InjectedIntlProps } from 'react-intl';
 
-import withTranslations, { TranslationProps } from './Helpers/withTranslations';
+export type McsDateRangeValue = McsDateRangeAbsoluteValue | McsDateRangeRelativeValue;
 
-export interface McsDateRangeValue {
-  rangeType: string;
-  lookbackWindow?: moment.Duration;
-  from?: moment.Moment;
-  to?: moment.Moment;
+export interface McsDateRangeAbsoluteValue {
+  rangeType: 'absolute';
+  from: moment.Moment;
+  to: moment.Moment;
+}
+
+export interface McsDateRangeRelativeValue {
+  rangeType: 'relative';
+  lookbackWindow: moment.Duration;
 }
 
 export interface McsDateRangePickerProps {
@@ -22,169 +28,181 @@ interface McsDateRangePickerState {
   showRangePicker?: boolean;
 }
 
-interface Range {
-  name: 'TODAY' | 'YESTERDAY' | 'LAST_7_DAYS' | 'LAST_30_DAYS';
-  from: moment.Moment;
-  to: moment.Moment;
-}
+// interface Range {
+//   name: 'TODAY' | 'YESTERDAY' | 'LAST_7_DAYS' | 'LAST_30_DAYS';
+//   from: moment.Moment;
+//   to: moment.Moment;
+//   message: FormattedMessage.MessageDescriptor;
+// }
 
-const { RangePicker } = DatePicker;
+// const { RangePicker } = DatePicker;
 
-const currentTimeStampInt = parseInt(moment().format('X'), 10); // radix is needed
-const numberOfSecondsInOneDay = 3600 * 24;
+// const currentTimeStampInt = parseInt(moment().format('X'), 10); // radix is needed
+// const numberOfSecondsInOneDay = 3600 * 24;
 
-const ranges: Range[] = [
-  {
-    name: 'TODAY',
-    from : moment.unix(currentTimeStampInt).startOf('day'),
-    to: moment.unix(currentTimeStampInt + numberOfSecondsInOneDay).startOf('day'),
-  },
-  {
-    name: 'YESTERDAY',
-    from : moment.unix(currentTimeStampInt - numberOfSecondsInOneDay).startOf('day'),
-    to: moment.unix(currentTimeStampInt).startOf('day'),
-  },
-  {
-    name: 'LAST_7_DAYS',
-    from: moment.unix(currentTimeStampInt - (7 * numberOfSecondsInOneDay)).startOf('day'),
-    to: moment.unix(currentTimeStampInt + numberOfSecondsInOneDay).startOf('day'),
-  },
-  {
-    name: 'LAST_30_DAYS',
-    from: moment.unix(currentTimeStampInt - (30 * numberOfSecondsInOneDay)).startOf('day'),
-    to: moment.unix(currentTimeStampInt + numberOfSecondsInOneDay).startOf('day'),
-  },
-];
+// const messages = defineMessages({
+//   today: { id: 'date_range_today', defaultMessage: 'Today' },
+//   yesterday: { id: 'date_range_yesterday', defaultMessage: 'Yesterday' },
+//   last7Days: { id: 'date_range_last_7_days', defaultMessage: 'Last 7 days' },
+//   last30Days: { id: 'date_range_last_30_days', defaultMessage: 'Last 30 days' },
+//   seconds: { id: 'date_range_seconds', defaultMessage: 'seconds' },
+// });
 
-class McsDateRangePicker extends React.Component<McsDateRangePickerProps & TranslationProps, McsDateRangePickerState> {
+// const ranges: Range[] = [
+//   {
+//     name: 'TODAY',
+//     from : moment.unix(currentTimeStampInt).startOf('day'),
+//     to: moment.unix(currentTimeStampInt + numberOfSecondsInOneDay).startOf('day'),
+//     message: messages.today,  
+//   },
+//   {
+//     name: 'YESTERDAY',
+//     from : moment.unix(currentTimeStampInt - numberOfSecondsInOneDay).startOf('day'),
+//     to: moment.unix(currentTimeStampInt).startOf('day'),
+//     message: messages.yesterday,
+//   },
+//   {
+//     name: 'LAST_7_DAYS',
+//     from: moment.unix(currentTimeStampInt - (7 * numberOfSecondsInOneDay)).startOf('day'),
+//     to: moment.unix(currentTimeStampInt + numberOfSecondsInOneDay).startOf('day'),
+//     message: messages.last7Days,
+//   },
+//   {
+//     name: 'LAST_30_DAYS',
+//     from: moment.unix(currentTimeStampInt - (30 * numberOfSecondsInOneDay)).startOf('day'),
+//     to: moment.unix(currentTimeStampInt + numberOfSecondsInOneDay).startOf('day'),
+//     message: messages.last30Days,
+//   },
+// ];
 
-  static defaultProps: Partial<McsDateRangePickerProps> = {
-    format: 'YYYY-MM-DD',
-  };
+class McsDateRangePicker extends React.Component<McsDateRangePickerProps & InjectedIntlProps, McsDateRangePickerState> {
 
-  state = {
-    showRangePicker: false,
-  };
+  // static defaultProps: Partial<McsDateRangePickerProps> = {
+  //   format: 'YYYY-MM-DD',
+  // };
 
-  disableFutureDates(current: moment.Moment) {
-    return current && current.valueOf() > Date.now();
-  }
+  // constructor(props: McsDateRangePickerProps & InjectedIntlProps){
+  //   super(props);
+  //   this.state = {
+  //     showRangePicker: false,  
+  //   }
+  // }  
 
-  getSelectedPresettedRange() {
-    const { values, translations, format } = this.props;
+  // getSelectedRange(value: McsDateRangeRelativeValue): Range | undefined {    
 
-    if (values.rangeType === 'absolute') {
-      return `${values.from!.format(format)} ~ ${values.to!.format(format)}`;
-    } else if (values.rangeType === 'relative') {
-      const selectedRange = ranges.find((range) => {
-        const ceil1 = Math.ceil(moment
-          .duration({ from: range.from, to: range.to })
-          .asSeconds(),
-        );
-        return (ceil1 === Math.ceil(values.lookbackWindow!.asSeconds())
-          && (range.to.unix() === (values.to ? values.to.unix() : null)));
-      });
+  //   // Math.ceil(values.lookbackWindow!.asSeconds()).toString().concat(' ', intl.formatMessage(messages.seconds))
+  //   //`${values.from!.format(format)} ~ ${values.to!.format(format)}`;
+  //   return ranges.find((range) => {
+  //     const ceil1 = Math.ceil(moment
+  //       .duration({ from: range.from, to: range.to })
+  //       .asSeconds(),
+  //     );
+  //     return (ceil1 === Math.ceil(values.lookbackWindow!.asSeconds())
+  //       && (range.to.unix() === (values.to ? values.to.unix() : null)));
+  //   });
+    
+  //   // return intl.formatMessage({ id: 'error', defaultMessage: 'Error'});
+  // }
 
-      return (selectedRange
-        ? translations[selectedRange.name]
-        : Math.ceil(values.lookbackWindow!.asSeconds()).toString().concat(' ', translations.SECONDS)
-      );
-    }
+  // handleDatePickerMenuChange = (dates: [moment.Moment, moment.Moment]) => {
+  //   const { onChange } = this.props;
 
-    return translations.ERROR;
-  }
+  //   this.setState({ showRangePicker: false });
 
-  handleDatePickerMenuChange = (dates: [moment.Moment, moment.Moment]) => {
-    const { onChange } = this.props;
+  //   onChange({
+  //     rangeType: 'absolute',
+  //     from: dates[0],
+  //     to: dates[1],
+  //   });
+  // }
 
-    this.setState({ showRangePicker: false });
+  // handleDropdownMenuClick = (param: ClickParam) => {
+  //   const { onChange } = this.props;
 
-    onChange({
-      rangeType: 'absolute',
-      from: dates[0],
-      to: dates[1],
-      lookbackWindow: moment.duration({from: dates[0], to: dates[1]}),
-    });
-  }
+  //   if (param.key === 'CUSTOM') {
+  //     this.setState({
+  //       showRangePicker: true,
+  //     });
+  //     return;
+  //   }
 
-  handleDropdownMenuClick = (param: ClickParam) => {
-    const { onChange } = this.props;
+  //   this.setState({ showRangePicker: false });
 
-    if (param.key === 'CUSTOM') {
-      this.setState({
-        showRangePicker: true,
-      });
-      return;
-    }
+  //   const selectedRange = ranges.find(element => {
+  //     return element.name.toLowerCase() === param.key.toLowerCase();
+  //   });
 
-    this.setState({ showRangePicker: false });
+  //   onChange({
+  //     lookbackWindow: moment.duration({ to: selectedRange!.to, from: selectedRange!.from }),
+  //     rangeType: 'relative'
+  //   });
+  // }
 
-    const selectedRange = ranges.find(element => {
-      return element.name.toLowerCase() === param.key.toLowerCase();
-    });
+  // onDatePickerOpenChange = () => {
+  //   this.setState({
+  //     showRangePicker: false,
+  //   });
+  // }  
 
-    onChange({
-      lookbackWindow: moment.duration({ to: selectedRange!.to, from: selectedRange!.from }),
-      rangeType: 'relative',
-      from: selectedRange!.from,
-      to: selectedRange!.to,
-    });
-  }
+  // renderRangesDropdown = () => {
 
-  onDatePickerOpenChange = () => {
-    this.setState({
-      showRangePicker: false,
-    });
-  }
+  //   const { values } = this.props;
 
-  renderRangesDropdown() {
-    const { translations } = this.props;
+  //   if (values.rangeType === 'relative'){
 
-    const menu = (
-      <Menu onClick={this.handleDropdownMenuClick}>
-        <Menu.ItemGroup title={translations.LOOKBACK_WINDOW}>
-          {
-            ranges.map((item) => {
-              return (this.getSelectedPresettedRange() === translations[item.name]
-                ? null
-                : <Menu.Item key={item.name}>{translations[item.name]}</Menu.Item>
-              );
-            })
-          }
-          <Menu.Item key="CUSTOM">{translations.CUSTOM}</Menu.Item>
-        </Menu.ItemGroup>
-      </Menu>
-    );
+  //   }
 
-    return (
-      <Dropdown overlay={menu} trigger={['click']}>
-        <Button>
-          <Icon type="calendar" />
-          {this.getSelectedPresettedRange()}
-          <Icon type="down" />
-        </Button>
-      </Dropdown>
-    );
-  }
+  //   const selectedRangeInPreset = this.getSelectedPresettedRange(); 
+
+  //   const menu = (
+  //     <Menu onClick={this.handleDropdownMenuClick}>
+  //       <Menu.ItemGroup title={<FormattedMessage id="LOOKBACK_WINDOW" defaultMessage="Lookback Window"/>}>
+  //         {
+  //           ranges.map((item) => {
+  //             return (this.getSelectedPresettedRange() === translations[item.name]
+  //               ? null
+  //               : <Menu.Item key={item.name}>{translations[item.name]}</Menu.Item>
+  //             );
+  //           })
+  //         }
+  //         <Menu.Item key="CUSTOM"><FormattedMessage id="date_range_custom" defaultMessage="Custom"/></Menu.Item>
+  //       </Menu.ItemGroup>
+  //     </Menu>
+  //   );
+
+  //   const 
+
+  //   return (
+  //     <Dropdown overlay={menu} trigger={['click']}>
+  //       <Button>
+  //         <Icon type="calendar" />
+  //         {this.getSelectedPresettedRange()}
+  //         <Icon type="down" />
+  //       </Button>
+  //     </Dropdown>
+  //   );
+  // }
 
   render() {
-    const { values } = this.props;
-    const { showRangePicker } = this.state;
+    // const { values } = this.props;
+    // const { showRangePicker } = this.state;
 
-    return showRangePicker === true
-      ? (
-          <RangePicker
-            allowClear={false}
-            onChange={this.handleDatePickerMenuChange}
-            defaultValue={[values.from!, values.to!]}
-            disabledDate={this.disableFutureDates}
-            onOpenChange={this.onDatePickerOpenChange}
-            open={showRangePicker}
-          />
-        )
-      : this.renderRangesDropdown();
+    return 'FIX ME';
+
+    // return showRangePicker === true
+    //   ? (
+    //       <RangePicker
+    //         allowClear={false}
+    //         onChange={this.handleDatePickerMenuChange}
+    //         defaultValue={[values.from!, values.to!]}
+    //         disabledDate={(current) => current.isAfter(moment.now())}
+    //         onOpenChange={this.onDatePickerOpenChange}
+    //         open={showRangePicker}
+    //       />
+    //     )
+    //   : this.renderRangesDropdown();
   }
 }
 
 // TODO replace any with correct type
-export default withTranslations(McsDateRangePicker) as any;
+export default injectIntl(McsDateRangePicker);

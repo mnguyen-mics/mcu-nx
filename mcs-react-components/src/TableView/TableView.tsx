@@ -23,13 +23,13 @@ export interface DataColumnDefinition<T> extends ColumnProps<T> {
   isHideable?: boolean;
 }
 
-interface ActionDefinition<T> {
+export interface ActionDefinition<T> {
   translationKey?: string;
   intlMessage?: FormattedMessage.MessageDescriptor;
   callback: (record: T) => void;
 }
 
-interface ActionsColumnDefinition<T> extends ColumnProps<T> {
+export interface ActionsColumnDefinition<T> extends ColumnProps<T> {
   key: string;
   actions: Array<ActionDefinition<T>>;
 }

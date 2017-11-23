@@ -12,7 +12,7 @@ import {compose} from "recompose";
 
 //import {RouteProps} from "react-router";
 
-interface AuthenticatedRouteProps extends RouteProps {
+export interface AuthenticatedRouteProps extends RouteProps {
   //render: (props: any) => React.Component,
 
 }

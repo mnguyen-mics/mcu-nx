@@ -3,7 +3,7 @@ import { Button, Col, Icon, Row } from 'antd';
 
 import McsIcons, { McsIconType } from '../McsIcons';
 
-interface RecordElementProps {
+export interface RecordElementProps {
   recordIconType: McsIconType;
   title: string;
   actionButtons?: [{

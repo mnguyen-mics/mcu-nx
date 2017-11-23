@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface ListProps {
+export interface ListProps {
   className?: string;
 }
 

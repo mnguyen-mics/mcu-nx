@@ -8,13 +8,13 @@ import McsIcons from '../McsIcons';
 import { MenuItem } from '../Menu';
 import { flatten } from '../utils/Tree';
 import {ClickParam, MenuProps} from "antd/lib/menu";
-import {LayoutMode} from '../Layout/View';
+// import {LayoutMode} from '../Layout/View';
 import {compose} from 'recompose';
 
 const { SubMenu } = Menu;
 
-interface McsMenuProps extends MenuProps{
-  mode: LayoutMode,
+export interface McsMenuProps extends MenuProps{
+  mode: 'vertical' | 'horizontal' | 'inline',
   collapsed:boolean,
   onMenuItemClick: () => void,
   items: MenuItem[]

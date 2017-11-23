@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-interface MetricsColumnProps {
+export interface MetricsColumnProps {
   metrics: [{
     name?: string;
     value?: string;
