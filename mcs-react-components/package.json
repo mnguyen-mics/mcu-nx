@@ -1,38 +1,38 @@
 {
-  "name": "mcs-react-components",
+  "name": "@mediarithmics/mcs-components-library",
   "main": "lib/index.js",
   "version": "0.1.0",
-  "dependencies": {},
+  "dependencies": {
+    "@mapbox/mapbox-gl-draw": "^1.1.1",
+    "@types/react-infinite-scroller": "^1.2.0",
+    "antd": "^3.10.9",
+    "create-react-class": "^15.6.3",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3",
+    "react-infinite-scroller": "^1.2.2",
+    "react-intl": "^2.7.2",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "recompose": "^0.30.0"
+  },
   "devDependencies": {
     "@types/classnames": "^2.2.3",
     "@types/cuid": "^1.3.0",
     "@types/lodash": "^4.14.77",
-    "@types/react": "^16.0.9",
-    "@types/react-dom": "^16.0.0",
-    "@types/react-intl": "^2.3.2",
+    "@types/react": "^16.7.7",
+    "@types/react-dom": "^16.0.11",
+    "@types/react-intl": "^2.3.3",
     "@types/react-redux": "^5.0.10",
     "@types/react-router-dom": "^4.0.8",
     "@types/react-scroll": "^1.5.2",
-    "@types/recompose": "^0.24.2",
+    "@types/recompose": "^0.27.0",
     "@types/redux-actions": "^2.2.2",
-    "@types/redux-form": "^7.0.9",
-    "antd": "^2.11.0",
-    "classnames": "^2.2.5",
+    "@types/redux-form": "^7.0.12",
+    "classnames": "^2.2.6",
     "cuid": "^1.3.8",
     "lodash": "^4.17.4",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-intl": "^2.3.0",
-    "react-redux": "^5.0.5",
-    "react-router-dom": "^4.1.1",
-    "react-scroll": "^1.6.4",
-    "react-scrollspy": "^3.3.4",
-    "recompose": "^0.23.5",
-    "redux-actions": "^2.2.1",
-    "redux-form": "^6.8.0",
-    "redux-saga": "^0.16.0",
     "rimraf": "^2.6.2",
-    "typescript": "^2.6.1"
+    "typescript": "^3.1.6"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -42,7 +42,7 @@
   },
   "scripts": {
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
-    "prebuild": "rimraf lib",
     "build": "tsc"
-  }
+  },
+  "license": "Apache-2.0"
 }

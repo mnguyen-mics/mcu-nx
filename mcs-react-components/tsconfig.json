@@ -1,14 +1,11 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "target": "es6",
-    "outDir": "lib",
-    "rootDirs": ["lib"],
-    "rootDir": "src",
+    "outDir": "./lib",   
+    "moduleResolution": "node", 
     "declaration": true,
     "allowJs": false,
-    "jsx": "preserve",
+    "jsx": "react",
+    "target": "es6",
     "lib": [
       "dom",
       "es7"
@@ -23,12 +20,13 @@
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "pretty": true,
-    "removeComments": true
+    "removeComments": true,
   },
   "include":[
     "src/**/*"
   ],
   "exclude":[
-    "node_modules"
+    "node_modules",
+    "lib"
   ]
 }
