@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "outDir": "./lib",   
+    "outDir": "./dist",  
+    "module": "es6", 
     "moduleResolution": "node", 
     "declaration": true,
     "allowJs": false,
     "jsx": "react",
-    "target": "es6",
+    "target": "es5",
     "lib": [
       "dom",
       "es7"
@@ -27,6 +28,8 @@
   ],
   "exclude":[
     "node_modules",
-    "lib"
+    "lib",
+    "**/*.test.*",
+    "**/*.fixture.*",
   ]
 }

@@ -1,3 +1,3 @@
-import InfiniteList from "./components/InfiniteList";
+// https://github.com/tc39/proposal-export-default-from#common-concerns
 
-export { InfiniteList };
+export { default as InfiniteList } from "./components/InfiniteList";

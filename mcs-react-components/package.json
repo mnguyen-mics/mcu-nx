@@ -1,12 +1,14 @@
 {
-  "name": "@mediarithmics/mcs-components-library",
+  "name": "@mediarithmics-private/mcs-components-library",
   "main": "lib/index.js",
+  "module": "lib/index.es.js",
+  "files": [
+    "lib"
+  ],
+  "types": "lib/index.d.ts",
   "version": "0.1.0",
   "dependencies": {
-    "@mapbox/mapbox-gl-draw": "^1.1.1",
-    "@types/react-infinite-scroller": "^1.2.0",
     "antd": "^3.10.9",
-    "create-react-class": "^15.6.3",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-infinite-scroller": "^1.2.2",
@@ -16,33 +18,59 @@
     "recompose": "^0.30.0"
   },
   "devDependencies": {
-    "@types/classnames": "^2.2.3",
-    "@types/cuid": "^1.3.0",
-    "@types/lodash": "^4.14.77",
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-react": "^7.0.0",
+    "@types/enzyme": "^3.1.15",
+    "@types/enzyme-adapter-react-16": "^1.0.3",
+    "@types/jest": "^23.3.10",
     "@types/react": "^16.7.7",
     "@types/react-dom": "^16.0.11",
-    "@types/react-intl": "^2.3.3",
-    "@types/react-redux": "^5.0.10",
-    "@types/react-router-dom": "^4.0.8",
-    "@types/react-scroll": "^1.5.2",
+    "@types/react-infinite-scroller": "^1.2.0",
+    "@types/react-intl": "^2.3.13",
+    "@types/react-router-dom": "^4.3.1",
+    "@types/react-test-renderer": "^16.0.3",
     "@types/recompose": "^0.27.0",
-    "@types/redux-actions": "^2.2.2",
-    "@types/redux-form": "^7.0.12",
-    "classnames": "^2.2.6",
-    "cuid": "^1.3.8",
-    "lodash": "^4.17.4",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^1.0.1",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.7.0",
+    "fs-extra": "^7.0.1",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^23.6.0",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+    "react-cosmos": "^4.6.4",
+    "react-test-renderer": "^16.6.3",
     "rimraf": "^2.6.2",
-    "typescript": "^3.1.6"
+    "rollup": "^0.67.3",
+    "rollup-plugin-typescript2": "^0.18.0",
+    "style-loader": "^0.23.1",
+    "ts-jest": "^23.10.5",
+    "ts-loader": "^5.3.1",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.17.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-react": "^3.6.0",
+    "typescript": "^3.1.6",
+    "webpack": "^4.27.0"
   },
   "engines": {
-    "node": ">=8.0.0"
-  },
-  "directories": {
-    "lib": "lib"
+    "node": ">=8.6.0"
   },
   "scripts": {
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
-    "build": "tsc"
+    "lint:fix": "tslint --fix -c tslint.json \"src/**/*.ts\"",
+    "build": "rimraf lib && npm run lint && npm run test && rollup -c && node scripts/copy-style.js",
+    "prepare": "rimraf lib && npm run lint && npm run test && rollup -c && node scripts/copy-style.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "cosmos": "cosmos",
+    "cosmos:export": "cosmos-export"
+  },
+  "publishConfig": {
+    "registry": "https://sf-npm.mediarithmics.com/repository/npm-mics/"
   },
   "license": "Apache-2.0"
 }

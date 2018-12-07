@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { compose } from 'recompose';
 import { List, Spin, Input } from 'antd';
-import InfiniteScroll from 'react-infinite-scroller';
+import * as InfiniteScroll from 'react-infinite-scroller';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { injectIntl, InjectedIntlProps, defineMessages } from 'react-intl';
 
@@ -67,8 +67,7 @@ class InfiniteList<T> extends React.Component<Props<T>, State<T>> {
     this.setState({
       initialLoading: true,
     });
-    this.handleInfiniteOnLoad().then(() => {
-      const { data } = this.state;
+    this.handleInfiniteOnLoad().then((data: T[]) => {      
       if (data[0]) {
         this.props.storeItemData(data[0]);
       }
@@ -85,27 +84,29 @@ class InfiniteList<T> extends React.Component<Props<T>, State<T>> {
       },
     } = this.props;
 
-    const { data, first, size, loading } = this.state;
+    const { first, size, loading } = this.state;
 
     if (!loading) {
       this.setState({
         loading: true,
       });
-      const prevData = data;
+      // const prevData = data;
       return this.props
         .fetchData(organisationId, offerId, { page: first, pageSize: size })
         .then(res => {
-          this.setState({
-            data: prevData.concat(res),
+          this.setState((prev) => ({
+            data: prev.data.concat(res),
             loading: false,
             hasMore: res.length === size,
             first: first + size,
-          });
+          }));
+          return res;
         })
         .catch(err => {
           this.setState({
             loading: false,
           });
+          throw err;
         });
     }
     return Promise.resolve();
