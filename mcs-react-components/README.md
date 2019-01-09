@@ -75,7 +75,7 @@ Versionning
 Usefull npm tasks
 ---------------
 
-* `npm run cosmo` starts react-cosmos
+* `npm run cosmos` starts react-cosmos
 * `npm run test` run the tests
 * `npm run build` lint, test and build the library
 
