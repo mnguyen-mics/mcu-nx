@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { List } from 'antd';
 import { MemoryRouter } from 'react-router';
 import { IntlProvider } from 'react-intl';
 import * as TestRenderer from 'react-test-renderer';
