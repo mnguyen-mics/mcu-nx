@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { MemoryRouter } from 'react-router';
 import { IntlProvider } from 'react-intl';
-import * as TestRenderer from 'react-test-renderer';
-
 import McsTabs, { McTabsProps } from '../McsTabs';
+import { render } from 'enzyme';
 
 it('renders the tabs', () => {
   const props: McTabsProps = {
@@ -26,13 +25,12 @@ it('renders the tabs', () => {
     ],
   };
 
-  const component = TestRenderer.create(
+  const component = render(
     <IntlProvider locale="en">
       <MemoryRouter>
         <McsTabs {...props} />
       </MemoryRouter>
     </IntlProvider>,
   );
-  const tree = component.toJSON();
-  expect(tree).toMatchSnapshot();
+  expect(component).toMatchSnapshot();
 });
