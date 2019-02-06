@@ -19,12 +19,14 @@
     "typescript": "^2.6.1"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=8.6.0"
   },
   "directories": {
     "lib": "lib"
   },
   "scripts": {
-    "build": "tsc"
+    "lint": "echo \"TODO\" && exit 0",
+    "test": "echo \"TODO\" && exit 0",
+    "build": "echo \"TODO\" && exit 0"
   }
 }
