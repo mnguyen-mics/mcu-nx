@@ -7,7 +7,7 @@ They are meant to be used by mediarithmics front clients. (eg: mediartihmics-nav
 Prerequisites
 -------------
 
-* node.js (version >= 8.0.0)
+* node.js (version >= 8.6.0)
 * npm
 
 #### optional : set the version of nodejs
