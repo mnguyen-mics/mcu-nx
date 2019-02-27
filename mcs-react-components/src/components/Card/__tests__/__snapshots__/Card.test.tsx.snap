@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the Card 1`] = `
+<div
+  className="ant-row mcs-card-container "
+  style={Object {}}
+>
+  <div
+    className="ant-row mcs-card-header"
+  >
+    <div
+      className="ant-col-24"
+    >
+      <span
+        className="mcs-card-title"
+      >
+        Title
+      </span>
+      <span
+        className="mcs-card-button"
+      >
+        <button
+          className="ant-btn ant-btn-primary"
+          onClick={[Function]}
+          type="button"
+        >
+          <span>
+            Test
+          </span>
+        </button>
+      </span>
+    </div>
+  </div>
+  <div
+    className="ant-row"
+    style={Object {}}
+  >
+    <div>
+      Content
+    </div>
+  </div>
+</div>
+`;
