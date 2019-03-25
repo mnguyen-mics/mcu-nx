@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders an user icon 1`] = `
+<span
+  className="icon pass-class1 pass-class2"
+  id="pass-id"
+>
+  <i
+    className="mcs-user"
+  />
+</span>
+`;
