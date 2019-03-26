@@ -1,0 +1,138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the Counter 1`] = `
+<div
+  className="counter-dashboard "
+>
+  <div
+    className="ant-row"
+  >
+    <div
+      className="ant-col-6 border-right"
+    >
+      <div
+        className="counter"
+      >
+        <span
+          className="icon "
+        >
+          <i
+            className="mcs-users"
+          />
+        </span>
+        <div
+          className="title"
+        >
+          Users
+        </div>
+        <div
+          className="number"
+        >
+          <span>
+            424,242
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-col-6 border-right"
+    >
+      <div
+        className="counter"
+      >
+        <span
+          className="icon "
+        >
+          <i
+            className="mcs-library"
+          />
+        </span>
+        <div
+          className="title"
+        >
+          Library
+        </div>
+        <div
+          className="number"
+        >
+          <div
+            className="ant-spin ant-spin-spinning"
+          >
+            <span
+              className="ant-spin-dot ant-spin-dot-spin"
+            >
+              <i />
+              <i />
+              <i />
+              <i />
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-col-6 border-right"
+    >
+      <div
+        className="counter"
+      >
+        <span
+          className="icon "
+        >
+          <i
+            className="mcs-settings"
+          />
+        </span>
+        <div
+          className="title"
+        >
+          Settings
+        </div>
+        <div
+          className="number"
+        >
+          <span>
+            464,646
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-col-6"
+    >
+      <div
+        className="counter"
+      >
+        <span
+          className="icon "
+        >
+          <i
+            className="mcs-display"
+          />
+        </span>
+        <div
+          className="title"
+        >
+          Display
+        </div>
+        <div
+          className="number"
+        >
+          <div
+            className="ant-spin ant-spin-spinning"
+          >
+            <span
+              className="ant-spin-dot ant-spin-dot-spin"
+            >
+              <i />
+              <i />
+              <i />
+              <i />
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
