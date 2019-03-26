@@ -8,7 +8,7 @@
   "types": "lib/index.d.ts",
   "version": "0.1.0",
   "dependencies": {
-    "antd": "^3.10.9",
+    "antd": "^3.11.2",
     "cuid": "^2.1.4",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
@@ -69,6 +69,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "test:updateSnapshot": "jest --updateSnapshot",
     "cosmos": "cosmos",
     "cosmos:export": "cosmos-export"
   },

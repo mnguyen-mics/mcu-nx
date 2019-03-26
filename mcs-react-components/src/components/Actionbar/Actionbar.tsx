@@ -7,6 +7,8 @@ import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import Breadcrumb, { BreadcrumbProps } from 'antd/lib/breadcrumb';
 import McsIcon from '../Icon';
 
+const BreadcrumbItem = Breadcrumb.Item;
+
 export interface Path {
   name: FormattedMessage.MessageDescriptor | string;
   path?: string;
@@ -38,7 +40,7 @@ class Actionbar extends React.Component<Props> {
       formatedElt
     );
 
-    return <Breadcrumb.Item key={cuid()}>{item}</Breadcrumb.Item>;
+    return <BreadcrumbItem key={cuid()}>{item}</BreadcrumbItem>;
   };
 
   render() {
