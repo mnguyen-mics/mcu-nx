@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a basic content header 1`] = `
+<div
+  className="content-header"
+>
+  <div>
+    <div
+      className="content-subtitle"
+    />
+    <div
+      className="content-title"
+    >
+      Titre
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders the "evolved" content header 1`] = `
+<div
+  className="content-header"
+>
+  <div>
+    <div
+      className="content-subtitle"
+    >
+      SubTitre
+    </div>
+    <div
+      className="content-title"
+    >
+      Titre
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders the loading content header 1`] = `
+<div
+  className="content-header"
+>
+  <i
+    className="mcs-table-cell-loading-large"
+  />
+</div>
+`;
