@@ -1,5 +1,5 @@
 import * as React from 'react';
-import cuid from 'cuid';
+import * as cuid from 'cuid';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { Menu, Table, Dropdown } from 'antd';
 import { TableProps, ColumnProps, TableRowSelection } from 'antd/lib/table';
