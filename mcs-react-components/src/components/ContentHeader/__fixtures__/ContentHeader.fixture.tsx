@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
-import { IntlProvider } from 'react-intl';
 import ContentHeader, { ContentHeaderProps } from '../ContentHeader';
 
 const props: ContentHeaderProps = {
@@ -9,13 +7,7 @@ const props: ContentHeaderProps = {
   loading: false,
 };
 
-const component = (_props: ContentHeaderProps) => (
-  <IntlProvider locale="en">
-    <MemoryRouter>
-      <ContentHeader {..._props} />
-    </MemoryRouter>
-  </IntlProvider>
-);
+const component = (_props: ContentHeaderProps) => <ContentHeader {..._props} />;
 
 export default {
   component,
