@@ -1,3 +1,4 @@
+import 'jest';
 import * as React from 'react';
 import { Button } from 'antd';
 import * as TestRenderer from 'react-test-renderer';
