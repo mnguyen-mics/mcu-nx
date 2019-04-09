@@ -1,3 +1,4 @@
+import 'jest';
 import * as React from 'react';
 import * as TestRenderer from 'react-test-renderer';
 import CounterDashboard, { CounterDashboardProps } from '../CounterDashboard';

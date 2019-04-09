@@ -1,3 +1,4 @@
+import 'jest';
 import * as React from "react";
 import { List} from 'antd';
 import { MemoryRouter } from 'react-router'

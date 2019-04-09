@@ -1,3 +1,4 @@
+import 'jest';
 import * as React from 'react';
 import { IntlProvider } from 'react-intl';
 import TableView, { TableViewProps } from '../TableView';
