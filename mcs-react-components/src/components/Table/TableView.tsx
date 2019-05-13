@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as cuid from 'cuid';
+import * as cuid_ from 'cuid';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { Menu, Table, Dropdown } from 'antd';
 import { TableProps, ColumnProps, TableRowSelection } from 'antd/lib/table';
@@ -12,6 +12,7 @@ const DEFAULT_PAGINATION_OPTION = {
   size: 'small',
   showSizeChanger: true,
 };
+const cuid = cuid_;
 
 export interface DataColumnDefinition<T> extends ColumnProps<T> {
   isHideable?: boolean;

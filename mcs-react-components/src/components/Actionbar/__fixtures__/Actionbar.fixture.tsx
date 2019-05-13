@@ -6,7 +6,7 @@ import { MemoryRouter } from 'react-router';
 
 const props: ActionbarProps = {
   paths: [
-    { name: 'Campaings', path: 'www.google.fr' },
+    { name: 'Campaigns', path: 'www.google.fr' },
     { name: 'Display', path: 'www.github.com' },
   ],
 };

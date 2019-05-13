@@ -8,7 +8,7 @@ import { IntlProvider } from 'react-intl';
 it('renders the actionBar', () => {
   const props: ActionbarProps = {
     paths: [
-      { name: 'Campaings', path: 'www.google.fr' },
+      { name: 'Campaigns', path: 'www.google.fr' },
       { name: 'Display', path: 'www.github.com' },
     ],
   };

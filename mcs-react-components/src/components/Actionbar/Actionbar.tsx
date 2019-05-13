@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Row } from 'antd';
-import * as cuid from 'cuid';
+import * as cuid_ from 'cuid';
 import { compose } from 'recompose';
 import { Link } from 'react-router-dom';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
@@ -8,6 +8,7 @@ import Breadcrumb, { BreadcrumbProps } from 'antd/lib/breadcrumb';
 import McsIcon from '../Icon';
 
 const BreadcrumbItem = Breadcrumb.Item;
+const cuid = cuid_;
 
 export interface Path {
   name: FormattedMessage.MessageDescriptor | string;

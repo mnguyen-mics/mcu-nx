@@ -6,7 +6,7 @@ import McsIcon from '../McsIcon';
 
 it('renders an user icon', () => {
   const component = TestRenderer.create(
-    <McsIcon type="user" className="pass-class1 pass-class2" id="pass-id" />,
+    <McsIcon type="user" />,
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();

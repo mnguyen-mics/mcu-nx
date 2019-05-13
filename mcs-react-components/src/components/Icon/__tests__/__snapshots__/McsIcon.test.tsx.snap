@@ -2,8 +2,7 @@
 
 exports[`renders an user icon 1`] = `
 <span
-  className="icon pass-class1 pass-class2"
-  id="pass-id"
+  className="icon "
 >
   <i
     className="mcs-user"

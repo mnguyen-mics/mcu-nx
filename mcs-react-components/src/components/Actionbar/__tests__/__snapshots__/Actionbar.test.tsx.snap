@@ -16,7 +16,7 @@ exports[`renders the actionBar 1`] = `
           href="/www.google.fr"
           onClick={[Function]}
         >
-          Campaings
+          Campaigns
         </a>
       </span>
       <span
