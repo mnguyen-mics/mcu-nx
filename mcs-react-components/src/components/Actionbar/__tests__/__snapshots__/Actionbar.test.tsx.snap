@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the actionBar 1`] = `
+<div
+  className="ant-row-flex ant-row-flex-space-between ant-row-flex-middle mcs-actionbar "
+  style={Object {}}
+>
+  <div
+    className="mcs-breadcrumb ant-breadcrumb"
+  >
+    <span>
+      <span
+        className="ant-breadcrumb-link"
+      >
+        <a
+          href="/www.google.fr"
+          onClick={[Function]}
+        >
+          Campaigns
+        </a>
+      </span>
+      <span
+        className="ant-breadcrumb-separator"
+      >
+        <span
+          className="icon "
+        >
+          <i
+            className="mcs-chevron-right"
+          />
+        </span>
+      </span>
+    </span>
+    <span>
+      <span
+        className="ant-breadcrumb-link"
+      >
+        <a
+          href="/www.github.com"
+          onClick={[Function]}
+        >
+          Display
+        </a>
+      </span>
+      <span
+        className="ant-breadcrumb-separator"
+      >
+        <span
+          className="icon "
+        >
+          <i
+            className="mcs-chevron-right"
+          />
+        </span>
+      </span>
+    </span>
+  </div>
+  <div
+    className="left-part-margin"
+  />
+</div>
+`;

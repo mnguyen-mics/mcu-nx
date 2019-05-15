@@ -17,17 +17,21 @@ exports[`renders the list 1`] = `
         <input
           className="ant-input ant-input-disabled"
           disabled={true}
+          onChange={[Function]}
           onKeyDown={[Function]}
           placeholder="Loading, please wait...."
           style={null}
           type="text"
+          value=""
         />
         <span
           className="ant-input-suffix"
         >
           <i
+            aria-label="icon: search"
             className="anticon anticon-search ant-input-search-icon"
             onClick={[Function]}
+            tabIndex={-1}
           >
             <svg
               aria-hidden="true"

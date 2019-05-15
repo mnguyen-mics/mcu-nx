@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the Counter 1`] = `
+<div
+  className="counter"
+>
+  <span
+    className="icon "
+  >
+    <i
+      className="mcs-users"
+    />
+  </span>
+  <div
+    className="title"
+  >
+    Users
+  </div>
+  <div
+    className="number"
+  >
+    <span>
+      424,242
+    </span>
+  </div>
+</div>
+`;
