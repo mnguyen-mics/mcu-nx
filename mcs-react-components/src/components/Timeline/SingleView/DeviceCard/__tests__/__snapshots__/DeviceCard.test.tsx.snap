@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the DeviceCard 1`] = `
+<div
+  className="ant-row mcs-card-container "
+  style={Object {}}
+>
+  <div
+    className="ant-row mcs-card-header"
+  >
+    <div
+      className="ant-col ant-col-24"
+    >
+      <span
+        className="mcs-card-title"
+      >
+        User Device
+      </span>
+    </div>
+  </div>
+  <div
+    className="ant-row"
+    style={Object {}}
+  >
+    <div
+      className="ant-col ant-col-24 text-center"
+    >
+      <div
+        className="ant-spin ant-spin-spinning"
+      >
+        <span
+          className="ant-spin-dot ant-spin-dot-spin"
+        >
+          <i
+            className="ant-spin-dot-item"
+          />
+          <i
+            className="ant-spin-dot-item"
+          />
+          <i
+            className="ant-spin-dot-item"
+          />
+          <i
+            className="ant-spin-dot-item"
+          />
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

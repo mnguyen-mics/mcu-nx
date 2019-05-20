@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the Device 1`] = `
+<div
+  className="ant-row table-line border-top"
+  style={
+    Object {
+      "marginLeft": -5,
+      "marginRight": -5,
+    }
+  }
+>
+  <div
+    className="ant-col ant-col-12 table-left"
+    style={
+      Object {
+        "paddingLeft": 5,
+        "paddingRight": 5,
+      }
+    }
+  >
+    <span
+      style={
+        Object {
+          "float": "left",
+        }
+      }
+    >
+      <span
+        className="icon "
+      >
+        <i
+          className="mcs-smartphone"
+        />
+      </span>
+    </span>
+    <span
+      style={
+        Object {
+          "float": "left",
+        }
+      }
+    >
+      <span
+        className="title"
+      >
+        safari
+      </span>
+      <br />
+      <span
+        className="subtitle"
+      />
+    </span>
+  </div>
+  <div
+    className="ant-col ant-col-12 table-right"
+    style={
+      Object {
+        "paddingLeft": 5,
+        "paddingRight": 5,
+      }
+    }
+  >
+    <span
+      className="subtitle"
+      style={
+        Object {
+          "float": "right",
+        }
+      }
+    >
+      abc123
+    </span>
+  </div>
+</div>
+`;
