@@ -18,9 +18,11 @@ const props: ProfileInfoProps = {
   },
 };
 
-const component = (_props: ProfileInfoProps) => (<IntlProvider locale="en">
-<ProfileInfo {..._props} />
-<IntlProvider locale="en">);
+const component = (_props: ProfileInfoProps) => (
+  <IntlProvider locale="en">
+    <ProfileInfo {..._props} />
+  </IntlProvider>
+);
 
 export default {
   component,
