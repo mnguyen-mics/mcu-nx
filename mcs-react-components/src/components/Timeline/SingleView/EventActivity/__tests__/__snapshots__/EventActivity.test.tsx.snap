@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the EventActivity 1`] = `
+<div
+  className="ant-row section border-top"
+>
+  <div
+    className="ant-col ant-col-5 section-ts"
+  >
+    15:26:15
+  </div>
+  <div
+    className="ant-col ant-col-19"
+  >
+    <div
+      className="section-title"
+    >
+      Recherche:Category
+    </div>
+    <div
+      className="section-cta"
+    >
+      <div>
+        <button
+          className="mcs-card-inner-action"
+          onClick={[Function]}
+        >
+          <span
+            className="icon "
+          >
+            <i
+              className="mcs-chevron"
+            />
+          </span>
+           
+          <span>
+            Details
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;
