@@ -38,6 +38,7 @@ exports[`renders the list 1`] = `
               className=""
               data-icon="search"
               fill="currentColor"
+              focusable="false"
               height="1em"
               viewBox="64 64 896 896"
               width="1em"
@@ -58,10 +59,18 @@ exports[`renders the list 1`] = `
           <span
             className="ant-spin-dot ant-spin-dot-spin"
           >
-            <i />
-            <i />
-            <i />
-            <i />
+            <i
+              className="ant-spin-dot-item"
+            />
+            <i
+              className="ant-spin-dot-item"
+            />
+            <i
+              className="ant-spin-dot-item"
+            />
+            <i
+              className="ant-spin-dot-item"
+            />
           </span>
         </div>
       </div>
