@@ -2,6 +2,7 @@
 
 export { default as Actionbar } from './components/Actionbar';
 export { default as Card } from './components/Card';
+export { default as ColoredButton } from './components/ColoredButton';
 export { default as ContentHeader } from './components/ContentHeader';
 export { default as Counter } from './components/Counters';
 export { default as CounterDashboard } from './components/Counters';
