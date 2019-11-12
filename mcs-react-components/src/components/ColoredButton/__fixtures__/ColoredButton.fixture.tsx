@@ -9,7 +9,7 @@ const props: ColoredButtonProps = {
 
 
 const component = (_props: ColoredButtonProps) => (
-  <ColoredButton {...props}>Save</ColoredButton>
+  <ColoredButton {..._props}>Save</ColoredButton>
 );
 
 export default {
