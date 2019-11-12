@@ -6,6 +6,7 @@ export { default as ColoredButton } from './components/ColoredButton';
 export { default as ContentHeader } from './components/ContentHeader';
 export { default as Counter } from './components/Counters';
 export { default as CounterDashboard } from './components/Counters';
+export { default as Error } from './components/Error';
 export { default as Loading } from './components/Loading';
 export { default as McsIcon } from './components/Icon';
 export { default as InfiniteList } from './components/InfiniteList';

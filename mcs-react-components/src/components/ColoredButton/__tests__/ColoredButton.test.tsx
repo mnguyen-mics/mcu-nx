@@ -7,7 +7,7 @@ it('renders the ColoredButton', () => {
   const props: ColoredButtonProps = {
     backgroundColor: '#003056',
     color: '#fff',
-    onClick: () => { console.log('clicked!') }
+    onClick: () => { /* tslint:disable */ console.log('clicked!') /* tslint:enable */ }
   };
   const component = TestRenderer.create(
     <ColoredButton {...props}>Save</ColoredButton>
