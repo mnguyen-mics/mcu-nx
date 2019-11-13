@@ -73,7 +73,7 @@ exports[`renders a basic tableView 1`] = `
                     }
                   >
                     <th
-                      className=""
+                      className="ant-table-row-cell-break-word"
                     >
                       <span
                         className="ant-table-header-column"
@@ -91,7 +91,7 @@ exports[`renders a basic tableView 1`] = `
                       </span>
                     </th>
                     <th
-                      className=""
+                      className="ant-table-row-cell-break-word"
                     >
                       <span
                         className="ant-table-header-column"
@@ -127,7 +127,7 @@ exports[`renders a basic tableView 1`] = `
                       </span>
                     </th>
                     <th
-                      className=""
+                      className="ant-table-row-cell-break-word"
                     >
                       <span
                         className="ant-table-header-column"
@@ -164,17 +164,9 @@ exports[`renders a basic tableView 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -182,7 +174,7 @@ exports[`renders a basic tableView 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       12
@@ -194,7 +186,7 @@ exports[`renders a basic tableView 1`] = `
                       New York No. 1 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -206,6 +198,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -214,6 +207,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -258,17 +252,9 @@ exports[`renders a basic tableView 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -276,7 +262,7 @@ exports[`renders a basic tableView 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       22
@@ -288,7 +274,7 @@ exports[`renders a basic tableView 1`] = `
                       New York No. 2 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -300,6 +286,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -308,6 +295,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -352,17 +340,9 @@ exports[`renders a basic tableView 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -370,7 +350,7 @@ exports[`renders a basic tableView 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       32
@@ -382,7 +362,7 @@ exports[`renders a basic tableView 1`] = `
                       New York No. 3 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -394,6 +374,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -402,6 +383,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -446,17 +428,9 @@ exports[`renders a basic tableView 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -464,7 +438,7 @@ exports[`renders a basic tableView 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       42
@@ -476,7 +450,7 @@ exports[`renders a basic tableView 1`] = `
                       New York No. 4 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -488,6 +462,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -496,6 +471,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -540,17 +516,9 @@ exports[`renders a basic tableView 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -558,7 +526,7 @@ exports[`renders a basic tableView 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       52
@@ -570,7 +538,7 @@ exports[`renders a basic tableView 1`] = `
                       New York No. 5 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -582,6 +550,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -590,6 +559,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -634,17 +604,9 @@ exports[`renders a basic tableView 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -652,7 +614,7 @@ exports[`renders a basic tableView 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       62
@@ -664,7 +626,7 @@ exports[`renders a basic tableView 1`] = `
                       New York No. 6 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -676,6 +638,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -684,6 +647,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -728,17 +692,9 @@ exports[`renders a basic tableView 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -746,7 +702,7 @@ exports[`renders a basic tableView 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       72
@@ -758,7 +714,7 @@ exports[`renders a basic tableView 1`] = `
                       New York No. 7 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -770,6 +726,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -778,6 +735,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -822,17 +780,9 @@ exports[`renders a basic tableView 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -840,7 +790,7 @@ exports[`renders a basic tableView 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       82
@@ -852,7 +802,7 @@ exports[`renders a basic tableView 1`] = `
                       New York No. 8 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -864,6 +814,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -872,6 +823,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -916,17 +868,9 @@ exports[`renders a basic tableView 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -934,7 +878,7 @@ exports[`renders a basic tableView 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       92
@@ -946,7 +890,7 @@ exports[`renders a basic tableView 1`] = `
                       New York No. 9 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -958,6 +902,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -966,6 +911,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -1010,17 +956,9 @@ exports[`renders a basic tableView 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -1028,7 +966,7 @@ exports[`renders a basic tableView 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       102
@@ -1040,7 +978,7 @@ exports[`renders a basic tableView 1`] = `
                       New York No. 10 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -1052,6 +990,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -1060,6 +999,7 @@ exports[`renders a basic tableView 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -1372,7 +1312,7 @@ exports[`renders a tableView with pagination 1`] = `
                     }
                   >
                     <th
-                      className=""
+                      className="ant-table-row-cell-break-word"
                     >
                       <span
                         className="ant-table-header-column"
@@ -1390,7 +1330,7 @@ exports[`renders a tableView with pagination 1`] = `
                       </span>
                     </th>
                     <th
-                      className=""
+                      className="ant-table-row-cell-break-word"
                     >
                       <span
                         className="ant-table-header-column"
@@ -1426,7 +1366,7 @@ exports[`renders a tableView with pagination 1`] = `
                       </span>
                     </th>
                     <th
-                      className=""
+                      className="ant-table-row-cell-break-word"
                     >
                       <span
                         className="ant-table-header-column"
@@ -1463,17 +1403,9 @@ exports[`renders a tableView with pagination 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -1481,7 +1413,7 @@ exports[`renders a tableView with pagination 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       12
@@ -1493,7 +1425,7 @@ exports[`renders a tableView with pagination 1`] = `
                       New York No. 1 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -1505,6 +1437,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -1513,6 +1446,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -1557,17 +1491,9 @@ exports[`renders a tableView with pagination 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -1575,7 +1501,7 @@ exports[`renders a tableView with pagination 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       22
@@ -1587,7 +1513,7 @@ exports[`renders a tableView with pagination 1`] = `
                       New York No. 2 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -1599,6 +1525,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -1607,6 +1534,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -1651,17 +1579,9 @@ exports[`renders a tableView with pagination 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -1669,7 +1589,7 @@ exports[`renders a tableView with pagination 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       32
@@ -1681,7 +1601,7 @@ exports[`renders a tableView with pagination 1`] = `
                       New York No. 3 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -1693,6 +1613,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -1701,6 +1622,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -1745,17 +1667,9 @@ exports[`renders a tableView with pagination 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -1763,7 +1677,7 @@ exports[`renders a tableView with pagination 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       42
@@ -1775,7 +1689,7 @@ exports[`renders a tableView with pagination 1`] = `
                       New York No. 4 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -1787,6 +1701,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -1795,6 +1710,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -1839,17 +1755,9 @@ exports[`renders a tableView with pagination 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -1857,7 +1765,7 @@ exports[`renders a tableView with pagination 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       52
@@ -1869,7 +1777,7 @@ exports[`renders a tableView with pagination 1`] = `
                       New York No. 5 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -1881,6 +1789,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -1889,6 +1798,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -1933,17 +1843,9 @@ exports[`renders a tableView with pagination 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -1951,7 +1853,7 @@ exports[`renders a tableView with pagination 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       62
@@ -1963,7 +1865,7 @@ exports[`renders a tableView with pagination 1`] = `
                       New York No. 6 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -1975,6 +1877,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -1983,6 +1886,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -2027,17 +1931,9 @@ exports[`renders a tableView with pagination 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -2045,7 +1941,7 @@ exports[`renders a tableView with pagination 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       72
@@ -2057,7 +1953,7 @@ exports[`renders a tableView with pagination 1`] = `
                       New York No. 7 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -2069,6 +1965,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -2077,6 +1974,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -2121,17 +2019,9 @@ exports[`renders a tableView with pagination 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -2139,7 +2029,7 @@ exports[`renders a tableView with pagination 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       82
@@ -2151,7 +2041,7 @@ exports[`renders a tableView with pagination 1`] = `
                       New York No. 8 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -2163,6 +2053,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -2171,6 +2062,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -2215,17 +2107,9 @@ exports[`renders a tableView with pagination 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -2233,7 +2117,7 @@ exports[`renders a tableView with pagination 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       92
@@ -2245,7 +2129,7 @@ exports[`renders a tableView with pagination 1`] = `
                       New York No. 9 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -2257,6 +2141,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -2265,6 +2150,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -2309,17 +2195,9 @@ exports[`renders a tableView with pagination 1`] = `
                     }
                   >
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -2327,7 +2205,7 @@ exports[`renders a tableView with pagination 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       102
@@ -2339,7 +2217,7 @@ exports[`renders a tableView with pagination 1`] = `
                       New York No. 10 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -2351,6 +2229,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -2359,6 +2238,7 @@ exports[`renders a tableView with pagination 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -2722,7 +2602,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       </span>
                     </th>
                     <th
-                      className=""
+                      className="ant-table-row-cell-break-word"
                     >
                       <span
                         className="ant-table-header-column"
@@ -2740,7 +2620,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       </span>
                     </th>
                     <th
-                      className=""
+                      className="ant-table-row-cell-break-word"
                     >
                       <span
                         className="ant-table-header-column"
@@ -2776,7 +2656,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       </span>
                     </th>
                     <th
-                      className=""
+                      className="ant-table-row-cell-break-word"
                     >
                       <span
                         className="ant-table-header-column"
@@ -2842,17 +2722,9 @@ exports[`renders a tableView with selected rows 1`] = `
                       </span>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -2860,7 +2732,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       12
@@ -2872,7 +2744,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       New York No. 1 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -2884,6 +2756,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -2892,6 +2765,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -2965,17 +2839,9 @@ exports[`renders a tableView with selected rows 1`] = `
                       </span>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -2983,7 +2849,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       22
@@ -2995,7 +2861,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       New York No. 2 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -3007,6 +2873,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -3015,6 +2882,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -3088,17 +2956,9 @@ exports[`renders a tableView with selected rows 1`] = `
                       </span>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -3106,7 +2966,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       32
@@ -3118,7 +2978,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       New York No. 3 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -3130,6 +2990,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -3138,6 +2999,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -3211,17 +3073,9 @@ exports[`renders a tableView with selected rows 1`] = `
                       </span>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -3229,7 +3083,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       42
@@ -3241,7 +3095,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       New York No. 4 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -3253,6 +3107,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -3261,6 +3116,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -3334,17 +3190,9 @@ exports[`renders a tableView with selected rows 1`] = `
                       </span>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -3352,7 +3200,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       52
@@ -3364,7 +3212,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       New York No. 5 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -3376,6 +3224,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -3384,6 +3233,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -3457,17 +3307,9 @@ exports[`renders a tableView with selected rows 1`] = `
                       </span>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -3475,7 +3317,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       62
@@ -3487,7 +3329,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       New York No. 6 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -3499,6 +3341,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -3507,6 +3350,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -3580,17 +3424,9 @@ exports[`renders a tableView with selected rows 1`] = `
                       </span>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -3598,7 +3434,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       72
@@ -3610,7 +3446,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       New York No. 7 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -3622,6 +3458,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -3630,6 +3467,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -3703,17 +3541,9 @@ exports[`renders a tableView with selected rows 1`] = `
                       </span>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -3721,7 +3551,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       82
@@ -3733,7 +3563,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       New York No. 8 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -3745,6 +3575,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -3753,6 +3584,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -3826,17 +3658,9 @@ exports[`renders a tableView with selected rows 1`] = `
                       </span>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -3844,7 +3668,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       92
@@ -3856,7 +3680,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       New York No. 9 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -3868,6 +3692,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -3876,6 +3701,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"
@@ -3949,17 +3775,9 @@ exports[`renders a tableView with selected rows 1`] = `
                       </span>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
-                      <span
-                        className="ant-table-row-indent indent-level-0"
-                        style={
-                          Object {
-                            "paddingLeft": "0px",
-                          }
-                        }
-                      />
                       <a
                         href="javascript:;"
                       >
@@ -3967,7 +3785,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       </a>
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       102
@@ -3979,7 +3797,7 @@ exports[`renders a tableView with selected rows 1`] = `
                       New York No. 10 Lake Park
                     </td>
                     <td
-                      className=""
+                      className="ant-table-row-cell-break-word"
                       onClick={[Function]}
                     >
                       <span>
@@ -3991,6 +3809,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           href="javascript:;"
@@ -3999,6 +3818,7 @@ exports[`renders a tableView with selected rows 1`] = `
                         </a>
                         <div
                           className="ant-divider ant-divider-vertical"
+                          role="separator"
                         />
                         <a
                           className="ant-dropdown-link"

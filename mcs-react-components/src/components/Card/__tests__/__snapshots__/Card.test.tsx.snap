@@ -7,9 +7,11 @@ exports[`renders the Card 1`] = `
 >
   <div
     className="ant-row mcs-card-header"
+    style={Object {}}
   >
     <div
       className="ant-col ant-col-24"
+      style={Object {}}
     >
       <span
         className="mcs-card-title"

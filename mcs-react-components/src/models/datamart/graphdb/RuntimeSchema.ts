@@ -1,4 +1,12 @@
-import { HashFunction } from './RuntimeSchema';
+export type HashFunction =
+'MD2' |
+'MD5' |
+'SHA_1' |
+'SHA_256' |
+'SHA_384' |
+'SHA_512' |
+'NO_HASH';
+
 export interface RuntimeSchemaResource {
   id: string;
   datamart_id: string;
@@ -121,14 +129,6 @@ export type OperatingSystemFamily =
   'ANDROID' |
   'IOS';
 
-export type HashFunction =
-  'MD2' |
-  'MD5' |
-  'SHA_1' |
-  'SHA_256' |
-  'SHA_384' |
-  'SHA_512' |
-  'NO_HASH';
 
 export type FormFactor =
   'OTHER' |
