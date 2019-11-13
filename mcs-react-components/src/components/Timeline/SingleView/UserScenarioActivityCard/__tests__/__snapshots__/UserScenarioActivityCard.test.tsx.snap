@@ -38,7 +38,7 @@ exports[`renders the UserScenarioActivityCard 1`] = `
       className="ant-row border-top sm-footer timed-footer text-right"
       style={Object {}}
     >
-      8:59:25
+      2019–11–13T12:34:56+00:00
     </div>
   </div>
 </div>

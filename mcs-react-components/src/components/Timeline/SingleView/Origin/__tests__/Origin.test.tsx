@@ -4,6 +4,9 @@ import * as TestRenderer from 'react-test-renderer';
 import Origin, { OriginComponentProps } from '../Origin';
 import { IntlProvider } from 'react-intl';
 
+// Return a fixed timestamp when moment().format() is called
+jest.mock('moment', () => () => ({format: () => '2019–11–13T12:34:56+00:00'}));
+
 it('renders the Origin', () => {
   const props: OriginComponentProps = {
     origin: {
