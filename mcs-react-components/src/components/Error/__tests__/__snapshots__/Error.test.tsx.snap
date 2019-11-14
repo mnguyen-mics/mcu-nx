@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the ColoredButton 1`] = `
+<div
+  className="mcs-centered-container mcs-error"
+  style={
+    Object {
+      "color": "red",
+    }
+  }
+>
+  <p>
+    This is an error message
+  </p>
+</div>
+`;

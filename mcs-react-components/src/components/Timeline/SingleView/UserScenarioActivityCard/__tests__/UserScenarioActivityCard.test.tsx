@@ -6,6 +6,9 @@ import { UserScenarioActivityCardProps } from '../../../../../models/timeline/ti
 import { IntlProvider } from 'react-intl';
 import { MemoryRouter } from 'react-router';
 
+// Return a fixed timestamp when moment().format() is called
+jest.mock('moment', () => () => ({format: () => '2019–11–13T12:34:56+00:00'}));
+
 it('renders the UserScenarioActivityCard', () => {
   const props: UserScenarioActivityCardProps = {
     activity: {

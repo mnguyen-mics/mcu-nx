@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the ColoredButton 1`] = `
+<button
+  className="ant-btn mcs-primary ant-btn-primary "
+  onClick={[Function]}
+  onMouseOut={[Function]}
+  onMouseOver={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#003056",
+      "borderColor": "#002b4d",
+      "color": "#fff",
+    }
+  }
+>
+  Save
+</button>
+`;

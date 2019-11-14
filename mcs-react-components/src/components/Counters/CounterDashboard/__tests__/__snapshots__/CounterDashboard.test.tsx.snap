@@ -6,9 +6,11 @@ exports[`renders the Counter 1`] = `
 >
   <div
     className="ant-row"
+    style={Object {}}
   >
     <div
       className="ant-col ant-col-6 border-right"
+      style={Object {}}
     >
       <div
         className="counter"
@@ -36,6 +38,7 @@ exports[`renders the Counter 1`] = `
     </div>
     <div
       className="ant-col ant-col-6 border-right"
+      style={Object {}}
     >
       <div
         className="counter"
@@ -80,6 +83,7 @@ exports[`renders the Counter 1`] = `
     </div>
     <div
       className="ant-col ant-col-6 border-right"
+      style={Object {}}
     >
       <div
         className="counter"
@@ -107,6 +111,7 @@ exports[`renders the Counter 1`] = `
     </div>
     <div
       className="ant-col ant-col-6"
+      style={Object {}}
     >
       <div
         className="counter"
