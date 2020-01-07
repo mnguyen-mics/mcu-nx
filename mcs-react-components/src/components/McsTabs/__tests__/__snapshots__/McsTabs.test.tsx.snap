@@ -259,8 +259,8 @@ initialize {
                                       Object {
                                         "attribs": Object {
                                           "aria-disabled": "false",
-                                          "aria-selected": "false",
-                                          "class": " ant-tabs-tab",
+                                          "aria-selected": "true",
+                                          "class": "ant-tabs-tab-active ant-tabs-tab",
                                           "role": "tab",
                                         },
                                         "children": Array [
@@ -416,8 +416,8 @@ initialize {
                                         "prev": Object {
                                           "attribs": Object {
                                             "aria-disabled": "false",
-                                            "aria-selected": "false",
-                                            "class": " ant-tabs-tab",
+                                            "aria-selected": "true",
+                                            "class": "ant-tabs-tab-active ant-tabs-tab",
                                             "role": "tab",
                                           },
                                           "children": Array [
@@ -505,8 +505,8 @@ initialize {
                                           "prev": Object {
                                             "attribs": Object {
                                               "aria-disabled": "false",
-                                              "aria-selected": "false",
-                                              "class": " ant-tabs-tab",
+                                              "aria-selected": "true",
+                                              "class": "ant-tabs-tab-active ant-tabs-tab",
                                               "role": "tab",
                                             },
                                             "children": Array [
@@ -607,8 +607,8 @@ initialize {
                                         Object {
                                           "attribs": Object {
                                             "aria-disabled": "false",
-                                            "aria-selected": "false",
-                                            "class": " ant-tabs-tab",
+                                            "aria-selected": "true",
+                                            "class": "ant-tabs-tab-active ant-tabs-tab",
                                             "role": "tab",
                                           },
                                           "children": Array [
@@ -764,8 +764,8 @@ initialize {
                                           "prev": Object {
                                             "attribs": Object {
                                               "aria-disabled": "false",
-                                              "aria-selected": "false",
-                                              "class": " ant-tabs-tab",
+                                              "aria-selected": "true",
+                                              "class": "ant-tabs-tab-active ant-tabs-tab",
                                               "role": "tab",
                                             },
                                             "children": Array [
@@ -853,8 +853,8 @@ initialize {
                                             "prev": Object {
                                               "attribs": Object {
                                                 "aria-disabled": "false",
-                                                "aria-selected": "false",
-                                                "class": " ant-tabs-tab",
+                                                "aria-selected": "true",
+                                                "class": "ant-tabs-tab-active ant-tabs-tab",
                                                 "role": "tab",
                                               },
                                               "children": Array [
@@ -1126,8 +1126,8 @@ initialize {
                                     Object {
                                       "attribs": Object {
                                         "aria-disabled": "false",
-                                        "aria-selected": "false",
-                                        "class": " ant-tabs-tab",
+                                        "aria-selected": "true",
+                                        "class": "ant-tabs-tab-active ant-tabs-tab",
                                         "role": "tab",
                                       },
                                       "children": Array [
@@ -1283,8 +1283,8 @@ initialize {
                                       "prev": Object {
                                         "attribs": Object {
                                           "aria-disabled": "false",
-                                          "aria-selected": "false",
-                                          "class": " ant-tabs-tab",
+                                          "aria-selected": "true",
+                                          "class": "ant-tabs-tab-active ant-tabs-tab",
                                           "role": "tab",
                                         },
                                         "children": Array [
@@ -1372,8 +1372,8 @@ initialize {
                                         "prev": Object {
                                           "attribs": Object {
                                             "aria-disabled": "false",
-                                            "aria-selected": "false",
-                                            "class": " ant-tabs-tab",
+                                            "aria-selected": "true",
+                                            "class": "ant-tabs-tab-active ant-tabs-tab",
                                             "role": "tab",
                                           },
                                           "children": Array [
@@ -1474,8 +1474,8 @@ initialize {
                                       Object {
                                         "attribs": Object {
                                           "aria-disabled": "false",
-                                          "aria-selected": "false",
-                                          "class": " ant-tabs-tab",
+                                          "aria-selected": "true",
+                                          "class": "ant-tabs-tab-active ant-tabs-tab",
                                           "role": "tab",
                                         },
                                         "children": Array [
@@ -1631,8 +1631,8 @@ initialize {
                                         "prev": Object {
                                           "attribs": Object {
                                             "aria-disabled": "false",
-                                            "aria-selected": "false",
-                                            "class": " ant-tabs-tab",
+                                            "aria-selected": "true",
+                                            "class": "ant-tabs-tab-active ant-tabs-tab",
                                             "role": "tab",
                                           },
                                           "children": Array [
@@ -1720,8 +1720,8 @@ initialize {
                                           "prev": Object {
                                             "attribs": Object {
                                               "aria-disabled": "false",
-                                              "aria-selected": "false",
-                                              "class": " ant-tabs-tab",
+                                              "aria-selected": "true",
+                                              "class": "ant-tabs-tab-active ant-tabs-tab",
                                               "role": "tab",
                                             },
                                             "children": Array [
@@ -1993,8 +1993,8 @@ initialize {
                                   Object {
                                     "attribs": Object {
                                       "aria-disabled": "false",
-                                      "aria-selected": "false",
-                                      "class": " ant-tabs-tab",
+                                      "aria-selected": "true",
+                                      "class": "ant-tabs-tab-active ant-tabs-tab",
                                       "role": "tab",
                                     },
                                     "children": Array [
@@ -2150,8 +2150,8 @@ initialize {
                                     "prev": Object {
                                       "attribs": Object {
                                         "aria-disabled": "false",
-                                        "aria-selected": "false",
-                                        "class": " ant-tabs-tab",
+                                        "aria-selected": "true",
+                                        "class": "ant-tabs-tab-active ant-tabs-tab",
                                         "role": "tab",
                                       },
                                       "children": Array [
@@ -2239,8 +2239,8 @@ initialize {
                                       "prev": Object {
                                         "attribs": Object {
                                           "aria-disabled": "false",
-                                          "aria-selected": "false",
-                                          "class": " ant-tabs-tab",
+                                          "aria-selected": "true",
+                                          "class": "ant-tabs-tab-active ant-tabs-tab",
                                           "role": "tab",
                                         },
                                         "children": Array [
@@ -2341,8 +2341,8 @@ initialize {
                                     Object {
                                       "attribs": Object {
                                         "aria-disabled": "false",
-                                        "aria-selected": "false",
-                                        "class": " ant-tabs-tab",
+                                        "aria-selected": "true",
+                                        "class": "ant-tabs-tab-active ant-tabs-tab",
                                         "role": "tab",
                                       },
                                       "children": Array [
@@ -2498,8 +2498,8 @@ initialize {
                                       "prev": Object {
                                         "attribs": Object {
                                           "aria-disabled": "false",
-                                          "aria-selected": "false",
-                                          "class": " ant-tabs-tab",
+                                          "aria-selected": "true",
+                                          "class": "ant-tabs-tab-active ant-tabs-tab",
                                           "role": "tab",
                                         },
                                         "children": Array [
@@ -2587,8 +2587,8 @@ initialize {
                                         "prev": Object {
                                           "attribs": Object {
                                             "aria-disabled": "false",
-                                            "aria-selected": "false",
-                                            "class": " ant-tabs-tab",
+                                            "aria-selected": "true",
+                                            "class": "ant-tabs-tab-active ant-tabs-tab",
                                             "role": "tab",
                                           },
                                           "children": Array [
@@ -2976,16 +2976,215 @@ initialize {
               "next": Object {
                 "attribs": Object {
                   "class": "ant-tabs-content ant-tabs-content-animated ant-tabs-top-content",
-                  "style": "display:none",
+                  "style": "margin-left:0%",
                 },
                 "children": Array [
                   Object {
                     "attribs": Object {
-                      "aria-hidden": "true",
-                      "class": "ant-tabs-tabpane ant-tabs-tabpane-inactive",
+                      "aria-hidden": "false",
+                      "class": "ant-tabs-tabpane ant-tabs-tabpane-active",
                       "role": "tabpanel",
                     },
-                    "children": Array [],
+                    "children": Array [
+                      Object {
+                        "attribs": Object {
+                          "role": "presentation",
+                          "style": "width:0;height:0;overflow:hidden;position:absolute",
+                          "tabindex": "0",
+                        },
+                        "children": Array [],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": Object {
+                          "attribs": Object {},
+                          "children": Array [
+                            Object {
+                              "data": "Content tab 1",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "text",
+                            },
+                          ],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": Object {
+                            "attribs": Object {
+                              "role": "presentation",
+                              "style": "width:0;height:0;overflow:hidden;position:absolute",
+                              "tabindex": "0",
+                            },
+                            "children": Array [],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": [Circular],
+                            "type": "tag",
+                            "x-attribsNamespace": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                          },
+                          "parent": [Circular],
+                          "prev": [Circular],
+                          "type": "tag",
+                          "x-attribsNamespace": Object {},
+                          "x-attribsPrefix": Object {},
+                        },
+                        "parent": [Circular],
+                        "prev": null,
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                      },
+                      Object {
+                        "attribs": Object {},
+                        "children": Array [
+                          Object {
+                            "data": "Content tab 1",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "text",
+                          },
+                        ],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": [Circular],
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                        "parent": [Circular],
+                        "prev": Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": [Circular],
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                        "type": "tag",
+                        "x-attribsNamespace": Object {},
+                        "x-attribsPrefix": Object {},
+                      },
+                      Object {
+                        "attribs": Object {
+                          "role": "presentation",
+                          "style": "width:0;height:0;overflow:hidden;position:absolute",
+                          "tabindex": "0",
+                        },
+                        "children": Array [],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": null,
+                        "parent": [Circular],
+                        "prev": Object {
+                          "attribs": Object {},
+                          "children": Array [
+                            Object {
+                              "data": "Content tab 1",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "text",
+                            },
+                          ],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": [Circular],
+                          "parent": [Circular],
+                          "prev": Object {
+                            "attribs": Object {
+                              "role": "presentation",
+                              "style": "width:0;height:0;overflow:hidden;position:absolute",
+                              "tabindex": "0",
+                            },
+                            "children": Array [],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": [Circular],
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "tag",
+                            "x-attribsNamespace": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                          },
+                          "type": "tag",
+                          "x-attribsNamespace": Object {},
+                          "x-attribsPrefix": Object {},
+                        },
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                      },
+                    ],
                     "name": "div",
                     "namespace": "http://www.w3.org/1999/xhtml",
                     "next": Object {
@@ -3085,11 +3284,210 @@ initialize {
                     "parent": [Circular],
                     "prev": Object {
                       "attribs": Object {
-                        "aria-hidden": "true",
-                        "class": "ant-tabs-tabpane ant-tabs-tabpane-inactive",
+                        "aria-hidden": "false",
+                        "class": "ant-tabs-tabpane ant-tabs-tabpane-active",
                         "role": "tabpanel",
                       },
-                      "children": Array [],
+                      "children": Array [
+                        Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": Object {
+                            "attribs": Object {},
+                            "children": Array [
+                              Object {
+                                "data": "Content tab 1",
+                                "next": null,
+                                "parent": [Circular],
+                                "prev": null,
+                                "type": "text",
+                              },
+                            ],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": Object {
+                              "attribs": Object {
+                                "role": "presentation",
+                                "style": "width:0;height:0;overflow:hidden;position:absolute",
+                                "tabindex": "0",
+                              },
+                              "children": Array [],
+                              "name": "div",
+                              "namespace": "http://www.w3.org/1999/xhtml",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": [Circular],
+                              "type": "tag",
+                              "x-attribsNamespace": Object {
+                                "role": undefined,
+                                "style": undefined,
+                                "tabindex": undefined,
+                              },
+                              "x-attribsPrefix": Object {
+                                "role": undefined,
+                                "style": undefined,
+                                "tabindex": undefined,
+                              },
+                            },
+                            "parent": [Circular],
+                            "prev": [Circular],
+                            "type": "tag",
+                            "x-attribsNamespace": Object {},
+                            "x-attribsPrefix": Object {},
+                          },
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                        Object {
+                          "attribs": Object {},
+                          "children": Array [
+                            Object {
+                              "data": "Content tab 1",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "text",
+                            },
+                          ],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": Object {
+                            "attribs": Object {
+                              "role": "presentation",
+                              "style": "width:0;height:0;overflow:hidden;position:absolute",
+                              "tabindex": "0",
+                            },
+                            "children": Array [],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": [Circular],
+                            "type": "tag",
+                            "x-attribsNamespace": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                          },
+                          "parent": [Circular],
+                          "prev": Object {
+                            "attribs": Object {
+                              "role": "presentation",
+                              "style": "width:0;height:0;overflow:hidden;position:absolute",
+                              "tabindex": "0",
+                            },
+                            "children": Array [],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": [Circular],
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "tag",
+                            "x-attribsNamespace": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                          },
+                          "type": "tag",
+                          "x-attribsNamespace": Object {},
+                          "x-attribsPrefix": Object {},
+                        },
+                        Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": Object {
+                            "attribs": Object {},
+                            "children": Array [
+                              Object {
+                                "data": "Content tab 1",
+                                "next": null,
+                                "parent": [Circular],
+                                "prev": null,
+                                "type": "text",
+                              },
+                            ],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": [Circular],
+                            "parent": [Circular],
+                            "prev": Object {
+                              "attribs": Object {
+                                "role": "presentation",
+                                "style": "width:0;height:0;overflow:hidden;position:absolute",
+                                "tabindex": "0",
+                              },
+                              "children": Array [],
+                              "name": "div",
+                              "namespace": "http://www.w3.org/1999/xhtml",
+                              "next": [Circular],
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "tag",
+                              "x-attribsNamespace": Object {
+                                "role": undefined,
+                                "style": undefined,
+                                "tabindex": undefined,
+                              },
+                              "x-attribsPrefix": Object {
+                                "role": undefined,
+                                "style": undefined,
+                                "tabindex": undefined,
+                              },
+                            },
+                            "type": "tag",
+                            "x-attribsNamespace": Object {},
+                            "x-attribsPrefix": Object {},
+                          },
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                      ],
                       "name": "div",
                       "namespace": "http://www.w3.org/1999/xhtml",
                       "next": [Circular],
@@ -3143,11 +3541,210 @@ initialize {
                       "parent": [Circular],
                       "prev": Object {
                         "attribs": Object {
-                          "aria-hidden": "true",
-                          "class": "ant-tabs-tabpane ant-tabs-tabpane-inactive",
+                          "aria-hidden": "false",
+                          "class": "ant-tabs-tabpane ant-tabs-tabpane-active",
                           "role": "tabpanel",
                         },
-                        "children": Array [],
+                        "children": Array [
+                          Object {
+                            "attribs": Object {
+                              "role": "presentation",
+                              "style": "width:0;height:0;overflow:hidden;position:absolute",
+                              "tabindex": "0",
+                            },
+                            "children": Array [],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": Object {
+                              "attribs": Object {},
+                              "children": Array [
+                                Object {
+                                  "data": "Content tab 1",
+                                  "next": null,
+                                  "parent": [Circular],
+                                  "prev": null,
+                                  "type": "text",
+                                },
+                              ],
+                              "name": "div",
+                              "namespace": "http://www.w3.org/1999/xhtml",
+                              "next": Object {
+                                "attribs": Object {
+                                  "role": "presentation",
+                                  "style": "width:0;height:0;overflow:hidden;position:absolute",
+                                  "tabindex": "0",
+                                },
+                                "children": Array [],
+                                "name": "div",
+                                "namespace": "http://www.w3.org/1999/xhtml",
+                                "next": null,
+                                "parent": [Circular],
+                                "prev": [Circular],
+                                "type": "tag",
+                                "x-attribsNamespace": Object {
+                                  "role": undefined,
+                                  "style": undefined,
+                                  "tabindex": undefined,
+                                },
+                                "x-attribsPrefix": Object {
+                                  "role": undefined,
+                                  "style": undefined,
+                                  "tabindex": undefined,
+                                },
+                              },
+                              "parent": [Circular],
+                              "prev": [Circular],
+                              "type": "tag",
+                              "x-attribsNamespace": Object {},
+                              "x-attribsPrefix": Object {},
+                            },
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "tag",
+                            "x-attribsNamespace": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                          },
+                          Object {
+                            "attribs": Object {},
+                            "children": Array [
+                              Object {
+                                "data": "Content tab 1",
+                                "next": null,
+                                "parent": [Circular],
+                                "prev": null,
+                                "type": "text",
+                              },
+                            ],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": Object {
+                              "attribs": Object {
+                                "role": "presentation",
+                                "style": "width:0;height:0;overflow:hidden;position:absolute",
+                                "tabindex": "0",
+                              },
+                              "children": Array [],
+                              "name": "div",
+                              "namespace": "http://www.w3.org/1999/xhtml",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": [Circular],
+                              "type": "tag",
+                              "x-attribsNamespace": Object {
+                                "role": undefined,
+                                "style": undefined,
+                                "tabindex": undefined,
+                              },
+                              "x-attribsPrefix": Object {
+                                "role": undefined,
+                                "style": undefined,
+                                "tabindex": undefined,
+                              },
+                            },
+                            "parent": [Circular],
+                            "prev": Object {
+                              "attribs": Object {
+                                "role": "presentation",
+                                "style": "width:0;height:0;overflow:hidden;position:absolute",
+                                "tabindex": "0",
+                              },
+                              "children": Array [],
+                              "name": "div",
+                              "namespace": "http://www.w3.org/1999/xhtml",
+                              "next": [Circular],
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "tag",
+                              "x-attribsNamespace": Object {
+                                "role": undefined,
+                                "style": undefined,
+                                "tabindex": undefined,
+                              },
+                              "x-attribsPrefix": Object {
+                                "role": undefined,
+                                "style": undefined,
+                                "tabindex": undefined,
+                              },
+                            },
+                            "type": "tag",
+                            "x-attribsNamespace": Object {},
+                            "x-attribsPrefix": Object {},
+                          },
+                          Object {
+                            "attribs": Object {
+                              "role": "presentation",
+                              "style": "width:0;height:0;overflow:hidden;position:absolute",
+                              "tabindex": "0",
+                            },
+                            "children": Array [],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": Object {
+                              "attribs": Object {},
+                              "children": Array [
+                                Object {
+                                  "data": "Content tab 1",
+                                  "next": null,
+                                  "parent": [Circular],
+                                  "prev": null,
+                                  "type": "text",
+                                },
+                              ],
+                              "name": "div",
+                              "namespace": "http://www.w3.org/1999/xhtml",
+                              "next": [Circular],
+                              "parent": [Circular],
+                              "prev": Object {
+                                "attribs": Object {
+                                  "role": "presentation",
+                                  "style": "width:0;height:0;overflow:hidden;position:absolute",
+                                  "tabindex": "0",
+                                },
+                                "children": Array [],
+                                "name": "div",
+                                "namespace": "http://www.w3.org/1999/xhtml",
+                                "next": [Circular],
+                                "parent": [Circular],
+                                "prev": null,
+                                "type": "tag",
+                                "x-attribsNamespace": Object {
+                                  "role": undefined,
+                                  "style": undefined,
+                                  "tabindex": undefined,
+                                },
+                                "x-attribsPrefix": Object {
+                                  "role": undefined,
+                                  "style": undefined,
+                                  "tabindex": undefined,
+                                },
+                              },
+                              "type": "tag",
+                              "x-attribsNamespace": Object {},
+                              "x-attribsPrefix": Object {},
+                            },
+                            "type": "tag",
+                            "x-attribsNamespace": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                          },
+                        ],
                         "name": "div",
                         "namespace": "http://www.w3.org/1999/xhtml",
                         "next": [Circular],
@@ -3268,16 +3865,215 @@ initialize {
             "next": Object {
               "attribs": Object {
                 "class": "ant-tabs-content ant-tabs-content-animated ant-tabs-top-content",
-                "style": "display:none",
+                "style": "margin-left:0%",
               },
               "children": Array [
                 Object {
                   "attribs": Object {
-                    "aria-hidden": "true",
-                    "class": "ant-tabs-tabpane ant-tabs-tabpane-inactive",
+                    "aria-hidden": "false",
+                    "class": "ant-tabs-tabpane ant-tabs-tabpane-active",
                     "role": "tabpanel",
                   },
-                  "children": Array [],
+                  "children": Array [
+                    Object {
+                      "attribs": Object {
+                        "role": "presentation",
+                        "style": "width:0;height:0;overflow:hidden;position:absolute",
+                        "tabindex": "0",
+                      },
+                      "children": Array [],
+                      "name": "div",
+                      "namespace": "http://www.w3.org/1999/xhtml",
+                      "next": Object {
+                        "attribs": Object {},
+                        "children": Array [
+                          Object {
+                            "data": "Content tab 1",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "text",
+                          },
+                        ],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": [Circular],
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                        "parent": [Circular],
+                        "prev": [Circular],
+                        "type": "tag",
+                        "x-attribsNamespace": Object {},
+                        "x-attribsPrefix": Object {},
+                      },
+                      "parent": [Circular],
+                      "prev": null,
+                      "type": "tag",
+                      "x-attribsNamespace": Object {
+                        "role": undefined,
+                        "style": undefined,
+                        "tabindex": undefined,
+                      },
+                      "x-attribsPrefix": Object {
+                        "role": undefined,
+                        "style": undefined,
+                        "tabindex": undefined,
+                      },
+                    },
+                    Object {
+                      "attribs": Object {},
+                      "children": Array [
+                        Object {
+                          "data": "Content tab 1",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "text",
+                        },
+                      ],
+                      "name": "div",
+                      "namespace": "http://www.w3.org/1999/xhtml",
+                      "next": Object {
+                        "attribs": Object {
+                          "role": "presentation",
+                          "style": "width:0;height:0;overflow:hidden;position:absolute",
+                          "tabindex": "0",
+                        },
+                        "children": Array [],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": null,
+                        "parent": [Circular],
+                        "prev": [Circular],
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                      },
+                      "parent": [Circular],
+                      "prev": Object {
+                        "attribs": Object {
+                          "role": "presentation",
+                          "style": "width:0;height:0;overflow:hidden;position:absolute",
+                          "tabindex": "0",
+                        },
+                        "children": Array [],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": [Circular],
+                        "parent": [Circular],
+                        "prev": null,
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                      },
+                      "type": "tag",
+                      "x-attribsNamespace": Object {},
+                      "x-attribsPrefix": Object {},
+                    },
+                    Object {
+                      "attribs": Object {
+                        "role": "presentation",
+                        "style": "width:0;height:0;overflow:hidden;position:absolute",
+                        "tabindex": "0",
+                      },
+                      "children": Array [],
+                      "name": "div",
+                      "namespace": "http://www.w3.org/1999/xhtml",
+                      "next": null,
+                      "parent": [Circular],
+                      "prev": Object {
+                        "attribs": Object {},
+                        "children": Array [
+                          Object {
+                            "data": "Content tab 1",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "text",
+                          },
+                        ],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": [Circular],
+                        "parent": [Circular],
+                        "prev": Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": [Circular],
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                        "type": "tag",
+                        "x-attribsNamespace": Object {},
+                        "x-attribsPrefix": Object {},
+                      },
+                      "type": "tag",
+                      "x-attribsNamespace": Object {
+                        "role": undefined,
+                        "style": undefined,
+                        "tabindex": undefined,
+                      },
+                      "x-attribsPrefix": Object {
+                        "role": undefined,
+                        "style": undefined,
+                        "tabindex": undefined,
+                      },
+                    },
+                  ],
                   "name": "div",
                   "namespace": "http://www.w3.org/1999/xhtml",
                   "next": Object {
@@ -3377,11 +4173,210 @@ initialize {
                   "parent": [Circular],
                   "prev": Object {
                     "attribs": Object {
-                      "aria-hidden": "true",
-                      "class": "ant-tabs-tabpane ant-tabs-tabpane-inactive",
+                      "aria-hidden": "false",
+                      "class": "ant-tabs-tabpane ant-tabs-tabpane-active",
                       "role": "tabpanel",
                     },
-                    "children": Array [],
+                    "children": Array [
+                      Object {
+                        "attribs": Object {
+                          "role": "presentation",
+                          "style": "width:0;height:0;overflow:hidden;position:absolute",
+                          "tabindex": "0",
+                        },
+                        "children": Array [],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": Object {
+                          "attribs": Object {},
+                          "children": Array [
+                            Object {
+                              "data": "Content tab 1",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "text",
+                            },
+                          ],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": Object {
+                            "attribs": Object {
+                              "role": "presentation",
+                              "style": "width:0;height:0;overflow:hidden;position:absolute",
+                              "tabindex": "0",
+                            },
+                            "children": Array [],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": [Circular],
+                            "type": "tag",
+                            "x-attribsNamespace": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                          },
+                          "parent": [Circular],
+                          "prev": [Circular],
+                          "type": "tag",
+                          "x-attribsNamespace": Object {},
+                          "x-attribsPrefix": Object {},
+                        },
+                        "parent": [Circular],
+                        "prev": null,
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                      },
+                      Object {
+                        "attribs": Object {},
+                        "children": Array [
+                          Object {
+                            "data": "Content tab 1",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "text",
+                          },
+                        ],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": [Circular],
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                        "parent": [Circular],
+                        "prev": Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": [Circular],
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                        "type": "tag",
+                        "x-attribsNamespace": Object {},
+                        "x-attribsPrefix": Object {},
+                      },
+                      Object {
+                        "attribs": Object {
+                          "role": "presentation",
+                          "style": "width:0;height:0;overflow:hidden;position:absolute",
+                          "tabindex": "0",
+                        },
+                        "children": Array [],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": null,
+                        "parent": [Circular],
+                        "prev": Object {
+                          "attribs": Object {},
+                          "children": Array [
+                            Object {
+                              "data": "Content tab 1",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "text",
+                            },
+                          ],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": [Circular],
+                          "parent": [Circular],
+                          "prev": Object {
+                            "attribs": Object {
+                              "role": "presentation",
+                              "style": "width:0;height:0;overflow:hidden;position:absolute",
+                              "tabindex": "0",
+                            },
+                            "children": Array [],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": [Circular],
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "tag",
+                            "x-attribsNamespace": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                          },
+                          "type": "tag",
+                          "x-attribsNamespace": Object {},
+                          "x-attribsPrefix": Object {},
+                        },
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                      },
+                    ],
                     "name": "div",
                     "namespace": "http://www.w3.org/1999/xhtml",
                     "next": [Circular],
@@ -3435,11 +4430,210 @@ initialize {
                     "parent": [Circular],
                     "prev": Object {
                       "attribs": Object {
-                        "aria-hidden": "true",
-                        "class": "ant-tabs-tabpane ant-tabs-tabpane-inactive",
+                        "aria-hidden": "false",
+                        "class": "ant-tabs-tabpane ant-tabs-tabpane-active",
                         "role": "tabpanel",
                       },
-                      "children": Array [],
+                      "children": Array [
+                        Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": Object {
+                            "attribs": Object {},
+                            "children": Array [
+                              Object {
+                                "data": "Content tab 1",
+                                "next": null,
+                                "parent": [Circular],
+                                "prev": null,
+                                "type": "text",
+                              },
+                            ],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": Object {
+                              "attribs": Object {
+                                "role": "presentation",
+                                "style": "width:0;height:0;overflow:hidden;position:absolute",
+                                "tabindex": "0",
+                              },
+                              "children": Array [],
+                              "name": "div",
+                              "namespace": "http://www.w3.org/1999/xhtml",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": [Circular],
+                              "type": "tag",
+                              "x-attribsNamespace": Object {
+                                "role": undefined,
+                                "style": undefined,
+                                "tabindex": undefined,
+                              },
+                              "x-attribsPrefix": Object {
+                                "role": undefined,
+                                "style": undefined,
+                                "tabindex": undefined,
+                              },
+                            },
+                            "parent": [Circular],
+                            "prev": [Circular],
+                            "type": "tag",
+                            "x-attribsNamespace": Object {},
+                            "x-attribsPrefix": Object {},
+                          },
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                        Object {
+                          "attribs": Object {},
+                          "children": Array [
+                            Object {
+                              "data": "Content tab 1",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "text",
+                            },
+                          ],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": Object {
+                            "attribs": Object {
+                              "role": "presentation",
+                              "style": "width:0;height:0;overflow:hidden;position:absolute",
+                              "tabindex": "0",
+                            },
+                            "children": Array [],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": [Circular],
+                            "type": "tag",
+                            "x-attribsNamespace": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                          },
+                          "parent": [Circular],
+                          "prev": Object {
+                            "attribs": Object {
+                              "role": "presentation",
+                              "style": "width:0;height:0;overflow:hidden;position:absolute",
+                              "tabindex": "0",
+                            },
+                            "children": Array [],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": [Circular],
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "tag",
+                            "x-attribsNamespace": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                          },
+                          "type": "tag",
+                          "x-attribsNamespace": Object {},
+                          "x-attribsPrefix": Object {},
+                        },
+                        Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": Object {
+                            "attribs": Object {},
+                            "children": Array [
+                              Object {
+                                "data": "Content tab 1",
+                                "next": null,
+                                "parent": [Circular],
+                                "prev": null,
+                                "type": "text",
+                              },
+                            ],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": [Circular],
+                            "parent": [Circular],
+                            "prev": Object {
+                              "attribs": Object {
+                                "role": "presentation",
+                                "style": "width:0;height:0;overflow:hidden;position:absolute",
+                                "tabindex": "0",
+                              },
+                              "children": Array [],
+                              "name": "div",
+                              "namespace": "http://www.w3.org/1999/xhtml",
+                              "next": [Circular],
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "tag",
+                              "x-attribsNamespace": Object {
+                                "role": undefined,
+                                "style": undefined,
+                                "tabindex": undefined,
+                              },
+                              "x-attribsPrefix": Object {
+                                "role": undefined,
+                                "style": undefined,
+                                "tabindex": undefined,
+                              },
+                            },
+                            "type": "tag",
+                            "x-attribsNamespace": Object {},
+                            "x-attribsPrefix": Object {},
+                          },
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                      ],
                       "name": "div",
                       "namespace": "http://www.w3.org/1999/xhtml",
                       "next": [Circular],
@@ -3770,8 +4964,8 @@ initialize {
                                         Object {
                                           "attribs": Object {
                                             "aria-disabled": "false",
-                                            "aria-selected": "false",
-                                            "class": " ant-tabs-tab",
+                                            "aria-selected": "true",
+                                            "class": "ant-tabs-tab-active ant-tabs-tab",
                                             "role": "tab",
                                           },
                                           "children": Array [
@@ -3927,8 +5121,8 @@ initialize {
                                           "prev": Object {
                                             "attribs": Object {
                                               "aria-disabled": "false",
-                                              "aria-selected": "false",
-                                              "class": " ant-tabs-tab",
+                                              "aria-selected": "true",
+                                              "class": "ant-tabs-tab-active ant-tabs-tab",
                                               "role": "tab",
                                             },
                                             "children": Array [
@@ -4016,8 +5210,8 @@ initialize {
                                             "prev": Object {
                                               "attribs": Object {
                                                 "aria-disabled": "false",
-                                                "aria-selected": "false",
-                                                "class": " ant-tabs-tab",
+                                                "aria-selected": "true",
+                                                "class": "ant-tabs-tab-active ant-tabs-tab",
                                                 "role": "tab",
                                               },
                                               "children": Array [
@@ -4118,8 +5312,8 @@ initialize {
                                           Object {
                                             "attribs": Object {
                                               "aria-disabled": "false",
-                                              "aria-selected": "false",
-                                              "class": " ant-tabs-tab",
+                                              "aria-selected": "true",
+                                              "class": "ant-tabs-tab-active ant-tabs-tab",
                                               "role": "tab",
                                             },
                                             "children": Array [
@@ -4275,8 +5469,8 @@ initialize {
                                             "prev": Object {
                                               "attribs": Object {
                                                 "aria-disabled": "false",
-                                                "aria-selected": "false",
-                                                "class": " ant-tabs-tab",
+                                                "aria-selected": "true",
+                                                "class": "ant-tabs-tab-active ant-tabs-tab",
                                                 "role": "tab",
                                               },
                                               "children": Array [
@@ -4364,8 +5558,8 @@ initialize {
                                               "prev": Object {
                                                 "attribs": Object {
                                                   "aria-disabled": "false",
-                                                  "aria-selected": "false",
-                                                  "class": " ant-tabs-tab",
+                                                  "aria-selected": "true",
+                                                  "class": "ant-tabs-tab-active ant-tabs-tab",
                                                   "role": "tab",
                                                 },
                                                 "children": Array [
@@ -4637,8 +5831,8 @@ initialize {
                                       Object {
                                         "attribs": Object {
                                           "aria-disabled": "false",
-                                          "aria-selected": "false",
-                                          "class": " ant-tabs-tab",
+                                          "aria-selected": "true",
+                                          "class": "ant-tabs-tab-active ant-tabs-tab",
                                           "role": "tab",
                                         },
                                         "children": Array [
@@ -4794,8 +5988,8 @@ initialize {
                                         "prev": Object {
                                           "attribs": Object {
                                             "aria-disabled": "false",
-                                            "aria-selected": "false",
-                                            "class": " ant-tabs-tab",
+                                            "aria-selected": "true",
+                                            "class": "ant-tabs-tab-active ant-tabs-tab",
                                             "role": "tab",
                                           },
                                           "children": Array [
@@ -4883,8 +6077,8 @@ initialize {
                                           "prev": Object {
                                             "attribs": Object {
                                               "aria-disabled": "false",
-                                              "aria-selected": "false",
-                                              "class": " ant-tabs-tab",
+                                              "aria-selected": "true",
+                                              "class": "ant-tabs-tab-active ant-tabs-tab",
                                               "role": "tab",
                                             },
                                             "children": Array [
@@ -4985,8 +6179,8 @@ initialize {
                                         Object {
                                           "attribs": Object {
                                             "aria-disabled": "false",
-                                            "aria-selected": "false",
-                                            "class": " ant-tabs-tab",
+                                            "aria-selected": "true",
+                                            "class": "ant-tabs-tab-active ant-tabs-tab",
                                             "role": "tab",
                                           },
                                           "children": Array [
@@ -5142,8 +6336,8 @@ initialize {
                                           "prev": Object {
                                             "attribs": Object {
                                               "aria-disabled": "false",
-                                              "aria-selected": "false",
-                                              "class": " ant-tabs-tab",
+                                              "aria-selected": "true",
+                                              "class": "ant-tabs-tab-active ant-tabs-tab",
                                               "role": "tab",
                                             },
                                             "children": Array [
@@ -5231,8 +6425,8 @@ initialize {
                                             "prev": Object {
                                               "attribs": Object {
                                                 "aria-disabled": "false",
-                                                "aria-selected": "false",
-                                                "class": " ant-tabs-tab",
+                                                "aria-selected": "true",
+                                                "class": "ant-tabs-tab-active ant-tabs-tab",
                                                 "role": "tab",
                                               },
                                               "children": Array [
@@ -5504,8 +6698,8 @@ initialize {
                                     Object {
                                       "attribs": Object {
                                         "aria-disabled": "false",
-                                        "aria-selected": "false",
-                                        "class": " ant-tabs-tab",
+                                        "aria-selected": "true",
+                                        "class": "ant-tabs-tab-active ant-tabs-tab",
                                         "role": "tab",
                                       },
                                       "children": Array [
@@ -5661,8 +6855,8 @@ initialize {
                                       "prev": Object {
                                         "attribs": Object {
                                           "aria-disabled": "false",
-                                          "aria-selected": "false",
-                                          "class": " ant-tabs-tab",
+                                          "aria-selected": "true",
+                                          "class": "ant-tabs-tab-active ant-tabs-tab",
                                           "role": "tab",
                                         },
                                         "children": Array [
@@ -5750,8 +6944,8 @@ initialize {
                                         "prev": Object {
                                           "attribs": Object {
                                             "aria-disabled": "false",
-                                            "aria-selected": "false",
-                                            "class": " ant-tabs-tab",
+                                            "aria-selected": "true",
+                                            "class": "ant-tabs-tab-active ant-tabs-tab",
                                             "role": "tab",
                                           },
                                           "children": Array [
@@ -5852,8 +7046,8 @@ initialize {
                                       Object {
                                         "attribs": Object {
                                           "aria-disabled": "false",
-                                          "aria-selected": "false",
-                                          "class": " ant-tabs-tab",
+                                          "aria-selected": "true",
+                                          "class": "ant-tabs-tab-active ant-tabs-tab",
                                           "role": "tab",
                                         },
                                         "children": Array [
@@ -6009,8 +7203,8 @@ initialize {
                                         "prev": Object {
                                           "attribs": Object {
                                             "aria-disabled": "false",
-                                            "aria-selected": "false",
-                                            "class": " ant-tabs-tab",
+                                            "aria-selected": "true",
+                                            "class": "ant-tabs-tab-active ant-tabs-tab",
                                             "role": "tab",
                                           },
                                           "children": Array [
@@ -6098,8 +7292,8 @@ initialize {
                                           "prev": Object {
                                             "attribs": Object {
                                               "aria-disabled": "false",
-                                              "aria-selected": "false",
-                                              "class": " ant-tabs-tab",
+                                              "aria-selected": "true",
+                                              "class": "ant-tabs-tab-active ant-tabs-tab",
                                               "role": "tab",
                                             },
                                             "children": Array [
@@ -6505,16 +7699,215 @@ initialize {
           Object {
             "attribs": Object {
               "class": "ant-tabs-content ant-tabs-content-animated ant-tabs-top-content",
-              "style": "display:none",
+              "style": "margin-left:0%",
             },
             "children": Array [
               Object {
                 "attribs": Object {
-                  "aria-hidden": "true",
-                  "class": "ant-tabs-tabpane ant-tabs-tabpane-inactive",
+                  "aria-hidden": "false",
+                  "class": "ant-tabs-tabpane ant-tabs-tabpane-active",
                   "role": "tabpanel",
                 },
-                "children": Array [],
+                "children": Array [
+                  Object {
+                    "attribs": Object {
+                      "role": "presentation",
+                      "style": "width:0;height:0;overflow:hidden;position:absolute",
+                      "tabindex": "0",
+                    },
+                    "children": Array [],
+                    "name": "div",
+                    "namespace": "http://www.w3.org/1999/xhtml",
+                    "next": Object {
+                      "attribs": Object {},
+                      "children": Array [
+                        Object {
+                          "data": "Content tab 1",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "text",
+                        },
+                      ],
+                      "name": "div",
+                      "namespace": "http://www.w3.org/1999/xhtml",
+                      "next": Object {
+                        "attribs": Object {
+                          "role": "presentation",
+                          "style": "width:0;height:0;overflow:hidden;position:absolute",
+                          "tabindex": "0",
+                        },
+                        "children": Array [],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": null,
+                        "parent": [Circular],
+                        "prev": [Circular],
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                      },
+                      "parent": [Circular],
+                      "prev": [Circular],
+                      "type": "tag",
+                      "x-attribsNamespace": Object {},
+                      "x-attribsPrefix": Object {},
+                    },
+                    "parent": [Circular],
+                    "prev": null,
+                    "type": "tag",
+                    "x-attribsNamespace": Object {
+                      "role": undefined,
+                      "style": undefined,
+                      "tabindex": undefined,
+                    },
+                    "x-attribsPrefix": Object {
+                      "role": undefined,
+                      "style": undefined,
+                      "tabindex": undefined,
+                    },
+                  },
+                  Object {
+                    "attribs": Object {},
+                    "children": Array [
+                      Object {
+                        "data": "Content tab 1",
+                        "next": null,
+                        "parent": [Circular],
+                        "prev": null,
+                        "type": "text",
+                      },
+                    ],
+                    "name": "div",
+                    "namespace": "http://www.w3.org/1999/xhtml",
+                    "next": Object {
+                      "attribs": Object {
+                        "role": "presentation",
+                        "style": "width:0;height:0;overflow:hidden;position:absolute",
+                        "tabindex": "0",
+                      },
+                      "children": Array [],
+                      "name": "div",
+                      "namespace": "http://www.w3.org/1999/xhtml",
+                      "next": null,
+                      "parent": [Circular],
+                      "prev": [Circular],
+                      "type": "tag",
+                      "x-attribsNamespace": Object {
+                        "role": undefined,
+                        "style": undefined,
+                        "tabindex": undefined,
+                      },
+                      "x-attribsPrefix": Object {
+                        "role": undefined,
+                        "style": undefined,
+                        "tabindex": undefined,
+                      },
+                    },
+                    "parent": [Circular],
+                    "prev": Object {
+                      "attribs": Object {
+                        "role": "presentation",
+                        "style": "width:0;height:0;overflow:hidden;position:absolute",
+                        "tabindex": "0",
+                      },
+                      "children": Array [],
+                      "name": "div",
+                      "namespace": "http://www.w3.org/1999/xhtml",
+                      "next": [Circular],
+                      "parent": [Circular],
+                      "prev": null,
+                      "type": "tag",
+                      "x-attribsNamespace": Object {
+                        "role": undefined,
+                        "style": undefined,
+                        "tabindex": undefined,
+                      },
+                      "x-attribsPrefix": Object {
+                        "role": undefined,
+                        "style": undefined,
+                        "tabindex": undefined,
+                      },
+                    },
+                    "type": "tag",
+                    "x-attribsNamespace": Object {},
+                    "x-attribsPrefix": Object {},
+                  },
+                  Object {
+                    "attribs": Object {
+                      "role": "presentation",
+                      "style": "width:0;height:0;overflow:hidden;position:absolute",
+                      "tabindex": "0",
+                    },
+                    "children": Array [],
+                    "name": "div",
+                    "namespace": "http://www.w3.org/1999/xhtml",
+                    "next": null,
+                    "parent": [Circular],
+                    "prev": Object {
+                      "attribs": Object {},
+                      "children": Array [
+                        Object {
+                          "data": "Content tab 1",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "text",
+                        },
+                      ],
+                      "name": "div",
+                      "namespace": "http://www.w3.org/1999/xhtml",
+                      "next": [Circular],
+                      "parent": [Circular],
+                      "prev": Object {
+                        "attribs": Object {
+                          "role": "presentation",
+                          "style": "width:0;height:0;overflow:hidden;position:absolute",
+                          "tabindex": "0",
+                        },
+                        "children": Array [],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": [Circular],
+                        "parent": [Circular],
+                        "prev": null,
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                      },
+                      "type": "tag",
+                      "x-attribsNamespace": Object {},
+                      "x-attribsPrefix": Object {},
+                    },
+                    "type": "tag",
+                    "x-attribsNamespace": Object {
+                      "role": undefined,
+                      "style": undefined,
+                      "tabindex": undefined,
+                    },
+                    "x-attribsPrefix": Object {
+                      "role": undefined,
+                      "style": undefined,
+                      "tabindex": undefined,
+                    },
+                  },
+                ],
                 "name": "div",
                 "namespace": "http://www.w3.org/1999/xhtml",
                 "next": Object {
@@ -6614,11 +8007,210 @@ initialize {
                 "parent": [Circular],
                 "prev": Object {
                   "attribs": Object {
-                    "aria-hidden": "true",
-                    "class": "ant-tabs-tabpane ant-tabs-tabpane-inactive",
+                    "aria-hidden": "false",
+                    "class": "ant-tabs-tabpane ant-tabs-tabpane-active",
                     "role": "tabpanel",
                   },
-                  "children": Array [],
+                  "children": Array [
+                    Object {
+                      "attribs": Object {
+                        "role": "presentation",
+                        "style": "width:0;height:0;overflow:hidden;position:absolute",
+                        "tabindex": "0",
+                      },
+                      "children": Array [],
+                      "name": "div",
+                      "namespace": "http://www.w3.org/1999/xhtml",
+                      "next": Object {
+                        "attribs": Object {},
+                        "children": Array [
+                          Object {
+                            "data": "Content tab 1",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "text",
+                          },
+                        ],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": [Circular],
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                        "parent": [Circular],
+                        "prev": [Circular],
+                        "type": "tag",
+                        "x-attribsNamespace": Object {},
+                        "x-attribsPrefix": Object {},
+                      },
+                      "parent": [Circular],
+                      "prev": null,
+                      "type": "tag",
+                      "x-attribsNamespace": Object {
+                        "role": undefined,
+                        "style": undefined,
+                        "tabindex": undefined,
+                      },
+                      "x-attribsPrefix": Object {
+                        "role": undefined,
+                        "style": undefined,
+                        "tabindex": undefined,
+                      },
+                    },
+                    Object {
+                      "attribs": Object {},
+                      "children": Array [
+                        Object {
+                          "data": "Content tab 1",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "text",
+                        },
+                      ],
+                      "name": "div",
+                      "namespace": "http://www.w3.org/1999/xhtml",
+                      "next": Object {
+                        "attribs": Object {
+                          "role": "presentation",
+                          "style": "width:0;height:0;overflow:hidden;position:absolute",
+                          "tabindex": "0",
+                        },
+                        "children": Array [],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": null,
+                        "parent": [Circular],
+                        "prev": [Circular],
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                      },
+                      "parent": [Circular],
+                      "prev": Object {
+                        "attribs": Object {
+                          "role": "presentation",
+                          "style": "width:0;height:0;overflow:hidden;position:absolute",
+                          "tabindex": "0",
+                        },
+                        "children": Array [],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": [Circular],
+                        "parent": [Circular],
+                        "prev": null,
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                      },
+                      "type": "tag",
+                      "x-attribsNamespace": Object {},
+                      "x-attribsPrefix": Object {},
+                    },
+                    Object {
+                      "attribs": Object {
+                        "role": "presentation",
+                        "style": "width:0;height:0;overflow:hidden;position:absolute",
+                        "tabindex": "0",
+                      },
+                      "children": Array [],
+                      "name": "div",
+                      "namespace": "http://www.w3.org/1999/xhtml",
+                      "next": null,
+                      "parent": [Circular],
+                      "prev": Object {
+                        "attribs": Object {},
+                        "children": Array [
+                          Object {
+                            "data": "Content tab 1",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "text",
+                          },
+                        ],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": [Circular],
+                        "parent": [Circular],
+                        "prev": Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": [Circular],
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                        "type": "tag",
+                        "x-attribsNamespace": Object {},
+                        "x-attribsPrefix": Object {},
+                      },
+                      "type": "tag",
+                      "x-attribsNamespace": Object {
+                        "role": undefined,
+                        "style": undefined,
+                        "tabindex": undefined,
+                      },
+                      "x-attribsPrefix": Object {
+                        "role": undefined,
+                        "style": undefined,
+                        "tabindex": undefined,
+                      },
+                    },
+                  ],
                   "name": "div",
                   "namespace": "http://www.w3.org/1999/xhtml",
                   "next": [Circular],
@@ -6672,11 +8264,210 @@ initialize {
                   "parent": [Circular],
                   "prev": Object {
                     "attribs": Object {
-                      "aria-hidden": "true",
-                      "class": "ant-tabs-tabpane ant-tabs-tabpane-inactive",
+                      "aria-hidden": "false",
+                      "class": "ant-tabs-tabpane ant-tabs-tabpane-active",
                       "role": "tabpanel",
                     },
-                    "children": Array [],
+                    "children": Array [
+                      Object {
+                        "attribs": Object {
+                          "role": "presentation",
+                          "style": "width:0;height:0;overflow:hidden;position:absolute",
+                          "tabindex": "0",
+                        },
+                        "children": Array [],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": Object {
+                          "attribs": Object {},
+                          "children": Array [
+                            Object {
+                              "data": "Content tab 1",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "text",
+                            },
+                          ],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": Object {
+                            "attribs": Object {
+                              "role": "presentation",
+                              "style": "width:0;height:0;overflow:hidden;position:absolute",
+                              "tabindex": "0",
+                            },
+                            "children": Array [],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": [Circular],
+                            "type": "tag",
+                            "x-attribsNamespace": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                          },
+                          "parent": [Circular],
+                          "prev": [Circular],
+                          "type": "tag",
+                          "x-attribsNamespace": Object {},
+                          "x-attribsPrefix": Object {},
+                        },
+                        "parent": [Circular],
+                        "prev": null,
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                      },
+                      Object {
+                        "attribs": Object {},
+                        "children": Array [
+                          Object {
+                            "data": "Content tab 1",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "text",
+                          },
+                        ],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": [Circular],
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                        "parent": [Circular],
+                        "prev": Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": [Circular],
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                        "type": "tag",
+                        "x-attribsNamespace": Object {},
+                        "x-attribsPrefix": Object {},
+                      },
+                      Object {
+                        "attribs": Object {
+                          "role": "presentation",
+                          "style": "width:0;height:0;overflow:hidden;position:absolute",
+                          "tabindex": "0",
+                        },
+                        "children": Array [],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": null,
+                        "parent": [Circular],
+                        "prev": Object {
+                          "attribs": Object {},
+                          "children": Array [
+                            Object {
+                              "data": "Content tab 1",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "text",
+                            },
+                          ],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": [Circular],
+                          "parent": [Circular],
+                          "prev": Object {
+                            "attribs": Object {
+                              "role": "presentation",
+                              "style": "width:0;height:0;overflow:hidden;position:absolute",
+                              "tabindex": "0",
+                            },
+                            "children": Array [],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": [Circular],
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "tag",
+                            "x-attribsNamespace": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                          },
+                          "type": "tag",
+                          "x-attribsNamespace": Object {},
+                          "x-attribsPrefix": Object {},
+                        },
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                      },
+                    ],
                     "name": "div",
                     "namespace": "http://www.w3.org/1999/xhtml",
                     "next": [Circular],
@@ -7006,8 +8797,8 @@ initialize {
                                           Object {
                                             "attribs": Object {
                                               "aria-disabled": "false",
-                                              "aria-selected": "false",
-                                              "class": " ant-tabs-tab",
+                                              "aria-selected": "true",
+                                              "class": "ant-tabs-tab-active ant-tabs-tab",
                                               "role": "tab",
                                             },
                                             "children": Array [
@@ -7163,8 +8954,8 @@ initialize {
                                             "prev": Object {
                                               "attribs": Object {
                                                 "aria-disabled": "false",
-                                                "aria-selected": "false",
-                                                "class": " ant-tabs-tab",
+                                                "aria-selected": "true",
+                                                "class": "ant-tabs-tab-active ant-tabs-tab",
                                                 "role": "tab",
                                               },
                                               "children": Array [
@@ -7252,8 +9043,8 @@ initialize {
                                               "prev": Object {
                                                 "attribs": Object {
                                                   "aria-disabled": "false",
-                                                  "aria-selected": "false",
-                                                  "class": " ant-tabs-tab",
+                                                  "aria-selected": "true",
+                                                  "class": "ant-tabs-tab-active ant-tabs-tab",
                                                   "role": "tab",
                                                 },
                                                 "children": Array [
@@ -7354,8 +9145,8 @@ initialize {
                                             Object {
                                               "attribs": Object {
                                                 "aria-disabled": "false",
-                                                "aria-selected": "false",
-                                                "class": " ant-tabs-tab",
+                                                "aria-selected": "true",
+                                                "class": "ant-tabs-tab-active ant-tabs-tab",
                                                 "role": "tab",
                                               },
                                               "children": Array [
@@ -7511,8 +9302,8 @@ initialize {
                                               "prev": Object {
                                                 "attribs": Object {
                                                   "aria-disabled": "false",
-                                                  "aria-selected": "false",
-                                                  "class": " ant-tabs-tab",
+                                                  "aria-selected": "true",
+                                                  "class": "ant-tabs-tab-active ant-tabs-tab",
                                                   "role": "tab",
                                                 },
                                                 "children": Array [
@@ -7600,8 +9391,8 @@ initialize {
                                                 "prev": Object {
                                                   "attribs": Object {
                                                     "aria-disabled": "false",
-                                                    "aria-selected": "false",
-                                                    "class": " ant-tabs-tab",
+                                                    "aria-selected": "true",
+                                                    "class": "ant-tabs-tab-active ant-tabs-tab",
                                                     "role": "tab",
                                                   },
                                                   "children": Array [
@@ -7873,8 +9664,8 @@ initialize {
                                         Object {
                                           "attribs": Object {
                                             "aria-disabled": "false",
-                                            "aria-selected": "false",
-                                            "class": " ant-tabs-tab",
+                                            "aria-selected": "true",
+                                            "class": "ant-tabs-tab-active ant-tabs-tab",
                                             "role": "tab",
                                           },
                                           "children": Array [
@@ -8030,8 +9821,8 @@ initialize {
                                           "prev": Object {
                                             "attribs": Object {
                                               "aria-disabled": "false",
-                                              "aria-selected": "false",
-                                              "class": " ant-tabs-tab",
+                                              "aria-selected": "true",
+                                              "class": "ant-tabs-tab-active ant-tabs-tab",
                                               "role": "tab",
                                             },
                                             "children": Array [
@@ -8119,8 +9910,8 @@ initialize {
                                             "prev": Object {
                                               "attribs": Object {
                                                 "aria-disabled": "false",
-                                                "aria-selected": "false",
-                                                "class": " ant-tabs-tab",
+                                                "aria-selected": "true",
+                                                "class": "ant-tabs-tab-active ant-tabs-tab",
                                                 "role": "tab",
                                               },
                                               "children": Array [
@@ -8221,8 +10012,8 @@ initialize {
                                           Object {
                                             "attribs": Object {
                                               "aria-disabled": "false",
-                                              "aria-selected": "false",
-                                              "class": " ant-tabs-tab",
+                                              "aria-selected": "true",
+                                              "class": "ant-tabs-tab-active ant-tabs-tab",
                                               "role": "tab",
                                             },
                                             "children": Array [
@@ -8378,8 +10169,8 @@ initialize {
                                             "prev": Object {
                                               "attribs": Object {
                                                 "aria-disabled": "false",
-                                                "aria-selected": "false",
-                                                "class": " ant-tabs-tab",
+                                                "aria-selected": "true",
+                                                "class": "ant-tabs-tab-active ant-tabs-tab",
                                                 "role": "tab",
                                               },
                                               "children": Array [
@@ -8467,8 +10258,8 @@ initialize {
                                               "prev": Object {
                                                 "attribs": Object {
                                                   "aria-disabled": "false",
-                                                  "aria-selected": "false",
-                                                  "class": " ant-tabs-tab",
+                                                  "aria-selected": "true",
+                                                  "class": "ant-tabs-tab-active ant-tabs-tab",
                                                   "role": "tab",
                                                 },
                                                 "children": Array [
@@ -8740,8 +10531,8 @@ initialize {
                                       Object {
                                         "attribs": Object {
                                           "aria-disabled": "false",
-                                          "aria-selected": "false",
-                                          "class": " ant-tabs-tab",
+                                          "aria-selected": "true",
+                                          "class": "ant-tabs-tab-active ant-tabs-tab",
                                           "role": "tab",
                                         },
                                         "children": Array [
@@ -8897,8 +10688,8 @@ initialize {
                                         "prev": Object {
                                           "attribs": Object {
                                             "aria-disabled": "false",
-                                            "aria-selected": "false",
-                                            "class": " ant-tabs-tab",
+                                            "aria-selected": "true",
+                                            "class": "ant-tabs-tab-active ant-tabs-tab",
                                             "role": "tab",
                                           },
                                           "children": Array [
@@ -8986,8 +10777,8 @@ initialize {
                                           "prev": Object {
                                             "attribs": Object {
                                               "aria-disabled": "false",
-                                              "aria-selected": "false",
-                                              "class": " ant-tabs-tab",
+                                              "aria-selected": "true",
+                                              "class": "ant-tabs-tab-active ant-tabs-tab",
                                               "role": "tab",
                                             },
                                             "children": Array [
@@ -9088,8 +10879,8 @@ initialize {
                                         Object {
                                           "attribs": Object {
                                             "aria-disabled": "false",
-                                            "aria-selected": "false",
-                                            "class": " ant-tabs-tab",
+                                            "aria-selected": "true",
+                                            "class": "ant-tabs-tab-active ant-tabs-tab",
                                             "role": "tab",
                                           },
                                           "children": Array [
@@ -9245,8 +11036,8 @@ initialize {
                                           "prev": Object {
                                             "attribs": Object {
                                               "aria-disabled": "false",
-                                              "aria-selected": "false",
-                                              "class": " ant-tabs-tab",
+                                              "aria-selected": "true",
+                                              "class": "ant-tabs-tab-active ant-tabs-tab",
                                               "role": "tab",
                                             },
                                             "children": Array [
@@ -9334,8 +11125,8 @@ initialize {
                                             "prev": Object {
                                               "attribs": Object {
                                                 "aria-disabled": "false",
-                                                "aria-selected": "false",
-                                                "class": " ant-tabs-tab",
+                                                "aria-selected": "true",
+                                                "class": "ant-tabs-tab-active ant-tabs-tab",
                                                 "role": "tab",
                                               },
                                               "children": Array [
@@ -9762,16 +11553,215 @@ initialize {
             "prev": Object {
               "attribs": Object {
                 "class": "ant-tabs-content ant-tabs-content-animated ant-tabs-top-content",
-                "style": "display:none",
+                "style": "margin-left:0%",
               },
               "children": Array [
                 Object {
                   "attribs": Object {
-                    "aria-hidden": "true",
-                    "class": "ant-tabs-tabpane ant-tabs-tabpane-inactive",
+                    "aria-hidden": "false",
+                    "class": "ant-tabs-tabpane ant-tabs-tabpane-active",
                     "role": "tabpanel",
                   },
-                  "children": Array [],
+                  "children": Array [
+                    Object {
+                      "attribs": Object {
+                        "role": "presentation",
+                        "style": "width:0;height:0;overflow:hidden;position:absolute",
+                        "tabindex": "0",
+                      },
+                      "children": Array [],
+                      "name": "div",
+                      "namespace": "http://www.w3.org/1999/xhtml",
+                      "next": Object {
+                        "attribs": Object {},
+                        "children": Array [
+                          Object {
+                            "data": "Content tab 1",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "text",
+                          },
+                        ],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": [Circular],
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                        "parent": [Circular],
+                        "prev": [Circular],
+                        "type": "tag",
+                        "x-attribsNamespace": Object {},
+                        "x-attribsPrefix": Object {},
+                      },
+                      "parent": [Circular],
+                      "prev": null,
+                      "type": "tag",
+                      "x-attribsNamespace": Object {
+                        "role": undefined,
+                        "style": undefined,
+                        "tabindex": undefined,
+                      },
+                      "x-attribsPrefix": Object {
+                        "role": undefined,
+                        "style": undefined,
+                        "tabindex": undefined,
+                      },
+                    },
+                    Object {
+                      "attribs": Object {},
+                      "children": Array [
+                        Object {
+                          "data": "Content tab 1",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "text",
+                        },
+                      ],
+                      "name": "div",
+                      "namespace": "http://www.w3.org/1999/xhtml",
+                      "next": Object {
+                        "attribs": Object {
+                          "role": "presentation",
+                          "style": "width:0;height:0;overflow:hidden;position:absolute",
+                          "tabindex": "0",
+                        },
+                        "children": Array [],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": null,
+                        "parent": [Circular],
+                        "prev": [Circular],
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                      },
+                      "parent": [Circular],
+                      "prev": Object {
+                        "attribs": Object {
+                          "role": "presentation",
+                          "style": "width:0;height:0;overflow:hidden;position:absolute",
+                          "tabindex": "0",
+                        },
+                        "children": Array [],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": [Circular],
+                        "parent": [Circular],
+                        "prev": null,
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                      },
+                      "type": "tag",
+                      "x-attribsNamespace": Object {},
+                      "x-attribsPrefix": Object {},
+                    },
+                    Object {
+                      "attribs": Object {
+                        "role": "presentation",
+                        "style": "width:0;height:0;overflow:hidden;position:absolute",
+                        "tabindex": "0",
+                      },
+                      "children": Array [],
+                      "name": "div",
+                      "namespace": "http://www.w3.org/1999/xhtml",
+                      "next": null,
+                      "parent": [Circular],
+                      "prev": Object {
+                        "attribs": Object {},
+                        "children": Array [
+                          Object {
+                            "data": "Content tab 1",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "text",
+                          },
+                        ],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": [Circular],
+                        "parent": [Circular],
+                        "prev": Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": [Circular],
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                        "type": "tag",
+                        "x-attribsNamespace": Object {},
+                        "x-attribsPrefix": Object {},
+                      },
+                      "type": "tag",
+                      "x-attribsNamespace": Object {
+                        "role": undefined,
+                        "style": undefined,
+                        "tabindex": undefined,
+                      },
+                      "x-attribsPrefix": Object {
+                        "role": undefined,
+                        "style": undefined,
+                        "tabindex": undefined,
+                      },
+                    },
+                  ],
                   "name": "div",
                   "namespace": "http://www.w3.org/1999/xhtml",
                   "next": Object {
@@ -9871,11 +11861,210 @@ initialize {
                   "parent": [Circular],
                   "prev": Object {
                     "attribs": Object {
-                      "aria-hidden": "true",
-                      "class": "ant-tabs-tabpane ant-tabs-tabpane-inactive",
+                      "aria-hidden": "false",
+                      "class": "ant-tabs-tabpane ant-tabs-tabpane-active",
                       "role": "tabpanel",
                     },
-                    "children": Array [],
+                    "children": Array [
+                      Object {
+                        "attribs": Object {
+                          "role": "presentation",
+                          "style": "width:0;height:0;overflow:hidden;position:absolute",
+                          "tabindex": "0",
+                        },
+                        "children": Array [],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": Object {
+                          "attribs": Object {},
+                          "children": Array [
+                            Object {
+                              "data": "Content tab 1",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "text",
+                            },
+                          ],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": Object {
+                            "attribs": Object {
+                              "role": "presentation",
+                              "style": "width:0;height:0;overflow:hidden;position:absolute",
+                              "tabindex": "0",
+                            },
+                            "children": Array [],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": [Circular],
+                            "type": "tag",
+                            "x-attribsNamespace": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                          },
+                          "parent": [Circular],
+                          "prev": [Circular],
+                          "type": "tag",
+                          "x-attribsNamespace": Object {},
+                          "x-attribsPrefix": Object {},
+                        },
+                        "parent": [Circular],
+                        "prev": null,
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                      },
+                      Object {
+                        "attribs": Object {},
+                        "children": Array [
+                          Object {
+                            "data": "Content tab 1",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "text",
+                          },
+                        ],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": [Circular],
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                        "parent": [Circular],
+                        "prev": Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": [Circular],
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                        "type": "tag",
+                        "x-attribsNamespace": Object {},
+                        "x-attribsPrefix": Object {},
+                      },
+                      Object {
+                        "attribs": Object {
+                          "role": "presentation",
+                          "style": "width:0;height:0;overflow:hidden;position:absolute",
+                          "tabindex": "0",
+                        },
+                        "children": Array [],
+                        "name": "div",
+                        "namespace": "http://www.w3.org/1999/xhtml",
+                        "next": null,
+                        "parent": [Circular],
+                        "prev": Object {
+                          "attribs": Object {},
+                          "children": Array [
+                            Object {
+                              "data": "Content tab 1",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "text",
+                            },
+                          ],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": [Circular],
+                          "parent": [Circular],
+                          "prev": Object {
+                            "attribs": Object {
+                              "role": "presentation",
+                              "style": "width:0;height:0;overflow:hidden;position:absolute",
+                              "tabindex": "0",
+                            },
+                            "children": Array [],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": [Circular],
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "tag",
+                            "x-attribsNamespace": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                          },
+                          "type": "tag",
+                          "x-attribsNamespace": Object {},
+                          "x-attribsPrefix": Object {},
+                        },
+                        "type": "tag",
+                        "x-attribsNamespace": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                        "x-attribsPrefix": Object {
+                          "role": undefined,
+                          "style": undefined,
+                          "tabindex": undefined,
+                        },
+                      },
+                    ],
                     "name": "div",
                     "namespace": "http://www.w3.org/1999/xhtml",
                     "next": [Circular],
@@ -9929,11 +12118,210 @@ initialize {
                     "parent": [Circular],
                     "prev": Object {
                       "attribs": Object {
-                        "aria-hidden": "true",
-                        "class": "ant-tabs-tabpane ant-tabs-tabpane-inactive",
+                        "aria-hidden": "false",
+                        "class": "ant-tabs-tabpane ant-tabs-tabpane-active",
                         "role": "tabpanel",
                       },
-                      "children": Array [],
+                      "children": Array [
+                        Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": Object {
+                            "attribs": Object {},
+                            "children": Array [
+                              Object {
+                                "data": "Content tab 1",
+                                "next": null,
+                                "parent": [Circular],
+                                "prev": null,
+                                "type": "text",
+                              },
+                            ],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": Object {
+                              "attribs": Object {
+                                "role": "presentation",
+                                "style": "width:0;height:0;overflow:hidden;position:absolute",
+                                "tabindex": "0",
+                              },
+                              "children": Array [],
+                              "name": "div",
+                              "namespace": "http://www.w3.org/1999/xhtml",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": [Circular],
+                              "type": "tag",
+                              "x-attribsNamespace": Object {
+                                "role": undefined,
+                                "style": undefined,
+                                "tabindex": undefined,
+                              },
+                              "x-attribsPrefix": Object {
+                                "role": undefined,
+                                "style": undefined,
+                                "tabindex": undefined,
+                              },
+                            },
+                            "parent": [Circular],
+                            "prev": [Circular],
+                            "type": "tag",
+                            "x-attribsNamespace": Object {},
+                            "x-attribsPrefix": Object {},
+                          },
+                          "parent": [Circular],
+                          "prev": null,
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                        Object {
+                          "attribs": Object {},
+                          "children": Array [
+                            Object {
+                              "data": "Content tab 1",
+                              "next": null,
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "text",
+                            },
+                          ],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": Object {
+                            "attribs": Object {
+                              "role": "presentation",
+                              "style": "width:0;height:0;overflow:hidden;position:absolute",
+                              "tabindex": "0",
+                            },
+                            "children": Array [],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": null,
+                            "parent": [Circular],
+                            "prev": [Circular],
+                            "type": "tag",
+                            "x-attribsNamespace": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                          },
+                          "parent": [Circular],
+                          "prev": Object {
+                            "attribs": Object {
+                              "role": "presentation",
+                              "style": "width:0;height:0;overflow:hidden;position:absolute",
+                              "tabindex": "0",
+                            },
+                            "children": Array [],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": [Circular],
+                            "parent": [Circular],
+                            "prev": null,
+                            "type": "tag",
+                            "x-attribsNamespace": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                            "x-attribsPrefix": Object {
+                              "role": undefined,
+                              "style": undefined,
+                              "tabindex": undefined,
+                            },
+                          },
+                          "type": "tag",
+                          "x-attribsNamespace": Object {},
+                          "x-attribsPrefix": Object {},
+                        },
+                        Object {
+                          "attribs": Object {
+                            "role": "presentation",
+                            "style": "width:0;height:0;overflow:hidden;position:absolute",
+                            "tabindex": "0",
+                          },
+                          "children": Array [],
+                          "name": "div",
+                          "namespace": "http://www.w3.org/1999/xhtml",
+                          "next": null,
+                          "parent": [Circular],
+                          "prev": Object {
+                            "attribs": Object {},
+                            "children": Array [
+                              Object {
+                                "data": "Content tab 1",
+                                "next": null,
+                                "parent": [Circular],
+                                "prev": null,
+                                "type": "text",
+                              },
+                            ],
+                            "name": "div",
+                            "namespace": "http://www.w3.org/1999/xhtml",
+                            "next": [Circular],
+                            "parent": [Circular],
+                            "prev": Object {
+                              "attribs": Object {
+                                "role": "presentation",
+                                "style": "width:0;height:0;overflow:hidden;position:absolute",
+                                "tabindex": "0",
+                              },
+                              "children": Array [],
+                              "name": "div",
+                              "namespace": "http://www.w3.org/1999/xhtml",
+                              "next": [Circular],
+                              "parent": [Circular],
+                              "prev": null,
+                              "type": "tag",
+                              "x-attribsNamespace": Object {
+                                "role": undefined,
+                                "style": undefined,
+                                "tabindex": undefined,
+                              },
+                              "x-attribsPrefix": Object {
+                                "role": undefined,
+                                "style": undefined,
+                                "tabindex": undefined,
+                              },
+                            },
+                            "type": "tag",
+                            "x-attribsNamespace": Object {},
+                            "x-attribsPrefix": Object {},
+                          },
+                          "type": "tag",
+                          "x-attribsNamespace": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                          "x-attribsPrefix": Object {
+                            "role": undefined,
+                            "style": undefined,
+                            "tabindex": undefined,
+                          },
+                        },
+                      ],
                       "name": "div",
                       "namespace": "http://www.w3.org/1999/xhtml",
                       "next": [Circular],
@@ -10240,8 +12628,8 @@ initialize {
                                             Object {
                                               "attribs": Object {
                                                 "aria-disabled": "false",
-                                                "aria-selected": "false",
-                                                "class": " ant-tabs-tab",
+                                                "aria-selected": "true",
+                                                "class": "ant-tabs-tab-active ant-tabs-tab",
                                                 "role": "tab",
                                               },
                                               "children": Array [
@@ -10397,8 +12785,8 @@ initialize {
                                               "prev": Object {
                                                 "attribs": Object {
                                                   "aria-disabled": "false",
-                                                  "aria-selected": "false",
-                                                  "class": " ant-tabs-tab",
+                                                  "aria-selected": "true",
+                                                  "class": "ant-tabs-tab-active ant-tabs-tab",
                                                   "role": "tab",
                                                 },
                                                 "children": Array [
@@ -10486,8 +12874,8 @@ initialize {
                                                 "prev": Object {
                                                   "attribs": Object {
                                                     "aria-disabled": "false",
-                                                    "aria-selected": "false",
-                                                    "class": " ant-tabs-tab",
+                                                    "aria-selected": "true",
+                                                    "class": "ant-tabs-tab-active ant-tabs-tab",
                                                     "role": "tab",
                                                   },
                                                   "children": Array [
@@ -10588,8 +12976,8 @@ initialize {
                                               Object {
                                                 "attribs": Object {
                                                   "aria-disabled": "false",
-                                                  "aria-selected": "false",
-                                                  "class": " ant-tabs-tab",
+                                                  "aria-selected": "true",
+                                                  "class": "ant-tabs-tab-active ant-tabs-tab",
                                                   "role": "tab",
                                                 },
                                                 "children": Array [
@@ -10745,8 +13133,8 @@ initialize {
                                                 "prev": Object {
                                                   "attribs": Object {
                                                     "aria-disabled": "false",
-                                                    "aria-selected": "false",
-                                                    "class": " ant-tabs-tab",
+                                                    "aria-selected": "true",
+                                                    "class": "ant-tabs-tab-active ant-tabs-tab",
                                                     "role": "tab",
                                                   },
                                                   "children": Array [
@@ -10834,8 +13222,8 @@ initialize {
                                                   "prev": Object {
                                                     "attribs": Object {
                                                       "aria-disabled": "false",
-                                                      "aria-selected": "false",
-                                                      "class": " ant-tabs-tab",
+                                                      "aria-selected": "true",
+                                                      "class": "ant-tabs-tab-active ant-tabs-tab",
                                                       "role": "tab",
                                                     },
                                                     "children": Array [
@@ -11107,8 +13495,8 @@ initialize {
                                           Object {
                                             "attribs": Object {
                                               "aria-disabled": "false",
-                                              "aria-selected": "false",
-                                              "class": " ant-tabs-tab",
+                                              "aria-selected": "true",
+                                              "class": "ant-tabs-tab-active ant-tabs-tab",
                                               "role": "tab",
                                             },
                                             "children": Array [
@@ -11264,8 +13652,8 @@ initialize {
                                             "prev": Object {
                                               "attribs": Object {
                                                 "aria-disabled": "false",
-                                                "aria-selected": "false",
-                                                "class": " ant-tabs-tab",
+                                                "aria-selected": "true",
+                                                "class": "ant-tabs-tab-active ant-tabs-tab",
                                                 "role": "tab",
                                               },
                                               "children": Array [
@@ -11353,8 +13741,8 @@ initialize {
                                               "prev": Object {
                                                 "attribs": Object {
                                                   "aria-disabled": "false",
-                                                  "aria-selected": "false",
-                                                  "class": " ant-tabs-tab",
+                                                  "aria-selected": "true",
+                                                  "class": "ant-tabs-tab-active ant-tabs-tab",
                                                   "role": "tab",
                                                 },
                                                 "children": Array [
@@ -11455,8 +13843,8 @@ initialize {
                                             Object {
                                               "attribs": Object {
                                                 "aria-disabled": "false",
-                                                "aria-selected": "false",
-                                                "class": " ant-tabs-tab",
+                                                "aria-selected": "true",
+                                                "class": "ant-tabs-tab-active ant-tabs-tab",
                                                 "role": "tab",
                                               },
                                               "children": Array [
@@ -11612,8 +14000,8 @@ initialize {
                                               "prev": Object {
                                                 "attribs": Object {
                                                   "aria-disabled": "false",
-                                                  "aria-selected": "false",
-                                                  "class": " ant-tabs-tab",
+                                                  "aria-selected": "true",
+                                                  "class": "ant-tabs-tab-active ant-tabs-tab",
                                                   "role": "tab",
                                                 },
                                                 "children": Array [
@@ -11701,8 +14089,8 @@ initialize {
                                                 "prev": Object {
                                                   "attribs": Object {
                                                     "aria-disabled": "false",
-                                                    "aria-selected": "false",
-                                                    "class": " ant-tabs-tab",
+                                                    "aria-selected": "true",
+                                                    "class": "ant-tabs-tab-active ant-tabs-tab",
                                                     "role": "tab",
                                                   },
                                                   "children": Array [
@@ -11974,8 +14362,8 @@ initialize {
                                         Object {
                                           "attribs": Object {
                                             "aria-disabled": "false",
-                                            "aria-selected": "false",
-                                            "class": " ant-tabs-tab",
+                                            "aria-selected": "true",
+                                            "class": "ant-tabs-tab-active ant-tabs-tab",
                                             "role": "tab",
                                           },
                                           "children": Array [
@@ -12131,8 +14519,8 @@ initialize {
                                           "prev": Object {
                                             "attribs": Object {
                                               "aria-disabled": "false",
-                                              "aria-selected": "false",
-                                              "class": " ant-tabs-tab",
+                                              "aria-selected": "true",
+                                              "class": "ant-tabs-tab-active ant-tabs-tab",
                                               "role": "tab",
                                             },
                                             "children": Array [
@@ -12220,8 +14608,8 @@ initialize {
                                             "prev": Object {
                                               "attribs": Object {
                                                 "aria-disabled": "false",
-                                                "aria-selected": "false",
-                                                "class": " ant-tabs-tab",
+                                                "aria-selected": "true",
+                                                "class": "ant-tabs-tab-active ant-tabs-tab",
                                                 "role": "tab",
                                               },
                                               "children": Array [
@@ -12322,8 +14710,8 @@ initialize {
                                           Object {
                                             "attribs": Object {
                                               "aria-disabled": "false",
-                                              "aria-selected": "false",
-                                              "class": " ant-tabs-tab",
+                                              "aria-selected": "true",
+                                              "class": "ant-tabs-tab-active ant-tabs-tab",
                                               "role": "tab",
                                             },
                                             "children": Array [
@@ -12479,8 +14867,8 @@ initialize {
                                             "prev": Object {
                                               "attribs": Object {
                                                 "aria-disabled": "false",
-                                                "aria-selected": "false",
-                                                "class": " ant-tabs-tab",
+                                                "aria-selected": "true",
+                                                "class": "ant-tabs-tab-active ant-tabs-tab",
                                                 "role": "tab",
                                               },
                                               "children": Array [
@@ -12568,8 +14956,8 @@ initialize {
                                               "prev": Object {
                                                 "attribs": Object {
                                                   "aria-disabled": "false",
-                                                  "aria-selected": "false",
-                                                  "class": " ant-tabs-tab",
+                                                  "aria-selected": "true",
+                                                  "class": "ant-tabs-tab-active ant-tabs-tab",
                                                   "role": "tab",
                                                 },
                                                 "children": Array [

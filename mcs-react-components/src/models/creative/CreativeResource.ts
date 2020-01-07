@@ -1,4 +1,10 @@
-import { DisplayAdCreateRequest } from './CreativeResource';
+
+export interface DisplayAdCreateRequest extends GenericCreativeResource {
+  type: 'DISPLAY_AD';
+  format: string;
+  destination_domain: string;
+}
+
 export type CreativeType =
   'DISPLAY_AD' |
   'VIDEO_AD' |
@@ -63,12 +69,6 @@ export interface GenericCreativeResource {
   renderer_plugin_id: string;
   creation_date: string;
   subtype: CreativeSubtype;
-}
-
-export interface DisplayAdCreateRequest extends GenericCreativeResource {
-  type: 'DISPLAY_AD';
-  format: string;
-  destination_domain: string;
 }
 
 export interface DisplayAdResource extends DisplayAdCreateRequest {
