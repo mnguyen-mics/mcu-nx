@@ -27,11 +27,7 @@ exports[`renders the FormModalWrapper 1`] = `
   >
     <div
       className="submit-button"
-    >
-      <div>
-        This is the footer
-      </div>
-    </div>
+    />
   </div>
 </div>
 `;

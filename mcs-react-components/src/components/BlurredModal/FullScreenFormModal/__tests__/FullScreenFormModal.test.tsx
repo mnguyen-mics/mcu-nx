@@ -1,7 +1,9 @@
 import 'jest';
 import * as React from 'react';
 import * as TestRenderer from 'react-test-renderer';
-import FullScreenFormModal, { FullScreenFormModalProps } from '../FullScreenFormModal';
+import FullScreenFormModal, {
+  FullScreenFormModalProps,
+} from '../FullScreenFormModal';
 
 it('renders the FullScreenModal', () => {
   const props: FullScreenFormModalProps = {
@@ -9,9 +11,7 @@ it('renders the FullScreenModal', () => {
     blurred: true,
   };
 
-  const component = TestRenderer.create(
-        <FullScreenFormModal {...props} />
-  );
+  const component = TestRenderer.create(<FullScreenFormModal {...props} />);
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });

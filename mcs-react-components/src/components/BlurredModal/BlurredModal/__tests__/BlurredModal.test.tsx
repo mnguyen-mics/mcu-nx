@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as TestRenderer from 'react-test-renderer';
 import BlurredModal, { BlurredModalProps } from '../BlurredModal';
 
-const onClose = (e: any) => {
+const onClose = (e: React.MouseEvent) => {
     return ;
 }
 
@@ -12,7 +12,6 @@ it('renders the BlurredModal', () => {
     opened: false,
     blurred: true,
     formId: 'formID',
-    footer: <div>This is the footer</div>,
     onClose: onClose
   };
 
@@ -22,3 +21,4 @@ it('renders the BlurredModal', () => {
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
+
