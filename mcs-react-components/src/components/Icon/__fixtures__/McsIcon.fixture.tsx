@@ -68,6 +68,8 @@ const component = () => (
   </div>
 )
 
+component.displayName = "McsIcon";
+
 export default {
   component,
   props: {},

@@ -38,6 +38,8 @@ const component = (_props: CounterDashboardProps) => (
   </IntlProvider>
 );
 
+component.displayName = "CounterDashboard";
+
 export default {
   component,
   props,

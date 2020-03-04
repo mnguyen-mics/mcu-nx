@@ -32,6 +32,8 @@ const component = (_props: StackedBarPlotProps) => (
 	<StackedBarPlot {...props} />
 );
 
+component.displayName = "StackedBarPlot";
+
 export default {
   component,
   props,

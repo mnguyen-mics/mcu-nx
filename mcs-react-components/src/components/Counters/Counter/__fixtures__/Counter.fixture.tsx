@@ -14,6 +14,7 @@ const component = (_props: CounterProps) => (
     <Counter {..._props} />
   </IntlProvider>
 );
+component.displayName = "Counter";
 
 export default {
   component,

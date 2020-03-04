@@ -9,6 +9,8 @@ const props: ContentHeaderProps = {
 
 const component = (_props: ContentHeaderProps) => <ContentHeader {..._props} />;
 
+component.displayName = "ContentHeader";
+
 export default {
   component,
   props,

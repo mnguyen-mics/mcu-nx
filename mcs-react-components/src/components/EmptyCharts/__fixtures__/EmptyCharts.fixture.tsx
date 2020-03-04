@@ -8,6 +8,8 @@ const props: EmptyChartsProps = {
 
 const component = (_props: EmptyChartsProps) => <EmptyCharts {..._props} />;
 
+component.displayName = "EmptyCharts";
+
 export default {
   component,
   props,

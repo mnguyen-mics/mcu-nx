@@ -18,6 +18,8 @@ const component = (_props: InfiniteListProps) => (
   </IntlProvider>
 )
 
+component.displayName = "InfiniteList";
+
 export default {
   component,
   props,

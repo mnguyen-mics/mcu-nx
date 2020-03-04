@@ -16,6 +16,8 @@ const component = (_props: StandardModalProps) => (
   </StandardModal>
 );
 
+component.displayName = "StandardModal";
+
 export default {
   component,
   props,

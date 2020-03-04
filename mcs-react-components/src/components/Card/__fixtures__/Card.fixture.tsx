@@ -13,6 +13,8 @@ const component = (_props: CardProps) => (
   </Card>
 );
 
+component.displayName = "Card";
+
 export default {
   component,
   props,

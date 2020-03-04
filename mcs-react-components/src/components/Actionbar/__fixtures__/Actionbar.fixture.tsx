@@ -23,6 +23,8 @@ const component = (_props: ActionbarProps) => (
   </IntlProvider>
 );
 
+component.displayName = "ActionBar";
+
 export default {
   component,
   props,

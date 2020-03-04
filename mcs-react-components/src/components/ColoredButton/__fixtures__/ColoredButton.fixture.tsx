@@ -12,6 +12,8 @@ const component = (_props: ColoredButtonProps) => (
   <ColoredButton {..._props}>Save</ColoredButton>
 );
 
+component.displayName = "ColoredButton";
+
 export default {
   component,
   props,

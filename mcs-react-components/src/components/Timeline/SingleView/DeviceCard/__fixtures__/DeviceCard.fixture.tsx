@@ -24,6 +24,8 @@ const component = (_props: DeviceCardProps) => (
   </IntlProvider>
 );
 
+component.displayName = "DeviceCard";
+
 export default {
   component,
   props,

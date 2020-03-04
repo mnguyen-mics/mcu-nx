@@ -32,6 +32,8 @@ const component = (_props: StackedAreaPlotProps) => (
   <StackedAreaPlot {...props} />
 );
 
+component.displayName = "StackedAreaPlot";
+
 export default {
   component,
   props,

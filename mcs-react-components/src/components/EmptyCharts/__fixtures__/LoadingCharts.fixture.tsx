@@ -7,6 +7,8 @@ const props: LoadingChartProps = {
 
 const component = (_props: LoadingChartProps) => <LoadingChart {..._props} />;
 
+component.displayName = "LoadingChart";
+
 export default {
   component,
   props,

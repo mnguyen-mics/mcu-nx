@@ -24,6 +24,8 @@ const component = (_props: ProfileInfoProps) => (
   </IntlProvider>
 );
 
+component.displayName = "ProfileInfo";
+
 export default {
   component,
   props,
