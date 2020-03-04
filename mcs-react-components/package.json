@@ -11,10 +11,9 @@
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
     "lint:fix": "tslint --fix -c tslint.json \"src/**/*.ts\"",
     "build": "rimraf lib && npm run lint && npm run test && rollup -c && node scripts/copy-style.js",
-    "prepare": "rimraf lib && npm run lint && npm run test && rollup -c && node scripts/copy-style.js",
+    "prepare": "rimraf lib && npm run lint && rollup -c && node scripts/copy-style.js",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
     "test:updateSnapshot": "jest --updateSnapshot",
     "cosmos": "cosmos",
     "cosmos:export": "cosmos-export"
