@@ -7,11 +7,9 @@ exports[`renders the UserScenarioActivityCard 1`] = `
 >
   <div
     className="ant-row mcs-card-header"
-    style={Object {}}
   >
     <div
-      className="ant-col ant-col-24"
-      style={Object {}}
+      className="ant-col-24"
     >
       <span
         className="mcs-card-title"
@@ -26,7 +24,6 @@ exports[`renders the UserScenarioActivityCard 1`] = `
   >
     <div
       className="ant-row"
-      style={Object {}}
     >
       <div
         className="mcs-card-content-text"
@@ -36,7 +33,6 @@ exports[`renders the UserScenarioActivityCard 1`] = `
     </div>
     <div
       className="ant-row border-top sm-footer timed-footer text-right"
-      style={Object {}}
     >
       2019–11–13T12:34:56+00:00
     </div>

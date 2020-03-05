@@ -3,17 +3,14 @@
 exports[`renders the EventActivity 1`] = `
 <div
   className="ant-row section border-top"
-  style={Object {}}
 >
   <div
-    className="ant-col ant-col-5 section-ts"
-    style={Object {}}
+    className="ant-col-5 section-ts"
   >
     2019–11–13T12:34:56+00:00
   </div>
   <div
-    className="ant-col ant-col-19"
-    style={Object {}}
+    className="ant-col-19"
   >
     <div
       className="section-title"

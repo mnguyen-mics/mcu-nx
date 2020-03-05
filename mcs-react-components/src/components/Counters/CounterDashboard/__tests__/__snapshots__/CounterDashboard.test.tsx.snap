@@ -6,11 +6,9 @@ exports[`renders the Counter 1`] = `
 >
   <div
     className="ant-row"
-    style={Object {}}
   >
     <div
-      className="ant-col ant-col-6 border-right"
-      style={Object {}}
+      className="ant-col-6 border-right"
     >
       <div
         className="counter"
@@ -37,8 +35,7 @@ exports[`renders the Counter 1`] = `
       </div>
     </div>
     <div
-      className="ant-col ant-col-6 border-right"
-      style={Object {}}
+      className="ant-col-6 border-right"
     >
       <div
         className="counter"
@@ -64,26 +61,17 @@ exports[`renders the Counter 1`] = `
             <span
               className="ant-spin-dot ant-spin-dot-spin"
             >
-              <i
-                className="ant-spin-dot-item"
-              />
-              <i
-                className="ant-spin-dot-item"
-              />
-              <i
-                className="ant-spin-dot-item"
-              />
-              <i
-                className="ant-spin-dot-item"
-              />
+              <i />
+              <i />
+              <i />
+              <i />
             </span>
           </div>
         </div>
       </div>
     </div>
     <div
-      className="ant-col ant-col-6 border-right"
-      style={Object {}}
+      className="ant-col-6 border-right"
     >
       <div
         className="counter"
@@ -110,8 +98,7 @@ exports[`renders the Counter 1`] = `
       </div>
     </div>
     <div
-      className="ant-col ant-col-6"
-      style={Object {}}
+      className="ant-col-6"
     >
       <div
         className="counter"
@@ -137,18 +124,10 @@ exports[`renders the Counter 1`] = `
             <span
               className="ant-spin-dot ant-spin-dot-spin"
             >
-              <i
-                className="ant-spin-dot-item"
-              />
-              <i
-                className="ant-spin-dot-item"
-              />
-              <i
-                className="ant-spin-dot-item"
-              />
-              <i
-                className="ant-spin-dot-item"
-              />
+              <i />
+              <i />
+              <i />
+              <i />
             </span>
           </div>
         </div>

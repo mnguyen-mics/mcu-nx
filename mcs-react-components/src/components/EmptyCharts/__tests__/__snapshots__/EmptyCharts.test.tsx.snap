@@ -3,11 +3,9 @@
 exports[`Should render the EmptyChart 1`] = `
 <div
   className="ant-row mcs-card-no-data"
-  style={Object {}}
 >
   <div
-    className="ant-col ant-col-24"
-    style={Object {}}
+    className="ant-col-24"
   >
     <span
       className="icon "
@@ -18,8 +16,7 @@ exports[`Should render the EmptyChart 1`] = `
     </span>
   </div>
   <div
-    className="ant-col ant-col-24"
-    style={Object {}}
+    className="ant-col-24"
   >
     There is no automation to display.
   </div>

@@ -3,11 +3,9 @@
 exports[`Should render the LoadingChart 1`] = `
 <div
   className="ant-row mcs-card-no-data test"
-  style={Object {}}
 >
   <div
-    className="ant-col ant-col-24"
-    style={Object {}}
+    className="ant-col-24"
   >
     <div
       className="ant-spin ant-spin-lg ant-spin-spinning"
@@ -15,18 +13,10 @@ exports[`Should render the LoadingChart 1`] = `
       <span
         className="ant-spin-dot ant-spin-dot-spin"
       >
-        <i
-          className="ant-spin-dot-item"
-        />
-        <i
-          className="ant-spin-dot-item"
-        />
-        <i
-          className="ant-spin-dot-item"
-        />
-        <i
-          className="ant-spin-dot-item"
-        />
+        <i />
+        <i />
+        <i />
+        <i />
       </span>
     </div>
   </div>

@@ -11,7 +11,7 @@
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
     "lint:fix": "tslint --fix -c tslint.json \"src/**/*.ts\"",
     "build": "rimraf lib && npm run lint && npm run test && rollup -c && node scripts/copy-style.js",
-    "prepare": "rimraf lib && npm run lint && rollup -c && node scripts/copy-style.js",
+    "prepublishOnly": "rimraf lib && npm run lint && npm run test && rollup -c && node scripts/copy-style.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:updateSnapshot": "jest --updateSnapshot",
@@ -21,7 +21,7 @@
   "dependencies": {
     "@types/numeral": "0.0.25",
     "@types/react-syntax-highlighter": "^10.1.0",
-    "antd": "^3.11.2",
+    "antd": "3.13.2",
     "cuid": "^2.1.4",
     "moment": "^2.22.2",
     "numeral": "^2.0.6",

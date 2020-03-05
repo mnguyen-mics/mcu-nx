@@ -7,11 +7,9 @@ exports[`renders the Card 1`] = `
 >
   <div
     className="ant-row mcs-card-header"
-    style={Object {}}
   >
     <div
-      className="ant-col ant-col-24"
-      style={Object {}}
+      className="ant-col-24"
     >
       <span
         className="mcs-card-title"
@@ -21,15 +19,15 @@ exports[`renders the Card 1`] = `
       <span
         className="mcs-card-button"
       >
-        <button
+        <a
           className="ant-btn ant-btn-primary"
+          href=""
           onClick={[Function]}
-          type="button"
         >
           <span>
             Test
           </span>
-        </button>
+        </a>
       </span>
     </div>
   </div>

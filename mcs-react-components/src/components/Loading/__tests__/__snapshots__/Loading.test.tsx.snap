@@ -10,18 +10,10 @@ exports[`renders the ColoredButton 1`] = `
     <span
       className="ant-spin-dot ant-spin-dot-spin"
     >
-      <i
-        className="ant-spin-dot-item"
-      />
-      <i
-        className="ant-spin-dot-item"
-      />
-      <i
-        className="ant-spin-dot-item"
-      />
-      <i
-        className="ant-spin-dot-item"
-      />
+      <i />
+      <i />
+      <i />
+      <i />
     </span>
   </div>
 </div>
