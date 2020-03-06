@@ -67,6 +67,8 @@ const component = (_props: CombinedTableViewProps) => (
   </IntlProvider>
 );
 
+component.displayName = "TableView";
+
 export default {
   component,
   props,

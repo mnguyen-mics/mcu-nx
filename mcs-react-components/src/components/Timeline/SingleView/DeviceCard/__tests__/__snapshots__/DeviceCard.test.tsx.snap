@@ -7,11 +7,9 @@ exports[`renders the DeviceCard 1`] = `
 >
   <div
     className="ant-row mcs-card-header"
-    style={Object {}}
   >
     <div
-      className="ant-col ant-col-24"
-      style={Object {}}
+      className="ant-col-24"
     >
       <span
         className="mcs-card-title"
@@ -25,8 +23,7 @@ exports[`renders the DeviceCard 1`] = `
     style={Object {}}
   >
     <div
-      className="ant-col ant-col-24 text-center"
-      style={Object {}}
+      className="ant-col-24 text-center"
     >
       <div
         className="ant-spin ant-spin-spinning"
@@ -34,18 +31,10 @@ exports[`renders the DeviceCard 1`] = `
         <span
           className="ant-spin-dot ant-spin-dot-spin"
         >
-          <i
-            className="ant-spin-dot-item"
-          />
-          <i
-            className="ant-spin-dot-item"
-          />
-          <i
-            className="ant-spin-dot-item"
-          />
-          <i
-            className="ant-spin-dot-item"
-          />
+          <i />
+          <i />
+          <i />
+          <i />
         </span>
       </div>
     </div>

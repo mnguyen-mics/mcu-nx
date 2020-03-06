@@ -34,6 +34,8 @@ const component = (_props: EventActivityProps) => (
   </IntlProvider>
 );
 
+component.displayName = "EventActivity";
+
 export default {
   component,
   props,

@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import Card, { CardProps } from '../Card';
 
 const props: CardProps = {
-  buttons: <Button type="primary">Test</Button>,
+  buttons: <Button type="primary" href="">Test</Button>,
   title: 'Title',
 };
 
@@ -12,6 +12,8 @@ const component = (_props: CardProps) => (
     <div>Content</div>
   </Card>
 );
+
+component.displayName = "Card";
 
 export default {
   component,

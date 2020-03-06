@@ -31,6 +31,8 @@ const component = (_props: McTabsProps) => (
   </IntlProvider>
 );
 
+component.displayName = "McsTabs";
+
 export default {
   component,
   props,

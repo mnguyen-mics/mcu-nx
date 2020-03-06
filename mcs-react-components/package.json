@@ -7,10 +7,21 @@
   ],
   "types": "lib/index.d.ts",
   "version": "0.1.0",
+  "scripts": {
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "lint:fix": "tslint --fix -c tslint.json \"src/**/*.ts\"",
+    "build": "rimraf lib && npm run lint && npm run test && rollup -c && node scripts/copy-style.js",
+    "prepublishOnly": "rimraf lib && npm run lint && npm run test && rollup -c && node scripts/copy-style.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:updateSnapshot": "jest --updateSnapshot",
+    "cosmos": "cosmos",
+    "cosmos:export": "cosmos-export"
+  },
   "dependencies": {
     "@types/numeral": "0.0.25",
     "@types/react-syntax-highlighter": "^10.1.0",
-    "antd": "^3.11.2",
+    "antd": "3.13.2",
     "cuid": "^2.1.4",
     "moment": "^2.22.2",
     "numeral": "^2.0.6",
@@ -21,7 +32,9 @@
     "react-map-gl": "^3.3.9",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "recompose": "^0.30.0"
+    "recompose": "^0.30.0",
+    "highcharts": "^7.1.2",
+    "highcharts-react-official": "^2.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",
@@ -68,18 +81,6 @@
   },
   "engines": {
     "node": ">=8.6.0"
-  },
-  "scripts": {
-    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
-    "lint:fix": "tslint --fix -c tslint.json \"src/**/*.ts\"",
-    "build": "rimraf lib && npm run lint && npm run test && rollup -c && node scripts/copy-style.js",
-    "prepare": "rimraf lib && npm run lint && npm run test && rollup -c && node scripts/copy-style.js",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "test:updateSnapshot": "jest --updateSnapshot",
-    "cosmos": "cosmos",
-    "cosmos:export": "cosmos-export"
   },
   "publishConfig": {
     "registry": "https://sf-npm.mediarithmics.com/repository/npm-mics/"

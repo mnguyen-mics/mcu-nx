@@ -32,6 +32,8 @@ const component = (_props: OriginComponentProps) => (
   </IntlProvider>
 );
 
+component.displayName = "Origin";
+
 export default {
   component,
   props,

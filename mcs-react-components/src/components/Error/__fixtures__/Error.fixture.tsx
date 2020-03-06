@@ -9,6 +9,8 @@ const component = (_props: ErrorProps) => (
   <Error {..._props} />
 );
 
+component.displayName = "Error";
+
 export default {
   component,
   props,

@@ -18,6 +18,8 @@ const props: DeviceProps = {
 
 const component = (_props: DeviceProps) => <Device {..._props} />;
 
+component.displayName = "Device";
+
 export default {
   component,
   props,

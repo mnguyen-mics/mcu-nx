@@ -6,7 +6,7 @@ import Card, { CardProps } from '../Card';
 
 it('renders the Card', () => {
   const props: CardProps = {
-    buttons: <Button type="primary">Test</Button>,
+    buttons: <Button type="primary" href="">Test</Button>,
     title: 'Title',
   };
   const component = TestRenderer.create(

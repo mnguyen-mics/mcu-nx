@@ -16,12 +16,14 @@ const component = (_props: ActionbarProps) => (
     <MemoryRouter>
       <Actionbar {..._props}>
         <div>
-          <Button type="primary">Save</Button>
+          <Button type="primary" href="">Save</Button>
         </div>
       </Actionbar>
     </MemoryRouter>
   </IntlProvider>
 );
+
+component.displayName = "ActionBar";
 
 export default {
   component,

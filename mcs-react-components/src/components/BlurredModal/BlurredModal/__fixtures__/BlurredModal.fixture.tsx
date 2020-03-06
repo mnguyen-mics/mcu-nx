@@ -19,6 +19,9 @@ const component = (_props: BlurredModalProps) => (
         </div>
     </BlurredModal>
 );
+
+component.displayName = "BlurredModal";
+
 export default {
   component,
   props,

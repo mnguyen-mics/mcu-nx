@@ -45,6 +45,8 @@ const component = (_props: UserScenarioActivityCardProps) => (
   </IntlProvider>
 );
 
+component.displayName = "UserScenarioActivityCard";
+
 export default {
   component,
   props,
