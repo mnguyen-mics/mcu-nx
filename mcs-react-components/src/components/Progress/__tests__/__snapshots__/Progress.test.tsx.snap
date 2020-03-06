@@ -39,8 +39,8 @@ initialize {
                   "children": Array [
                     Object {
                       "attribs": Object {
-                        "class": "mcs-progress-bg success",
-                        "style": "width:25%;height:5px",
+                        "class": "mcs-progress-bg warning",
+                        "style": "width:66%;height:5px",
                       },
                       "children": Array [],
                       "name": "div",
@@ -127,8 +127,8 @@ initialize {
                 "children": Array [
                   Object {
                     "attribs": Object {
-                      "class": "mcs-progress-bg success",
-                      "style": "width:25%;height:5px",
+                      "class": "mcs-progress-bg warning",
+                      "style": "width:66%;height:5px",
                     },
                     "children": Array [],
                     "name": "div",
