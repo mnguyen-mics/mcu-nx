@@ -16,4 +16,3 @@ export { default as PiePlot } from './components/Charts/CategoryBasedCharts/PieP
 export { default as StackedBarPlot } from './components/Charts/CategoryBasedCharts/StackedBarPlot';
 export { default as DoubleStackedAreaPlot } from './components/Charts/TimeBasedCharts/DoubleStackedAreaPlot';
 export { default as StackedAreaPlot } from './components/Charts/TimeBasedCharts/StackedAreaPlot';
-

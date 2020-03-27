@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { compose } from 'recompose';
-import { generateTooltip, BASE_CHART_HEIGHT } from '../../domain';
+import { generateTooltip, BASE_CHART_HEIGHT } from '../../utils';
 
 export interface DatasetProps {
   key: string;

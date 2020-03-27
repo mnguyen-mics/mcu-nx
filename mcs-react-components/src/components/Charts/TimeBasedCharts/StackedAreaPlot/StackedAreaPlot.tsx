@@ -10,7 +10,7 @@ import {
   generateTooltip,
   BASE_CHART_HEIGHT,
   OnDragEnd,
-} from '../../domain';
+} from '../../utils';
 
 export interface StackedAreaPlotProps {
   dataset: Dataset;

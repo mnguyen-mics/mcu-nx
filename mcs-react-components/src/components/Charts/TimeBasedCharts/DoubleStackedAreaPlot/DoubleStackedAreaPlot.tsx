@@ -11,7 +11,7 @@ import {
   BASE_CHART_HEIGHT,
   OnDragEnd,
   generateDraggable,
-} from '../../domain';
+} from '../../utils';
 
 export interface DoubleStackedAreaPlotProps {
   dataset: Dataset;
