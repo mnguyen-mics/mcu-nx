@@ -10,6 +10,8 @@ const component = (_props: ProgressProps) => (
   <Progress {...props}/>
 );
 
+component.displayName =  'Progress';
+
 export default {
   component,
   props,
