@@ -1,8 +1,7 @@
 const path = require('path');
-var glob = require("glob");
+const glob = require("glob");
 
 module.exports = {
-	mode: 'production',
   entry: 	glob.sync('./src/index.ts'),
   output: {
     path: path.resolve(__dirname, 'lib'),
