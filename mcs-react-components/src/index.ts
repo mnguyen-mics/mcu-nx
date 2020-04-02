@@ -11,7 +11,7 @@ export { default as Loading } from './components/loading';
 export { default as McsIcon } from './components/icon';
 export { default as InfiniteList } from './components/infinite-list';
 export { default as McsTabs } from './components/mcs-tabs';
-export { default as Table } from './components/table';
+export { default as Table } from './components/table-view';
 export { default as PiePlot } from './components/charts/category-based-charts/pie-plot';
 export { default as StackedBarPlot } from './components/charts/category-based-charts/stacked-bar-plot';
 export { default as DoubleStackedAreaPlot } from './components/charts/time-based-charts/double-stacked-area-plot';
