@@ -31,13 +31,16 @@ Getting started
 `@mediarithmics-private:registry=https://sf-npm.mediarithmics.com/repository/npm-mics/`
 * `npm install @mediarithmics-private/mcs-components-library`
 * `'import { InfiniteList } from '@mediarithmics-private/mcs-components-library';` Import a component form library index main entry point
-* `import { InfiniteListFilters } from '@mediarithmics-private/mcs-components-library/lib/components/InfiniteList';` Import utilities/types exposed in the component itself
+* `import { InfiniteListFilters } from '@mediarithmics-private/mcs-components-library/lib/components/infinite-list';` Import utilities/types exposed in the component itself
 
 Developping and testing in Navigator
 ---------------
 
 * `cd ~/dev/ux-components/mcs-react-components` go into the library directory
 * `npm build` build library
+* To build the library you have two options:
+  * `npm run build` build in production mode
+  * `npm run watch` build in development mode with a watcher
 * `npm link` creates global link
 * `cd ~/dev/mediarithmics-navigator` go into the navigator directory
 * `npm link @mediarithmics-private/mcs-components-library` link-install the package
