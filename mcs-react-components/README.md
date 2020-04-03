@@ -38,7 +38,7 @@ Developping and testing in Navigator
 
 * `cd ~/dev/ux-components/mcs-react-components` go into the library directory
 * `npm build` build library
-* To build the library you have to options:
+* To build the library you have two options:
   * `npm run build` build in production mode
   * `npm run watch` build in development mode with a watcher
 * `npm link` creates global link

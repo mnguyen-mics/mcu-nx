@@ -16,7 +16,7 @@
     "test:updateSnapshot": "jest --updateSnapshot",
     "cosmos": "cosmos",
     "cosmos:export": "cosmos-export",
-    "watch": "webpack --watch --info-verbosity verbose --config webpack.dev.js"
+    "dev:watch": "webpack --watch --info-verbosity verbose --config webpack.dev.js"
   },
   "dependencies": {
     "@types/numeral": "0.0.25",
