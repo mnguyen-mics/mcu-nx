@@ -1,0 +1,59 @@
+.mcs-menu-presentational {
+  display: flex;
+  align-items: stretch;
+  background-color: #ffffff;
+  border: @border-width-base @border-style-base @border-color-base;
+  border-radius: @border-radius-sm @border-radius-sm;
+  flex-basis: calc(45%);
+  cursor: pointer;
+
+  &:before {
+    content: '';
+    float: left;
+    padding-top: 100%;
+  }
+
+  &:hover {
+    background-color: @hover-color;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    background-color: @btn-disable-bg;
+    border-color: @btn-disable-border;
+    color: @btn-disable-color;
+    cursor: initial;
+
+    .content {
+      .subtitle {
+        color: @error-color;
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    flex-direction: column;
+    .icon {
+      font-size: 10em;
+    }
+    .title {
+      padding-top: 10px;
+      font-size: 1.1em;
+      font-weight: bold;
+      letter-spacing: 0.4px;
+    }
+    .subtitle {
+      font-size: 1em;
+      letter-spacing: 0.4px;
+      color: @text-color-secondary;
+    }
+  }
+}

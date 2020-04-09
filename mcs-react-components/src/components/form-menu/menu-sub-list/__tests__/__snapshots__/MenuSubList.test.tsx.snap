@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the MenuSubList 1`] = `
+<div
+  className="mcs-menu-sub-list"
+>
+  <button
+    className="menu-item"
+    onClick={[Function]}
+  >
+    <div
+      className="content"
+    >
+      <div
+        className="title"
+      >
+        Title
+      </div>
+      <div
+        className="subtitles"
+      >
+        subtitle_1, 
+        subtitle_2
+      </div>
+    </div>
+    <div
+      className="selector"
+    >
+      <span
+        className="icon "
+      >
+        <i
+          className="mcs-plus"
+        />
+      </span>
+    </div>
+  </button>
+</div>
+`;
+
+exports[`renders the MenuSubList with submenu 1`] = `
+<div
+  className="mcs-menu-sub-list"
+>
+  <button
+    className="menu-item opened"
+    onClick={[Function]}
+  >
+    <div
+      className="content"
+    >
+      <div
+        className="title"
+      >
+        Title
+      </div>
+      <div
+        className="subtitles"
+      >
+        subtitle_1, 
+        subtitle_2
+      </div>
+    </div>
+    <div
+      className="selector"
+    >
+      <span
+        className="icon "
+      >
+        <i
+          className="mcs-minus"
+        />
+      </span>
+    </div>
+  </button>
+  <div>
+    <button
+      className="menu-item small"
+      onClick={[Function]}
+    >
+      <div
+        className="content alone small"
+      >
+        <div
+          className="subtitles"
+        >
+          submenu_1
+        </div>
+      </div>
+      <div
+        className="selector"
+      >
+        <span
+          className="icon "
+        >
+          <i
+            className="mcs-chevron-right"
+          />
+        </span>
+      </div>
+    </button>
+  </div>
+</div>
+`;
