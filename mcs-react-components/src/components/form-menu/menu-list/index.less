@@ -18,6 +18,19 @@
     &:hover {
       background-color: #ebeff2;
     }
+    
+    &:disabled {
+      background-color: @btn-disable-bg;
+      border-color: @btn-disable-border;
+      color: @btn-disable-color;
+      cursor: initial;
+  
+      .content {
+        .subtitles {
+          color: @error-color;
+        }
+      }
+    }
 
     &:focus {
       outline: none;
