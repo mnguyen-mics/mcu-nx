@@ -7,13 +7,14 @@ export interface MenuListProps {
   icon_path?: string;
   subtitles?: string[];
   select: React.FormEventHandler<any>;
+  disabled?: boolean;
 }
 
-const MenuList: React.SFC<MenuListProps> = ({ title, icon_path, subtitles, select }) => {
+const MenuList: React.SFC<MenuListProps> = ({ title, icon_path, subtitles, select, disabled }) => {
 
   return (
     <div className="mcs-menu-list">
-      <button className="menu-item" onClick={select}>
+      <button className="menu-item" onClick={select} disabled={disabled}>
         <div className={subtitles ? 'content' : 'content alone'}>
           {icon_path ? <img className="image-title" src={icon_path} /> : undefined}
           <div>
