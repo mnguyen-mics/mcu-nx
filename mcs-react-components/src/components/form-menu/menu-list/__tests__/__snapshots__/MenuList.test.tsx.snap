@@ -1,41 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders the MenuList 1`] = `
-<div
+<button
   className="mcs-menu-list"
+  onClick={[Function]}
 >
-  <button
-    className="menu-item"
-    onClick={[Function]}
+  <div
+    className="mcs-menu-list-content"
   >
-    <div
-      className="content"
-    >
-      <div>
-        <div
-          className="title"
-        >
-          Title
-        </div>
-        <div
-          className="subtitles"
-        >
-          subtitle_1, 
-          subtitle_2
-        </div>
+    <div>
+      <div
+        className="mcs-menu-list-content-title"
+      >
+        Title
+      </div>
+      <div
+        className="mcs-menu-list-content-subtitles"
+      >
+        subtitle_1, 
+        subtitle_2
       </div>
     </div>
-    <div
-      className="selector"
+  </div>
+  <div
+    className="mcs-menu-list-selector"
+  >
+    <span
+      className="icon "
     >
-      <span
-        className="icon "
-      >
-        <i
-          className="mcs-chevron-right"
-        />
-      </span>
-    </div>
-  </button>
-</div>
+      <i
+        className="mcs-chevron-right"
+      />
+    </span>
+  </div>
+</button>
 `;
