@@ -1,4 +1,4 @@
 module.exports = {
-  webpackConfigPath: 'webpack.prod.js',
+  webpackConfigPath: 'webpack.cosmos.js',
   globalImports: ['./utils/cosmos/style/index.less'],
 };

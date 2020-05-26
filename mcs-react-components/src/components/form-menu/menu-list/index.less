@@ -1,75 +1,72 @@
 
-.mcs-menu-list {
+@import '../../../style/theme.less';
+
+@menu-list-prefix-cls: ~'@{mcs-prefix}-menu-list';
+
+.@{menu-list-prefix-cls} {
   overflow: hidden;
+  width: 100%;
+  text-align: left;
+  background-color: #ffffff;
+  border: @border-width-base @border-style-base @border-color-base;
+  display: flex;
+  align-items: center;
+  align-content: space-between;
+  flex-flow: row wrap;
+  justify-content: space-between;
   cursor: pointer;
 
-  .menu-item {
-    width: 100%;
-    text-align: left;
-    background-color: #ffffff;
-    border: @border-width-base @border-style-base @border-color-base;
-    display: flex;
-    align-items: center;
-    align-content: space-between;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    cursor: pointer;
+  &-selector {
+    padding: 0 20px 0 0;
+    flex: 0;
+  }
 
-    &:hover {
-      background-color: #ebeff2;
+  &-image-title {
+    margin: 0 10px 0 0;
+    width: 37px;
+    height: 37px;
+    float: left;
+  }
+
+  &-content {
+    padding: 20px 0 20px 50px;
+    flex-grow: 1;
+    flex: 1;
+    -webkit-flex-grmenu-sublistow: 1;
+    &-title {
+      font-size: 1.1em;
+      font-weight: bold;
+      letter-spacing: 0.4px;
     }
-    
-    &:disabled {
-      background-color: @btn-disable-bg;
-      border-color: @btn-disable-border;
-      color: @btn-disable-color;
-      cursor: initial;
+    &-subtitle {
+      font-size: 1em;
+      letter-spacing: 0.4px;
+      color: @text-color-secondary;
+    }
+  }
+
+  &-content.alone {
+    padding: 29px 0 29px 50px;
+  }
+
+  &:hover {
+    background-color: #ebeff2;
+  }
   
-      .content {
-        .subtitles {
-          color: @error-color;
-        }
-      }
-    }
+  &:disabled {
+    background-color: @btn-disable-bg;
+    border-color: @btn-disable-border;
+    color: @btn-disable-color;
+    cursor: initial;
 
-    &:focus {
-      outline: none;
+    .@{menu-list-prefix-cls}-content {
+      &-subtitles {
+        color: @error-color;
+      }
     }
+  }
 
-    .selector {
-      padding: 0 20px 0 0;
-      flex: 0;
-    }
-    .image-title {
-      margin: 0 10px 0 0;
-      width: 37px;
-      height: 37px;
-      float: left;
-    }
-    .content {
-      padding: 20px 0 20px 50px;
-      flex-grow: 1;
-      flex: 1;
-      -webkit-flex-grmenu-sublistow: 1;
-      .title {
-        font-size: 1.1em;
-        font-weight: bold;
-        letter-spacing: 0.4px;
-      }
-      .subtitle {
-        font-size: 1em;
-        letter-spacing: 0.4px;
-        color: @text-color-secondary;
-      }
-    }
-    .content.alone {
-      padding: 29px 0 29px 50px;
-    }
-    .content.alone.small {
-      padding: 12px 0 12px 50px;
-    }
-    .clearfix {
-      width: 100%;
-    }
+  &:focus {
+    outline: none;
   }
 }
