@@ -5,7 +5,7 @@ import { compose } from 'recompose';
 import { Link } from 'react-router-dom';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import Breadcrumb, { BreadcrumbProps } from 'antd/lib/breadcrumb';
-import McsIcon from '../icon';
+import McsIcon from '../mcs-icon';
 
 const BreadcrumbItem = Breadcrumb.Item;
 const cuid = cuid_;

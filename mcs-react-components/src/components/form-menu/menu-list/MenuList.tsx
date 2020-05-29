@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import McsIcon from '../../icon/McsIcon';
+import McsIcon from '../../mcs-icon';
 
 export interface MenuListProps {
   title: string;

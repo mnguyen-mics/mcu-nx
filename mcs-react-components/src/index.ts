@@ -7,7 +7,7 @@ export { default as Counter } from './components/counters';
 export { default as CounterDashboard } from './components/counters';
 export { default as Error } from './components/error';
 export { default as Loading } from './components/loading';
-export { default as McsIcon } from './components/icon';
+export { default as McsIcon } from './components/mcs-icon';
 export { default as InfiniteList } from './components/infinite-list';
 export { default as McsTabs } from './components/mcs-tabs';
 export { default as Table } from './components/table-view';

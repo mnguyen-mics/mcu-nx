@@ -1,5 +1,5 @@
 import * as React from 'react';
-import McsIcon, { McsIconType } from '../../icon';
+import McsIcon, { McsIconType } from '../../mcs-icon';
 import { Spin } from 'antd';
 import { FormattedNumber } from 'react-intl';
 

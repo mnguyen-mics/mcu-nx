@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Row, Col } from 'antd';
 
-import McsIcon, { McsIconType } from '../icon';
+import McsIcon, { McsIconType } from '../mcs-icon';
 
 export interface EmptyChartsProps {
   title: React.ReactNode;

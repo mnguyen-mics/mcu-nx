@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Row, Col, Icon } from 'antd';
-import McsIcon from '../../../icon';
+import McsIcon from '../../../mcs-icon';
 import { FormFactor } from '../../../../models/timeline/timeline';
 
 export interface Device {

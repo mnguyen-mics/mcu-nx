@@ -5,7 +5,7 @@ import { Menu, Table, Dropdown } from 'antd';
 import { TableProps, ColumnProps, TableRowSelection } from 'antd/lib/table';
 import { PaginationProps } from 'antd/lib/pagination/Pagination';
 import { ClickParam } from 'antd/lib/menu';
-import McsIcon from '../icon';
+import McsIcon from '../mcs-icon';
 // import SelectionNotifyer from './SelectionNotifyer';
 
 const DEFAULT_PAGINATION_OPTION = {
