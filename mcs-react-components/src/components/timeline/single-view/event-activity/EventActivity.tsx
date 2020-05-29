@@ -10,7 +10,7 @@ import {
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/styles/hljs';
 import McsIcon from '../../../icon';
-import ButtonStyleless from '../../../button-styless';
+import ButtonStyleless from '../../../button-styleless';
 import {
   UserActivityEventResource,
   AnyJson,
