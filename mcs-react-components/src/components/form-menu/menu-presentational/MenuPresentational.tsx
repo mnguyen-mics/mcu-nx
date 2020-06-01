@@ -1,5 +1,5 @@
 import * as React from 'react';
-import McsIcon, { McsIconType } from '../../icon/McsIcon';
+import McsIcon, { McsIconType } from '../../mcs-icon';
 
 export interface MenuPresentationalProps {
   title: string;

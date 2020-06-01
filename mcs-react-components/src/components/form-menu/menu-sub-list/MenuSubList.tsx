@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as cuid from 'cuid';
 import { Spin } from 'antd';
 import { FormattedMessage } from 'react-intl';
-import McsIcon from '../../icon/McsIcon';
+import McsIcon from '../../mcs-icon';
 
 export interface SubMenu {
   title: string;
