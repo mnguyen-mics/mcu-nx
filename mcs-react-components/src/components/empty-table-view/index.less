@@ -1,0 +1,33 @@
+@import './../../style/theme.less';
+
+@empty-table-view-prefix-cls: ~'@{mcs-prefix}-empty-table-view';
+
+.@{empty-table-view-prefix-cls} {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: inherit;
+
+  .@{empty-table-view-prefix-cls}-content {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: #9c9c9c;
+    .@{empty-table-view-prefix-cls}-logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50px;
+      background-color: #d8d8d8;
+      color: #fff;
+      line-height: 100px;
+      font-size: 3.5em;
+      display: table;
+      margin: 0 auto 10px;
+      .icon {
+        display: table-cell;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
