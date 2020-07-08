@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should display an empty table view default values 1`] = `
+<div
+  className="mcs-aligner"
+>
+  <div
+    className="ant-col-24 mcs-table-view-empty"
+  >
+    <div
+      className="logo"
+    >
+      <span
+        className="icon "
+      >
+        <i
+          className="mcs-warning"
+        />
+      </span>
+    </div>
+    <span>
+      No data found
+    </span>
+  </div>
+</div>
+`;
+
+exports[`should display an empty table view with a message and an icon 1`] = `
+<div
+  className="mcs-aligner"
+>
+  <div
+    className="ant-col-24 mcs-table-view-empty"
+  >
+    <div
+      className="logo"
+    >
+      <span
+        className="icon "
+      >
+        <i
+          className="mcs-magnifier"
+        />
+      </span>
+    </div>
+    <span>
+      Nothing to see here
+    </span>
+  </div>
+</div>
+`;
