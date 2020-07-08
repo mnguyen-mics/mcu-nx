@@ -5,10 +5,7 @@ import EmptyTableView,{EmptyTableViewProps} from '../EmptyTableView';
 const props:EmptyTableViewProps={
     iconType:'magnifier',
     className:'mcs-table-view-empty',
-    intlMessage:{
-        defaultMessage:'Nothing to see here',
-        id:'generic.table.empty.information_message'
-    },
+    defaultMessage:'Nothing to see here',
     text:'This is for testing purposes'
 }
 

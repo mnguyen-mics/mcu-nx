@@ -1,44 +1,32 @@
 import * as React from 'react';
-import { FormattedMessage, defineMessages} from 'react-intl';
 import { Col } from 'antd';
 
 import McsIcon, { McsIconType } from '../mcs-icon';
 
-const messages = defineMessages({
-  emptyMsg: {
-    id: 'generic.table.empty.information_message',
-    defaultMessage: 'No data found',
-  },
-});
-
 export interface EmptyTableViewProps {
   text?: string;
-  intlMessage?: {
-    id?: string;
-    defaultMessage?: string;
-  };
+  defaultMessage?: string;
   iconType: McsIconType;
   className?: string;
 }
 
 const EmptyTableView: React.SFC<EmptyTableViewProps> = props => {
-
-  /* Support new intl message obj and legacy translation key (en/fr.json) */
-  const formattedMessageProps: FormattedMessage.MessageDescriptor = {
-    id: props.intlMessage!.id ? props.intlMessage!.id! : props.text ? props.text : messages.emptyMsg.id,
-    defaultMessage: (props.intlMessage!.defaultMessage
-      ? props.intlMessage!.defaultMessage
-      : messages.emptyMsg.defaultMessage
-    ),
-  };
-
+  const prefixCls="mcs-empty-table-view"
+  const {defaultMessage, className, iconType}=props
   return (
-    <div className="mcs-aligner">
-      <Col span={24} className={props.className}>
-        <div className="logo">
-          <McsIcon type={props.iconType} />
+    <div className={prefixCls}>
+      <Col 
+        span={24} 
+        className={
+          className ? 
+          `${prefixCls}-content ${className}` :
+          `${prefixCls}-content`
+        }
+      >
+        <div className={`${prefixCls}-logo`}>
+          <McsIcon type={iconType} />
         </div>
-        <FormattedMessage {...formattedMessageProps} />
+        {defaultMessage}
       </Col>
     </div>
   );
@@ -46,8 +34,7 @@ const EmptyTableView: React.SFC<EmptyTableViewProps> = props => {
 
 EmptyTableView.defaultProps = {
   iconType: 'warning',
-  className: 'mcs-table-view-empty',
-  intlMessage: {},
+  defaultMessage:'No data found' ,
   text: undefined,
 };
 

@@ -1,12 +1,19 @@
-.mcs-aligner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: inherit;
-  }
+@import './../../style/theme.less';
 
-  .mcs-table-view-empty {
-    .logo {
+@empty-table-view-prefix-cls: ~'@{mcs-prefix}-empty-table-view';
+
+.@{empty-table-view-prefix-cls} {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: inherit;
+
+  .@{empty-table-view-prefix-cls}-content {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: #9c9c9c;
+    .@{empty-table-view-prefix-cls}-logo {
       width: 100px;
       height: 100px;
       border-radius: 50px;
@@ -21,8 +28,6 @@
         vertical-align: middle;
       }
     }
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    color: #9c9c9c;
   }
+}
+

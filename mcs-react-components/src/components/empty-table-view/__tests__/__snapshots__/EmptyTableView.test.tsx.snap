@@ -2,13 +2,13 @@
 
 exports[`should display an empty table view default values 1`] = `
 <div
-  className="mcs-aligner"
+  className="mcs-empty-table-view"
 >
   <div
-    className="ant-col-24 mcs-table-view-empty"
+    className="ant-col-24 mcs-empty-table-view-content"
   >
     <div
-      className="logo"
+      className="mcs-empty-table-view-logo"
     >
       <span
         className="icon "
@@ -18,22 +18,20 @@ exports[`should display an empty table view default values 1`] = `
         />
       </span>
     </div>
-    <span>
-      No data found
-    </span>
+    No data found
   </div>
 </div>
 `;
 
 exports[`should display an empty table view with a message and an icon 1`] = `
 <div
-  className="mcs-aligner"
+  className="mcs-empty-table-view"
 >
   <div
-    className="ant-col-24 mcs-table-view-empty"
+    className="ant-col-24 mcs-empty-table-view-content mcs-table-view-empty"
   >
     <div
-      className="logo"
+      className="mcs-empty-table-view-logo"
     >
       <span
         className="icon "
@@ -43,9 +41,7 @@ exports[`should display an empty table view with a message and an icon 1`] = `
         />
       </span>
     </div>
-    <span>
-      Nothing to see here
-    </span>
+    Nothing to see here
   </div>
 </div>
 `;
