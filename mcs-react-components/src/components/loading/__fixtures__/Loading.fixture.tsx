@@ -10,7 +10,7 @@ const component = (_props: LoadingProps) => (
   <Loading {..._props} />
 );
 
-component.displayName = "Laoding";
+component.displayName = "Loading";
 
 export default {
   component,
