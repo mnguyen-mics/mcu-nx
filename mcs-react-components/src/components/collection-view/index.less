@@ -1,0 +1,28 @@
+@import './../../style/theme.less';
+
+@collection-view-prefix-cls: ~'@{mcs-prefix}-collection-view';
+
+.@{collection-view-prefix-cls}-loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: inherit;
+}
+
+.@{collection-view-prefix-cls} {
+	height: 100%;
+	margin-bottom: -1.4em;
+
+	li.ant-pagination-item {
+		background-color: transparent;
+	}
+	li.ant-pagination-prev {
+		background-color: transparent;
+	}
+	li.ant-pagination-next {
+		background-color: transparent;
+  }
+  &-text-right {
+    text-align: right;
+  }
+}
