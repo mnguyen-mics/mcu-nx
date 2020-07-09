@@ -3,10 +3,14 @@
 @collection-view-prefix-cls: ~'@{mcs-prefix}-collection-view';
 
 .@{collection-view-prefix-cls}-loading {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: inherit;
+	height: '350px';
+
+	&-content {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: inherit;
+	}
 }
 
 .@{collection-view-prefix-cls} {

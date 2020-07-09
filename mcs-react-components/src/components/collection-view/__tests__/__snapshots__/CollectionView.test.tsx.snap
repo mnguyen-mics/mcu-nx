@@ -879,15 +879,10 @@ exports[`should display a collection view with items and pagination 1`] = `
 
 exports[`should display a loading collection view 1`] = `
 <div
-  className="ant-row"
-  style={
-    Object {
-      "height": "350px",
-    }
-  }
+  className="ant-row mcs-collection-view-loading"
 >
   <div
-    className="ant-row mcs-collection-view-loading"
+    className="ant-row mcs-collection-view-loading-content"
   >
     <div
       className="ant-spin ant-spin-spinning"

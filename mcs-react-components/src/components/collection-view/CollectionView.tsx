@@ -23,8 +23,8 @@ class CollectionView extends React.Component<CollectionViewProps> {
 		const { collectionItems, gutter, span, pagination, loading } = this.props
 
 		return loading ? (
-			<Row style={{ height: '350px' }}>
-				<Row className={`${prefixCls}-loading`}>
+			<Row className={`${prefixCls}-loading`}>
+				<Row className={`${prefixCls}-loading-content`}>
 					<Spin />
 				</Row>
 			</Row>
