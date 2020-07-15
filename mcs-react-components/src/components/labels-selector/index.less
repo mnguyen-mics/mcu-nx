@@ -1,0 +1,31 @@
+.mcs-labelsSelector {
+  margin-bottom: 20px;
+
+  &_tag {
+    background-color: @layout-body-background;
+    border: @border-width-base @border-style-base @border-color-base;
+  }
+
+  &_button {
+    background-color: @layout-content-background;
+    color: darken(@layout-content-background, 10%);
+    border: @border-width-base @border-style-base darken(@layout-content-background, 10%);
+    transition: 0.5s;
+    line-height: 18px;
+    .icon {
+      margin-right: 5px;
+    }
+  
+    &:hover {
+      background-color: @layout-body-background;
+      border: @border-width-base @border-style-base @border-color-base;
+      color: @text-color;
+    }
+  }
+
+  &_dropdown {
+    max-height: 300px; 
+    overflow: hidden;
+    overflow-y: scroll;
+  }
+}
