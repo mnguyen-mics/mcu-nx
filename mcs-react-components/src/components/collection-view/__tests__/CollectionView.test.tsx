@@ -9,7 +9,7 @@ it('should display a loading collection view', () => {
 
 	for (let i = 1; i <= 30; i++) {
 		items.push(
-			<Col key='test'>
+			<Col key={i}>
 				<li>test {i}</li>
 			</Col>
 		)
@@ -30,7 +30,7 @@ it('should display a collection view with items and pagination', () => {
 
 	for (let i = 1; i <= 30; i++) {
 		items.push(
-			<Col key='test'>
+			<Col key={i}>
 				<li>test {i}</li>
 			</Col>
 		)

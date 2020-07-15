@@ -32,16 +32,8 @@ exports[`renders a basic tableView 1`] = `
                   <col
                     style={
                       Object {
-                        "minWidth": 150,
-                        "width": 150,
-                      }
-                    }
-                  />
-                  <col
-                    style={
-                      Object {
-                        "minWidth": 70,
-                        "width": 70,
+                        "minWidth": undefined,
+                        "width": undefined,
                       }
                     }
                   />
@@ -56,8 +48,16 @@ exports[`renders a basic tableView 1`] = `
                   <col
                     style={
                       Object {
-                        "minWidth": 360,
-                        "width": 360,
+                        "minWidth": undefined,
+                        "width": undefined,
+                      }
+                    }
+                  />
+                  <col
+                    style={
+                      Object {
+                        "minWidth": undefined,
+                        "width": undefined,
                       }
                     }
                   />
@@ -1287,16 +1287,8 @@ exports[`renders a tableView with pagination 1`] = `
                   <col
                     style={
                       Object {
-                        "minWidth": 150,
-                        "width": 150,
-                      }
-                    }
-                  />
-                  <col
-                    style={
-                      Object {
-                        "minWidth": 70,
-                        "width": 70,
+                        "minWidth": undefined,
+                        "width": undefined,
                       }
                     }
                   />
@@ -1311,8 +1303,16 @@ exports[`renders a tableView with pagination 1`] = `
                   <col
                     style={
                       Object {
-                        "minWidth": 360,
-                        "width": 360,
+                        "minWidth": undefined,
+                        "width": undefined,
+                      }
+                    }
+                  />
+                  <col
+                    style={
+                      Object {
+                        "minWidth": undefined,
+                        "width": undefined,
                       }
                     }
                   />
@@ -2513,6 +2513,17 @@ exports[`renders a tableView with pagination 1`] = `
 exports[`renders a tableView with selected rows 1`] = `
 <div>
   <div
+    style={
+      Object {
+        "display": "block",
+        "height": "0px",
+        "opacity": 0,
+        "textAlign": "center",
+        "transition": "height 120ms ease-in-out",
+      }
+    }
+  />
+  <div
     className="ant-table-wrapper"
   >
     <div
@@ -2550,16 +2561,8 @@ exports[`renders a tableView with selected rows 1`] = `
                   <col
                     style={
                       Object {
-                        "minWidth": 150,
-                        "width": 150,
-                      }
-                    }
-                  />
-                  <col
-                    style={
-                      Object {
-                        "minWidth": 70,
-                        "width": 70,
+                        "minWidth": undefined,
+                        "width": undefined,
                       }
                     }
                   />
@@ -2574,8 +2577,16 @@ exports[`renders a tableView with selected rows 1`] = `
                   <col
                     style={
                       Object {
-                        "minWidth": 360,
-                        "width": 360,
+                        "minWidth": undefined,
+                        "width": undefined,
+                      }
+                    }
+                  />
+                  <col
+                    style={
+                      Object {
+                        "minWidth": undefined,
+                        "width": undefined,
                       }
                     }
                   />

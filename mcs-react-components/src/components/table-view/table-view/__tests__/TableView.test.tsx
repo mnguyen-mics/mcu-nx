@@ -5,7 +5,14 @@ import TableView, { TableViewProps } from '../TableView';
 import { Divider, Icon } from 'antd';
 import * as TestRenderer from 'react-test-renderer';
 import { MemoryRouter } from 'react-router';
-import { CombinedTableViewProps } from '../__fixtures__/TableView.fixture';
+
+interface Data {
+  key: string;
+  name: string;
+  age: string;
+  address: string;
+  description: string;
+}
 
 const columns = [
   {
@@ -46,7 +53,7 @@ const columns = [
   },
 ];
 
-const data = [];
+const data: Data[] = [];
 for (let i = 1; i <= 46; i++) {
   data.push({
     key: i.toString(),
@@ -86,7 +93,7 @@ it('renders a basic tableView', () => {
 });
 
 it('renders a tableView with pagination', () => {
-  const tableViewProps: CombinedTableViewProps = {
+  const tableViewProps: TableViewProps<Data> = {
     ...props,
     pagination: pagination,
   };
@@ -103,7 +110,7 @@ it('renders a tableView with pagination', () => {
 });
 
 it('renders a tableView with selected rows', () => {
-  const tableViewProps: CombinedTableViewProps = {
+  const tableViewProps: TableViewProps<Data> = {
     ...props,
     rowSelection: {
       selectedRowKeys: selectedRows,

@@ -2,9 +2,14 @@ import * as React from 'react';
 import { IntlProvider } from 'react-intl';
 import TableView, { TableViewProps } from '../TableView';
 import { Divider, Icon } from 'antd';
-import { TableProps } from 'antd/lib/table';
 
-export type CombinedTableViewProps = TableViewProps<any> & TableProps<any>;
+interface Data {
+  key: string;
+  name: string;
+  age: string;
+  address: string;
+  description: string;
+}
 
 const columns = [
   {
@@ -45,7 +50,7 @@ const columns = [
   },
 ];
 
-const data = [];
+const data: Data[] = [];
 for (let i = 1; i <= 46; i++) {
   data.push({
     key: i.toString(),
@@ -56,18 +61,24 @@ for (let i = 1; i <= 46; i++) {
   });
 }
 
-const props: CombinedTableViewProps = {
+const props: TableViewProps<Data> = {
   columns: columns,
   dataSource: data,
+  rowSelection: {
+    selectedRowKeys: ['1', '2'],
+  },
+  pagination: {
+    pageSize: 10,
+  },
 };
 
-const component = (_props: CombinedTableViewProps) => (
+const component = (_props: TableViewProps<Data>) => (
   <IntlProvider locale="en">
     <TableView {...props} />
   </IntlProvider>
 );
 
-component.displayName = "TableView";
+component.displayName = 'TableView';
 
 export default {
   component,
