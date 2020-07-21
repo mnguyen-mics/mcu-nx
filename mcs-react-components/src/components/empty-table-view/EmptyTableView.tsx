@@ -1,32 +1,22 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Col } from 'antd';
-
-import McsIcon, { McsIconType } from '../mcs-icon';
+import McsIcon, { McsIconType } from '../../components/mcs-icon';
 
 export interface EmptyTableViewProps {
-  text?: string;
-  defaultMessage?: string;
+  intlMessage: FormattedMessage.MessageDescriptor;
   iconType: McsIconType;
   className?: string;
 }
 
 const EmptyTableView: React.SFC<EmptyTableViewProps> = props => {
-  const prefixCls="mcs-empty-table-view"
-  const {defaultMessage, className, iconType}=props
   return (
-    <div className={prefixCls}>
-      <Col 
-        span={24} 
-        className={
-          className ? 
-          `${prefixCls}-content ${className}` :
-          `${prefixCls}-content`
-        }
-      >
-        <div className={`${prefixCls}-logo`}>
-          <McsIcon type={iconType} />
+    <div className="mcs-aligner">
+      <Col span={24} className={props.className}>
+        <div className="logo">
+          <McsIcon type={props.iconType} />
         </div>
-        {defaultMessage}
+        <FormattedMessage {...props.intlMessage} />
       </Col>
     </div>
   );
@@ -34,8 +24,7 @@ const EmptyTableView: React.SFC<EmptyTableViewProps> = props => {
 
 EmptyTableView.defaultProps = {
   iconType: 'warning',
-  defaultMessage:'No data found' ,
-  text: undefined,
+  className: 'mcs-table-view-empty',
 };
 
 export default EmptyTableView;
