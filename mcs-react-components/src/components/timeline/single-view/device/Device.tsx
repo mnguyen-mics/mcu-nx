@@ -1,19 +1,7 @@
 import * as React from 'react';
 import { Row, Col, Icon } from 'antd';
 import McsIcon from '../../../mcs-icon';
-import { FormFactor } from '../../../../models/timeline/timeline';
-
-export interface Device {
-  brand?: string;
-  browser_family?: string;
-  browser_version?: string;
-  carrier?: string;
-  form_factor?: FormFactor;
-  model?: string;
-  os_family?: string;
-  os_version?: string;
-  raw_value?: string;
-}
+import { Device, FormFactor } from '../../../../models/timeline/timeline';
 
 export interface DeviceProps {
   vectorId: string;

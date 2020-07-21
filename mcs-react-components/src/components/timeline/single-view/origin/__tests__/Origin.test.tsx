@@ -1,14 +1,24 @@
 import 'jest';
 import * as React from 'react';
 import * as TestRenderer from 'react-test-renderer';
-import Origin, { OriginComponentProps } from '../Origin';
-import { IntlProvider } from 'react-intl';
+import Origin, { Props } from '../Origin';
+import { IntlProvider, defineMessages } from 'react-intl';
 
 // Return a fixed timestamp when moment().format() is called
 jest.mock('moment', () => () => ({format: () => '2019–11–13T12:34:56+00:00'}));
 
 it('renders the Origin', () => {
-  const props: OriginComponentProps = {
+  const props: Props = {
+    messages: defineMessages({
+      origin: {
+        id: 'id1',
+        defaultMessage: 'Origin',
+      },
+      direct: {
+        id: 'id2',
+        defaultMessage: 'Direct',
+      },
+    }),
     origin: {
       $campaign_id: null,
       $campaign_name: null,
