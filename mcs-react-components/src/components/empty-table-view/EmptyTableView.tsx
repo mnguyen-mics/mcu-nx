@@ -1,22 +1,30 @@
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Col } from 'antd';
 import McsIcon, { McsIconType } from '../../components/mcs-icon';
 
 export interface EmptyTableViewProps {
-  intlMessage: FormattedMessage.MessageDescriptor;
+  message: string;
   iconType: McsIconType;
   className?: string;
 }
 
 const EmptyTableView: React.SFC<EmptyTableViewProps> = props => {
+  const prefixCls = 'mcs-empty-table-view';
+  const { message, className, iconType } = props;
   return (
-    <div className="mcs-aligner">
-      <Col span={24} className={props.className}>
-        <div className="logo">
-          <McsIcon type={props.iconType} />
+    <div className={prefixCls}>
+      <Col
+        span={24}
+        className={
+          className
+            ? `${prefixCls}-content ${className}`
+            : `${prefixCls}-content`
+        }
+      >
+        <div className={`${prefixCls}-logo`}>
+          <McsIcon type={iconType} />
         </div>
-        <FormattedMessage {...props.intlMessage} />
+        {message}
       </Col>
     </div>
   );

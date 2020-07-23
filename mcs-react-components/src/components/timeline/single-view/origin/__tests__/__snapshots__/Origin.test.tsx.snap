@@ -19,9 +19,7 @@ exports[`renders the Origin 1`] = `
       }
     }
   >
-    <span>
-      Origin
-    </span>
+    Origin
   </div>
   <div
     className="ant-col-19"

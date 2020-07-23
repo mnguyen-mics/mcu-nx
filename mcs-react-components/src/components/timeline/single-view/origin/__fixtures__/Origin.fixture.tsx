@@ -1,18 +1,9 @@
 import * as React from 'react';
 import Origin, { Props } from '../Origin';
-import { IntlProvider, defineMessages } from 'react-intl';
 
 const props: Props = {
-  messages: defineMessages({
-    origin: {
-      id: 'id1',
-      defaultMessage: 'Origin',
-    },
-    direct: {
-      id: 'id2',
-      defaultMessage: 'Direct',
-    },
-  }),
+  title: 'Origin',
+  noOriginText: 'Direct',
   origin: {
     $campaign_id: null,
     $campaign_name: null,
@@ -35,11 +26,7 @@ const props: Props = {
     $ts: 1555507575217,
   },
 };
-const component = (_props: Props) => (
-  <IntlProvider locale="en">
-    <Origin {..._props} />
-  </IntlProvider>
-);
+const component = (_props: Props) => <Origin {..._props} />;
 
 component.displayName = 'Origin';
 

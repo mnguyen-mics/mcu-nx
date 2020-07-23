@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Actionbar, { ActionbarProps } from '../Actionbar';
 import { Button } from 'antd';
-import { IntlProvider } from 'react-intl';
 import { MemoryRouter } from 'react-router';
 
 const props: ActionbarProps = {
@@ -12,18 +11,18 @@ const props: ActionbarProps = {
 };
 
 const component = (_props: ActionbarProps) => (
-  <IntlProvider locale="en">
-    <MemoryRouter>
-      <Actionbar {..._props}>
-        <div>
-          <Button type="primary" href="">Save</Button>
-        </div>
-      </Actionbar>
-    </MemoryRouter>
-  </IntlProvider>
+  <MemoryRouter>
+    <Actionbar {..._props}>
+      <div>
+        <Button type="primary" href="">
+          Save
+        </Button>
+      </div>
+    </Actionbar>
+  </MemoryRouter>
 );
 
-component.displayName = "ActionBar";
+component.displayName = 'ActionBar';
 
 export default {
   component,

@@ -2,7 +2,7 @@
 
 exports[`renders the SelectorLayout with children 1`] = `
 <div
-  className="ant-layout"
+  className="mcs-selector-layout ant-layout"
 >
   <div
     className="edit-layout ant-layout"
@@ -79,7 +79,7 @@ exports[`renders the SelectorLayout with children 1`] = `
 
 exports[`renders the SelectorLayout with no element 1`] = `
 <div
-  className="ant-layout"
+  className="mcs-selector-layout ant-layout"
 >
   <div
     className="edit-layout ant-layout"
@@ -146,13 +146,13 @@ exports[`renders the SelectorLayout with no element 1`] = `
         className="mcs-edit-container  ant-layout-content"
       >
         <div
-          className="mcs-aligner"
+          className="mcs-empty-table-view"
         >
           <div
-            className="ant-col-24 mcs-table-view-empty"
+            className="ant-col-24 mcs-empty-table-view-content mcs-table-view-empty"
           >
             <div
-              className="logo"
+              className="mcs-empty-table-view-logo"
             >
               <span
                 className="icon "
@@ -162,9 +162,7 @@ exports[`renders the SelectorLayout with no element 1`] = `
                 />
               </span>
             </div>
-            <span>
-              No element
-            </span>
+            No data found
           </div>
         </div>
       </div>

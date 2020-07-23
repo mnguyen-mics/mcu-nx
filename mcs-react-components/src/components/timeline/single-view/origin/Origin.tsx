@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
 import * as _moment from 'moment';
 import { Row, Col, Tooltip } from 'antd';
 import { OriginProps } from '../../../../models/timeline/timeline';
@@ -7,7 +6,8 @@ import { OriginProps } from '../../../../models/timeline/timeline';
 const moment = _moment;
 
 export interface Props {
-  messages: { [propertyName: string]: FormattedMessage.MessageDescriptor };
+  title: string;
+  noOriginText: string;
   origin: OriginProps;
 }
 
@@ -40,12 +40,12 @@ const renderLine = (key: string, value: string | number) => {
 
 class Origin extends React.Component<Props> {
   render() {
-    const { origin, messages } = this.props;
+    const { origin, title, noOriginText } = this.props;
 
     return (
       <Row gutter={10} className="section table-line border-top">
         <Col span={5} className="section-title">
-          <FormattedMessage {...messages.origin} />
+          {title}
         </Col>
         <Col span={19}>
           {origin ? (
@@ -56,9 +56,7 @@ class Origin extends React.Component<Props> {
               return originKey ? renderLine(key, originKey) : null;
             })
           ) : (
-            <span>
-              <FormattedMessage {...messages.direct} />
-            </span>
+            <span>{noOriginText}</span>
           )}
         </Col>
       </Row>

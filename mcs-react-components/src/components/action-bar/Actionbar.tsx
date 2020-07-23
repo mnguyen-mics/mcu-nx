@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { Row } from 'antd';
 import * as cuid_ from 'cuid';
-import { compose } from 'recompose';
 import { Link } from 'react-router-dom';
-import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import Breadcrumb, { BreadcrumbProps } from 'antd/lib/breadcrumb';
 import McsIcon from '../mcs-icon';
 
@@ -11,7 +9,7 @@ const BreadcrumbItem = Breadcrumb.Item;
 const cuid = cuid_;
 
 export interface Path {
-  name: FormattedMessage.MessageDescriptor | string;
+  name: string;
   path?: string;
 }
 
@@ -22,14 +20,11 @@ export interface ActionbarProps extends BreadcrumbProps {
   inverted?: boolean;
 }
 
-type Props = ActionbarProps & InjectedIntlProps;
+type Props = ActionbarProps;
 
 class Actionbar extends React.Component<Props> {
   buildItem = (elt: Path) => {
-    const name =
-      typeof elt.name === 'string'
-        ? elt.name
-        : this.props.intl.formatMessage(elt.name);
+    const name = elt.name;
     const formatedElt = name
       ? name.substr(0, 27) !== name
         ? `${name.substr(0, 27)}\u2026`
@@ -48,7 +43,6 @@ class Actionbar extends React.Component<Props> {
     const {
       edition,
       paths,
-      intl,
       backgroundColor,
       inverted,
       children,
@@ -78,4 +72,4 @@ class Actionbar extends React.Component<Props> {
   }
 }
 
-export default compose<Props, ActionbarProps>(injectIntl)(Actionbar);
+export default Actionbar;

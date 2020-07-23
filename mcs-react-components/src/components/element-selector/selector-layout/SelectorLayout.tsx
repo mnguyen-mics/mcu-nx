@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Button, Layout } from 'antd';
 import ActionBar from '../../action-bar';
 import McsIcon from '../../mcs-icon';
-import { FormattedMessage } from 'react-intl';
 import EmptyTableView from '../../empty-table-view';
 
 const { Content } = Layout;
@@ -13,7 +12,8 @@ export interface SelectorLayoutProps {
   handleClose: () => void;
   disabled: boolean;
   className?: string;
-  noElementMessage: FormattedMessage.MessageDescriptor;
+  addButtonText: string;
+  noElementText: string;
 }
 
 export default class SelectorLayout extends React.Component<
@@ -28,11 +28,13 @@ export default class SelectorLayout extends React.Component<
       disabled,
       children,
       className,
-      noElementMessage,
+      addButtonText,
+      noElementText,
     } = this.props;
+    const prefixCls = 'mcs-selector-layout';
 
     return (
-      <Layout>
+      <Layout className={prefixCls}>
         <div className="edit-layout ant-layout">
           <ActionBar paths={[{ name: actionBarTitle }]} edition={true}>
             <Button
@@ -42,10 +44,7 @@ export default class SelectorLayout extends React.Component<
               href=""
             >
               <McsIcon type="plus" />
-              <FormattedMessage
-                id="components.elementSelector.selectorLayout.actionbar.add.button"
-                defaultMessage="Add"
-              />
+              {addButtonText}
             </Button>
             <McsIcon
               type="close"
@@ -58,10 +57,7 @@ export default class SelectorLayout extends React.Component<
               className={`mcs-edit-container ${className ? className : ''}`}
             >
               {disabled ? (
-                <EmptyTableView
-                  iconType="warning"
-                  intlMessage={noElementMessage}
-                />
+                <EmptyTableView iconType="warning" message={noElementText} />
               ) : (
                 children
               )}

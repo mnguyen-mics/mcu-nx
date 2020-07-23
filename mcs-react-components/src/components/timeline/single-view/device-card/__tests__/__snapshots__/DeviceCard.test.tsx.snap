@@ -2,7 +2,7 @@
 
 exports[`renders the DeviceCard 1`] = `
 <div
-  className="ant-row mcs-card-container mcs-deviceCard"
+  className="ant-row mcs-card-container mcs-device-card"
   style={Object {}}
 >
   <div

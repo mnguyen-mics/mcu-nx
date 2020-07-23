@@ -2,23 +2,16 @@ import 'jest';
 import * as React from 'react';
 import * as TestRenderer from 'react-test-renderer';
 import Origin, { Props } from '../Origin';
-import { IntlProvider, defineMessages } from 'react-intl';
 
 // Return a fixed timestamp when moment().format() is called
-jest.mock('moment', () => () => ({format: () => '2019–11–13T12:34:56+00:00'}));
+jest.mock('moment', () => () => ({
+  format: () => '2019–11–13T12:34:56+00:00',
+}));
 
 it('renders the Origin', () => {
   const props: Props = {
-    messages: defineMessages({
-      origin: {
-        id: 'id1',
-        defaultMessage: 'Origin',
-      },
-      direct: {
-        id: 'id2',
-        defaultMessage: 'Direct',
-      },
-    }),
+    title: 'Origin',
+    noOriginText: 'Direct',
     origin: {
       $campaign_id: null,
       $campaign_name: null,
@@ -41,11 +34,7 @@ it('renders the Origin', () => {
       $ts: 1555507575217,
     },
   };
-  const component = TestRenderer.create(
-    <IntlProvider locale="en">
-      <Origin {...props} />
-    </IntlProvider>,
-  );
+  const component = TestRenderer.create(<Origin {...props} />);
   const res = component.toJSON();
   expect(res).toMatchSnapshot();
 });

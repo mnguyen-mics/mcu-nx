@@ -2,14 +2,6 @@ import 'jest';
 import * as React from 'react';
 import * as TestRenderer from 'react-test-renderer';
 import SelectorLayout, { SelectorLayoutProps } from '../SelectorLayout';
-import { defineMessages, IntlProvider } from 'react-intl';
-
-const messages = defineMessages({
-  noElementMessage: {
-    id: 'id1',
-    defaultMessage: 'No element',
-  },
-});
 
 it('renders the SelectorLayout with no element', () => {
   const props: SelectorLayoutProps = {
@@ -21,13 +13,10 @@ it('renders the SelectorLayout with no element', () => {
       //
     },
     disabled: true,
-    noElementMessage: messages.noElementMessage,
+    noElementText: 'No data found',
+    addButtonText: 'Add',
   };
-  const component = TestRenderer.create(
-    <IntlProvider>
-      <SelectorLayout {...props} />
-    </IntlProvider>,
-  );
+  const component = TestRenderer.create(<SelectorLayout {...props} />);
   const res = component.toJSON();
   expect(res).toMatchSnapshot();
 });
@@ -42,14 +31,13 @@ it('renders the SelectorLayout with children', () => {
     handleClose: () => {
       //
     },
-    noElementMessage: messages.noElementMessage,
+    noElementText: 'No data found',
+    addButtonText: 'Add',
   };
   const component = TestRenderer.create(
-    <IntlProvider>
-      <SelectorLayout {...props}>
-        <div>Children elements</div>
-      </SelectorLayout>
-    </IntlProvider>,
+    <SelectorLayout {...props}>
+      <div>Children elements</div>
+    </SelectorLayout>,
   );
   const res = component.toJSON();
   expect(res).toMatchSnapshot();

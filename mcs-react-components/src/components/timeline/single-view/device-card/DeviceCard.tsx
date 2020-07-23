@@ -49,7 +49,7 @@ class DeviceCard extends React.Component<Props, State> {
       <Card
         title={formatMessage(messages.deviceTitle)}
         isLoading={isLoading}
-        className={'mcs-deviceCard'}
+        className={'mcs-device-card'}
       >
         {accountsFormatted &&
           accountsFormatted.map(agent => {

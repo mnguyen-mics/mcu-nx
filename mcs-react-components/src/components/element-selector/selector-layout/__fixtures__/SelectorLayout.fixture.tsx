@@ -1,13 +1,5 @@
 import * as React from 'react';
 import SelectorLayout, { SelectorLayoutProps } from '../SelectorLayout';
-import { defineMessages, IntlProvider } from 'react-intl';
-
-const messages = defineMessages({
-  noElementMessage: {
-    id: 'id1',
-    defaultMessage: 'No element',
-  },
-});
 
 const props: SelectorLayoutProps = {
   actionBarTitle: 'Action Bar Title',
@@ -18,13 +10,12 @@ const props: SelectorLayoutProps = {
     //
   },
   disabled: true,
-  noElementMessage: messages.noElementMessage,
+  noElementText: 'No data found',
+  addButtonText: 'Add',
 };
 
 const component = (_props: SelectorLayoutProps) => (
-  <IntlProvider>
-    <SelectorLayout {..._props} />
-  </IntlProvider>
+  <SelectorLayout {..._props} />
 );
 
 component.displayName = 'SelectorLayout';
