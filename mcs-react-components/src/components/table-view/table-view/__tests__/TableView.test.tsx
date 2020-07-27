@@ -1,11 +1,17 @@
 import 'jest';
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import TableView, { TableViewProps } from '../TableView';
 import { Divider, Icon } from 'antd';
 import * as TestRenderer from 'react-test-renderer';
 import { MemoryRouter } from 'react-router';
-import { CombinedTableViewProps } from '../__fixtures__/TableView.fixture';
+
+interface Data {
+  key: string;
+  name: string;
+  age: string;
+  address: string;
+  description: string;
+}
 
 const columns = [
   {
@@ -46,7 +52,7 @@ const columns = [
   },
 ];
 
-const data = [];
+const data: Data[] = [];
 for (let i = 1; i <= 46; i++) {
   data.push({
     key: i.toString(),
@@ -67,6 +73,13 @@ const selectedRows = ['1', '2', '3'];
 const props = {
   columns: columns,
   dataSource: data,
+  selectionNotifyerMessages: {
+    allRowsSelected: 'You have selected all rows.',
+      unselectAll: 'Unselect all rows',
+      allPageRowsSelected: 'You have selected all rows in this page.',
+      selectAll: 'Select all',
+      selectedRows: 'You have selected N rows.',
+  }
 };
 
 it('renders a basic tableView', () => {
@@ -75,47 +88,45 @@ it('renders a basic tableView', () => {
   };
 
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
-      <MemoryRouter>
-        <TableView {...tableViewProps} />
-      </MemoryRouter>
-    </IntlProvider>,
+    <MemoryRouter>
+      <TableView {...tableViewProps} />
+    </MemoryRouter>,
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
 
 it('renders a tableView with pagination', () => {
-  const tableViewProps: CombinedTableViewProps = {
+  const tableViewProps: TableViewProps<Data> = {
     ...props,
     pagination: pagination,
   };
 
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
-      <MemoryRouter>
-        <TableView {...tableViewProps} />
-      </MemoryRouter>
-    </IntlProvider>,
+    <MemoryRouter>
+      <TableView {...tableViewProps} />
+    </MemoryRouter>
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
 
-it('renders a tableView with selected rows', () => {
-  const tableViewProps: CombinedTableViewProps = {
+it('renders a tableView with 3 selected rows', () => {
+  const tableViewProps: TableViewProps<Data> = {
     ...props,
     rowSelection: {
       selectedRowKeys: selectedRows,
     },
+    selectionNotifyerMessages: {
+      ...props.selectionNotifyerMessages,
+      selectedRows: 'You have selected 3 rows.',
+    }
   };
 
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
-      <MemoryRouter>
-        <TableView {...tableViewProps} />
-      </MemoryRouter>
-    </IntlProvider>,
+    <MemoryRouter>
+      <TableView {...tableViewProps} />
+    </MemoryRouter>
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();

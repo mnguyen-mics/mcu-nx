@@ -1,0 +1,127 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the SelectionNotifyer with 3 items selected 1`] = `
+<div
+  style={
+    Object {
+      "display": "block",
+      "height": "50px",
+      "opacity": 1,
+      "textAlign": "center",
+      "transition": "height 120ms ease-in-out",
+    }
+  }
+>
+  <div
+    className="ant-alert ant-alert-warning ant-alert-no-icon selected-rows-alert"
+    data-show={true}
+  >
+    <span
+      className="ant-alert-message"
+    >
+      <div>
+        You have selected all rows.
+        <button
+          className="button-styleless selected-rows-btn"
+          onClick={[Function]}
+          style={
+            Object {
+              "cursor": "pointer",
+            }
+          }
+          type="button"
+        >
+          Unselect all rows
+        </button>
+      </div>
+    </span>
+    <span
+      className="ant-alert-description"
+    />
+  </div>
+</div>
+`;
+
+exports[`renders the SelectionNotifyer with all items selected 1`] = `
+<div
+  style={
+    Object {
+      "display": "block",
+      "height": "50px",
+      "opacity": 1,
+      "textAlign": "center",
+      "transition": "height 120ms ease-in-out",
+    }
+  }
+>
+  <div
+    className="ant-alert ant-alert-warning ant-alert-no-icon selected-rows-alert"
+    data-show={true}
+  >
+    <span
+      className="ant-alert-message"
+    >
+      <div>
+        You have selected all rows.
+        <button
+          className="button-styleless selected-rows-btn"
+          onClick={[Function]}
+          style={
+            Object {
+              "cursor": "pointer",
+            }
+          }
+          type="button"
+        >
+          Unselect all rows
+        </button>
+      </div>
+    </span>
+    <span
+      className="ant-alert-description"
+    />
+  </div>
+</div>
+`;
+
+exports[`renders the SelectionNotifyer with all the page items selected 1`] = `
+<div
+  style={
+    Object {
+      "display": "block",
+      "height": "50px",
+      "opacity": 1,
+      "textAlign": "center",
+      "transition": "height 120ms ease-in-out",
+    }
+  }
+>
+  <div
+    className="ant-alert ant-alert-warning ant-alert-no-icon selected-rows-alert"
+    data-show={true}
+  >
+    <span
+      className="ant-alert-message"
+    >
+      <div>
+        You have selected all rows.
+        <button
+          className="button-styleless selected-rows-btn"
+          onClick={[Function]}
+          style={
+            Object {
+              "cursor": "pointer",
+            }
+          }
+          type="button"
+        >
+          Unselect all rows
+        </button>
+      </div>
+    </span>
+    <span
+      className="ant-alert-description"
+    />
+  </div>
+</div>
+`;
