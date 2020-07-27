@@ -23,6 +23,13 @@ it('renders the SelectionNotifyer with all items selected', () => {
     pagination: {
       total: 10,
     },
+    messages: {
+      allRowsSelected: 'You have selected all rows.',
+      unselectAll: 'Unselect all rows',
+      allPageRowsSelected: 'You have selected all rows in this page.',
+      selectAll: 'Select all',
+      selectedRows: 'You have selected N rows.',
+    }
   };
 
   const component = TestRenderer.create(<SelectionNotifyer {...props} />);
@@ -40,6 +47,13 @@ it('renders the SelectionNotifyer with all the page items selected', () => {
       total: 10,
       pageSize: 5,
     },
+    messages: {
+      allRowsSelected: 'You have selected all rows.',
+      unselectAll: 'Unselect all rows',
+      allPageRowsSelected: 'You have selected all rows in this page.',
+      selectAll: 'Select all',
+      selectedRows: 'You have selected N rows.',
+    }
   };
 
   const component = TestRenderer.create(<SelectionNotifyer {...props} />);
@@ -57,6 +71,13 @@ it('renders the SelectionNotifyer with 3 items selected', () => {
       total: 10,
       pageSize: 5,
     },
+    messages: {
+      allRowsSelected: 'You have selected all rows.',
+      unselectAll: 'Unselect all rows',
+      allPageRowsSelected: 'You have selected all rows in this page.',
+      selectAll: 'Select all',
+      selectedRows: 'You have selected 3 rows.',
+    }
   };
 
   const component = TestRenderer.create(

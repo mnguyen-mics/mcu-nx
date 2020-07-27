@@ -19,6 +19,13 @@ const props: SelectionNotifyerProps<Data> = {
   pagination: {
     total: 10,
   },
+  messages: {
+    allRowsSelected: 'You have selected all rows.',
+    unselectAll: 'Unselect all rows',
+    allPageRowsSelected: 'You have selected all rows in this page.',
+    selectAll: 'Select all',
+    selectedRows: 'You have selected N rows.',
+  }
 };
 
 const component = (_props: SelectionNotifyerProps<Data>) => (

@@ -70,6 +70,13 @@ const props: TableViewProps<Data> = {
   pagination: {
     pageSize: 10,
   },
+  selectionNotifyerMessages: {
+    allRowsSelected: 'You have selected all rows.',
+      unselectAll: 'Unselect all rows',
+      allPageRowsSelected: 'You have selected all rows in this page.',
+      selectAll: 'Select all',
+      selectedRows: 'You have selected N rows.',
+  }
 };
 
 const component = (_props: TableViewProps<Data>) => (

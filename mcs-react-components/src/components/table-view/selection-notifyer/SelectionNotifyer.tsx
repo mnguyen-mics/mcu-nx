@@ -1,19 +1,25 @@
 import * as React from 'react';
 import Slide from '../../transition/slide';
-import { FormattedMessage } from 'react-intl';
 import { Alert } from 'antd';
 import { PaginationProps } from 'antd/lib/pagination/Pagination';
 import ButtonStyleless from '../../button-styleless';
 import { ExtendedTableRowSelection } from '../table-view/TableView';
 
 export interface SelectionNotifyerProps<T> {
+  messages: {
+    allRowsSelected: string
+    unselectAll: string;
+    allPageRowsSelected: string;
+    selectAll: string;
+    selectedRows: string;
+  },
   rowSelection?: ExtendedTableRowSelection<T>;
   pagination?: PaginationProps | false;
 }
 
 class SelectionNotifyer extends React.Component<SelectionNotifyerProps<any>> {
   render() {
-    const { rowSelection, pagination } = this.props;
+    const { rowSelection, pagination, messages } = this.props;
     let content: JSX.Element = <span />;
 
     const handleOnClick = () => {
@@ -29,56 +35,32 @@ class SelectionNotifyer extends React.Component<SelectionNotifyerProps<any>> {
       ) {
         content = (
           <div>
-            <FormattedMessage
-              id="components.tableview.selectionNotifyer.allRowsSelected"
-              defaultMessage={`All the {paginationTotal} items of this list have been selected. `}
-              values={{
-                paginationTotal: pagination.total,
-              }}
-            />
+            {messages.allRowsSelected}
             <ButtonStyleless
               onClick={rowSelection.unselectAllItemIds}
               className="selected-rows-btn"
             >
-              <FormattedMessage
-                id="components.tableview.selectionNotifyer.unselectAll"
-                defaultMessage={`Click here to unselect all the items.`}
-              />
+              {messages.unselectAll}
             </ButtonStyleless>
           </div>
         );
       } else if (rowSelection.selectedRowKeys.length === pagination.pageSize) {
         content = (
           <div>
-            <FormattedMessage
-              id="components.tableview.selectionNotifyer.allPageRowsSelected"
-              defaultMessage={`You have selected {paginationPageSize} items. `}
-              values={{
-                paginationPageSize: pagination.pageSize,
-              }}
-            />
+            
+            {messages.allPageRowsSelected}
             <ButtonStyleless
               onClick={handleOnClick}
               className="selected-rows-btn"
             >
-              <FormattedMessage
-                id="components.tableview.selectionNotifyer.selectAll"
-                defaultMessage={`Click here to select all the items.`}
-              />
+              {messages.selectAll}
             </ButtonStyleless>
           </div>
         );
       } else {
         content = (
           <div>
-            <FormattedMessage
-              id="components.tableview.selectionNotifyer.selectedRows"
-              defaultMessage={`You have selected {selectedRowKeysLength}
-              { selectedRowKeysLength, plural, zero {item} one {item} other {items} }.`}
-              values={{
-                selectedRowKeysLength: rowSelection.selectedRowKeys.length,
-              }}
-            />
+            {messages.selectedRows}
           </div>
         );
       }

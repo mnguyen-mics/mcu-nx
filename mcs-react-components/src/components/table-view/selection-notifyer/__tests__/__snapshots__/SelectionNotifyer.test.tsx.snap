@@ -20,9 +20,7 @@ exports[`renders the SelectionNotifyer with 3 items selected 1`] = `
       className="ant-alert-message"
     >
       <div>
-        <span>
-          All the 10 items of this list have been selected. 
-        </span>
+        You have selected all rows.
         <button
           className="button-styleless selected-rows-btn"
           onClick={[Function]}
@@ -33,9 +31,7 @@ exports[`renders the SelectionNotifyer with 3 items selected 1`] = `
           }
           type="button"
         >
-          <span>
-            Click here to unselect all the items.
-          </span>
+          Unselect all rows
         </button>
       </div>
     </span>
@@ -66,9 +62,7 @@ exports[`renders the SelectionNotifyer with all items selected 1`] = `
       className="ant-alert-message"
     >
       <div>
-        <span>
-          All the 10 items of this list have been selected. 
-        </span>
+        You have selected all rows.
         <button
           className="button-styleless selected-rows-btn"
           onClick={[Function]}
@@ -79,9 +73,7 @@ exports[`renders the SelectionNotifyer with all items selected 1`] = `
           }
           type="button"
         >
-          <span>
-            Click here to unselect all the items.
-          </span>
+          Unselect all rows
         </button>
       </div>
     </span>
@@ -112,9 +104,7 @@ exports[`renders the SelectionNotifyer with all the page items selected 1`] = `
       className="ant-alert-message"
     >
       <div>
-        <span>
-          All the 10 items of this list have been selected. 
-        </span>
+        You have selected all rows.
         <button
           className="button-styleless selected-rows-btn"
           onClick={[Function]}
@@ -125,9 +115,7 @@ exports[`renders the SelectionNotifyer with all the page items selected 1`] = `
           }
           type="button"
         >
-          <span>
-            Click here to unselect all the items.
-          </span>
+          Unselect all rows
         </button>
       </div>
     </span>

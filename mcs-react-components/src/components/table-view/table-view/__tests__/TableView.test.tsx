@@ -74,6 +74,13 @@ const selectedRows = ['1', '2', '3'];
 const props = {
   columns: columns,
   dataSource: data,
+  selectionNotifyerMessages: {
+    allRowsSelected: 'You have selected all rows.',
+      unselectAll: 'Unselect all rows',
+      allPageRowsSelected: 'You have selected all rows in this page.',
+      selectAll: 'Select all',
+      selectedRows: 'You have selected N rows.',
+  }
 };
 
 it('renders a basic tableView', () => {
@@ -109,12 +116,16 @@ it('renders a tableView with pagination', () => {
   expect(tree).toMatchSnapshot();
 });
 
-it('renders a tableView with selected rows', () => {
+it('renders a tableView with 3 selected rows', () => {
   const tableViewProps: TableViewProps<Data> = {
     ...props,
     rowSelection: {
       selectedRowKeys: selectedRows,
     },
+    selectionNotifyerMessages: {
+      ...props.selectionNotifyerMessages,
+      selectedRows: 'You have selected 3 rows.',
+    }
   };
 
   const component = TestRenderer.create(

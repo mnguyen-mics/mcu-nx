@@ -14,7 +14,7 @@ const DEFAULT_PAGINATION_OPTION = {
 const cuid = _cuid;
 
 export interface DataColumnDefinition<T> extends ColumnProps<T> {
-  message?: string;
+  title?: string;
   key: string;
   render?: (text: string, record: T, index: number) => React.ReactNode;
   sorter?: boolean | ((a: any, b: any) => number);
@@ -46,6 +46,13 @@ export interface TableViewProps<T> extends TableProps<T> {
   columns?: Array<DataColumnDefinition<T>>;
   actionsColumnsDefinition?: Array<ActionsColumnDefinition<T>>;
   rowSelection?: ExtendedTableRowSelection;
+  selectionNotifyerMessages: {
+    allRowsSelected: string,
+    unselectAll: string,
+    allPageRowsSelected: string,
+    selectAll: string,
+    selectedRows: string,
+  }
 }
 
 class TableView<
@@ -102,7 +109,7 @@ class TableView<
       })
       .map(dataColumn => {
         return {
-          title: dataColumn.message || dataColumn.title,
+          title: dataColumn.title || dataColumn.title,
           dataIndex: dataColumn.key,
           key: dataColumn.key,
           render: dataColumn.render ? dataColumn.render : (text: any) => text,
@@ -143,6 +150,8 @@ class TableView<
       onChange,
       pagination,
       actionsColumnsDefinition,
+      visibilitySelectedColumns,
+      selectionNotifyerMessages,
       children,
       ...rest
     } = this.props;
@@ -185,6 +194,7 @@ class TableView<
         <SelectionNotifyer
           rowSelection={rest.rowSelection}
           pagination={pagination}
+          messages={selectionNotifyerMessages}
         />
 
         <Table<T> {...computedTableProps} />
