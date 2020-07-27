@@ -1,6 +1,5 @@
 import 'jest';
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import TableView, { TableViewProps } from '../TableView';
 import { Divider, Icon } from 'antd';
 import * as TestRenderer from 'react-test-renderer';
@@ -89,11 +88,9 @@ it('renders a basic tableView', () => {
   };
 
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
-      <MemoryRouter>
-        <TableView {...tableViewProps} />
-      </MemoryRouter>
-    </IntlProvider>,
+    <MemoryRouter>
+      <TableView {...tableViewProps} />
+    </MemoryRouter>,
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
@@ -106,11 +103,9 @@ it('renders a tableView with pagination', () => {
   };
 
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
-      <MemoryRouter>
-        <TableView {...tableViewProps} />
-      </MemoryRouter>
-    </IntlProvider>,
+    <MemoryRouter>
+      <TableView {...tableViewProps} />
+    </MemoryRouter>
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
@@ -129,11 +124,9 @@ it('renders a tableView with 3 selected rows', () => {
   };
 
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
-      <MemoryRouter>
-        <TableView {...tableViewProps} />
-      </MemoryRouter>
-    </IntlProvider>,
+    <MemoryRouter>
+      <TableView {...tableViewProps} />
+    </MemoryRouter>
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();

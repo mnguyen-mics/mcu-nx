@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import TableView, { TableViewProps } from '../TableView';
 import { Divider, Icon } from 'antd';
 
@@ -80,9 +79,7 @@ const props: TableViewProps<Data> = {
 };
 
 const component = (_props: TableViewProps<Data>) => (
-  <IntlProvider locale="en">
-    <TableView {...props} />
-  </IntlProvider>
+  <TableView {...props} /> 
 );
 
 component.displayName = 'TableView';

@@ -4,7 +4,6 @@ import * as TestRenderer from 'react-test-renderer';
 import SelectionNotifyer, {
   SelectionNotifyerProps,
 } from '../SelectionNotifyer';
-import { IntlProvider } from 'react-intl';
 
 interface Data {
   key: string;
@@ -81,9 +80,7 @@ it('renders the SelectionNotifyer with 3 items selected', () => {
   };
 
   const component = TestRenderer.create(
-    <IntlProvider>
-      <SelectionNotifyer {...props} />
-    </IntlProvider>,
+    <SelectionNotifyer {...props} />
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
