@@ -1,8 +1,9 @@
 import * as React from 'react';
-import Origin, { OriginComponentProps } from '../Origin';
-import { IntlProvider } from 'react-intl';
+import Origin, { Props } from '../Origin';
 
-const props: OriginComponentProps = {
+const props: Props = {
+  title: 'Origin',
+  noOriginText: 'Direct',
   origin: {
     $campaign_id: null,
     $campaign_name: null,
@@ -25,14 +26,9 @@ const props: OriginComponentProps = {
     $ts: 1555507575217,
   },
 };
+const component = (_props: Props) => <Origin {..._props} />;
 
-const component = (_props: OriginComponentProps) => (
-  <IntlProvider locale="en">
-    <Origin {..._props} />
-  </IntlProvider>
-);
-
-component.displayName = "Origin";
+component.displayName = 'Origin';
 
 export default {
   component,

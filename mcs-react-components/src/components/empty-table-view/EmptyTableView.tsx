@@ -1,32 +1,30 @@
 import * as React from 'react';
 import { Col } from 'antd';
-
-import McsIcon, { McsIconType } from '../mcs-icon';
+import McsIcon, { McsIconType } from '../../components/mcs-icon';
 
 export interface EmptyTableViewProps {
-  text?: string;
-  defaultMessage?: string;
+  message: string;
   iconType: McsIconType;
   className?: string;
 }
 
 const EmptyTableView: React.SFC<EmptyTableViewProps> = props => {
-  const prefixCls="mcs-empty-table-view"
-  const {defaultMessage, className, iconType}=props
+  const prefixCls = 'mcs-empty-table-view';
+  const { message, className, iconType } = props;
   return (
     <div className={prefixCls}>
-      <Col 
-        span={24} 
+      <Col
+        span={24}
         className={
-          className ? 
-          `${prefixCls}-content ${className}` :
-          `${prefixCls}-content`
+          className
+            ? `${prefixCls}-content ${className}`
+            : `${prefixCls}-content`
         }
       >
         <div className={`${prefixCls}-logo`}>
           <McsIcon type={iconType} />
         </div>
-        {defaultMessage}
+        {message}
       </Col>
     </div>
   );
@@ -34,8 +32,7 @@ const EmptyTableView: React.SFC<EmptyTableViewProps> = props => {
 
 EmptyTableView.defaultProps = {
   iconType: 'warning',
-  defaultMessage:'No data found' ,
-  text: undefined,
+  className: 'mcs-table-view-empty',
 };
 
 export default EmptyTableView;

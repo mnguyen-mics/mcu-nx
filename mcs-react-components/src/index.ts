@@ -18,3 +18,4 @@ export { default as StackedAreaPlot } from './components/charts/time-based-chart
 export { default as MenuList } from './components/form-menu/menu-list';
 export { default as MenuPresentational } from './components/form-menu/menu-presentational';
 export { default as MenuSubList } from './components/form-menu/menu-sub-list';
+export { default as  SelectorLayout } from './components/element-selector/selector-layout'

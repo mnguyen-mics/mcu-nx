@@ -1,23 +1,17 @@
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
-import EmptyTableView,{EmptyTableViewProps} from '../EmptyTableView';
+import EmptyTableView, { EmptyTableViewProps } from '../EmptyTableView';
 
-const props:EmptyTableViewProps={
-    iconType:'magnifier',
-    className:'mcs-table-view-empty',
-    defaultMessage:'Nothing to see here',
-    text:'This is for testing purposes'
-}
-
-const component = (_props:EmptyTableViewProps)=>(
-    <IntlProvider locale="en">
-        <EmptyTableView {..._props}/>
-    </IntlProvider>
+const props: EmptyTableViewProps = {
+  message: 'No data found',
+  iconType: 'warning',
+};
+const component = (_props: EmptyTableViewProps) => (
+  <EmptyTableView {..._props} />
 );
 
-component.displayName="EmptyTableView"
+component.displayName = 'EmptyTableView';
 
 export default {
-    component,
-    props,
-  };
+  component,
+  props,
+};

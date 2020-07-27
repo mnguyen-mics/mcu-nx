@@ -1,29 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should display an empty table view default values 1`] = `
-<div
-  className="mcs-empty-table-view"
->
-  <div
-    className="ant-col-24 mcs-empty-table-view-content"
-  >
-    <div
-      className="mcs-empty-table-view-logo"
-    >
-      <span
-        className="icon "
-      >
-        <i
-          className="mcs-warning"
-        />
-      </span>
-    </div>
-    No data found
-  </div>
-</div>
-`;
-
-exports[`should display an empty table view with a message and an icon 1`] = `
+exports[`renders the EmptyTableView 1`] = `
 <div
   className="mcs-empty-table-view"
 >
@@ -37,11 +14,11 @@ exports[`should display an empty table view with a message and an icon 1`] = `
         className="icon "
       >
         <i
-          className="mcs-magnifier"
+          className="mcs-warning"
         />
       </span>
     </div>
-    Nothing to see here
+    No data found
   </div>
 </div>
 `;

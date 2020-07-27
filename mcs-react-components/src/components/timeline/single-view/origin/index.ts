@@ -1,5 +1,5 @@
 import Origin from './Origin';
 
-export { OriginComponentProps } from './Origin';
+export { Props } from './Origin';
 
 export default Origin;

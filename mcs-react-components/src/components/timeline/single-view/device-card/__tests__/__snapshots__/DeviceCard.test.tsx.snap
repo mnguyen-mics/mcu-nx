@@ -2,7 +2,7 @@
 
 exports[`renders the DeviceCard 1`] = `
 <div
-  className="ant-row mcs-card-container "
+  className="ant-row mcs-card-container mcs-device-card"
   style={Object {}}
 >
   <div
@@ -23,18 +23,76 @@ exports[`renders the DeviceCard 1`] = `
     style={Object {}}
   >
     <div
-      className="ant-col-24 text-center"
+      className="ant-row table-line border-top"
+      style={
+        Object {
+          "marginLeft": -5,
+          "marginRight": -5,
+        }
+      }
     >
       <div
-        className="ant-spin ant-spin-spinning"
+        className="ant-col-12 table-left"
+        style={
+          Object {
+            "paddingLeft": 5,
+            "paddingRight": 5,
+          }
+        }
       >
         <span
-          className="ant-spin-dot ant-spin-dot-spin"
+          style={
+            Object {
+              "float": "left",
+            }
+          }
         >
-          <i />
-          <i />
-          <i />
-          <i />
+          <span
+            className="icon "
+          >
+            <i
+              className="mcs-laptop"
+            />
+          </span>
+        </span>
+        <span
+          style={
+            Object {
+              "float": "left",
+            }
+          }
+        >
+          <span
+            className="title"
+          >
+            CHROME
+          </span>
+          <br />
+          <span
+            className="subtitle"
+          >
+            LINUX
+          </span>
+        </span>
+      </div>
+      <div
+        className="ant-col-12 table-right"
+        style={
+          Object {
+            "paddingLeft": 5,
+            "paddingRight": 5,
+          }
+        }
+      >
+        <span
+          className="subtitle"
+          style={
+            Object {
+              "float": "right",
+            }
+          }
+        >
+          vec:123456789
         </span>
       </div>
     </div>
