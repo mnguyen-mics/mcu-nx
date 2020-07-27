@@ -74,7 +74,7 @@ const props: TableViewProps<Data> = {
       unselectAll: 'Unselect all rows',
       allPageRowsSelected: 'You have selected all rows in this page.',
       selectAll: 'Select all',
-      selectedRows: 'You have selected N rows.',
+      selectedRows: 'You have selected 2 rows.',
   }
 };
 

@@ -4,14 +4,14 @@ import { Menu, Table } from 'antd';
 import { TableProps, ColumnProps, TableRowSelection } from 'antd/lib/table';
 import { PaginationProps } from 'antd/lib/pagination/Pagination';
 import { ClickParam } from 'antd/lib/menu';
+import { Dropdown } from '../../popupContainer/PopupContainer';
 import McsIcon from '../../mcs-icon';
-// import SelectionNotifyer from './SelectionNotifyer';
+import SelectionNotifyer from '../selection-notifyer';
 
 const DEFAULT_PAGINATION_OPTION = {
   size: 'small',
   showSizeChanger: true,
 };
-const cuid = _cuid;
 
 export interface DataColumnDefinition<T> extends ColumnProps<T> {
   title?: string;
@@ -28,9 +28,11 @@ export interface ActionDefinition<T> {
   callback: (record: T) => void;
 }
 
+export type ActionsRenderer<T> = (record: T) => Array<ActionDefinition<T>>;
+
 export interface ActionsColumnDefinition<T> extends ColumnProps<T> {
   key: string;
-  actions: Array<ActionDefinition<T>>;
+  actions: ActionsRenderer<T>;
 }
 
 export interface ExtendedTableRowSelection<T = any>
@@ -39,11 +41,12 @@ export interface ExtendedTableRowSelection<T = any>
   allRowsAreSelected?: boolean;
   selectAllItemIds?: () => void;
   unselectAllItemIds?: () => void;
-  //   onSelect?: () => void;
+  onSelect?: () => void;
 }
 
 export interface TableViewProps<T> extends TableProps<T> {
   columns?: Array<DataColumnDefinition<T>>;
+  visibilitySelectedColumns?: Array<DataColumnDefinition<T>>;
   actionsColumnsDefinition?: Array<ActionsColumnDefinition<T>>;
   rowSelection?: ExtendedTableRowSelection;
   selectionNotifyerMessages: {
@@ -59,8 +62,8 @@ class TableView<
   T extends { key?: string; id?: string; [key: string]: any }
 > extends React.Component<TableViewProps<T>> {
   static defaultProps: Partial<TableViewProps<any>> = {
+    visibilitySelectedColumns: [],
     actionsColumnsDefinition: [],
-    columns: [],
   };
 
   buildActionsColumns = (
@@ -123,7 +126,7 @@ class TableView<
     record: T,
   ) => {
     const onClick = (item: ClickParam) => {
-      actions[parseInt(item.key, 0)].onClick(record);
+      actions(record)[parseInt(item.key, 0)].callback(record);
     };
 
     return (
@@ -156,17 +159,20 @@ class TableView<
       ...rest
     } = this.props;
 
-    const columns: Array<ColumnProps<T>> = this.props.columns!.concat(
+    const columns: Array<ColumnProps<T>> = this.buildDataColumns().concat(
       this.buildActionsColumns(actionsColumnsDefinition!),
     );
 
     if (dataSource === undefined)
       throw new Error('Undefined dataSource in TableView');
 
-    const dataSourceWithIds = dataSource.map(elem => ({
-      key: elem.id ? elem.id : cuid(),
-      ...(elem as any),
-    }));
+    const dataSourceWithIds = dataSource.map(elem => {
+      const cuid = _cuid();
+      return {
+        key: elem.id ? elem.id : cuid,
+        ...(elem as any),
+      }
+    });
 
     let newPagination = pagination;
     if (pagination) {
@@ -197,7 +203,7 @@ class TableView<
           messages={selectionNotifyerMessages}
         />
 
-        <Table<T> {...computedTableProps} />
+        <Table {...computedTableProps} />
       </div>
     );
   }
