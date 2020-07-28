@@ -10,7 +10,7 @@ import {
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/styles/hljs';
 import McsIcon from '../../../mcs-icon';
-import ButtonStyleless from '../../../button-styleless';
+import Button from '../../../button';
 import {
   UserActivityEventResource,
   AnyJson,
@@ -156,13 +156,13 @@ class EventActivity extends React.Component<Props, State> {
           <div className="section-cta">
             {event.$properties && showMore ? (
               <div>
-                <ButtonStyleless
+                <Button
                   onClick={this.handleJSONViewModal}
                   className="mcs-card-inner-action"
                   style={{ marginRight: '10px' }}
                 >
                   <FormattedMessage {...messages.viewEventJson} />
-                </ButtonStyleless>
+                </Button>
                 <button
                   className="mcs-card-inner-action"
                   onClick={changeVisibility}

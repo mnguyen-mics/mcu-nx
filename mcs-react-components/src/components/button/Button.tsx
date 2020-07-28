@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Omit } from '../../utils/Types';
 
-export interface ButtonStylelessProps {
+export interface ButtonProps {
   onClick?: any;
 }
 
-const ButtonStyleless: React.SFC<
+const Button: React.SFC<
   Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> &
-    ButtonStylelessProps
+    ButtonProps
 > = props => {
   const { children, className, onClick, ...rest } = props;
 
@@ -26,7 +26,7 @@ const ButtonStyleless: React.SFC<
     <button
       type="button"
       style={style}
-      className={`button-styleless ${className ? className : ''}`}
+      className={`mcs-button ${className ? className : ''}`}
       onClick={disabled ? undefined : handleOnClick}
       {...rest}
     >
@@ -35,4 +35,4 @@ const ButtonStyleless: React.SFC<
   );
 };
 
-export default ButtonStyleless;
+export default Button;

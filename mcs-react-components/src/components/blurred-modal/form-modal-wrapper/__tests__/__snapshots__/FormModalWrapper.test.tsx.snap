@@ -5,7 +5,7 @@ exports[`renders the FormModalWrapper 1`] = `
   className="form-modal"
 >
   <button
-    className="button-styleless form-close"
+    className="mcs-button form-close"
     onClick={[Function]}
     style={
       Object {
