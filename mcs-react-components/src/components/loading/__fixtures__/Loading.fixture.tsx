@@ -2,7 +2,7 @@ import * as React from 'react';
 import Loading, { LoadingProps } from '../Loading';
 
 const props: LoadingProps = {
-  className: 'loading-full-screen',
+  isFullScreen: true
 };
 
 

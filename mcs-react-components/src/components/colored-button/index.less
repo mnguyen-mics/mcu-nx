@@ -1,0 +1,22 @@
+@import './../../style/theme.less';
+
+@colored-button-prefix-cls: ~'@{mcs-prefix}-colored-button';
+
+.@{colored-button-prefix-cls} {
+  color: #fff;
+  background-color: @info-color;
+  border-color: @info-color;
+  padding: 10px 30px;
+  &:active {
+    background-color: @info-color;
+    border-color: lighten(@info-color, 10%);
+  }
+  &:hover {
+    background-color: lighten(@info-color, 10%);
+    border-color: lighten(@info-color, 10%);
+  }
+  &:disabled {
+    border-color: @btn-default-border;
+    background-color: @disabled-color;
+  }
+}

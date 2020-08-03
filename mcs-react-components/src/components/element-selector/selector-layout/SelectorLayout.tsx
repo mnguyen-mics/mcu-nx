@@ -35,35 +35,33 @@ export default class SelectorLayout extends React.Component<
 
     return (
       <Layout className={prefixCls}>
-        <div className="edit-layout ant-layout">
-          <ActionBar paths={[{ name: actionBarTitle }]} edition={true}>
-            <Button
-              type="primary"
-              className="mcs-primary"
-              onClick={handleAdd}
-              href=""
-            >
-              <McsIcon type="plus" />
-              {addButtonText}
-            </Button>
-            <McsIcon
-              type="close"
-              className="close-icon mcs-table-cursor"
-              onClick={handleClose}
-            />
-          </ActionBar>
-          <Layout>
-            <Content
-              className={`mcs-edit-container ${className ? className : ''}`}
-            >
-              {disabled ? (
-                <EmptyTableView iconType="warning" message={noElementText} />
-              ) : (
-                children
-              )}
-            </Content>
-          </Layout>
-        </div>
+        <ActionBar paths={[{ name: actionBarTitle }]} edition={true}>
+          <Button
+            type="primary"
+            className="mcs-primary"
+            onClick={handleAdd}
+            href=""
+          >
+            <McsIcon type="plus" />
+            {addButtonText}
+          </Button>
+          <McsIcon
+            type="close"
+            className="close-icon mcs-table-cursor"
+            onClick={handleClose}
+          />
+        </ActionBar>
+        <Layout>
+          <Content
+            className={`mcs-edit-container ${className ? className : ''}`}
+          >
+            {disabled ? (
+              <EmptyTableView iconType="warning" message={noElementText} />
+            ) : (
+              children
+            )}
+          </Content>
+        </Layout>
       </Layout>
     );
   }

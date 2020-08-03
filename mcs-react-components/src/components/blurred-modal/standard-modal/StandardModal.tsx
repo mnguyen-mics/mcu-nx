@@ -25,8 +25,8 @@ export default class StandardModal extends React.Component<
     const click = isBackdrop ? onClose : () => ({})
     return (
       <FullScreenModal opened={opened} blurred={false}>
-        <div className="form-card-modal dark" onClick={click}>
-          <div className="form-modal-container">
+        <div className="mcs-form-card-modal dark" onClick={click}>
+          <div className="mcs-form-modal-container">
             {children}
           </div>
         </div>

@@ -92,7 +92,7 @@ class EventActivity extends React.Component<Props, State> {
     if (Array.isArray(json)) {
       if (json.length === 0) return '[]';
       returnValue = json.map((o, i) => (
-        <div className="m-b-10" key={i}>
+        <div key={i}>
           {this.renderAnyJson(o)}
         </div>
       ));
@@ -147,7 +147,7 @@ class EventActivity extends React.Component<Props, State> {
     const changeVisibility = () => this.setState({ showMore: !showMore });
 
     return (
-      <Row className="section border-top">
+      <Row className="section border-top mcs-card-container">
         <Col className="section-ts" span={5}>
           {moment(event.$ts).format('HH:mm:ss')}
         </Col>

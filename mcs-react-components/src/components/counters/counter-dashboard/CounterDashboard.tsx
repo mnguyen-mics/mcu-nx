@@ -16,7 +16,7 @@ export default class CounterDashboard extends React.Component<CounterDashboardPr
     const computedSpan = Math.floor(24 / counters.length);
 
     return (
-      <div className={`counter-dashboard ${invertedColor ? 'inverted' : ''}`}>
+      <div className={`mcs-counter-dashboard ${invertedColor ? 'inverted' : ''}`}>
         <Row>
           {counters.map((counter, index) => {
             return (

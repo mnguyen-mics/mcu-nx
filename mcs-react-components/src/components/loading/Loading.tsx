@@ -3,14 +3,17 @@ import { Spin } from 'antd';
 
 export interface LoadingProps {
   className?: string;
+  isFullScreen: boolean;
 }
 
 const Loading: React.SFC<LoadingProps> = props => {
-
   return (
-    <div className={`mcs-centered-container ${props.className}`}>
-      <Spin size="large" />
-    </div>
+    <Spin
+      size="large"
+      className={`mcs-loading ${
+        props.isFullScreen ? 'loading-full-screen' : ''
+      } ${props.className}`}
+    />
   );
 };
 

@@ -59,7 +59,7 @@ class Actionbar extends React.Component<Props> {
         style={backgroundColor ? { backgroundColor } : {}}
       >
         <Breadcrumb
-          className={edition ? 'mcs-breadcrumb-edit' : 'mcs-breadcrumb'}
+          className={'mcs-breadcrumb'}
           separator={<McsIcon type="chevron-right" />}
           {...rest}
         >

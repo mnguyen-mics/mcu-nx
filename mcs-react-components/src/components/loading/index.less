@@ -1,5 +1,16 @@
-.loading-full-screen {
-  flex: 1;
-  width: 100%;
-}
+@import './../../style/theme.less';
 
+@loading-prefix-cls: ~'@{mcs-prefix}-loading';
+
+.@{loading-prefix-cls} {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: @layout-content-background;
+  flex: 1;
+  
+  &-full-screen {
+    flex: 1;
+    width: 100%;
+  }
+}

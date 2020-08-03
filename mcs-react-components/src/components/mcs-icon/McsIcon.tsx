@@ -74,7 +74,7 @@ class McsIcon extends React.Component<
   render() {
     const { type, className, ...rest } = this.props;
     return (
-      <span className={`icon ${className ? className : ''}`} {...rest}>
+      <span className={`mcs-icon ${className ? className : ''}`} {...rest}>
         <i className={`mcs-${type}`} />
       </span>
     );
