@@ -22,7 +22,7 @@ exports[`renders the SelectionNotifyer with 3 items selected 1`] = `
       <div>
         You have selected all rows.
         <button
-          className="button-styleless selected-rows-btn"
+          className="mcs-button selected-rows-btn"
           onClick={[Function]}
           style={
             Object {
@@ -64,7 +64,7 @@ exports[`renders the SelectionNotifyer with all items selected 1`] = `
       <div>
         You have selected all rows.
         <button
-          className="button-styleless selected-rows-btn"
+          className="mcs-button selected-rows-btn"
           onClick={[Function]}
           style={
             Object {
@@ -106,7 +106,7 @@ exports[`renders the SelectionNotifyer with all the page items selected 1`] = `
       <div>
         You have selected all rows.
         <button
-          className="button-styleless selected-rows-btn"
+          className="mcs-button selected-rows-btn"
           onClick={[Function]}
           style={
             Object {

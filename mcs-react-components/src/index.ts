@@ -1,5 +1,6 @@
 // https://github.com/tc39/proposal-export-default-from#common-concerns
 export { default as Actionbar } from './components/action-bar';
+export { default as Button } from './components/button';
 export { default as Card } from './components/card';
 export { default as ColoredButton } from './components/colored-button';
 export { default as ContentHeader } from './components/content-header';
@@ -18,4 +19,4 @@ export { default as StackedAreaPlot } from './components/charts/time-based-chart
 export { default as MenuList } from './components/form-menu/menu-list';
 export { default as MenuPresentational } from './components/form-menu/menu-presentational';
 export { default as MenuSubList } from './components/form-menu/menu-sub-list';
-export { default as  SelectorLayout } from './components/element-selector/selector-layout'
+export { default as SelectorLayout } from './components/element-selector/selector-layout';

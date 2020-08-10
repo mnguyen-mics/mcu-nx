@@ -2,7 +2,7 @@ import * as React from 'react';
 import Slide from '../../transition/slide';
 import { Alert } from 'antd';
 import { PaginationProps } from 'antd/lib/pagination/Pagination';
-import ButtonStyleless from '../../button-styleless';
+import Button from '../../button';
 import { ExtendedTableRowSelection } from '../table-view/TableView';
 
 export interface SelectionNotifyerProps<T> {
@@ -36,12 +36,12 @@ class SelectionNotifyer extends React.Component<SelectionNotifyerProps<any>> {
         content = (
           <div>
             {messages.allRowsSelected}
-            <ButtonStyleless
+            <Button
               onClick={rowSelection.unselectAllItemIds}
               className="selected-rows-btn"
             >
               {messages.unselectAll}
-            </ButtonStyleless>
+            </Button>
           </div>
         );
       } else if (rowSelection.selectedRowKeys.length === pagination.pageSize) {
@@ -49,12 +49,12 @@ class SelectionNotifyer extends React.Component<SelectionNotifyerProps<any>> {
           <div>
             
             {messages.allPageRowsSelected}
-            <ButtonStyleless
+            <Button
               onClick={handleOnClick}
               className="selected-rows-btn"
             >
               {messages.selectAll}
-            </ButtonStyleless>
+            </Button>
           </div>
         );
       } else {

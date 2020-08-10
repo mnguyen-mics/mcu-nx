@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ButtonStyleless from '../../button-styleless';
+import Button from '../../button';
 import McsIcon from '../../mcs-icon';
 
 
@@ -25,7 +25,7 @@ const FormModalWrapper: React.SFC<FormModalWrapperProps> = props => {
 
   return (
     <div className="form-modal">
-      <ButtonStyleless className="form-close" onClick={onClose}><McsIcon type="close-big" /></ButtonStyleless>
+      <Button className="form-close" onClick={onClose}><McsIcon type="close-big" /></Button>
       <div className="form-modal-container mcs-content-container mcs-form-container">
         {children}
         <div className="submit-button">
