@@ -52,7 +52,7 @@ exports[`should display a collection view filters with pagination and a search p
     </div>
   </div>
   <div
-    className="ant-row mcs-collection-view-filters-table-body"
+    className="ant-row"
   >
     <div
       className="ant-col-24"
@@ -618,7 +618,7 @@ exports[`should display a loading collection view filters 1`] = `
     />
   </div>
   <div
-    className="ant-row mcs-collection-view-filters-table-body"
+    className="ant-row"
   >
     <div
       className="ant-col-24"

@@ -25,7 +25,7 @@ class CollectionViewFilters extends React.Component<
         <Row className={`${prefixCls}-table-header`}>
           <Col span={24}>{searchInput}</Col>
         </Row>
-        <Row className={`${prefixCls}-table-body`}>
+        <Row>
           <Col span={24}>
             <CollectionView {...this.props} />
           </Col>
