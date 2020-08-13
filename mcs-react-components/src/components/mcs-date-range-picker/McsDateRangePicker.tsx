@@ -216,7 +216,7 @@ class McsDateRangePicker extends React.Component<
     const { showRangePicker } = this.state;
     const fromMoment = values.from.toMoment();
     const toMoment = values.to.toMoment();
-    return showRangePicker === true ? (
+    return showRangePicker ? (
       <RangePicker
         allowClear={false}
         onChange={this.handleDatePickerMenuChange}
