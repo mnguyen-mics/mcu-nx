@@ -35,7 +35,7 @@ class Card extends React.Component<CardProps> {
     return (
       <Row
         type={this.props.type}
-        className={`mcs-card-container ${className ? className : ''}`}
+        className={`mcs-card ${className ? className : ''}`}
         style={style ? style : {}}
       >
         {hasHeader && (
