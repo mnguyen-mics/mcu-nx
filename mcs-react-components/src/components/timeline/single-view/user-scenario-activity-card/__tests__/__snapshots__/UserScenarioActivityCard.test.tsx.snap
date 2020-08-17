@@ -2,7 +2,7 @@
 
 exports[`renders the UserScenarioActivityCard 1`] = `
 <div
-  className="ant-row mcs-card-container "
+  className="ant-row mcs-card "
   style={Object {}}
 >
   <div
