@@ -43,7 +43,7 @@ class Origin extends React.Component<Props> {
     const { origin, title, noOriginText } = this.props;
 
     return (
-      <Row gutter={10} className="section table-line border-top">
+      <Row gutter={10} className="section table-line border-top mcs-origin">
         <Col span={5} className="section-title">
           {title}
         </Col>

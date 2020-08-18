@@ -2,7 +2,7 @@
 
 exports[`renders the EventActivity 1`] = `
 <div
-  className="ant-row section border-top mcs-card-container"
+  className="ant-row mcs-event-activity"
 >
   <div
     className="ant-col-5 section-ts"

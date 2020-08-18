@@ -1,19 +1,24 @@
-.infinite-container {
+@import '../../style/theme.less';
+
+@infinite-list-prefix-cls: ~'@{mcs-prefix}-infinite-list';
+
+.@{infinite-list-prefix-cls} {
   overflow: auto;
   margin-top: 50px;
-  .infinite-list {
+  max-height: 600px;
+  &-items {
     button {
       flex: auto;
       padding-top: 12px;
       padding-bottom: 12px;
     }
-    .infinite-list-selected-item {
+    .@{infinite-list-prefix-cls}-selected-item {
       border-left: 4px solid @info-color;
       button {
         padding-left: 16px;
       }
     }
-    .infinite-list-item {
+    .@{infinite-list-prefix-cls}-item {
       button {
         padding-left: 20px;
       }
@@ -26,14 +31,14 @@
       }
     }
   }
-  .infinite-loading-container {
+  &-loading {
     position: absolute;
     width: 100%;
     text-align: center;
     padding: 15px 0px;
   }
 
-  .infinite-scroll-searchbar {
+  &-searchbar {
     background-color: #fff;
     position: absolute;
     top: 0px;

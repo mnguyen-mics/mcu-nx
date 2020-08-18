@@ -147,7 +147,7 @@ class EventActivity extends React.Component<Props, State> {
     const changeVisibility = () => this.setState({ showMore: !showMore });
 
     return (
-      <Row className="section border-top mcs-card-container">
+      <Row className="mcs-event-activity">
         <Col className="section-ts" span={5}>
           {moment(event.$ts).format('HH:mm:ss')}
         </Col>

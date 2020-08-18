@@ -167,7 +167,7 @@ export default class ProfileInfo extends React.Component<
     };
 
     return (
-      <div>
+      <div className="mcs-profile-info">
         {profileFormatted &&
           profileFormatted.map(profil => {
             return generateItems(profil as any);

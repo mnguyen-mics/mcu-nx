@@ -2,17 +2,12 @@
 
 exports[`renders the list 1`] = `
 <div
-  className="infinite-container"
-  style={
-    Object {
-      "maxHeight": "600px",
-    }
-  }
+  className="mcs-infinite-list"
 >
   <div>
     <div>
       <span
-        className="ant-input-search infinite-scroll-searchbar ant-input-affix-wrapper"
+        className="ant-input-search mcs-infinite-list-searchbar ant-input-affix-wrapper"
       >
         <input
           className="ant-input ant-input-disabled"
@@ -51,7 +46,7 @@ exports[`renders the list 1`] = `
         </span>
       </span>
       <div
-        className="infinite-loading-container"
+        className="mcs-infinite-list-loading"
       >
         <div
           className="ant-spin ant-spin-spinning"

@@ -2,7 +2,7 @@
 
 exports[`renders the Origin 1`] = `
 <div
-  className="ant-row section table-line border-top"
+  className="ant-row section table-line border-top mcs-origin"
   style={
     Object {
       "marginLeft": -5,
