@@ -11,7 +11,7 @@ words=wip
 regex=^[A-Z]+-[^ ]+ [^ ]+
 
 [body-max-line-length]
-line-length=72
+line-length=112
 
 [author-valid-email]
 regex=[^@]+@(mediarithmics.com|users.noreply.github.com)
