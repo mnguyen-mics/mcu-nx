@@ -1,8 +1,8 @@
 mediarithmics react components
 =======================
 
-This is the place were our react components & utilities live.
-They are meant to be used by mediarithmics front clients. (eg: mediartihmics-navigator)
+This is the place where our react components & utilities live.
+They are meant to be used by mediarithmics front clients. (eg: mediarithmics-navigator)
 
 Prerequisites
 -------------
@@ -17,7 +17,7 @@ We use [nvm](https://github.com/creationix/nvm) to set the nodejs version.
 Getting started
 ---------------
 
-### Developping components
+### Developing components
 
 * Clone the ux-components project
 * `cd mcs-react-components`
@@ -33,7 +33,7 @@ Getting started
 * `'import { InfiniteList } from '@mediarithmics-private/mcs-components-library';` Import a component form library index main entry point
 * `import { InfiniteListFilters } from '@mediarithmics-private/mcs-components-library/lib/components/infinite-list';` Import utilities/types exposed in the component itself
 
-Developping and testing in Navigator
+Developing and testing in Navigator
 ---------------
 
 * `cd ~/dev/ux-components/mcs-react-components` go into the library directory
@@ -45,6 +45,8 @@ Developping and testing in Navigator
 * `cd ~/dev/mediarithmics-navigator` go into the navigator directory
 * `npm link @mediarithmics-private/mcs-components-library` link-install the package
 * `npm start` run navigator locally
+
+Adding a new component to the library can be tedious, especially the creation of the file structure (with the tests, the fixtures folders and files). To generate those, you can use the script `generate-component-folder.sh`, passing only the name of the new component (in kebab-case).
 
 Tests
 ---------------
@@ -75,7 +77,7 @@ Versionning
 
 * We follow [semver](https://semver.org/) rules for the versioning
 
-Usefull npm tasks
+Useful npm tasks
 ---------------
 
 * `npm run cosmos` starts react-cosmos

@@ -2,7 +2,7 @@
 
 exports[`renders the ColoredButton 1`] = `
 <button
-  className="ant-btn mcs-primary ant-btn-primary "
+  className="ant-btn ant-btn-primary mcs-colored-button "
   onClick={[Function]}
   onMouseOut={[Function]}
   onMouseOver={[Function]}

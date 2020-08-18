@@ -144,7 +144,7 @@ class InfiniteList<T> extends React.Component<Props<T>, State<T>> {
     const { intl } = this.props;
     const { data, loading, hasMore, initialLoading } = this.state;
     return (
-      <div className="infinite-container" style={{ maxHeight: '600px' }}>
+      <div className="mcs-infinite-list">
         <InfiniteScroll
           initialLoad={false}
           loadMore={this.handleInfiniteOnLoad}
@@ -157,10 +157,10 @@ class InfiniteList<T> extends React.Component<Props<T>, State<T>> {
                 placeholder={intl.formatMessage(
                   messages.loadingSearchBarPlaceholder,
                 )}
-                className="infinite-scroll-searchbar"
+                className="mcs-infinite-list-searchbar"
                 disabled={true}
               />
-              <div className="infinite-loading-container">
+              <div className="mcs-infinite-list-loading">
                 <Spin />
               </div>
             </div>
@@ -169,17 +169,17 @@ class InfiniteList<T> extends React.Component<Props<T>, State<T>> {
               <InputSearch
                 placeholder={intl.formatMessage(messages.searchBarPlaceholder)}
                 onSearch={this.onSearch}
-                className="infinite-scroll-searchbar"
+                className="mcs-infinite-list-searchbar"
                 onChange={this.onChange}
               />
               <List
                 dataSource={data}
                 renderItem={this.props.renderItem}
-                className="infinite-list"
+                className="mcs-infinite-list-items"
               >
                 {loading &&
                   hasMore && (
-                    <div className="infinite-loading-container">
+                    <div className="mcs-infinite-list-loading">
                       <Spin />
                     </div>
                   )}

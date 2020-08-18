@@ -1,20 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders the ColoredButton 1`] = `
+exports[`renders the Loading 1`] = `
 <div
-  className="mcs-centered-container loading-full-screen"
+  className="ant-spin ant-spin-lg ant-spin-spinning mcs-loading loading-full-screen undefined"
 >
-  <div
-    className="ant-spin ant-spin-lg ant-spin-spinning"
+  <span
+    className="ant-spin-dot ant-spin-dot-spin"
   >
-    <span
-      className="ant-spin-dot ant-spin-dot-spin"
-    >
-      <i />
-      <i />
-      <i />
-      <i />
-    </span>
-  </div>
+    <i />
+    <i />
+    <i />
+    <i />
+  </span>
 </div>
 `;

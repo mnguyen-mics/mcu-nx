@@ -9,7 +9,7 @@ exports[`renders the MenuPresentational 1`] = `
     className="content"
   >
     <span
-      className="icon "
+      className="mcs-icon "
     >
       <i
         className="mcs-automation"

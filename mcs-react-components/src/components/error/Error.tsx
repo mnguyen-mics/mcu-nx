@@ -7,7 +7,7 @@ export interface ErrorProps {
 
 const Error: React.SFC<ErrorProps> = ({ message, style }) => {
   return (
-    <div className="mcs-centered-container mcs-error" style={style}>
+    <div className="mcs-error" style={style}>
       <p>{message}</p>
     </div>
   );

@@ -57,7 +57,8 @@ export default class ColoredButton extends React.Component<Props, State> {
         style={isOver ? hoveredStyle : defaultStyle}
         onMouseOver={onMouseOver}
         onMouseOut={onMouseOut}
-        className={`ant-btn mcs-primary ant-btn-primary ${
+        // TODO : importing ant style here should be avoided, maybe replace 'button' component with antd Button instead ?
+        className={`ant-btn ant-btn-primary mcs-colored-button ${
           className ? className : ''
         }`}
         onClick={handleOnClick}

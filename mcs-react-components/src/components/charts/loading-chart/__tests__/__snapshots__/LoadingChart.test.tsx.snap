@@ -2,7 +2,7 @@
 
 exports[`Should render the LoadingChart 1`] = `
 <div
-  className="ant-row mcs-card-no-data test"
+  className="ant-row mcs-loading-chart-no-data test"
 >
   <div
     className="ant-col-24"

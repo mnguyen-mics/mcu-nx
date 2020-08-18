@@ -41,7 +41,7 @@ exports[`renders the labelsSelector component 1`] = `
     type="button"
   >
     <span
-      className="icon "
+      className="mcs-icon "
     >
       <i
         className="mcs-plus"

@@ -12,8 +12,8 @@ it('should render a disabled date range picker', () => {
   const handleDatePickerMenuChange = (dates: McsDateRangeValue) => dates;
   const props: McsDateRangePickerProps = {
     values: {
-      from: new McsMoment('2020-08-02'),
-      to: new McsMoment('2020-08-03'),
+      from: new McsMoment('2020-08-03'),
+      to: new McsMoment('2020-08-04'),
     },
     onChange: handleDatePickerMenuChange,
     excludeToday: true,

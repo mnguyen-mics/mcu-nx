@@ -5,7 +5,7 @@ exports[`should render a date range picker without the start date 1`] = `
   id="123"
 >
   <button
-    className="ant-btn ant-dropdown-trigger"
+    className="ant-btn ant-dropdown-trigger mcs-date-range-picker"
     onClick={[Function]}
     onMouseDown={[Function]}
     onTouchStart={[Function]}
@@ -61,7 +61,7 @@ exports[`should render a disabled date range picker 1`] = `
   id="123"
 >
   <button
-    className="ant-btn ant-dropdown-trigger"
+    className="ant-btn ant-dropdown-trigger mcs-date-range-picker"
     disabled={true}
     onClick={[Function]}
     type="button"
@@ -86,7 +86,7 @@ exports[`should render a disabled date range picker 1`] = `
       </svg>
     </i>
     <span>
-      2020-08-02 ~ 2020-08-03
+      2020-08-03 ~ 2020-08-04
     </span>
     <i
       aria-label="icon: down"

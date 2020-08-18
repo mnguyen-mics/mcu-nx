@@ -2,7 +2,7 @@
 
 exports[`renders the ColoredButton 1`] = `
 <div
-  className="mcs-centered-container mcs-error"
+  className="mcs-error"
   style={
     Object {
       "color": "red",

@@ -2,7 +2,7 @@
 
 exports[`renders the Counter 1`] = `
 <div
-  className="counter-dashboard "
+  className="mcs-counter-dashboard "
 >
   <div
     className="ant-row"
@@ -11,10 +11,10 @@ exports[`renders the Counter 1`] = `
       className="ant-col-6 border-right"
     >
       <div
-        className="counter"
+        className="mcs-counter"
       >
         <span
-          className="icon "
+          className="mcs-icon "
         >
           <i
             className="mcs-users"
@@ -38,10 +38,10 @@ exports[`renders the Counter 1`] = `
       className="ant-col-6 border-right"
     >
       <div
-        className="counter"
+        className="mcs-counter"
       >
         <span
-          className="icon "
+          className="mcs-icon "
         >
           <i
             className="mcs-library"
@@ -74,10 +74,10 @@ exports[`renders the Counter 1`] = `
       className="ant-col-6 border-right"
     >
       <div
-        className="counter"
+        className="mcs-counter"
       >
         <span
-          className="icon "
+          className="mcs-icon "
         >
           <i
             className="mcs-settings"
@@ -101,10 +101,10 @@ exports[`renders the Counter 1`] = `
       className="ant-col-6"
     >
       <div
-        className="counter"
+        className="mcs-counter"
       >
         <span
-          className="icon "
+          className="mcs-icon "
         >
           <i
             className="mcs-display"

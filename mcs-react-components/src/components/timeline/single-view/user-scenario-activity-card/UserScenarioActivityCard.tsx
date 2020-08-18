@@ -131,7 +131,7 @@ class UserScenarioActivityCard extends React.Component<Props> {
     const activity = this.props.activity;
     const cardContent = this.generateCardElements(activity);
     return (
-      <Card title={cardContent.title}>
+      <Card title={cardContent.title} className="mcs-user-scenario-activity-card">
         <Row>
           <div className="mcs-card-content-text">{cardContent.intlMsg}</div>
         </Row>

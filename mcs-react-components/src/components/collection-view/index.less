@@ -2,17 +2,6 @@
 
 @collection-view-prefix-cls: ~'@{mcs-prefix}-collection-view';
 
-.@{collection-view-prefix-cls}-loading {
-	height: '350px';
-
-	&-content {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: inherit;
-	}
-}
-
 .@{collection-view-prefix-cls} {
 	height: 100%;
 	margin-bottom: -1.4em;
@@ -28,5 +17,16 @@
 	}
 	&-text-right {
 		text-align: right;
+	}
+
+	&-loading {
+		height: 350px;
+	
+		&-content {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: inherit;
+		}
 	}
 }

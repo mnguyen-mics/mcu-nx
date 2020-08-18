@@ -11,7 +11,7 @@ exports[`renders the EmptyTableView 1`] = `
       className="mcs-empty-table-view-logo"
     >
       <span
-        className="icon "
+        className="mcs-icon "
       >
         <i
           className="mcs-warning"

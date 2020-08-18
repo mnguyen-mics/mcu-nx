@@ -23,7 +23,7 @@ exports[`renders the actionBar 1`] = `
         className="ant-breadcrumb-separator"
       >
         <span
-          className="icon "
+          className="mcs-icon "
         >
           <i
             className="mcs-chevron-right"
@@ -46,7 +46,7 @@ exports[`renders the actionBar 1`] = `
         className="ant-breadcrumb-separator"
       >
         <span
-          className="icon "
+          className="mcs-icon "
         >
           <i
             className="mcs-chevron-right"

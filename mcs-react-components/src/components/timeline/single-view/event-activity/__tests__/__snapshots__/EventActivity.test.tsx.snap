@@ -2,7 +2,7 @@
 
 exports[`renders the EventActivity 1`] = `
 <div
-  className="ant-row section border-top"
+  className="ant-row mcs-event-activity"
 >
   <div
     className="ant-col-5 section-ts"
@@ -26,7 +26,7 @@ exports[`renders the EventActivity 1`] = `
           onClick={[Function]}
         >
           <span
-            className="icon "
+            className="mcs-icon "
           >
             <i
               className="mcs-chevron"

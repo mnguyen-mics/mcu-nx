@@ -201,7 +201,12 @@ class McsDateRangePicker extends React.Component<
     );
 
     return (
-      <Dropdown overlay={menu} trigger={['click']} disabled={disabled}>
+      <Dropdown
+        className="mcs-date-range-picker"
+        overlay={menu}
+        trigger={['click']}
+        disabled={disabled}
+      >
         <Button>
           <Icon type="calendar" />
           {this.getSelectedPresettedRange()}
@@ -219,6 +224,7 @@ class McsDateRangePicker extends React.Component<
     return showRangePicker ? (
       <RangePicker
         allowClear={false}
+        className="mcs-date-range-picker"
         onChange={this.handleDatePickerMenuChange}
         defaultValue={[fromMoment, toMoment]}
         disabledDate={this.disableDates}

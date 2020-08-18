@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders the ProfileInfo 1`] = `
-<div>
+<div
+  className="mcs-profile-info"
+>
   <div
     className="ant-row table-line"
     style={

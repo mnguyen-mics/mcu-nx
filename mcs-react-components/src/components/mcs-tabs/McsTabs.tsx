@@ -34,7 +34,7 @@ class McsTabs extends React.Component<McTabsProps> {
     const menuItems = this.buildMenuItems();
 
     return (
-      <div>
+      <div className="mcs-tabs">
         <Tabs defaultActiveKey={items[0].title} {...rest}>
           {menuItems}
         </Tabs>

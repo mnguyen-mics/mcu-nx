@@ -1,7 +1,7 @@
 import 'jest';
 import * as React from 'react';
 import * as TestRenderer from 'react-test-renderer';
-import LoadingChart, { LoadingChartProps } from '../LoadingCharts';
+import LoadingChart, { LoadingChartProps } from '../LoadingChart';
 
 it('Should render the LoadingChart', () => {
   const props: LoadingChartProps = {

@@ -18,7 +18,7 @@ class ContentHeader extends React.Component<ContentHeaderProps> {
     );
 
     return (
-      <div className="content-header">
+      <div className="mcs-content-header">
         {loading ? <i className="mcs-table-cell-loading-large" /> : content}
       </div>
     );

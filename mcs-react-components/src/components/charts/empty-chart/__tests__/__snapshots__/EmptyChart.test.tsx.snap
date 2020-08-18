@@ -2,13 +2,13 @@
 
 exports[`Should render the EmptyChart 1`] = `
 <div
-  className="ant-row mcs-card-no-data"
+  className="ant-row mcs-empty-chart-no-data"
 >
   <div
     className="ant-col-24"
   >
     <span
-      className="icon "
+      className="mcs-icon "
     >
       <i
         className="mcs-automation"
