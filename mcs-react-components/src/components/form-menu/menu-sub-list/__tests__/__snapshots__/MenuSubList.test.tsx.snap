@@ -27,7 +27,7 @@ exports[`renders the MenuSubList 1`] = `
       className="selector"
     >
       <span
-        className="icon "
+        className="mcs-icon "
       >
         <i
           className="mcs-plus"
@@ -65,7 +65,7 @@ exports[`renders the MenuSubList with submenu 1`] = `
       className="selector"
     >
       <span
-        className="icon "
+        className="mcs-icon "
       >
         <i
           className="mcs-minus"
@@ -91,7 +91,7 @@ exports[`renders the MenuSubList with submenu 1`] = `
         className="selector"
       >
         <span
-          className="icon "
+          className="mcs-icon "
         >
           <i
             className="mcs-chevron-right"

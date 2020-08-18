@@ -86,7 +86,7 @@ exports[`should render a disabled date range picker 1`] = `
       </svg>
     </i>
     <span>
-      2020-08-02 ~ 2020-08-03
+      2020-08-03 ~ 2020-08-04
     </span>
     <i
       aria-label="icon: down"

@@ -2,7 +2,7 @@
 
 exports[`renders a basic content header 1`] = `
 <div
-  className="content-header"
+  className="mcs-content-header"
 >
   <div>
     <div
@@ -19,7 +19,7 @@ exports[`renders a basic content header 1`] = `
 
 exports[`renders the "evolved" content header 1`] = `
 <div
-  className="content-header"
+  className="mcs-content-header"
 >
   <div>
     <div
@@ -38,7 +38,7 @@ exports[`renders the "evolved" content header 1`] = `
 
 exports[`renders the loading content header 1`] = `
 <div
-  className="content-header"
+  className="mcs-content-header"
 >
   <i
     className="mcs-table-cell-loading-large"

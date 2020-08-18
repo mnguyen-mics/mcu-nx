@@ -48,7 +48,7 @@ exports[`renders the DeviceCard 1`] = `
           }
         >
           <span
-            className="icon "
+            className="mcs-icon "
           >
             <i
               className="mcs-laptop"

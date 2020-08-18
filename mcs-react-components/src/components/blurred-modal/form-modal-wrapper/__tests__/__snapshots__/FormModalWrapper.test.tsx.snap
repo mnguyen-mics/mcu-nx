@@ -15,7 +15,7 @@ exports[`renders the FormModalWrapper 1`] = `
     type="button"
   >
     <span
-      className="icon "
+      className="mcs-icon "
     >
       <i
         className="mcs-close-big"

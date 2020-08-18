@@ -3,9 +3,9 @@ import * as React from 'react';
 import * as TestRenderer from 'react-test-renderer';
 import Loading, { LoadingProps } from '../Loading';
 
-it('renders the ColoredButton', () => {
+it('renders the Loading', () => {
   const props: LoadingProps = {
-    className: 'loading-full-screen',
+    isFullScreen: true
   };
 
   const component = TestRenderer.create(

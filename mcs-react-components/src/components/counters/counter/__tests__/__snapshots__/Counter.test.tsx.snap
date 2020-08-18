@@ -2,10 +2,10 @@
 
 exports[`renders the Counter 1`] = `
 <div
-  className="counter"
+  className="mcs-counter"
 >
   <span
-    className="icon "
+    className="mcs-icon "
   >
     <i
       className="mcs-users"

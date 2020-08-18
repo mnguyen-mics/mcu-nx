@@ -27,7 +27,7 @@ exports[`renders the Device 1`] = `
       }
     >
       <span
-        className="icon "
+        className="mcs-icon "
       >
         <i
           className="mcs-smartphone"
