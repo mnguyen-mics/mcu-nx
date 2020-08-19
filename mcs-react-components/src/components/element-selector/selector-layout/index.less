@@ -1,0 +1,43 @@
+@import '../../../style/theme.less';
+
+@selector-layout-prefix-cls: ~'@{mcs-prefix}-selector-layout';
+
+.@{selector-layout-prefix-cls} {
+  .mcs-plus{
+      margin-right:10px;
+  }
+  .ant-btn-primary.mcs-primary {
+    color: #fff;
+    background-color: @info-color;
+    border-color: @info-color;
+    padding: 5px 30px;
+    &:active {
+      background-color: @info-color;
+      border-color: lighten(@info-color, 10%);
+    }
+    &:hover {
+      background-color: lighten(@info-color, 10%);
+      border-color: lighten(@info-color, 10%);
+    }
+    &:disabled {
+      border-color: @btn-default-border;
+      background-color: @disabled-color;
+    }
+  }
+  .mcs-table-cursor {
+    cursor: pointer;
+  }
+  .close-icon {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .mcs-edit-container {
+    padding: 60px 40px 20px 40px;
+    height: inherit;
+    overflow-y: scroll;
+  }
+  .ant-btn {
+    height: auto !important;
+  }
+}
