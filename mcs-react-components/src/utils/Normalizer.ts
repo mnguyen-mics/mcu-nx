@@ -16,13 +16,13 @@
 import { Index } from './index';
 import { ItemsById } from './ItemsInterface';
 
-export function normalizeArrayOfObject<T extends Object, K extends keyof T>(
+export function normalizeArrayOfObject<T extends {}, K extends keyof T>(
   arr: T[],
   key: K,
 ): Index<T> {
   if (!Array.isArray(arr)) throw new Error(`${arr} is not an array`);
   return arr.reduce((acc, object) => {
-    const obj:Object=object[key]
+    const obj:{}=object[key]
     if (obj) {
       const keyValue = obj.toString();
       return {

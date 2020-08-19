@@ -78,12 +78,8 @@ exports[`renders the SelectorLayout with no element 1`] = `
   className="mcs-selector-layout ant-layout"
 >
   <div
-<<<<<<< HEAD
     className="ant-row-flex ant-row-flex-space-between ant-row-flex-middle mcs-actionbar-edit "
     style={Object {}}
-=======
-    className="mcs-selector-layout-edit-layout mcs-selector-layout-ant-layout"
->>>>>>> MICS-5983 : Updating the selector layout snapshot
   >
     <div
       className="mcs-breadcrumb ant-breadcrumb"

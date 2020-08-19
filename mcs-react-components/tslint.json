@@ -38,7 +38,6 @@
     "no-var-requires": false,
     "prefer-conditional-expression": false,
     "max-classes-per-file": false,
-    "ban-types":false,
     "no-implicit-dependencies": [true, "dev"]
   }
 }
