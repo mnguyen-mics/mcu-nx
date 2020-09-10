@@ -10,11 +10,15 @@ const props: MultiSelectProps<string> = {
   subItemsTitle: '... mais aussi',
   selectedItems: [],
   getKey: (a: string) => a,
-  handleItemClick: (a: string) => console.log(a),
-  handleMenuClick: (selectedItems: string[]) =>
-    selectedItems.forEach(s => console.log('> clicked on: ' + s)),
-  onCloseMenu: (selectedItems: string[]) =>
-    selectedItems.forEach(s => console.log('> closing: ' + s)),
+  handleItemClick: (a: string) => {
+      // do nothing
+  },
+  handleMenuClick: (selectedItems: string[]) => {
+      // do nothing
+  },
+  onCloseMenu: (selectedItems: string[]) => {
+      // do nothing
+  },
   singleSelectOnly: false,
   buttonClass: 'test-class',
 };

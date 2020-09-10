@@ -14,11 +14,17 @@ it('renders the multi select', () => {
     subItemsTitle: '... mais aussi',
     selectedItems: [],
     getKey: (a: string) => a,
-    handleItemClick: (a: string) => console.log(a),
+    handleItemClick: (a: string) => {
+        // do nothing
+    },
     handleMenuClick: (selectedItems: string[]) =>
-      selectedItems.forEach(s => console.log('> clicked on: ' + s)),
+      selectedItems.forEach(s => {
+          // do nothing
+      }),
     onCloseMenu: (selectedItems: string[]) =>
-      selectedItems.forEach(s => console.log('> closing: ' + s)),
+      selectedItems.forEach(s => {
+          // do nothing
+      }),
     singleSelectOnly: false,
     buttonClass: 'test-class',
   };
