@@ -1,43 +1,39 @@
-@import './../../style/theme.less';
-
-@progress-prefix-cls: ~'@{mcs-prefix}-progress';
-
-.@{progress-prefix-cls}-wrapper {
+.mcs-progress-wrapper {
   margin-top: 15px;
   margin-bottom: 30px;
-  .@{progress-prefix-cls} {
-    width: 100%;
-    font-size: 12px;
-    position: relative;
-    display: inline-block;
-    .@{progress-prefix-cls}-outer {
-      display: inline-block;
+  .mcs-progress {
       width: 100%;
-      .@{progress-prefix-cls}-inner {
-        display: inline-block;
-        width: 100%;
-        background-color: @border-color-split;
-        border-radius: 100px;
-        vertical-align: middle;
-        .@{progress-prefix-cls}-bg {
-          border-radius: 100px;
-          transition: all 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
-          position: relative;
-        }
-        .@{progress-prefix-cls}-bg.success {
-          background-color: @success-color;
-        }
-        .@{progress-prefix-cls}-bg.error {
-          background-color: @error-color;
-        }
-        .@{progress-prefix-cls}-bg.warning {
-          background-color: @warning-color;
-        }
+      font-size: 12px;
+      position: relative;
+      display: inline-block;
+      .mcs-progress-outer {
+          display: inline-block;
+          width: 100%;
+          .mcs-progress-inner {
+              display: inline-block;
+              width: 100%;
+              background-color: @border-color-split;
+              border-radius: 100px;
+              vertical-align: middle;
+              .mcs-progress-bg {
+                  border-radius: 100px;
+                  transition: all 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
+                  position: relative;
+              }
+              .mcs-progress-bg.success {
+                  background-color: @success-color;
+              }
+              .mcs-progress-bg.error {
+                  background-color: @error-color;
+              }
+              .mcs-progress-bg.warning {
+                  background-color: @warning-color;
+              }
+          }
       }
-    }
   }
 
-  .@{progress-prefix-cls}-label {
-    color: @text-color;
+  .mcs-progress-label {
+      color: @text-color; 
   }
 }
