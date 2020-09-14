@@ -4,7 +4,7 @@ exports[`renders the metrics column 1`] = `
 initialize {
   "0": Object {
     "attribs": Object {
-      "class": "p-r-20 mcs-metrics-column",
+      "class": "mcs-metrics-column",
     },
     "children": Array [
       Object {
@@ -14,7 +14,7 @@ initialize {
         "children": Array [
           Object {
             "attribs": Object {
-              "class": "title",
+              "class": "mcs-metrics-column_title",
             },
             "children": Array [
               Object {
@@ -29,7 +29,7 @@ initialize {
             "namespace": "http://www.w3.org/1999/xhtml",
             "next": Object {
               "attribs": Object {
-                "class": "metric",
+                "class": "mcs-metrics-column_metric",
               },
               "children": Array [
                 Object {
@@ -65,7 +65,7 @@ initialize {
           },
           Object {
             "attribs": Object {
-              "class": "metric",
+              "class": "mcs-metrics-column_metric",
             },
             "children": Array [
               Object {
@@ -82,7 +82,7 @@ initialize {
             "parent": [Circular],
             "prev": Object {
               "attribs": Object {
-                "class": "title",
+                "class": "mcs-metrics-column_title",
               },
               "children": Array [
                 Object {
@@ -124,7 +124,7 @@ initialize {
           "children": Array [
             Object {
               "attribs": Object {
-                "class": "title",
+                "class": "mcs-metrics-column_title",
               },
               "children": Array [
                 Object {
@@ -139,7 +139,7 @@ initialize {
               "namespace": "http://www.w3.org/1999/xhtml",
               "next": Object {
                 "attribs": Object {
-                  "class": "metric",
+                  "class": "mcs-metrics-column_metric",
                 },
                 "children": Array [
                   Object {
@@ -175,7 +175,7 @@ initialize {
             },
             Object {
               "attribs": Object {
-                "class": "metric",
+                "class": "mcs-metrics-column_metric",
               },
               "children": Array [
                 Object {
@@ -192,7 +192,7 @@ initialize {
               "parent": [Circular],
               "prev": Object {
                 "attribs": Object {
-                  "class": "title",
+                  "class": "mcs-metrics-column_title",
                 },
                 "children": Array [
                   Object {
@@ -234,7 +234,7 @@ initialize {
             "children": Array [
               Object {
                 "attribs": Object {
-                  "class": "title",
+                  "class": "mcs-metrics-column_title",
                 },
                 "children": Array [
                   Object {
@@ -249,7 +249,7 @@ initialize {
                 "namespace": "http://www.w3.org/1999/xhtml",
                 "next": Object {
                   "attribs": Object {
-                    "class": "metric",
+                    "class": "mcs-metrics-column_metric",
                   },
                   "children": Array [
                     Object {
@@ -285,7 +285,7 @@ initialize {
               },
               Object {
                 "attribs": Object {
-                  "class": "metric",
+                  "class": "mcs-metrics-column_metric",
                 },
                 "children": Array [
                   Object {
@@ -302,7 +302,7 @@ initialize {
                 "parent": [Circular],
                 "prev": Object {
                   "attribs": Object {
-                    "class": "title",
+                    "class": "mcs-metrics-column_title",
                   },
                   "children": Array [
                     Object {
@@ -375,7 +375,7 @@ initialize {
         "children": Array [
           Object {
             "attribs": Object {
-              "class": "title",
+              "class": "mcs-metrics-column_title",
             },
             "children": Array [
               Object {
@@ -390,7 +390,7 @@ initialize {
             "namespace": "http://www.w3.org/1999/xhtml",
             "next": Object {
               "attribs": Object {
-                "class": "metric",
+                "class": "mcs-metrics-column_metric",
               },
               "children": Array [
                 Object {
@@ -426,7 +426,7 @@ initialize {
           },
           Object {
             "attribs": Object {
-              "class": "metric",
+              "class": "mcs-metrics-column_metric",
             },
             "children": Array [
               Object {
@@ -443,7 +443,7 @@ initialize {
             "parent": [Circular],
             "prev": Object {
               "attribs": Object {
-                "class": "title",
+                "class": "mcs-metrics-column_title",
               },
               "children": Array [
                 Object {
@@ -485,7 +485,7 @@ initialize {
           "children": Array [
             Object {
               "attribs": Object {
-                "class": "title",
+                "class": "mcs-metrics-column_title",
               },
               "children": Array [
                 Object {
@@ -500,7 +500,7 @@ initialize {
               "namespace": "http://www.w3.org/1999/xhtml",
               "next": Object {
                 "attribs": Object {
-                  "class": "metric",
+                  "class": "mcs-metrics-column_metric",
                 },
                 "children": Array [
                   Object {
@@ -536,7 +536,7 @@ initialize {
             },
             Object {
               "attribs": Object {
-                "class": "metric",
+                "class": "mcs-metrics-column_metric",
               },
               "children": Array [
                 Object {
@@ -553,7 +553,7 @@ initialize {
               "parent": [Circular],
               "prev": Object {
                 "attribs": Object {
-                  "class": "title",
+                  "class": "mcs-metrics-column_title",
                 },
                 "children": Array [
                   Object {
@@ -607,7 +607,7 @@ initialize {
           "children": Array [
             Object {
               "attribs": Object {
-                "class": "title",
+                "class": "mcs-metrics-column_title",
               },
               "children": Array [
                 Object {
@@ -622,7 +622,7 @@ initialize {
               "namespace": "http://www.w3.org/1999/xhtml",
               "next": Object {
                 "attribs": Object {
-                  "class": "metric",
+                  "class": "mcs-metrics-column_metric",
                 },
                 "children": Array [
                   Object {
@@ -658,7 +658,7 @@ initialize {
             },
             Object {
               "attribs": Object {
-                "class": "metric",
+                "class": "mcs-metrics-column_metric",
               },
               "children": Array [
                 Object {
@@ -675,7 +675,7 @@ initialize {
               "parent": [Circular],
               "prev": Object {
                 "attribs": Object {
-                  "class": "title",
+                  "class": "mcs-metrics-column_title",
                 },
                 "children": Array [
                   Object {
@@ -736,7 +736,7 @@ initialize {
         "children": Array [
           Object {
             "attribs": Object {
-              "class": "title",
+              "class": "mcs-metrics-column_title",
             },
             "children": Array [
               Object {
@@ -751,7 +751,7 @@ initialize {
             "namespace": "http://www.w3.org/1999/xhtml",
             "next": Object {
               "attribs": Object {
-                "class": "metric",
+                "class": "mcs-metrics-column_metric",
               },
               "children": Array [
                 Object {
@@ -787,7 +787,7 @@ initialize {
           },
           Object {
             "attribs": Object {
-              "class": "metric",
+              "class": "mcs-metrics-column_metric",
             },
             "children": Array [
               Object {
@@ -804,7 +804,7 @@ initialize {
             "parent": [Circular],
             "prev": Object {
               "attribs": Object {
-                "class": "title",
+                "class": "mcs-metrics-column_title",
               },
               "children": Array [
                 Object {
@@ -848,7 +848,7 @@ initialize {
           "children": Array [
             Object {
               "attribs": Object {
-                "class": "title",
+                "class": "mcs-metrics-column_title",
               },
               "children": Array [
                 Object {
@@ -863,7 +863,7 @@ initialize {
               "namespace": "http://www.w3.org/1999/xhtml",
               "next": Object {
                 "attribs": Object {
-                  "class": "metric",
+                  "class": "mcs-metrics-column_metric",
                 },
                 "children": Array [
                   Object {
@@ -899,7 +899,7 @@ initialize {
             },
             Object {
               "attribs": Object {
-                "class": "metric",
+                "class": "mcs-metrics-column_metric",
               },
               "children": Array [
                 Object {
@@ -916,7 +916,7 @@ initialize {
               "parent": [Circular],
               "prev": Object {
                 "attribs": Object {
-                  "class": "title",
+                  "class": "mcs-metrics-column_title",
                 },
                 "children": Array [
                   Object {
@@ -960,7 +960,7 @@ initialize {
             "children": Array [
               Object {
                 "attribs": Object {
-                  "class": "title",
+                  "class": "mcs-metrics-column_title",
                 },
                 "children": Array [
                   Object {
@@ -975,7 +975,7 @@ initialize {
                 "namespace": "http://www.w3.org/1999/xhtml",
                 "next": Object {
                   "attribs": Object {
-                    "class": "metric",
+                    "class": "mcs-metrics-column_metric",
                   },
                   "children": Array [
                     Object {
@@ -1011,7 +1011,7 @@ initialize {
               },
               Object {
                 "attribs": Object {
-                  "class": "metric",
+                  "class": "mcs-metrics-column_metric",
                 },
                 "children": Array [
                   Object {
@@ -1028,7 +1028,7 @@ initialize {
                 "parent": [Circular],
                 "prev": Object {
                   "attribs": Object {
-                    "class": "title",
+                    "class": "mcs-metrics-column_title",
                   },
                   "children": Array [
                     Object {

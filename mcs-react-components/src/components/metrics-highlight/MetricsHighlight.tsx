@@ -12,17 +12,18 @@ class MetricsHighlight extends React.Component<MetricsColumnProps> {
 
     const nbOfVal: number = metrics ? metrics.length : 1;
     const cellSize: number = Math.round(24 / nbOfVal);
+    const prefixCls = 'mcs-metrics-column';
 
     return (
-      <div className="mcs-metrics-column">
+      <div className={prefixCls}>
         {metrics.map(metric => {
           return (
             <Col key={metric.name} span={cellSize}>
-              <div className="title">{metric.name}</div>
-              <div className="metric">
+              <div className={`${prefixCls}_title`}>{metric.name}</div>
+              <div className={`${prefixCls}_metric`}>
                 {isLoading ? (
                   <i
-                    className="mcs-table-cell-loading"
+                    className={`${prefixCls}_loading`}
                     style={{ width: '130px' }}
                   />
                 ) : (
