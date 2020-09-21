@@ -1,3 +1,3 @@
 import LoadingChart from './LoadingChart';
 
-export default { LoadingChart };
+export default LoadingChart;
