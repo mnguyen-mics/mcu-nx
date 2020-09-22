@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders the ColoredButton 1`] = `
+exports[`renders the Error component 1`] = `
 <div
   className="mcs-error"
   style={

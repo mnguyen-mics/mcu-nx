@@ -3,7 +3,7 @@ import * as React from 'react';
 import * as TestRenderer from 'react-test-renderer';
 import Error, { ErrorProps } from '../Error';
 
-it('renders the ColoredButton', () => { 
+it('renders the Error component', () => { 
   const props: ErrorProps = {
     message: 'This is an error message',
     style: {color: 'red'}
