@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the legendchart 1`] = `
+<div
+  className="mcs-legend-container"
+>
+  <div
+    className="wrapper"
+  >
+    <div
+      className="mcs-line"
+      style={
+        Object {
+          "backgroundColor": "#FFF",
+        }
+      }
+    />
+    <span
+      className="mcs-legend"
+    >
+      mics
+    </span>
+  </div>
+</div>
+`;
