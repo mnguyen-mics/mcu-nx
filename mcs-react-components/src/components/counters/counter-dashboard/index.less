@@ -3,14 +3,26 @@
 @counter-dashboard-prefix-cls: ~'@{mcs-prefix}-counter-dashboard';
 
 .@{counter-dashboard-prefix-cls} {
+  display: flex;
+  justify-content: space-evenly;
   padding: 30px 10px;
-  .border-right {
+
+  .mcs-icon {
+    padding-bottom: 5px;
+  }
+
+  >:not(:last-child) {
     border-right: 1px solid #d3dbe1;
   }
+
   &.inverted {
     color: white;
 
-    .border-right {
+    .mcs-icon {
+      color: @info-color;
+    }
+
+    >:not(:last-child) {
       border-right: 1px solid rgba(215, 215, 215, 0.49);
     }
   }

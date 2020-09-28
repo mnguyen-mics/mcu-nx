@@ -9,6 +9,11 @@ const props: CounterDashboardProps = {
       title: 'Users',
       value: 424242,
       loading: false,
+      trend: {
+        value: 20,
+        type: 'up',
+      },
+      unit: 'Users'
     },
     {
       iconType: 'library',

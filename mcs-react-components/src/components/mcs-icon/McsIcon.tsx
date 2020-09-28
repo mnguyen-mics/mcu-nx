@@ -62,6 +62,7 @@ export type McsIconType =
 
 export interface McsIconProps {
   type: McsIconType;
+  styleIcon?: React.CSSProperties;
 }
 
 class McsIcon extends React.Component<
@@ -72,10 +73,10 @@ class McsIcon extends React.Component<
     >
 > {
   render() {
-    const { type, className, ...rest } = this.props;
+    const { type, styleIcon, className, ...rest } = this.props;
     return (
       <span className={`mcs-icon ${className ? className : ''}`} {...rest}>
-        <i className={`mcs-${type}`} />
+        <i className={`mcs-${type}`} style={styleIcon ? styleIcon : {}}/>
       </span>
     );
   }

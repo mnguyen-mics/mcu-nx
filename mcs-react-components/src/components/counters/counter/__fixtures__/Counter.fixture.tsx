@@ -7,6 +7,11 @@ const props: CounterProps = {
   title: 'Users',
   value: 424242,
   loading: false,
+  trend: {
+    value: 20,
+    type: 'up',
+  },
+  unit: 'Users'
 };
 
 const component = (_props: CounterProps) => (

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Counter, { CounterProps } from '../counter/Counter';
-import { Row, Col } from 'antd/lib/grid';
 
 export interface CounterDashboardProps {
   counters: CounterProps[];
@@ -13,23 +12,11 @@ export default class CounterDashboard extends React.Component<CounterDashboardPr
 
     if (counters.length === 0) return null;
 
-    const computedSpan = Math.floor(24 / counters.length);
-
     return (
       <div className={`mcs-counter-dashboard ${invertedColor ? 'inverted' : ''}`}>
-        <Row>
-          {counters.map((counter, index) => {
-            return (
-              <Col
-                key={index}
-                span={computedSpan}
-                className={index !== counters.length - 1 ? 'border-right' : ''}
-              >
-                <Counter {...counter} />
-              </Col>
-            );
-          })}
-        </Row>
+        {counters.map((counter, index) => {
+          return <Counter key={index} {...counter} />;
+        })}
       </div>
     );
   }
