@@ -11,8 +11,8 @@ export { default as CollectionSelector } from './components/collection-selector'
 export { default as CollectionView } from './components/collection-view';
 export { default as CollectionViewFilters } from './components/collection-view-filters';
 export { default as ContentHeader } from './components/content-header';
-export { default as Counter } from './components/counters';
-export { default as CounterDashboard } from './components/counters';
+export { default as Counter } from './components/counters/counter';
+export { default as CounterDashboard } from './components/counters/counter-dashboard';
 export { default as Error } from './components/error';
 export { default as EmptyTableView } from './components/empty-table-view';
 export { default as Loading } from './components/loading';
