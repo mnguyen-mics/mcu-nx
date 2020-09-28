@@ -30,6 +30,7 @@ exports[`renders the MenuList 1`] = `
     >
       <i
         className="mcs-chevron-right"
+        style={Object {}}
       />
     </span>
   </div>

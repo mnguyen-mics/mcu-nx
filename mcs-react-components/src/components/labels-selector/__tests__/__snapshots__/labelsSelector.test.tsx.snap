@@ -45,6 +45,7 @@ exports[`renders the labelsSelector component 1`] = `
     >
       <i
         className="mcs-plus"
+        style={Object {}}
       />
     </span>
     <span>

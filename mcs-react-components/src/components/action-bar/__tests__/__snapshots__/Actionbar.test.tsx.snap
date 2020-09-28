@@ -27,6 +27,7 @@ exports[`renders the actionBar 1`] = `
         >
           <i
             className="mcs-chevron-right"
+            style={Object {}}
           />
         </span>
       </span>
@@ -50,6 +51,7 @@ exports[`renders the actionBar 1`] = `
         >
           <i
             className="mcs-chevron-right"
+            style={Object {}}
           />
         </span>
       </span>

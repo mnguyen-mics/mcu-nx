@@ -15,6 +15,7 @@ exports[`renders the EmptyTableView 1`] = `
       >
         <i
           className="mcs-warning"
+          style={Object {}}
         />
       </span>
     </div>

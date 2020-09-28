@@ -19,6 +19,7 @@ exports[`renders the FormModalWrapper 1`] = `
     >
       <i
         className="mcs-close-big"
+        style={Object {}}
       />
     </span>
   </button>

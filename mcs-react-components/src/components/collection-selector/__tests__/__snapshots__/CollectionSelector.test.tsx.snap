@@ -25,6 +25,7 @@ exports[`should test a collection selector with filtering 1`] = `
           >
             <i
               className="mcs-chevron-right"
+              style={Object {}}
             />
           </span>
         </span>
@@ -43,6 +44,7 @@ exports[`should test a collection selector with filtering 1`] = `
         >
           <i
             className="mcs-plus"
+            style={Object {}}
           />
         </span>
         <span>
@@ -55,6 +57,7 @@ exports[`should test a collection selector with filtering 1`] = `
       >
         <i
           className="mcs-close"
+          style={Object {}}
         />
       </span>
     </div>
@@ -174,6 +177,7 @@ exports[`should test a collection selector without filtering 1`] = `
           >
             <i
               className="mcs-chevron-right"
+              style={Object {}}
             />
           </span>
         </span>
@@ -192,6 +196,7 @@ exports[`should test a collection selector without filtering 1`] = `
         >
           <i
             className="mcs-plus"
+            style={Object {}}
           />
         </span>
         <span>
@@ -204,6 +209,7 @@ exports[`should test a collection selector without filtering 1`] = `
       >
         <i
           className="mcs-close"
+          style={Object {}}
         />
       </span>
     </div>
