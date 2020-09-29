@@ -5,7 +5,7 @@
     "lib"
   ],
   "types": "lib/index.d.ts",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "scripts": {
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
     "lint:fix": "tslint --fix -c tslint.json \"src/**/*.ts\"",
