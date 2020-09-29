@@ -13,6 +13,7 @@ exports[`renders the MenuPresentational 1`] = `
     >
       <i
         className="mcs-automation"
+        style={Object {}}
       />
     </span>
     <div

@@ -31,6 +31,7 @@ exports[`renders the MenuSubList 1`] = `
       >
         <i
           className="mcs-plus"
+          style={Object {}}
         />
       </span>
     </div>
@@ -69,6 +70,7 @@ exports[`renders the MenuSubList with submenu 1`] = `
       >
         <i
           className="mcs-minus"
+          style={Object {}}
         />
       </span>
     </div>
@@ -95,6 +97,7 @@ exports[`renders the MenuSubList with submenu 1`] = `
         >
           <i
             className="mcs-chevron-right"
+            style={Object {}}
           />
         </span>
       </div>

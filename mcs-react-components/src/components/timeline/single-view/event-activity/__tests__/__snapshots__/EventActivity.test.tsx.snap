@@ -30,6 +30,7 @@ exports[`renders the EventActivity 1`] = `
           >
             <i
               className="mcs-chevron"
+              style={Object {}}
             />
           </span>
            

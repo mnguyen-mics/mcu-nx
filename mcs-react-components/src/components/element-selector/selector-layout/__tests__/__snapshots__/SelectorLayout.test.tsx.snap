@@ -25,6 +25,7 @@ exports[`renders the SelectorLayout with children 1`] = `
           >
             <i
               className="mcs-chevron-right"
+              style={Object {}}
             />
           </span>
         </span>
@@ -43,6 +44,7 @@ exports[`renders the SelectorLayout with children 1`] = `
         >
           <i
             className="mcs-plus"
+            style={Object {}}
           />
         </span>
         <span>
@@ -55,6 +57,7 @@ exports[`renders the SelectorLayout with children 1`] = `
       >
         <i
           className="mcs-close"
+          style={Object {}}
         />
       </span>
     </div>
@@ -98,6 +101,7 @@ exports[`renders the SelectorLayout with no element 1`] = `
           >
             <i
               className="mcs-chevron-right"
+              style={Object {}}
             />
           </span>
         </span>
@@ -116,6 +120,7 @@ exports[`renders the SelectorLayout with no element 1`] = `
         >
           <i
             className="mcs-plus"
+            style={Object {}}
           />
         </span>
         <span>
@@ -128,6 +133,7 @@ exports[`renders the SelectorLayout with no element 1`] = `
       >
         <i
           className="mcs-close"
+          style={Object {}}
         />
       </span>
     </div>
@@ -152,6 +158,7 @@ exports[`renders the SelectorLayout with no element 1`] = `
             >
               <i
                 className="mcs-warning"
+                style={Object {}}
               />
             </span>
           </div>

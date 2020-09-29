@@ -6,6 +6,7 @@ exports[`renders an user icon 1`] = `
 >
   <i
     className="mcs-user"
+    style={Object {}}
   />
 </span>
 `;

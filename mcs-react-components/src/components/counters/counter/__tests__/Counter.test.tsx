@@ -10,6 +10,11 @@ it('renders the Counter', () => {
     title: 'Users',
     value: 424242,
     loading: false,
+    trend: {
+      value: 20,
+      type: 'up',
+    },
+    unit: 'Users'
   };
   const component = TestRenderer.create(
     <IntlProvider locale="en">

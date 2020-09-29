@@ -12,6 +12,7 @@ exports[`Should render the EmptyChart 1`] = `
     >
       <i
         className="mcs-automation"
+        style={Object {}}
       />
     </span>
   </div>

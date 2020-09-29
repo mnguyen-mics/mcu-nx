@@ -31,6 +31,7 @@ exports[`renders the Device 1`] = `
       >
         <i
           className="mcs-smartphone"
+          style={Object {}}
         />
       </span>
     </span>
