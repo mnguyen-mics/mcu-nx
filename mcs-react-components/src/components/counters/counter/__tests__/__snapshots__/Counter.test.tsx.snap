@@ -23,8 +23,7 @@ exports[`renders the Counter 1`] = `
     <span>
       424,242
     </span>
-     
-    Users
+     Users
     <div
       className="ant-statistic"
     >

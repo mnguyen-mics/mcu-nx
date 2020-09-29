@@ -34,7 +34,7 @@ export default class Counter extends React.Component<CounterProps> {
             <Spin />
           ) : (value !== undefined && value !== null) ? (
             <React.Fragment>
-              <FormattedNumber value={value} />&nbsp;{unit || ''}
+              <FormattedNumber value={value} />{unit ? ' ' + unit : ''}
               {trend ? <Statistic
                 title=""
                 value={trend.value}
