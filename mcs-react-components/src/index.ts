@@ -1,9 +1,9 @@
 // https://github.com/tc39/proposal-export-default-from#common-concerns
 export { default as Actionbar } from './components/action-bar';
-export { default as BlurredModal } from './components/blurred-modal';
-export { default as FormModalWrapper } from './components/blurred-modal';
-export { default as FullScreenModal } from './components/blurred-modal';
-export { default as StandardModal } from './components/blurred-modal';
+export { default as BlurredModal } from './components/blurred-modal/blurred-modal';
+export { default as FormModalWrapper } from './components/blurred-modal/form-modal-wrapper';
+export { default as FullScreenModal } from './components/blurred-modal/full-screen-form-modal';
+export { default as StandardModal } from './components/blurred-modal/standard-modal';
 export { default as Button } from './components/button';
 export { default as Card } from './components/card';
 export { default as ColoredButton } from './components/colored-button';
