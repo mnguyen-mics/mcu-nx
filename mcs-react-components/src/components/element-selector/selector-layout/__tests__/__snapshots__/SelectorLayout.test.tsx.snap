@@ -34,10 +34,10 @@ exports[`renders the SelectorLayout with children 1`] = `
     <div
       className="left-part-margin"
     >
-      <a
-        className="ant-btn mcs-primary ant-btn-primary"
-        href=""
+      <button
+        className="ant-btn add-button"
         onClick={[Function]}
+        type="button"
       >
         <span
           className="mcs-icon "
@@ -50,7 +50,7 @@ exports[`renders the SelectorLayout with children 1`] = `
         <span>
           Add
         </span>
-      </a>
+      </button>
       <span
         className="mcs-icon close-icon mcs-table-cursor"
         onClick={[Function]}
@@ -110,10 +110,10 @@ exports[`renders the SelectorLayout with no element 1`] = `
     <div
       className="left-part-margin"
     >
-      <a
-        className="ant-btn mcs-primary ant-btn-primary"
-        href=""
+      <button
+        className="ant-btn add-button"
         onClick={[Function]}
+        type="button"
       >
         <span
           className="mcs-icon "
@@ -126,7 +126,7 @@ exports[`renders the SelectorLayout with no element 1`] = `
         <span>
           Add
         </span>
-      </a>
+      </button>
       <span
         className="mcs-icon close-icon mcs-table-cursor"
         onClick={[Function]}
