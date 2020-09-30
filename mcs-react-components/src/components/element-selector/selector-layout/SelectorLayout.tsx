@@ -37,10 +37,8 @@ export default class SelectorLayout extends React.Component<
       <Layout className={prefixCls}>
         <ActionBar paths={[{ name: actionBarTitle }]} edition={true}>
           <Button
-            type="primary"
-            className="mcs-primary"
+            className='add-button'
             onClick={handleAdd}
-            href=""
           >
             <McsIcon type="plus" />
             {addButtonText}

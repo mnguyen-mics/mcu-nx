@@ -34,10 +34,10 @@ exports[`should test a collection selector with filtering 1`] = `
     <div
       className="left-part-margin"
     >
-      <a
-        className="ant-btn mcs-primary ant-btn-primary"
-        href=""
+      <button
+        className="ant-btn add-button"
         onClick={[Function]}
+        type="button"
       >
         <span
           className="mcs-icon "
@@ -50,7 +50,7 @@ exports[`should test a collection selector with filtering 1`] = `
         <span>
           Add
         </span>
-      </a>
+      </button>
       <span
         className="mcs-icon close-icon mcs-table-cursor"
         onClick={[Function]}
@@ -186,10 +186,10 @@ exports[`should test a collection selector without filtering 1`] = `
     <div
       className="left-part-margin"
     >
-      <a
-        className="ant-btn mcs-primary ant-btn-primary"
-        href=""
+      <button
+        className="ant-btn add-button"
         onClick={[Function]}
+        type="button"
       >
         <span
           className="mcs-icon "
@@ -202,7 +202,7 @@ exports[`should test a collection selector without filtering 1`] = `
         <span>
           Add
         </span>
-      </a>
+      </button>
       <span
         className="mcs-icon close-icon mcs-table-cursor"
         onClick={[Function]}
