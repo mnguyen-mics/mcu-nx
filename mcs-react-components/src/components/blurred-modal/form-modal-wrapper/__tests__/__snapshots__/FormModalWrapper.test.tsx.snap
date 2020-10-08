@@ -2,7 +2,7 @@
 
 exports[`renders the FormModalWrapper 1`] = `
 <div
-  className="form-modal"
+  className="mcs-form-modal"
 >
   <button
     className="mcs-button form-close"
@@ -24,7 +24,7 @@ exports[`renders the FormModalWrapper 1`] = `
     </span>
   </button>
   <div
-    className="form-modal-container mcs-content-container mcs-form-container"
+    className="mcs-form-modal-container mcs-content-container mcs-form-container"
   >
     <div
       className="submit-button"
