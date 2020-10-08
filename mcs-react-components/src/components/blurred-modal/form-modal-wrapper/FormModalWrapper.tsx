@@ -24,9 +24,9 @@ const FormModalWrapper: React.SFC<FormModalWrapperProps> = props => {
 
 
   return (
-    <div className="form-modal">
+    <div className="mcs-form-modal">
       <Button className="form-close" onClick={onClose}><McsIcon type="close-big" /></Button>
-      <div className="form-modal-container mcs-content-container mcs-form-container">
+      <div className="mcs-form-modal-container mcs-content-container mcs-form-container">
         {children}
         <div className="submit-button">
           {footer}

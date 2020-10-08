@@ -18,12 +18,12 @@ export default class FullScreenModal extends React.Component<FullScreenFormModal
   setRootClassName = (remove?: boolean, blurred?: boolean) => {
     const appRoot = document.getElementById('mcs-full-page');
     if (appRoot && !remove && blurred)
-      appRoot.classList.add('form-modal-blurred-open')
+      appRoot.classList.add('mcs-form-modal-blurred-open')
     if (appRoot && !remove && !blurred)
-      appRoot.classList.add('form-modal-open')
+      appRoot.classList.add('mcs-form-modal-open')
     if (appRoot && remove) {
-      appRoot.classList.remove('form-modal-blurred-open')
-      appRoot.classList.remove('form-modal-open')
+      appRoot.classList.remove('mcs-form-modal-blurred-open')
+      appRoot.classList.remove('mcs-form-modal-open')
     }
   }
 
