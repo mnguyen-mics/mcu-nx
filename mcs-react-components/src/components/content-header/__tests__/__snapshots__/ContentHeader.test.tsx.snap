@@ -1,15 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders a basic content header 1`] = `
+exports[`renders a large content header 1`] = `
 <div
-  className="mcs-content-header"
+  className="mcs-contentHeader"
 >
   <div>
     <div
-      className="content-subtitle"
+      className="mcs-contentHeader_subtitle"
     />
     <div
-      className="content-title"
+      className="mcs-contentHeader_title--large"
+    >
+      Titre
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders a medium content header 1`] = `
+<div
+  className="mcs-contentHeader"
+>
+  <div>
+    <div
+      className="mcs-contentHeader_subtitle"
+    />
+    <div
+      className="mcs-contentHeader_title--medium"
     >
       Titre
     </div>
@@ -19,16 +36,16 @@ exports[`renders a basic content header 1`] = `
 
 exports[`renders the "evolved" content header 1`] = `
 <div
-  className="mcs-content-header"
+  className="mcs-contentHeader"
 >
   <div>
     <div
-      className="content-subtitle"
+      className="mcs-contentHeader_subtitle"
     >
       SubTitre
     </div>
     <div
-      className="content-title"
+      className="mcs-contentHeader_title--undefined"
     >
       Titre
     </div>
@@ -38,7 +55,7 @@ exports[`renders the "evolved" content header 1`] = `
 
 exports[`renders the loading content header 1`] = `
 <div
-  className="mcs-content-header"
+  className="mcs-contentHeader"
 >
   <i
     className="mcs-table-cell-loading-large"

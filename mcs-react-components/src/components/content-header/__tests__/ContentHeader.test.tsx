@@ -5,9 +5,27 @@ import * as TestRenderer from 'react-test-renderer';
 
 import ContentHeader, { ContentHeaderProps } from '../ContentHeader';
 
-it('renders a basic content header', () => {
+it('renders a medium content header', () => {
   const props: ContentHeaderProps = {
     title: 'Titre',
+    size: 'medium'
+  };
+
+  const component = TestRenderer.create(
+    <IntlProvider locale="en">
+      <MemoryRouter>
+        <ContentHeader {...props} />
+      </MemoryRouter>
+    </IntlProvider>,
+  );
+  const tree = component.toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
+it('renders a large content header', () => {
+  const props: ContentHeaderProps = {
+    title: 'Titre',
+    size: 'large'
   };
 
   const component = TestRenderer.create(

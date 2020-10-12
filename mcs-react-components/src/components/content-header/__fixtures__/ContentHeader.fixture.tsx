@@ -5,6 +5,7 @@ const props: ContentHeaderProps = {
   title: 'Titre',
   subTitle: 'SubTitre',
   loading: false,
+  size: 'large',
 };
 
 const component = (_props: ContentHeaderProps) => <ContentHeader {..._props} />;
