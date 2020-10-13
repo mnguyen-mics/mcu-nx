@@ -45,7 +45,7 @@ exports[`renders the "evolved" content header 1`] = `
       SubTitre
     </div>
     <div
-      className="mcs-contentHeader_title--undefined"
+      className="mcs-contentHeader_title--large"
     >
       Titre
     </div>
