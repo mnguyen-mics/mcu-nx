@@ -15,7 +15,7 @@ class ContentHeader extends React.Component<ContentHeaderProps> {
       <div>
         <div className="mcs-contentHeader_subtitle">{subTitle}</div>
         <div
-          className={`mcs-contentHeader_title--${size}`}
+          className={size ? `mcs-contentHeader_title--${size}` : "mcs-contentHeader_title--large"}
         >
           {title}
         </div>
