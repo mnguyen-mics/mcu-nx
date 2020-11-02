@@ -21,7 +21,6 @@ const defaultFieldGridConfig: Partial<FormItemProps> = {
 };
 
 const defaultRowProps: Partial<RowProps> = {
-  type: 'flex',
   align: 'middle',
 };
 
@@ -59,7 +58,7 @@ const FormFieldWrapper: React.SFC<FormItemProps &
       >
         <Row {...defaultRowProps} {...rowProps}>
           {!isEmpty(hoverToolTipProps) && !small ? (
-            <Tooltip placement="top" {...hoverToolTipProps}>
+            <Tooltip placement="top" {...hoverToolTipProps} title="">
               <Col span={20}>{children}</Col>
             </Tooltip>
           ) : (
@@ -68,7 +67,7 @@ const FormFieldWrapper: React.SFC<FormItemProps &
 
           {!isEmpty(helpToolTipProps) && !small ? (
             <Col span={2} className={`field-tooltip`}>
-              <Tooltip {...helpToolTipProps} placement="right">
+              <Tooltip {...helpToolTipProps} placement="right" title="">
                 <McsIcon type="info" />
               </Tooltip>
             </Col>

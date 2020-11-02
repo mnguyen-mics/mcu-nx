@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Icon, Checkbox, Menu } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+import { Checkbox, Menu } from 'antd';
 import Input from 'antd/lib/input/Input';
-import { ClickParam } from 'antd/lib/menu';
+import { MenuInfo } from '../../../node_modules/rc-menu/lib/interface';
 import { Dropdown } from '../popupContainer/PopupContainer';
 
 export interface MenuItemProps {
@@ -64,8 +65,8 @@ export default class SearchAndMultiSelect extends React.Component<
     return !!value.find(v => v === key);
   };
 
-  handleOnClick = (param: ClickParam) => {
-    this.props.onClick(param.key);
+  handleOnClick = (param: MenuInfo) => {
+    this.props.onClick(param.key.toString());
   };
 
   render() {
@@ -108,7 +109,7 @@ export default class SearchAndMultiSelect extends React.Component<
       >
         <Input
           placeholder={placeholder}
-          suffix={<Icon type="down" />}
+          suffix={<DownOutlined />}
           onChange={this.handleOnChange}
         />
       </Dropdown>

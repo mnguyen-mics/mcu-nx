@@ -2,11 +2,11 @@
 
 exports[`renders the actionBar 1`] = `
 <div
-  className="ant-row-flex ant-row-flex-space-between ant-row-flex-middle mcs-actionbar "
+  className="ant-row ant-row-space-between ant-row-middle mcs-actionbar "
   style={Object {}}
 >
   <div
-    className="mcs-breadcrumb ant-breadcrumb"
+    className="ant-breadcrumb mcs-breadcrumb"
   >
     <span>
       <span

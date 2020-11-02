@@ -50,7 +50,6 @@ class Actionbar extends React.Component<Props> {
     } = this.props;
     return (
       <Row
-        type="flex"
         align="middle"
         justify="space-between"
         className={`${edition ? 'mcs-actionbar-edit' : 'mcs-actionbar'} ${

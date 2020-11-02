@@ -20,7 +20,7 @@ class McsTabs extends React.Component<McTabsProps> {
 
     return items.map((item, index) => (
       <Tabs.TabPane
-        tab={item.title}
+        tab={<div className="mcs-tabs">{item.title}</div>}
         key={item.key || item.title}
         forceRender={item.forceRender ? item.forceRender : false}
       >
@@ -34,8 +34,8 @@ class McsTabs extends React.Component<McTabsProps> {
     const menuItems = this.buildMenuItems();
 
     return (
-      <div className="mcs-tabs">
-        <Tabs defaultActiveKey={items[0].title} {...rest}>
+      <div>
+        <Tabs defaultActiveKey={items[0].title} {...rest} animated={true}>
           {menuItems}
         </Tabs>
       </div>

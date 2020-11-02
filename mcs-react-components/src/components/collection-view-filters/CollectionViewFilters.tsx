@@ -4,7 +4,7 @@ import { SearchProps } from 'antd/lib/input/Search';
 
 import CollectionView, { CollectionViewProps } from '../collection-view';
 
-const Search = Input.Search;
+const { Search } = Input;
 
 export interface CollectionViewFiltersProps extends CollectionViewProps {
   searchOptions?: SearchProps;
@@ -21,7 +21,7 @@ class CollectionViewFilters extends React.Component<
     const searchInput = searchOptions ? <Search {...searchOptions} /> : null;
 
     return (
-      <Row className={prefixCls}>
+      <div className={prefixCls}>
         <Row className={`${prefixCls}-table-header`}>
           <Col span={24}>{searchInput}</Col>
         </Row>
@@ -30,7 +30,7 @@ class CollectionViewFilters extends React.Component<
             <CollectionView {...this.props} />
           </Col>
         </Row>
-      </Row>
+      </div>
     );
   }
 }

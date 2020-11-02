@@ -1,6 +1,7 @@
 import * as React from 'react';
 import McsIcon, { McsIconType } from '../../mcs-icon';
-import { Spin, Statistic, Icon } from 'antd';
+import { UpOutlined, DownOutlined } from '@ant-design/icons';
+import { Spin, Statistic } from 'antd';
 import { FormattedNumber } from 'react-intl';
 
 export interface LoadingCounterValue {
@@ -40,7 +41,7 @@ export default class Counter extends React.Component<CounterProps> {
                 value={trend.value}
                 precision={1}
                 valueStyle={{ color: trend.type === 'up' ? '#4ea500' : '#ed2333' }}
-                prefix={<Icon type={`arrow-${trend.type}`} />}
+                prefix={trend.type === 'up' ? <UpOutlined /> : <DownOutlined />}
                 suffix="%"
               /> : null}
             </React.Fragment>

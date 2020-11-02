@@ -17,7 +17,7 @@ const props: CollectionViewProps = {
 	collectionItems: items,
 	loading: false,
 	gutter: 50,
-	span: 30,
+	span: 24,
 	pagination: {
 		current: 0,
 		total: 60,

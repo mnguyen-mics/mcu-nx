@@ -1,6 +1,7 @@
 import * as React from 'react';
 import TableView, { TableViewProps } from '../TableView';
-import { Divider, Icon } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+import { Divider } from 'antd';
 
 interface Data {
   key: string;
@@ -42,7 +43,7 @@ const columns = [
         <a href="javascript:;">Delete</a>
         <Divider type="vertical" />
         <a href="javascript:;" className="ant-dropdown-link">
-          More actions <Icon type="down" />
+          More actions <DownOutlined />
         </a>
       </span>
     ),

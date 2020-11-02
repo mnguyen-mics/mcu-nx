@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Icon, Menu, Button } from 'antd';
-import { ClickParam } from 'antd/lib/menu';
+import { CheckOutlined } from '@ant-design/icons';
+import { Menu, Button } from 'antd';
+import { MenuInfo } from '../../../node_modules/rc-menu/lib/interface';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { Dropdown } from '../popupContainer/PopupContainer';
 
@@ -49,7 +50,7 @@ class MultiSelect<T> extends React.Component<
           ) !== -1;
         return (
           <Menu.Item key={getKey(element)}>
-            {isItemSelected && <Icon type="check" />}
+            {isItemSelected && <CheckOutlined />}
             <span>{display!(element)}</span>
           </Menu.Item>
         );
@@ -73,7 +74,7 @@ class MultiSelect<T> extends React.Component<
     }
   };
 
-  onMenuClick = (param: ClickParam) => {
+  onMenuClick = (param: MenuInfo) => {
     const {
       items,
       handleMenuClick,

@@ -12,10 +12,9 @@ module.exports = {
   module: {
     rules: [
 			{
-				test: /\.(ts|tsx)?$/,
+        test: /\.ts|\.tsx$/,
 				include: path.resolve('src'),
 				loaders: ['babel-loader', 'ts-loader'],
-				exclude: /node_modules/,
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -30,5 +29,5 @@ module.exports = {
 	resolve: {
 		extensions: ['.tsx', '.ts', '.jsx', '.js'],
 	},
-	performance: { hints: false },
+  performance: { hints: false },
 };

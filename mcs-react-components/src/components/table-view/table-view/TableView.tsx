@@ -1,15 +1,16 @@
 import * as React from 'react';
 import * as _cuid from 'cuid';
 import { Menu, Table } from 'antd';
-import { TableProps, ColumnProps, TableRowSelection } from 'antd/lib/table';
+import { TableProps, ColumnProps } from 'antd/lib/table';
+import { TableRowSelection, TablePaginationConfig } from 'antd/lib/table/interface';
 import { PaginationProps } from 'antd/lib/pagination/Pagination';
-import { ClickParam } from 'antd/lib/menu';
+import { MenuInfo } from '../../../../node_modules/rc-menu/lib/interface';
 import { Dropdown } from '../../popupContainer/PopupContainer';
 import McsIcon from '../../mcs-icon';
 import SelectionNotifyer from '../selection-notifyer';
 
 const DEFAULT_PAGINATION_OPTION = {
-  size: 'small',
+  size: 'small' as 'small',
   showSizeChanger: true,
 };
 
@@ -125,8 +126,8 @@ class TableView<
     actions: (record: T) => Array<ActionDefinition<T>>,
     record: T,
   ) => {
-    const onClick = (item: ClickParam) => {
-      actions(record)[parseInt(item.key, 0)].callback(record);
+    const onClick = (item: MenuInfo) => {
+      actions(record)[parseInt(item.key.toString(), 0)].callback(record);
     };
 
     return (
@@ -174,7 +175,7 @@ class TableView<
       }
     });
 
-    let newPagination = pagination;
+    let newPagination: false | TablePaginationConfig | undefined = pagination;
     if (pagination) {
       newPagination = {
         ...DEFAULT_PAGINATION_OPTION,

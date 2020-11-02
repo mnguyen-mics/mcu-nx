@@ -11,13 +11,13 @@ exports[`should render a date range picker without the start date 1`] = `
     onTouchStart={[Function]}
     type="button"
   >
-    <i
-      aria-label="icon: calendar"
+    <span
+      aria-label="calendar"
       className="anticon anticon-calendar"
+      role="img"
     >
       <svg
         aria-hidden="true"
-        className=""
         data-icon="calendar"
         fill="currentColor"
         focusable="false"
@@ -29,17 +29,17 @@ exports[`should render a date range picker without the start date 1`] = `
           d="M880 184H712v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H384v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H144c-17.7 0-32 14.3-32 32v664c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V216c0-17.7-14.3-32-32-32zm-40 656H184V460h656v380zM184 392V256h128v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h256v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h128v136H184z"
         />
       </svg>
-    </i>
+    </span>
     <span>
       2020-08-02 ~ 2020-08-03
     </span>
-    <i
-      aria-label="icon: down"
+    <span
+      aria-label="down"
       className="anticon anticon-down"
+      role="img"
     >
       <svg
         aria-hidden="true"
-        className=""
         data-icon="down"
         fill="currentColor"
         focusable="false"
@@ -51,7 +51,7 @@ exports[`should render a date range picker without the start date 1`] = `
           d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
         />
       </svg>
-    </i>
+    </span>
   </button>
 </span>
 `;
@@ -66,13 +66,13 @@ exports[`should render a disabled date range picker 1`] = `
     onClick={[Function]}
     type="button"
   >
-    <i
-      aria-label="icon: calendar"
+    <span
+      aria-label="calendar"
       className="anticon anticon-calendar"
+      role="img"
     >
       <svg
         aria-hidden="true"
-        className=""
         data-icon="calendar"
         fill="currentColor"
         focusable="false"
@@ -84,17 +84,17 @@ exports[`should render a disabled date range picker 1`] = `
           d="M880 184H712v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H384v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H144c-17.7 0-32 14.3-32 32v664c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V216c0-17.7-14.3-32-32-32zm-40 656H184V460h656v380zM184 392V256h128v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h256v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h128v136H184z"
         />
       </svg>
-    </i>
+    </span>
     <span>
       2020-08-03 ~ 2020-08-04
     </span>
-    <i
-      aria-label="icon: down"
+    <span
+      aria-label="down"
       className="anticon anticon-down"
+      role="img"
     >
       <svg
         aria-hidden="true"
-        className=""
         data-icon="down"
         fill="currentColor"
         focusable="false"
@@ -106,7 +106,7 @@ exports[`should render a disabled date range picker 1`] = `
           d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
         />
       </svg>
-    </i>
+    </span>
   </button>
 </span>
 `;
