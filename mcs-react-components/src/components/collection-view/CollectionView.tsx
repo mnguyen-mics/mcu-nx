@@ -41,7 +41,7 @@ class CollectionView extends React.Component<CollectionViewProps> {
 				</Row>
 				{pagination && (
 					<div className={`${prefixCls}-text-right`}>
-						<Pagination {...pagination} showSizeChanger={false} />
+						<Pagination {...pagination} />
 					</div>
 				)}
 			</div>
