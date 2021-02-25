@@ -34,9 +34,8 @@ class Card extends React.Component<CardProps> {
 
     return (
       <Row
-        type={this.props.type}
         className={`mcs-card ${className ? className : ''}`}
-        style={style ? style : {}}
+        style={style ? style : { display: 'block' }}
       >
         {hasHeader && (
           <Row className="mcs-card-header">
@@ -47,8 +46,7 @@ class Card extends React.Component<CardProps> {
           </Row>
         )}
         <Row
-          type={this.props.type}
-          style={this.props.type === 'flex' ? { flex: 1 } : {}}
+          style={this.props.type === 'flex' ? { flex: 1 } : { display: 'block' }}
         >
           {isLoading ? (
             <Col span={24} className="text-center">

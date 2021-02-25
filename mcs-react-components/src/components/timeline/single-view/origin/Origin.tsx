@@ -13,7 +13,7 @@ export interface Props {
 
 const renderLine = (key: string, value: string | number) => {
   return (
-    <div key={key}>
+    <Row key={key}>
       <Col className="table-left" span={12}>
         <span>
           <Tooltip title={key}>{key}</Tooltip>
@@ -34,7 +34,7 @@ const renderLine = (key: string, value: string | number) => {
           </Tooltip>
         </span>
       </Col>
-    </div>
+    </Row>
   );
 };
 

@@ -3,13 +3,19 @@
 exports[`renders the DeviceCard 1`] = `
 <div
   className="ant-row mcs-card mcs-device-card"
-  style={Object {}}
+  style={
+    Object {
+      "display": "block",
+    }
+  }
 >
   <div
     className="ant-row mcs-card-header"
+    style={Object {}}
   >
     <div
-      className="ant-col-24"
+      className="ant-col ant-col-24"
+      style={Object {}}
     >
       <span
         className="mcs-card-title"
@@ -20,7 +26,11 @@ exports[`renders the DeviceCard 1`] = `
   </div>
   <div
     className="ant-row"
-    style={Object {}}
+    style={
+      Object {
+        "display": "block",
+      }
+    }
   >
     <div
       className="ant-row table-line border-top"
@@ -32,7 +42,7 @@ exports[`renders the DeviceCard 1`] = `
       }
     >
       <div
-        className="ant-col-12 table-left"
+        className="ant-col ant-col-12 table-left"
         style={
           Object {
             "paddingLeft": 5,
@@ -77,7 +87,7 @@ exports[`renders the DeviceCard 1`] = `
         </span>
       </div>
       <div
-        className="ant-col-12 table-right"
+        className="ant-col ant-col-12 table-right"
         style={
           Object {
             "paddingLeft": 5,

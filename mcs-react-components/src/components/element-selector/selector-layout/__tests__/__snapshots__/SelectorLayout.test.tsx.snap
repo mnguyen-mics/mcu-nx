@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders the SelectorLayout with children 1`] = `
-<div
-  className="mcs-selector-layout ant-layout"
+<section
+  className="ant-layout mcs-selector-layout"
 >
   <div
-    className="ant-row-flex ant-row-flex-space-between ant-row-flex-middle mcs-actionbar-edit "
+    className="ant-row ant-row-space-between ant-row-middle mcs-actionbar-edit "
     style={Object {}}
   >
     <div
-      className="mcs-breadcrumb ant-breadcrumb"
+      className="ant-breadcrumb mcs-breadcrumb"
     >
       <span>
         <span
@@ -62,30 +62,30 @@ exports[`renders the SelectorLayout with children 1`] = `
       </span>
     </div>
   </div>
-  <div
+  <section
     className="ant-layout"
   >
-    <div
-      className="mcs-edit-container  ant-layout-content"
+    <main
+      className="ant-layout-content mcs-edit-container "
     >
       <div>
         Children elements
       </div>
-    </div>
-  </div>
-</div>
+    </main>
+  </section>
+</section>
 `;
 
 exports[`renders the SelectorLayout with no element 1`] = `
-<div
-  className="mcs-selector-layout ant-layout"
+<section
+  className="ant-layout mcs-selector-layout"
 >
   <div
-    className="ant-row-flex ant-row-flex-space-between ant-row-flex-middle mcs-actionbar-edit "
+    className="ant-row ant-row-space-between ant-row-middle mcs-actionbar-edit "
     style={Object {}}
   >
     <div
-      className="mcs-breadcrumb ant-breadcrumb"
+      className="ant-breadcrumb mcs-breadcrumb"
     >
       <span>
         <span
@@ -138,17 +138,18 @@ exports[`renders the SelectorLayout with no element 1`] = `
       </span>
     </div>
   </div>
-  <div
+  <section
     className="ant-layout"
   >
-    <div
-      className="mcs-edit-container  ant-layout-content"
+    <main
+      className="ant-layout-content mcs-edit-container "
     >
       <div
         className="mcs-empty-table-view"
       >
         <div
-          className="ant-col-24 mcs-empty-table-view-content mcs-table-view-empty"
+          className="ant-col ant-col-24 mcs-empty-table-view-content mcs-table-view-empty"
+          style={Object {}}
         >
           <div
             className="mcs-empty-table-view-logo"
@@ -165,7 +166,7 @@ exports[`renders the SelectorLayout with no element 1`] = `
           No data found
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </main>
+  </section>
+</section>
 `;

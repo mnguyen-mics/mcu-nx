@@ -2,17 +2,17 @@
 
 exports[`renders the progress 1`] = `
 initialize {
-  "0": Object {
+  "0": Node {
     "attribs": Object {
       "class": "mcs-progress-wrapper",
     },
     "children": Array [
-      Object {
+      Node {
         "attribs": Object {
           "class": "mcs-progress-label",
         },
         "children": Array [
-          Object {
+          Node {
             "data": " % Test",
             "next": null,
             "parent": [Circular],
@@ -22,22 +22,22 @@ initialize {
         ],
         "name": "div",
         "namespace": "http://www.w3.org/1999/xhtml",
-        "next": Object {
+        "next": Node {
           "attribs": Object {
             "class": "mcs-progress",
           },
           "children": Array [
-            Object {
+            Node {
               "attribs": Object {
                 "class": "mcs-progress-outer",
               },
               "children": Array [
-                Object {
+                Node {
                   "attribs": Object {
                     "class": "mcs-progress-inner",
                   },
                   "children": Array [
-                    Object {
+                    Node {
                       "attribs": Object {
                         "class": "mcs-progress-bg warning",
                         "style": "width:66%;height:5px",
@@ -110,22 +110,22 @@ initialize {
           "class": undefined,
         },
       },
-      Object {
+      Node {
         "attribs": Object {
           "class": "mcs-progress",
         },
         "children": Array [
-          Object {
+          Node {
             "attribs": Object {
               "class": "mcs-progress-outer",
             },
             "children": Array [
-              Object {
+              Node {
                 "attribs": Object {
                   "class": "mcs-progress-inner",
                 },
                 "children": Array [
-                  Object {
+                  Node {
                     "attribs": Object {
                       "class": "mcs-progress-bg warning",
                       "style": "width:66%;height:5px",
@@ -179,12 +179,12 @@ initialize {
         "namespace": "http://www.w3.org/1999/xhtml",
         "next": null,
         "parent": [Circular],
-        "prev": Object {
+        "prev": Node {
           "attribs": Object {
             "class": "mcs-progress-label",
           },
           "children": Array [
-            Object {
+            Node {
               "data": " % Test",
               "next": null,
               "parent": [Circular],
@@ -217,22 +217,17 @@ initialize {
     "name": "div",
     "namespace": "http://www.w3.org/1999/xhtml",
     "next": null,
-    "parent": null,
-    "prev": null,
-    "root": Object {
-      "attribs": Object {},
+    "parent": Node {
       "children": Array [
         [Circular],
       ],
       "name": "root",
-      "namespace": "http://www.w3.org/1999/xhtml",
       "next": null,
       "parent": null,
       "prev": null,
       "type": "root",
-      "x-attribsNamespace": Object {},
-      "x-attribsPrefix": Object {},
     },
+    "prev": null,
     "type": "tag",
     "x-attribsNamespace": Object {
       "class": undefined,
@@ -245,8 +240,6 @@ initialize {
   "length": 1,
   "options": Object {
     "decodeEntities": true,
-    "normalizeWhitespace": false,
-    "withDomLvl1": true,
     "xml": false,
   },
 }

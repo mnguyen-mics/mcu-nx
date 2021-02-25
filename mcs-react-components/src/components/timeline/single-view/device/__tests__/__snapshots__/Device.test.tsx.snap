@@ -11,7 +11,7 @@ exports[`renders the Device 1`] = `
   }
 >
   <div
-    className="ant-col-12 table-left"
+    className="ant-col ant-col-12 table-left"
     style={
       Object {
         "paddingLeft": 5,
@@ -54,7 +54,7 @@ exports[`renders the Device 1`] = `
     </span>
   </div>
   <div
-    className="ant-col-12 table-right"
+    className="ant-col ant-col-12 table-right"
     style={
       Object {
         "paddingLeft": 5,

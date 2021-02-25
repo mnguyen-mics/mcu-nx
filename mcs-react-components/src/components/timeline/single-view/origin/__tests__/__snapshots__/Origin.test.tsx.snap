@@ -11,7 +11,7 @@ exports[`renders the Origin 1`] = `
   }
 >
   <div
-    className="ant-col-5 section-title"
+    className="ant-col ant-col-5 section-title"
     style={
       Object {
         "paddingLeft": 5,
@@ -22,7 +22,7 @@ exports[`renders the Origin 1`] = `
     Origin
   </div>
   <div
-    className="ant-col-19"
+    className="ant-col ant-col-19"
     style={
       Object {
         "paddingLeft": 5,
@@ -30,15 +30,13 @@ exports[`renders the Origin 1`] = `
       }
     }
   >
-    <div>
+    <div
+      className="ant-row"
+      style={Object {}}
+    >
       <div
-        className="ant-col-12 table-left"
-        style={
-          Object {
-            "paddingLeft": 5,
-            "paddingRight": 5,
-          }
-        }
+        className="ant-col ant-col-12 table-left"
+        style={Object {}}
       >
         <span>
           <span
@@ -50,13 +48,8 @@ exports[`renders the Origin 1`] = `
         </span>
       </div>
       <div
-        className="ant-col-12 table-right"
-        style={
-          Object {
-            "paddingLeft": 5,
-            "paddingRight": 5,
-          }
-        }
+        className="ant-col ant-col-12 table-right"
+        style={Object {}}
       >
         <span>
           <span
@@ -68,15 +61,13 @@ exports[`renders the Origin 1`] = `
         </span>
       </div>
     </div>
-    <div>
+    <div
+      className="ant-row"
+      style={Object {}}
+    >
       <div
-        className="ant-col-12 table-left"
-        style={
-          Object {
-            "paddingLeft": 5,
-            "paddingRight": 5,
-          }
-        }
+        className="ant-col ant-col-12 table-left"
+        style={Object {}}
       >
         <span>
           <span
@@ -88,13 +79,8 @@ exports[`renders the Origin 1`] = `
         </span>
       </div>
       <div
-        className="ant-col-12 table-right"
-        style={
-          Object {
-            "paddingLeft": 5,
-            "paddingRight": 5,
-          }
-        }
+        className="ant-col ant-col-12 table-right"
+        style={Object {}}
       >
         <span>
           <span
@@ -106,15 +92,13 @@ exports[`renders the Origin 1`] = `
         </span>
       </div>
     </div>
-    <div>
+    <div
+      className="ant-row"
+      style={Object {}}
+    >
       <div
-        className="ant-col-12 table-left"
-        style={
-          Object {
-            "paddingLeft": 5,
-            "paddingRight": 5,
-          }
-        }
+        className="ant-col ant-col-12 table-left"
+        style={Object {}}
       >
         <span>
           <span
@@ -126,13 +110,8 @@ exports[`renders the Origin 1`] = `
         </span>
       </div>
       <div
-        className="ant-col-12 table-right"
-        style={
-          Object {
-            "paddingLeft": 5,
-            "paddingRight": 5,
-          }
-        }
+        className="ant-col ant-col-12 table-right"
+        style={Object {}}
       >
         <span>
           <span
@@ -144,15 +123,13 @@ exports[`renders the Origin 1`] = `
         </span>
       </div>
     </div>
-    <div>
+    <div
+      className="ant-row"
+      style={Object {}}
+    >
       <div
-        className="ant-col-12 table-left"
-        style={
-          Object {
-            "paddingLeft": 5,
-            "paddingRight": 5,
-          }
-        }
+        className="ant-col ant-col-12 table-left"
+        style={Object {}}
       >
         <span>
           <span
@@ -164,13 +141,8 @@ exports[`renders the Origin 1`] = `
         </span>
       </div>
       <div
-        className="ant-col-12 table-right"
-        style={
-          Object {
-            "paddingLeft": 5,
-            "paddingRight": 5,
-          }
-        }
+        className="ant-col ant-col-12 table-right"
+        style={Object {}}
       >
         <span>
           <span

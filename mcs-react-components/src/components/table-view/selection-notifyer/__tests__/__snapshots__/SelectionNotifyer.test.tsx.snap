@@ -15,29 +15,35 @@ exports[`renders the SelectionNotifyer with 3 items selected 1`] = `
   <div
     className="ant-alert ant-alert-warning ant-alert-no-icon selected-rows-alert"
     data-show={true}
+    role="alert"
+    style={Object {}}
   >
-    <span
-      className="ant-alert-message"
+    <div
+      className="ant-alert-content"
     >
-      <div>
-        You have selected all rows.
-        <button
-          className="mcs-button selected-rows-btn"
-          onClick={[Function]}
-          style={
-            Object {
-              "cursor": "pointer",
+      <div
+        className="ant-alert-message"
+      >
+        <div>
+          You have selected all rows.
+          <button
+            className="mcs-button selected-rows-btn"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
             }
-          }
-          type="button"
-        >
-          Unselect all rows
-        </button>
+            type="button"
+          >
+            Unselect all rows
+          </button>
+        </div>
       </div>
-    </span>
-    <span
-      className="ant-alert-description"
-    />
+      <div
+        className="ant-alert-description"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -57,29 +63,35 @@ exports[`renders the SelectionNotifyer with all items selected 1`] = `
   <div
     className="ant-alert ant-alert-warning ant-alert-no-icon selected-rows-alert"
     data-show={true}
+    role="alert"
+    style={Object {}}
   >
-    <span
-      className="ant-alert-message"
+    <div
+      className="ant-alert-content"
     >
-      <div>
-        You have selected all rows.
-        <button
-          className="mcs-button selected-rows-btn"
-          onClick={[Function]}
-          style={
-            Object {
-              "cursor": "pointer",
+      <div
+        className="ant-alert-message"
+      >
+        <div>
+          You have selected all rows.
+          <button
+            className="mcs-button selected-rows-btn"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
             }
-          }
-          type="button"
-        >
-          Unselect all rows
-        </button>
+            type="button"
+          >
+            Unselect all rows
+          </button>
+        </div>
       </div>
-    </span>
-    <span
-      className="ant-alert-description"
-    />
+      <div
+        className="ant-alert-description"
+      />
+    </div>
   </div>
 </div>
 `;
@@ -99,29 +111,35 @@ exports[`renders the SelectionNotifyer with all the page items selected 1`] = `
   <div
     className="ant-alert ant-alert-warning ant-alert-no-icon selected-rows-alert"
     data-show={true}
+    role="alert"
+    style={Object {}}
   >
-    <span
-      className="ant-alert-message"
+    <div
+      className="ant-alert-content"
     >
-      <div>
-        You have selected all rows.
-        <button
-          className="mcs-button selected-rows-btn"
-          onClick={[Function]}
-          style={
-            Object {
-              "cursor": "pointer",
+      <div
+        className="ant-alert-message"
+      >
+        <div>
+          You have selected all rows.
+          <button
+            className="mcs-button selected-rows-btn"
+            onClick={[Function]}
+            style={
+              Object {
+                "cursor": "pointer",
+              }
             }
-          }
-          type="button"
-        >
-          Unselect all rows
-        </button>
+            type="button"
+          >
+            Unselect all rows
+          </button>
+        </div>
       </div>
-    </span>
-    <span
-      className="ant-alert-description"
-    />
+      <div
+        className="ant-alert-description"
+      />
+    </div>
   </div>
 </div>
 `;

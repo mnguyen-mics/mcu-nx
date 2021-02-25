@@ -6,28 +6,33 @@ exports[`Should render the FormFieldWrapper 1`] = `
 >
   <div
     className="ant-row ant-form-item"
+    style={Object {}}
   >
     <div
-      className="ant-col-15 ant-col-offset-1 ant-form-item-control-wrapper"
+      className="ant-col ant-col-15 ant-col-offset-1 ant-form-item-control"
+      style={Object {}}
     >
       <div
-        className="ant-form-item-control"
+        className="ant-form-item-control-input"
       >
-        <span
-          className="ant-form-item-children"
+        <div
+          className="ant-form-item-control-input-content"
         >
           <div
-            className="ant-row-flex ant-row-flex-middle"
+            className="ant-row ant-row-middle"
+            style={Object {}}
           >
             <div
-              className="ant-col-20"
+              className="ant-col ant-col-20"
+              style={Object {}}
             >
               <div>
                 Content
               </div>
             </div>
             <div
-              className="ant-col-2 field-tooltip"
+              className="ant-col ant-col-2 field-tooltip"
+              style={Object {}}
             >
               <span
                 className="mcs-icon "
@@ -41,7 +46,8 @@ exports[`Should render the FormFieldWrapper 1`] = `
               </span>
             </div>
             <div
-              className="ant-col-2 renderFieldAction"
+              className="ant-col ant-col-2 renderFieldAction"
+              style={Object {}}
             >
               <span
                 className="mcs-icon "
@@ -53,7 +59,7 @@ exports[`Should render the FormFieldWrapper 1`] = `
               </span>
             </div>
           </div>
-        </span>
+        </div>
       </div>
     </div>
   </div>

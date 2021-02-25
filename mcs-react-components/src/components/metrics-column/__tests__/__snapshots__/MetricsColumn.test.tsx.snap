@@ -2,22 +2,22 @@
 
 exports[`renders the metrics column 1`] = `
 initialize {
-  "0": Object {
+  "0": Node {
     "attribs": Object {
       "class": "mcs-metrics-column",
     },
     "children": Array [
-      Object {
+      Node {
         "attribs": Object {
           "style": "height:125px",
         },
         "children": Array [
-          Object {
+          Node {
             "attribs": Object {
               "class": "mcs-metrics-column_title",
             },
             "children": Array [
-              Object {
+              Node {
                 "data": "TestMetric1",
                 "next": null,
                 "parent": [Circular],
@@ -27,12 +27,12 @@ initialize {
             ],
             "name": "div",
             "namespace": "http://www.w3.org/1999/xhtml",
-            "next": Object {
+            "next": Node {
               "attribs": Object {
                 "class": "mcs-metrics-column_metric",
               },
               "children": Array [
-                Object {
+                Node {
                   "data": "1",
                   "next": null,
                   "parent": [Circular],
@@ -63,12 +63,12 @@ initialize {
               "class": undefined,
             },
           },
-          Object {
+          Node {
             "attribs": Object {
               "class": "mcs-metrics-column_metric",
             },
             "children": Array [
-              Object {
+              Node {
                 "data": "1",
                 "next": null,
                 "parent": [Circular],
@@ -80,12 +80,12 @@ initialize {
             "namespace": "http://www.w3.org/1999/xhtml",
             "next": null,
             "parent": [Circular],
-            "prev": Object {
+            "prev": Node {
               "attribs": Object {
                 "class": "mcs-metrics-column_title",
               },
               "children": Array [
-                Object {
+                Node {
                   "data": "TestMetric1",
                   "next": null,
                   "parent": [Circular],
@@ -117,17 +117,17 @@ initialize {
         ],
         "name": "div",
         "namespace": "http://www.w3.org/1999/xhtml",
-        "next": Object {
+        "next": Node {
           "attribs": Object {
             "style": "height:125px",
           },
           "children": Array [
-            Object {
+            Node {
               "attribs": Object {
                 "class": "mcs-metrics-column_title",
               },
               "children": Array [
-                Object {
+                Node {
                   "data": "TestMetric2",
                   "next": null,
                   "parent": [Circular],
@@ -137,12 +137,12 @@ initialize {
               ],
               "name": "div",
               "namespace": "http://www.w3.org/1999/xhtml",
-              "next": Object {
+              "next": Node {
                 "attribs": Object {
                   "class": "mcs-metrics-column_metric",
                 },
                 "children": Array [
-                  Object {
+                  Node {
                     "data": "2",
                     "next": null,
                     "parent": [Circular],
@@ -173,12 +173,12 @@ initialize {
                 "class": undefined,
               },
             },
-            Object {
+            Node {
               "attribs": Object {
                 "class": "mcs-metrics-column_metric",
               },
               "children": Array [
-                Object {
+                Node {
                   "data": "2",
                   "next": null,
                   "parent": [Circular],
@@ -190,12 +190,12 @@ initialize {
               "namespace": "http://www.w3.org/1999/xhtml",
               "next": null,
               "parent": [Circular],
-              "prev": Object {
+              "prev": Node {
                 "attribs": Object {
                   "class": "mcs-metrics-column_title",
                 },
                 "children": Array [
-                  Object {
+                  Node {
                     "data": "TestMetric2",
                     "next": null,
                     "parent": [Circular],
@@ -227,17 +227,17 @@ initialize {
           ],
           "name": "div",
           "namespace": "http://www.w3.org/1999/xhtml",
-          "next": Object {
+          "next": Node {
             "attribs": Object {
               "style": "height:125px",
             },
             "children": Array [
-              Object {
+              Node {
                 "attribs": Object {
                   "class": "mcs-metrics-column_title",
                 },
                 "children": Array [
-                  Object {
+                  Node {
                     "data": "TestMetric3",
                     "next": null,
                     "parent": [Circular],
@@ -247,12 +247,12 @@ initialize {
                 ],
                 "name": "div",
                 "namespace": "http://www.w3.org/1999/xhtml",
-                "next": Object {
+                "next": Node {
                   "attribs": Object {
                     "class": "mcs-metrics-column_metric",
                   },
                   "children": Array [
-                    Object {
+                    Node {
                       "data": "3",
                       "next": null,
                       "parent": [Circular],
@@ -283,12 +283,12 @@ initialize {
                   "class": undefined,
                 },
               },
-              Object {
+              Node {
                 "attribs": Object {
                   "class": "mcs-metrics-column_metric",
                 },
                 "children": Array [
-                  Object {
+                  Node {
                     "data": "3",
                     "next": null,
                     "parent": [Circular],
@@ -300,12 +300,12 @@ initialize {
                 "namespace": "http://www.w3.org/1999/xhtml",
                 "next": null,
                 "parent": [Circular],
-                "prev": Object {
+                "prev": Node {
                   "attribs": Object {
                     "class": "mcs-metrics-column_title",
                   },
                   "children": Array [
-                    Object {
+                    Node {
                       "data": "TestMetric3",
                       "next": null,
                       "parent": [Circular],
@@ -368,17 +368,17 @@ initialize {
           "style": undefined,
         },
       },
-      Object {
+      Node {
         "attribs": Object {
           "style": "height:125px",
         },
         "children": Array [
-          Object {
+          Node {
             "attribs": Object {
               "class": "mcs-metrics-column_title",
             },
             "children": Array [
-              Object {
+              Node {
                 "data": "TestMetric2",
                 "next": null,
                 "parent": [Circular],
@@ -388,12 +388,12 @@ initialize {
             ],
             "name": "div",
             "namespace": "http://www.w3.org/1999/xhtml",
-            "next": Object {
+            "next": Node {
               "attribs": Object {
                 "class": "mcs-metrics-column_metric",
               },
               "children": Array [
-                Object {
+                Node {
                   "data": "2",
                   "next": null,
                   "parent": [Circular],
@@ -424,12 +424,12 @@ initialize {
               "class": undefined,
             },
           },
-          Object {
+          Node {
             "attribs": Object {
               "class": "mcs-metrics-column_metric",
             },
             "children": Array [
-              Object {
+              Node {
                 "data": "2",
                 "next": null,
                 "parent": [Circular],
@@ -441,12 +441,12 @@ initialize {
             "namespace": "http://www.w3.org/1999/xhtml",
             "next": null,
             "parent": [Circular],
-            "prev": Object {
+            "prev": Node {
               "attribs": Object {
                 "class": "mcs-metrics-column_title",
               },
               "children": Array [
-                Object {
+                Node {
                   "data": "TestMetric2",
                   "next": null,
                   "parent": [Circular],
@@ -478,17 +478,17 @@ initialize {
         ],
         "name": "div",
         "namespace": "http://www.w3.org/1999/xhtml",
-        "next": Object {
+        "next": Node {
           "attribs": Object {
             "style": "height:125px",
           },
           "children": Array [
-            Object {
+            Node {
               "attribs": Object {
                 "class": "mcs-metrics-column_title",
               },
               "children": Array [
-                Object {
+                Node {
                   "data": "TestMetric3",
                   "next": null,
                   "parent": [Circular],
@@ -498,12 +498,12 @@ initialize {
               ],
               "name": "div",
               "namespace": "http://www.w3.org/1999/xhtml",
-              "next": Object {
+              "next": Node {
                 "attribs": Object {
                   "class": "mcs-metrics-column_metric",
                 },
                 "children": Array [
-                  Object {
+                  Node {
                     "data": "3",
                     "next": null,
                     "parent": [Circular],
@@ -534,12 +534,12 @@ initialize {
                 "class": undefined,
               },
             },
-            Object {
+            Node {
               "attribs": Object {
                 "class": "mcs-metrics-column_metric",
               },
               "children": Array [
-                Object {
+                Node {
                   "data": "3",
                   "next": null,
                   "parent": [Circular],
@@ -551,12 +551,12 @@ initialize {
               "namespace": "http://www.w3.org/1999/xhtml",
               "next": null,
               "parent": [Circular],
-              "prev": Object {
+              "prev": Node {
                 "attribs": Object {
                   "class": "mcs-metrics-column_title",
                 },
                 "children": Array [
-                  Object {
+                  Node {
                     "data": "TestMetric3",
                     "next": null,
                     "parent": [Circular],
@@ -600,17 +600,17 @@ initialize {
           },
         },
         "parent": [Circular],
-        "prev": Object {
+        "prev": Node {
           "attribs": Object {
             "style": "height:125px",
           },
           "children": Array [
-            Object {
+            Node {
               "attribs": Object {
                 "class": "mcs-metrics-column_title",
               },
               "children": Array [
-                Object {
+                Node {
                   "data": "TestMetric1",
                   "next": null,
                   "parent": [Circular],
@@ -620,12 +620,12 @@ initialize {
               ],
               "name": "div",
               "namespace": "http://www.w3.org/1999/xhtml",
-              "next": Object {
+              "next": Node {
                 "attribs": Object {
                   "class": "mcs-metrics-column_metric",
                 },
                 "children": Array [
-                  Object {
+                  Node {
                     "data": "1",
                     "next": null,
                     "parent": [Circular],
@@ -656,12 +656,12 @@ initialize {
                 "class": undefined,
               },
             },
-            Object {
+            Node {
               "attribs": Object {
                 "class": "mcs-metrics-column_metric",
               },
               "children": Array [
-                Object {
+                Node {
                   "data": "1",
                   "next": null,
                   "parent": [Circular],
@@ -673,12 +673,12 @@ initialize {
               "namespace": "http://www.w3.org/1999/xhtml",
               "next": null,
               "parent": [Circular],
-              "prev": Object {
+              "prev": Node {
                 "attribs": Object {
                   "class": "mcs-metrics-column_title",
                 },
                 "children": Array [
-                  Object {
+                  Node {
                     "data": "TestMetric1",
                     "next": null,
                     "parent": [Circular],
@@ -729,17 +729,17 @@ initialize {
           "style": undefined,
         },
       },
-      Object {
+      Node {
         "attribs": Object {
           "style": "height:125px",
         },
         "children": Array [
-          Object {
+          Node {
             "attribs": Object {
               "class": "mcs-metrics-column_title",
             },
             "children": Array [
-              Object {
+              Node {
                 "data": "TestMetric3",
                 "next": null,
                 "parent": [Circular],
@@ -749,12 +749,12 @@ initialize {
             ],
             "name": "div",
             "namespace": "http://www.w3.org/1999/xhtml",
-            "next": Object {
+            "next": Node {
               "attribs": Object {
                 "class": "mcs-metrics-column_metric",
               },
               "children": Array [
-                Object {
+                Node {
                   "data": "3",
                   "next": null,
                   "parent": [Circular],
@@ -785,12 +785,12 @@ initialize {
               "class": undefined,
             },
           },
-          Object {
+          Node {
             "attribs": Object {
               "class": "mcs-metrics-column_metric",
             },
             "children": Array [
-              Object {
+              Node {
                 "data": "3",
                 "next": null,
                 "parent": [Circular],
@@ -802,12 +802,12 @@ initialize {
             "namespace": "http://www.w3.org/1999/xhtml",
             "next": null,
             "parent": [Circular],
-            "prev": Object {
+            "prev": Node {
               "attribs": Object {
                 "class": "mcs-metrics-column_title",
               },
               "children": Array [
-                Object {
+                Node {
                   "data": "TestMetric3",
                   "next": null,
                   "parent": [Circular],
@@ -841,17 +841,17 @@ initialize {
         "namespace": "http://www.w3.org/1999/xhtml",
         "next": null,
         "parent": [Circular],
-        "prev": Object {
+        "prev": Node {
           "attribs": Object {
             "style": "height:125px",
           },
           "children": Array [
-            Object {
+            Node {
               "attribs": Object {
                 "class": "mcs-metrics-column_title",
               },
               "children": Array [
-                Object {
+                Node {
                   "data": "TestMetric2",
                   "next": null,
                   "parent": [Circular],
@@ -861,12 +861,12 @@ initialize {
               ],
               "name": "div",
               "namespace": "http://www.w3.org/1999/xhtml",
-              "next": Object {
+              "next": Node {
                 "attribs": Object {
                   "class": "mcs-metrics-column_metric",
                 },
                 "children": Array [
-                  Object {
+                  Node {
                     "data": "2",
                     "next": null,
                     "parent": [Circular],
@@ -897,12 +897,12 @@ initialize {
                 "class": undefined,
               },
             },
-            Object {
+            Node {
               "attribs": Object {
                 "class": "mcs-metrics-column_metric",
               },
               "children": Array [
-                Object {
+                Node {
                   "data": "2",
                   "next": null,
                   "parent": [Circular],
@@ -914,12 +914,12 @@ initialize {
               "namespace": "http://www.w3.org/1999/xhtml",
               "next": null,
               "parent": [Circular],
-              "prev": Object {
+              "prev": Node {
                 "attribs": Object {
                   "class": "mcs-metrics-column_title",
                 },
                 "children": Array [
-                  Object {
+                  Node {
                     "data": "TestMetric2",
                     "next": null,
                     "parent": [Circular],
@@ -953,17 +953,17 @@ initialize {
           "namespace": "http://www.w3.org/1999/xhtml",
           "next": [Circular],
           "parent": [Circular],
-          "prev": Object {
+          "prev": Node {
             "attribs": Object {
               "style": "height:125px",
             },
             "children": Array [
-              Object {
+              Node {
                 "attribs": Object {
                   "class": "mcs-metrics-column_title",
                 },
                 "children": Array [
-                  Object {
+                  Node {
                     "data": "TestMetric1",
                     "next": null,
                     "parent": [Circular],
@@ -973,12 +973,12 @@ initialize {
                 ],
                 "name": "div",
                 "namespace": "http://www.w3.org/1999/xhtml",
-                "next": Object {
+                "next": Node {
                   "attribs": Object {
                     "class": "mcs-metrics-column_metric",
                   },
                   "children": Array [
-                    Object {
+                    Node {
                       "data": "1",
                       "next": null,
                       "parent": [Circular],
@@ -1009,12 +1009,12 @@ initialize {
                   "class": undefined,
                 },
               },
-              Object {
+              Node {
                 "attribs": Object {
                   "class": "mcs-metrics-column_metric",
                 },
                 "children": Array [
-                  Object {
+                  Node {
                     "data": "1",
                     "next": null,
                     "parent": [Circular],
@@ -1026,12 +1026,12 @@ initialize {
                 "namespace": "http://www.w3.org/1999/xhtml",
                 "next": null,
                 "parent": [Circular],
-                "prev": Object {
+                "prev": Node {
                   "attribs": Object {
                     "class": "mcs-metrics-column_title",
                   },
                   "children": Array [
-                    Object {
+                    Node {
                       "data": "TestMetric1",
                       "next": null,
                       "parent": [Circular],
@@ -1094,22 +1094,17 @@ initialize {
     "name": "div",
     "namespace": "http://www.w3.org/1999/xhtml",
     "next": null,
-    "parent": null,
-    "prev": null,
-    "root": Object {
-      "attribs": Object {},
+    "parent": Node {
       "children": Array [
         [Circular],
       ],
       "name": "root",
-      "namespace": "http://www.w3.org/1999/xhtml",
       "next": null,
       "parent": null,
       "prev": null,
       "type": "root",
-      "x-attribsNamespace": Object {},
-      "x-attribsPrefix": Object {},
     },
+    "prev": null,
     "type": "tag",
     "x-attribsNamespace": Object {
       "class": undefined,
@@ -1122,8 +1117,6 @@ initialize {
   "length": 1,
   "options": Object {
     "decodeEntities": true,
-    "normalizeWhitespace": false,
-    "withDomLvl1": true,
     "xml": false,
   },
 }

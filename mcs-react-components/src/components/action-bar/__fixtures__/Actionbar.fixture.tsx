@@ -14,7 +14,7 @@ const component = (_props: ActionbarProps) => (
   <MemoryRouter>
     <Actionbar {..._props}>
       <div>
-        <Button type="primary" href="">
+        <Button type="primary" href="" style={{padding: '10px 15px'}}>
           Save
         </Button>
       </div>

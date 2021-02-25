@@ -11,5 +11,22 @@ module.exports = merge(common, {
         { from: './components/**/*.less', to: '[path][name].[ext]', context: 'src' },
       ],
     }),
-  ]
+  ],
+  externals: {
+    react: {
+      root: 'React',
+      commonjs2: 'react',
+      commonjs: 'react',
+      amd: 'react',
+      umd: 'react',
+    },
+    'react-dom': {
+      root: 'ReactDOM',
+      commonjs2: 'react-dom',
+      commonjs: 'react-dom',
+      amd: 'react-dom',
+      umd: 'react-dom',
+    },
+    antd: 'antd'
+  },
 });

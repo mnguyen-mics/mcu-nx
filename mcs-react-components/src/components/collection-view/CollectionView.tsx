@@ -29,7 +29,7 @@ class CollectionView extends React.Component<CollectionViewProps> {
 				</Row>
 			</Row>
 		) : (
-			<Row className={prefixCls}>
+			<div className={prefixCls}>
 				<Row gutter={gutter}>
 					{collectionItems.map((item) => {
 						return (
@@ -40,11 +40,11 @@ class CollectionView extends React.Component<CollectionViewProps> {
 					})}
 				</Row>
 				{pagination && (
-					<Row className={`${prefixCls}-text-right`}>
-						<Pagination {...pagination} />
-					</Row>
+					<div className={`${prefixCls}-text-right`}>
+						<Pagination {...pagination} showSizeChanger={false} />
+					</div>
 				)}
-			</Row>
+			</div>
 		)
 	}
 }

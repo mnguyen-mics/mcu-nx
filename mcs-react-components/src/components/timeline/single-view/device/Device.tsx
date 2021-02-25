@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Row, Col, Icon } from 'antd';
+import { Row, Col } from 'antd';
+import { QuestionOutlined } from '@ant-design/icons';
 import McsIcon from '../../../mcs-icon';
 import { Device, FormFactor } from '../../../../models/timeline/timeline';
 
@@ -20,7 +21,7 @@ const Device = (props: DeviceProps) => {
       case 'PERSONAL_COMPUTER':
         return <McsIcon type="laptop" />;
       default:
-        return <Icon type="question" />;
+        return <QuestionOutlined />;
     }
   };
   return device && vectorId ? (

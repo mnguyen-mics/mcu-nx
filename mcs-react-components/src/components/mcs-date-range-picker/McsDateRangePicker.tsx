@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Button, DatePicker, Menu, Icon } from 'antd';
+import { CalendarOutlined, DownOutlined } from '@ant-design/icons';
+import { Button, DatePicker, Menu } from 'antd';
 import moment from 'moment';
-import { ClickParam } from 'antd/lib/menu';
+import { MenuInfo } from '../../../node_modules/rc-menu/lib/interface';
 import { Dropdown } from '../popupContainer/PopupContainer';
 import McsMoment, { convertMcsDateToMoment } from '../../utils/McsMoment';
 import { InjectedIntlProps, defineMessages, injectIntl } from 'react-intl';
@@ -149,7 +150,7 @@ class McsDateRangePicker extends React.Component<
     });
   };
 
-  handleDropdownMenuClick = (param: ClickParam) => {
+  handleDropdownMenuClick = (param: MenuInfo) => {
     const { ranges } = this.state;
     const { onChange } = this.props;
 
@@ -163,7 +164,7 @@ class McsDateRangePicker extends React.Component<
     this.setState({ showRangePicker: false });
 
     const selectedRange = ranges.find(element => {
-      return element.name.toLowerCase() === param.key.toLowerCase();
+      return element.name.toLowerCase() === param.key.toString().toLowerCase();
     });
 
     onChange({
@@ -208,9 +209,9 @@ class McsDateRangePicker extends React.Component<
         disabled={disabled}
       >
         <Button>
-          <Icon type="calendar" />
+          <CalendarOutlined />
           {this.getSelectedPresettedRange()}
-          <Icon type="down" />
+          <DownOutlined />
         </Button>
       </Dropdown>
     );
