@@ -15,7 +15,6 @@ const DEFAULT_PAGINATION_OPTION = {
 };
 
 export interface DataColumnDefinition<T> extends ColumnProps<T> {
-  title?: string;
   key: string;
   render?: (text: string, record: T, index: number) => React.ReactNode;
   sorter?: boolean | ((a: any, b: any) => number);
