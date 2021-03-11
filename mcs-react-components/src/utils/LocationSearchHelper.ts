@@ -1,5 +1,5 @@
-import queryString from 'query-string';
-import lodash from 'lodash';
+import * as queryString from 'query-string';
+import { isEqual } from 'lodash';
 import McsMoment from './McsMoment';
 import { Index } from '.';
 
@@ -255,9 +255,9 @@ export const getComparisonDateSearchSettings = (
           query.from.length &&
           new McsMoment(query.from).isValid() &&
           new McsMoment(query.from).toMoment() >
-            new McsMoment(
-              `now-${convertTimestampToDayNumber(comparisonStartDate)}d`,
-            ).toMoment()
+          new McsMoment(
+            `now-${convertTimestampToDayNumber(comparisonStartDate)}d`,
+          ).toMoment()
         ),
     },
     {
@@ -271,7 +271,7 @@ export const getComparisonDateSearchSettings = (
       isValid: (query: Index<string>) =>
         !!(query.to && query.to.length && new McsMoment(query.to).isValid()) &&
         new McsMoment(query.to).toMoment() >
-          new McsMoment(query.from).toMoment(),
+        new McsMoment(query.from).toMoment(),
     },
   ];
 };
@@ -281,7 +281,7 @@ export interface DateSearchSettings {
   to: McsMoment;
 }
 
-export interface SegmentsSearchSettings { 
+export interface SegmentsSearchSettings {
   segments: string[];
 }
 
@@ -436,7 +436,7 @@ export function parseSearch<T = Index<any>>(
  * @returns true if two objects are equals
  */
 export const compareSearches = (currentSearch: string, nextSearch: string) => {
-  return lodash.isEqual(
+  return isEqual(
     queryString.parse(currentSearch),
     queryString.parse(nextSearch),
   );
