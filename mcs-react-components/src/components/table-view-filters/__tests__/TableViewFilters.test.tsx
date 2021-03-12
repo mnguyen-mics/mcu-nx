@@ -5,6 +5,7 @@ import { IntlProvider } from 'react-intl';
 import * as TestRenderer from 'react-test-renderer';
 
 import TableViewFilters, { ViewComponentWithFiltersProps } from '../../table-view-filters';
+import { selectionNotifyerMessagesMock } from '../../../utils/TableViewHelpers';
 
 it("renders the table view filters", () => {
 
@@ -17,13 +18,7 @@ it("renders the table view filters", () => {
       {key: "key 1"},
       {key: "key 2"},
     ],
-    selectionNotifyerMessages: {
-      allRowsSelected: "string",
-      unselectAll: "string",
-      allPageRowsSelected: "string",
-      selectAll: "string",
-      selectedRows: "string",
-    }
+    selectionNotifyerMessages: selectionNotifyerMessagesMock
   };
 
   const component = TestRenderer.create(
