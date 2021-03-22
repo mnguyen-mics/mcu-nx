@@ -2,7 +2,7 @@
 
 exports[`renders the tree select filter 1`] = `
 <span
-  id="ckm65kdew0000blhl3b0cgsj0"
+  id="123"
 >
   <div
     className="ant-select ant-tree-select ant-select-multiple ant-select-allow-clear"

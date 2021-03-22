@@ -1,32 +1,35 @@
 import 'jest';
-import * as React from "react";
-import { MemoryRouter } from 'react-router'
-import { IntlProvider } from 'react-intl';
+import * as React from 'react';
+import { MemoryRouter } from 'react-router';
 import * as TestRenderer from 'react-test-renderer';
-import ItemList, { ItemListProps, Filters } from "../ItemList";
+import ItemList, { ItemListProps, Filters } from '../ItemList';
 import { selectionNotifyerMessagesMock } from '../../../utils/TableViewHelpers';
 
-it("renders the item list", () => {
-  const p = (organisationId: string, filters: Filters, isInitialFetch?: boolean) => { };
+it('renders the item list', () => {
+  const fetchList = (
+    organisationId: string,
+    filters: Filters,
+    isInitialFetch?: boolean,
+  ) => {
+    //
+  };
   const props: ItemListProps<any> = {
     selectionNotifyerMessages: selectionNotifyerMessagesMock,
-    fetchList: p,
+    fetchList: fetchList,
     dataSource: [],
     total: 10,
     pageSettings: [],
     emptyTable: {
       iconType: 'email',
-      message: "Empty Table"
+      message: 'Empty Table',
     },
   };
 
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
-      <MemoryRouter>
-        <ItemList {...props} />
-      </MemoryRouter>
-    </IntlProvider>
+    <MemoryRouter>
+      <ItemList {...props} />
+    </MemoryRouter>,
   );
-  const tree = component.toJSON()
+  const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });

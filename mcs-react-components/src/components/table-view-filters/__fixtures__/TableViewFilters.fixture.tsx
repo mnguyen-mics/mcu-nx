@@ -1,25 +1,31 @@
 import * as React from 'react';
-import { MemoryRouter } from 'react-router'
-import { IntlProvider } from 'react-intl';
-import TableViewFilters, { ViewComponentWithFiltersProps } from '../TableViewFilters';
+import { MemoryRouter } from 'react-router';
+import TableViewFilters, {
+  ViewComponentWithFiltersProps,
+} from '../TableViewFilters';
 import { DownOutlined } from '@ant-design/icons';
 import { MultiSelectProps } from '../../multi-select';
-import { tableViewMockColumns, tableViewMockData, selectionNotifyerMessagesMock } from '../../../utils/TableViewHelpers'
+import {
+  tableViewMockColumns,
+  tableViewMockData,
+  selectionNotifyerMessagesMock,
+} from '../../../utils/TableViewHelpers';
 
 const searchOptions = {
-  placeholder: "Search...",
-  onSearch: (value: string) =>
-    console.log("hello !", value),
+  placeholder: 'Search...',
+  onSearch: (value: string) => {
+    //
+  },
 };
 
 const filter = ['FILTER 1', 'FILTER 2', 'FILTER 3'];
 
-const statusItems = filter.map(status => ({
+const statusItems = filter.map((status) => ({
   key: status,
   value: status,
 }));
 
-const filtersOptions: MultiSelectProps<any>[] = [
+const filtersOptions: Array<MultiSelectProps<any>> = [
   {
     displayElement: (
       <div>
@@ -34,7 +40,9 @@ const filtersOptions: MultiSelectProps<any>[] = [
     items: statusItems,
     getKey: (t: any) => t.key,
     display: (t: any) => t.value,
-    handleMenuClick: () => { },
+    handleMenuClick: () => {
+      //
+    },
   },
 ];
 
@@ -43,18 +51,16 @@ const props: ViewComponentWithFiltersProps<any> = {
   dataSource: tableViewMockData(),
   filtersOptions: filtersOptions,
   searchOptions: searchOptions,
-  selectionNotifyerMessages: selectionNotifyerMessagesMock
+  selectionNotifyerMessages: selectionNotifyerMessagesMock,
 };
 
 const component = (_props: ViewComponentWithFiltersProps<any>) => (
-  <IntlProvider locale="en">
-    <MemoryRouter>
-      <TableViewFilters {..._props} />
-    </MemoryRouter>
-  </IntlProvider>
-)
+  <MemoryRouter>
+    <TableViewFilters {..._props} />
+  </MemoryRouter>
+);
 
-component.displayName = "TableViewFilters";
+component.displayName = 'TableViewFilters';
 
 export default {
   component,

@@ -1,39 +1,39 @@
 import 'jest';
-import * as React from "react";
-import { MemoryRouter } from 'react-router'
-import { IntlProvider } from 'react-intl';
+import * as React from 'react';
+import { MemoryRouter } from 'react-router';
 import * as TestRenderer from 'react-test-renderer';
 
-import TreeSelectFilter, { TreeSelectFilterProps } from "../TreeSelectFilter";
+import TreeSelectFilter, { TreeSelectFilterProps } from '../TreeSelectFilter';
 
-it("renders the tree select filter", () => {
+jest.mock('cuid', () => () => '123');
+it('renders the tree select filter', () => {
   const props: TreeSelectFilterProps = {
-    placeholder: "Hello",
+    placeholder: 'Hello',
     tree: [
       {
-        value: "value 1",
-        title: "title 1"
+        value: 'value 1',
+        title: 'title 1',
       },
       {
-        value: "value 2",
-        title: "title 2"
+        value: 'value 2',
+        title: 'title 2',
       },
       {
-        value: "value 3",
-        title: "title 3"
+        value: 'value 3',
+        title: 'title 3',
       },
     ],
-    parentFilterName: "filter name",
-    handleItemClick: (filters: any) => {}
+    parentFilterName: 'filter name',
+    handleItemClick: (filters: any) => {
+      //
+    },
   };
 
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
-      <MemoryRouter>
-        <TreeSelectFilter {...props} />
-      </MemoryRouter>
-    </IntlProvider>
+    <MemoryRouter>
+      <TreeSelectFilter {...props} />
+    </MemoryRouter>,
   );
-  const tree = component.toJSON()
+  const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });

@@ -345,7 +345,7 @@ export interface ArchivedSearchSettings {
   archived: boolean;
 }
 
-export const isSearchValid = (search: string, settings: SearchSetting[]) => {
+export const isSearchValid = (search: string, settings: SearchSetting[]): boolean => {
   const query = queryString.parse(search);
   // notEmpty and must forall settings query isValid
   return (
