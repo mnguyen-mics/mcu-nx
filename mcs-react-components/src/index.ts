@@ -56,3 +56,4 @@ export {
 } from './components/timeline';
 export { default as TreeSelectFilter } from './components/tree-select-filter';
 export { default as TableViewFilters } from './components/table-view-filters';
+export { default as McsHeader } from './components/mcs-header';

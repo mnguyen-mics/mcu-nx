@@ -1,0 +1,138 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the Error component 1`] = `
+<header
+  className="ant-layout-header mcs-header"
+>
+  <div
+    className="mcs-header-wrapper"
+  >
+    <span
+      className="mcs-header-left-component"
+    >
+      <span
+        className="mcs-header-wrapper-launcher"
+      >
+        <a
+          className="ant-dropdown-trigger"
+          onClick={[Function]}
+          onMouseDown={[Function]}
+          onTouchStart={[Function]}
+        >
+          <span
+            aria-label="appstore"
+            className="anticon anticon-appstore mcs-header-menu-icon"
+            role="img"
+          >
+            <svg
+              aria-hidden="true"
+              data-icon="appstore"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M864 144H560c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V160c0-8.8-7.2-16-16-16zm0 400H560c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V560c0-8.8-7.2-16-16-16zM464 144H160c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V160c0-8.8-7.2-16-16-16zm0 400H160c-8.8 0-16 7.2-16 16v304c0 8.8 7.2 16 16 16h304c8.8 0 16-7.2 16-16V560c0-8.8-7.2-16-16-16z"
+              />
+            </svg>
+          </span>
+        </a>
+      </span>
+      <span
+        className="mcs-header-wrapper-title"
+      >
+        Mediarithmics New App
+      </span>
+    </span>
+    <div
+      className="ant-alert ant-alert-error"
+      data-show={true}
+      role="alert"
+      style={
+        Object {
+          "borderColor": "red",
+          "display": "flex",
+          "margin": "auto",
+          "marginRight": 0,
+        }
+      }
+    >
+      <span
+        aria-label="close-circle"
+        className="anticon anticon-close-circle ant-alert-icon"
+        role="img"
+      >
+        <svg
+          aria-hidden="true"
+          data-icon="close-circle"
+          fill="currentColor"
+          focusable="false"
+          height="1em"
+          viewBox="64 64 896 896"
+          width="1em"
+        >
+          <path
+            d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm165.4 618.2l-66-.3L512 563.4l-99.3 118.4-66.1.3c-4.4 0-8-3.5-8-8 0-1.9.7-3.7 1.9-5.2l130.1-155L340.5 359a8.32 8.32 0 01-1.9-5.2c0-4.4 3.6-8 8-8l66.1.3L512 464.6l99.3-118.4 66-.3c4.4 0 8 3.5 8 8 0 1.9-.7 3.7-1.9 5.2L553.5 514l130 155c1.2 1.5 1.9 3.3 1.9 5.2 0 4.4-3.6 8-8 8z"
+          />
+        </svg>
+      </span>
+      <div
+        className="ant-alert-content"
+      >
+        <div
+          className="ant-alert-message"
+        >
+          You are using production API environment !
+        </div>
+        <div
+          className="ant-alert-description"
+        />
+      </div>
+    </div>
+  </div>
+  <div
+    className="mcs-header-actions"
+  >
+    <div
+      className="mcs-header-actions-settings"
+    >
+      <a>
+        <span
+          className="mcs-icon mcs-header-menu-icon"
+          style={
+            Object {
+              "display": "flex",
+            }
+          }
+        >
+          <i
+            className="mcs-options"
+            style={Object {}}
+          />
+        </span>
+      </a>
+    </div>
+    <div
+      className="mcs-header-actions-account"
+    >
+      <a
+        className="ant-dropdown-trigger"
+        onClick={[Function]}
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+      >
+        <span
+          className="mcs-icon mcs-header-menu-icon"
+        >
+          <i
+            className="mcs-user"
+            style={Object {}}
+          />
+        </span>
+      </a>
+    </div>
+  </div>
+</header>
+`;
