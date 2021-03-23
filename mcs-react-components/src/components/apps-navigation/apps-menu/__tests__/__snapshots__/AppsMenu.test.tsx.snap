@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render the AppsMenu 1`] = `
+<ul
+  className="ant-menu ant-menu-light mcs-app_dropdown_menu ant-menu-root ant-menu-inline"
+  onMouseEnter={[Function]}
+  onTransitionEnd={[Function]}
+  role="menu"
+  style={Object {}}
+>
+  <span />
+  <li
+    className=" ant-menu-item-divider"
+    style={Object {}}
+  />
+  <li
+    className="ant-menu-item ant-menu-item-only-child"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    role="menuitem"
+    style={
+      Object {
+        "paddingLeft": 24,
+      }
+    }
+  >
+    <a
+      href="url3"
+    >
+      <span>
+        Platform Admin
+      </span>
+    </a>
+  </li>
+  <li
+    className=" ant-menu-item-divider"
+    style={Object {}}
+  />
+  <li
+    className="ant-menu-item"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    role="menuitem"
+    style={
+      Object {
+        "paddingLeft": 24,
+      }
+    }
+  >
+    <span
+      aria-label="compass"
+      className="anticon anticon-compass mcs-app_icon mcs-app_icon_navigator ant-menu-item-icon"
+      role="img"
+    >
+      <svg
+        aria-hidden="true"
+        data-icon="compass"
+        fill="currentColor"
+        focusable="false"
+        height="1em"
+        viewBox="64 64 896 896"
+        width="1em"
+      >
+        <path
+          d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zM327.3 702.4c-2 .9-4.4 0-5.3-2.1-.4-1-.4-2.2 0-3.2l98.7-225.5 132.1 132.1-225.5 98.7zm375.1-375.1l-98.7 225.5-132.1-132.1L697.1 322c2-.9 4.4 0 5.3 2.1.4 1 .4 2.1 0 3.2z"
+        />
+      </svg>
+    </span>
+    <span>
+      <a
+        href="url1"
+      >
+        <span>
+          Navigator
+        </span>
+      </a>
+    </span>
+  </li>
+  <li
+    className="ant-menu-item"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    role="menuitem"
+    style={
+      Object {
+        "paddingLeft": 24,
+      }
+    }
+  >
+    <span
+      aria-label="code-sandbox-circle"
+      className="anticon anticon-code-sandbox-circle mcs-app_icon mcs-app_icon_developer_console ant-menu-item-icon"
+      role="img"
+    >
+      <svg
+        aria-hidden="true"
+        data-icon="code-sandbox-circle"
+        fill="currentColor"
+        focusable="false"
+        height="1em"
+        viewBox="64 64 896 896"
+        width="1em"
+      >
+        <path
+          d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm243.7 589.2L512 794 268.3 653.2V371.8l110-63.6-.4-.2h.2L512 231l134 77h-.2l-.3.2 110.1 63.6v281.4zM307.9 536.7l87.6 49.9V681l96.7 55.9V524.8L307.9 418.4zm203.9-151.8L418 331l-91.1 52.6 185.2 107 185.2-106.9-91.4-52.8zm20 352l97.3-56.2v-94.1l87-49.5V418.5L531.8 525z"
+        />
+      </svg>
+    </span>
+    <span>
+      <a
+        href="url2"
+      >
+        <span>
+          Developer Console
+        </span>
+      </a>
+    </span>
+  </li>
+</ul>
+`;
