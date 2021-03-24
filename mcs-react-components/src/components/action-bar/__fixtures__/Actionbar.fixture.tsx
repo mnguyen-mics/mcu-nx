@@ -8,6 +8,7 @@ const props: ActionbarProps = {
     { name: 'Campaigns', path: 'www.google.fr' },
     { name: 'Display', path: 'www.github.com' },
   ],
+  mention: 'ALPHA'
 };
 
 const component = (_props: ActionbarProps) => (

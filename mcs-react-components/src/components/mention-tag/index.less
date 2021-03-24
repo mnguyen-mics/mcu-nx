@@ -1,0 +1,32 @@
+@import '../../style/theme.less';
+
+@mentiontag-prefix-cls: ~'@{mcs-prefix}-mentionTag';
+
+.@{mentiontag-prefix-cls} {
+  margin: 1px 0;
+  border-radius: 4px;
+  color: white;
+  font-weight: 600;
+  font-family: "LLCircularWeb-Medium";
+  
+  &_alphaMentionTag {
+    background-color: #4087bf;
+    border: solid 1px #4087bf;
+    padding: 2px;
+  }
+  
+  &_betaMentionTag {
+    background-color: #00ab67;
+    border: solid 1px #00ab67;
+    padding: 2px;
+  }
+
+  &_block {
+    .anticon-info-circle {
+      color: #003056;
+      margin-top: -5px;
+      margin-left: -4px;
+      vertical-align: top;
+    }
+  }
+}
