@@ -1,6 +1,5 @@
 import 'jest';
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
 import * as TestRenderer from 'react-test-renderer';
 
 import TableViewFilters, {
@@ -15,11 +14,7 @@ it('renders the table view filters', () => {
     selectionNotifyerMessages: selectionNotifyerMessagesMock,
   };
 
-  const component = TestRenderer.create(
-    <MemoryRouter>
-      <TableViewFilters {...props} />
-    </MemoryRouter>,
-  );
+  const component = TestRenderer.create(<TableViewFilters {...props} />);
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });

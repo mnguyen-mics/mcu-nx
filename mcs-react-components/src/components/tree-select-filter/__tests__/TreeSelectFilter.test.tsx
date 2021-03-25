@@ -1,6 +1,5 @@
 import 'jest';
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
 import * as TestRenderer from 'react-test-renderer';
 
 import TreeSelectFilter, { TreeSelectFilterProps } from '../TreeSelectFilter';
@@ -29,11 +28,7 @@ it('renders the tree select filter', () => {
     },
   };
 
-  const component = TestRenderer.create(
-    <MemoryRouter>
-      <TreeSelectFilter {...props} />
-    </MemoryRouter>,
-  );
+  const component = TestRenderer.create(<TreeSelectFilter {...props} />);
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });

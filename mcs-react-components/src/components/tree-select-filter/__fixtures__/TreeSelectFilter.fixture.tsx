@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
 import TreeSelectFilter, { TreeSelectFilterProps } from '../TreeSelectFilter';
 
 const props: TreeSelectFilterProps = {
@@ -26,9 +25,7 @@ const props: TreeSelectFilterProps = {
 };
 
 const component = (_props: TreeSelectFilterProps) => (
-  <MemoryRouter>
-    <TreeSelectFilter {..._props} />
-  </MemoryRouter>
+  <TreeSelectFilter {..._props} />
 );
 
 component.displayName = 'TreeSelectFilter';

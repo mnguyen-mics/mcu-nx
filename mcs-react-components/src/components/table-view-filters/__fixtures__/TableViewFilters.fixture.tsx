@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
 import TableViewFilters, {
   ViewComponentWithFiltersProps,
 } from '../TableViewFilters';
@@ -55,9 +54,7 @@ const props: ViewComponentWithFiltersProps<any> = {
 };
 
 const component = (_props: ViewComponentWithFiltersProps<any>) => (
-  <MemoryRouter>
-    <TableViewFilters {..._props} />
-  </MemoryRouter>
+  <TableViewFilters {..._props} />
 );
 
 component.displayName = 'TableViewFilters';
