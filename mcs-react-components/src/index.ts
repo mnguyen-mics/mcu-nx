@@ -54,6 +54,5 @@ export {
   default as Topics,
   default as UserScenarioActivityCard,
 } from './components/timeline';
-export { default as ItemList } from './components/item-list';
 export { default as TreeSelectFilter } from './components/tree-select-filter';
 export { default as TableViewFilters } from './components/table-view-filters';
