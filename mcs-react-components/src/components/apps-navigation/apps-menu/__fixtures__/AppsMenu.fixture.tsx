@@ -1,8 +1,8 @@
 import * as React from 'react';
-import AppsMenu, { AppMenuOption, AppsMenuProps } from '../AppsMenu';
+import AppsMenu, { AppsMenuProps } from '../AppsMenu';
 
 const props: AppsMenuProps = {
-  availableAppUrlsMap: new Map<AppMenuOption, string>([
+  availableAppUrlsMap: new Map([
     ['NAVIGATOR', 'url1'],
     ['DEVELOPER_CONSOLE', 'url2'],
     ['PLATFORM_ADMIN', 'url3'],
