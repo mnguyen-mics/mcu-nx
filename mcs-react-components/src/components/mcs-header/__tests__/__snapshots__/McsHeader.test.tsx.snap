@@ -40,11 +40,6 @@ exports[`renders the Error component 1`] = `
           </span>
         </a>
       </span>
-      <span
-        className="mcs-header-wrapper-title"
-      >
-        Mediarithmics New App
-      </span>
     </span>
     <div
       className="ant-alert ant-alert-error"

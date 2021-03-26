@@ -4,7 +4,6 @@ import McsIcon from '../../mcs-icon';
 import McsHeader, { McsHeaderProps } from '../McsHeader';
 
 const props: McsHeaderProps = {
-  headerTitle: 'Mediarithmics New App',
   userEmail: 'toto@mix.com',
   devAlert: (
     <Alert

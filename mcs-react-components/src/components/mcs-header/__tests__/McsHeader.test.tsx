@@ -7,7 +7,6 @@ import McsHeader, { McsHeaderProps } from '../McsHeader';
 
 it('renders the Error component', () => {
   const props: McsHeaderProps = {
-    headerTitle: 'Mediarithmics New App',
     userEmail: 'toto@mix.com',
     devAlert: (
       <Alert

@@ -7,7 +7,6 @@ const { Header } = Layout;
 
 export interface McsHeaderProps {
   menu?: React.ReactElement;
-  headerTitle: string;
   userEmail: string;
   accountContent: React.ReactNode[];
   headerSettings?: React.ReactNode;
@@ -20,7 +19,6 @@ class McsHeader extends React.Component<McsHeaderProps> {
       menu,
       userEmail,
       accountContent,
-      headerTitle,
       headerSettings,
       devAlert,
     } = this.props;
@@ -50,7 +48,6 @@ class McsHeader extends React.Component<McsHeaderProps> {
                 </Dropdown>
               </span>
             )}
-            <span className="mcs-header-wrapper-title">{headerTitle}</span>
           </span>
           {devAlert}
         </div>
