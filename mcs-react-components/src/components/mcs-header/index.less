@@ -1,0 +1,77 @@
+@import './../../style/theme.less';
+
+@mcs-header-prefix-cls: ~'@{mcs-prefix}-header';
+
+.@{mcs-header-prefix-cls} {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 40px;
+  padding-left: 15px;
+  padding-right: 40px; 
+  background-color: @info-color;
+
+  &-wrapper {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 20px;
+
+    .@{mcs-header-prefix-cls}-left-component {
+      display: flex;
+      align-items: center;
+
+      .ant-dropdown-trigger {
+        display: flex;
+      }
+    }
+
+    &-launcher {
+      padding-right: 20px;
+    }
+    &-title {
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+  
+      i {
+        font-size: 12px;
+      }
+    }
+  }
+
+  &-actions {
+    display: flex;
+
+    &-settings {
+      display: flex;
+      align-items: center;
+      padding-right: 20px;
+    }
+
+    &-account {
+      display: flex;
+      align-items: center;
+
+      .ant-dropdown-trigger {
+        display: flex;
+      }
+    }
+  }
+
+  &-menu-icon {
+    margin: 0;
+    color: white;
+    font-size: 20px !important;
+    &:hover {
+      color: @normal-color;
+    }
+  }
+
+  .datamart-switcher {
+    margin-left: 40px;
+  }
+}
