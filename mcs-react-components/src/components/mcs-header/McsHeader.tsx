@@ -7,6 +7,7 @@ const { Header } = Layout;
 
 export interface McsHeaderProps {
   menu?: React.ReactElement;
+  menuIcon?: React.ReactElement;
   userEmail: string;
   accountContent: React.ReactNode[];
   headerSettings?: React.ReactNode;
@@ -21,6 +22,7 @@ class McsHeader extends React.Component<McsHeaderProps> {
       accountContent,
       headerSettings,
       devAlert,
+      menuIcon,
     } = this.props;
 
     const accountMenu = (
@@ -43,7 +45,11 @@ class McsHeader extends React.Component<McsHeaderProps> {
               <span className="mcs-header-wrapper-launcher">
                 <Dropdown overlay={menu} trigger={['click']}>
                   <a>
-                    <AppstoreFilled className="mcs-header-menu-icon" />
+                    {menuIcon ? (
+                      menuIcon
+                    ) : (
+                      <AppstoreFilled className="mcs-header-menu-icon" />
+                    )}
                   </a>
                 </Dropdown>
               </span>
