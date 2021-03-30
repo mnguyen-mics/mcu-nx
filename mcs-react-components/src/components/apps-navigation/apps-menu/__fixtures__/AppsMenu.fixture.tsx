@@ -2,11 +2,10 @@ import * as React from 'react';
 import AppsMenu, { AppsMenuProps } from '../AppsMenu';
 
 const props: AppsMenuProps = {
-  availableAppUrlsMap: new Map([
-    ['NAVIGATOR', 'url1'],
-    ['DEVELOPER_CONSOLE', 'url2'],
-    ['PLATFORM_ADMIN', 'url3'],
-  ]),
+  sections: [
+    { items: [{ name: 'Platform Admin', url: 'url1' }] },
+    { items: [{ name: 'Navigator', url: 'url2' }] },
+  ],
   logo: <span />,
 };
 
