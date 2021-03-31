@@ -2,7 +2,7 @@
 
 exports[`render the AppsMenu 1`] = `
 <ul
-  className="ant-menu ant-menu-light mcs-app_dropdown_menu ant-menu-root ant-menu-inline"
+  className="ant-menu ant-menu-light mcs-app_dropdown_menu  ant-menu-root ant-menu-inline"
   onMouseEnter={[Function]}
   onTransitionEnd={[Function]}
   role="menu"

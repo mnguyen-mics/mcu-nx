@@ -33,6 +33,7 @@ const props: McsHeaderProps = {
       <Menu.Item>Really optionnal</Menu.Item>
     </Menu>
   ),
+  className: "fake-class-name",
   /* tslint:disable */
   accountContent: [<div>Account Menu #1</div>, <div>Account Menu #2</div>],
   /* tslint:enable */

@@ -12,6 +12,7 @@ export interface McsHeaderProps {
   accountContent: React.ReactNode[];
   headerSettings?: React.ReactNode;
   devAlert?: React.ReactNode;
+  className?: string;
 }
 
 class McsHeader extends React.Component<McsHeaderProps> {
@@ -23,6 +24,7 @@ class McsHeader extends React.Component<McsHeaderProps> {
       headerSettings,
       devAlert,
       menuIcon,
+      className
     } = this.props;
 
     const accountMenu = (
@@ -38,7 +40,7 @@ class McsHeader extends React.Component<McsHeaderProps> {
     );
 
     return (
-      <Header className="mcs-header">
+      <Header className={`mcs-header ${className ? className : ''}`}>
         <div className="mcs-header-wrapper">
           <span className="mcs-header-left-component">
             {menu && (
