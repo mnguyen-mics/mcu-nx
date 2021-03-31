@@ -7,6 +7,7 @@ const props: AppsMenuProps = {
     { items: [{ name: 'Navigator', url: 'url2' }] },
   ],
   logo: <span />,
+  className: "fake-class-name"
 };
 
 const component = (_props: AppsMenuProps) => <AppsMenu {..._props} />;

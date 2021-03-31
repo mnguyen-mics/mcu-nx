@@ -13,6 +13,7 @@ export interface AppsMenuItem {
 export interface AppsMenuProps {
   logo: React.ReactElement;
   sections: AppsMenuSection[];
+  className?: string;
 }
 
 class AppsMenu extends React.Component<AppsMenuProps> {
@@ -41,10 +42,13 @@ class AppsMenu extends React.Component<AppsMenuProps> {
   }
 
   render() {
-    const { sections, logo } = this.props;
+    const { sections, logo, className } = this.props;
 
     return (
-      <Menu mode="inline" className="mcs-app_dropdown_menu">
+      <Menu
+        mode="inline"
+        className={`mcs-app_dropdown_menu ${className ? className : ''}`}
+      >
         {logo}
         {sections.map((section, index) => this.renderSection(section, index))}
       </Menu>

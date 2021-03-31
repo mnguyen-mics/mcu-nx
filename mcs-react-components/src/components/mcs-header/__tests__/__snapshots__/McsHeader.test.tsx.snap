@@ -2,7 +2,7 @@
 
 exports[`renders the Error component 1`] = `
 <header
-  className="ant-layout-header mcs-header"
+  className="ant-layout-header mcs-header "
 >
   <div
     className="mcs-header-wrapper"
