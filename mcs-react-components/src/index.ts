@@ -43,7 +43,6 @@ export { default as SearchAndMultiSelect } from './components/search-multi-selec
 export { default as Fade } from './components/transition/fade';
 export { default as Slide } from './components/transition/slide';
 export { default as AppsMenu } from './components/apps-navigation/apps-menu';
-export { default as AppsMenuDropdown } from './components/apps-navigation/apps-menu-dropdown';
 export { default as MentionTag } from './components/mention-tag';
 export {
   default as Device,
