@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
 import { IntlProvider } from 'react-intl';
 import McsTabs, { McTabsProps } from '../McsTabs';
 
@@ -25,9 +24,7 @@ const props: McTabsProps = {
 
 const component = (_props: McTabsProps) => (
   <IntlProvider locale="en">
-    <MemoryRouter>
-      <McsTabs {..._props} />
-    </MemoryRouter>
+    <McsTabs {..._props} />
   </IntlProvider>
 );
 

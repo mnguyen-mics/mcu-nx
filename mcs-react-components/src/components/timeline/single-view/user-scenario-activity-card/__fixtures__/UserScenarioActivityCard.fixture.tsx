@@ -2,7 +2,6 @@ import * as React from 'react';
 import UserScenarioActivityCard from '../UserScenarioActivityCard';
 import { UserScenarioActivityCardProps } from '../../../../../models/timeline/timeline';
 import { IntlProvider } from 'react-intl';
-import { MemoryRouter } from 'react-router';
 
 const props: UserScenarioActivityCardProps = {
   activity: {
@@ -39,9 +38,7 @@ const props: UserScenarioActivityCardProps = {
 
 const component = (_props: UserScenarioActivityCardProps) => (
   <IntlProvider locale="en">
-    <MemoryRouter>
-      <UserScenarioActivityCard {..._props} />
-    </MemoryRouter>
+    <UserScenarioActivityCard {..._props} />
   </IntlProvider>
 );
 

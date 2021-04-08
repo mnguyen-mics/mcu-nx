@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
 import { IntlProvider } from 'react-intl';
 import PieChart, { PieChartProps } from '../PieChart';
 
@@ -76,9 +75,7 @@ const props: PieChartProps = {
 
 const component = (_props: PieChartProps) => (
   <IntlProvider locale="en">
-    <MemoryRouter>
-      <PieChart {..._props} />
-    </MemoryRouter>
+    <PieChart {..._props} />
   </IntlProvider>
 );
 

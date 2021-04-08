@@ -35,7 +35,7 @@ export default class SelectorLayout extends React.Component<
 
     return (
       <Layout className={prefixCls}>
-        <ActionBar paths={[{ name: actionBarTitle }]} edition={true}>
+        <ActionBar pathItems={[actionBarTitle]} edition={true}>
           <Button
             className='add-button'
             onClick={handleAdd}

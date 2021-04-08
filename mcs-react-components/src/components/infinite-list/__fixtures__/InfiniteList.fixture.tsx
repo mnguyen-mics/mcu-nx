@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { List} from 'antd';
-import { MemoryRouter } from 'react-router'
 import { IntlProvider } from 'react-intl';
 import InfiniteList, { InfiniteListProps } from "../InfiniteList";
 
@@ -12,9 +11,7 @@ const props: InfiniteListProps = {
 
 const component = (_props: InfiniteListProps) => (
   <IntlProvider locale="en">
-    <MemoryRouter>      
       <InfiniteList {..._props} />
-    </MemoryRouter>
   </IntlProvider>
 )
 

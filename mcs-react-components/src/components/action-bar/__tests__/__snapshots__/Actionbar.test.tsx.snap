@@ -13,8 +13,7 @@ exports[`renders the actionBar 1`] = `
         className="ant-breadcrumb-link"
       >
         <a
-          href="/www.google.fr"
-          onClick={[Function]}
+          href="https://www.google.fr"
         >
           Campaigns
         </a>
@@ -37,8 +36,7 @@ exports[`renders the actionBar 1`] = `
         className="ant-breadcrumb-link"
       >
         <a
-          href="/www.github.com"
-          onClick={[Function]}
+          href="https://www.github.fr"
         >
           Display
         </a>

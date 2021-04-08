@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
 import { IntlProvider } from 'react-intl';
 import * as TestRenderer from 'react-test-renderer';
 
@@ -13,9 +12,7 @@ it('renders a medium content header', () => {
 
   const component = TestRenderer.create(
     <IntlProvider locale="en">
-      <MemoryRouter>
-        <ContentHeader {...props} />
-      </MemoryRouter>
+      <ContentHeader {...props} />
     </IntlProvider>,
   );
   const tree = component.toJSON();
@@ -30,9 +27,7 @@ it('renders a large content header', () => {
 
   const component = TestRenderer.create(
     <IntlProvider locale="en">
-      <MemoryRouter>
-        <ContentHeader {...props} />
-      </MemoryRouter>
+      <ContentHeader {...props} />
     </IntlProvider>,
   );
   const tree = component.toJSON();
@@ -48,9 +43,7 @@ it('renders the "evolved" content header', () => {
 
   const component = TestRenderer.create(
     <IntlProvider locale="en">
-      <MemoryRouter>
-        <ContentHeader {...props} />
-      </MemoryRouter>
+      <ContentHeader {...props} />
     </IntlProvider>,
   );
   const tree = component.toJSON();
@@ -66,9 +59,7 @@ it('renders the loading content header', () => {
 
   const component = TestRenderer.create(
     <IntlProvider locale="en">
-      <MemoryRouter>
-        <ContentHeader {...props} />
-      </MemoryRouter>
+      <ContentHeader {...props} />
     </IntlProvider>,
   );
   const tree = component.toJSON();

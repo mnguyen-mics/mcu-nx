@@ -2,7 +2,6 @@ import * as React from 'react';
 import { compose } from 'recompose';
 import { List, Spin, Input } from 'antd';
 import * as InfiniteScroll from 'react-infinite-scroller';
-import { RouteComponentProps, withRouter } from 'react-router';
 import { injectIntl, InjectedIntlProps, defineMessages } from 'react-intl';
 
 const messages = defineMessages({
@@ -26,17 +25,14 @@ export interface InfiniteListFilters {
 
 export interface InfiniteListProps<T = any> {
   fetchData: (
-    organisationId: string,
-    offerId: string,
     filter: InfiniteListFilters,
-  ) => Promise<any>;
+  ) => Promise<T[]>;
   renderItem: (item: T) => React.ReactNode;
   storeItemData: (item: T) => void;
 }
 
 type Props<T = any> = InfiniteListProps<T> &
-  InjectedIntlProps &
-  RouteComponentProps<{ organisationId: string; offerId: string }>;
+  InjectedIntlProps;
 
 interface State<T> {
   data: T[];
@@ -77,22 +73,16 @@ class InfiniteList<T> extends React.Component<Props<T>, State<T>> {
     });
   }
 
-  handleInfiniteOnLoad = () => {
-    const {
-      match: {
-        params: { organisationId, offerId },
-      },
-    } = this.props;
-
+  handleInfiniteOnLoad = (): Promise<T[] | void> => {
     const { first, size, loading } = this.state;
 
     if (!loading) {
       this.setState({
         loading: true,
       });
-      // const prevData = data;
+      
       return this.props
-        .fetchData(organisationId, offerId, { page: first, pageSize: size })
+        .fetchData({ page: first, pageSize: size })
         .then(res => {
           this.setState((prev) => ({
             data: prev.data.concat(res),
@@ -113,14 +103,8 @@ class InfiniteList<T> extends React.Component<Props<T>, State<T>> {
   };
 
   onSearch = (searchValue: string) => {
-    const {
-      match: {
-        params: { organisationId, offerId },
-      },
-    } = this.props;
-
     this.props
-      .fetchData(organisationId, offerId, {
+      .fetchData({
         keywords: searchValue,
       })
       .then(res => {
@@ -193,6 +177,5 @@ class InfiniteList<T> extends React.Component<Props<T>, State<T>> {
 }
 
 export default compose<Props, InfiniteListProps>(
-  withRouter,
   injectIntl,
 )(InfiniteList);

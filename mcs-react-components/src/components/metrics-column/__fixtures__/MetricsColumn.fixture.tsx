@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
 import { IntlProvider } from 'react-intl';
 import MetricsColumn, { MetricsColumnProps } from '../MetricsColumn';
 
@@ -13,9 +12,7 @@ const props: MetricsColumnProps = {
 
 const component = (_props: MetricsColumnProps) => (
   <IntlProvider locale="en">
-    <MemoryRouter>
-      <MetricsColumn {..._props} />
-    </MemoryRouter>
+    <MetricsColumn {..._props} />
   </IntlProvider>
 );
 

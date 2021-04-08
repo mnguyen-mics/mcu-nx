@@ -13,15 +13,8 @@ import {
   UserScenarioActivityCardProps,
 } from '../../../../models/timeline/timeline';
 import Card from '../../../card';
-import { RouteComponentProps, withRouter } from 'react-router';
 
 const moment = _moment;
-
-interface TimelinePageParams {
-  organisationId: string;
-  identifierType: string;
-  identifierId: string;
-}
 
 const messages = defineMessages({
   userScenarioStartContent: {
@@ -48,8 +41,7 @@ const messages = defineMessages({
 });
 
 type Props = UserScenarioActivityCardProps &
-  InjectedIntlProps &
-  RouteComponentProps<TimelinePageParams>;
+  InjectedIntlProps;
 
 interface CardElements {
   title: string;
@@ -145,5 +137,4 @@ class UserScenarioActivityCard extends React.Component<Props> {
 
 export default compose<Props, UserScenarioActivityCardProps>(
   injectIntl,
-  withRouter,
 )(UserScenarioActivityCard);
