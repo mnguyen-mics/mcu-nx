@@ -14,6 +14,7 @@ export { default as ContentHeader } from './components/content-header';
 export { default as Counter } from './components/counters/counter';
 export { default as CounterDashboard } from './components/counters/counter-dashboard';
 export { default as Error } from './components/error';
+export { default as ErrorBoundary } from './components/error-boundary';
 export { default as EmptyTableView } from './components/empty-table-view';
 export { default as Loading } from './components/loading';
 export { default as McsIcon } from './components/mcs-icon';

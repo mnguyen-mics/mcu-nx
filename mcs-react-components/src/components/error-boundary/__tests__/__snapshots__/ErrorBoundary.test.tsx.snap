@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the ErrorBoundary 1`] = `
+<div>
+  Tset
+</div>
+`;
+
+exports[`uses the onError when an error occurs 1`] = `
+<div
+  className="ant-layout"
+>
+  Something went wrong
+</div>
+`;
