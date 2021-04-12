@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
 import { IntlProvider } from 'react-intl';
 import { render } from 'enzyme';
 import PieChart, { PieChartProps } from '../PieChart';
@@ -75,12 +74,10 @@ it('renders the pie chart', () => {
       ],
     },
   };
-  
+
   const component = render(
     <IntlProvider locale="en">
-      <MemoryRouter>
-        <PieChart {...props} />
-      </MemoryRouter>
+      <PieChart {...props} />
     </IntlProvider>,
   );
   expect(component).toMatchSnapshot();

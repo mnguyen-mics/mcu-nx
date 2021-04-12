@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
 import { IntlProvider } from 'react-intl';
 import McsTabs, { McTabsProps } from '../McsTabs';
 import { render } from 'enzyme';
@@ -27,9 +26,7 @@ it('renders the tabs', () => {
 
   const component = render(
     <IntlProvider locale="en">
-      <MemoryRouter>
-        <McsTabs {...props} />
-      </MemoryRouter>
+      <McsTabs {...props} />
     </IntlProvider>,
   );
   expect(component).toMatchSnapshot();

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
 import { IntlProvider } from 'react-intl';
 import { render } from 'enzyme';
 import MultiSelect, { MultiSelectProps } from '../MultiSelect';
@@ -15,15 +14,15 @@ it('renders the multi select', () => {
     selectedItems: [],
     getKey: (a: string) => a,
     handleItemClick: (a: string) => {
-        // do nothing
+      // do nothing
     },
     handleMenuClick: (selectedItems: string[]) =>
       selectedItems.forEach(s => {
-          // do nothing
+        // do nothing
       }),
     onCloseMenu: (selectedItems: string[]) =>
       selectedItems.forEach(s => {
-          // do nothing
+        // do nothing
       }),
     singleSelectOnly: false,
     buttonClass: 'test-class',
@@ -31,9 +30,7 @@ it('renders the multi select', () => {
 
   const component = render(
     <IntlProvider locale="en">
-      <MemoryRouter>
-        <MultiSelect {...props} />
-      </MemoryRouter>
+      <MultiSelect {...props} />
     </IntlProvider>,
   );
   expect(component).toMatchSnapshot();

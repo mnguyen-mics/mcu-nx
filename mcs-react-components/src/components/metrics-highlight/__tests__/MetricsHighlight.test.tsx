@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
 import { IntlProvider } from 'react-intl';
 import { render } from 'enzyme';
 import { MetricsColumnProps } from '../../metrics-column/MetricsColumn';
@@ -16,9 +15,7 @@ it('renders the metrics highlight', () => {
 
   const component = render(
     <IntlProvider locale="en">
-      <MemoryRouter>
-        <MetricsHighlight {...props} />
-      </MemoryRouter>
+      <MetricsHighlight {...props} />
     </IntlProvider>,
   );
   expect(component).toMatchSnapshot();

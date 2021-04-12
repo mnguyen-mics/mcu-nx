@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
 import { IntlProvider } from 'react-intl';
 import { MetricsColumnProps } from '../../metrics-column/MetricsColumn';
 import MetricsHighlight from '../MetricsHighlight'
@@ -14,9 +13,7 @@ const props: MetricsColumnProps = {
 
 const component = (_props: MetricsColumnProps) => (
   <IntlProvider locale="en">
-    <MemoryRouter>
-      <MetricsHighlight {..._props} />
-    </MemoryRouter>
+    <MetricsHighlight {..._props} />
   </IntlProvider>
 );
 

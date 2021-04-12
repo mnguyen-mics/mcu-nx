@@ -15,7 +15,7 @@ exports[`should test a collection selector with filtering 1`] = `
         <span
           className="ant-breadcrumb-link"
         >
-          Welcome to the Collection S…
+          Welcome to the Collection Selector
         </span>
         <span
           className="ant-breadcrumb-separator"
@@ -191,7 +191,7 @@ exports[`should test a collection selector without filtering 1`] = `
         <span
           className="ant-breadcrumb-link"
         >
-          Welcome to the Collection S…
+          Welcome to the Collection Selector
         </span>
         <span
           className="ant-breadcrumb-separator"

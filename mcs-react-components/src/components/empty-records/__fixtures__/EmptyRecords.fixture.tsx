@@ -1,6 +1,5 @@
 import * as React from 'react';
 import EmptyRecords, { EmptyRecordsProps } from '../EmptyRecords';
-import { MemoryRouter } from 'react-router';
 
 const props: EmptyRecordsProps = {
   iconType: 'question',
@@ -8,11 +7,7 @@ const props: EmptyRecordsProps = {
   className: 'mcs-customClass'  
 };
 
-const component = (_props: EmptyRecordsProps) => (
-  <MemoryRouter>
-    <EmptyRecords {..._props} />
-  </MemoryRouter>
-);
+const component = (_props: EmptyRecordsProps) => (<EmptyRecords {..._props} />);
 
 component.displayName = 'EmptyRecords';
 

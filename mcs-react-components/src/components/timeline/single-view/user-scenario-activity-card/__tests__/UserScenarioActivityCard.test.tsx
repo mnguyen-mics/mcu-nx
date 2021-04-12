@@ -4,10 +4,9 @@ import * as TestRenderer from 'react-test-renderer';
 import UserScenarioActivityCard from '../UserScenarioActivityCard';
 import { UserScenarioActivityCardProps } from '../../../../../models/timeline/timeline';
 import { IntlProvider } from 'react-intl';
-import { MemoryRouter } from 'react-router';
 
 // Return a fixed timestamp when moment().format() is called
-jest.mock('moment', () => () => ({format: () => '2019–11–13T12:34:56+00:00'}));
+jest.mock('moment', () => () => ({ format: () => '2019–11–13T12:34:56+00:00' }));
 
 it('renders the UserScenarioActivityCard', () => {
   const props: UserScenarioActivityCardProps = {
@@ -44,9 +43,7 @@ it('renders the UserScenarioActivityCard', () => {
   };
   const component = TestRenderer.create(
     <IntlProvider locale="en">
-      <MemoryRouter>
-        <UserScenarioActivityCard {...props} />
-      </MemoryRouter>
+      <UserScenarioActivityCard {...props} />
     </IntlProvider>,
   );
   const res = component.toJSON();

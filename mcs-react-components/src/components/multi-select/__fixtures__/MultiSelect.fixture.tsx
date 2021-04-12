@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
 import { IntlProvider } from 'react-intl';
 import MultiSelect, { MultiSelectProps } from '../MultiSelect';
 
@@ -11,13 +10,13 @@ const props: MultiSelectProps<string> = {
   selectedItems: [],
   getKey: (a: string) => a,
   handleItemClick: (a: string) => {
-      // do nothing
+    // do nothing
   },
   handleMenuClick: (selectedItems: string[]) => {
-      // do nothing
+    // do nothing
   },
   onCloseMenu: (selectedItems: string[]) => {
-      // do nothing
+    // do nothing
   },
   singleSelectOnly: false,
   buttonClass: 'test-class',
@@ -25,9 +24,7 @@ const props: MultiSelectProps<string> = {
 
 const component = (_props: MultiSelectProps<string>) => (
   <IntlProvider locale="en">
-    <MemoryRouter>
-      <MultiSelect {..._props} />
-    </MemoryRouter>
+    <MultiSelect {..._props} />
   </IntlProvider>
 );
 

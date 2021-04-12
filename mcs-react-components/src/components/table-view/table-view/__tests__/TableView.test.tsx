@@ -4,7 +4,6 @@ import TableView, { TableViewProps } from '../TableView';
 import { DownOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
 import * as TestRenderer from 'react-test-renderer';
-import { MemoryRouter } from 'react-router';
 
 interface Data {
   key: string;
@@ -89,9 +88,7 @@ it('renders a basic tableView', () => {
   };
 
   const component = TestRenderer.create(
-    <MemoryRouter>
       <TableView {...tableViewProps} />
-    </MemoryRouter>,
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
@@ -104,9 +101,7 @@ it('renders a tableView with pagination', () => {
   };
 
   const component = TestRenderer.create(
-    <MemoryRouter>
       <TableView {...tableViewProps} />
-    </MemoryRouter>
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
@@ -125,9 +120,7 @@ it('renders a tableView with 3 selected rows', () => {
   };
 
   const component = TestRenderer.create(
-    <MemoryRouter>
       <TableView {...tableViewProps} />
-    </MemoryRouter>
   );
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
