@@ -29,13 +29,6 @@ const props: PiePlotProps = {
 	}
 };
 
-const component = (_props: PiePlotProps) => (
+export default (
 	<PiePlot {...props} />
 );
-
-component.displayName = "PiePlot";
-
-export default {
-  component,
-  props,
-};

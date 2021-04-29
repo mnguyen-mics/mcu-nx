@@ -1,5 +1,5 @@
 import Device from './Device';
 
-export { DeviceProps } from './Device';
+export type { DeviceProps } from './Device';
 
 export default Device;

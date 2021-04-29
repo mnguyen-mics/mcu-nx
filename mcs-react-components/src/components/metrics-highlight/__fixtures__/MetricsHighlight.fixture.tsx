@@ -11,15 +11,8 @@ const props: MetricsColumnProps = {
   ],
 };
 
-const component = (_props: MetricsColumnProps) => (
+export default (
   <IntlProvider locale="en">
-    <MetricsHighlight {..._props} />
+    <MetricsHighlight {...props} />
   </IntlProvider>
 );
-
-component.displayName = 'MetricsHighlight';
-
-export default {
-  component,
-  props,
-};

@@ -6,13 +6,6 @@ const props: ProgressProps = {
   label: " % Test",
 };
 
-const component = (_props: ProgressProps) => (
+export default (
   <Progress {...props}/>
 );
-
-component.displayName =  'Progress';
-
-export default {
-  component,
-  props,
-};

@@ -73,15 +73,8 @@ const props: PieChartProps = {
   },
 };
 
-const component = (_props: PieChartProps) => (
+export default (
   <IntlProvider locale="en">
-    <PieChart {..._props} />
+    <PieChart {...props} />
   </IntlProvider>
 );
-
-component.displayName = 'PieChart';
-
-export default {
-  component,
-  props,
-};

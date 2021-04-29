@@ -5,13 +5,6 @@ const props: ErrorProps = {
   message: 'This is an error message',
   style: {color: 'red'}
 };
-const component = (_props: ErrorProps) => (
-  <Error {..._props} />
+export default (
+  <Error {...props} />
 );
-
-component.displayName = "Error";
-
-export default {
-  component,
-  props,
-};

@@ -9,15 +9,8 @@ const props: InfiniteListProps = {
   storeItemData: () => undefined
 };
 
-const component = (_props: InfiniteListProps) => (
+export default (
   <IntlProvider locale="en">
-      <InfiniteList {..._props} />
+      <InfiniteList {...props} />
   </IntlProvider>
 )
-
-component.displayName = "InfiniteList";
-
-export default {
-  component,
-  props,
-};

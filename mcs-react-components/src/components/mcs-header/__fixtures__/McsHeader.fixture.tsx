@@ -39,11 +39,4 @@ const props: McsHeaderProps = {
   /* tslint:enable */
 };
 
-const component = (_props: McsHeaderProps) => <McsHeader {..._props} />;
-
-component.displayName = 'McsHeader';
-
-export default {
-  component,
-  props,
-};
+export default <McsHeader {...props} />;

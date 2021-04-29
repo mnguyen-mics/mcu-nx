@@ -24,13 +24,6 @@ const props: TreeSelectFilterProps = {
   },
 };
 
-const component = (_props: TreeSelectFilterProps) => (
-  <TreeSelectFilter {..._props} />
+export default (
+  <TreeSelectFilter {...props} />
 );
-
-component.displayName = 'TreeSelectFilter';
-
-export default {
-  component,
-  props,
-};

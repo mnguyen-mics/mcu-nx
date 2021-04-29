@@ -28,15 +28,8 @@ const props: EventActivityProps = {
   },
 };
 
-const component = (_props: EventActivityProps) => (
+export default (
   <IntlProvider locale="en">
-    <EventActivity {..._props} />
+    <EventActivity {...props} />
   </IntlProvider>
 );
-
-component.displayName = "EventActivity";
-
-export default {
-  component,
-  props,
-};

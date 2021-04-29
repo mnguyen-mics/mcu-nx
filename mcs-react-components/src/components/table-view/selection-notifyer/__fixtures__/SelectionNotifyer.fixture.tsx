@@ -28,13 +28,6 @@ const props: SelectionNotifyerProps<Data> = {
   }
 };
 
-const component = (_props: SelectionNotifyerProps<Data>) => (
-  <SelectionNotifyer {..._props} />
+export default (
+  <SelectionNotifyer {...props} />
 );
-
-component.displayName = 'SelectionNotifyer';
-
-export default {
-  component,
-  props,
-};

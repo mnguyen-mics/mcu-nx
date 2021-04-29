@@ -18,15 +18,8 @@ const props: Props = {
   
 };
 
-const component = (_props: Props) => (
-  <FormFieldWrapper {..._props}>
+export default (
+  <FormFieldWrapper {...props}>
     <Input />
   </FormFieldWrapper>
 );
-
-component.displayName = 'FormFieldWrapper';
-
-export default {
-  component,
-  props,
-};

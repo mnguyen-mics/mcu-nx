@@ -36,15 +36,8 @@ const props: UserScenarioActivityCardProps = {
   },
 };
 
-const component = (_props: UserScenarioActivityCardProps) => (
+export default (
   <IntlProvider locale="en">
-    <UserScenarioActivityCard {..._props} />
+    <UserScenarioActivityCard {...props} />
   </IntlProvider>
 );
-
-component.displayName = "UserScenarioActivityCard";
-
-export default {
-  component,
-  props,
-};

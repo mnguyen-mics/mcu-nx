@@ -14,14 +14,8 @@ const props: CounterProps = {
   unit: 'Users'
 };
 
-const component = (_props: CounterProps) => (
+export default (
   <IntlProvider locale="en">
-    <Counter {..._props} />
+    <Counter {...props} />
   </IntlProvider>
 );
-component.displayName = "Counter";
-
-export default {
-  component,
-  props,
-};

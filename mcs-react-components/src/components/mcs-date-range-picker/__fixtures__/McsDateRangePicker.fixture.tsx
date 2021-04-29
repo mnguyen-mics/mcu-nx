@@ -14,15 +14,8 @@ const props: McsDateRangePickerProps = {
   excludeToday:true,
   startDate:1587147165831
 };
-const component = (_props: McsDateRangePickerProps) => (
+export default (
   <IntlProvider locale="en">
-    <McsDateRangePicker {..._props} />
+    <McsDateRangePicker {...props} />
   </IntlProvider>
 );
-
-component.displayName = 'McsDateRangePicker';
-
-export default {
-  component,
-  props,
-};

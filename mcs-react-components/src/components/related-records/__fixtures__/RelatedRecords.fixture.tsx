@@ -10,17 +10,10 @@ const props: RelatedRecordsProps = {
   isLoading: false
 };
 
-const component = (_props: RelatedRecordsProps) => (
-    <RelatedRecords {..._props}>
+export default (
+    <RelatedRecords {...props}>
       <div>
         Hello World
       </div>
     </RelatedRecords>
 );
-
-component.displayName = 'RelatedRecords';
-
-export default {
-  component,
-  props,
-};

@@ -7,17 +7,10 @@ const props: SlideProps = {
   horizontal: false,
 };
 
-const component = (_props: SlideProps) => (
+export default (
   <React.Fragment>
-    <Slide {..._props}>
+    <Slide {...props}>
       <div style={{ backgroundColor: '#EFEFEF' }}>Hello world !</div>
     </Slide>
   </React.Fragment>
 );
-
-component.displayName = 'Slide';
-
-export default {
-  component,
-  props,
-};

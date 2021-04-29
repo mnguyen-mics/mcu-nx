@@ -53,13 +53,6 @@ const props: ViewComponentWithFiltersProps<any> = {
   selectionNotifyerMessages: selectionNotifyerMessagesMock,
 };
 
-const component = (_props: ViewComponentWithFiltersProps<any>) => (
-  <TableViewFilters {..._props} />
+export default (
+  <TableViewFilters {...props} />
 );
-
-component.displayName = 'TableViewFilters';
-
-export default {
-  component,
-  props,
-};

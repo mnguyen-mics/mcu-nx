@@ -10,10 +10,4 @@ const props: AppsMenuProps = {
   className: "fake-class-name"
 };
 
-const component = (_props: AppsMenuProps) => <AppsMenu {..._props} />;
-component.displayName = 'AppsMenu';
-
-export default {
-  component,
-  props,
-};
+export default (<AppsMenu {...props} />);

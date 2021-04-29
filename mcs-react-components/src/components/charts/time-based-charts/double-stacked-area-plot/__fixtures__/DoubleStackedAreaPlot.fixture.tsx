@@ -30,13 +30,6 @@ const props: DoubleStackedAreaPlotProps = {
   },
 };
 
-const component = (_props: DoubleStackedAreaPlotProps) => (
+export default (
   <DoubleStackedAreaPlot {...props} />
 );
-
-component.displayName = "DoubleStackedAreaPlot";
-
-export default {
-  component,
-  props,
-};

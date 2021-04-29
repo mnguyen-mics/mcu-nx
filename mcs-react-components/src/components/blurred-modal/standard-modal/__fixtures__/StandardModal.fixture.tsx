@@ -10,15 +10,8 @@ const props: StandardModalProps = {
   opened: true,
 };
 
-const component = (_props: StandardModalProps) => (
-  <StandardModal {..._props}>
+export default (
+  <StandardModal {...props}>
     <div>This is the Standard Modal Content</div>
   </StandardModal>
 );
-
-component.displayName = "StandardModal";
-
-export default {
-  component,
-  props,
-};

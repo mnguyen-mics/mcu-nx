@@ -14,13 +14,6 @@ const props: MenuSubListProps = {
   }],
 };
 
-const component = (_props: MenuSubListProps) => (
-  <MenuSubList {..._props}/>
+export default (
+  <MenuSubList {...props}/>
 );
-
-component.displayName = "MenuSubList";
-
-export default {
-  component,
-  props,
-};

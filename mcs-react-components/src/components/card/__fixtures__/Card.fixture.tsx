@@ -7,15 +7,8 @@ const props: CardProps = {
   title: 'Title',
 };
 
-const component = (_props: CardProps) => (
-  <Card {..._props}>
+export default (
+  <Card {...props}>
     <div>Content</div>
   </Card>
 );
-
-component.displayName = "Card";
-
-export default {
-  component,
-  props,
-};

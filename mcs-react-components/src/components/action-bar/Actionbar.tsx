@@ -5,11 +5,6 @@ import McsIcon from '../mcs-icon';
 
 const BreadcrumbItem = Breadcrumb.Item;
 
-export interface Path {
-  name: string;
-  path?: string;
-}
-
 export interface ActionbarProps extends BreadcrumbProps {
   edition?: boolean;
   pathItems: React.ReactNode[];

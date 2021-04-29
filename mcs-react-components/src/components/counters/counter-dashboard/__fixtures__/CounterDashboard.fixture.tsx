@@ -37,15 +37,8 @@ const props: CounterDashboardProps = {
   invertedColor: false
 };
 
-const component = (_props: CounterDashboardProps) => (
+export default (
   <IntlProvider locale="en">
-    <CounterDashboard {..._props} />
+    <CounterDashboard {...props} />
   </IntlProvider>
 );
-
-component.displayName = "CounterDashboard";
-
-export default {
-  component,
-  props,
-};

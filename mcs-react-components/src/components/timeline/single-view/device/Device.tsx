@@ -2,11 +2,11 @@ import * as React from 'react';
 import { Row, Col } from 'antd';
 import { QuestionOutlined } from '@ant-design/icons';
 import McsIcon from '../../../mcs-icon';
-import { Device, FormFactor } from '../../../../models/timeline/timeline';
+import { Device as IDevice, FormFactor } from '../../../../models/timeline/timeline';
 
 export interface DeviceProps {
   vectorId: string;
-  device?: Device;
+  device?: IDevice;
 }
 
 const Device = (props: DeviceProps) => {
