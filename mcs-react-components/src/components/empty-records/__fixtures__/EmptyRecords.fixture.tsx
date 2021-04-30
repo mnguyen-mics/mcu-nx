@@ -7,11 +7,5 @@ const props: EmptyRecordsProps = {
   className: 'mcs-customClass'  
 };
 
-const component = (_props: EmptyRecordsProps) => (<EmptyRecords {..._props} />);
+export default (<EmptyRecords {...props} />);
 
-component.displayName = 'EmptyRecords';
-
-export default {
-  component,
-  props,
-};

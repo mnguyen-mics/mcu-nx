@@ -4,15 +4,8 @@ import Fade, { FadeProps } from '../Fade';
 
 const props: FadeProps = {};
 
-const component = (_props: FadeProps) => (
-  <Fade {..._props}>
+export default (
+  <Fade {...props}>
     <div style={{ backgroundColor: '#EFEFEF' }}>Hello world !</div>
   </Fade>
 );
-
-component.displayName = 'Fade';
-
-export default {
-  component,
-  props,
-};

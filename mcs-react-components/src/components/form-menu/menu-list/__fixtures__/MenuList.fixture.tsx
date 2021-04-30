@@ -7,13 +7,6 @@ const props: MenuListProps = {
   select: () => { /* tslint:disable */ console.log('click') /* tslint:enable */ },
 };
 
-const component = (_props: MenuListProps) => (
-  <MenuList {..._props}/>
+export default (
+  <MenuList {...props}/>
 );
-
-component.displayName = "MenuList";
-
-export default {
-  component,
-  props,
-};

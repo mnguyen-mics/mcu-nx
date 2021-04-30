@@ -2,27 +2,20 @@ import * as React from 'react';
 import BlurredModal, { BlurredModalProps } from '../BlurredModal';
 
 const onClose = (e: React.MouseEvent) => {
-    return ;
+  return;
 }
 
 const props: BlurredModalProps = {
-    opened: true,
-    blurred: true,
-    formId: 'formID',
-    onClose: onClose
+  opened: true,
+  blurred: true,
+  formId: 'formID',
+  onClose: onClose
 };
 
-const component = (_props: BlurredModalProps) => (
-    <BlurredModal {..._props}>
-        <div>
-          This is the Blurred Modal Content
+export default (
+  <BlurredModal {...props}>
+    <div>
+      This is the Blurred Modal Content
         </div>
-    </BlurredModal>
+  </BlurredModal>
 );
-
-component.displayName = "BlurredModal";
-
-export default {
-  component,
-  props,
-};

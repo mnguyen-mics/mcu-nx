@@ -23,13 +23,6 @@ const props: SearchAndMultiSelectProps = {
     value: ['1'],
     loading: false,
   };
-const component = (_props: SearchAndMultiSelectProps) => (
-  <SearchAndMultiSelect {..._props} />
+export default (
+  <SearchAndMultiSelect {...props} />
 );
-
-component.displayName = "SearchAndMultiSelect";
-
-export default {
-  component,
-  props,
-};

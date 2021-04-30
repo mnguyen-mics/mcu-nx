@@ -57,15 +57,8 @@ const props: DeviceCardProps = {
   isLoading: false,
 };
 
-const component = (_props: DeviceCardProps) => (
+export default (
   <IntlProvider locale="en">
-    <DeviceCard {..._props} />
+    <DeviceCard {...props} />
   </IntlProvider>
 );
-
-component.displayName = "DeviceCard";
-
-export default {
-  component,
-  props,
-};

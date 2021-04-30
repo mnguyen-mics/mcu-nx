@@ -10,15 +10,8 @@ const props: LegendChartProps = {
   }]
 };
 
-const component = (_props: LegendChartProps) => (
+export default (
   <IntlProvider locale="en">
-      <LegendChart {..._props} />
+      <LegendChart {...props} />
   </IntlProvider>
 );
-
-component.displayName = "LegendChart";
-
-export default {
-  component,
-  props,
-};

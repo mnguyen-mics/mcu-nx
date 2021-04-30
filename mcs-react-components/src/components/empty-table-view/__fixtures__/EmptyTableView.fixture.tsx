@@ -5,13 +5,7 @@ const props: EmptyTableViewProps = {
   message: 'No data found',
   iconType: 'warning',
 };
-const component = (_props: EmptyTableViewProps) => (
-  <EmptyTableView {..._props} />
+
+export default (
+  <EmptyTableView {...props} />
 );
-
-component.displayName = 'EmptyTableView';
-
-export default {
-  component,
-  props,
-};

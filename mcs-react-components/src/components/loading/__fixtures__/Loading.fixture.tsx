@@ -6,13 +6,6 @@ const props: LoadingProps = {
 };
 
 
-const component = (_props: LoadingProps) => (
-  <Loading {..._props} />
+export default (
+  <Loading {...props} />
 );
-
-component.displayName = "Loading";
-
-export default {
-  component,
-  props,
-};

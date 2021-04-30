@@ -80,15 +80,8 @@ const props: CollectionSelectorProps<Data> = {
   selectedIds:Object.keys(Array.apply(0,Array(12)))
 };
 
-const component = (_props: CollectionSelectorProps<Data>) => (
+export default (
   <IntlProvider locale="en">
-    <CollectionSelector {..._props} />
+    <CollectionSelector {...props} />
   </IntlProvider>
 );
-
-component.displayName = 'CollectionSelector';
-
-export default {
-  component,
-  props,
-};

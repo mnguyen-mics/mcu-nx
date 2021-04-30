@@ -5,11 +5,5 @@ const props: LoadingChartProps = {
   className: 'test',
 };
 
-const component = (_props: LoadingChartProps) => <LoadingChart {..._props} />;
+export default <LoadingChart {...props} />;
 
-component.displayName = "LoadingChart";
-
-export default {
-  component,
-  props,
-};

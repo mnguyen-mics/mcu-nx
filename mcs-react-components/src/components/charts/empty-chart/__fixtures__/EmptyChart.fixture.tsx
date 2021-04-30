@@ -6,11 +6,4 @@ const props: EmptyChartProps = {
   icon: 'automation',
 };
 
-const component = (_props: EmptyChartProps) => <EmptyChart {..._props} />;
-
-component.displayName = "EmptyChart";
-
-export default {
-  component,
-  props,
-};
+export default <EmptyChart {...props} />;

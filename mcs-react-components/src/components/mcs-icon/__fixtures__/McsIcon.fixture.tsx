@@ -62,15 +62,8 @@ const typeList: McsIconType[] = [
   'warning'
 ];
 
-const component = () => (
+export default (
   <div style={{ maxWidth: "600px" }}>
     {typeList.map(type => <McsIcon key={type} type={type} style={{fontSize: '40px', margin: "8px"}} />)}
   </div>
 )
-
-component.displayName = "McsIcon";
-
-export default {
-  component,
-  props: {},
-};

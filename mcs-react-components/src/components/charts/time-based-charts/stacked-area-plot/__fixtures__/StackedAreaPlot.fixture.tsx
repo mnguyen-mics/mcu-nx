@@ -28,13 +28,6 @@ const props: StackedAreaPlotProps = {
   },
 };
 
-const component = (_props: StackedAreaPlotProps) => (
+export default (
   <StackedAreaPlot {...props} />
 );
-
-component.displayName = "StackedAreaPlot";
-
-export default {
-  component,
-  props,
-};

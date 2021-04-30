@@ -11,15 +11,8 @@ const props: ErrorBoundaryProps = {
   onError,
 };
 
-const component = (_props: ErrorBoundaryProps) => (
-  <ErrorBoundary {..._props}>
+export default (
+  <ErrorBoundary {...props}>
     <BuggyButton/>
   </ErrorBoundary>
 );
-
-component.displayName = 'ErrorBoundary';
-
-export default {
-  component,
-  props,
-};

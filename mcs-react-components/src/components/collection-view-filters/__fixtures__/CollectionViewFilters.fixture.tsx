@@ -22,15 +22,8 @@ const props: CollectionViewFiltersProps = {
   },
 };
 
-const component = (_props: CollectionViewFiltersProps) => (
+export default (
   <IntlProvider locale="en">
-    <CollectionViewFilters {..._props} />
+    <CollectionViewFilters {...props} />
   </IntlProvider>
 );
-
-component.displayName = 'CollectionViewFilters';
-
-export default {
-  component,
-  props,
-};

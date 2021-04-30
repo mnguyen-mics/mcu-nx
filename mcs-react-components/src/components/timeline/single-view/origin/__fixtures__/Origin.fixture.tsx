@@ -26,11 +26,4 @@ const props: Props = {
     $ts: 1555507575217,
   },
 };
-const component = (_props: Props) => <Origin {..._props} />;
-
-component.displayName = 'Origin';
-
-export default {
-  component,
-  props,
-};
+export default <Origin {...props} />;

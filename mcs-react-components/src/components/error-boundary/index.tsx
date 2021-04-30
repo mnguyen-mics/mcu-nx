@@ -1,5 +1,5 @@
 import ErrorBoundary from './ErrorBoundary';
 
-export { ErrorBoundaryProps } from './ErrorBoundary';
+export type { ErrorBoundaryProps } from './ErrorBoundary';
 
 export default ErrorBoundary;

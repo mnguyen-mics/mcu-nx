@@ -30,15 +30,8 @@ const props: LabelsSelectorProps = {
   onChange: () => {return true}
 };
 
-const component = (_props: LabelsSelectorProps) => (
+export default (
   <IntlProvider locale="en">
-    <LabelsSelector {..._props} />
+    <LabelsSelector {...props} />
   </IntlProvider>
 );
-
-component.displayName = "LabelsSelector";
-
-export default {
-  component,
-  props,
-};

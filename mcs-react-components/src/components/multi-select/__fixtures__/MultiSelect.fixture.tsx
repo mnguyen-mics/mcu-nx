@@ -22,15 +22,8 @@ const props: MultiSelectProps<string> = {
   buttonClass: 'test-class',
 };
 
-const component = (_props: MultiSelectProps<string>) => (
+export default (
   <IntlProvider locale="en">
-    <MultiSelect {..._props} />
+    <MultiSelect {...props} />
   </IntlProvider>
 );
-
-component.displayName = 'MultiSelect';
-
-export default {
-  component,
-  props,
-};

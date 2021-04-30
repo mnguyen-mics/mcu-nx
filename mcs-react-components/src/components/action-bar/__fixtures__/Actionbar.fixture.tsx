@@ -9,8 +9,8 @@ const props: ActionbarProps = {
   ],
 };
 
-const component = (_props: ActionbarProps) => (
-  <Actionbar {..._props}>
+export default (
+  <Actionbar {...props}>
     <div>
       <Button type="primary" href="" style={{ padding: '10px 15px' }}>
         Save
@@ -18,10 +18,3 @@ const component = (_props: ActionbarProps) => (
     </div>
   </Actionbar>
 );
-
-component.displayName = 'ActionBar';
-
-export default {
-  component,
-  props,
-};

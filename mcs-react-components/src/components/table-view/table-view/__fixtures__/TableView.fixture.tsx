@@ -14,13 +14,6 @@ const props: TableViewProps<TableViewMockData> = {
   selectionNotifyerMessages: selectionNotifyerMessagesMock
 };
 
-const component = (_props: TableViewProps<TableViewMockData>) => (
+export default (
   <TableView {...props} />
 );
-
-component.displayName = 'TableView';
-
-export default {
-  component,
-  props,
-};

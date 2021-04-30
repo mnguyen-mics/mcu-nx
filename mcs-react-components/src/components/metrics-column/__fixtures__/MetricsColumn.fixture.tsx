@@ -10,15 +10,8 @@ const props: MetricsColumnProps = {
   ],
 };
 
-const component = (_props: MetricsColumnProps) => (
+export default (
   <IntlProvider locale="en">
-    <MetricsColumn {..._props} />
+    <MetricsColumn {...props} />
   </IntlProvider>
 );
-
-component.displayName = 'MetricsColumn';
-
-export default {
-  component,
-  props,
-};

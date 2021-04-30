@@ -24,15 +24,8 @@ const props: CollectionViewProps = {
 	},
 }
 
-const component = (_props: CollectionViewProps) => (
+export default (
 	<IntlProvider locale='en'>
-		<CollectionView {..._props} />
+		<CollectionView {...props} />
 	</IntlProvider>
 )
-
-component.displayName = 'CollectionView'
-
-export default {
-	component,
-	props,
-}

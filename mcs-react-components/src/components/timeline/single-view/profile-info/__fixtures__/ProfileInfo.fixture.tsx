@@ -18,15 +18,8 @@ const props: ProfileInfoProps = {
   },
 };
 
-const component = (_props: ProfileInfoProps) => (
+export default (
   <IntlProvider locale="en">
-    <ProfileInfo {..._props} />
+    <ProfileInfo {...props} />
   </IntlProvider>
 );
-
-component.displayName = "ProfileInfo";
-
-export default {
-  component,
-  props,
-};

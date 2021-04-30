@@ -22,15 +22,8 @@ const props: McTabsProps = {
   ],
 };
 
-const component = (_props: McTabsProps) => (
+export default (
   <IntlProvider locale="en">
-    <McsTabs {..._props} />
+    <McsTabs {...props} />
   </IntlProvider>
 );
-
-component.displayName = "McsTabs";
-
-export default {
-  component,
-  props,
-};

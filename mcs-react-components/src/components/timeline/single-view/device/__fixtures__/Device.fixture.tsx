@@ -16,17 +16,4 @@ const props: DeviceProps = {
   },
 };
 
-const component = (_props: DeviceProps) => <Device {..._props} />;
-
-component.displayName = "Device";
-
-// const component = (_props: DeviceProps) => (
-//   <div className="mcs-card">
-//     <Device {..._props} />
-//   </div>
-// );
-
-export default {
-  component,
-  props,
-};
+export default <Device {...props} />;
