@@ -7,18 +7,18 @@
   flex-direction: row;
   justify-content: space-between;
   height: 40px;
-  padding-left: 15px;
+  padding-left: 24px;
   padding-right: 40px; 
   background-color: @info-color;
 
-  &-wrapper {
+  &_wrapper {
     display: flex;
     flex: 1;
     flex-direction: row;
     justify-content: space-between;
     padding-right: 20px;
 
-    .@{mcs-header-prefix-cls}-left-component {
+    .@{mcs-header-prefix-cls}_leftComponent {
       display: flex;
       align-items: center;
 
@@ -27,32 +27,20 @@
       }
     }
 
-    &-launcher {
-      padding-right: 20px;
-    }
-    &-title {
-      color: white;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      text-decoration: none;
-  
-      i {
-        font-size: 12px;
-      }
-    }
   }
 
-  &-actions {
+  &_actions {
     display: flex;
 
-    &-settings {
-      display: flex;
-      align-items: center;
-      padding-right: 20px;
+
+    &_appLauncher,
+    &_settings {
+      padding-right: 15px;
     }
 
-    &-account {
+    &_account,
+    &_appLauncher,
+    &_settings {
       display: flex;
       align-items: center;
 
@@ -62,12 +50,21 @@
     }
   }
 
-  &-menu-icon {
+
+  &-menu-icon,
+  &_menuIcon {
     margin: 0;
     color: white;
-    font-size: 20px !important;
+    font-size: 20px;
     &:hover {
       color: @normal-color;
+    }
+  }
+
+  &_actions_appLauncher {
+    .@{mcs-header-prefix-cls}_menuIcon,
+    .@{mcs-header-prefix-cls}_menu-icon {
+      font-size: 23px;
     }
   }
 

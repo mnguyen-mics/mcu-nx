@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AppstoreFilled } from '@ant-design/icons';
+import { AppstoreOutlined } from '@ant-design/icons';
 import { Layout, Menu, Dropdown } from 'antd';
 import McsIcon from '../mcs-icon';
 
@@ -13,6 +13,7 @@ export interface McsHeaderProps {
   headerSettings?: React.ReactNode;
   devAlert?: React.ReactNode;
   className?: string;
+  organisationSwitcher?: React.ReactNode;
 }
 
 class McsHeader extends React.Component<McsHeaderProps> {
@@ -24,7 +25,8 @@ class McsHeader extends React.Component<McsHeaderProps> {
       headerSettings,
       devAlert,
       menuIcon,
-      className
+      className,
+      organisationSwitcher
     } = this.props;
 
     const accountMenu = (
@@ -41,36 +43,37 @@ class McsHeader extends React.Component<McsHeaderProps> {
 
     return (
       <Header className={`mcs-header ${className ? className : ''}`}>
-        <div className="mcs-header-wrapper">
-          <span className="mcs-header-left-component">
-            {menu && (
-              <span className="mcs-header-wrapper-launcher">
+        <div className="mcs-header_wrapper">
+          <span className="mcs-header_leftComponent">
+           {organisationSwitcher}
+          </span>
+          {devAlert}
+        </div>
+        <div className="mcs-header_actions">
+          {menu && (
+              <span className="mcs-header_actions_appLauncher">
                 <Dropdown overlay={menu} trigger={['click']}>
                   <a>
                     {menuIcon ? (
                       menuIcon
                     ) : (
-                      <AppstoreFilled className="mcs-header-menu-icon" />
+                      <AppstoreOutlined className="mcs-header_menuIcon" />
                     )}
                   </a>
                 </Dropdown>
               </span>
             )}
-          </span>
-          {devAlert}
-        </div>
-        <div className="mcs-header-actions">
           {headerSettings && (
-            <div className="mcs-header-actions-settings">{headerSettings}</div>
+            <div className="mcs-header_actions_settings mcs-header_menuIcon">{headerSettings}</div>
           )}
-          <div className="mcs-header-actions-account">
+          <div className="mcs-header_actions_account">
             <Dropdown
               overlay={accountMenu}
               trigger={['click']}
               placement="bottomRight"
             >
               <a>
-                <McsIcon type="user" className="mcs-header-menu-icon" />
+                <McsIcon type="user" className="mcs-header_menuIcon" />
               </a>
             </Dropdown>
           </div>
