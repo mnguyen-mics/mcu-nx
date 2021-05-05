@@ -2,10 +2,7 @@ import * as React from 'react';
 import Loading, { LoadingProps } from '../Loading';
 
 const props: LoadingProps = {
-  isFullScreen: true
+  isFullScreen: true,
 };
 
-
-export default (
-  <Loading {...props} />
-);
+export default <Loading {...props} />;

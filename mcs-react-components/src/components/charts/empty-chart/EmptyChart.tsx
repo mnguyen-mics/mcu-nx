@@ -10,11 +10,11 @@ export interface EmptyChartProps {
 
 const EmptyChart: React.SFC<EmptyChartProps> = ({ title, icon }) => {
   return (
-    <Row className="mcs-empty-chart-no-data">
-      <Col span={24} className="">
+    <Row className='mcs-empty-chart-no-data'>
+      <Col span={24} className=''>
         <McsIcon type={icon!} />
       </Col>
-      <Col span={24} className="">
+      <Col span={24} className=''>
         {title}
       </Col>
     </Row>

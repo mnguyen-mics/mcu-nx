@@ -1,16 +1,9 @@
-export type HashFunction =
-'MD2' |
-'MD5' |
-'SHA_1' |
-'SHA_256' |
-'SHA_384' |
-'SHA_512' |
-'NO_HASH';
+export type HashFunction = 'MD2' | 'MD5' | 'SHA_1' | 'SHA_256' | 'SHA_384' | 'SHA_512' | 'NO_HASH';
 
 export interface RuntimeSchemaResource {
   id: string;
   datamart_id: string;
-  status: 'DRAFT' | 'PUBLISHED' | 'LIVE'| 'ARCHIVED';
+  status: 'DRAFT' | 'PUBLISHED' | 'LIVE' | 'ARCHIVED';
   creation_date: number;
   modification_date: number;
   publication_date: number;
@@ -56,14 +49,16 @@ export interface FieldDirectiveResource {
   runtime_schema_id: string;
   name: string;
   comment: string;
-  arguments?: DirectiveArgumentResource[]
+  arguments?: DirectiveArgumentResource[];
 }
 
 export interface FieldDirectiveInfoResource extends FieldDirectiveResource {
   arguments: DirectiveArgumentResource[];
 }
 
-export type SchemaDecoratorResource = SchemaVisibleDecoratorRedource | SchemaHiddenDecoratorRedource;
+export type SchemaDecoratorResource =
+  | SchemaVisibleDecoratorRedource
+  | SchemaHiddenDecoratorRedource;
 
 export interface SchemaBaseDecoratorResource {
   id: string;
@@ -91,68 +86,67 @@ export interface FieldInfoResource extends FieldResource {
 }
 
 export interface ObjectLikeTypeInfoResource extends ObjectLikeTypeResource {
-  fields: FieldInfoResource[],
+  fields: FieldInfoResource[];
   directives: ObjectLikeTypeDirectiveInfoResource[];
 }
 
 // see https://github.com/MEDIARITHMICS/mediarithmics-platform/blob/d741c845e5dd5850b17770295758e577d0bd8788/graphdb/graphdb-engine-lib/src/main/scala/com/mediarithmics/graphdb/datamart/schema/package.scala#L95
-export type BuitinEnumerationType = 'HashFunction' | 'FormFactor' | 'BrowserFamily' | 'OperatingSystemFamily' | 'UserAgentType' | 'ActivitySource' | 'UserActivityType'; 
+export type BuitinEnumerationType =
+  | 'HashFunction'
+  | 'FormFactor'
+  | 'BrowserFamily'
+  | 'OperatingSystemFamily'
+  | 'UserAgentType'
+  | 'ActivitySource'
+  | 'UserActivityType';
 
 export type ActivitySource =
-  'PIXEL_TRACKING' |
-  'API' |
-  'INTERNAL' |
-  'SESSION_AGGREGATOR' |
-  'ACTIVITY_STORE';
+  | 'PIXEL_TRACKING'
+  | 'API'
+  | 'INTERNAL'
+  | 'SESSION_AGGREGATOR'
+  | 'ACTIVITY_STORE';
 
 export type UserActivityType =
-  'ALL' |
-  'USER_PLATFORM' |
-  'TOUCH' |
-  'SITE_VISIT' |
-  'APP_VISIT' |
-  'EMAIL' |
-  'DISPLAY_AD' |
-  'STOPWATCH' |
-  'STAGING_AREA' |
-  'RECOMMENDER' |
-  'USER_SCENARIO_START' |
-  'USER_SCENARIO_STOP' |
-  'USER_SCENARIO_NODE_ENTER' |
-  'USER_SCENARIO_NODE_EXIT';
+  | 'ALL'
+  | 'USER_PLATFORM'
+  | 'TOUCH'
+  | 'SITE_VISIT'
+  | 'APP_VISIT'
+  | 'EMAIL'
+  | 'DISPLAY_AD'
+  | 'STOPWATCH'
+  | 'STAGING_AREA'
+  | 'RECOMMENDER'
+  | 'USER_SCENARIO_START'
+  | 'USER_SCENARIO_STOP'
+  | 'USER_SCENARIO_NODE_ENTER'
+  | 'USER_SCENARIO_NODE_EXIT';
 
-export type OperatingSystemFamily = 
-  'OTHER' |
-  'WINDOWS' |
-  'MAC_OS' |
-  'LINUX' |
-  'ANDROID' |
-  'IOS';
-
+export type OperatingSystemFamily = 'OTHER' | 'WINDOWS' | 'MAC_OS' | 'LINUX' | 'ANDROID' | 'IOS';
 
 export type FormFactor =
-  'OTHER' |
-  'PERSONAL_COMPUTER' |
-  'SMART_TV' |
-  'GAME_CONSOLE' |
-  'SMARTPHONE' |
-  'TABLET' |
-  'WEARABLE_COMPUTER';
+  | 'OTHER'
+  | 'PERSONAL_COMPUTER'
+  | 'SMART_TV'
+  | 'GAME_CONSOLE'
+  | 'SMARTPHONE'
+  | 'TABLET'
+  | 'WEARABLE_COMPUTER';
 
 export type BrowserFamily =
-  'OTHER' |
-  'CHROME' |
-  'IE' |
-  'FIREFOX' |
-  'SAFARI' |
-  'OPERA' |
-  'STOCK_ANDROID' |
-  'BOT' |
-  'EMAIL_CLIENT' |
-  'MICROSOFT_EDGE';
+  | 'OTHER'
+  | 'CHROME'
+  | 'IE'
+  | 'FIREFOX'
+  | 'SAFARI'
+  | 'OPERA'
+  | 'STOCK_ANDROID'
+  | 'BOT'
+  | 'EMAIL_CLIENT'
+  | 'MICROSOFT_EDGE';
 
-export type UserAgentType = 'WEB_BROWSER' | 'MOBILE_APP'
-
+export type UserAgentType = 'WEB_BROWSER' | 'MOBILE_APP';
 
 type GTypes =
   | 'Bool'

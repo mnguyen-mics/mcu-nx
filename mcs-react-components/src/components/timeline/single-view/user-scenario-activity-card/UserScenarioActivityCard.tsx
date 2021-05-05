@@ -2,16 +2,8 @@ import * as React from 'react';
 import { Row } from 'antd';
 import * as _moment from 'moment';
 import { compose } from 'recompose';
-import {
-  injectIntl,
-  InjectedIntlProps,
-  FormattedMessage,
-  defineMessages,
-} from 'react-intl';
-import {
-  Activity,
-  UserScenarioActivityCardProps,
-} from '../../../../models/timeline/timeline';
+import { injectIntl, InjectedIntlProps, FormattedMessage, defineMessages } from 'react-intl';
+import { Activity, UserScenarioActivityCardProps } from '../../../../models/timeline/timeline';
 import Card from '../../../card';
 
 const moment = _moment;
@@ -35,13 +27,11 @@ const messages = defineMessages({
   },
   userScenarioNodeMovementContent: {
     id: 'audience.monitoring.timeline.activity.scenario.node.movement.content',
-    defaultMessage:
-      'Moved from {scenarioOldNodeName} to {scenarioNodeName} within {scenarioName}',
+    defaultMessage: 'Moved from {scenarioOldNodeName} to {scenarioNodeName} within {scenarioName}',
   },
 });
 
-type Props = UserScenarioActivityCardProps &
-  InjectedIntlProps;
+type Props = UserScenarioActivityCardProps & InjectedIntlProps;
 
 interface CardElements {
   title: string;
@@ -123,11 +113,11 @@ class UserScenarioActivityCard extends React.Component<Props> {
     const activity = this.props.activity;
     const cardContent = this.generateCardElements(activity);
     return (
-      <Card title={cardContent.title} className="mcs-user-scenario-activity-card">
+      <Card title={cardContent.title} className='mcs-user-scenario-activity-card'>
         <Row>
-          <div className="mcs-card-content-text">{cardContent.intlMsg}</div>
+          <div className='mcs-card-content-text'>{cardContent.intlMsg}</div>
         </Row>
-        <Row className="border-top sm-footer timed-footer text-right">
+        <Row className='border-top sm-footer timed-footer text-right'>
           {moment(activity.$ts).format('H:mm:ss')}
         </Row>
       </Card>
@@ -135,6 +125,4 @@ class UserScenarioActivityCard extends React.Component<Props> {
   }
 }
 
-export default compose<Props, UserScenarioActivityCardProps>(
-  injectIntl,
-)(UserScenarioActivityCard);
+export default compose<Props, UserScenarioActivityCardProps>(injectIntl)(UserScenarioActivityCard);

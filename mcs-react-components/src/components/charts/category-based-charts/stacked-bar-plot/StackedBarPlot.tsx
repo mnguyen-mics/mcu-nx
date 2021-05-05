@@ -17,7 +17,7 @@ export interface StackedBarPlotOptions {
   yKeys: yKey[];
   xKey: string;
   showLegend?: boolean;
-  type?: string 
+  type?: string;
 }
 
 type yKey = { key: string; message: string };
@@ -25,7 +25,6 @@ type yKey = { key: string; message: string };
 type Props = StackedBarPlotProps;
 
 class StackedBarPlot extends React.Component<Props, {}> {
-
   constructor(props: Props) {
     super(props);
     this.state = {};
@@ -34,30 +33,30 @@ class StackedBarPlot extends React.Component<Props, {}> {
   getXAxisValues = (dataset: Dataset, xKey: string) => {
     return dataset.map(d => {
       return d[xKey] as string;
-    })
-  }
+    });
+  };
 
   formatSerieData = (dataset: Dataset, y: yKey) => {
     return dataset.map(d => {
-      return d[y.key] ? d[y.key] as number : 0;
+      return d[y.key] ? (d[y.key] as number) : 0;
     });
-  }
+  };
 
   formatSeries = (dataset: Dataset, yKeys: yKey[]): Highcharts.SeriesOptionsType[] => {
     return yKeys.map(y => {
       return {
         name: y.message,
         data: this.formatSerieData(dataset, y),
-        type: "column" as any
-      }
+        type: 'column' as any,
+      };
     });
-  }
+  };
 
   render() {
     const {
       dataset,
       options: { colors, xKey, yKeys, showLegend, type },
-      height
+      height,
     } = this.props;
 
     const options: Highcharts.Options = {
@@ -66,16 +65,14 @@ class StackedBarPlot extends React.Component<Props, {}> {
         height: height ? height : BASE_CHART_HEIGHT,
       },
       title: {
-        text: ''
+        text: '',
       },
       colors: colors,
       plotOptions: {
-        column: {
-          
-        },
+        column: {},
       },
       xAxis: {
-        categories: this.getXAxisValues(dataset, xKey)
+        categories: this.getXAxisValues(dataset, xKey),
       },
       series: this.formatSeries(dataset, yKeys),
       credits: {
@@ -86,17 +83,11 @@ class StackedBarPlot extends React.Component<Props, {}> {
         ...generateTooltip(),
       },
       legend: {
-        enabled: showLegend === undefined ? false : showLegend
-      }
+        enabled: showLegend === undefined ? false : showLegend,
+      },
     };
 
-    return (
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={options}
-          style={{ width: "100%" }}
-        />
-    );
+    return <HighchartsReact highcharts={Highcharts} options={options} style={{ width: '100%' }} />;
   }
 }
 

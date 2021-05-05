@@ -24,6 +24,4 @@ const props: TreeSelectFilterProps = {
   },
 };
 
-export default (
-  <TreeSelectFilter {...props} />
-);
+export default <TreeSelectFilter {...props} />;

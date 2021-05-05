@@ -15,33 +15,28 @@ export interface ActionbarProps extends BreadcrumbProps {
 type Props = ActionbarProps;
 
 class Actionbar extends React.Component<Props> {
-
   render() {
-    const {
-      edition,
-      pathItems,
-      backgroundColor,
-      inverted,
-      children,
-      ...rest
-    } = this.props;
+    const { edition, pathItems, backgroundColor, inverted, children, ...rest } = this.props;
 
     return (
       <Row
-        align="middle"
-        justify="space-between"
-        className={`${edition ? 'mcs-actionbar-edit' : 'mcs-actionbar'} ${inverted ? 'inverted' : ''
-          }`}
+        align='middle'
+        justify='space-between'
+        className={`${edition ? 'mcs-actionbar-edit' : 'mcs-actionbar'} ${
+          inverted ? 'inverted' : ''
+        }`}
         style={backgroundColor ? { backgroundColor } : {}}
       >
         <Breadcrumb
           className={'mcs-breadcrumb'}
-          separator={<McsIcon type="chevron-right" />}
+          separator={<McsIcon type='chevron-right' />}
           {...rest}
         >
-          {pathItems.map((item, index) => <BreadcrumbItem key={index}>{item}</BreadcrumbItem>)}
+          {pathItems.map((item, index) => (
+            <BreadcrumbItem key={index}>{item}</BreadcrumbItem>
+          ))}
         </Breadcrumb>
-        <div className="left-part-margin">{children}</div>
+        <div className='left-part-margin'>{children}</div>
       </Row>
     );
   }

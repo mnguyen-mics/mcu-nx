@@ -17,20 +17,11 @@ export interface PieChartProps {
 type Props = PieChartProps & InjectedIntlProps;
 
 class PieChart extends React.Component<Props> {
-
   render() {
-    const {
-      options
-    } = this.props;
+    const { options } = this.props;
 
-    return (
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={options}
-        />
-    );
+    return <HighchartsReact highcharts={Highcharts} options={options} />;
   }
 }
 
 export default compose<Props, PieChartProps>(injectIntl)(PieChart);
-

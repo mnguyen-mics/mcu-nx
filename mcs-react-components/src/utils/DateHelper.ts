@@ -11,9 +11,7 @@ export function areDatesSameDay(date1: Moment, date2: Moment) {
 
 export const DEFAULT_DATE_FORMAT = 'DD/MM/YYYY';
 
-export function formatUnixTimestamp(
-  ts: number | null | undefined
-) {
+export function formatUnixTimestamp(ts: number | null | undefined) {
   if (!ts) return '--/--/----';
   return moment(ts).format(DEFAULT_DATE_FORMAT);
 }

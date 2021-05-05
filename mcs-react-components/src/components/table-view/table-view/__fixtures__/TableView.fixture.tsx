@@ -1,6 +1,11 @@
 import * as React from 'react';
 import TableView, { TableViewProps } from '../TableView';
-import { TableViewMockData, tableViewMockColumns, tableViewMockData, selectionNotifyerMessagesMock } from '../../../../utils/TableViewHelpers'
+import {
+  TableViewMockData,
+  tableViewMockColumns,
+  tableViewMockData,
+  selectionNotifyerMessagesMock,
+} from '../../../../utils/TableViewHelpers';
 
 const props: TableViewProps<TableViewMockData> = {
   columns: tableViewMockColumns,
@@ -11,9 +16,7 @@ const props: TableViewProps<TableViewMockData> = {
   pagination: {
     pageSize: 10,
   },
-  selectionNotifyerMessages: selectionNotifyerMessagesMock
+  selectionNotifyerMessages: selectionNotifyerMessagesMock,
 };
 
-export default (
-  <TableView {...props} />
-);
+export default <TableView {...props} />;

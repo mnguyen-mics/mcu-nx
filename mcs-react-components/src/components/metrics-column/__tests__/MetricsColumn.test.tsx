@@ -13,7 +13,7 @@ it('renders the metrics column', () => {
   };
 
   const component = render(
-    <IntlProvider locale="en">
+    <IntlProvider locale='en'>
       <MetricsColumn {...props} />
     </IntlProvider>,
   );

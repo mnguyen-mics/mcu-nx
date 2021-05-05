@@ -78,9 +78,7 @@ class PiePlot extends React.Component<Props, {}> {
         style: { fontFamily: '' },
       },
       title: {
-        text: text
-          ? `<div>${text.value}</div><br /><div>${text.text}</div>`
-          : '',
+        text: text ? `<div>${text.value}</div><br /><div>${text.text}</div>` : '',
         align: 'center',
         verticalAlign: 'middle',
         y: isHalf ? -30 : -5,
@@ -119,11 +117,7 @@ class PiePlot extends React.Component<Props, {}> {
           height: height || (isHalf ? BASE_CHART_HEIGHT / 2 : BASE_CHART_HEIGHT),
         }}
       >
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={options}
-          style={{ width: '100%' }}
-        />
+        <HighchartsReact highcharts={Highcharts} options={options} style={{ width: '100%' }} />
       </div>
     );
   }

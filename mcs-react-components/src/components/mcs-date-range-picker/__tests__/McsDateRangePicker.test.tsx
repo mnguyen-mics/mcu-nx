@@ -21,7 +21,7 @@ it('should render a disabled date range picker', () => {
     disabled: true,
   };
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
+    <IntlProvider locale='en'>
       <McsDateRangePicker {...props} />
     </IntlProvider>,
   );
@@ -39,7 +39,7 @@ it('should render a date range picker without the start date', () => {
     excludeToday: true,
   };
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
+    <IntlProvider locale='en'>
       <McsDateRangePicker {...props} />
     </IntlProvider>,
   );

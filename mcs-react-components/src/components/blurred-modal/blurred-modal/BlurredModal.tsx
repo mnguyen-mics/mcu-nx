@@ -1,26 +1,12 @@
 import * as React from 'react';
-import FullScreenModal, {
-  FullScreenFormModalProps,
-} from '../full-screen-form-modal';
+import FullScreenModal, { FullScreenFormModalProps } from '../full-screen-form-modal';
 import FormModalWrapper, { FormModalWrapperProps } from '../form-modal-wrapper';
 
-export interface BlurredModalProps
-  extends FullScreenFormModalProps,
-    FormModalWrapperProps {
-}
+export interface BlurredModalProps extends FullScreenFormModalProps, FormModalWrapperProps {}
 
-export default class BlurredModal extends React.Component<
-  BlurredModalProps,
-  any
-> {
+export default class BlurredModal extends React.Component<BlurredModalProps, any> {
   public render() {
-    const {
-      opened,
-      formId,
-      onClose,
-      footer,
-      children,
-    } = this.props;
+    const { opened, formId, onClose, footer, children } = this.props;
     return (
       <FullScreenModal opened={opened} blurred={true}>
         <FormModalWrapper formId={formId} onClose={onClose} footer={footer}>

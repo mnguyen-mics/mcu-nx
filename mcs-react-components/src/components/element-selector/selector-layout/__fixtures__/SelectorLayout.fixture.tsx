@@ -14,6 +14,4 @@ const props: SelectorLayoutProps = {
   addButtonText: 'Add',
 };
 
-export default (
-  <SelectorLayout {...props} />
-);
+export default <SelectorLayout {...props} />;

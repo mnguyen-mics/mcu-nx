@@ -25,10 +25,7 @@ export interface MultiSelectState<T> {
   overlayVisible: boolean;
 }
 
-class MultiSelect<T> extends React.Component<
-  MultiSelectProps<T>,
-  MultiSelectState<T>
-> {
+class MultiSelect<T> extends React.Component<MultiSelectProps<T>, MultiSelectState<T>> {
   static defaultProps: Partial<MultiSelectProps<any>> = {
     buttonClass: '',
     display: t => t.toString(),
@@ -45,9 +42,7 @@ class MultiSelect<T> extends React.Component<
     const renderItems = (elements: T[]) => {
       return elements.map(element => {
         const isItemSelected =
-          selectedItems.findIndex(
-            selectedItem => getKey(selectedItem) === getKey(element),
-          ) !== -1;
+          selectedItems.findIndex(selectedItem => getKey(selectedItem) === getKey(element)) !== -1;
         return (
           <Menu.Item key={getKey(element)}>
             {isItemSelected && <CheckOutlined />}
@@ -100,9 +95,7 @@ class MultiSelect<T> extends React.Component<
         ? []
         : [...selectedItems.slice(0, index), ...selectedItems.slice(index + 1)];
     } else {
-      newArray = singleSelectOnly
-        ? [clickedItem!]
-        : [...selectedItems, clickedItem!];
+      newArray = singleSelectOnly ? [clickedItem!] : [...selectedItems, clickedItem!];
     }
 
     this.setState({ selectedItems: newArray });

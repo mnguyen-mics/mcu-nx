@@ -11,8 +11,8 @@ export interface DatamartResource {
   storage_model_version: string;
 }
 
-export interface DatamartWithMetricResource extends DatamartResource{
-audience_segment_metrics: AudienceSegmentMetricResource[] 
+export interface DatamartWithMetricResource extends DatamartResource {
+  audience_segment_metrics: AudienceSegmentMetricResource[];
 }
 
 type DatamartType = 'DATAMART' | 'CROSS_DATAMART';
@@ -54,27 +54,27 @@ export interface AutoCompleteResource {
   field_name: string;
 }
 
-export type ErrorQueryResource = ValidationErrorResource | ParsingErrorResource | ValidResource;
+export type ErrorQueryResource = ValidationErrorResource | ParsingErrorResource | ValidResource;
 
 export interface ErrorResource {
-  type: "PARSING_ERROR" | "VALID" | "VALIDATION_ERROR"
+  type: 'PARSING_ERROR' | 'VALID' | 'VALIDATION_ERROR';
 }
 
 export interface ParsingErrorResource extends ErrorResource {
-  type: "PARSING_ERROR";
+  type: 'PARSING_ERROR';
   error: ErroTypeResource;
-  status: "error";
+  status: 'error';
 }
 
 export interface ValidResource extends ErrorResource {
-  type: "VALID";
-  status: "ok";
+  type: 'VALID';
+  status: 'ok';
 }
 
 export interface ValidationErrorResource extends ErrorResource {
-  type: "VALIDATION_ERROR";
+  type: 'VALIDATION_ERROR';
   error: ErroTypeResource;
-  status: "error";
+  status: 'error';
 }
 
 export interface ErroTypeResource {
@@ -82,8 +82,8 @@ export interface ErroTypeResource {
   position: {
     row: number;
     col: number;
-  }
-  error_type: "PARSING" | "TYPINGS" | "FIELD" | "DIRECTIVE";
+  };
+  error_type: 'PARSING' | 'TYPINGS' | 'FIELD' | 'DIRECTIVE';
 }
 
 export interface AudienceSegmentMetricResource {

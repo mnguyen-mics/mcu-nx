@@ -31,10 +31,7 @@ class MetricsColumn extends React.Component<MetricsColumnProps> {
               <div className={`${prefixCls}_title`}>{metric.name}</div>
               <div className={`${prefixCls}_metric`}>
                 {isLoading ? (
-                  <i
-                    className={`${prefixCls}_loading`}
-                    style={{ width: '130px' }}
-                  />
+                  <i className={`${prefixCls}_loading`} style={{ width: '130px' }} />
                 ) : (
                   metric.value
                 )}

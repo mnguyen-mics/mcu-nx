@@ -6,6 +6,4 @@ const props: EmptyTableViewProps = {
   iconType: 'warning',
 };
 
-export default (
-  <EmptyTableView {...props} />
-);
+export default <EmptyTableView {...props} />;

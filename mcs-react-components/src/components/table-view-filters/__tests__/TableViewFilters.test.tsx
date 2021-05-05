@@ -2,9 +2,7 @@ import 'jest';
 import * as React from 'react';
 import * as TestRenderer from 'react-test-renderer';
 
-import TableViewFilters, {
-  ViewComponentWithFiltersProps,
-} from '../../table-view-filters';
+import TableViewFilters, { ViewComponentWithFiltersProps } from '../../table-view-filters';
 import { selectionNotifyerMessagesMock } from '../../../utils/TableViewHelpers';
 
 it('renders the table view filters', () => {

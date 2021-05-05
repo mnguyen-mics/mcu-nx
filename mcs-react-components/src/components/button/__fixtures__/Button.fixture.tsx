@@ -3,4 +3,4 @@ import Button, { ButtonProps } from '../Button';
 
 const props: ButtonProps = {};
 
-export default (<Button {...props}>Add audience feature</Button>);
+export default <Button {...props}>Add audience feature</Button>;

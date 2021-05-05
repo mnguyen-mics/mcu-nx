@@ -58,7 +58,7 @@ const props: DeviceCardProps = {
 };
 
 export default (
-  <IntlProvider locale="en">
+  <IntlProvider locale='en'>
     <DeviceCard {...props} />
   </IntlProvider>
 );

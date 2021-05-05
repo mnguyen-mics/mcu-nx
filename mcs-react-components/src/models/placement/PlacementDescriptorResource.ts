@@ -1,5 +1,4 @@
-export interface PlacementDescriptorResource
-  extends PlacementDescriptorCreateRequest {
+export interface PlacementDescriptorResource extends PlacementDescriptorCreateRequest {
   id: string;
 }
 

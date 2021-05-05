@@ -98,27 +98,15 @@ class CollectionSelector<T extends SelectableItem> extends React.Component<
     }
   };
 
-  componentDidUpdate(
-    prevProps: CollectionSelectorProps<T>,
-    prevState: State<T>,
-  ) {
-    const {
-      currentPage,
-      pageSize,
-      keywords,
-      selectedElementsById,
-    } = this.state;
+  componentDidUpdate(prevProps: CollectionSelectorProps<T>, prevState: State<T>) {
+    const { currentPage, pageSize, keywords, selectedElementsById } = this.state;
     const {
       currentPage: prevCurrentPage,
       pageSize: prevPageSize,
       keywords: prevKeywords,
     } = prevState;
 
-    if (
-      currentPage !== prevCurrentPage ||
-      pageSize !== prevPageSize ||
-      keywords !== prevKeywords
-    ) {
+    if (currentPage !== prevCurrentPage || pageSize !== prevPageSize || keywords !== prevKeywords) {
       this.fetchNewData(Object.keys(selectedElementsById));
     }
   }
@@ -127,8 +115,7 @@ class CollectionSelector<T extends SelectableItem> extends React.Component<
     const { searchPlaceholder } = this.props;
     return {
       placeholder: searchPlaceholder ? searchPlaceholder : 'Search a template',
-      onSearch: (value: string) =>
-        this.setState({ keywords: value, currentPage: 1 }),
+      onSearch: (value: string) => this.setState({ keywords: value, currentPage: 1 }),
     };
   };
 
@@ -136,9 +123,7 @@ class CollectionSelector<T extends SelectableItem> extends React.Component<
     const { save } = this.props;
     const { selectedElementsById } = this.state;
     const selectedElementIds = Object.keys(selectedElementsById);
-    const selectedElement = selectedElementIds.map(
-      id => selectedElementsById[id],
-    );
+    const selectedElement = selectedElementIds.map(id => selectedElementsById[id]);
 
     save(selectedElementIds, selectedElement);
   };
@@ -147,9 +132,7 @@ class CollectionSelector<T extends SelectableItem> extends React.Component<
     const { displayFiltering } = this.props;
     const { currentPage, keywords, pageSize, type } = this.state;
 
-    const filterOptions = displayFiltering
-      ? { currentPage, keywords, pageSize, type }
-      : undefined;
+    const filterOptions = displayFiltering ? { currentPage, keywords, pageSize, type } : undefined;
     this.setState({ isLoading: true });
     return this.props.fetchDataList(filterOptions).then(({ data, total }) => {
       const allElementIds = data.map(element => element.id);
@@ -174,9 +157,7 @@ class CollectionSelector<T extends SelectableItem> extends React.Component<
       if (this.props.singleSelection) {
         // only one element is kept
         return {
-          selectedElementsById: isElementSelected
-            ? {}
-            : { [elementId]: element },
+          selectedElementsById: isElementSelected ? {} : { [elementId]: element },
         };
       }
 
@@ -223,8 +204,7 @@ class CollectionSelector<T extends SelectableItem> extends React.Component<
       pageSize,
       total,
       onChange: page => this.setState({ currentPage: page }),
-      onShowSizeChange: (current, size) =>
-        this.setState({ currentPage: 1, pageSize: size }),
+      onShowSizeChange: (current, size) => this.setState({ currentPage: 1, pageSize: size }),
     };
 
     const collectionViewProps: CollectionViewProps = {
@@ -234,10 +214,7 @@ class CollectionSelector<T extends SelectableItem> extends React.Component<
     };
 
     const renderedCollection = displayFiltering ? (
-      <CollectionViewFilters
-        {...collectionViewProps}
-        searchOptions={this.getSearchOptions()}
-      />
+      <CollectionViewFilters {...collectionViewProps} searchOptions={this.getSearchOptions()} />
     ) : (
       <CollectionView {...collectionViewProps} />
     );
@@ -249,7 +226,8 @@ class CollectionSelector<T extends SelectableItem> extends React.Component<
         handleClose={close}
         disabled={noElement}
         addButtonText={addButtonText}
-        noElementText={noElementText}>
+        noElementText={noElementText}
+      >
         {renderedCollection}
       </SelectorLayout>
     );

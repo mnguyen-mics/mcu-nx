@@ -13,24 +13,13 @@ export interface CardProps {
 
 class Card extends React.Component<CardProps> {
   render() {
-    const {
-      title,
-      buttons,
-      isLoading,
-      children,
-      className,
-      style,
-    } = this.props;
+    const { title, buttons, isLoading, children, className, style } = this.props;
 
     const hasHeader = title || buttons;
 
-    const titleElement = title && (
-      <span className="mcs-card-title">{title}</span>
-    );
+    const titleElement = title && <span className='mcs-card-title'>{title}</span>;
 
-    const buttonsElement = buttons && (
-      <span className="mcs-card-button">{buttons}</span>
-    );
+    const buttonsElement = buttons && <span className='mcs-card-button'>{buttons}</span>;
 
     return (
       <Row
@@ -38,18 +27,16 @@ class Card extends React.Component<CardProps> {
         style={style ? style : { display: 'block' }}
       >
         {hasHeader && (
-          <Row className="mcs-card-header">
+          <Row className='mcs-card-header'>
             <Col span={24}>
               {titleElement}
               {buttonsElement}
             </Col>
           </Row>
         )}
-        <Row
-          style={this.props.type === 'flex' ? { flex: 1 } : { display: 'block' }}
-        >
+        <Row style={this.props.type === 'flex' ? { flex: 1 } : { display: 'block' }}>
           {isLoading ? (
-            <Col span={24} className="text-center">
+            <Col span={24} className='text-center'>
               <Spin />
             </Col>
           ) : (

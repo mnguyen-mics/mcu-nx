@@ -9,7 +9,7 @@ const LoadingChart: React.SFC<LoadingChartProps> = ({ className }) => {
   return (
     <Row className={`mcs-loading-chart-no-data ${className ? className : ''}`}>
       <Col span={24}>
-        <Spin size="large" />
+        <Spin size='large' />
       </Col>
     </Row>
   );

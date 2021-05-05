@@ -7,6 +7,6 @@ module.exports = merge(common, {
   devtool: 'inline-source-map',
   watchOptions: {
     aggregateTimeout: 300,
-    poll: 1000
-  }
+    poll: 1000,
+  },
 });

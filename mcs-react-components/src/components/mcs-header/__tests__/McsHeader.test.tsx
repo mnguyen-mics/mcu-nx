@@ -16,18 +16,14 @@ it('renders the Error component', () => {
           marginRight: 0,
           borderColor: 'red',
         }}
-        message="You are using production API environment !"
-        type="error"
+        message='You are using production API environment !'
+        type='error'
         showIcon={true}
       />
     ),
     headerSettings: (
       <a>
-        <McsIcon
-          type="options"
-          className="mcs-header-menu-icon"
-          style={{ display: 'flex' }}
-        />
+        <McsIcon type='options' className='mcs-header-menu-icon' style={{ display: 'flex' }} />
       </a>
     ),
     menu: (

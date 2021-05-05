@@ -4,7 +4,7 @@ export interface Import {
   name: string;
   datafarm_key: string;
   encoding: string;
-  mime_type: "APPLICATION_X_NDJSON" | "TEXT_CSV";
+  mime_type: 'APPLICATION_X_NDJSON' | 'TEXT_CSV';
   document_type: string; // 'USER_ACTIVITY' | 'USER_PROFILE' | 'USER_SEGMENT';
 }
 
@@ -24,18 +24,18 @@ export interface ImportExecutionBase {
   organisation_id: string;
   parameters: object;
   start_date: number;
-  status: 'SUCCESS' | 'RUNNING' | 'PENDING' | 'SUCCEEDED' | 'FAILED' | 'CANCELED';
+  status: 'SUCCESS' | 'RUNNING' | 'PENDING' | 'SUCCEEDED' | 'FAILED' | 'CANCELED';
   user_id: string;
 }
 
 export interface ImportExecutionSuccess extends ImportExecutionBase {
-  status: 'SUCCESS' | 'SUCCEEDED',
-  result: { 
+  status: 'SUCCESS' | 'SUCCEEDED';
+  result: {
     output_files: string[];
     total_failure: number;
     total_success: number;
   };
 }
 export interface MakeJobExecutionAction {
-  action: 'CANCEL'
+  action: 'CANCEL';
 }

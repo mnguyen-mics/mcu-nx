@@ -3,16 +3,10 @@ import moment from 'moment';
 
 export const GRAY_COLOR = '#8ca0b3';
 
-export const LINE_COLOR = (Highcharts as any)
-  .Color(GRAY_COLOR)
-  .setOpacity(0.4)
-	.get('rgba');
-	
-export const CROSSHAIR_COLOR = (Highcharts as any)
-  .Color(GRAY_COLOR)
-  .setOpacity(0.6)
-	.get('rgba');
-	
+export const LINE_COLOR = (Highcharts as any).Color(GRAY_COLOR).setOpacity(0.4).get('rgba');
+
+export const CROSSHAIR_COLOR = (Highcharts as any).Color(GRAY_COLOR).setOpacity(0.6).get('rgba');
+
 export const AREA_OPACITY = 0.15;
 
 export const BASE_CHART_HEIGHT = 400;
@@ -48,9 +42,7 @@ export const generateYAxisGridLine = (): Partial<Highcharts.YAxisOptions> => {
 export const generateDragEvents = (
   onDragEnd?: OnDragEnd,
 ): Highcharts.ChartSelectionCallbackFunction => {
-  const a = (
-    b: Highcharts.Chart,
-  ) => {
+  const a = (b: Highcharts.Chart) => {
     const startDragDate = moment(b.xAxis[0].min as number);
     const endDragDate = moment(b.xAxis[0].max as number);
     const min = startDragDate;
@@ -58,7 +50,7 @@ export const generateDragEvents = (
     const max = duration > DAY_MILLIS ? endDragDate : endDragDate.add(1, 'days');
 
     if (onDragEnd) {
-      onDragEnd([min as any, max as any])
+      onDragEnd([min as any, max as any]);
     }
 
     return false;
@@ -66,16 +58,14 @@ export const generateDragEvents = (
   return a as any;
 };
 
-export const generateDraggable = (
-  onDragEnd?: OnDragEnd,
-): Partial<Highcharts.ChartOptions> => {
+export const generateDraggable = (onDragEnd?: OnDragEnd): Partial<Highcharts.ChartOptions> => {
   return {
-    zoomType: "x", 
-    events: { 
-      selection: generateDragEvents(onDragEnd)
-    }
-  }
-}
+    zoomType: 'x',
+    events: {
+      selection: generateDragEvents(onDragEnd),
+    },
+  };
+};
 
 // PIE CHARTS
 

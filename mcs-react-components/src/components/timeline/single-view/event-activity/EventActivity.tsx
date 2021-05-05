@@ -1,12 +1,7 @@
 import * as React from 'react';
 import { Row, Col, Tag, Tooltip, Modal } from 'antd';
 import * as _moment from 'moment';
-import {
-  FormattedMessage,
-  InjectedIntlProps,
-  injectIntl,
-  defineMessages,
-} from 'react-intl';
+import { FormattedMessage, InjectedIntlProps, injectIntl, defineMessages } from 'react-intl';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/styles/hljs';
 import McsIcon from '../../../mcs-icon';
@@ -70,7 +65,7 @@ class EventActivity extends React.Component<Props, State> {
       okText: intl.formatMessage(messages.eventJsonModalOkText),
       width: '650px',
       content: (
-        <SyntaxHighlighter language="json" style={docco}>
+        <SyntaxHighlighter language='json' style={docco}>
           {JSON.stringify(event, undefined, 4)}
         </SyntaxHighlighter>
       ),
@@ -84,23 +79,15 @@ class EventActivity extends React.Component<Props, State> {
     let returnValue: React.ReactNode = '';
     if (!json)
       return (
-        <i className="empty">
+        <i className='empty'>
           <FormattedMessage {...messages.empty} />
         </i>
       );
 
     if (Array.isArray(json)) {
       if (json.length === 0) return '[]';
-      returnValue = json.map((o, i) => (
-        <div key={i}>
-          {this.renderAnyJson(o)}
-        </div>
-      ));
-    } else if (
-      typeof json === 'string' ||
-      typeof json === 'number' ||
-      typeof json === 'boolean'
-    ) {
+      returnValue = json.map((o, i) => <div key={i}>{this.renderAnyJson(o)}</div>);
+    } else if (typeof json === 'string' || typeof json === 'number' || typeof json === 'boolean') {
       returnValue = (
         <span>
           <Tooltip title={json}>{json}</Tooltip>
@@ -112,7 +99,7 @@ class EventActivity extends React.Component<Props, State> {
         return (
           <div key={key}>
             <Tooltip title={key}>
-              <Tag className="card-tag">{key}</Tag>
+              <Tag className='card-tag'>{key}</Tag>
             </Tooltip>
             &nbsp;:&nbsp;
             {this.renderAnyJson(json[key])}
@@ -124,7 +111,7 @@ class EventActivity extends React.Component<Props, State> {
         <div>{returnValue}</div>
       ) : (
         <Col
-          className="event-properties-sublist"
+          className='event-properties-sublist'
           span={24}
           style={{ marginLeft: '40px', marginTop: 10, marginRight: '40px' }}
         >
@@ -133,11 +120,7 @@ class EventActivity extends React.Component<Props, State> {
       );
     }
 
-    return isRoot ? (
-      <div className="event-properties-list-item">{returnValue}</div>
-    ) : (
-      returnValue
-    );
+    return isRoot ? <div className='event-properties-list-item'>{returnValue}</div> : returnValue;
   };
 
   render() {
@@ -147,38 +130,32 @@ class EventActivity extends React.Component<Props, State> {
     const changeVisibility = () => this.setState({ showMore: !showMore });
 
     return (
-      <Row className="mcs-event-activity">
-        <Col className="section-ts" span={5}>
+      <Row className='mcs-event-activity'>
+        <Col className='section-ts' span={5}>
           {moment(event.$ts).format('HH:mm:ss')}
         </Col>
         <Col span={19}>
-          <div className="section-title">{event.$event_name}</div>
-          <div className="section-cta">
+          <div className='section-title'>{event.$event_name}</div>
+          <div className='section-cta'>
             {event.$properties && showMore ? (
               <div>
                 <Button
                   onClick={this.handleJSONViewModal}
-                  className="mcs-card-inner-action"
+                  className='mcs-card-inner-action'
                   style={{ marginRight: '10px' }}
                 >
                   <FormattedMessage {...messages.viewEventJson} />
                 </Button>
-                <button
-                  className="mcs-card-inner-action"
-                  onClick={changeVisibility}
-                >
-                  <McsIcon className="icon-inverted" type="chevron" />
+                <button className='mcs-card-inner-action' onClick={changeVisibility}>
+                  <McsIcon className='icon-inverted' type='chevron' />
                   &nbsp;
                   <FormattedMessage {...messages.less} />
                 </button>
               </div>
             ) : (
               <div>
-                <button
-                  className="mcs-card-inner-action"
-                  onClick={changeVisibility}
-                >
-                  <McsIcon type="chevron" />
+                <button className='mcs-card-inner-action' onClick={changeVisibility}>
+                  <McsIcon type='chevron' />
                   &nbsp;
                   <FormattedMessage {...messages.detail} />
                 </button>
@@ -187,9 +164,7 @@ class EventActivity extends React.Component<Props, State> {
           </div>
         </Col>
         {event.$properties && showMore && (
-          <div className="event-properties-list">
-            {this.renderAnyJson(event.$properties, true)}
-          </div>
+          <div className='event-properties-list'>{this.renderAnyJson(event.$properties, true)}</div>
         )}
       </Row>
     );

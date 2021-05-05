@@ -2,9 +2,7 @@ import 'jest';
 import * as React from 'react';
 import * as TestRenderer from 'react-test-renderer';
 import { selectionNotifyerMessagesMock } from '../../../../utils/TableViewHelpers';
-import SelectionNotifyer, {
-  SelectionNotifyerProps,
-} from '../SelectionNotifyer';
+import SelectionNotifyer, { SelectionNotifyerProps } from '../SelectionNotifyer';
 
 interface Data {
   key: string;
@@ -23,7 +21,7 @@ it('renders the SelectionNotifyer with all items selected', () => {
     pagination: {
       total: 10,
     },
-    messages: selectionNotifyerMessagesMock
+    messages: selectionNotifyerMessagesMock,
   };
 
   const component = TestRenderer.create(<SelectionNotifyer {...props} />);
@@ -47,7 +45,7 @@ it('renders the SelectionNotifyer with all the page items selected', () => {
       allPageRowsSelected: 'You have selected all rows in this page.',
       selectAll: 'Select all',
       selectedRows: 'You have selected N rows.',
-    }
+    },
   };
 
   const component = TestRenderer.create(<SelectionNotifyer {...props} />);
@@ -71,12 +69,10 @@ it('renders the SelectionNotifyer with 3 items selected', () => {
       allPageRowsSelected: 'You have selected all rows in this page.',
       selectAll: 'Select all',
       selectedRows: 'You have selected 3 rows.',
-    }
+    },
   };
 
-  const component = TestRenderer.create(
-    <SelectionNotifyer {...props} />
-  );
+  const component = TestRenderer.create(<SelectionNotifyer {...props} />);
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });

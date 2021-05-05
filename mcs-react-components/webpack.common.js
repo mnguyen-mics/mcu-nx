@@ -1,20 +1,20 @@
 const path = require('path');
-const glob = require("glob");
+const glob = require('glob');
 
 module.exports = {
-  entry: 	glob.sync('./src/index.ts'),
+  entry: glob.sync('./src/index.ts'),
   output: {
     path: path.resolve(__dirname, 'lib'),
-		filename: 'index.js',
-		libraryTarget: 'umd',
-		library: 'McsReactComponents',
+    filename: 'index.js',
+    libraryTarget: 'umd',
+    library: 'McsReactComponents',
   },
   module: {
     rules: [
-			{
+      {
         test: /\.ts|\.tsx$/,
-				include: path.resolve('src'),
-				loaders: ['babel-loader', 'ts-loader'],
+        include: path.resolve('src'),
+        loaders: ['babel-loader', 'ts-loader'],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -25,9 +25,9 @@ module.exports = {
         use: ['file-loader'],
       },
     ],
-	},
-	resolve: {
-		extensions: ['.tsx', '.ts', '.jsx', '.js'],
-	},
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.jsx', '.js'],
+  },
   performance: { hints: false },
 };

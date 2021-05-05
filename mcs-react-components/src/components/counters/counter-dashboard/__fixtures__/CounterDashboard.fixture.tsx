@@ -13,7 +13,7 @@ const props: CounterDashboardProps = {
         value: 20,
         type: 'up',
       },
-      unit: 'Users'
+      unit: 'Users',
     },
     {
       iconType: 'library',
@@ -34,11 +34,11 @@ const props: CounterDashboardProps = {
       loading: true,
     },
   ],
-  invertedColor: false
+  invertedColor: false,
 };
 
 export default (
-  <IntlProvider locale="en">
+  <IntlProvider locale='en'>
     <CounterDashboard {...props} />
   </IntlProvider>
 );

@@ -4,12 +4,10 @@ import Progress, { ProgressProps } from '../Progress';
 
 it('renders the progress', () => {
   const props: ProgressProps = {
-      percent: 66,
-      label: " % Test",
+    percent: 66,
+    label: ' % Test',
   };
 
-  const component = render(
-    <Progress {...props}/>,
-  );
+  const component = render(<Progress {...props} />);
   expect(component).toMatchSnapshot();
 });

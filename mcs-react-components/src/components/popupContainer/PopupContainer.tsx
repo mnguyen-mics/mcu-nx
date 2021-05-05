@@ -45,6 +45,4 @@ export const Popover = withPopupContainer<PopoverProps>(Antd.Popover as any);
 export const Dropdown = withPopupContainer<DropDownProps>(Antd.Dropdown as any);
 
 export const Select = withPopupContainer<SelectProps<any>>(Antd.Select as any);
-export const DatePicker = withCalendarContainer<DatePickerProps>(
-  Antd.DatePicker,
-);
+export const DatePicker = withCalendarContainer<DatePickerProps>(Antd.DatePicker);

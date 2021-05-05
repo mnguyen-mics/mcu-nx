@@ -76,7 +76,7 @@ it('renders the pie chart', () => {
   };
 
   const component = render(
-    <IntlProvider locale="en">
+    <IntlProvider locale='en'>
       <PieChart {...props} />
     </IntlProvider>,
   );

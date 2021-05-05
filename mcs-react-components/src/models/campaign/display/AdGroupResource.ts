@@ -7,7 +7,7 @@ import {
   TargetedDevice,
   TargetedMedia,
   TargetedBrowserFamily,
-  TargetedConnectionType
+  TargetedConnectionType,
 } from '../constants';
 
 export interface AdGroupCreateRequest {

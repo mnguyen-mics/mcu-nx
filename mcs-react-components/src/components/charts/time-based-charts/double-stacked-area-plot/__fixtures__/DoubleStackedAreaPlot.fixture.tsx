@@ -1,7 +1,5 @@
 import * as React from 'react';
-import DoubleStackedAreaPlot, {
-  DoubleStackedAreaPlotProps,
-} from '../DoubleStackedAreaPlot';
+import DoubleStackedAreaPlot, { DoubleStackedAreaPlotProps } from '../DoubleStackedAreaPlot';
 
 const props: DoubleStackedAreaPlotProps = {
   dataset: [
@@ -12,10 +10,7 @@ const props: DoubleStackedAreaPlotProps = {
     { day: '2020-03-02', data_1: 889, data_2: 53 },
   ],
   options: {
-    colors: [
-      '#8A008C',
-      '#7677DB',
-    ],
+    colors: ['#8A008C', '#7677DB'],
     yKeys: [
       {
         key: 'data_1',
@@ -23,13 +18,11 @@ const props: DoubleStackedAreaPlotProps = {
       },
       {
         key: 'data_2',
-        message: 'Data 2'
+        message: 'Data 2',
       },
     ],
     xKey: 'day',
   },
 };
 
-export default (
-  <DoubleStackedAreaPlot {...props} />
-);
+export default <DoubleStackedAreaPlot {...props} />;

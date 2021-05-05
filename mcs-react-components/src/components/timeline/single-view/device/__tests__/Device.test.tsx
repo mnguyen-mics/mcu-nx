@@ -18,9 +18,7 @@ it('renders the Device', () => {
       raw_value: undefined,
     },
   };
-  const component = TestRenderer.create(
-    <Device {...props} />,
-  );
+  const component = TestRenderer.create(<Device {...props} />);
   const res = component.toJSON();
   expect(res).toMatchSnapshot();
 });

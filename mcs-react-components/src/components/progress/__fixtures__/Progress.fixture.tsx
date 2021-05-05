@@ -3,9 +3,7 @@ import Progress, { ProgressProps } from '../Progress';
 
 const props: ProgressProps = {
   percent: 66,
-  label: " % Test",
+  label: ' % Test',
 };
 
-export default (
-  <Progress {...props}/>
-);
+export default <Progress {...props} />;

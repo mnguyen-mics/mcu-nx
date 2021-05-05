@@ -28,55 +28,46 @@ export interface ServiceItemPublicResource {
   inventory_access_type?: string;
 }
 
-export interface AudienceSegmentServiceItemPublicResource
-  extends ServiceItemPublicResource {
+export interface AudienceSegmentServiceItemPublicResource extends ServiceItemPublicResource {
   type: 'audience_segment';
   segment_id: string;
   datamart_id: string;
 }
 
-export interface UserAccountCompartmentServiceItemPublicResource
-  extends ServiceItemPublicResource {
+export interface UserAccountCompartmentServiceItemPublicResource extends ServiceItemPublicResource {
   type: 'user_account_compartment';
   compartment_id: string;
 }
 
-export interface DisplayNetworkServiceItemPublicResource
-  extends ServiceItemPublicResource {
+export interface DisplayNetworkServiceItemPublicResource extends ServiceItemPublicResource {
   type: 'inventory_access_display_network';
   display_network_id: string;
 }
 
-export interface PlacementListServiceItemPublicResource
-  extends ServiceItemPublicResource {
+export interface PlacementListServiceItemPublicResource extends ServiceItemPublicResource {
   type: 'inventory_access_placement_list';
   placement_list_id: string;
 }
 
-export interface DealListServiceItemPublicResource
-  extends ServiceItemPublicResource {
+export interface DealListServiceItemPublicResource extends ServiceItemPublicResource {
   type: 'inventory_access_deal_list';
   deal_list_id: string;
 }
 
-export interface AdexInventoryServiceItemPublicResource
-  extends ServiceItemPublicResource {
+export interface AdexInventoryServiceItemPublicResource extends ServiceItemPublicResource {
   type: 'inventory_access_ad_exchange';
   ad_exchange_id: string;
 }
 
-export interface BaseServiceItemPublicResource
-  extends ServiceItemPublicResource {
+export interface BaseServiceItemPublicResource extends ServiceItemPublicResource {
   service_type: string;
 }
 
-export interface AdExchangeHubInventoryServiceItemPublicResource
-  extends ServiceItemPublicResource {
+export interface AdExchangeHubInventoryServiceItemPublicResource extends ServiceItemPublicResource {
   ad_exchange_hub_key: string;
 }
 
-export interface KeywordListInventoryAccessPublicResource
-  extends ServiceItemPublicResource {
+export interface KeywordListInventoryAccessPublicResource extends ServiceItemPublicResource {
   type: 'inventory_access_keyword_list';
   keyword_list_id: string;
 }
@@ -133,7 +124,11 @@ export interface ServiceItemResource {
   reseller_agreement_id?: string;
 }
 
-export type AutomaticRecordType = "AUDIENCE_SEGMENT" | "DEAL_LIST" | "PLACEMENT_LIST" | "KEYWORDS_LIST";
+export type AutomaticRecordType =
+  | 'AUDIENCE_SEGMENT'
+  | 'DEAL_LIST'
+  | 'PLACEMENT_LIST'
+  | 'KEYWORDS_LIST';
 
 export type ServiceItemConditionShape =
   | LinearServiceItemConditionResource
@@ -145,21 +140,18 @@ interface ServiceItemConditionsResource {
   service_item_id: string;
 }
 
-export interface LinearServiceItemConditionResource
-  extends ServiceItemConditionsResource {
+export interface LinearServiceItemConditionResource extends ServiceItemConditionsResource {
   currency: string;
   percent_value: number;
   fixed_value: number;
   min_value: number;
 }
 
-export interface PluginServiceItemConditionResource
-  extends ServiceItemConditionsResource {
+export interface PluginServiceItemConditionResource extends ServiceItemConditionsResource {
   valuator_id: string;
 }
 
-export interface ProvidedServiceItemConditionResource
-  extends ServiceItemConditionsResource { }
+export interface ProvidedServiceItemConditionResource extends ServiceItemConditionsResource {}
 
 export interface ServiceAgreement {
   id: string;
@@ -171,9 +163,7 @@ export function isLinearServiceItemConditionsResource(
   serviceItemCondition: ServiceItemConditionShape,
 ): serviceItemCondition is LinearServiceItemConditionResource {
   return (
-    (serviceItemCondition as LinearServiceItemConditionResource)
-      .percent_value !== undefined &&
-    (serviceItemCondition as LinearServiceItemConditionResource)
-      .fixed_value !== undefined
+    (serviceItemCondition as LinearServiceItemConditionResource).percent_value !== undefined &&
+    (serviceItemCondition as LinearServiceItemConditionResource).fixed_value !== undefined
   );
 }

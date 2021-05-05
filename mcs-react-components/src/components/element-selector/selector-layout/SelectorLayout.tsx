@@ -16,10 +16,7 @@ export interface SelectorLayoutProps {
   noElementText: string;
 }
 
-export default class SelectorLayout extends React.Component<
-  SelectorLayoutProps,
-  any
-> {
+export default class SelectorLayout extends React.Component<SelectorLayoutProps, any> {
   render() {
     const {
       actionBarTitle,
@@ -36,28 +33,15 @@ export default class SelectorLayout extends React.Component<
     return (
       <Layout className={prefixCls}>
         <ActionBar pathItems={[actionBarTitle]} edition={true}>
-          <Button
-            className='add-button'
-            onClick={handleAdd}
-          >
-            <McsIcon type="plus" />
+          <Button className='add-button' onClick={handleAdd}>
+            <McsIcon type='plus' />
             {addButtonText}
           </Button>
-          <McsIcon
-            type="close"
-            className="close-icon mcs-table-cursor"
-            onClick={handleClose}
-          />
+          <McsIcon type='close' className='close-icon mcs-table-cursor' onClick={handleClose} />
         </ActionBar>
         <Layout>
-          <Content
-            className={`mcs-edit-container ${className ? className : ''}`}
-          >
-            {disabled ? (
-              <EmptyTableView iconType="warning" message={noElementText} />
-            ) : (
-              children
-            )}
+          <Content className={`mcs-edit-container ${className ? className : ''}`}>
+            {disabled ? <EmptyTableView iconType='warning' message={noElementText} /> : children}
           </Content>
         </Layout>
       </Layout>

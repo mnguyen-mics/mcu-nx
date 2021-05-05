@@ -57,7 +57,7 @@ class StackedAreaPlot extends React.Component<Props, {}> {
     return yKeys.map((y, i) => {
       return {
         type: 'area' as any,
-        data: dataset.map((data) => {
+        data: dataset.map(data => {
           const yValue = data[y.key];
           return [
             this.formatDateToTs(data[xKey] as string),
@@ -75,13 +75,7 @@ class StackedAreaPlot extends React.Component<Props, {}> {
             y2: 1,
           },
           stops: [
-            [
-              0,
-              (Highcharts as any)
-                .Color(colors[i])
-                .setOpacity(AREA_OPACITY)
-                .get('rgba'),
-            ],
+            [0, (Highcharts as any).Color(colors[i]).setOpacity(AREA_OPACITY).get('rgba')],
             [1, (Highcharts as any).Color(colors[i]).setOpacity(0).get('rgba')],
           ],
         },
@@ -97,13 +91,7 @@ class StackedAreaPlot extends React.Component<Props, {}> {
     } = this.props;
 
     if (mode === 'DAY') {
-      return moment(date)
-        .utc()
-        .seconds(0)
-        .hours(24)
-        .milliseconds(0)
-        .minutes(0)
-        .valueOf();
+      return moment(date).utc().seconds(0).hours(24).milliseconds(0).minutes(0).valueOf();
     } else if (mode === 'HOUR') {
       return moment(date).utc().valueOf();
     } else return date;
@@ -158,8 +146,7 @@ class StackedAreaPlot extends React.Component<Props, {}> {
         },
       },
       xAxis: {
-        type:
-          xKey.mode === 'DAY' || xKey.mode === 'HOUR' ? 'datetime' : 'category',
+        type: xKey.mode === 'DAY' || xKey.mode === 'HOUR' ? 'datetime' : 'category',
         dateTimeLabelFormats: xAxisDateTimeLabelFormatsOptions,
         ...generateXAxisGridLine(),
       },
@@ -182,13 +169,7 @@ class StackedAreaPlot extends React.Component<Props, {}> {
       },
     };
 
-    return (
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={options}
-        style={{ width: '100%' }}
-      />
-    );
+    return <HighchartsReact highcharts={Highcharts} options={options} style={{ width: '100%' }} />;
   }
 }
 

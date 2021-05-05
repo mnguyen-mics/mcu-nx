@@ -37,8 +37,7 @@ export default class SearchAndMultiSelect extends React.Component<
   search = (keywords: string): MenuItemProps[] => {
     const { datasource } = this.props;
     return datasource.filter(
-      item =>
-        !keywords || item.label.toLowerCase().includes(keywords.toLowerCase()),
+      item => !keywords || item.label.toLowerCase().includes(keywords.toLowerCase()),
     );
   };
 
@@ -75,25 +74,17 @@ export default class SearchAndMultiSelect extends React.Component<
     const prefixCls = 'mcs-search-multi-select';
 
     // if inputValue is defined, search is handled internaly
-    const menuItems = (inputValue ? this.search(inputValue) : datasource).map(
-      item => {
-        return (
-          <Menu.Item key={item.key}>
-            <span>{item.label}</span>
-            <Checkbox
-              className={`${prefixCls}_checkbox`}
-              checked={this.isChecked(item.key)}
-            />
-          </Menu.Item>
-        );
-      },
-    );
+    const menuItems = (inputValue ? this.search(inputValue) : datasource).map(item => {
+      return (
+        <Menu.Item key={item.key}>
+          <span>{item.label}</span>
+          <Checkbox className={`${prefixCls}_checkbox`} checked={this.isChecked(item.key)} />
+        </Menu.Item>
+      );
+    });
 
     const menu = (
-      <Menu
-        className={`${prefixCls}_menu`}
-        onClick={this.handleOnClick}
-      >
+      <Menu className={`${prefixCls}_menu`} onClick={this.handleOnClick}>
         {menuItems}
       </Menu>
     );
@@ -105,13 +96,9 @@ export default class SearchAndMultiSelect extends React.Component<
         trigger={['click']}
         visible={dropdownVisibility}
         onVisibleChange={this.handleVisibleChange}
-        placement="bottomLeft"
+        placement='bottomLeft'
       >
-        <Input
-          placeholder={placeholder}
-          suffix={<DownOutlined />}
-          onChange={this.handleOnChange}
-        />
+        <Input placeholder={placeholder} suffix={<DownOutlined />} onChange={this.handleOnChange} />
       </Dropdown>
     );
   }

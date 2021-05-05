@@ -6,8 +6,7 @@ export interface ButtonProps {
 }
 
 const Button: React.SFC<
-  Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> &
-    ButtonProps
+  Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> & ButtonProps
 > = props => {
   const { children, className, onClick, ...rest } = props;
 
@@ -24,7 +23,7 @@ const Button: React.SFC<
 
   return (
     <button
-      type="button"
+      type='button'
       style={style}
       className={`mcs-button ${className ? className : ''}`}
       onClick={disabled ? undefined : handleOnClick}

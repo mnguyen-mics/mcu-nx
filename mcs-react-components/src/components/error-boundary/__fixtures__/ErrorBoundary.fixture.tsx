@@ -13,6 +13,6 @@ const props: ErrorBoundaryProps = {
 
 export default (
   <ErrorBoundary {...props}>
-    <BuggyButton/>
+    <BuggyButton />
   </ErrorBoundary>
 );

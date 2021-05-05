@@ -8,11 +8,11 @@ it('renders the MenuPresentational', () => {
     title: 'Title',
     type: 'automation',
     subtitles: ['subtitle_1', 'subtitle_2'],
-    select: () => { /* tslint:disable */ console.log('click') /* tslint:enable */ },
+    select: () => {
+      /* tslint:disable */ console.log('click'); /* tslint:enable */
+    },
   };
-  const component = TestRenderer.create(
-    <MenuPresentational {...props}/>
-  );
+  const component = TestRenderer.create(<MenuPresentational {...props} />);
   const res = component.toJSON();
   expect(res).toMatchSnapshot();
 });

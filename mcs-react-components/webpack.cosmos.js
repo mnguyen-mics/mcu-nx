@@ -1,7 +1,7 @@
 const path = require('path');
 const merge = require('webpack-merge');
 
-module.exports = (webpackConfig) => {
+module.exports = webpackConfig => {
   return merge(webpackConfig, {
     module: {
       rules: [

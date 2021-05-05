@@ -6,4 +6,3 @@ const props: LoadingChartProps = {
 };
 
 export default <LoadingChart {...props} />;
-

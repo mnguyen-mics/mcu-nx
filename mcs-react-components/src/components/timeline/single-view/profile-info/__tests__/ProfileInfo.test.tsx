@@ -21,7 +21,7 @@ it('renders the ProfileInfo', () => {
     },
   };
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
+    <IntlProvider locale='en'>
       <ProfileInfo {...props} />
     </IntlProvider>,
   );

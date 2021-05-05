@@ -42,7 +42,7 @@ it('renders the UserScenarioActivityCard', () => {
     },
   };
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
+    <IntlProvider locale='en'>
       <UserScenarioActivityCard {...props} />
     </IntlProvider>,
   );

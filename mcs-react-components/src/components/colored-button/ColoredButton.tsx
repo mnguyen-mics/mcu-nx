@@ -8,8 +8,7 @@ export interface ColoredButtonProps {
   color: string;
 }
 
-type Props = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> &
-  ColoredButtonProps;
+type Props = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> & ColoredButtonProps;
 
 interface State {
   isOver: boolean;
@@ -17,8 +16,6 @@ interface State {
 
 const BORDER_BRIGHTNESS = -0.1;
 const BACKGROUNT_BRIGHTNESS_HOVER = 0.2;
-
-
 
 export default class ColoredButton extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -43,14 +40,14 @@ export default class ColoredButton extends React.Component<Props, State> {
     const hoveredStyle: React.CSSProperties = {
       backgroundColor: shadeColor(backgroundColor, BACKGROUNT_BRIGHTNESS_HOVER),
       color: color,
-      borderColor: shadeColor(backgroundColor, BORDER_BRIGHTNESS)
-    }
+      borderColor: shadeColor(backgroundColor, BORDER_BRIGHTNESS),
+    };
 
     const defaultStyle: React.CSSProperties = {
       backgroundColor: backgroundColor,
       color: color,
-      borderColor: shadeColor(backgroundColor, BORDER_BRIGHTNESS)
-    }
+      borderColor: shadeColor(backgroundColor, BORDER_BRIGHTNESS),
+    };
 
     return (
       <button
@@ -58,9 +55,7 @@ export default class ColoredButton extends React.Component<Props, State> {
         onMouseOver={onMouseOver}
         onMouseOut={onMouseOut}
         // TODO : importing ant style here should be avoided, maybe replace 'button' component with antd Button instead ?
-        className={`ant-btn ant-btn-primary mcs-colored-button ${
-          className ? className : ''
-        }`}
+        className={`ant-btn ant-btn-primary mcs-colored-button ${className ? className : ''}`}
         onClick={handleOnClick}
         {...rest}
       >

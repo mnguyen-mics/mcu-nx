@@ -1,4 +1,1 @@
-export type CampaignStatus =
- 'PENDING' |
- 'ACTIVE' |
- 'PAUSED';
+export type CampaignStatus = 'PENDING' | 'ACTIVE' | 'PAUSED';

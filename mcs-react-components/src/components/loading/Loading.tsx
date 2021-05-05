@@ -9,10 +9,10 @@ export interface LoadingProps {
 const Loading: React.SFC<LoadingProps> = props => {
   return (
     <Spin
-      size="large"
-      className={`mcs-loading ${
-        props.isFullScreen ? 'loading-full-screen' : ''
-      } ${props.className}`}
+      size='large'
+      className={`mcs-loading ${props.isFullScreen ? 'loading-full-screen' : ''} ${
+        props.className
+      }`}
     />
   );
 };

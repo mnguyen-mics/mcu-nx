@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import McsIcon from '../../mcs-icon';
 
@@ -11,20 +10,24 @@ export interface MenuListProps {
 }
 
 const MenuList: React.SFC<MenuListProps> = ({ title, icon_path, subtitles, select, disabled }) => {
-  const prefixCls = "mcs-menu-list"
+  const prefixCls = 'mcs-menu-list';
   return (
     <button className={prefixCls} onClick={select} disabled={disabled}>
       <div className={subtitles ? `${prefixCls}-content` : `${prefixCls}-content alone`}>
         {icon_path ? <img className={`${prefixCls}-image-title`} src={icon_path} /> : undefined}
         <div>
           <div className={`${prefixCls}-content-title`}>{title}</div>
-          {subtitles ? <div className={`${prefixCls}-content-subtitles`}>{subtitles.map((subtitle, index) => {
-            return index !== subtitles.length - 1 ? `${subtitle}, ` : subtitle;
-          })}</div> : null}
+          {subtitles ? (
+            <div className={`${prefixCls}-content-subtitles`}>
+              {subtitles.map((subtitle, index) => {
+                return index !== subtitles.length - 1 ? `${subtitle}, ` : subtitle;
+              })}
+            </div>
+          ) : null}
         </div>
       </div>
       <div className={`${prefixCls}-selector`}>
-        <McsIcon type="chevron-right" />
+        <McsIcon type='chevron-right' />
       </div>
     </button>
   );

@@ -1,12 +1,11 @@
-
-export type Index<T>= { [key: string]: T};
+export type Index<T> = { [key: string]: T };
 
 export interface OrganisationIdProp {
- organisationId: string;
+  organisationId: string;
 }
 
 export function getOrElse<T>(t: T | undefined, _default: T): T {
-    return t ? t : _default;
+  return t ? t : _default;
 }
 import {
   PaginationSearchSettings,

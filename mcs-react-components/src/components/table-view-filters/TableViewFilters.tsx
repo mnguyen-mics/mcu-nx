@@ -4,7 +4,10 @@ import { Row, Col, Input } from 'antd';
 import cuid from 'cuid';
 import { SearchProps } from 'antd/lib/input/Search';
 import McsDateRangePicker, { McsDateRangePickerProps } from '../mcs-date-range-picker';
-import TableView, { DataColumnDefinition, TableViewProps } from '../table-view/table-view/TableView';
+import TableView, {
+  DataColumnDefinition,
+  TableViewProps,
+} from '../table-view/table-view/TableView';
 import MultiSelect, { MultiSelectProps } from '../multi-select';
 import LabelsSelector, { LabelsSelectorProps } from '../labels-selector/LabelsSelector';
 import TreeSelectFilter from '../tree-select-filter/TreeSelectFilter';
@@ -26,9 +29,9 @@ export interface ViewComponentWithFiltersProps<T> extends TableViewProps<T> {
 export interface FiltersState<T> {
   visibilitySelectedColumns: Array<DataColumnDefinition<T>>;
 }
-const VisibilityMultiSelect: React.ComponentClass<MultiSelectProps<
-  DataColumnDefinition<any>
->> = MultiSelect;
+const VisibilityMultiSelect: React.ComponentClass<
+  MultiSelectProps<DataColumnDefinition<any>>
+> = MultiSelect;
 
 class TableViewFilters<T> extends React.Component<
   ViewComponentWithFiltersProps<T>,
@@ -44,9 +47,7 @@ class TableViewFilters<T> extends React.Component<
     super(props);
     this.state = {
       visibilitySelectedColumns: this.props
-        .columns!.filter(
-          column => column.isHideable && column.isVisibleByDefault,
-        )
+        .columns!.filter(column => column.isHideable && column.isVisibleByDefault)
         .map(column => ({ key: column.key, value: column.key })),
     };
   }
@@ -57,9 +58,7 @@ class TableViewFilters<T> extends React.Component<
     return columns ? columns.filter(column => column.isHideable) : [];
   };
 
-  changeColumnVisibility = (
-    selectedColumns: Array<DataColumnDefinition<T>>,
-  ) => {
+  changeColumnVisibility = (selectedColumns: Array<DataColumnDefinition<T>>) => {
     this.setState({
       visibilitySelectedColumns: selectedColumns,
     });
@@ -77,7 +76,7 @@ class TableViewFilters<T> extends React.Component<
     } = this.props;
 
     const searchInput = searchOptions ? (
-      <Search className="mcs-search-input" {...searchOptions} />
+      <Search className='mcs-search-input' {...searchOptions} />
     ) : null;
 
     const dateRangePicker = dateRangePickerOptions ? (
@@ -90,36 +89,30 @@ class TableViewFilters<T> extends React.Component<
 
     const filtersMultiSelect = filtersOptions
       ? filtersOptions.map(filterOptions => {
-        return (
-          <MultiSelect
-            {...filterOptions}
-            key={cuid()}
-            buttonClass="mcs-table-filters-item"
-          />
-        );
-      })
+          return (
+            <MultiSelect {...filterOptions} key={cuid()} buttonClass='mcs-table-filters-item' />
+          );
+        })
       : null;
 
     const getItemKey = (item: DataColumnDefinition<T>) => item.key;
-    const visibilityMultiSelect = columnsVisibilityOptions!.isEnabled
-      ? (
-        <VisibilityMultiSelect
-          displayElement={<LayoutOutlined />}
-          items={this.getHideableColumns()}
-          getKey={getItemKey}
-          display={getItemKey}
-          selectedItems={this.state.visibilitySelectedColumns}
-          handleMenuClick={this.changeColumnVisibility}
-          buttonClass={'mcs-table-filters-item'}
-        />
-      )
-      : null;
+    const visibilityMultiSelect = columnsVisibilityOptions!.isEnabled ? (
+      <VisibilityMultiSelect
+        displayElement={<LayoutOutlined />}
+        items={this.getHideableColumns()}
+        getKey={getItemKey}
+        display={getItemKey}
+        selectedItems={this.state.visibilitySelectedColumns}
+        handleMenuClick={this.changeColumnVisibility}
+        buttonClass={'mcs-table-filters-item'}
+      />
+    ) : null;
 
     return (
       <div>
-        <Row className="mcs-table-header">
+        <Row className='mcs-table-header'>
           <Col span={6}>{searchInput}</Col>
-          <Col span={18} className="mcs-table-header-right">
+          <Col span={18} className='mcs-table-header-right'>
             {dateRangePicker}
             {treeSelectFilter ? treeSelectFilter() : null}
             {filtersMultiSelect}
@@ -132,7 +125,7 @@ class TableViewFilters<T> extends React.Component<
           </Row>
         ) : null}
         {!!relatedTable && relatedTable}
-        <Row className="mcs-table-body">
+        <Row className='mcs-table-body'>
           <Col span={24}>
             <TableView
               {...(this.props as any)}

@@ -74,7 +74,7 @@ const props: PieChartProps = {
 };
 
 export default (
-  <IntlProvider locale="en">
+  <IntlProvider locale='en'>
     <PieChart {...props} />
   </IntlProvider>
 );

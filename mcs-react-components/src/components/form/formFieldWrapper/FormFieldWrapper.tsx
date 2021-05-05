@@ -24,8 +24,7 @@ const defaultRowProps: Partial<RowProps> = {
   align: 'middle',
 };
 
-const FormFieldWrapper: React.SFC<FormItemProps &
-  FormFieldWrapperProps> = props => {
+const FormFieldWrapper: React.SFC<FormItemProps & FormFieldWrapperProps> = props => {
   const {
     children,
     hasMarginBottom,
@@ -40,13 +39,11 @@ const FormFieldWrapper: React.SFC<FormItemProps &
 
   const renderedLabel = small ? (
     <span>
-      <span className="field-label">{label}</span>
-      <div className="field-helper">
-        {helpToolTipProps && helpToolTipProps.title}
-      </div>
+      <span className='field-label'>{label}</span>
+      <div className='field-helper'>{helpToolTipProps && helpToolTipProps.title}</div>
     </span>
   ) : (
-    <span className="field-label">{label}</span>
+    <span className='field-label'>{label}</span>
   );
 
   return (
@@ -58,7 +55,7 @@ const FormFieldWrapper: React.SFC<FormItemProps &
       >
         <Row {...defaultRowProps} {...rowProps}>
           {!isEmpty(hoverToolTipProps) && !small ? (
-            <Tooltip placement="top" {...hoverToolTipProps} title="">
+            <Tooltip placement='top' {...hoverToolTipProps} title=''>
               <Col span={20}>{children}</Col>
             </Tooltip>
           ) : (
@@ -67,23 +64,23 @@ const FormFieldWrapper: React.SFC<FormItemProps &
 
           {!isEmpty(helpToolTipProps) && !small ? (
             <Col span={2} className={`field-tooltip`}>
-              <Tooltip {...helpToolTipProps} placement="right" title="">
-                <McsIcon type="info" />
+              <Tooltip {...helpToolTipProps} placement='right' title=''>
+                <McsIcon type='info' />
               </Tooltip>
             </Col>
           ) : small ? null : (
             <Col
               span={2}
-              className="
-              "
+              className='
+              '
             />
           )}
           {typeof renderFieldAction !== 'undefined' ? (
-            <Col span={2} className="renderFieldAction">
+            <Col span={2} className='renderFieldAction'>
               {renderFieldAction()}
             </Col>
           ) : (
-            <Col span={2} className="no-renderFieldAction" />
+            <Col span={2} className='no-renderFieldAction' />
           )}
         </Row>
       </Form.Item>

@@ -5,7 +5,7 @@ import EventActivity, { EventActivityProps } from '../EventActivity';
 import { IntlProvider } from 'react-intl';
 
 // Return a fixed timestamp when moment().format() is called
-jest.mock('moment', () => () => ({format: () => '2019–11–13T12:34:56+00:00'}));
+jest.mock('moment', () => () => ({ format: () => '2019–11–13T12:34:56+00:00' }));
 
 it('renders the EventActivity', () => {
   const props: EventActivityProps = {
@@ -14,8 +14,7 @@ it('renders the EventActivity', () => {
       $properties: {
         $items: [],
         $referrer: 'https://www.google.com/',
-        $url:
-          'https://www.cdiscount.com/vin-champagne/r-vin+nuit+saint+georges.html#_his_',
+        $url: 'https://www.cdiscount.com/vin-champagne/r-vin+nuit+saint+georges.html#_his_',
         channel_id: '2748',
         pg_cat1: 'Accueil',
         pg_cat2: 'Vins Alcools',
@@ -34,7 +33,7 @@ it('renders the EventActivity', () => {
     },
   };
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
+    <IntlProvider locale='en'>
       <EventActivity {...props} />
     </IntlProvider>,
   );

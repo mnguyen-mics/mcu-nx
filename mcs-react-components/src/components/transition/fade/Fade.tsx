@@ -7,7 +7,7 @@ export default class Fade extends React.Component<FadeProps> {
   render() {
     const { children, ...rest } = this.props;
     return (
-      <CSSTransition {...rest} timeout={1000} classNames="mcs-fade">
+      <CSSTransition {...rest} timeout={1000} classNames='mcs-fade'>
         {children}
       </CSSTransition>
     );

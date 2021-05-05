@@ -1,5 +1,5 @@
 import * as React from 'react';
-import McsIcon, { McsIconType } from "../McsIcon";
+import McsIcon, { McsIconType } from '../McsIcon';
 
 const typeList: McsIconType[] = [
   'adGroups',
@@ -59,11 +59,13 @@ const typeList: McsIconType[] = [
   'user-pixel',
   'user-list',
   'video',
-  'warning'
+  'warning',
 ];
 
 export default (
-  <div style={{ maxWidth: "600px" }}>
-    {typeList.map(type => <McsIcon key={type} type={type} style={{fontSize: '40px', margin: "8px"}} />)}
+  <div style={{ maxWidth: '600px' }}>
+    {typeList.map(type => (
+      <McsIcon key={type} type={type} style={{ fontSize: '40px', margin: '8px' }} />
+    ))}
   </div>
-)
+);

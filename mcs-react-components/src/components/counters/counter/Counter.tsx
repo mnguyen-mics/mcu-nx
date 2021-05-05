@@ -27,27 +27,30 @@ export default class Counter extends React.Component<CounterProps> {
     const { iconType, iconStyle, title, value, loading, unit, trend } = this.props;
 
     return (
-      <div className="mcs-counter" >
+      <div className='mcs-counter'>
         <McsIcon type={iconType} styleIcon={iconStyle ? iconStyle : {}} />
-        <div className="title">{title}</div>
-        <div className="number">
+        <div className='title'>{title}</div>
+        <div className='number'>
           {loading ? (
             <Spin />
-          ) : (value !== undefined && value !== null) ? (
+          ) : value !== undefined && value !== null ? (
             <React.Fragment>
-              <FormattedNumber value={value} />{unit ? ' ' + unit : ''}
-              {trend ? <Statistic
-                title=""
-                value={trend.value}
-                precision={1}
-                valueStyle={{ color: trend.type === 'up' ? '#4ea500' : '#ed2333' }}
-                prefix={trend.type === 'up' ? <UpOutlined /> : <DownOutlined />}
-                suffix="%"
-              /> : null}
+              <FormattedNumber value={value} />
+              {unit ? ' ' + unit : ''}
+              {trend ? (
+                <Statistic
+                  title=''
+                  value={trend.value}
+                  precision={1}
+                  valueStyle={{ color: trend.type === 'up' ? '#4ea500' : '#ed2333' }}
+                  prefix={trend.type === 'up' ? <UpOutlined /> : <DownOutlined />}
+                  suffix='%'
+                />
+              ) : null}
             </React.Fragment>
           ) : (
-                '--'
-              )}
+            '--'
+          )}
         </div>
       </div>
     );

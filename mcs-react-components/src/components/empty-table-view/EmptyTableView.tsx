@@ -15,11 +15,7 @@ const EmptyTableView: React.SFC<EmptyTableViewProps> = props => {
     <div className={prefixCls}>
       <Col
         span={24}
-        className={
-          className
-            ? `${prefixCls}-content ${className}`
-            : `${prefixCls}-content`
-        }
+        className={className ? `${prefixCls}-content ${className}` : `${prefixCls}-content`}
       >
         <div className={`${prefixCls}-logo`}>
           <McsIcon type={iconType} />
