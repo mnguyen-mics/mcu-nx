@@ -28,7 +28,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, State> {
     const { error } = this.state;
 
     if (error) {
-      return <div className="ant-layout">{errorMessage}</div>;
+      return <div className='ant-layout'>{errorMessage}</div>;
     } else {
       return children;
     }

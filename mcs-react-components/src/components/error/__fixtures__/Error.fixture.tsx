@@ -3,8 +3,6 @@ import Error, { ErrorProps } from '../Error';
 
 const props: ErrorProps = {
   message: 'This is an error message',
-  style: {color: 'red'}
+  style: { color: 'red' },
 };
-export default (
-  <Error {...props} />
-);
+export default <Error {...props} />;

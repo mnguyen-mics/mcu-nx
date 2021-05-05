@@ -63,10 +63,7 @@ const messages = defineMessages({
 
 type Props = McsDateRangePickerProps & InjectedIntlProps;
 
-class McsDateRangePicker extends React.Component<
-  Props,
-  McsDateRangePickerState
-> {
+class McsDateRangePicker extends React.Component<Props, McsDateRangePickerState> {
   static defaultProps: Partial<McsDateRangePickerProps> = {
     format: 'YYYY-MM-DD',
   };
@@ -117,9 +114,7 @@ class McsDateRangePicker extends React.Component<
   disableDates = (current: moment.Moment) => {
     const { startDate } = this.props;
     return (
-      current &&
-      (current.valueOf() > Date.now() ||
-        (!!startDate && current.valueOf() < startDate))
+      current && (current.valueOf() > Date.now() || (!!startDate && current.valueOf() < startDate))
     );
   };
 
@@ -134,9 +129,9 @@ class McsDateRangePicker extends React.Component<
     if (selectedRange) {
       return intl.formatMessage(messages[selectedRange.name]);
     }
-    return `${convertMcsDateToMoment(values.from.raw())!.format(
-      format,
-    )} ~ ${convertMcsDateToMoment(values.to.raw())!.format(format)}`;
+    return `${convertMcsDateToMoment(values.from.raw())!.format(format)} ~ ${convertMcsDateToMoment(
+      values.to.raw(),
+    )!.format(format)}`;
   }
 
   handleDatePickerMenuChange = (dates: [moment.Moment, moment.Moment]) => {
@@ -189,21 +184,17 @@ class McsDateRangePicker extends React.Component<
           {ranges.map(item => {
             return this.getSelectedPresettedRange() ===
               intl.formatMessage(messages[item.name]) ? null : (
-              <Menu.Item key={item.name}>
-                {intl.formatMessage(messages[item.name])}
-              </Menu.Item>
+              <Menu.Item key={item.name}>{intl.formatMessage(messages[item.name])}</Menu.Item>
             );
           })}
-          <Menu.Item key="CUSTOM">
-            {intl.formatMessage(messages.CUSTOM)}
-          </Menu.Item>
+          <Menu.Item key='CUSTOM'>{intl.formatMessage(messages.CUSTOM)}</Menu.Item>
         </Menu.ItemGroup>
       </Menu>
     );
 
     return (
       <Dropdown
-        className="mcs-date-range-picker"
+        className='mcs-date-range-picker'
         overlay={menu}
         trigger={['click']}
         disabled={disabled}
@@ -225,7 +216,7 @@ class McsDateRangePicker extends React.Component<
     return showRangePicker ? (
       <RangePicker
         allowClear={false}
-        className="mcs-date-range-picker"
+        className='mcs-date-range-picker'
         onChange={this.handleDatePickerMenuChange}
         defaultValue={[fromMoment, toMoment]}
         disabledDate={this.disableDates}

@@ -19,7 +19,7 @@ const props: ProfileInfoProps = {
 };
 
 export default (
-  <IntlProvider locale="en">
+  <IntlProvider locale='en'>
     <ProfileInfo {...props} />
   </IntlProvider>
 );

@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import McsIcon, { McsIconType } from '../mcs-icon';
 
@@ -18,7 +17,7 @@ const EmptyRecords: React.SFC<EmptyRecordsProps> = props => {
 };
 
 EmptyRecords.defaultProps = {
-  iconType: 'warning'
+  iconType: 'warning',
 };
 
 export default EmptyRecords;

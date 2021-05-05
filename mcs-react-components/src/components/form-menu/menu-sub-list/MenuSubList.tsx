@@ -72,42 +72,40 @@ class MenuSubList extends React.Component<Props, MenuSubListState> {
     }
 
     return (
-      <div className="mcs-menu-sub-list">
+      <div className='mcs-menu-sub-list'>
         <button
           className={this.state.open ? 'menu-item opened' : 'menu-item'}
           onClick={this.openMenuItem}
         >
           <div className={subtitles ? 'content' : 'content alone'}>
-            <div className="title">{title}</div>
+            <div className='title'>{title}</div>
             {subtitles ? (
-              <div className="subtitles">
+              <div className='subtitles'>
                 {subtitles.map((subtitle, index) => {
-                  return index !== subtitles.length - 1
-                    ? `${subtitle}, `
-                    : subtitle;
+                  return index !== subtitles.length - 1 ? `${subtitle}, ` : subtitle;
                 })}
               </div>
             ) : null}
           </div>
-          <div className="selector">
+          <div className='selector'>
             <McsIcon type={this.state.open ? 'minus' : 'plus'} />
           </div>
         </button>
         {this.state.open && (
           <div>
             {fetching && (
-              <div className="menu-item small">
-                <div className="content alone small text-center">
+              <div className='menu-item small'>
+                <div className='content alone small text-center'>
                   <Spin />
                 </div>
               </div>
             )}
             {!fetching && !displayMenu.length && (
-              <div className="menu-item small">
-                <div className="content alone small text-center">
+              <div className='menu-item small'>
+                <div className='content alone small text-center'>
                   <FormattedMessage
-                    id="components.formMenu.menuSubList.empty"
-                    defaultMessage="Empty"
+                    id='components.formMenu.menuSubList.empty'
+                    defaultMessage='Empty'
                   />
                 </div>
               </div>
@@ -115,15 +113,11 @@ class MenuSubList extends React.Component<Props, MenuSubListState> {
             {!fetching &&
               displayMenu.map(sub => {
                 return (
-                  <button
-                    key={cuid()}
-                    className="menu-item small"
-                    onClick={sub.select}
-                  >
-                    <div className="content alone small">
-                      <div className="subtitles">{sub.title}</div>
+                  <button key={cuid()} className='menu-item small' onClick={sub.select}>
+                    <div className='content alone small'>
+                      <div className='subtitles'>{sub.title}</div>
                     </div>
-                    <div className="selector">
+                    <div className='selector'>
                       <McsIcon type={'chevron-right'} />
                     </div>
                   </button>

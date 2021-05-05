@@ -1,8 +1,6 @@
 import 'jest';
 import * as React from 'react';
-import CollectionSelector, {
-  CollectionSelectorProps,
-} from '../CollectionSelector';
+import CollectionSelector, { CollectionSelectorProps } from '../CollectionSelector';
 import * as TestRenderer from 'react-test-renderer';
 import { DataResponse, DataListResponse } from '../../../utils/ApiResponses';
 import { SelectableItem, SearchFilter } from '../../../utils';
@@ -43,9 +41,7 @@ it('should test a collection selector without filtering', () => {
     });
   };
 
-  const fetchDataList = (
-    filter: SearchFilter,
-  ): Promise<DataListResponse<Data>> => {
+  const fetchDataList = (filter: SearchFilter): Promise<DataListResponse<Data>> => {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve({
@@ -55,8 +51,7 @@ it('should test a collection selector without filtering', () => {
                 (filter.currentPage - 1) * filter.pageSize,
                 filter.pageSize * filter.currentPage,
               ),
-          count:
-            items.length < filter.pageSize ? items.length : filter.pageSize,
+          count: items.length < filter.pageSize ? items.length : filter.pageSize,
           status: 'ok',
           first_result: 0,
           max_results: 48,
@@ -70,9 +65,7 @@ it('should test a collection selector without filtering', () => {
 
   const close = () => undefined;
   const save = () => undefined;
-  const renderCollectionItem = (element: Data) => (
-    <div>{getDataById(element.id).data.text}</div>
-  );
+  const renderCollectionItem = (element: Data) => <div>{getDataById(element.id).data.text}</div>;
 
   const props: CollectionSelectorProps<Data> = {
     actionBarTitle: 'Welcome to the Collection Selector',
@@ -129,9 +122,7 @@ it('should test a collection selector with filtering', () => {
     });
   };
 
-  const fetchDataList = (
-    filter: SearchFilter,
-  ): Promise<DataListResponse<Data>> => {
+  const fetchDataList = (filter: SearchFilter): Promise<DataListResponse<Data>> => {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve({
@@ -141,8 +132,7 @@ it('should test a collection selector with filtering', () => {
                 (filter.currentPage - 1) * filter.pageSize,
                 filter.pageSize * filter.currentPage,
               ),
-          count:
-            items.length < filter.pageSize ? items.length : filter.pageSize,
+          count: items.length < filter.pageSize ? items.length : filter.pageSize,
           status: 'ok',
           first_result: 0,
           max_results: 48,
@@ -156,9 +146,7 @@ it('should test a collection selector with filtering', () => {
 
   const close = () => undefined;
   const save = () => undefined;
-  const renderCollectionItem = (element: Data) => (
-    <div>{getDataById(element.id).data.text}</div>
-  );
+  const renderCollectionItem = (element: Data) => <div>{getDataById(element.id).data.text}</div>;
 
   const props: CollectionSelectorProps<Data> = {
     actionBarTitle: 'Welcome to the Collection Selector',

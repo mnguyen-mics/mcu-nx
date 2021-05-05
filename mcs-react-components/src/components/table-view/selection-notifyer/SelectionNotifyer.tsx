@@ -7,12 +7,12 @@ import { ExtendedTableRowSelection } from '../table-view/TableView';
 
 export interface SelectionNotifyerProps<T> {
   messages: {
-    allRowsSelected: string
+    allRowsSelected: string;
     unselectAll: string;
     allPageRowsSelected: string;
     selectAll: string;
     selectedRows: string;
-  },
+  };
   rowSelection?: ExtendedTableRowSelection<T>;
   pagination?: PaginationProps | false;
 }
@@ -36,10 +36,7 @@ class SelectionNotifyer extends React.Component<SelectionNotifyerProps<any>> {
         content = (
           <div>
             {messages.allRowsSelected}
-            <Button
-              onClick={rowSelection.unselectAllItemIds}
-              className="selected-rows-btn"
-            >
+            <Button onClick={rowSelection.unselectAllItemIds} className='selected-rows-btn'>
               {messages.unselectAll}
             </Button>
           </div>
@@ -47,28 +44,18 @@ class SelectionNotifyer extends React.Component<SelectionNotifyerProps<any>> {
       } else if (rowSelection.selectedRowKeys.length === pagination.pageSize) {
         content = (
           <div>
-            
             {messages.allPageRowsSelected}
-            <Button
-              onClick={handleOnClick}
-              className="selected-rows-btn"
-            >
+            <Button onClick={handleOnClick} className='selected-rows-btn'>
               {messages.selectAll}
             </Button>
           </div>
         );
       } else {
-        content = (
-          <div>
-            {messages.selectedRows}
-          </div>
-        );
+        content = <div>{messages.selectedRows}</div>;
       }
     }
 
-    const alert = (
-      <Alert message={content} type="warning" className="selected-rows-alert" />
-    );
+    const alert = <Alert message={content} type='warning' className='selected-rows-alert' />;
 
     const toShow = !!(
       rowSelection &&

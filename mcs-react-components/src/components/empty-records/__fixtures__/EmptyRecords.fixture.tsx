@@ -4,8 +4,7 @@ import EmptyRecords, { EmptyRecordsProps } from '../EmptyRecords';
 const props: EmptyRecordsProps = {
   iconType: 'question',
   message: 'Hello world!',
-  className: 'mcs-customClass'  
+  className: 'mcs-customClass',
 };
 
-export default (<EmptyRecords {...props} />);
-
+export default <EmptyRecords {...props} />;

@@ -8,14 +8,12 @@ it('renders the RelatedRecords', () => {
     emptyOption: {
       iconType: 'question',
       message: 'Hello world!',
-      className: 'mcs-customClass'
+      className: 'mcs-customClass',
     },
-    isLoading: false
+    isLoading: false,
   };
 
-  const component = TestRenderer.create(
-    <RelatedRecords {...props} />
-  );
+  const component = TestRenderer.create(<RelatedRecords {...props} />);
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });

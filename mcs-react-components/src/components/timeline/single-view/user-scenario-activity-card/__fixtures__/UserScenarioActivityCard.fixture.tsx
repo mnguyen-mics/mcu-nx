@@ -37,7 +37,7 @@ const props: UserScenarioActivityCardProps = {
 };
 
 export default (
-  <IntlProvider locale="en">
+  <IntlProvider locale='en'>
     <UserScenarioActivityCard {...props} />
   </IntlProvider>
 );

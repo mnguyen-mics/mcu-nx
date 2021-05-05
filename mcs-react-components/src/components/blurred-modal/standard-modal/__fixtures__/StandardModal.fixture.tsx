@@ -2,7 +2,7 @@ import * as React from 'react';
 import StandardModal, { StandardModalProps } from '../StandardModal';
 
 const onClose = (e: React.MouseEvent) => {
-  return ;
+  return;
 };
 
 const props: StandardModalProps = {

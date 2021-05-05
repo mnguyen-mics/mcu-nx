@@ -14,14 +14,14 @@ const MenuPresentational: React.SFC<MenuPresentationalProps> = ({
   subtitles,
   select,
   type,
-  disabled
+  disabled,
 }) => {
   return (
-    <button className="mcs-menu-presentational" onClick={select} disabled={disabled}>
-      <div className="content">
+    <button className='mcs-menu-presentational' onClick={select} disabled={disabled}>
+      <div className='content'>
         <McsIcon type={type} />
-        <div className="title">{title}</div>
-        <div className="subtitle">
+        <div className='title'>{title}</div>
+        <div className='subtitle'>
           {subtitles &&
             subtitles.map((subtitle, index, arr) => {
               // If it's the last subtitle, the comma is not needed

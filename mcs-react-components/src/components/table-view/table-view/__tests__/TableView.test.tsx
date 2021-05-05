@@ -20,7 +20,7 @@ const columns = [
     key: 'name',
     width: 150,
     render: (text: string) => {
-      return <a href="javascript:;">{text}</a>;
+      return <a href='javascript:;'>{text}</a>;
     },
   },
   {
@@ -40,11 +40,11 @@ const columns = [
     width: 360,
     render: (text: string, record: any) => (
       <span>
-        <a href="javascript:;">Action 一 {record.name}</a>
-        <Divider type="vertical" />
-        <a href="javascript:;">Delete</a>
-        <Divider type="vertical" />
-        <a href="javascript:;" className="ant-dropdown-link">
+        <a href='javascript:;'>Action 一 {record.name}</a>
+        <Divider type='vertical' />
+        <a href='javascript:;'>Delete</a>
+        <Divider type='vertical' />
+        <a href='javascript:;' className='ant-dropdown-link'>
           More actions <DownOutlined />
         </a>
       </span>
@@ -75,11 +75,11 @@ const props = {
   dataSource: data,
   selectionNotifyerMessages: {
     allRowsSelected: 'You have selected all rows.',
-      unselectAll: 'Unselect all rows',
-      allPageRowsSelected: 'You have selected all rows in this page.',
-      selectAll: 'Select all',
-      selectedRows: 'You have selected N rows.',
-  }
+    unselectAll: 'Unselect all rows',
+    allPageRowsSelected: 'You have selected all rows in this page.',
+    selectAll: 'Select all',
+    selectedRows: 'You have selected N rows.',
+  },
 };
 
 it('renders a basic tableView', () => {
@@ -87,9 +87,7 @@ it('renders a basic tableView', () => {
     ...props,
   };
 
-  const component = TestRenderer.create(
-      <TableView {...tableViewProps} />
-  );
+  const component = TestRenderer.create(<TableView {...tableViewProps} />);
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
@@ -100,9 +98,7 @@ it('renders a tableView with pagination', () => {
     pagination: pagination,
   };
 
-  const component = TestRenderer.create(
-      <TableView {...tableViewProps} />
-  );
+  const component = TestRenderer.create(<TableView {...tableViewProps} />);
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
@@ -116,12 +112,10 @@ it('renders a tableView with 3 selected rows', () => {
     selectionNotifyerMessages: {
       ...props.selectionNotifyerMessages,
       selectedRows: 'You have selected 3 rows.',
-    }
+    },
   };
 
-  const component = TestRenderer.create(
-      <TableView {...tableViewProps} />
-  );
+  const component = TestRenderer.create(<TableView {...tableViewProps} />);
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });

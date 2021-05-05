@@ -11,11 +11,11 @@ const handleDatePickerMenuChange = (dates: McsDateRangeValue) => dates;
 const props: McsDateRangePickerProps = {
   values: { from: new McsMoment(1597147165831), to: new McsMoment(1597247165831) },
   onChange: handleDatePickerMenuChange,
-  excludeToday:true,
-  startDate:1587147165831
+  excludeToday: true,
+  startDate: 1587147165831,
 };
 export default (
-  <IntlProvider locale="en">
+  <IntlProvider locale='en'>
     <McsDateRangePicker {...props} />
   </IntlProvider>
 );

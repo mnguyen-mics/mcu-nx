@@ -1,9 +1,6 @@
 import { Index } from '../../utils';
 import { UserActivityEventResource } from '../datamart/UserActivityResource';
-import {
-  OperatingSystemFamily,
-  BrowserFamily,
-} from '../datamart/graphdb/RuntimeSchema';
+import { OperatingSystemFamily, BrowserFamily } from '../datamart/graphdb/RuntimeSchema';
 
 export interface Activity {
   $email_hash: string | object;
@@ -13,11 +10,7 @@ export interface Activity {
   };
   $origin: object;
   $session_duration: number;
-  $session_status:
-    | 'IN_SESSION'
-    | 'SESSION_SNAPSHOT'
-    | 'CLOSED_SESSION'
-    | 'NO_SESSION';
+  $session_status: 'IN_SESSION' | 'SESSION_SNAPSHOT' | 'CLOSED_SESSION' | 'NO_SESSION';
   $site_id: string;
   $topics: Index<Index<number>>;
   $ts: number;

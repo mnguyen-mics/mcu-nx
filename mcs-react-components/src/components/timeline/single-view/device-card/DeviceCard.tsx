@@ -29,7 +29,7 @@ class DeviceCard extends React.Component<Props, State> {
       intl: { formatMessage },
       dataSource,
       isLoading,
-      messages
+      messages,
     } = this.props;
 
     const userAgents = dataSource || [];
@@ -54,11 +54,7 @@ class DeviceCard extends React.Component<Props, State> {
         {accountsFormatted &&
           accountsFormatted.map(agent => {
             return agent.device ? (
-              <Device
-                key={agent.vector_id}
-                vectorId={agent.vector_id}
-                device={agent.device}
-              />
+              <Device key={agent.vector_id} vectorId={agent.vector_id} device={agent.device} />
             ) : (
               <div key={agent.vector_id}>{agent.vector_id}</div>
             );
@@ -70,18 +66,18 @@ class DeviceCard extends React.Component<Props, State> {
         )}
         {canViewMore ? (
           !this.state.showMore ? (
-            <div className="mcs-card-footer">
+            <div className='mcs-card-footer'>
               <button
-                className="mcs-card-footer-link mcs-deviceCard_viewMoreLink"
+                className='mcs-card-footer-link mcs-deviceCard_viewMoreLink'
                 onClick={handleViewMore(true)}
               >
                 <FormattedMessage {...messages.viewMore} />
               </button>
             </div>
           ) : (
-            <div className="mcs-card-footer">
+            <div className='mcs-card-footer'>
               <button
-                className="mcs-card-footer-link mcs-deviceCard_viewLessLink"
+                className='mcs-card-footer-link mcs-deviceCard_viewLessLink'
                 onClick={handleViewMore(false)}
               >
                 <FormattedMessage {...messages.viewLess} />

@@ -20,7 +20,7 @@ class McsTabs extends React.Component<McTabsProps> {
 
     return items.map((item, index) => (
       <Tabs.TabPane
-        tab={<div className="mcs-tabs">{item.title}</div>}
+        tab={<div className='mcs-tabs'>{item.title}</div>}
         key={item.key || item.title}
         forceRender={item.forceRender ? item.forceRender : false}
       >

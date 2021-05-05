@@ -11,11 +11,11 @@ const props: CounterProps = {
     value: 20,
     type: 'up',
   },
-  unit: 'Users'
+  unit: 'Users',
 };
 
 export default (
-  <IntlProvider locale="en">
+  <IntlProvider locale='en'>
     <Counter {...props} />
   </IntlProvider>
 );

@@ -76,20 +76,8 @@ class DoubleStackedAreaPlot extends React.Component<Props, {}> {
             y2: 1,
           },
           stops: [
-            [
-              0,
-              (Highcharts as any)
-                .Color(colors[i])
-                .setOpacity(AREA_OPACITY)
-                .get('rgba'),
-            ],
-            [
-              1,
-              (Highcharts as any)
-                .Color(colors[i])
-                .setOpacity(0)
-                .get('rgba'),
-            ],
+            [0, (Highcharts as any).Color(colors[i]).setOpacity(AREA_OPACITY).get('rgba')],
+            [1, (Highcharts as any).Color(colors[i]).setOpacity(0).get('rgba')],
           ],
         },
       };
@@ -195,16 +183,10 @@ class DoubleStackedAreaPlot extends React.Component<Props, {}> {
 
     return (
       <div style={style}>
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={options}
-          style={{ width: '100%' }}
-        />
+        <HighchartsReact highcharts={Highcharts} options={options} style={{ width: '100%' }} />
       </div>
     );
   }
 }
 
-export default compose<Props, DoubleStackedAreaPlotProps>()(
-  DoubleStackedAreaPlot,
-);
+export default compose<Props, DoubleStackedAreaPlotProps>()(DoubleStackedAreaPlot);

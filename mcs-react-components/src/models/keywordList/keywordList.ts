@@ -10,14 +10,13 @@ export interface KeywordListSelectionCreateRequest {
   exclude: boolean;
 }
 
-export interface KeywordListSelectionResource
-  extends KeywordListSelectionCreateRequest {
+export interface KeywordListSelectionResource extends KeywordListSelectionCreateRequest {
   id: string;
   name: string;
   technical_name?: string;
 }
 
-export interface KeywordResource extends KeywordCreateRequest{
+export interface KeywordResource extends KeywordCreateRequest {
   id: string;
 }
 

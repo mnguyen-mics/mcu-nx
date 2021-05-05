@@ -4,8 +4,8 @@ import MultiSelect, { MultiSelectProps } from '../MultiSelect';
 
 const props: MultiSelectProps<string> = {
   displayElement: <div>Click To Test</div>,
-  items: ["Willy Denzey", "Matt Huston"],
-  subItems: ["Billy Crawford", "Tragédie"],
+  items: ['Willy Denzey', 'Matt Huston'],
+  subItems: ['Billy Crawford', 'Tragédie'],
   subItemsTitle: '... mais aussi',
   selectedItems: [],
   getKey: (a: string) => a,
@@ -23,7 +23,7 @@ const props: MultiSelectProps<string> = {
 };
 
 export default (
-  <IntlProvider locale="en">
+  <IntlProvider locale='en'>
     <MultiSelect {...props} />
   </IntlProvider>
 );

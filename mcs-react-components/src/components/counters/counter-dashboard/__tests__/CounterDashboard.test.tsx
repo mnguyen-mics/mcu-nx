@@ -16,7 +16,7 @@ it('renders the Counter', () => {
           value: 20,
           type: 'up',
         },
-        unit: 'Users'
+        unit: 'Users',
       },
       {
         iconType: 'library',
@@ -39,7 +39,7 @@ it('renders the Counter', () => {
     ],
   };
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
+    <IntlProvider locale='en'>
       <CounterDashboard {...props} />
     </IntlProvider>,
   );

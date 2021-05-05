@@ -7,11 +7,11 @@ import ContentHeader, { ContentHeaderProps } from '../ContentHeader';
 it('renders a medium content header', () => {
   const props: ContentHeaderProps = {
     title: 'Titre',
-    size: 'medium'
+    size: 'medium',
   };
 
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
+    <IntlProvider locale='en'>
       <ContentHeader {...props} />
     </IntlProvider>,
   );
@@ -22,11 +22,11 @@ it('renders a medium content header', () => {
 it('renders a large content header', () => {
   const props: ContentHeaderProps = {
     title: 'Titre',
-    size: 'large'
+    size: 'large',
   };
 
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
+    <IntlProvider locale='en'>
       <ContentHeader {...props} />
     </IntlProvider>,
   );
@@ -42,7 +42,7 @@ it('renders the "evolved" content header', () => {
   };
 
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
+    <IntlProvider locale='en'>
       <ContentHeader {...props} />
     </IntlProvider>,
   );
@@ -58,7 +58,7 @@ it('renders the loading content header', () => {
   };
 
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
+    <IntlProvider locale='en'>
       <ContentHeader {...props} />
     </IntlProvider>,
   );

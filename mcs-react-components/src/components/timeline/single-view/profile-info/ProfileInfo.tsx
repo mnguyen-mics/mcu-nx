@@ -28,10 +28,7 @@ interface State {
   showMore: boolean;
 }
 
-export default class ProfileInfo extends React.Component<
-  ProfileInfoProps,
-  State
-> {
+export default class ProfileInfo extends React.Component<ProfileInfoProps, State> {
   static defaultProps = {
     profile: {},
   };
@@ -91,12 +88,10 @@ export default class ProfileInfo extends React.Component<
             className={'table-line'}
             style={{ marginLeft: shouldSlide ? margin + 10 : margin }}
           >
-            <Col className="table-left" span={12}>
-              <Tooltip title={profileInfoSlice[0]}>
-                {profileInfoSlice[0]}
-              </Tooltip>
+            <Col className='table-left' span={12}>
+              <Tooltip title={profileInfoSlice[0]}>{profileInfoSlice[0]}</Tooltip>
             </Col>
-            <Col className="table-right" span={12}>
+            <Col className='table-right' span={12}>
               <Tooltip title={filteredInfoValue}>{filteredInfoValue}</Tooltip>
             </Col>
           </Row>
@@ -111,12 +106,10 @@ export default class ProfileInfo extends React.Component<
             className={'table-line'}
             style={{ marginLeft: shouldSlide ? margin + 10 : margin }}
           >
-            <Col className="table-left" span={12}>
-              <Tooltip title={profileInfoSlice[0]}>
-                {profileInfoSlice[0]}
-              </Tooltip>
+            <Col className='table-left' span={12}>
+              <Tooltip title={profileInfoSlice[0]}>{profileInfoSlice[0]}</Tooltip>
             </Col>
-            <Col className="table-right" span={12}>
+            <Col className='table-right' span={12}>
               <Tooltip title={JSON.stringify(profileInfoSlice[1])}>
                 {JSON.stringify(profileInfoSlice[1])}
               </Tooltip>
@@ -133,10 +126,8 @@ export default class ProfileInfo extends React.Component<
             className={'table-line'}
             style={{ marginLeft: shouldSlide ? margin + 10 : margin }}
           >
-            <Col className="table-left" span={12}>
-              <Tooltip title={profileInfoSlice[0]}>
-                {profileInfoSlice[0]}:
-              </Tooltip>
+            <Col className='table-left' span={12}>
+              <Tooltip title={profileInfoSlice[0]}>{profileInfoSlice[0]}:</Tooltip>
             </Col>
             <Col className={'p-l-10'} span={12}>
               <i>{JSON.stringify(profileInfoSlice[1])}</i>
@@ -152,10 +143,8 @@ export default class ProfileInfo extends React.Component<
           className={'table-line'}
           style={{ marginLeft: shouldSlide ? margin + 10 : margin }}
         >
-          <Col className="table-left" span={24}>
-            <Tooltip title={profileInfoSlice[0]}>
-              {profileInfoSlice[0]}:
-            </Tooltip>
+          <Col className='table-left' span={24}>
+            <Tooltip title={profileInfoSlice[0]}>{profileInfoSlice[0]}:</Tooltip>
           </Col>
           <Col className={'p-l-10'} span={24}>
             {generateValues(profileInfoSlice[1] as any).map(item => {
@@ -167,7 +156,7 @@ export default class ProfileInfo extends React.Component<
     };
 
     return (
-      <div className="mcs-profile-info">
+      <div className='mcs-profile-info'>
         {profileFormatted &&
           profileFormatted.map(profil => {
             return generateItems(profil as any);
@@ -179,20 +168,14 @@ export default class ProfileInfo extends React.Component<
         )}
         {canViewMore ? (
           !this.state.showMore ? (
-            <div className="mcs-card-footer">
-              <button
-                className="mcs-card-footer-link"
-                onClick={onViewMoreClick}
-              >
+            <div className='mcs-card-footer'>
+              <button className='mcs-card-footer-link' onClick={onViewMoreClick}>
                 <FormattedMessage {...messages.viewMore} />
               </button>
             </div>
           ) : (
-            <div className="mcs-card-footer">
-              <button
-                className="mcs-card-footer-link"
-                onClick={onViewLessClick}
-              >
+            <div className='mcs-card-footer'>
+              <button className='mcs-card-footer-link' onClick={onViewLessClick}>
                 <FormattedMessage {...messages.viewLess} />
               </button>
             </div>

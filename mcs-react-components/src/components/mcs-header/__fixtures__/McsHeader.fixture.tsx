@@ -13,18 +13,14 @@ const props: McsHeaderProps = {
         marginRight: 0,
         borderColor: 'red',
       }}
-      message="You are using production API environment !"
-      type="error"
+      message='You are using production API environment !'
+      type='error'
       showIcon={true}
     />
   ),
   headerSettings: (
     <a>
-      <McsIcon
-        type="options"
-        className="mcs-header-menu-icon"
-        style={{ display: 'flex' }}
-      />
+      <McsIcon type='options' className='mcs-header-menu-icon' style={{ display: 'flex' }} />
     </a>
   ),
   menu: (
@@ -33,7 +29,7 @@ const props: McsHeaderProps = {
       <Menu.Item>Really optionnal</Menu.Item>
     </Menu>
   ),
-  className: "fake-class-name",
+  className: 'fake-class-name',
   /* tslint:disable */
   accountContent: [<div>Account Menu #1</div>, <div>Account Menu #2</div>],
   /* tslint:enable */

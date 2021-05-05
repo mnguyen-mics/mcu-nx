@@ -14,7 +14,7 @@ it('renders the metrics highlight', () => {
   };
 
   const component = render(
-    <IntlProvider locale="en">
+    <IntlProvider locale='en'>
       <MetricsHighlight {...props} />
     </IntlProvider>,
   );

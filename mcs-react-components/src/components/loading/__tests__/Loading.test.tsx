@@ -5,12 +5,10 @@ import Loading, { LoadingProps } from '../Loading';
 
 it('renders the Loading', () => {
   const props: LoadingProps = {
-    isFullScreen: true
+    isFullScreen: true,
   };
 
-  const component = TestRenderer.create(
-    <Loading {...props} />
-  );
+  const component = TestRenderer.create(<Loading {...props} />);
   const res = component.toJSON();
   expect(res).toMatchSnapshot();
 });

@@ -7,7 +7,7 @@ const props: AppsMenuProps = {
     { items: [{ name: 'Navigator', url: 'url2' }] },
   ],
   logo: <span />,
-  className: "fake-class-name"
+  className: 'fake-class-name',
 };
 
-export default (<AppsMenu {...props} />);
+export default <AppsMenu {...props} />;

@@ -8,8 +8,7 @@ const props: EventActivityProps = {
     $properties: {
       $items: [],
       $referrer: 'https://www.google.com/',
-      $url:
-        'https://www.cdiscount.com/vin-champagne/r-vin+nuit+saint+georges.html#_his_',
+      $url: 'https://www.cdiscount.com/vin-champagne/r-vin+nuit+saint+georges.html#_his_',
       channel_id: '2748',
       pg_cat1: 'Accueil',
       pg_cat2: 'Vins Alcools',
@@ -29,7 +28,7 @@ const props: EventActivityProps = {
 };
 
 export default (
-  <IntlProvider locale="en">
+  <IntlProvider locale='en'>
     <EventActivity {...props} />
   </IntlProvider>
 );

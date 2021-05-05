@@ -7,11 +7,11 @@ it('renders the ColoredButton', () => {
   const props: ColoredButtonProps = {
     backgroundColor: '#003056',
     color: '#fff',
-    onClick: () => { /* tslint:disable */ console.log('clicked!') /* tslint:enable */ }
+    onClick: () => {
+      /* tslint:disable */ console.log('clicked!'); /* tslint:enable */
+    },
   };
-  const component = TestRenderer.create(
-    <ColoredButton {...props}>Save</ColoredButton>
-  );
+  const component = TestRenderer.create(<ColoredButton {...props}>Save</ColoredButton>);
   const res = component.toJSON();
   expect(res).toMatchSnapshot();
 });

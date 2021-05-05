@@ -60,7 +60,7 @@ it('renders the DeviceCard', () => {
     isLoading: false,
   };
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
+    <IntlProvider locale='en'>
       <DeviceCard {...props} />
     </IntlProvider>,
   );

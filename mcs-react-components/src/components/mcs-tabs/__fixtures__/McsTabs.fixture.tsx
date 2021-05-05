@@ -23,7 +23,7 @@ const props: McTabsProps = {
 };
 
 export default (
-  <IntlProvider locale="en">
+  <IntlProvider locale='en'>
     <McsTabs {...props} />
   </IntlProvider>
 );

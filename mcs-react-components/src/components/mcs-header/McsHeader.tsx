@@ -26,12 +26,12 @@ class McsHeader extends React.Component<McsHeaderProps> {
       devAlert,
       menuIcon,
       className,
-      organisationSwitcher
+      organisationSwitcher,
     } = this.props;
 
     const accountMenu = (
       <Menu>
-        <Menu.Item key="email" disabled={true}>
+        <Menu.Item key='email' disabled={true}>
           {userEmail}
         </Menu.Item>
         {accountContent.length > 0 && <Menu.Divider />}
@@ -43,37 +43,25 @@ class McsHeader extends React.Component<McsHeaderProps> {
 
     return (
       <Header className={`mcs-header ${className ? className : ''}`}>
-        <div className="mcs-header_wrapper">
-          <span className="mcs-header_leftComponent">
-           {organisationSwitcher}
-          </span>
+        <div className='mcs-header_wrapper'>
+          <span className='mcs-header_leftComponent'>{organisationSwitcher}</span>
           {devAlert}
         </div>
-        <div className="mcs-header_actions">
+        <div className='mcs-header_actions'>
           {menu && (
-              <span className="mcs-header_actions_appLauncher">
-                <Dropdown overlay={menu} trigger={['click']}>
-                  <a>
-                    {menuIcon ? (
-                      menuIcon
-                    ) : (
-                      <AppstoreOutlined className="mcs-header_menuIcon" />
-                    )}
-                  </a>
-                </Dropdown>
-              </span>
-            )}
-          {headerSettings && (
-            <div className="mcs-header_actions_settings mcs-header_menuIcon">{headerSettings}</div>
+            <span className='mcs-header_actions_appLauncher'>
+              <Dropdown overlay={menu} trigger={['click']}>
+                <a>{menuIcon ? menuIcon : <AppstoreOutlined className='mcs-header_menuIcon' />}</a>
+              </Dropdown>
+            </span>
           )}
-          <div className="mcs-header_actions_account">
-            <Dropdown
-              overlay={accountMenu}
-              trigger={['click']}
-              placement="bottomRight"
-            >
+          {headerSettings && (
+            <div className='mcs-header_actions_settings mcs-header_menuIcon'>{headerSettings}</div>
+          )}
+          <div className='mcs-header_actions_account'>
+            <Dropdown overlay={accountMenu} trigger={['click']} placement='bottomRight'>
               <a>
-                <McsIcon type="user" className="mcs-header_menuIcon" />
+                <McsIcon type='user' className='mcs-header_menuIcon' />
               </a>
             </Dropdown>
           </div>

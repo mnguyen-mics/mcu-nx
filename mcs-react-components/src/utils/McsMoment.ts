@@ -5,8 +5,8 @@ const DATE_FORMAT = 'YYYY-MM-DD';
 type McsDate = Date | string | number;
 
 export type McsRange = {
-  from: McsMoment,
-  to: McsMoment,
+  from: McsMoment;
+  to: McsMoment;
 };
 
 export function isValidMcsDate(date: McsDate) {
@@ -34,8 +34,9 @@ export function convertMcsDateToMoment(date: McsDate): moment.Moment {
 
 export function formatMcsDate(range: McsRange, inclusive?: boolean) {
   const from = range.from.toMoment().format(DATE_FORMAT);
-  const to = inclusive ? range.to.toMoment()
-    .add(1, 'day').format(DATE_FORMAT) : range.to.toMoment().format(DATE_FORMAT);
+  const to = inclusive
+    ? range.to.toMoment().add(1, 'day').format(DATE_FORMAT)
+    : range.to.toMoment().format(DATE_FORMAT);
   return {
     from: from,
     to: to,

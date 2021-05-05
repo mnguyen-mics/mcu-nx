@@ -1,7 +1,5 @@
 import * as React from 'react';
-import SelectionNotifyer, {
-  SelectionNotifyerProps,
-} from '../SelectionNotifyer';
+import SelectionNotifyer, { SelectionNotifyerProps } from '../SelectionNotifyer';
 
 interface Data {
   key: string;
@@ -25,9 +23,7 @@ const props: SelectionNotifyerProps<Data> = {
     allPageRowsSelected: 'You have selected all rows in this page.',
     selectAll: 'Select all',
     selectedRows: 'You have selected N rows.',
-  }
+  },
 };
 
-export default (
-  <SelectionNotifyer {...props} />
-);
+export default <SelectionNotifyer {...props} />;

@@ -4,11 +4,11 @@ import {
   AudienceSegmentType,
   FeedType,
   UserListSegment,
-  UserActivationSegment
+  UserActivationSegment,
 } from './AudienceSegmentResource';
 import {
   AudienceSegmentSelectionResource,
-  AudienceSegmentSelectionCreateRequest
+  AudienceSegmentSelectionCreateRequest,
 } from './AudienceSegmentSelectionResource';
 
 export {
@@ -19,6 +19,5 @@ export {
   AudienceSegmentSelectionResource,
   AudienceSegmentSelectionCreateRequest,
   AudienceSegmentShape,
-  UserActivationSegment
-
+  UserActivationSegment,
 };

@@ -3,10 +3,13 @@ const SUCCESS = 'SUCCESS';
 const FAILURE = 'FAILURE';
 
 export const createRequestTypes = base => {
-  return [REQUEST, SUCCESS, FAILURE].reduce((acc, type) => ({
-    ...acc,
-    [type]: `${base}_${type}`,
-  }), {});
+  return [REQUEST, SUCCESS, FAILURE].reduce(
+    (acc, type) => ({
+      ...acc,
+      [type]: `${base}_${type}`,
+    }),
+    {},
+  );
 };
 
 const defaultMetadata = {
@@ -34,6 +37,7 @@ export const createRequestMetadataReducer = requestTypes => (state = defaultMeta
         isFetching: false,
         error: action.payload,
       };
-    default: return state;
+    default:
+      return state;
   }
 };

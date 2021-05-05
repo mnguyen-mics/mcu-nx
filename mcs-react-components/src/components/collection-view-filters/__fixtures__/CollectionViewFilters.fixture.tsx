@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { IntlProvider } from 'react-intl';
-import CollectionViewFilters, {
-  CollectionViewFiltersProps,
-} from '../CollectionViewFilters';
+import CollectionViewFilters, { CollectionViewFiltersProps } from '../CollectionViewFilters';
 
 const items = [];
 
@@ -23,7 +21,7 @@ const props: CollectionViewFiltersProps = {
 };
 
 export default (
-  <IntlProvider locale="en">
+  <IntlProvider locale='en'>
     <CollectionViewFilters {...props} />
   </IntlProvider>
 );

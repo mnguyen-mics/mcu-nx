@@ -4,8 +4,7 @@ import McsIcon from '../../../mcs-icon';
 import { Input } from 'antd';
 import { FormItemProps } from 'antd/lib/form';
 
-type Props = FormItemProps &
-FormFieldWrapperProps
+type Props = FormItemProps & FormFieldWrapperProps;
 
 const props: Props = {
   helpToolTipProps: {
@@ -15,7 +14,6 @@ const props: Props = {
     return <McsIcon type={'close'} />;
   },
   label: 'Label',
-  
 };
 
 export default (

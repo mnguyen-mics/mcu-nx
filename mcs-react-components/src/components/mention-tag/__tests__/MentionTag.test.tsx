@@ -6,7 +6,7 @@ import MentionTag, { MentionTagProps } from '../MentionTag';
 it('renders the MentionTag', () => {
   const props: MentionTagProps = {
     mention: 'ALPHA',
-    tooltip: 'tooltip'
+    tooltip: 'tooltip',
   };
   const component = TestRenderer.create(<MentionTag {...props} />);
   const res = component.toJSON();

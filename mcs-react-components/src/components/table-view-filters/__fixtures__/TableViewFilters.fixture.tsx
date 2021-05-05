@@ -1,7 +1,5 @@
 import * as React from 'react';
-import TableViewFilters, {
-  ViewComponentWithFiltersProps,
-} from '../TableViewFilters';
+import TableViewFilters, { ViewComponentWithFiltersProps } from '../TableViewFilters';
 import { DownOutlined } from '@ant-design/icons';
 import { MultiSelectProps } from '../../multi-select';
 import {
@@ -19,7 +17,7 @@ const searchOptions = {
 
 const filter = ['FILTER 1', 'FILTER 2', 'FILTER 3'];
 
-const statusItems = filter.map((status) => ({
+const statusItems = filter.map(status => ({
   key: status,
   value: status,
 }));
@@ -53,6 +51,4 @@ const props: ViewComponentWithFiltersProps<any> = {
   selectionNotifyerMessages: selectionNotifyerMessagesMock,
 };
 
-export default (
-  <TableViewFilters {...props} />
-);
+export default <TableViewFilters {...props} />;

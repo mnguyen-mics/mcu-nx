@@ -29,7 +29,7 @@ it('renders the multi select', () => {
   };
 
   const component = render(
-    <IntlProvider locale="en">
+    <IntlProvider locale='en'>
       <MultiSelect {...props} />
     </IntlProvider>,
   );

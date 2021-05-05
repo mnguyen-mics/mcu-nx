@@ -14,10 +14,10 @@ it('renders the Counter', () => {
       value: 20,
       type: 'up',
     },
-    unit: 'Users'
+    unit: 'Users',
   };
   const component = TestRenderer.create(
-    <IntlProvider locale="en">
+    <IntlProvider locale='en'>
       <Counter {...props} />
     </IntlProvider>,
   );

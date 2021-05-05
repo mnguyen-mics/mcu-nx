@@ -10,9 +10,7 @@ export interface CollectionViewFiltersProps extends CollectionViewProps {
   searchOptions?: SearchProps;
 }
 
-class CollectionViewFilters extends React.Component<
-  CollectionViewFiltersProps
-> {
+class CollectionViewFilters extends React.Component<CollectionViewFiltersProps> {
   render() {
     const prefixCls = 'mcs-collection-view-filters';
 

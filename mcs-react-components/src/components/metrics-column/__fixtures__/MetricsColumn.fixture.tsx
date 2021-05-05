@@ -11,7 +11,7 @@ const props: MetricsColumnProps = {
 };
 
 export default (
-  <IntlProvider locale="en">
+  <IntlProvider locale='en'>
     <MetricsColumn {...props} />
   </IntlProvider>
 );

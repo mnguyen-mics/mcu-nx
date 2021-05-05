@@ -30,10 +30,7 @@ const messages = defineMessages({
   },
 });
 
-class LabelsSelector extends React.Component<
-  LabelsSelectorProps,
-  LabelsSelectorState
-> {
+class LabelsSelector extends React.Component<LabelsSelectorProps, LabelsSelectorState> {
   constructor(props: LabelsSelectorProps) {
     super(props);
     this.state = {
@@ -46,18 +43,13 @@ class LabelsSelector extends React.Component<
 
   handleClose = (removedLabel: Label) => {
     const labels = [
-      ...this.props.selectedLabels.filter(
-        selectedLabel => selectedLabel.id !== removedLabel.id,
-      ),
+      ...this.props.selectedLabels.filter(selectedLabel => selectedLabel.id !== removedLabel.id),
     ];
     this.props.onChange(labels);
   };
 
   showInput = () => {
-    this.setState(
-      { inputVisible: true },
-      () => this.state.input && this.state.input.focus(),
-    );
+    this.setState({ inputVisible: true }, () => this.state.input && this.state.input.focus());
   };
 
   handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,9 +57,7 @@ class LabelsSelector extends React.Component<
   };
 
   handleInputConfirm = () => {
-    const selectedValue = this.props.labels.find(
-      label => label.name === this.state.inputValue,
-    );
+    const selectedValue = this.props.labels.find(label => label.name === this.state.inputValue);
     const labels = [...this.props.selectedLabels];
     if (selectedValue) {
       labels.push(selectedValue);
@@ -113,7 +103,7 @@ class LabelsSelector extends React.Component<
 
     const overlayMenu = () => {
       return (
-        <Menu onClick={onClick} className="mcs-labelsSelector_dropdown" style={{}}>
+        <Menu onClick={onClick} className='mcs-labelsSelector_dropdown' style={{}}>
           {results.length ? (
             results.map(label => {
               return <Menu.Item key={label.id}>{label.name}</Menu.Item>;
@@ -128,12 +118,12 @@ class LabelsSelector extends React.Component<
     };
 
     return (
-      <div className="mcs-labelsSelector">
-        {selectedLabels.map((label) => {
+      <div className='mcs-labelsSelector'>
+        {selectedLabels.map(label => {
           const isLongTag = label.name.length > 20;
           const labelelem = (
             <Tag
-              className="mcs-labelsSelector_tag"
+              className='mcs-labelsSelector_tag'
               key={label.id}
               closable={true}
               onClose={onClose(label)}
@@ -158,26 +148,22 @@ class LabelsSelector extends React.Component<
           >
             <Input
               autoFocus={true}
-              id="labelInput"
+              id='labelInput'
               ref={this.saveInputRef}
-              type="text"
-              size="small"
+              type='text'
+              size='small'
               style={{ width: 100 }}
               value={inputValue}
               onChange={this.handleInputChange}
               onPressEnter={this.handleInputConfirm}
-              prefix={<McsIcon type="magnifier" />}
+              prefix={<McsIcon type='magnifier' />}
             />
           </Dropdown>
         )}
         {!inputVisible && (
-          <Button
-            size="small"
-            className="mcs-labelsSelector_button"
-            onClick={this.showInput}
-          >
-            <McsIcon type="plus" />
-              {buttonMessage || messages.labelButton.defaultMessage}
+          <Button size='small' className='mcs-labelsSelector_button' onClick={this.showInput}>
+            <McsIcon type='plus' />
+            {buttonMessage || messages.labelButton.defaultMessage}
           </Button>
         )}
       </div>

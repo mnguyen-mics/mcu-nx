@@ -1,4 +1,4 @@
-import { UploadFile } from "antd/lib/upload/interface";
+import { UploadFile } from 'antd/lib/upload/interface';
 
 export type PluginPropertyOrigin = 'PLUGIN_STATIC' | 'PLUGIN' | 'INSTANCE';
 
@@ -9,26 +9,27 @@ export interface PropertyResource {
   writable: boolean;
 }
 
-export type PropertyResourceShape = StringPropertyResource
-| UrlPropertyResource
-| DoublePropertyResource
-| IntPropertyResource
-| BooleanPropertyResource
-| AssetPropertyResource
-| AssetFilePropertyResource
-| AssetPropertyCreationResource
-| DataFilePropertyResource
-| AdLayoutPropertyResource
-| StyleSheetPropertyResource
-| PixelTagPropertyResource
-| RecommenderPropertyResource
-| LongPropertyResource
-| ModelIdPropertyResource
-| DatamartIdPropertyResource
-| RecommenderIdPropertyResource 
-| NativeImagePropertyResource
-| NativeTitlePropertyResource
-| NativeDataPropertyResource;
+export type PropertyResourceShape =
+  | StringPropertyResource
+  | UrlPropertyResource
+  | DoublePropertyResource
+  | IntPropertyResource
+  | BooleanPropertyResource
+  | AssetPropertyResource
+  | AssetFilePropertyResource
+  | AssetPropertyCreationResource
+  | DataFilePropertyResource
+  | AdLayoutPropertyResource
+  | StyleSheetPropertyResource
+  | PixelTagPropertyResource
+  | RecommenderPropertyResource
+  | LongPropertyResource
+  | ModelIdPropertyResource
+  | DatamartIdPropertyResource
+  | RecommenderIdPropertyResource
+  | NativeImagePropertyResource
+  | NativeTitlePropertyResource
+  | NativeDataPropertyResource;
 
 export interface StringPropertyResource extends PropertyResource {
   property_type: 'STRING';

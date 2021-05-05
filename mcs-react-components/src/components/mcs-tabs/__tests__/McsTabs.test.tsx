@@ -25,7 +25,7 @@ it('renders the tabs', () => {
   };
 
   const component = render(
-    <IntlProvider locale="en">
+    <IntlProvider locale='en'>
       <McsTabs {...props} />
     </IntlProvider>,
   );

@@ -13,9 +13,9 @@ class ContentHeader extends React.Component<ContentHeaderProps> {
 
     const content = (
       <div>
-        <div className="mcs-contentHeader_subtitle">{subTitle}</div>
+        <div className='mcs-contentHeader_subtitle'>{subTitle}</div>
         <div
-          className={size ? `mcs-contentHeader_title--${size}` : "mcs-contentHeader_title--large"}
+          className={size ? `mcs-contentHeader_title--${size}` : 'mcs-contentHeader_title--large'}
         >
           {title}
         </div>
@@ -23,12 +23,10 @@ class ContentHeader extends React.Component<ContentHeaderProps> {
     );
 
     return (
-      <div className="mcs-contentHeader">
-        {loading ? <i className="mcs-table-cell-loading-large" /> : content}
+      <div className='mcs-contentHeader'>
+        {loading ? <i className='mcs-table-cell-loading-large' /> : content}
       </div>
     );
-
-    
   }
 }
 

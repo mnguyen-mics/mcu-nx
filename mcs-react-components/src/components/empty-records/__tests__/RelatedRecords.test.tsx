@@ -7,7 +7,7 @@ it('renders the EmptyRecords', () => {
   const props: EmptyRecordsProps = {
     iconType: 'question',
     message: 'Hello world!',
-    className: 'mcs-customClass'  
+    className: 'mcs-customClass',
   };
 
   const component = TestRenderer.create(<EmptyRecords {...props} />);

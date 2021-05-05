@@ -6,10 +6,7 @@ export interface OTQLResult {
   rows: OTQLResultRowsShape;
 }
 
-export type OTQLResultRowsShape =
-  | OTQLAggregationResult[]
-  | OTQLCountResult[]
-  | OTQLDataResult[];
+export type OTQLResultRowsShape = OTQLAggregationResult[] | OTQLCountResult[] | OTQLDataResult[];
 
 export interface OTQLBucket {
   key: string;
@@ -50,14 +47,10 @@ export interface OTQLDataResult {
   [key: string]: any;
 }
 
-export function isAggregateResult(
-  rows: OTQLResultRowsShape,
-): rows is OTQLAggregationResult[] {
+export function isAggregateResult(rows: OTQLResultRowsShape): rows is OTQLAggregationResult[] {
   return !!(rows.length && (rows as OTQLAggregationResult[])[0].aggregations !== undefined);
 }
 
-export function isCountResult(
-  rows: OTQLResultRowsShape,
-): rows is OTQLCountResult[] {
+export function isCountResult(rows: OTQLResultRowsShape): rows is OTQLCountResult[] {
   return !!(rows.length && (rows as OTQLCountResult[])[0].count !== undefined);
 }

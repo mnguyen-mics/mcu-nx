@@ -5,15 +5,13 @@ const props: RelatedRecordsProps = {
   emptyOption: {
     iconType: 'question',
     message: 'Hello world!',
-    className: 'mcs-customClass'  
+    className: 'mcs-customClass',
   },
-  isLoading: false
+  isLoading: false,
 };
 
 export default (
-    <RelatedRecords {...props}>
-      <div>
-        Hello World
-      </div>
-    </RelatedRecords>
+  <RelatedRecords {...props}>
+    <div>Hello World</div>
+  </RelatedRecords>
 );

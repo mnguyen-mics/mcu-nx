@@ -35,8 +35,7 @@ export interface ActionsColumnDefinition<T> extends ColumnProps<T> {
   actions: ActionsRenderer<T>;
 }
 
-export interface ExtendedTableRowSelection<T = any>
-  extends TableRowSelection<T> {
+export interface ExtendedTableRowSelection<T = any> extends TableRowSelection<T> {
   selectedRowKeys?: string[];
   allRowsAreSelected?: boolean;
   selectAllItemIds?: () => void;
@@ -50,12 +49,12 @@ export interface TableViewProps<T> extends TableProps<T> {
   actionsColumnsDefinition?: Array<ActionsColumnDefinition<T>>;
   rowSelection?: ExtendedTableRowSelection;
   selectionNotifyerMessages: {
-    allRowsSelected: string,
-    unselectAll: string,
-    allPageRowsSelected: string,
-    selectAll: string,
-    selectedRows: string,
-  }
+    allRowsSelected: string;
+    unselectAll: string;
+    allPageRowsSelected: string;
+    selectAll: string;
+    selectedRows: string;
+  };
 }
 
 class TableView<
@@ -74,12 +73,9 @@ class TableView<
       width: 30,
       render: (text: string, record: T) => {
         return (
-          <Dropdown
-            overlay={this.renderActionsMenu(column.actions, record)}
-            trigger={['click']}
-          >
-            <a className="ant-dropdown-link">
-              <McsIcon type="chevron" />
+          <Dropdown overlay={this.renderActionsMenu(column.actions, record)} trigger={['click']}>
+            <a className='ant-dropdown-link'>
+              <McsIcon type='chevron' />
             </a>
           </Dropdown>
         );
@@ -91,22 +87,16 @@ class TableView<
   buildDataColumns = (): Array<ColumnProps<T>> => {
     const { columns, visibilitySelectedColumns } = this.props;
 
-    const visibilitySelectedColumnsValues: string[] = visibilitySelectedColumns!.map(
-      column => {
-        return column.key;
-      },
-    );
+    const visibilitySelectedColumnsValues: string[] = visibilitySelectedColumns!.map(column => {
+      return column.key;
+    });
 
-    if (columns === undefined)
-      throw new Error('Undefined columns in TableView');
+    if (columns === undefined) throw new Error('Undefined columns in TableView');
 
     return columns
       .filter(column => {
         if (visibilitySelectedColumnsValues.length >= 1) {
-          return (
-            !column.isHideable ||
-            visibilitySelectedColumnsValues.includes(column.key)
-          );
+          return !column.isHideable || visibilitySelectedColumnsValues.includes(column.key);
         }
         return column;
       })
@@ -121,24 +111,17 @@ class TableView<
       });
   };
 
-  renderActionsMenu = (
-    actions: (record: T) => Array<ActionDefinition<T>>,
-    record: T,
-  ) => {
+  renderActionsMenu = (actions: (record: T) => Array<ActionDefinition<T>>, record: T) => {
     const onClick = (item: MenuInfo) => {
       actions(record)[parseInt(item.key.toString(), 0)].callback(record);
     };
 
     return (
-      <Menu onClick={onClick} className="mcs-dropdown-actions">
+      <Menu onClick={onClick} className='mcs-dropdown-actions'>
         {actions(record).map((action, index) => {
           return (
             <Menu.Item key={index.toString()} disabled={action.disabled}>
-              {action.message ? (
-                action.message
-              ) : (
-                index
-              )}
+              {action.message ? action.message : index}
             </Menu.Item>
           );
         })}
@@ -163,15 +146,14 @@ class TableView<
       this.buildActionsColumns(actionsColumnsDefinition!),
     );
 
-    if (dataSource === undefined)
-      throw new Error('Undefined dataSource in TableView');
+    if (dataSource === undefined) throw new Error('Undefined dataSource in TableView');
 
     const dataSourceWithIds = dataSource.map(elem => {
       const cuid = _cuid();
       return {
         key: elem.id ? elem.id : cuid,
         ...(elem as any),
-      }
+      };
     });
 
     let newPagination: false | TablePaginationConfig | undefined = pagination;
@@ -196,7 +178,7 @@ class TableView<
     };
 
     return (
-      <div className="mcs-table-view">
+      <div className='mcs-table-view'>
         <SelectionNotifyer
           rowSelection={rest.rowSelection}
           pagination={pagination}
@@ -209,6 +191,4 @@ class TableView<
   }
 }
 
-export default (TableView) as React.ComponentClass<
-  TableViewProps<any>
->;
+export default TableView as React.ComponentClass<TableViewProps<any>>;
