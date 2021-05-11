@@ -31,15 +31,15 @@ const messages = defineMessages({
 });
 
 class LabelsSelector extends React.Component<LabelsSelectorProps, LabelsSelectorState> {
+  input: React.RefObject<Input>;
   constructor(props: LabelsSelectorProps) {
     super(props);
+    this.input = React.createRef();
     this.state = {
       inputVisible: false,
       inputValue: '',
     };
   }
-
-  saveInputRef = (input: any) => this.setState({ input: input });
 
   handleClose = (removedLabel: Label) => {
     const labels = [
@@ -49,7 +49,10 @@ class LabelsSelector extends React.Component<LabelsSelectorProps, LabelsSelector
   };
 
   showInput = () => {
-    this.setState({ inputVisible: true }, () => this.state.input && this.state.input.focus());
+    this.setState(
+      { inputVisible: true },
+      () => this.input && this.input.current && this.input.current.focus(),
+    );
   };
 
   handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,12 +68,12 @@ class LabelsSelector extends React.Component<LabelsSelectorProps, LabelsSelector
     this.props.onChange(labels);
     this.setState({
       inputValue: '',
-      inputVisible: true,
+      inputVisible: false,
     });
   };
 
   handleVisibleChange = () => {
-    this.setState({ inputValue: '', inputVisible: true });
+    this.setState({ inputValue: '', inputVisible: false });
   };
 
   render() {
@@ -149,10 +152,9 @@ class LabelsSelector extends React.Component<LabelsSelectorProps, LabelsSelector
             <Input
               autoFocus={true}
               id='labelInput'
-              ref={this.saveInputRef}
+              ref={this.input}
               type='text'
               size='small'
-              style={{ width: 100 }}
               value={inputValue}
               onChange={this.handleInputChange}
               onPressEnter={this.handleInputConfirm}

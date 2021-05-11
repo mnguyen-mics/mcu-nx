@@ -6,7 +6,7 @@ import Button from '../../button';
 import { ExtendedTableRowSelection } from '../table-view/TableView';
 
 export interface SelectionNotifyerProps<T> {
-  messages: {
+  messages?: {
     allRowsSelected: string;
     unselectAll: string;
     allPageRowsSelected: string;
@@ -17,10 +17,20 @@ export interface SelectionNotifyerProps<T> {
   pagination?: PaginationProps | false;
 }
 
+const defaultMessages = {
+  allRowsSelected: 'All rows selected',
+  unselectAll: 'Unselect all',
+  allPageRowsSelected: 'All page rows selected',
+  selectAll: 'Select All',
+  selectedRows: 'Selected rows',
+};
+
 class SelectionNotifyer extends React.Component<SelectionNotifyerProps<any>> {
   render() {
     const { rowSelection, pagination, messages } = this.props;
     let content: JSX.Element = <span />;
+
+    const msgs = messages || defaultMessages;
 
     const handleOnClick = () => {
       if (rowSelection && rowSelection.selectAllItemIds) {
@@ -35,23 +45,23 @@ class SelectionNotifyer extends React.Component<SelectionNotifyerProps<any>> {
       ) {
         content = (
           <div>
-            {messages.allRowsSelected}
+            {msgs.allRowsSelected}
             <Button onClick={rowSelection.unselectAllItemIds} className='selected-rows-btn'>
-              {messages.unselectAll}
+              {msgs.unselectAll}
             </Button>
           </div>
         );
       } else if (rowSelection.selectedRowKeys.length === pagination.pageSize) {
         content = (
           <div>
-            {messages.allPageRowsSelected}
+            {msgs.allPageRowsSelected}
             <Button onClick={handleOnClick} className='selected-rows-btn'>
-              {messages.selectAll}
+              {msgs.selectAll}
             </Button>
           </div>
         );
       } else {
-        content = <div>{messages.selectedRows}</div>;
+        content = <div>{msgs.selectedRows}</div>;
       }
     }
 
