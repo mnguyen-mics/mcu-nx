@@ -48,7 +48,7 @@ export interface TableViewProps<T> extends TableProps<T> {
   visibilitySelectedColumns?: Array<DataColumnDefinition<T>>;
   actionsColumnsDefinition?: Array<ActionsColumnDefinition<T>>;
   rowSelection?: ExtendedTableRowSelection;
-  selectionNotifyerMessages: {
+  selectionNotifyerMessages?: {
     allRowsSelected: string;
     unselectAll: string;
     allPageRowsSelected: string;
