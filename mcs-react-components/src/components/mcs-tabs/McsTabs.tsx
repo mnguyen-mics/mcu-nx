@@ -3,7 +3,7 @@ import { Tabs } from 'antd';
 import { TabsProps } from 'antd/lib/tabs';
 
 interface McsTabsItem {
-  title: string;
+  title: React.ReactChild;
   display?: JSX.Element;
   forceRender?: boolean;
   key?: string;
@@ -21,7 +21,7 @@ class McsTabs extends React.Component<McTabsProps> {
     return items.map((item, index) => (
       <Tabs.TabPane
         tab={<div className='mcs-tabs'>{item.title}</div>}
-        key={item.key || item.title}
+        key={item.key || index}
         forceRender={item.forceRender ? item.forceRender : false}
       >
         {item.display}
@@ -35,7 +35,7 @@ class McsTabs extends React.Component<McTabsProps> {
 
     return (
       <div>
-        <Tabs defaultActiveKey={items[0].title} {...rest} animated={true}>
+        <Tabs defaultActiveKey={items[0].key || '0'} {...rest} animated={true}>
           {menuItems}
         </Tabs>
       </div>

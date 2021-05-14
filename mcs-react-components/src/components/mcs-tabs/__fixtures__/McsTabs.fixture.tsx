@@ -5,17 +5,17 @@ import McsTabs, { McTabsProps } from '../McsTabs';
 const props: McTabsProps = {
   items: [
     {
-      title: 'Tabun',
+      title: <div>tabun</div>,
       key: 'tab1',
       display: <div>Content tab 1</div>,
     },
     {
-      title: 'Tabdeu',
+      title: <div>tabdeux</div>,
       key: 'tab2',
       display: <div>Content tab 2</div>,
     },
     {
-      title: 'Tabtroi',
+      title: <div>tabtrois</div>,
       key: 'tab3',
       display: <div>Content tab 3</div>,
     },
