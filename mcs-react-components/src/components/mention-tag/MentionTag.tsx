@@ -20,9 +20,9 @@ class MentionTag extends React.Component<MentionTagProps, State> {
 
   getMentionClass = (mention: Mention) => {
     const { className } = this.props;
-    return `${
-      className ? className : ''
-    } mcs-mentionTag mcs-mentionTag_${mention.toString().toLowerCase()}MentionTag`;
+    return `${className ? className : ''} mcs-mentionTag mcs-mentionTag_${mention
+      .toString()
+      .toLowerCase()}MentionTag`;
   };
 
   render() {
