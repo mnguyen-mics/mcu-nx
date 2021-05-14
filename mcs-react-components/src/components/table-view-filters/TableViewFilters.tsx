@@ -29,9 +29,8 @@ export interface ViewComponentWithFiltersProps<T> extends TableViewProps<T> {
 export interface FiltersState<T> {
   visibilitySelectedColumns: Array<DataColumnDefinition<T>>;
 }
-const VisibilityMultiSelect: React.ComponentClass<
-  MultiSelectProps<DataColumnDefinition<any>>
-> = MultiSelect;
+const VisibilityMultiSelect: React.ComponentClass<MultiSelectProps<DataColumnDefinition<any>>> =
+  MultiSelect;
 
 class TableViewFilters<T> extends React.Component<
   ViewComponentWithFiltersProps<T>,

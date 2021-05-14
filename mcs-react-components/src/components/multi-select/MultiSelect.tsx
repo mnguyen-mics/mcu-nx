@@ -70,14 +70,8 @@ class MultiSelect<T> extends React.Component<MultiSelectProps<T>, MultiSelectSta
   };
 
   onMenuClick = (param: MenuInfo) => {
-    const {
-      items,
-      handleMenuClick,
-      getKey,
-      handleItemClick,
-      singleSelectOnly,
-      subItems,
-    } = this.props;
+    const { items, handleMenuClick, getKey, handleItemClick, singleSelectOnly, subItems } =
+      this.props;
     const { selectedItems } = this.state;
 
     const allItems = subItems ? items.concat(subItems) : items;

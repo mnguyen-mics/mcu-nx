@@ -58,7 +58,7 @@ export interface TableViewProps<T> extends TableProps<T> {
 }
 
 class TableView<
-  T extends { key?: string; id?: string; [key: string]: any }
+  T extends { key?: string; id?: string; [key: string]: any },
 > extends React.Component<TableViewProps<T>> {
   static defaultProps: Partial<TableViewProps<any>> = {
     visibilitySelectedColumns: [],

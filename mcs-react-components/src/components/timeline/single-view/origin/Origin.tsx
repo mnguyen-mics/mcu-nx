@@ -42,9 +42,11 @@ class Origin extends React.Component<Props> {
         <Col span={19}>
           {origin ? (
             Object.keys(origin).map(key => {
-              const originKey = (origin as {
-                [propertyName: string]: string | number;
-              })[key];
+              const originKey = (
+                origin as {
+                  [propertyName: string]: string | number;
+                }
+              )[key];
               return originKey ? renderLine(key, originKey) : null;
             })
           ) : (

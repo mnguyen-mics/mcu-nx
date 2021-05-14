@@ -379,7 +379,7 @@ export const updateSearch = (search: string, params: Index<any>, settings?: Sear
  */
 export function parseSearch<T = Index<any>>(search: string, settings?: SearchSetting[]): T {
   const query = queryString.parse(search);
-  if (!settings) return (query as unknown) as T;
+  if (!settings) return query as unknown as T;
   return settings.reduce(
     (acc, setting) => ({
       ...acc,
