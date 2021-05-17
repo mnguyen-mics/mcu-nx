@@ -1,5 +1,6 @@
 import * as React from 'react';
 import McsIcon from '../../mcs-icon';
+import classNames from 'classnames';
 
 export interface MenuListProps {
   title: string;
@@ -7,12 +8,21 @@ export interface MenuListProps {
   subtitles?: string[];
   select: React.FormEventHandler<any>;
   disabled?: boolean;
+  className?: string;
 }
 
-const MenuList: React.SFC<MenuListProps> = ({ title, icon_path, subtitles, select, disabled }) => {
+const MenuList: React.SFC<MenuListProps> = ({
+  title,
+  icon_path,
+  subtitles,
+  select,
+  disabled,
+  className,
+}) => {
   const prefixCls = 'mcs-menu-list';
+  const classString = classNames(prefixCls, className);
   return (
-    <button className={prefixCls} onClick={select} disabled={disabled}>
+    <button className={classString} onClick={select} disabled={disabled}>
       <div className={subtitles ? `${prefixCls}-content` : `${prefixCls}-content alone`}>
         {icon_path ? <img className={`${prefixCls}-image-title`} src={icon_path} /> : undefined}
         <div>

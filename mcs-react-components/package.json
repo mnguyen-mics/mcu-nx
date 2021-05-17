@@ -22,6 +22,7 @@
     "@types/numeral": "0.0.25",
     "@types/react-syntax-highlighter": "^10.1.0",
     "@types/react-transition-group": "^4.4.0",
+    "classnames": "^2.3.1",
     "cuid": "^2.1.4",
     "faker": "^4.1.0",
     "highcharts": "^7.2.2",
