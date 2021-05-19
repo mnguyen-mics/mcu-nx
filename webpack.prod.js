@@ -42,7 +42,7 @@ module.exports = merge(common, {
       { from: './app/*.txt', to: '../[name].[ext]' },
       { from: './app/*.json', to: '../[name].[ext]' },
       {
-        from: 'app/react/src/assets',
+        from: 'app/src/assets',
         to: 'src/assets',
       },
     ]),
