@@ -1,26 +1,37 @@
 {
   "compilerOptions": {
+    "outDir": "./lib",  
+    "module": "es6", 
+    "moduleResolution": "node", 
+    "declaration": true,
+    "allowJs": false,
+    "jsx": "react",
     "target": "es5",
     "lib": [
       "dom",
-      "dom.iterable",
-      "esnext"
+      "es7"
     ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
+    "noEmitOnError": true,
+    "sourceMap": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": false,
+    "strictNullChecks": false,
+    "pretty": true,
+    "removeComments": true,
+    "experimentalDecorators": true
   },
-  "include": [
-    "src"
+  "include":[
+    "src/**/*"
+  ],
+  "exclude":[
+    "node_modules",
+    "lib",
+    "**/*.test.*",
+    "**/*.fixture.*",
   ]
 }
+

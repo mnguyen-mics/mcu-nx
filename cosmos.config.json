@@ -1,0 +1,6 @@
+{
+  "webpack": {
+    "overridePath": "./webpack.cosmos.js"
+  },
+  "globalImports": ["./src/styles/index.less"]
+}
