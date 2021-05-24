@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import * as React from 'react';
-import Login from "../Login";
+import ForgotPassword from '../ForgotPassword';
 import { IntlProvider } from 'react-intl';
 import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -16,7 +16,7 @@ export default (
     <IocProvider container={container}>
       <IntlProvider locale="en">
         <Router>
-          <Login forgotPasswordRoute={'/forgot_password'}/>
+          <ForgotPassword />
         </Router>
       </IntlProvider>
     </IocProvider>

@@ -63,6 +63,10 @@ const messages = defineMessages({
   },
 });
 
+interface LoginProps {
+  forgotPasswordRoute: string;
+}
+
 interface MapStateToProps {
   hasError: boolean;
   error: {
@@ -80,7 +84,8 @@ interface MapDispatchToProps {
   ) => ActionFunctionAny<ActionMeta<any, any>>;
 }
 
-type Props = MapStateToProps &
+type Props = LoginProps &
+  MapStateToProps &
   MapDispatchToProps &
   InjectedIntlProps &
   FormComponentProps &
@@ -132,7 +137,8 @@ const Login = (props: Props) => {
       hasError,
       error,
       intl,
-      connectedUser
+      connectedUser,
+      forgotPasswordRoute
     } = props;
 
     const getRememberMe = () => {
@@ -201,7 +207,7 @@ const Login = (props: Props) => {
                 <div className="login-text-remember-me">
                   <FormattedMessage {...messages.rememberMe} />
                 </div>
-                <Link className="login-form-forgot" to="/v2/forgot_password">
+                <Link className="login-form-forgot" to={forgotPasswordRoute}>
                   <FormattedMessage {...messages.forgotPassword} />
                 </Link>
               </FormItem>
@@ -224,7 +230,7 @@ const mapDispatchToProps = {
 };
 
 
-export default compose<Props, {}>(
+export default compose<Props, LoginProps>(
   injectIntl,
   withRouter,
   connect(mapStateToProps, mapDispatchToProps),
