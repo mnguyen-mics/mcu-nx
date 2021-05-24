@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "dependencies": {
     "@mediarithmics-private/mcs-components-library": "4.0.0",
-    "@mediarithmics-private/advanced-component": "0.1.10",
+    "@mediarithmics-private/advanced-component": "0.1.19",
     "antd": "^4.9.4",
     "pascalcase": "^1.0.0",
+    "inversify": "^5.0.1",
     "react": "16.14.0",
     "react-intl": "^2.7.2",
     "react-burger-menu": "^3.0.6",
