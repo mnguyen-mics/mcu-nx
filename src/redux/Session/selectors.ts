@@ -84,6 +84,7 @@ const hasWorkspace = (state: MicsReduxState) => (organisationId: string) => {
 
 const hasAccessToOrganisation = (state: MicsReduxState) => (organisationId: string) => {
   const workspaces = getWorkspaces(state);
+  
   return !!workspaces[organisationId];
 };
 

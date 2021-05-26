@@ -222,7 +222,7 @@ const Login = (props: Props) => {
 const mapStateToProps = (state: MicsReduxState) => ({
   hasError: state.login.hasError,
   error: state.login.error,
-  //connectedUser: state.session.connectedUser,
+  connectedUser: state.session.connectedUser,
 });
 
 const mapDispatchToProps = {

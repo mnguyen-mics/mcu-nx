@@ -17,7 +17,6 @@ const ForgotPassword = (props: Props) => {
   const [hasError, setHasError] = useState(false);
   const [isRequesting, setIsRequesting] = useState(false);
   const [passwordSentSuccess, setPasswordSentSuccess] = useState(false);
-  console.log(useInjection)
   const authService = useInjection<IAuthService>(TYPES.IAuthService);
 
   const handleSubmit = (e: any) => {

@@ -28,6 +28,7 @@ import { getStoredConnectedUser } from '../Session/selectors';
 import { UserProfileResource } from '../../models/directory/UserProfileResource';
 
 
+
 function* authorize(credentialsOrRefreshToken: any) {
   const _authService = yield getContext('authService');
   const response = yield call(_authService.createAccessToken, credentialsOrRefreshToken);
