@@ -2,9 +2,10 @@
   "name": "new-computing-console",
   "version": "0.1.0",
   "dependencies": {
-    "@mediarithmics-private/mcs-components-library": "4.0.0",
-    "@mediarithmics-private/advanced-component": "0.1.19",
-    "antd": "^4.9.4",
+    "@ant-design/compatible": "^1.0.8",
+    "@mediarithmics-private/mcs-components-library": "5.2.1",
+    "@mediarithmics-private/advanced-component": "0.1.63",
+    "antd": "4.10.3",
     "pascalcase": "^1.0.0",
     "inversify": "^5.0.1",
     "react": "16.14.0",

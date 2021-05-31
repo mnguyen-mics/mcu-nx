@@ -3,8 +3,9 @@ import './styles/index.less';
 import { HashRouter as Router } from 'react-router-dom';
 import Main from './containers/main/Main';
 import { Provider } from 'react-redux';
-import store from './store';
 import { IntlProvider } from 'react-intl';
+import {Store } from '@mediarithmics-private/advanced-component';
+const store = Store();
 
 function App() {
   return (

@@ -1,23 +1,28 @@
 import 'reflect-metadata';
 import Layout from 'antd/lib/layout/layout';
 import * as React from 'react';
-import { McsHeader } from '@mediarithmics-private/mcs-components-library';
-import { MainMenu } from '../../components/Menu';
-import Sider from 'antd/lib/layout/Sider';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { compose } from 'recompose';
+interface RouteProps {
+  organisationId: string;
+}
 
-class HomePage extends React.Component {
+type Props = RouteComponentProps<RouteProps>
+
+class HomePage extends React.Component<Props> {
   render() {
-    return <Layout id="mcs-main-layout" className="mcs-fullScreen">
-      <McsHeader className="mcs-header-main-layout" userEmail="dev@mediarithmics.com" accountContent={[]} />
-      <Layout className="mcs-fullScreen">
-        <Sider className="mcs-sider">
-          <MainMenu className="mcs-mainLayout-menu" mode={'inline'} onMenuItemClick={() => { }} />
-        </Sider>
-        <Layout>
-        </Layout>
-      </Layout>
+    const {
+      match: {
+        params: { organisationId },
+      },
+    } = this.props;
+    return <Layout className="mcs-fullScreen">
+      Hello From the homepage :) {organisationId}
     </Layout>
   }
 }
 
-export default HomePage;
+
+export default compose<Props, {}>(
+  withRouter
+)(HomePage);

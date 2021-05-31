@@ -3,7 +3,7 @@ import HomePage from '../containers/home/HomePage'
 
 export const homeDefinition: NavigatorDefinition = {
   home: {
-    path: '/',
+    path: '/home',
     layout: 'main',
     contentComponent: HomePage
   }

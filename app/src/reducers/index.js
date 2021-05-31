@@ -7,6 +7,8 @@ const allReducers = Object.assign(
   {},
   AppReducer,
   LoginReducers,
+  SessionReducers,
+  LabelsReducers
 );
 
 export default combineReducers(allReducers);

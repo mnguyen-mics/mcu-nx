@@ -19,7 +19,7 @@ import { MicsReduxState } from '../../utils/ReduxHelper';
 
 const { SubMenu } = Menu;
 
-const basePath = '/';
+const basePath = '/o/:organisationId(\\d+)';
 
 export interface MenuInfo {
   key: React.Key;
@@ -145,7 +145,7 @@ class MainMenu extends React.Component<Props, NavigatorMenuState> {
       },
     } = this.props;
 
-    const baseUrl = ``;
+    const baseUrl = `/o/${organisationId}`;
 
     return this.getAvailableItems().map((itemDef) => {
       if (itemDef.type === 'multi') {
