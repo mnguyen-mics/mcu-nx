@@ -2,13 +2,9 @@
 
 ## Project structure
 
-### app/conf
-
-This is where you can configure your React app (available features, global constants, etc ...). You will have to create a Git ignored `app/conf/app-configuration.js` file to modify these constants. (see below)
-
 ### app/react/src
 
-Almost everything you need to know about navigator is here. Let's focus on a few parts :
+Almost everything you need to know about computing console is here. Let's focus on a few parts :
 
 #### components
 
@@ -150,47 +146,6 @@ Example:
 </ul>
 
 ```
-
-## VSCode SonarLint extension
-
-This extension permits to detect and fix quality issues scanned from SonarQube directly in VSCode.
-
-### Installation instructions
-
-1. Token generation from SonarQube server
-
-- Sign-in to following adress using Google credentials. Login is your email without `@mediarithmics.com`
-
-```
-https://sf-sonarqube.mediarithmics.com
-```
-
-- Click to `My Account` > `Security`
-- Generate a token and copy it.
-
-2. SonarLint installation
-
-- In VS Code, type `CTRL+P` and enter following command
-
-```
-ext install SonarSource.sonarlint-vscode
-```
-
-- In `File` > `Preferences` > `Settings` > `Extensions` > `SonarLint` > `Connected Mode` > `Connections: Sonarqube`
-- Click on `Edit in settings.json`
-- Paste following block :
-
-```
-  "sonarlint.connectedMode.connections.sonarqube": [
-      { "serverUrl": "https://sf-sonarqube.mediarithmics.com", "token": "PASTE_YOUR_TOKEN_HERE" }
-  ],
-  "sonarlint.connectedMode.project": {
-      "projectKey": "mediarithmics-navigator"
-  }
-```
-
-- Enable SonarLint by typing `CTRL+SHIFT+P` and select `SonarLint: Update all project bindings to SonarQube/SonarCloud`
-
 CSS rules && Guidelines
 
 1/ Avoid antd css classes direct targeting. Create new BEM class instead. if no choice, you can only target antd classes inside another scoped class.
