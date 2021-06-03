@@ -1,4 +1,4 @@
-# mediarithmics new computing console
+# mediarithmics computing console
 
 ## Project structure
 
