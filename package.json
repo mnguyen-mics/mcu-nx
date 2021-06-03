@@ -4,7 +4,7 @@
   "dependencies": {
     "@ant-design/compatible": "^1.0.8",
     "@mediarithmics-private/mcs-components-library": "5.2.1",
-    "@mediarithmics-private/advanced-component": "0.1.66",
+    "@mediarithmics-private/advanced-component": "1.1.0",
     "antd": "4.10.3",
     "pascalcase": "^1.0.0",
     "inversify": "^5.0.1",
@@ -33,7 +33,7 @@
     "prettier-check": "prettier -c .",
     "start:local": "cross-env NODE_ENV=local API_ENV=local BABEL_ENV=dev NODE_OPTIONS=--max_old_space_size=4000 webpack-dev-server --config webpack.dev.js",
     "start:prod": "cross-env NODE_ENV=local API_ENV=prod BABEL_ENV=dev NODE_OPTIONS=--max_old_space_size=4000 webpack-dev-server --config webpack.dev.js",
-    "build": "cross-env NODE_ENV=production BABEL_ENV=production NODE_OPTIONS=--max_old_space_size=4000 webpack --config webpack.prod.js && cd dist && zip -r navigator.zip . && mv navigator.zip ./.. && cd ..",
+    "build": "cross-env NODE_ENV=production BABEL_ENV=production NODE_OPTIONS=--max_old_space_size=4000 webpack --config webpack.prod.js && cd dist && zip -r mediarithmics-computing-console.zip . && mv mediarithmics-computing-console.zip ./.. && cd ..",
     "translation-file": "npm run build && node scripts/translate.js"
   },
   "devDependencies": {

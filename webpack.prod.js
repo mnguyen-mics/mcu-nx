@@ -9,19 +9,6 @@ const paths = require('./paths');
 module.exports = merge(common, {
   mode: 'production',
 
-  entry: {
-    'plateforme.alliancegravity.com/style-less': paths.appGravityStyleLess,
-    'converged-ww2.havas.com/style-less': paths.appConvergedStyleLess,
-    'app.teamjoin.fr/style-less': paths.appTeamjoinStyleLess,
-    'console.valiuz.com/style-less': paths.appValiuzStyleLess,
-  },
-
-  output: {
-    filename: '[name].[hash].js',
-    path: paths.appDistPath,
-    publicPath: paths.publicDistPath,
-  },
-
   node: {
     fs: 'empty',
   },
@@ -41,10 +28,6 @@ module.exports = merge(common, {
       { from: './app/*.html', to: '../[name].[ext]' },
       { from: './app/*.txt', to: '../[name].[ext]' },
       { from: './app/*.json', to: '../[name].[ext]' },
-      {
-        from: 'app/src/assets',
-        to: 'src/assets',
-      },
     ]),
     new HtmlWebpackPlugin({
       inject: true,
