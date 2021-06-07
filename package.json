@@ -33,7 +33,7 @@
     "prettier-check": "prettier -c .",
     "start:local": "cross-env NODE_ENV=local API_ENV=local BABEL_ENV=dev NODE_OPTIONS=--max_old_space_size=4000 webpack-dev-server --config webpack.dev.js",
     "start:prod": "cross-env NODE_ENV=local API_ENV=prod BABEL_ENV=dev NODE_OPTIONS=--max_old_space_size=4000 webpack-dev-server --config webpack.dev.js",
-    "build": "cross-env NODE_ENV=production BABEL_ENV=production NODE_OPTIONS=--max_old_space_size=4000 webpack --config webpack.prod.js && cd dist && zip -r navigator.zip . && mv navigator.zip ./.. && cd ..",
+    "build": "cross-env NODE_ENV=production BABEL_ENV=production NODE_OPTIONS=--max_old_space_size=4000 webpack --config webpack.prod.js && cd dist && zip -r mediarithmics-computing-console.zip . && mv mediarithmics-computing-console.zip ./.. && cd ..",
     "translation-file": "npm run build && node scripts/translate.js"
   },
   "devDependencies": {

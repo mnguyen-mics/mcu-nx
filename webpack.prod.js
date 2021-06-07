@@ -25,9 +25,9 @@ module.exports = merge(common, {
 
   plugins: [
     new CopyWebpackPlugin([
-      { from: './app/*.html', to: '../[name].[ext]' },
-      { from: './app/*.txt', to: '../[name].[ext]' },
-      { from: './app/*.json', to: '../[name].[ext]' },
+      { from: './app/*.html', to: './[name].[ext]' },
+      { from: './app/*.txt', to: './[name].[ext]' },
+      { from: './app/*.json', to: './[name].[ext]' },
     ]),
     new HtmlWebpackPlugin({
       inject: true,
