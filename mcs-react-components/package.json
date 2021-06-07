@@ -19,6 +19,7 @@
     "dev:watch": "webpack --watch --info-verbosity verbose --config webpack.dev.js"
   },
   "dependencies": {
+    "@types/moment-duration-format": "^2.2.2",
     "@types/numeral": "0.0.25",
     "@types/react-syntax-highlighter": "^10.1.0",
     "@types/react-transition-group": "^4.4.0",
@@ -29,6 +30,7 @@
     "highcharts-react-official": "^2.2.2",
     "lodash": "^4.17.20",
     "moment": "^2.22.2",
+    "moment-duration-format": "^2.3.2",
     "numeral": "^2.0.6",
     "query-string": "^6.13.1",
     "react-infinite-scroller": "^1.2.2",

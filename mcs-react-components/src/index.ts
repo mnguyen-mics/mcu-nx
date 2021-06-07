@@ -57,3 +57,4 @@ export {
 export { default as TreeSelectFilter } from './components/tree-select-filter';
 export { default as TableViewFilters } from './components/table-view-filters';
 export { default as McsHeader } from './components/mcs-header';
+export { default as RadarSpiderPlot } from './components/charts/category-based-charts/radar-spider-plot';
