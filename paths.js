@@ -11,7 +11,7 @@ module.exports = {
   appStyleLess: resolve('app/src/styles/index.less'),
   appNodeModules: resolve('node_modules'),
   appPath: resolve('app'),
-  appDistPath: resolve('dist/react'),
+  appDistPath: resolve('dist/'),
   publicPath: '/',
-  publicDistPath: '/react',
+  publicDistPath: '/',
 };
