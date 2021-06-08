@@ -105,7 +105,7 @@ module.exports = {
 
   resolve: {
     alias: {
-      Containers: path.resolve(__dirname, 'app/react/src/containers/'),
+      Containers: path.resolve(__dirname, 'app/src/containers/'),
     },
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
@@ -116,8 +116,8 @@ module.exports = {
       filename: '[name].css',
     }),
     new webpack.DefinePlugin({
-      PUBLIC_PATH: JSON.stringify('react'),
-      PUBLIC_URL: JSON.stringify('/v2'),
+      PUBLIC_PATH: JSON.stringify('app'),
+      PUBLIC_URL: JSON.stringify('/'),
     }),
   ],
 };

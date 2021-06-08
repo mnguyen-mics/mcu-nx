@@ -32,7 +32,7 @@ module.exports = merge(common, {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
-      filename: '../index.html',
+      filename: './index.html',
       excludeAssets: [/(plateforme|app|console|converged-ww2).*\/style.*.(css|js)/],
     }),
     new HtmlWebpackExcludeAssetsPlugin(),
