@@ -80,7 +80,7 @@ Cosmos looks for `*.fixture.ts(x)` named files and files inside `__fixtures__` d
 
 If you wish to test publication, one can test it on the sandbox registry
 
-- `npm adduser --registry=https://sf-npm.mediarithmics.com/repository/npm-mics-sandbox/` connect with you nexus credentials
+- `npm adduser --registry=https://sf-npm.mediarithmics.com/repository/npm-mics-sandbox/ --scope=@mediarithmics-private` connect with you nexus credentials
 - `npm publish --registry https://sf-npm.mediarithmics.com/repository/npm-mics-sandbox/` publish the library to sandbox registry
 - update mics registry in your `~/.npmrc` to point to `npm-mics-sandbox` instead of `npm-mics`
 - `npm install` to install in your client project (eg navigator)
