@@ -1,6 +1,7 @@
 import { CodeSandboxCircleFilled } from '@ant-design/icons';
 import { AppsMenu, McsHeader } from '@mediarithmics-private/mcs-components-library';
 import { AppsMenuSection } from '@mediarithmics-private/mcs-components-library/lib/components/apps-navigation/apps-menu/AppsMenu';
+import { LocationDescriptor } from 'history';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -20,6 +21,7 @@ interface TopBarMapStateToProps {
 
 interface TopBarProps {
   organisationId: string;
+  linkPath: LocationDescriptor<unknown>;
 }
 
 type Props = TopBarMapStateToProps & TopBarProps;
@@ -66,7 +68,7 @@ class TopBar extends React.Component<Props> {
   }
 
   render() {
-    const { userEmail } = this.props;
+    const { userEmail, linkPath } = this.props;
     const appMenuSections: AppsMenuSection[] = this.getAppMenuSections();
 
     const appMenu =
@@ -74,7 +76,7 @@ class TopBar extends React.Component<Props> {
         <AppsMenu
           className='mcs-app-menu-main-layout'
           sections={appMenuSections}
-          logo={<Logo mode='inline' />}
+          logo={<Logo linkPath={linkPath} mode='inline' />}
         />
       ) : undefined;
     return <McsHeader

@@ -132,16 +132,11 @@ class AuthenticatedRoute extends React.Component<Props> {
     } = this.props;
 
     const authenticated = this._authService.isAuthenticated(); // if access token is present
-    console.log('authenticated1', authenticated)
-    console.log('this._authService.isAuthenticated()', this._authService.isAuthenticated())
-    console.log('connectedUserLoaded', connectedUserLoaded)
     const renderRoute = (props: SubComponentProps) => {
       if (authenticated) {
-        console.log('accessGrantedToOrganisation2', accessGrantedToOrganisation)
         if (accessGrantedToOrganisation(organisationId)) {
           log.trace(`Access granted to ${props.match.url}`);
           if (this.checkIfHasFeatures()) {
-            console.log('this.checkIfHasFeatures()3', this.checkIfHasFeatures())
             return render(props);
           }
           return errorRender(props);

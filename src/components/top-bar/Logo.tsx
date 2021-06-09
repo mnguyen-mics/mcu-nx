@@ -6,9 +6,11 @@ import { compose } from 'recompose';
 import { getLogo } from '../../redux/Session/actions';
 import { MenuMode } from 'antd/lib/menu';
 import { MicsReduxState } from '../../redux/ReduxHelper';
+import { LocationDescriptor } from 'history';
 
 export interface LogoProps {
   mode: MenuMode;
+  linkPath: LocationDescriptor<unknown>;
 }
 
 interface LogoStoreProps {
@@ -29,7 +31,6 @@ class Logo extends React.Component<Props> {
         params: { organisationId },
       },
     } = this.props;
-    console.log('componentDidMountorganisationId', organisationId)
     this.props.getLogoRequest({ organisationId });
   }
 
@@ -45,8 +46,6 @@ class Logo extends React.Component<Props> {
         params: { organisationId: previousOrganisationId },
       },
     } = previousProps;
-    console.log('previousOrganisationId', previousOrganisationId)
-    console.log('organisationId', organisationId)
     if (organisationId !== previousOrganisationId) {
 
       this.props.getLogoRequest({ organisationId: organisationId });
@@ -57,6 +56,7 @@ class Logo extends React.Component<Props> {
     const {
       mode,
       logoUrl,
+      linkPath,
       match: {
         params: { organisationId },
       },
@@ -66,7 +66,7 @@ class Logo extends React.Component<Props> {
       <div className='mcs-logo-placeholder'>
         {mode === 'inline' && (
           <div className='mcs-logo'>
-            <Link to={`/v2/o/${organisationId}/campaigns/display`} id='logo'>
+            <Link to={linkPath} id='logo'>
               <img alt='logo' src={logoUrl} />
             </Link>
           </div>
