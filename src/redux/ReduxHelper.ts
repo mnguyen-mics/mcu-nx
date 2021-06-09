@@ -17,6 +17,10 @@ export interface CreateRequestType {
 }
 
 export type MicsReduxState = {
+  app: {
+    initialized: boolean;
+    initializationError: boolean;
+  };
   login: {
     hasError: boolean;
     error: any; // ?
