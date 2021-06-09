@@ -1,7 +1,5 @@
-
-import {  generateMissingdefinitionItemFromRoute, NavigatorMenuDefinition } from './domain';
+import { generateMissingdefinitionItemFromRoute, NavigatorMenuDefinition } from './domain';
 import { HomePage } from '../containers/home';
-
 
 const homeMenuDefinition: NavigatorMenuDefinition = {
   iconType: 'library',
@@ -10,10 +8,8 @@ const homeMenuDefinition: NavigatorMenuDefinition = {
   ...generateMissingdefinitionItemFromRoute({
     path: '/home',
     layout: 'main',
-    contentComponent: HomePage
-  })
-}
+    contentComponent: HomePage,
+  }),
+};
 
-export const menuDefinitions: NavigatorMenuDefinition[] = [
-  homeMenuDefinition
-];
+export const menuDefinitions: NavigatorMenuDefinition[] = [homeMenuDefinition];
