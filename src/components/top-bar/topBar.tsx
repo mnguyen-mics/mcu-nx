@@ -12,7 +12,7 @@ import { MicsReduxState } from '../../redux/ReduxHelper';
 import OrganisationListSwitcher from '../organisation-switcher/OrganisationListSwitcher';
 import Logo from './Logo';
 import messages from './messages';
-
+import { Alert } from 'antd';
 
 interface TopBarMapStateToProps {
   connectedUser: UserProfileResource;
@@ -67,10 +67,19 @@ class TopBar extends React.Component<Props> {
     }
   }
 
+
+
   render() {
     const { userEmail, linkPath } = this.props;
     const appMenuSections: AppsMenuSection[] = this.getAppMenuSections();
-
+    const ProductionApiEnvironment = (
+      <Alert
+        className='mcs-navigator-header-title-alert'
+        message='You are using production API environment !'
+        type='error'
+        showIcon={true}
+      />
+    );
     const appMenu =
       appMenuSections.length > 0 ? (
         <AppsMenu
@@ -83,7 +92,8 @@ class TopBar extends React.Component<Props> {
       organisationSwitcher={<OrganisationListSwitcher />}
       userEmail={userEmail}
       accountContent={buildAccountsMenu()}
-      menu={appMenu} />;
+      menu={appMenu} 
+      devAlert={process.env.API_ENV === 'prod' ? ProductionApiEnvironment : undefined}/>;
   }
 }
 

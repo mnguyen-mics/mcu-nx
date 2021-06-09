@@ -8,7 +8,7 @@ import log from './Logger';
 import { getWorkspace } from '../redux/Session/actions';
 import { fetchAllLabels } from '../redux/Labels/actions';
 import * as SessionHelper from '../redux/Session/selectors';
-import errorMessages from './messages';
+import errorMessages from './errorMessage';
 import injectFeatures, { InjectedFeaturesProps } from '../components/Features/injectFeatures';
 import { lazyInject } from '../inversify/inversify.config';
 import { TYPES } from '../constants/types';
