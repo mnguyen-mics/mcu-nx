@@ -22,6 +22,7 @@ interface TopBarMapStateToProps {
 interface TopBarProps {
   organisationId: string;
   linkPath: LocationDescriptor<unknown>;
+  prodEnv: boolean;
 }
 
 type Props = TopBarMapStateToProps & TopBarProps;
@@ -70,11 +71,11 @@ class TopBar extends React.Component<Props> {
 
 
   render() {
-    const { userEmail, linkPath } = this.props;
+    const { userEmail, linkPath, prodEnv } = this.props;
     const appMenuSections: AppsMenuSection[] = this.getAppMenuSections();
     const ProductionApiEnvironment = (
       <Alert
-        className='mcs-navigator-header-title-alert'
+        className='mcs-topBar-envAlert'
         message='You are using production API environment !'
         type='error'
         showIcon={true}
@@ -93,7 +94,7 @@ class TopBar extends React.Component<Props> {
       userEmail={userEmail}
       accountContent={buildAccountsMenu()}
       menu={appMenu} 
-      devAlert={process.env.API_ENV === 'prod' ? ProductionApiEnvironment : undefined}/>;
+      devAlert={prodEnv ? ProductionApiEnvironment : undefined}/>;
   }
 }
 
