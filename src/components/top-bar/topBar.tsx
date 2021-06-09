@@ -75,7 +75,7 @@ class TopBar extends React.Component<Props> {
     const appMenuSections: AppsMenuSection[] = this.getAppMenuSections();
     const ProductionApiEnvironment = (
       <Alert
-        className='mcs-navigator-header-title-alert'
+        className='mcs-topBar-envAlert'
         message='You are using production API environment !'
         type='error'
         showIcon={true}
