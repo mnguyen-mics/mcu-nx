@@ -131,7 +131,7 @@ class AuthenticatedRoute extends React.Component<Props> {
       errorRender,
     } = this.props;
 
-    const authenticated = this._authService.isAuthenticated() && connectedUserLoaded; // if access token is present
+    const authenticated = this._authService.isAuthenticated(); // if access token is present
     console.log('authenticated1', authenticated)
     console.log('this._authService.isAuthenticated()', this._authService.isAuthenticated())
     console.log('connectedUserLoaded', connectedUserLoaded)
