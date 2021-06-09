@@ -6,3 +6,21 @@
   background-color: @layout-content-background;
   flex: 1;
 }
+
+.ant-btn-primary.mcs-primary {
+  color: #fff;
+  background-color: @info-color;
+  border-color: @info-color;
+  &:active {
+    background-color: @info-color;
+    border-color: lighten(@info-color, 10%);
+  }
+  &:hover {
+    background-color: lighten(@info-color, 10%);
+    border-color: lighten(@info-color, 10%);
+  }
+  &:disabled {
+    border-color: @btn-default-border;
+    background-color: @disabled-color;
+  }
+}
