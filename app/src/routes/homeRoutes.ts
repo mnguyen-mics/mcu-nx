@@ -1,14 +1,12 @@
 import { generateRoutesFromDefinition, NavigatorDefinition, NavigatorRoute } from './domain';
-import HomePage from '../containers/home/HomePage'
+import HomePage from '../containers/home/HomePage';
 
 export const homeDefinition: NavigatorDefinition = {
   home: {
     path: '/home',
     layout: 'main',
-    contentComponent: HomePage
-  }
-}
+    contentComponent: HomePage,
+  },
+};
 
-export const homeRoutes: NavigatorRoute[] = generateRoutesFromDefinition(
-  homeDefinition,
-);
+export const homeRoutes: NavigatorRoute[] = generateRoutesFromDefinition(homeDefinition);

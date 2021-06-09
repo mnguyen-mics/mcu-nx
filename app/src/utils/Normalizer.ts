@@ -13,15 +13,12 @@
  * @param {*} arr input array of object to convert
  * @param {*} key object key to extract
  */
-import { Index,  } from './Types';
+import { Index } from './Types';
 
-export function normalizeArrayOfObject<T, K extends keyof T>(
-  arr: T[],
-  key: K,
-): Index<T> {
+export function normalizeArrayOfObject<T, K extends keyof T>(arr: T[], key: K): Index<T> {
   if (!Array.isArray(arr)) throw new Error(`${arr} is not an array`);
   return arr.reduce((acc, object) => {
-    const val: {} = object[key]
+    const val: {} = object[key];
     if (val) {
       const keyValue = val.toString();
       return {

@@ -6,7 +6,7 @@ import { Omit } from '../utils/Types';
 export type LayoutTypes = 'main' | 'edit' | 'settings';
 
 export interface DataLayerDefinition {
-  [key: string]: any
+  [key: string]: any;
 }
 export interface RouteDef {
   path: string;
@@ -49,7 +49,9 @@ interface NavigatorBaseMenuDefinition {
   mention?: Mention;
 }
 
-export interface NavigatorSingleLevelMenuDefinition extends NavigatorBaseMenuDefinition, Omit<RouteDef, 'layout'> {
+export interface NavigatorSingleLevelMenuDefinition
+  extends NavigatorBaseMenuDefinition,
+    Omit<RouteDef, 'layout'> {
   type: 'simple';
 }
 
@@ -64,18 +66,20 @@ export interface NavigatorMultipleLevelMenuDefinition extends NavigatorBaseMenuD
   subMenuItems: NavigatorSubMenuDefinition[];
 }
 
-export type NavigatorMenuDefinition = NavigatorSingleLevelMenuDefinition | NavigatorMultipleLevelMenuDefinition
+export type NavigatorMenuDefinition =
+  | NavigatorSingleLevelMenuDefinition
+  | NavigatorMultipleLevelMenuDefinition;
 
-export function generateRoutesFromDefinition(
-  definition: NavigatorDefinition,
-): NavigatorRoute[] {
+export function generateRoutesFromDefinition(definition: NavigatorDefinition): NavigatorRoute[] {
   return Object.keys(definition).map(key => definition[key]);
 }
 
-export function generateMissingdefinitionItemFromRoute(route: NavigatorRoute): Omit<RouteDef, 'layout'> {
+export function generateMissingdefinitionItemFromRoute(
+  route: NavigatorRoute,
+): Omit<RouteDef, 'layout'> {
   return {
     path: route.path,
     requiredFeature: route.requiredFeature,
     requireDatamart: route.requireDatamart,
-  }
+  };
 }

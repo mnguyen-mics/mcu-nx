@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import Layout from 'antd/lib/layout/layout';
 import * as React from 'react';
 import Sider from 'antd/lib/layout/Sider';
-import { TopBar } from '@mediarithmics-private/advanced-component';
+import { TopBar, Logo } from '@mediarithmics-private/advanced-component';
 import { MainMenu } from '../Menu';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
@@ -11,11 +11,9 @@ interface LayoutManagerProps {
   routeComponent: JSX.Element;
 }
 
-
 interface RouteProps {
   organisationId: string;
 }
-
 
 type Props = LayoutManagerProps & RouteComponentProps<RouteProps>;
 
@@ -24,26 +22,30 @@ class LayoutManager extends React.Component<Props> {
     super(props);
   }
   render() {
-    const { routeComponent,
+    const {
+      routeComponent,
       match: {
         params: { organisationId },
-      }, } = this.props
-    return <Layout id="mcs-main-layout" className="mcs-fullScreen">
-      <TopBar organisationId={organisationId} />
-      <Layout className="mcs-fullScreen">
-        <Sider className="mcs-sider">
-          <MainMenu className="mcs-mainLayout-menu" mode={'inline'} onMenuItemClick={() => { }} />
-        </Sider>
-        <Layout>
-          {routeComponent}
+      },
+    } = this.props;
+    const logoLinkPath = `/o/${organisationId}/home`;
+    return (
+      <Layout id='mcs-main-layout' className='mcs-fullScreen'>
+        <TopBar
+          organisationId={organisationId}
+          linkPath={logoLinkPath}
+          prodEnv={process.env.API_ENV === 'prod'}
+        />
+        <Layout className='mcs-fullScreen'>
+          <Sider className='mcs-sider'>
+            <Logo mode={'inline'} linkPath={logoLinkPath} />
+            <MainMenu className='mcs-mainLayout-menu' mode={'inline'} />
+          </Sider>
+          <Layout>{routeComponent}</Layout>
         </Layout>
       </Layout>
-    </Layout>
+    );
   }
 }
 
-
-
-export default compose<Props, LayoutManagerProps>(
-  withRouter,
-)(LayoutManager);
+export default compose<Props, LayoutManagerProps>(withRouter)(LayoutManager);

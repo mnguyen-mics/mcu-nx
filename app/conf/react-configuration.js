@@ -1,7 +1,7 @@
-(function(){
+(function () {
   'use strict';
 
- const defaultFeatures = [
+  const defaultFeatures = [
     'audience-segments',
     'audience-feeds',
     'audience-segment_builder',
@@ -56,7 +56,7 @@
     'new-audienceFeatureSelector',
   ];
 
- const gravityFeatures = [
+  const gravityFeatures = [
     'audience-segments',
     'campaigns-display',
     'campaigns-display-edition-audience_catalog',
@@ -68,17 +68,17 @@
     'accountSettings-profile',
   ]
 
- var MCS_CONSTANTS = {
-    'API_URL' : 'https://api.mediarithm',
-    'ASSETS_URL' : 'https://assets.mediarithmics.local',
-    'FEATURES' : defaultFeatures,
-    'SITE_NAME' : 'mediarithmics | computing console',
-    'PLATFORM_ADMIN_URL' : 'http://localhost:3000',
-    'DEVELOPER_CONSOLE_URL' : 'https://computing-console-mics.francecentral.cloudapp.azure.com/frontprod/login',
+  var MCS_CONSTANTS = {
+    'API_URL': 'https://api.mediarithm',
+    'ASSETS_URL': 'https://assets.mediarithmics.local',
+    'FEATURES': defaultFeatures,
+    'SITE_NAME': 'mediarithmics | computing console',
+    'PLATFORM_ADMIN_URL': 'http://localhost:3000',
+    'DEVELOPER_CONSOLE_URL': 'https://computing-console-mics.francecentral.cloudapp.azure.com/frontprod/login',
     'USE_GTAG': false,
     'GTAG_ID': 'G-123',
   };
 
- window.MCS_CONSTANTS = MCS_CONSTANTS;
+  window.MCS_CONSTANTS = MCS_CONSTANTS;
 
 })();

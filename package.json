@@ -1,10 +1,10 @@
 {
   "name": "new-computing-console",
-  "version": "0.1.0",
+  "version": "1.2.0",
   "dependencies": {
     "@ant-design/compatible": "^1.0.8",
     "@mediarithmics-private/mcs-components-library": "5.2.1",
-    "@mediarithmics-private/advanced-component": "1.1.0",
+    "@mediarithmics-private/advanced-component": "1.2.8",
     "antd": "4.10.3",
     "pascalcase": "^1.0.0",
     "inversify": "^5.0.1",
@@ -23,11 +23,12 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "web-vitals": "^1.1.1",
-    "reflect-metadata": "^0.1.12"
+    "reflect-metadata": "^0.1.12",
+    "loglevel": "^1.6.8"
   },
   "scripts": {
-    "test:tslint": "tslint -c tslint.json 'app/react/src/**/*.{ts,tsx}'",
-    "test:lint": "eslint --cache --max-warnings 0 app/react/src",
+    "test:tslint": "tslint -c tslint.json 'app/src/**/*.{ts,tsx}'",
+    "test:lint": "eslint --cache --max-warnings 0 app/src",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "start": "npm run start:local",
     "prettier-check": "prettier -c .",
