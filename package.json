@@ -3,8 +3,8 @@
   "version": "1.2.0",
   "dependencies": {
     "@ant-design/compatible": "^1.0.8",
-    "@mediarithmics-private/mcs-components-library": "5.2.1",
-    "@mediarithmics-private/advanced-component": "1.2.8",
+    "@mediarithmics-private/mcs-components-library": "5.2.3",
+    "@mediarithmics-private/advanced-component": "1.2.9",
     "antd": "4.10.3",
     "pascalcase": "^1.0.0",
     "inversify": "^5.0.1",
