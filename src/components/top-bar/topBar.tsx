@@ -1,4 +1,4 @@
-import { CodeSandboxCircleFilled } from '@ant-design/icons';
+import { BookFilled, CodeSandboxCircleFilled, CompassFilled, ReadOutlined } from '@ant-design/icons';
 import { AppsMenu, McsHeader } from '@mediarithmics-private/mcs-components-library';
 import { AppsMenuSection } from '@mediarithmics-private/mcs-components-library/lib/components/apps-navigation/apps-menu/AppsMenu';
 import { LocationDescriptor } from 'history';
@@ -53,12 +53,48 @@ class TopBar extends React.Component<Props> {
         {
           items: [
             {
-              name: 'Developer Console',
+              name: 'Computing Console',
               icon: (
-                <CodeSandboxCircleFilled className='mcs-app_icon mcs-app_icon_developer_console' />
+                <CodeSandboxCircleFilled className='mcs-app_icon mcs-app_developerConsoleIcon' />
               ),
               url:
                 'https://computing-console-mics.francecentral.cloudapp.azure.com/frontprod/login',
+            },
+          ],
+        },
+        {
+          items: [
+            {
+              name: 'Navigator',
+              icon: (
+                <CompassFilled className='mcs-app_icon mcs-app_navigatorIcon' />
+              ),
+              url:
+                'https://navigator.mediarithmics.com',
+            },
+          ],
+        },
+        {
+          items: [
+            {
+              name: 'Developer Documentation',
+              icon: (
+                <BookFilled className='mcs-app_icon mcs-app_documentationIcon ' />
+              ),
+              url:
+                'https://developer.mediarithmics.com',
+            },
+          ],
+        },
+        {
+          items: [
+            {
+              name: 'User Guide',
+              icon: (
+                <ReadOutlined className='mcs-app_icon mcs-app_documentationIcon' />
+              ),
+              url:
+                'https://userguides.mediarithmics.com',
             },
           ],
         },
@@ -67,8 +103,6 @@ class TopBar extends React.Component<Props> {
       return [];
     }
   }
-
-
 
   render() {
     const { userEmail, linkPath, prodEnv } = this.props;

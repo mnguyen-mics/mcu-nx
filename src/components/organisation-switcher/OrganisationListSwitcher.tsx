@@ -92,7 +92,7 @@ class OrganizationListSwitcher extends React.Component<Props, OrganizationListSw
 
 const mapStateToProps = (state: MicsReduxState) => ({
   workspaces: state.session.connectedUser.workspaces,
-  workspace: getWorkspace(state),
+  workspace: getWorkspace(state)
 });
 
 export default compose<Props, {}>(
