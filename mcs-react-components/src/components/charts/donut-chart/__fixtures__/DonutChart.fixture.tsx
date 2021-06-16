@@ -1,7 +1,7 @@
 import * as React from 'react';
-import PiePlot, { PiePlotProps } from '../PiePlot';
+import DonutChart, { DonutChartProps } from '../DonutChart';
 
-const props: PiePlotProps = {
+const props: DonutChartProps = {
   dataset: [
     {
       key: 'data_1',
@@ -29,4 +29,4 @@ const props: PiePlotProps = {
   },
 };
 
-export default <PiePlot {...props} />;
+export default <DonutChart {...props} />;

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import StackedAreaPlot, { StackedAreaPlotProps } from '../StackedAreaPlot';
+import StackedAreaChart, { StackedAreaChartProps } from '../StackedAreaChart';
 
-const propsForDayMode: StackedAreaPlotProps = {
+const propsForDayMode: StackedAreaChartProps = {
   dataset: [
     { day: '2020-02-27', data_1: 120, data_2: 20 },
     { day: '2020-02-28', data_1: 3451, data_2: 561 },
@@ -25,7 +25,7 @@ const propsForDayMode: StackedAreaPlotProps = {
   },
 };
 
-const propsForHourMode: StackedAreaPlotProps = {
+const propsForHourMode: StackedAreaChartProps = {
   dataset: [
     {
       day: '2021-04-29 00:00:00',
@@ -136,7 +136,7 @@ const propsForHourMode: StackedAreaPlotProps = {
   },
 };
 
-const propsForDefaultMode: StackedAreaPlotProps = {
+const propsForDefaultMode: StackedAreaChartProps = {
   dataset: [
     { category: 'a', y: 1 },
     { category: 'b', y: 2 },
@@ -178,7 +178,7 @@ const propsForDefaultMode: StackedAreaPlotProps = {
 };
 
 export default {
-  'Day mode': <StackedAreaPlot {...propsForDayMode} />,
-  'Hour mode': <StackedAreaPlot {...propsForHourMode} />,
-  'Default mode': <StackedAreaPlot {...propsForDefaultMode} />,
+  'Day mode': <StackedAreaChart {...propsForDayMode} />,
+  'Hour mode': <StackedAreaChart {...propsForHourMode} />,
+  'Default mode': <StackedAreaChart {...propsForDefaultMode} />,
 };

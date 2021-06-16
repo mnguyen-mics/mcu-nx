@@ -1,7 +1,7 @@
 import * as React from 'react';
-import RadarSpiderPlot, { RadarSpiderPlotProps } from '../RadarSpiderPlot';
+import RadarSpiderChart, { RadarSpiderChartProps } from '../RadarSpiderChart';
 
-const props: RadarSpiderPlotProps = {
+const props: RadarSpiderChartProps = {
   dataset: [
     { 'yKey-count': 1000, yKey: 10.96, xKey: 'careers_education' },
     { 'yKey-count': 1000, yKey: 12.63, xKey: 'sports_outdoors' },
@@ -31,4 +31,4 @@ const props: RadarSpiderPlotProps = {
   },
 };
 
-export default <RadarSpiderPlot {...props} />;
+export default <RadarSpiderChart {...props} />;

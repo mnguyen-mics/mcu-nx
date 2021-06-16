@@ -4,17 +4,17 @@ require('highcharts/highcharts-more')(Highcharts);
 import HighchartsReact from 'highcharts-react-official';
 import { compose } from 'recompose';
 import { generateTooltip, BASE_CHART_HEIGHT, SerieSortType } from './domain';
-import { DataLabel, TooltipChart } from '../../../../utils/DashboardsInterfaces';
+import { DataLabel, TooltipChart } from '../../../utils/DashboardsInterfaces';
 
-export interface RadarSpiderPlotProps {
+export interface RadarSpiderChartProps {
   dataset: Dataset;
-  options: RadarSpiderPlotOptions;
+  options: RadarSpiderChartOptions;
   height?: number;
 }
 
 type Dataset = Array<{ [key: string]: string | number | Date | undefined }>;
 
-export interface RadarSpiderPlotOptions {
+export interface RadarSpiderChartOptions {
   colors: string[];
   yKeys: yKey[];
   xKey: string;
@@ -31,9 +31,9 @@ type yKey = {
   message: string;
 };
 
-type Props = RadarSpiderPlotProps;
+type Props = RadarSpiderChartProps;
 
-class RadarSpiderPlot extends React.Component<Props, {}> {
+class RadarSpiderChart extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {};
@@ -146,4 +146,4 @@ class RadarSpiderPlot extends React.Component<Props, {}> {
   }
 }
 
-export default compose<Props, RadarSpiderPlotProps>()(RadarSpiderPlot);
+export default compose<Props, RadarSpiderChartProps>()(RadarSpiderChart);
