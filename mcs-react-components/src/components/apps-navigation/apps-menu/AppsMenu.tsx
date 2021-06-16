@@ -24,7 +24,7 @@ class AppsMenu extends React.Component<AppsMenuProps> {
 
   renderItem(item: AppsMenuItem): React.ReactElement {
     return (
-      <Menu.Item icon={item.icon}>
+      <Menu.Item icon={item.icon} className={'mcs_appMenu_item--withDivider'}>
         <a href={item.url}>
           <span>{item.name}</span>
         </a>
@@ -33,15 +33,14 @@ class AppsMenu extends React.Component<AppsMenuProps> {
   }
 
   renderSection(section: AppsMenuSection, key: number): React.ReactElement[] {
-    const elements: React.ReactElement[] = [<Menu.Divider key={'div_' + key} />];
-    return elements.concat(section.items.map((item, index) => this.renderItem(item)));
+    return section.items.map((item, index) => this.renderItem(item));
   }
 
   render() {
     const { sections, logo, className } = this.props;
 
     return (
-      <Menu mode='inline' className={`mcs-app_dropdown_menu ${className ? className : ''}`}>
+      <Menu mode='inline' className={`mcs_appMenu ${className ? className : ''}`}>
         {logo}
         {sections.map((section, index) => this.renderSection(section, index))}
       </Menu>

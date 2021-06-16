@@ -2,7 +2,7 @@
 
 exports[`render the AppsMenu 1`] = `
 <ul
-  className="ant-menu ant-menu-light mcs-app_dropdown_menu  ant-menu-root ant-menu-inline"
+  className="ant-menu ant-menu-light mcs_appMenu  ant-menu-root ant-menu-inline"
   onMouseEnter={[Function]}
   onTransitionEnd={[Function]}
   role="menu"
@@ -10,11 +10,7 @@ exports[`render the AppsMenu 1`] = `
 >
   <span />
   <li
-    className=" ant-menu-item-divider"
-    style={Object {}}
-  />
-  <li
-    className="ant-menu-item ant-menu-item-only-child"
+    className="ant-menu-item ant-menu-item-only-child mcs_appMenu_item--withDivider"
     onClick={[Function]}
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
@@ -34,11 +30,7 @@ exports[`render the AppsMenu 1`] = `
     </a>
   </li>
   <li
-    className=" ant-menu-item-divider"
-    style={Object {}}
-  />
-  <li
-    className="ant-menu-item ant-menu-item-only-child"
+    className="ant-menu-item ant-menu-item-only-child mcs_appMenu_item--withDivider"
     onClick={[Function]}
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}

@@ -1,5 +1,5 @@
-.mcs-app_dropdown_menu {
-  box-shadow: @box-shadow-base!important;
+.mcs_appMenu.ant-menu {
+  box-shadow: @box-shadow-base;
   min-width: 260px;
   padding-bottom: 5px;
   border-radius: 6px;
@@ -11,7 +11,12 @@
   }
 
   .ant-menu-item {
-    margin-bottom: 0px !important;
-    margin-top: 0px !important;
+    margin-bottom: 0px;
+    margin-top: 0px;
+  }
+
+  .mcs_appMenu_item--withDivider:first-of-type {
+    border-top: 1px solid @border-color-split;
+    border-bottom: 1px solid @border-color-split;
   }
 }
