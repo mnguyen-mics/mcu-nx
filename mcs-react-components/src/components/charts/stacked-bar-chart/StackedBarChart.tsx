@@ -2,17 +2,17 @@ import * as React from 'react';
 import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { compose } from 'recompose';
-import { generateTooltip, BASE_CHART_HEIGHT } from '../../utils';
+import { generateTooltip, BASE_CHART_HEIGHT } from '../utils';
 
-export interface StackedBarPlotProps {
+export interface StackedBarChartProps {
   dataset: Dataset;
-  options: StackedBarPlotOptions;
+  options: StackedBarChartOptions;
   height?: number;
 }
 
 type Dataset = Array<{ [key: string]: string | number | Date | undefined }>;
 
-export interface StackedBarPlotOptions {
+export interface StackedBarChartOptions {
   colors: string[];
   yKeys: yKey[];
   xKey: string;
@@ -22,9 +22,9 @@ export interface StackedBarPlotOptions {
 
 type yKey = { key: string; message: string };
 
-type Props = StackedBarPlotProps;
+type Props = StackedBarChartProps;
 
-class StackedBarPlot extends React.Component<Props, {}> {
+class StackedBarChart extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {};
@@ -91,4 +91,4 @@ class StackedBarPlot extends React.Component<Props, {}> {
   }
 }
 
-export default compose<Props, StackedBarPlotProps>()(StackedBarPlot);
+export default compose<Props, StackedBarChartProps>()(StackedBarChart);

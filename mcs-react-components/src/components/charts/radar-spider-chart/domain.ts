@@ -1,6 +1,6 @@
 import * as Highcharts from 'highcharts';
 import moment from 'moment';
-import { TooltipChart } from '../../../../utils/DashboardsInterfaces';
+import { TooltipChart } from '../../../utils/DashboardsInterfaces';
 
 export type SerieSortType = 'A-Z' | 'Z-A';
 

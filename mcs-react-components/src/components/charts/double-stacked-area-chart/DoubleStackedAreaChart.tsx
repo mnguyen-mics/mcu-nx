@@ -10,39 +10,32 @@ import {
   generateTooltip,
   BASE_CHART_HEIGHT,
   OnDragEnd,
-} from '../../utils';
+  generateDraggable,
+} from '../utils';
 
-export interface StackedAreaPlotProps {
+export interface DoubleStackedAreaChartProps {
   dataset: Dataset;
   options: ChartOptions;
   style?: React.CSSProperties;
 }
 
-type Dataset = Array<{ [key: string]: string | number | Date | undefined }>;
+export type Dataset = Array<{
+  [key: string]: string | number | Date | undefined;
+}>;
 
 interface ChartOptions {
   colors: string[];
-  yKeys: YKey[];
-  xKey: XKey;
+  yKeys: yKey[];
+  xKey: string;
   isDraggable?: boolean;
   onDragEnd?: OnDragEnd;
 }
 
-type YKey = {
-  key: string;
-  message: string;
-};
+type yKey = { key: string; message: string };
 
-type XKey = {
-  key: string;
-  mode: XKeyMode;
-};
+type Props = DoubleStackedAreaChartProps;
 
-type XKeyMode = 'DAY' | 'HOUR' | 'DEFAULT';
-
-type Props = StackedAreaPlotProps;
-
-class StackedAreaPlot extends React.Component<Props, {}> {
+class DoubleStackedAreaChart extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {};
@@ -51,7 +44,7 @@ class StackedAreaPlot extends React.Component<Props, {}> {
   formatSeries = (
     dataset: Dataset,
     xKey: string,
-    yKeys: YKey[],
+    yKeys: yKey[],
     colors: string[],
   ): Highcharts.SeriesOptionsType[] => {
     return yKeys.map((y, i) => {
@@ -60,13 +53,21 @@ class StackedAreaPlot extends React.Component<Props, {}> {
         data: dataset.map(data => {
           const yValue = data[y.key];
           return [
-            this.formatDateToTs(data[xKey] as string),
+            this.formatDateToTs(
+              data[xKey] as string,
+              data.hour_of_day
+                ? (data.hour_of_day as number)
+                : data.hour
+                ? (data.hour as number)
+                : undefined,
+            ),
             yValue && typeof yValue === 'string' ? parseFloat(yValue) : yValue,
           ];
         }),
         name: y.message,
         color: colors[i],
         fillOpacity: 0.5,
+        yAxis: i,
         fillColor: {
           linearGradient: {
             x1: 0,
@@ -83,44 +84,41 @@ class StackedAreaPlot extends React.Component<Props, {}> {
     });
   };
 
-  formatDateToTs = (date: string) => {
-    const {
-      options: {
-        xKey: { mode },
-      },
-    } = this.props;
+  formatDateToTs = (date: string, hour?: number) => {
+    return moment(date)
+      .utc()
+      .seconds(0)
+      .hours((hour ? hour : 0) + 24)
+      .milliseconds(0)
+      .minutes(0)
+      .valueOf();
+  };
 
-    if (mode === 'DAY') {
-      return moment(date).utc().seconds(0).hours(24).milliseconds(0).minutes(0).valueOf();
-    } else if (mode === 'HOUR') {
-      return moment(date).utc().valueOf();
-    } else return date;
+  formatXAxis = (dataset: Dataset, xKey: string) => {
+    return dataset.map(d => this.formatDateToTs(d[xKey] as string));
+  };
+
+  generateMinValue = (dataset: Dataset, yKeys: yKey[]) => {
+    const values: number[] = [];
+    dataset.forEach(d => {
+      yKeys.forEach(y => {
+        values.push(d[y.key] as number);
+      });
+    });
+    return Math.min(...values);
   };
 
   render() {
     const {
       dataset,
-      options: { xKey, yKeys, colors },
+      options: { xKey, yKeys, colors, isDraggable, onDragEnd },
+      style,
     } = this.props;
-
-    const xAxisDateTimeLabelFormatsOptions:
-      | Highcharts.XAxisDateTimeLabelFormatsOptions
-      | undefined =
-      xKey.mode === 'DAY'
-        ? {
-            month: { main: '%e. %b' },
-            year: { main: '%b' },
-          }
-        : xKey.mode === 'HOUR'
-        ? {
-            minute: '%H:%M',
-            hour: '%H:%M',
-          }
-        : undefined;
 
     const options: Highcharts.Options = {
       chart: {
         height: BASE_CHART_HEIGHT,
+        ...(isDraggable ? generateDraggable(onDragEnd) : {}),
       },
       title: {
         text: '',
@@ -146,20 +144,31 @@ class StackedAreaPlot extends React.Component<Props, {}> {
         },
       },
       xAxis: {
-        type: xKey.mode === 'DAY' || xKey.mode === 'HOUR' ? 'datetime' : 'category',
-        dateTimeLabelFormats: xAxisDateTimeLabelFormatsOptions,
+        type: 'datetime',
+        dateTimeLabelFormats: {
+          month: { main: '%e. %b' },
+          year: { main: '%b' },
+        },
         ...generateXAxisGridLine(),
       },
       time: {
-        useUTC: xKey.mode === 'DAY',
+        useUTC: true,
       },
-      yAxis: {
-        title: {
-          text: null,
+      yAxis: [
+        {
+          title: {
+            text: yKeys[0].message,
+          },
+          ...generateYAxisGridLine(),
         },
-        ...generateYAxisGridLine(),
-      },
-      series: this.formatSeries(dataset, xKey.key, yKeys, colors),
+        {
+          title: {
+            text: yKeys[1].message,
+          },
+          opposite: true,
+        },
+      ],
+      series: this.formatSeries(dataset, xKey, yKeys, colors),
       credits: {
         enabled: false,
       },
@@ -167,10 +176,17 @@ class StackedAreaPlot extends React.Component<Props, {}> {
         shared: true,
         ...generateTooltip(),
       },
+      legend: {
+        enabled: false,
+      },
     };
 
-    return <HighchartsReact highcharts={Highcharts} options={options} style={{ width: '100%' }} />;
+    return (
+      <div style={style}>
+        <HighchartsReact highcharts={Highcharts} options={options} style={{ width: '100%' }} />
+      </div>
+    );
   }
 }
 
-export default compose<Props, StackedAreaPlotProps>()(StackedAreaPlot);
+export default compose<Props, DoubleStackedAreaChartProps>()(DoubleStackedAreaChart);

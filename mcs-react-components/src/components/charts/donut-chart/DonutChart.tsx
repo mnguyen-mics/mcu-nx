@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { compose } from 'recompose';
-import { generateTooltip, BASE_CHART_HEIGHT } from '../../utils';
+import { generateTooltip, BASE_CHART_HEIGHT } from '../utils';
 
 export interface DatasetProps {
   key: string;
@@ -15,7 +15,7 @@ interface TextProps {
   text?: string;
 }
 
-export interface PiePlotOptionsProps {
+export interface DonutChartOptionsProps {
   innerRadius: boolean;
   isHalf: boolean;
   text?: TextProps;
@@ -25,15 +25,15 @@ export interface PiePlotOptionsProps {
   showHover?: boolean;
 }
 
-export interface PiePlotProps {
+export interface DonutChartProps {
   dataset: DatasetProps[];
-  options: PiePlotOptionsProps;
+  options: DonutChartOptionsProps;
   height?: number;
 }
 
-type Props = PiePlotProps;
+type Props = DonutChartProps;
 
-class PiePlot extends React.Component<Props, {}> {
+class DonutChart extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {};
@@ -123,4 +123,4 @@ class PiePlot extends React.Component<Props, {}> {
   }
 }
 
-export default compose<Props, PiePlotProps>()(PiePlot);
+export default compose<Props, DonutChartProps>()(DonutChart);
