@@ -1,6 +1,6 @@
 {
   "name": "@mediarithmics-private/advanced-component",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "main": "lib/index.js",
   "files": [
     "lib"
@@ -12,7 +12,7 @@
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
-    "@mediarithmics-private/mcs-components-library": "5.2.1",
+    "@mediarithmics-private/mcs-components-library": "5.2.10",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
     "@splitsoftware/splitio": "^10.15.5",
     "@svgr/webpack": "5.5.0",
