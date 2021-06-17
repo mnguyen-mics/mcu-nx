@@ -2,13 +2,17 @@ import * as React from 'react';
 import AppsMenu, { AppsMenuProps } from '../AppsMenu';
 
 const props: AppsMenuProps = {
-  sections: [
-    { items: [{ name: 'Platform Admin', url: 'url1' }] },
-    { items: [{ name: 'Navigator', url: 'url2' }] },
-    { items: [{ name: 'Navigator2', url: 'url2' }] },
-    { items: [{ name: 'Navigator3', url: 'url2' }] },
-  ],
-  logo: <span />,
+  sections: {
+    adminLinks: [
+      { name: 'Platform Admin', url: 'url1' },
+      { name: 'computing console', url: 'url2' },
+    ],
+    userLinks: [
+      { name: 'Navigator2', url: 'url2' },
+      { name: 'Navigator3', url: 'url2' },
+    ],
+  },
+  logo: <div>toto</div>,
   className: 'fake-class-name',
 };
 

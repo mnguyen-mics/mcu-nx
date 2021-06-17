@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { Menu } from 'antd';
 
-export type AppsMenuSection = {
-  items: AppsMenuItem[];
+export type AppsMenuSections = {
+  adminLinks: AppsMenuItem[];
+  userLinks: AppsMenuItem[];
 };
 export interface AppsMenuItem {
   icon?: React.ReactElement;
@@ -12,7 +13,7 @@ export interface AppsMenuItem {
 
 export interface AppsMenuProps {
   logo: React.ReactElement;
-  sections: AppsMenuSection[];
+  sections: AppsMenuSections;
   className?: string;
 }
 
@@ -22,9 +23,14 @@ class AppsMenu extends React.Component<AppsMenuProps> {
     this.state = {};
   }
 
-  renderItem(item: AppsMenuItem): React.ReactElement {
+  renderItem(item: AppsMenuItem, displayBorder: boolean): React.ReactElement {
     return (
-      <Menu.Item icon={item.icon} className={'mcs_appMenu_item--withDivider'}>
+      <Menu.Item
+        icon={item.icon}
+        className={
+          displayBorder ? 'mcs_appMenu_item mcs_appMenu_item--withDivider' : 'mcs_appMenu_item'
+        }
+      >
         <a href={item.url}>
           <span>{item.name}</span>
         </a>
@@ -32,8 +38,10 @@ class AppsMenu extends React.Component<AppsMenuProps> {
     );
   }
 
-  renderSection(section: AppsMenuSection, key: number): React.ReactElement[] {
-    return section.items.map((item, index) => this.renderItem(item));
+  renderSection(links: AppsMenuItem[], isAdmin?: boolean): React.ReactElement[] {
+    return links.map((link, index) =>
+      this.renderItem(link, !!isAdmin && links.length === index + 1),
+    );
   }
 
   render() {
@@ -42,7 +50,8 @@ class AppsMenu extends React.Component<AppsMenuProps> {
     return (
       <Menu mode='inline' className={`mcs_appMenu ${className ? className : ''}`}>
         {logo}
-        {sections.map((section, index) => this.renderSection(section, index))}
+        {sections.adminLinks && this.renderSection(sections.adminLinks, true)}
+        {sections.userLinks && this.renderSection(sections.userLinks)}
       </Menu>
     );
   }

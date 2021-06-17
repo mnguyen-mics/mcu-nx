@@ -2,15 +2,17 @@
 
 exports[`render the AppsMenu 1`] = `
 <ul
-  className="ant-menu ant-menu-light mcs_appMenu  ant-menu-root ant-menu-inline"
+  className="ant-menu ant-menu-light mcs_appMenu fake-class-name ant-menu-root ant-menu-inline"
   onMouseEnter={[Function]}
   onTransitionEnd={[Function]}
   role="menu"
   style={Object {}}
 >
-  <span />
+  <div>
+    toto
+  </div>
   <li
-    className="ant-menu-item ant-menu-item-only-child mcs_appMenu_item--withDivider"
+    className="ant-menu-item ant-menu-item-only-child mcs_appMenu_item"
     onClick={[Function]}
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
@@ -30,7 +32,7 @@ exports[`render the AppsMenu 1`] = `
     </a>
   </li>
   <li
-    className="ant-menu-item ant-menu-item-only-child mcs_appMenu_item--withDivider"
+    className="ant-menu-item ant-menu-item-only-child mcs_appMenu_item mcs_appMenu_item--withDivider"
     onClick={[Function]}
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
@@ -45,7 +47,47 @@ exports[`render the AppsMenu 1`] = `
       href="url2"
     >
       <span>
-        Navigator
+        computing console
+      </span>
+    </a>
+  </li>
+  <li
+    className="ant-menu-item ant-menu-item-only-child mcs_appMenu_item"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    role="menuitem"
+    style={
+      Object {
+        "paddingLeft": 24,
+      }
+    }
+  >
+    <a
+      href="url2"
+    >
+      <span>
+        Navigator2
+      </span>
+    </a>
+  </li>
+  <li
+    className="ant-menu-item ant-menu-item-only-child mcs_appMenu_item"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    role="menuitem"
+    style={
+      Object {
+        "paddingLeft": 24,
+      }
+    }
+  >
+    <a
+      href="url2"
+    >
+      <span>
+        Navigator3
       </span>
     </a>
   </li>
