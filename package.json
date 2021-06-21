@@ -4,7 +4,7 @@
   "dependencies": {
     "@ant-design/compatible": "^1.0.8",
     "@mediarithmics-private/mcs-components-library": "5.2.10",
-    "@mediarithmics-private/advanced-component": "1.2.10",
+    "@mediarithmics-private/advanced-components": "1.2.11",
     "antd": "4.10.3",
     "pascalcase": "^1.0.0",
     "inversify": "^5.0.1",

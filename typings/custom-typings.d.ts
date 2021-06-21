@@ -1,1 +1,1 @@
-// declare module '@mediarithmics-private/advanced-component'
+// declare module '@mediarithmics-private/advanced-components'

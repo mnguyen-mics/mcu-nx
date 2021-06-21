@@ -4,7 +4,7 @@ import { HashRouter as Router } from 'react-router-dom';
 import Main from './containers/main/Main';
 import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
-import { Store } from '@mediarithmics-private/advanced-component';
+import { Store } from '@mediarithmics-private/advanced-components';
 const store = Store();
 
 function App() {
