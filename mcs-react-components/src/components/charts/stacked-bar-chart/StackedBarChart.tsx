@@ -8,6 +8,7 @@ export interface StackedBarChartProps {
   dataset: Dataset;
   options: StackedBarChartOptions;
   height?: number;
+  reducePadding?: boolean;
 }
 
 type Dataset = Array<{ [key: string]: string | number | Date | undefined }>;
@@ -18,6 +19,8 @@ export interface StackedBarChartOptions {
   xKey: string;
   showLegend?: boolean;
   type?: string;
+  yAxisTilte?: string;
+  chartOptions?: Highcharts.Options;
 }
 
 type yKey = { key: string; message: string };
@@ -55,11 +58,13 @@ class StackedBarChart extends React.Component<Props, {}> {
   render() {
     const {
       dataset,
-      options: { colors, xKey, yKeys, showLegend, type },
+      options: { colors, xKey, yKeys, showLegend, type, chartOptions },
+      reducePadding,
       height,
     } = this.props;
 
     const options: Highcharts.Options = {
+      ...this.props.options,
       chart: {
         type: type || 'column',
         height: height ? height : BASE_CHART_HEIGHT,
@@ -69,11 +74,17 @@ class StackedBarChart extends React.Component<Props, {}> {
       },
       colors: colors,
       plotOptions: {
-        column: {},
+        column: reducePadding
+          ? {
+              pointPadding: 0.05,
+              groupPadding: 0,
+            }
+          : {},
       },
       xAxis: {
         categories: this.getXAxisValues(dataset, xKey),
       },
+      yAxis: chartOptions?.yAxis,
       series: this.formatSeries(dataset, yKeys),
       credits: {
         enabled: false,
@@ -86,7 +97,6 @@ class StackedBarChart extends React.Component<Props, {}> {
         enabled: showLegend === undefined ? false : showLegend,
       },
     };
-
     return <HighchartsReact highcharts={Highcharts} options={options} style={{ width: '100%' }} />;
   }
 }
