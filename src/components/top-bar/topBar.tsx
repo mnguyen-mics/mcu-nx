@@ -7,6 +7,7 @@ import {
 import {
   AppsMenu,
   McsHeader,
+  McsIcon,
 } from "@mediarithmics-private/mcs-components-library";
 import { AppsMenuSections } from "@mediarithmics-private/mcs-components-library/lib/components/apps-navigation/apps-menu/AppsMenu";
 import { LocationDescriptor } from "history";
@@ -31,6 +32,8 @@ interface TopBarProps {
   organisationId: string;
   linkPath: LocationDescriptor<unknown>;
   prodEnv: boolean;
+  userAccount?: React.ReactNode[];
+  headerSettings?: React.ReactNode;
 }
 
 type Props = TopBarMapStateToProps & TopBarProps;
@@ -97,7 +100,8 @@ class TopBar extends React.Component<Props> {
   }
 
   render() {
-    const { userEmail, linkPath, prodEnv } = this.props;
+    const { userEmail, linkPath, prodEnv, userAccount, headerSettings } =
+      this.props;
     const appMenuSections: AppsMenuSections = this.getAppMenuSections();
     const ProductionApiEnvironment = (
       <Alert
@@ -108,7 +112,8 @@ class TopBar extends React.Component<Props> {
       />
     );
     const appMenu =
-      appMenuSections.userLinks.length > 0 || appMenuSections.adminLinks.length > 0 ? (
+      appMenuSections.userLinks.length > 0 ||
+      appMenuSections.adminLinks.length > 0 ? (
         <AppsMenu
           className="mcs-app-menu-main-layout"
           sections={appMenuSections}
@@ -119,7 +124,8 @@ class TopBar extends React.Component<Props> {
       <McsHeader
         organisationSwitcher={<OrganisationListSwitcher />}
         userEmail={userEmail}
-        accountContent={buildAccountsMenu()}
+        accountContent={userAccount || buildAccountsMenu()}
+        headerSettings={headerSettings}
         menu={appMenu}
         devAlert={prodEnv ? ProductionApiEnvironment : undefined}
       />
