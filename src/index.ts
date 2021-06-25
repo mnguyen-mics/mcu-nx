@@ -1,6 +1,6 @@
 
-export { default as ForgotPassword } from './components/forgotPassword';
-export { default as Login } from './components/login';
+export { default as ForgotPassword } from './components/forgot-password';
+export { default as Login } from './components/login-page';
 export { default as OrganizationListSwitcher } from './components/organisation-switcher';
 export { default as TopBar } from './components/top-bar';
 export { default as advancedComponentLibReducers } from './redux/reducers';
