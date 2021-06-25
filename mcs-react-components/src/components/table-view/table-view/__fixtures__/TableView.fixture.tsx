@@ -3,11 +3,13 @@ import TableView, { TableViewProps } from '../TableView';
 import {
   TableViewMockData,
   tableViewMockColumns,
+  tableViewMockActionColumns,
   tableViewMockData,
   selectionNotifyerMessagesMock,
 } from '../../../../utils/TableViewHelpers';
 
 const props: TableViewProps<TableViewMockData> = {
+  actionsColumnsDefinition: tableViewMockActionColumns,
   columns: tableViewMockColumns,
   dataSource: tableViewMockData(),
   rowSelection: {
