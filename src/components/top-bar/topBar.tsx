@@ -34,6 +34,7 @@ interface TopBarProps {
   prodEnv: boolean;
   userAccount?: React.ReactNode[];
   headerSettings?: React.ReactNode;
+  color?: string;
 }
 
 type Props = TopBarMapStateToProps & TopBarProps;
