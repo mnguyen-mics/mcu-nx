@@ -10,6 +10,22 @@ export interface TableViewMockData {
   description: string;
 }
 
+export const tableViewMockActionColumns = [
+  {
+    className: 'myActionClassName',
+    key: 'key',
+    actions: () => [
+      {
+        className: 'menuItemAction',
+        message: 'Action',
+        callback: () => {
+          return;
+        },
+      },
+    ],
+  },
+];
+
 export const tableViewMockColumns = [
   {
     title: 'Name',

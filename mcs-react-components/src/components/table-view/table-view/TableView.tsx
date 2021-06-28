@@ -23,6 +23,7 @@ export interface DataColumnDefinition<T> extends ColumnProps<T> {
 }
 
 export interface ActionDefinition<T> {
+  className?: string;
   message?: string;
   disabled?: boolean;
   callback: (record: T) => void;
@@ -73,7 +74,11 @@ class TableView<
       width: 30,
       render: (text: string, record: T) => {
         return (
-          <Dropdown overlay={this.renderActionsMenu(column.actions, record)} trigger={['click']}>
+          <Dropdown
+            className={column.className}
+            overlay={this.renderActionsMenu(column.actions, record)}
+            trigger={['click']}
+          >
             <a className='ant-dropdown-link'>
               <McsIcon type='chevron' />
             </a>
@@ -120,7 +125,11 @@ class TableView<
       <Menu onClick={onClick} className='mcs-dropdown-actions'>
         {actions(record).map((action, index) => {
           return (
-            <Menu.Item key={index.toString()} disabled={action.disabled}>
+            <Menu.Item
+              className={action.className}
+              key={index.toString()}
+              disabled={action.disabled}
+            >
               {action.message ? action.message : index}
             </Menu.Item>
           );
