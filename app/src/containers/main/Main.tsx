@@ -15,7 +15,7 @@ import {
   AuthenticatedRoute,
   NoAccess,
   errorMessages,
-} from '@mediarithmics-private/advanced-component';
+} from '@mediarithmics-private/advanced-components';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { NavigatorRoute } from '../../routes/domain';

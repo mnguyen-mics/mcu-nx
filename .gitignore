@@ -45,3 +45,6 @@ ts-build
 .scannerwork
 # vscode plugin local history
 .history
+app/version.json
+app/version.txt
+

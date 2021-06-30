@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import Layout from 'antd/lib/layout/layout';
 import * as React from 'react';
 import Sider from 'antd/lib/layout/Sider';
-import { TopBar, Logo } from '@mediarithmics-private/advanced-component';
+import { TopBar, Logo } from '@mediarithmics-private/advanced-components';
 import { MainMenu } from '../Menu';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
