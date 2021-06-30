@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import * as React from 'react';
-import TopBar from '../topBar';
+import TopBar from '../TopBar';
 import { IntlProvider } from 'react-intl';
 import { HashRouter as Router } from 'react-router-dom';
 import { IocProvider } from '../../../inversify/inversify.react';
@@ -10,7 +10,6 @@ import config from '../../../react-configuration';
 import { ReduxMock } from 'react-cosmos-redux';
 
 (global as any).window.MCS_CONSTANTS = config;
-
 
 const myMockedReduxState = {
   features: {
