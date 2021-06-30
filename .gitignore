@@ -33,6 +33,7 @@ dist/
 generated/
 *.zip
 npm-debug.log*
+app/conf/plugins-configuration.js
 app/conf/react-configuration.js
 app/version*
 .tags*
@@ -46,3 +47,4 @@ ts-build
 .history
 app/version.json
 app/version.txt
+
