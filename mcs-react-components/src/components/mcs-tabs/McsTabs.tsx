@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { Tabs } from 'antd';
 import { TabsProps } from 'antd/lib/tabs';
+import classNames from 'classnames';
 
 interface McsTabsItem {
+  className?: string;
   title: React.ReactChild;
   display?: JSX.Element;
   forceRender?: boolean;
@@ -20,7 +22,7 @@ class McsTabs extends React.Component<McTabsProps> {
 
     return items.map((item, index) => (
       <Tabs.TabPane
-        tab={<div className='mcs-tabs_tab'>{item.title}</div>}
+        tab={<div className={classNames('mcs-tabs_tab', item.className)}>{item.title}</div>}
         key={item.key || index}
         forceRender={item.forceRender ? item.forceRender : false}
       >
