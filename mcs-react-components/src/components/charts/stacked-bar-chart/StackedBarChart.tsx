@@ -84,7 +84,10 @@ class StackedBarChart extends React.Component<Props, {}> {
       xAxis: {
         categories: this.getXAxisValues(dataset, xKey),
       },
-      yAxis: chartOptions?.yAxis,
+      yAxis: {
+        ...chartOptions?.yAxis,
+        title: (chartOptions?.yAxis as Highcharts.YAxisOptions)?.title || { text: '' },
+      },
       series: this.formatSeries(dataset, yKeys),
       credits: {
         enabled: false,
