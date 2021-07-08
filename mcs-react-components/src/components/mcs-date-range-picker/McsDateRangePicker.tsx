@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { CalendarOutlined, DownOutlined } from '@ant-design/icons';
+import { CalendarOutlined, ClockCircleOutlined, DownOutlined } from '@ant-design/icons';
 import { Button, DatePicker, Menu } from 'antd';
 import moment from 'moment';
 import { MenuInfo } from '../../../node_modules/rc-menu/lib/interface';
 import { Dropdown } from '../popupContainer/PopupContainer';
 import McsMoment, { convertMcsDateToMoment } from '../../utils/McsMoment';
 import { InjectedIntlProps, defineMessages, injectIntl } from 'react-intl';
+import OnOutsideClick from 'react-outclick';
 
 export interface McsDateRangeValue {
   from: McsMoment;
@@ -22,8 +23,10 @@ export interface McsDateRangePickerProps {
 }
 
 interface McsDateRangePickerState {
-  showRangePicker?: boolean;
+  showDropdown?: boolean;
+  datePickerOpen?: boolean;
   ranges: Range[];
+  rangeType: 'ABSOLUTE' | 'RELATIVE';
 }
 
 interface Range {
@@ -59,6 +62,14 @@ const messages = defineMessages({
     id: 'components.mcsDateRangePicker.custom',
     defaultMessage: 'Custom',
   },
+  ABSOLUTE_TIME_RANGE: {
+    id: 'components.mcsDateRangePicker.absoluteTimeRange',
+    defaultMessage: 'Absolute time range',
+  },
+  RELATIVE_TIME_RANGE: {
+    id: 'components.mcsDateRangePicker.relativeTimeRange',
+    defaultMessage: 'Relative time ranges',
+  },
 });
 
 type Props = McsDateRangePickerProps & InjectedIntlProps;
@@ -71,8 +82,9 @@ class McsDateRangePicker extends React.Component<Props, McsDateRangePickerState>
   constructor(props: Props) {
     super(props);
     this.state = {
-      showRangePicker: false,
+      showDropdown: false,
       ranges: [],
+      rangeType: 'RELATIVE',
     };
   }
 
@@ -136,9 +148,9 @@ class McsDateRangePicker extends React.Component<Props, McsDateRangePickerState>
 
   handleDatePickerMenuChange = (dates: [moment.Moment, moment.Moment]) => {
     const { onChange } = this.props;
-
-    this.setState({ showRangePicker: false });
-
+    this.setState({
+      rangeType: 'ABSOLUTE',
+    });
     onChange({
       from: new McsMoment(dates[0].format('YYYY-MM-DD')),
       to: new McsMoment(dates[1].format('YYYY-MM-DD')),
@@ -149,85 +161,114 @@ class McsDateRangePicker extends React.Component<Props, McsDateRangePickerState>
     const { ranges } = this.state;
     const { onChange } = this.props;
 
-    if (param.key === 'CUSTOM') {
+    if (param.key !== 'CUSTOM') {
       this.setState({
-        showRangePicker: true,
+        showDropdown: false,
+        rangeType: 'RELATIVE',
       });
-      return;
+
+      const selectedRange = ranges.find(element => {
+        return element.name.toLowerCase() === param.key.toString().toLowerCase();
+      });
+
+      onChange({
+        from: new McsMoment(selectedRange!.from),
+        to: new McsMoment(selectedRange!.to),
+      });
     }
+  };
 
-    this.setState({ showRangePicker: false });
-
-    const selectedRange = ranges.find(element => {
-      return element.name.toLowerCase() === param.key.toString().toLowerCase();
-    });
-
-    onChange({
-      from: new McsMoment(selectedRange!.from),
-      to: new McsMoment(selectedRange!.to),
+  onDatePickerOpenChange = (open: boolean) => {
+    this.setState({
+      showDropdown: open,
+      datePickerOpen: open,
     });
   };
 
-  onDatePickerOpenChange = () => {
-    this.setState({
-      showRangePicker: false,
-    });
+  onDropdownClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    this.setState({ showDropdown: true });
+  };
+
+  handleClick = () => {
+    const { showDropdown, datePickerOpen } = this.state;
+
+    if (showDropdown && !datePickerOpen) {
+      this.setState({ showDropdown: false });
+    }
   };
 
   renderRangesDropdown() {
-    const { intl, disabled } = this.props;
-    const { ranges } = this.state;
-
+    const { intl, disabled, values } = this.props;
+    const { ranges, showDropdown, rangeType } = this.state;
+    const fromMoment = values.from.toMoment();
+    const toMoment = values.to.toMoment();
     const menu = (
-      <Menu onClick={this.handleDropdownMenuClick}>
-        <Menu.ItemGroup title={intl.formatMessage(messages.LOOKBACK_WINDOW)}>
+      <Menu onClick={this.handleDropdownMenuClick} className={'mcs-dateRangePicker_menu'}>
+        <Menu.ItemGroup
+          title={'Absolute time range'}
+          className={
+            'mcs-dateRangePicker_menu_timeType mcs-dateRangePicker_menu_timeType--absolute'
+          }
+        >
+          <Menu.Item
+            className={'mcs-dateRangePicker_menu_item mcs-dateRangePicker_menu_item--rangePicker'}
+            key='CUSTOM'
+          >
+            <RangePicker
+              allowClear={false}
+              className='mcs-dateRangePicker_rangePicker'
+              onChange={this.handleDatePickerMenuChange}
+              defaultValue={[fromMoment, toMoment]}
+              disabledDate={this.disableDates}
+              onOpenChange={this.onDatePickerOpenChange}
+            />
+          </Menu.Item>
+        </Menu.ItemGroup>
+        <Menu.ItemGroup
+          title={intl.formatMessage(messages.RELATIVE_TIME_RANGE)}
+          className={'mcs-dateRangePicker_menu_timeType'}
+        >
           {ranges.map(item => {
-            return this.getSelectedPresettedRange() ===
-              intl.formatMessage(messages[item.name]) ? null : (
-              <Menu.Item key={item.name}>{intl.formatMessage(messages[item.name])}</Menu.Item>
+            return (
+              <Menu.Item
+                className={
+                  this.getSelectedPresettedRange() === intl.formatMessage(messages[item.name])
+                    ? 'mcs-dateRangePicker_menu_item mcs-dateRangePicker_menu_item--selected'
+                    : 'mcs-dateRangePicker_menu_item'
+                }
+                key={item.name}
+              >
+                {intl.formatMessage(messages[item.name])}
+              </Menu.Item>
             );
           })}
-          <Menu.Item key='CUSTOM'>{intl.formatMessage(messages.CUSTOM)}</Menu.Item>
         </Menu.ItemGroup>
       </Menu>
     );
 
     return (
-      <Dropdown
-        className='mcs-date-range-picker'
-        overlay={menu}
-        trigger={['click']}
-        disabled={disabled}
-      >
-        <Button>
-          <CalendarOutlined />
-          {this.getSelectedPresettedRange()}
-          <DownOutlined />
-        </Button>
-      </Dropdown>
+      <OnOutsideClick onOutsideClick={this.handleClick} display={'inline'}>
+        <Dropdown
+          className='mcs-dateRangePicker'
+          overlay={menu}
+          trigger={['click']}
+          disabled={disabled}
+          visible={showDropdown}
+        >
+          <Button onClick={this.onDropdownClick}>
+            {rangeType === 'ABSOLUTE' ? <CalendarOutlined /> : <ClockCircleOutlined />}
+            {this.getSelectedPresettedRange()}
+            <DownOutlined />
+          </Button>
+        </Dropdown>
+      </OnOutsideClick>
     );
   }
 
   render() {
-    const { values } = this.props;
-    const { showRangePicker } = this.state;
-    const fromMoment = values.from.toMoment();
-    const toMoment = values.to.toMoment();
-    return showRangePicker ? (
-      <RangePicker
-        allowClear={false}
-        className='mcs-date-range-picker'
-        onChange={this.handleDatePickerMenuChange}
-        defaultValue={[fromMoment, toMoment]}
-        disabledDate={this.disableDates}
-        onOpenChange={this.onDatePickerOpenChange}
-        open={showRangePicker}
-      />
-    ) : (
-      this.renderRangesDropdown()
-    );
+    return this.renderRangesDropdown();
   }
 }
 
-// TODO replace any with correct type
 export default injectIntl(McsDateRangePicker);

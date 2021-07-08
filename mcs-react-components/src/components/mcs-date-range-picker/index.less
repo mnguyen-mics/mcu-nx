@@ -1,0 +1,46 @@
+.mcs-dateRangePicker {
+  &_rangePicker {
+    width: 203px;
+    height: 32px;
+
+    .ant-picker-suffix {
+      color: rgba(0, 0, 0, 0.65);
+    }
+  }
+  &_menu {
+    display: flex;
+    min-width: 390px;
+    padding: 4px 30px 3px 15px;
+    .ant-dropdown-menu-item:hover,
+    .ant-dropdown-menu-submenu-title:hover {
+      background-color: white;
+      color: @primary-color;
+    }
+
+    &_timeType {
+      .ant-dropdown-menu-item-group-title {
+        line-height: 32px;
+        padding: 0;
+      }
+
+      &--absolute {
+        margin-right: 30px;
+      }
+    }
+  }
+
+  &_menu_item {
+    margin: 0;
+    line-height: 32px;
+    padding: 0;
+    &--selected {
+      color: @primary-color;
+    }
+  }
+
+  &_menu_timeType {
+    .ant-dropdown-menu-item-group-list {
+      margin: 0;
+    }
+  }
+}
