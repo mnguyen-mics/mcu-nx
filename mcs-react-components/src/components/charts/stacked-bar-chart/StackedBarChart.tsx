@@ -125,7 +125,7 @@ class StackedBarChart extends React.Component<Props, {}> {
         id: d[xKey] as string,
         y: d[y.key] ? (d[y.key] as number) : 0,
       };
-      if (enableDrilldown)
+      if (enableDrilldown && !!d.buckets)
         return {
           ...datapoint,
           drilldown: d.drilldown,
@@ -171,7 +171,9 @@ class StackedBarChart extends React.Component<Props, {}> {
     }
     const series = this.formatSeries(datasetWithDrilldownIds, yKeys, xKey, !!enableDrilldown);
     // TODO: Handle multiple yKeys
-    const drilldown = this.buildDrilldownTree(datasetWithDrilldownIds, [], xKey, yKeys[0].key);
+    const drilldown = !!enableDrilldown
+      ? this.buildDrilldownTree(datasetWithDrilldownIds, [], xKey, yKeys[0].key)
+      : [];
 
     const options: Highcharts.Options = {
       ...this.props.options,
