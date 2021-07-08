@@ -222,6 +222,7 @@ class McsDateRangePicker extends React.Component<Props, McsDateRangePickerState>
               defaultValue={[fromMoment, toMoment]}
               disabledDate={this.disableDates}
               onOpenChange={this.onDatePickerOpenChange}
+              value={[fromMoment, toMoment]}
             />
           </Menu.Item>
         </Menu.ItemGroup>
