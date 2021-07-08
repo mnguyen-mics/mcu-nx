@@ -45,15 +45,13 @@ export { default as Fade } from './components/transition/fade';
 export { default as Slide } from './components/transition/slide';
 export { default as AppsMenu } from './components/apps-navigation/apps-menu';
 export { default as MentionTag } from './components/mention-tag';
-export {
-  default as Device,
-  default as DeviceCard,
-  default as EventActivity,
-  default as Origin,
-  default as ProfileInfo,
-  default as Topics,
-  default as UserScenarioActivityCard,
-} from './components/timeline';
+export { default as Device } from './components/timeline/single-view/device';
+export { default as DeviceCard } from './components/timeline/single-view/device-card';
+export { default as EventActivity } from './components/timeline/single-view/event-activity';
+export { default as Origin } from './components/timeline/single-view/origin';
+export { default as ProfileInfo } from './components/timeline/single-view/profile-info';
+export { default as Topics } from './components/timeline/single-view/topics';
+export { default as UserScenarioActivityCard } from './components/timeline/single-view/user-scenario-activity-card';
 export { default as TreeSelectFilter } from './components/tree-select-filter';
 export { default as TableViewFilters } from './components/table-view-filters';
 export { default as McsHeader } from './components/mcs-header';

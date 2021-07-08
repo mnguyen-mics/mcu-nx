@@ -42,12 +42,16 @@ exports[`renders the Device 1`] = `
         }
       }
     >
-      <span
-        className="title"
-      >
-        safari
+      <span>
+        <span
+          className="title"
+        >
+           
+          safari
+        </span>
+        <br />
+         
       </span>
-      <br />
       <span
         className="subtitle"
       />

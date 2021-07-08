@@ -73,12 +73,16 @@ exports[`renders the DeviceCard 1`] = `
             }
           }
         >
-          <span
-            className="title"
-          >
-            CHROME
+          <span>
+            <span
+              className="title"
+            >
+               
+              CHROME
+            </span>
+            <br />
+             
           </span>
-          <br />
           <span
             className="subtitle"
           >

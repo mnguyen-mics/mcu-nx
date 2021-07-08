@@ -29,8 +29,12 @@ const Device = (props: DeviceProps) => {
       <Col className='table-left' span={12}>
         <span style={{ float: 'left' }}>{formFactorIcon(device.form_factor)}</span>
         <span style={{ float: 'left' }}>
-          <span className='title'>{device.browser_family}</span>
-          <br />
+          {device.browser_family && (
+            <span>
+              <span className='title'> {device.browser_family}</span>
+              <br />{' '}
+            </span>
+          )}
           <span className='subtitle'>{device.os_family}</span>
         </span>
       </Col>
