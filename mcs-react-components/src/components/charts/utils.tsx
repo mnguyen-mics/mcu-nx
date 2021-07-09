@@ -1,4 +1,5 @@
 import * as Highcharts from 'highcharts';
+import { uniqueId } from 'lodash';
 import moment from 'moment';
 
 export const GRAY_COLOR = '#8ca0b3';
@@ -92,3 +93,93 @@ export const generateTooltip = (
       }
     : { enabled: false };
 };
+
+export type Datapoint = {
+  [key: string]: string | number | Date | undefined | boolean;
+} & WithDrilldownId &
+  WithSubBuckets;
+export type Dataset = Datapoint[];
+
+interface WithDrilldownId {
+  drilldown?: string;
+}
+
+interface WithSubBuckets {
+  buckets?: Datapoint[];
+}
+
+interface DrilldownAccumulator<T> {
+  drilldownNodes: Array<DrilldownView<T>>;
+  buckets: Datapoint[];
+}
+
+interface DrilldownView<T> {
+  name: string;
+  id: string;
+  data: DrilldownNode[];
+  type: T;
+  innerSize?: string;
+}
+
+interface DrilldownNode {
+  name: string;
+  y: number;
+  drilldown?: string;
+}
+
+export function buildDrilldownTree<T>(
+  chartType: T,
+  buckets: Datapoint[],
+  currentState: Array<DrilldownView<T>>,
+  xKey: string,
+  yKey: string,
+  additionalSeriesOptions?: Highcharts.SeriesOptionsType,
+): Array<DrilldownView<T>> {
+  if (!buckets || buckets.length === 0) {
+    return currentState;
+  } else {
+    const initialAcc = {
+      drilldownNodes: currentState,
+      buckets: [],
+    };
+    const nextLevelBuckets: DrilldownAccumulator<T> = buckets.reduce(
+      (acc: DrilldownAccumulator<T>, buck: Datapoint) => {
+        const subBuckets: Dataset = ((buck.buckets as Datapoint[]) || []).map(b => {
+          const nextDrilldownId = b.buckets ? uniqueId() : undefined;
+          return {
+            ...b,
+            drilldown: nextDrilldownId,
+          };
+        }) as Dataset;
+        const drilldownNode: DrilldownView<T> = {
+          ...(additionalSeriesOptions as any),
+          id: buck.drilldown as string,
+          name: buck[xKey] as string,
+          type: chartType,
+          data: subBuckets.map((sub: Datapoint) => {
+            return {
+              name: sub[xKey] as string,
+              drilldown: sub.drilldown,
+              y: sub[yKey] as number,
+            };
+          }),
+        };
+        const nextDrilldownNodes = acc.drilldownNodes.concat([drilldownNode]);
+        const nextBuckets = acc.buckets.concat(subBuckets);
+        return {
+          drilldownNodes: nextDrilldownNodes,
+          buckets: nextBuckets,
+        };
+      },
+      initialAcc,
+    );
+    return buildDrilldownTree(
+      chartType,
+      nextLevelBuckets.buckets,
+      nextLevelBuckets.drilldownNodes,
+      xKey,
+      yKey,
+      additionalSeriesOptions,
+    );
+  }
+}

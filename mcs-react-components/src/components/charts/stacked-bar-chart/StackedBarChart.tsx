@@ -3,10 +3,18 @@ import * as Highcharts from 'highcharts';
 import HighchartsDrilldown from 'highcharts/modules/drilldown';
 import HighchartsReact from 'highcharts-react-official';
 import { compose } from 'recompose';
-import { generateTooltip, BASE_CHART_HEIGHT } from '../utils';
+import {
+  generateTooltip,
+  BASE_CHART_HEIGHT,
+  Dataset,
+  Datapoint,
+  buildDrilldownTree,
+} from '../utils';
 import { uniqueId } from 'lodash';
 
 HighchartsDrilldown(Highcharts);
+
+type Bar = 'bar';
 
 export interface StackedBarChartProps {
   dataset: Dataset;
@@ -15,10 +23,6 @@ export interface StackedBarChartProps {
   height?: number;
   reducePadding?: boolean;
 }
-
-export type Datapoint = { [key: string]: string | number | Date | undefined } & WithDrilldownId &
-  WithSubBuckets;
-export type Dataset = Datapoint[];
 
 export interface StackedBarChartOptions {
   colors: string[];
@@ -34,89 +38,11 @@ type YKey = { key: string; message: string };
 
 type Props = StackedBarChartProps;
 
-interface DrilldownNode {
-  name: string;
-  y: number;
-  drilldown?: string;
-}
-
-interface DrilldownView {
-  name: string;
-  id: string;
-  data: DrilldownNode[];
-  type: 'bar';
-}
-
-interface WithDrilldownId {
-  drilldown?: string;
-}
-
-interface WithSubBuckets {
-  buckets?: Datapoint[];
-}
-
-interface DrilldownAccumulator {
-  drilldownNodes: DrilldownView[];
-  buckets: Datapoint[];
-}
-
 class StackedBarChart extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {};
   }
-
-  buildDrilldownTree = (
-    buckets: Datapoint[],
-    currentState: DrilldownView[],
-    xKey: string,
-    yKey: string,
-  ): DrilldownView[] => {
-    if (!buckets || buckets.length === 0) {
-      return currentState;
-    } else {
-      const initialAcc = {
-        drilldownNodes: currentState,
-        buckets: [],
-      };
-      const nextLevelBuckets: DrilldownAccumulator = buckets.reduce(
-        (acc: DrilldownAccumulator, buck: Datapoint) => {
-          const subBuckets: Dataset = ((buck.buckets as Datapoint[]) || []).map(b => {
-            const nextDrilldownId = b.buckets ? uniqueId() : undefined;
-            return {
-              ...b,
-              drilldown: nextDrilldownId,
-            };
-          }) as Dataset;
-          const drilldownNode: DrilldownView = {
-            id: buck.drilldown as string,
-            name: buck[xKey] as string,
-            type: 'bar' as 'bar',
-            data: subBuckets.map((sub: Datapoint) => {
-              return {
-                name: sub[xKey] as string,
-                drilldown: sub.drilldown,
-                y: sub[yKey] as number,
-              };
-            }),
-          };
-          const nextDrilldownNodes = acc.drilldownNodes.concat([drilldownNode]);
-          const nextBuckets = acc.buckets.concat(subBuckets);
-          return {
-            drilldownNodes: nextDrilldownNodes,
-            buckets: nextBuckets,
-          };
-        },
-        initialAcc,
-      );
-      return this.buildDrilldownTree(
-        nextLevelBuckets.buckets,
-        nextLevelBuckets.drilldownNodes,
-        xKey,
-        yKey,
-      );
-    }
-  };
 
   formatSerieData = (dataset: Dataset, y: YKey, xKey: string, enableDrilldown: boolean) => {
     return dataset.map((d: Datapoint) => {
@@ -144,7 +70,6 @@ class StackedBarChart extends React.Component<Props, {}> {
       return {
         name: y.message,
         data: this.formatSerieData(dataset, y, xKey, enableDrilldown),
-
         type: 'column' as any,
       };
     });
@@ -172,7 +97,7 @@ class StackedBarChart extends React.Component<Props, {}> {
     const series = this.formatSeries(datasetWithDrilldownIds, yKeys, xKey, !!enableDrilldown);
     // TODO: Handle multiple yKeys
     const drilldown = !!enableDrilldown
-      ? this.buildDrilldownTree(datasetWithDrilldownIds, [], xKey, yKeys[0].key)
+      ? buildDrilldownTree<Bar>('bar', datasetWithDrilldownIds, [], xKey, yKeys[0].key)
       : [];
 
     const options: Highcharts.Options = {
