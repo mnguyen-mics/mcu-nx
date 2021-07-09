@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { LayoutOutlined } from '@ant-design/icons';
 import { Row, Col, Input } from 'antd';
-import cuid from 'cuid';
 import { SearchProps } from 'antd/lib/input/Search';
 import McsDateRangePicker, { McsDateRangePickerProps } from '../mcs-date-range-picker';
 import TableView, {
@@ -87,9 +86,9 @@ class TableViewFilters<T> extends React.Component<
     ) : null;
 
     const filtersMultiSelect = filtersOptions
-      ? filtersOptions.map(filterOptions => {
+      ? filtersOptions.map((filterOptions, index) => {
           return (
-            <MultiSelect {...filterOptions} key={cuid()} buttonClass='mcs-table-filters-item' />
+            <MultiSelect {...filterOptions} key={index} buttonClass='mcs-table-filters-item' />
           );
         })
       : null;
