@@ -159,6 +159,7 @@ it('renders a basic tableSelector', () => {
   const tableSelectorProps: TableSelectorProps<any> = {
     ...props,
   };
+  jest.mock('cuid');
   const component = TestRenderer.create(<TableSelector {...tableSelectorProps} />);
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();

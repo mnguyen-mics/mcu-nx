@@ -2,18 +2,21 @@ import * as React from 'react';
 import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { compose } from 'recompose';
-import { generateTooltip, BASE_CHART_HEIGHT } from '../utils';
-
-export interface DatasetProps {
-  key: string;
-  value: number;
-  color: string;
-}
+import {
+  generateTooltip,
+  BASE_CHART_HEIGHT,
+  Datapoint,
+  Dataset,
+  buildDrilldownTree,
+} from '../utils';
+import { uniqueId } from 'lodash';
 
 interface TextProps {
   value?: string;
   text?: string;
 }
+
+type Pie = 'pie';
 
 export interface DonutChartOptionsProps {
   innerRadius: boolean;
@@ -26,8 +29,9 @@ export interface DonutChartOptionsProps {
 }
 
 export interface DonutChartProps {
-  dataset: DatasetProps[];
+  dataset: Dataset;
   options: DonutChartOptionsProps;
+  enableDrilldown?: boolean;
   height?: number;
 }
 
@@ -39,25 +43,40 @@ class DonutChart extends React.Component<Props, {}> {
     this.state = {};
   }
 
+  initDrilldownIds = (dataset: Dataset): Dataset => {
+    return dataset.map((d: Datapoint) => {
+      const drilldownId = !!d.buckets ? uniqueId() : undefined;
+      return {
+        name: d.key as string,
+        y: d.value as number,
+        drilldown: drilldownId,
+      };
+    });
+  };
+
   formatSeries = (
-    dataset: DatasetProps[],
+    dataset: Dataset,
     innerRadius: boolean,
+    colors: string[],
+    enableDrilldown: boolean,
     showLabels?: boolean,
-  ): Highcharts.SeriesOptionsType[] => {
-    return [
-      {
-        type: 'pie',
-        name: '',
-        innerSize: innerRadius ? '65%' : '0%',
-        data: dataset.map(d => {
-          return {
-            name: d.key,
-            y: d.value,
-            selected: showLabels ? !showLabels : true,
-          };
-        }),
-      },
-    ];
+  ): Highcharts.SeriesPieOptions => {
+    return {
+      type: 'pie',
+      name: '',
+      innerSize: innerRadius ? '65%' : '0%',
+      data: dataset.map((d: Datapoint, i: number) => {
+        const drilldownId = enableDrilldown && !!d.buckets ? uniqueId() : undefined;
+        return {
+          name: d.key as string,
+          y: d.value as number,
+          selected: showLabels ? !showLabels : true,
+          color: colors[i % colors.length],
+          drilldown: drilldownId,
+          buckets: d.buckets,
+        };
+      }),
+    };
   };
 
   render() {
@@ -65,7 +84,18 @@ class DonutChart extends React.Component<Props, {}> {
       dataset,
       options: { innerRadius, isHalf, text, colors, showTooltip, showLabels },
       height,
+      enableDrilldown,
     } = this.props;
+
+    const series = this.formatSeries(dataset, innerRadius, colors, !!enableDrilldown, showLabels);
+    const seriesData: Dataset = this.initDrilldownIds(dataset);
+    const seriesPieOptions: Highcharts.SeriesPieOptions = {
+      type: 'pie',
+      innerSize: innerRadius ? '65%' : '0%',
+    };
+    const drilldown = !!enableDrilldown
+      ? buildDrilldownTree<Pie>('pie', seriesData, [], 'key', 'value', seriesPieOptions)
+      : [];
 
     const options: Highcharts.Options = {
       chart: {
@@ -76,6 +106,9 @@ class DonutChart extends React.Component<Props, {}> {
         animation: false,
         height: height,
         style: { fontFamily: '' },
+      },
+      lang: {
+        drillUpText: 'Back',
       },
       title: {
         text: text ? `<div>${text.value}</div><br /><div>${text.text}</div>` : '',
@@ -100,7 +133,14 @@ class DonutChart extends React.Component<Props, {}> {
           selected: true,
         },
       },
-      series: this.formatSeries(dataset, innerRadius, showLabels),
+      series: [series],
+      drilldown: {
+        activeDataLabelStyle: {
+          textDecoration: 'none',
+          color: '#00A1DF',
+        },
+        series: drilldown,
+      },
       credits: {
         enabled: false,
       },
