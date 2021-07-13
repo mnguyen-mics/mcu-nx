@@ -104,7 +104,7 @@ interface WithDrilldownId {
   drilldown?: string;
 }
 
-interface WithSubBuckets {
+export interface WithSubBuckets {
   buckets?: Datapoint[];
 }
 
