@@ -8,6 +8,7 @@ import {
   Datapoint,
   Dataset,
   buildDrilldownTree,
+  WithSubBuckets,
 } from '../utils';
 import { uniqueId } from 'lodash';
 
@@ -43,14 +44,16 @@ class DonutChart extends React.Component<Props, {}> {
     this.state = {};
   }
 
-  initDrilldownIds = (dataset: Dataset): Dataset => {
-    return dataset.map((d: Datapoint) => {
-      const drilldownId = !!d.buckets ? uniqueId() : undefined;
-      return {
-        name: d.key as string,
-        y: d.value as number,
-        drilldown: drilldownId,
+  initDrilldownIds = (dataset: Highcharts.SeriesPieDataOptions[]): Dataset => {
+    return dataset.map((d: Highcharts.SeriesPieDataOptions) => {
+      const withBuckets: WithSubBuckets = d as WithSubBuckets;
+      const datapoint = {
+        name: d.name,
+        y: d.y as number,
+        drilldown: d.drilldown,
+        buckets: withBuckets.buckets,
       };
+      return datapoint as Datapoint;
     });
   };
 
@@ -88,7 +91,9 @@ class DonutChart extends React.Component<Props, {}> {
     } = this.props;
 
     const series = this.formatSeries(dataset, innerRadius, colors, !!enableDrilldown, showLabels);
-    const seriesData: Dataset = this.initDrilldownIds(dataset);
+    const seriesData: Dataset = this.initDrilldownIds(
+      series.data as Highcharts.SeriesPieDataOptions[],
+    );
     const seriesPieOptions: Highcharts.SeriesPieOptions = {
       type: 'pie',
       innerSize: innerRadius ? '65%' : '0%',
