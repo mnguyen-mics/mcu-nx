@@ -83,7 +83,7 @@ class StackedBarChart extends React.Component<Props, {}> {
       options: { colors, xKey, yKeys, showLegend, type, chartOptions },
       reducePadding,
       height,
-      stacking,
+      stacking
     } = this.props;
 
     let datasetWithDrilldownIds = dataset;
@@ -107,16 +107,16 @@ class StackedBarChart extends React.Component<Props, {}> {
     if (reducePadding) {
       plotOptionsForColumn = {
         ...plotOptionsForColumn,
-        pointPadding: 0.05,
-        groupPadding: 0,
-      };
+          pointPadding: 0.05,
+          groupPadding: 0,
+      }
     }
-
+    
     if (stacking) {
       plotOptionsForColumn = {
         ...plotOptionsForColumn,
-        stacking: 'normal',
-      };
+        stacking: 'normal'
+      }
     }
 
     const options: Highcharts.Options = {
@@ -133,7 +133,7 @@ class StackedBarChart extends React.Component<Props, {}> {
       },
       colors: colors,
       plotOptions: {
-        column: plotOptionsForColumn,
+        column: plotOptionsForColumn
       },
       xAxis: {
         type: 'category',

@@ -21,16 +21,12 @@ const props: StackedBarChartProps = {
         message: 'Data 2',
       },
     ],
-    xKey: 'day',
-    chartOptions: {
-      yAxis: {
-        title: { text: '' },
-      },
-    },
+    xKey: 'day'
   },
   reducePadding: true,
-  stacking: true,
+  stacking: false,
   height: 380,
+
 };
 
 export default <StackedBarChart {...props} />;
