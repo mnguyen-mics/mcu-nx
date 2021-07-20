@@ -25,3 +25,5 @@ export { isAppInitialized } from './redux/App/selectors';
 export {  default as Logo } from './components/top-bar/Logo';
 export {  default as errorMessages } from './utils/errorMessage';
 export {  default as NoAccess } from './utils/NoAccess';
+export { default as KeycloakService } from './services/KeycloakService';
+export { default as RenderOnAuthenticated } from './utils/RenderOnAuthenticated';
