@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the Location 1`] = `
+<div
+  className="ant-row table-line section border-top"
+  style={
+    Object {
+      "marginLeft": -5,
+      "marginRight": -5,
+    }
+  }
+>
+  <div
+    className="ant-col ant-col-24"
+    style={
+      Object {
+        "height": "100px",
+        "margin": "-5px -20px",
+        "paddingLeft": 5,
+        "paddingRight": 5,
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "cursor": "grab",
+          "height": 100,
+          "position": "relative",
+          "width": 840,
+        }
+      }
+    >
+      <div
+        style={
+          Object {
+            "height": 100,
+            "position": "relative",
+            "width": 840,
+          }
+        }
+      >
+        <div
+          style={
+            Object {
+              "height": 100,
+              "visibility": "visible",
+              "width": 840,
+            }
+          }
+        />
+        <div
+          className="overlays"
+          style={
+            Object {
+              "height": 100,
+              "left": 0,
+              "overflow": "hidden",
+              "position": "absolute",
+              "top": 0,
+              "width": 840,
+            }
+          }
+        >
+          <div
+            className="mapboxgl-marker "
+            style={
+              Object {
+                "left": 419.9999999999951,
+                "position": "absolute",
+                "top": 50.0000000000194,
+              }
+            }
+          >
+            <svg
+              height="10"
+              width="10"
+            >
+              <circle
+                cx="5"
+                cy="5"
+                fill="#00a1df"
+                r="5"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
