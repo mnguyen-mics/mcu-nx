@@ -8,7 +8,8 @@ it('renders the Location', () => {
     longitude: -122.45,
     latitude: 37.78,
     containerWidth: 800,
-    mapboxToken: 'pk.eyJ1Ijoiem9iaW9uZTE0MyIsImEiOiJjajZtMHZpYngxcm4yMndvMXVibXJwZGx3In0.9s_vDS6h2pU5ampVcydvCA'
+    mapboxToken:
+      'pk.eyJ1Ijoiem9iaW9uZTE0MyIsImEiOiJjajZtMHZpYngxcm4yMndvMXVibXJwZGx3In0.9s_vDS6h2pU5ampVcydvCA',
   };
   const component = TestRenderer.create(<Location {...props} />);
   const res = component.toJSON();

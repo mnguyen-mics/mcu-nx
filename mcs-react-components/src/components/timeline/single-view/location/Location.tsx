@@ -23,7 +23,9 @@ class Location extends React.Component<LocationProps> {
 
     const containerWidth = this.props.containerWidth ? this.props.containerWidth : 0;
 
-    const mapToken = (global as any).window.MCS_CONSTANTS && (global as any).window.MCS_CONSTANTS.MAPBOX_TOKEN || mapboxToken;
+    const mapToken =
+      ((global as any).window.MCS_CONSTANTS && (global as any).window.MCS_CONSTANTS.MAPBOX_TOKEN) ||
+      mapboxToken;
 
     return longitude && latitude && mapToken ? (
       <Row gutter={10} className='table-line section border-top'>
