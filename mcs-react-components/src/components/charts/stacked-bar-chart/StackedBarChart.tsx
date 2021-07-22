@@ -22,6 +22,7 @@ export interface StackedBarChartProps {
   options: StackedBarChartOptions;
   height?: number;
   reducePadding?: boolean;
+  stacking?: boolean;
 }
 
 export interface StackedBarChartOptions {
@@ -82,6 +83,7 @@ class StackedBarChart extends React.Component<Props, {}> {
       options: { colors, xKey, yKeys, showLegend, type, chartOptions },
       reducePadding,
       height,
+      stacking,
     } = this.props;
 
     let datasetWithDrilldownIds = dataset;
@@ -100,6 +102,23 @@ class StackedBarChart extends React.Component<Props, {}> {
       ? buildDrilldownTree<Bar>('bar', datasetWithDrilldownIds, [], xKey, yKeys[0].key)
       : [];
 
+    let plotOptionsForColumn = {};
+
+    if (reducePadding) {
+      plotOptionsForColumn = {
+        ...plotOptionsForColumn,
+        pointPadding: 0.05,
+        groupPadding: 0,
+      };
+    }
+
+    if (stacking) {
+      plotOptionsForColumn = {
+        ...plotOptionsForColumn,
+        stacking: 'normal',
+      };
+    }
+
     const options: Highcharts.Options = {
       ...this.props.options,
       chart: {
@@ -114,12 +133,7 @@ class StackedBarChart extends React.Component<Props, {}> {
       },
       colors: colors,
       plotOptions: {
-        column: reducePadding
-          ? {
-              pointPadding: 0.05,
-              groupPadding: 0,
-            }
-          : {},
+        column: plotOptionsForColumn,
       },
       xAxis: {
         type: 'category',

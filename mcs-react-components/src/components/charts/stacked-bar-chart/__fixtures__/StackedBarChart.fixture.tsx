@@ -29,6 +29,7 @@ const props: StackedBarChartProps = {
     },
   },
   reducePadding: true,
+  stacking: true,
   height: 380,
 };
 
