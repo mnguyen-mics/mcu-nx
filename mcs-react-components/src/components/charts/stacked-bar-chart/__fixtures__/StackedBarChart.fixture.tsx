@@ -22,14 +22,9 @@ const props: StackedBarChartProps = {
       },
     ],
     xKey: 'day',
-    chartOptions: {
-      yAxis: {
-        title: { text: '' },
-      },
-    },
   },
   reducePadding: true,
-  stacking: true,
+  stacking: false,
   height: 380,
 };
 

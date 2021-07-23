@@ -10,7 +10,7 @@ import {
   Datapoint,
   buildDrilldownTree,
 } from '../utils';
-import { uniqueId } from 'lodash';
+import { uniqueId, omitBy, isUndefined } from 'lodash';
 
 HighchartsDrilldown(Highcharts);
 
@@ -61,6 +61,10 @@ class StackedBarChart extends React.Component<Props, {}> {
     });
   };
 
+  hasSubBucket = () => {
+    return this.props.dataset && this.props.dataset.find(d => d.buckets && d.buckets.length > 0);
+  };
+
   formatSeries = (
     dataset: Dataset,
     yKeys: YKey[],
@@ -74,6 +78,38 @@ class StackedBarChart extends React.Component<Props, {}> {
         type: 'column' as any,
       };
     });
+  };
+
+  formatSeriesForStacking = () => {
+    return this.props.dataset.map(y => {
+      return {
+        name: y.xKey,
+        data: y.buckets ? this.getSeriesForStacking(y.buckets) : [],
+        type: 'column' as any,
+      };
+    });
+  };
+
+  getSeriesForStacking = (buckets: Datapoint[]) => {
+    const categories = this.getCategoriesForStacking();
+    const series: number[] = [];
+    categories.forEach(c => {
+      const bucket = buckets.find((b: Datapoint) => b.xKey === c);
+      const seriesData = bucket && bucket.yKey ? bucket.yKey : 0;
+      series.push(seriesData as number);
+    });
+
+    return series;
+  };
+
+  getCategoriesForStacking = () => {
+    const categories = new Set();
+    this.props.dataset.forEach(d => {
+      d.buckets?.forEach(b => {
+        categories.add(b.xKey);
+      });
+    });
+    return Array.from(categories);
   };
 
   render() {
@@ -97,6 +133,7 @@ class StackedBarChart extends React.Component<Props, {}> {
       }) as Dataset;
     }
     const series = this.formatSeries(datasetWithDrilldownIds, yKeys, xKey, !!enableDrilldown);
+    const seriesForStacking = this.formatSeriesForStacking() as Highcharts.SeriesOptionsType[];
     // TODO: Handle multiple yKeys
     const drilldown = !!enableDrilldown
       ? buildDrilldownTree<Bar>('bar', datasetWithDrilldownIds, [], xKey, yKeys[0].key)
@@ -104,7 +141,7 @@ class StackedBarChart extends React.Component<Props, {}> {
 
     let plotOptionsForColumn = {};
 
-    if (reducePadding) {
+    if (reducePadding && (stacking || enableDrilldown || !this.hasSubBucket())) {
       plotOptionsForColumn = {
         ...plotOptionsForColumn,
         pointPadding: 0.05,
@@ -131,18 +168,22 @@ class StackedBarChart extends React.Component<Props, {}> {
       lang: {
         drillUpText: 'Back',
       },
-      colors: colors,
+      colors: this.hasSubBucket() ? undefined : colors,
       plotOptions: {
         column: plotOptionsForColumn,
       },
       xAxis: {
         type: 'category',
+        categories:
+          !enableDrilldown && this.hasSubBucket()
+            ? (this.getCategoriesForStacking() as string[])
+            : undefined,
       },
       yAxis: {
         ...chartOptions?.yAxis,
         title: (chartOptions?.yAxis as Highcharts.YAxisOptions)?.title || { text: '' },
       },
-      series: series,
+      series: !enableDrilldown && this.hasSubBucket() ? seriesForStacking : series,
       drilldown: {
         activeAxisLabelStyle: {
           textDecoration: 'none',
@@ -161,7 +202,15 @@ class StackedBarChart extends React.Component<Props, {}> {
         enabled: showLegend === undefined ? false : showLegend,
       },
     };
-    return <HighchartsReact highcharts={Highcharts} options={options} style={{ width: '100%' }} />;
+
+    const sanitizedOptions = omitBy(options, isUndefined);
+    return (
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={sanitizedOptions}
+        style={{ width: '100%' }}
+      />
+    );
   }
 }
 
