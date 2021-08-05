@@ -23,11 +23,13 @@ export interface ViewComponentWithFiltersProps<T> extends TableViewProps<T> {
   };
   labelsOptions?: LabelsSelectorProps;
   relatedTable?: JSX.Element;
+  onVisibilityChange?: (columns: Array<DataColumnDefinition<T>>) => void;
 }
 
 export interface FiltersState<T> {
   visibilitySelectedColumns: Array<DataColumnDefinition<T>>;
 }
+
 const VisibilityMultiSelect: React.ComponentClass<MultiSelectProps<DataColumnDefinition<any>>> =
   MultiSelect;
 
@@ -57,6 +59,9 @@ class TableViewFilters<T> extends React.Component<
   };
 
   changeColumnVisibility = (selectedColumns: Array<DataColumnDefinition<T>>) => {
+    if (this.props.onVisibilityChange !== undefined) {
+      this.props.onVisibilityChange(selectedColumns);
+    }
     this.setState({
       visibilitySelectedColumns: selectedColumns,
     });
