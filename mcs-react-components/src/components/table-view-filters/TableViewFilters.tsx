@@ -23,6 +23,7 @@ export interface ViewComponentWithFiltersProps<T> extends TableViewProps<T> {
   };
   labelsOptions?: LabelsSelectorProps;
   relatedTable?: JSX.Element;
+  controlledVisibilitySelectedColumns?: Array<DataColumnDefinition<T>>;
   onVisibilityChange?: (columns: Array<DataColumnDefinition<T>>) => void;
 }
 
@@ -62,9 +63,11 @@ class TableViewFilters<T> extends React.Component<
     if (this.props.onVisibilityChange !== undefined) {
       this.props.onVisibilityChange(selectedColumns);
     }
-    this.setState({
-      visibilitySelectedColumns: selectedColumns,
-    });
+    if (this.props.controlledVisibilitySelectedColumns === undefined) {
+      this.setState({
+        visibilitySelectedColumns: selectedColumns,
+      });
+    }
   };
 
   render() {
@@ -105,7 +108,9 @@ class TableViewFilters<T> extends React.Component<
         items={this.getHideableColumns()}
         getKey={getItemKey}
         display={getItemKey}
-        selectedItems={this.state.visibilitySelectedColumns}
+        selectedItems={
+          this.props.controlledVisibilitySelectedColumns || this.state.visibilitySelectedColumns
+        }
         handleMenuClick={this.changeColumnVisibility}
         buttonClass={'mcs-table-filters-item'}
       />
@@ -132,7 +137,10 @@ class TableViewFilters<T> extends React.Component<
           <Col span={24}>
             <TableView
               {...(this.props as any)}
-              visibilitySelectedColumns={this.state.visibilitySelectedColumns}
+              visibilitySelectedColumns={
+                this.props.controlledVisibilitySelectedColumns ||
+                this.state.visibilitySelectedColumns
+              }
             />
           </Col>
         </Row>

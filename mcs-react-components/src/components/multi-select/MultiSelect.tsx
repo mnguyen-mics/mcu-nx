@@ -38,7 +38,7 @@ class MultiSelect<T> extends React.Component<MultiSelectProps<T>, MultiSelectSta
 
   buildMenuItems = () => {
     const { items, display, getKey, subItems, subItemsTitle } = this.props;
-    const { selectedItems } = this.state;
+    const selectedItems = this.props.selectedItems;
     const renderItems = (elements: T[]) => {
       return elements.map(element => {
         const isItemSelected =
