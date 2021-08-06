@@ -21,7 +21,6 @@ export interface MultiSelectProps<T> {
 }
 
 export interface MultiSelectState<T> {
-  selectedItems: T[];
   overlayVisible: boolean;
 }
 
@@ -33,7 +32,6 @@ class MultiSelect<T> extends React.Component<MultiSelectProps<T>, MultiSelectSta
 
   state = {
     overlayVisible: false,
-    selectedItems: this.props.selectedItems,
   };
 
   buildMenuItems = () => {
@@ -65,14 +63,14 @@ class MultiSelect<T> extends React.Component<MultiSelectProps<T>, MultiSelectSta
     this.setVisibility(isVisible);
 
     if (!isVisible && this.props.onCloseMenu) {
-      this.props.onCloseMenu(this.state.selectedItems);
+      this.props.onCloseMenu(this.props.selectedItems);
     }
   };
 
   onMenuClick = (param: MenuInfo) => {
     const { items, handleMenuClick, getKey, handleItemClick, singleSelectOnly, subItems } =
       this.props;
-    const { selectedItems } = this.state;
+    const { selectedItems } = this.props;
 
     const allItems = subItems ? items.concat(subItems) : items;
 
@@ -91,8 +89,6 @@ class MultiSelect<T> extends React.Component<MultiSelectProps<T>, MultiSelectSta
     } else {
       newArray = singleSelectOnly ? [clickedItem!] : [...selectedItems, clickedItem!];
     }
-
-    this.setState({ selectedItems: newArray });
 
     if (handleMenuClick) {
       handleMenuClick(newArray);
