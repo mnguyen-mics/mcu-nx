@@ -54,3 +54,5 @@ export { default as TableViewFilters } from './components/table-view-filters';
 export { default as McsHeader } from './components/mcs-header';
 export { default as RadarSpiderChart } from './components/charts/radar-spider-chart';
 export { default as RadarChart } from './components/charts/radar-chart';
+export { default as EmptyRecords } from './components/empty-records';
+export { default as RelatedRecords } from './components/related-records';
