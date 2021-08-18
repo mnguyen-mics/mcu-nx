@@ -178,6 +178,7 @@ class StackedBarChart extends React.Component<Props, {}> {
           !enableDrilldown && this.hasSubBucket()
             ? (this.getCategoriesForStacking() as string[])
             : undefined,
+        labels: { style: { fontWeight: 'normal' } },
       },
       yAxis: {
         ...chartOptions?.yAxis,

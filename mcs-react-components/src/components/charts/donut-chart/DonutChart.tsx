@@ -112,6 +112,13 @@ class DonutChart extends React.Component<Props, {}> {
         height: height,
         style: { fontFamily: '' },
       },
+      xAxis: {
+        labels: {
+          style: {
+            fontWeight: 'normal',
+          },
+        },
+      },
       lang: {
         drillUpText: 'Back',
       },
