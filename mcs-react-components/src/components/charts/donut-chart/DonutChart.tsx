@@ -115,7 +115,7 @@ class DonutChart extends React.Component<Props, {}> {
       xAxis: {
         labels: {
           style: {
-            fontWeight: 'normal',
+            fontWeight: '500',
           },
         },
       },
@@ -150,6 +150,7 @@ class DonutChart extends React.Component<Props, {}> {
         activeDataLabelStyle: {
           textDecoration: 'none',
           color: '#00A1DF',
+          fontWeight: '500',
         },
         series: drilldown,
       },
