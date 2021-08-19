@@ -178,7 +178,7 @@ class StackedBarChart extends React.Component<Props, {}> {
           !enableDrilldown && this.hasSubBucket()
             ? (this.getCategoriesForStacking() as string[])
             : undefined,
-        labels: { style: { fontWeight: 'normal' } },
+        labels: { style: { fontWeight: '500' } },
       },
       yAxis: {
         ...chartOptions?.yAxis,
@@ -189,6 +189,7 @@ class StackedBarChart extends React.Component<Props, {}> {
         activeAxisLabelStyle: {
           textDecoration: 'none',
           color: '#00A1DF',
+          fontWeight: '500',
         },
         series: drilldown,
       },
