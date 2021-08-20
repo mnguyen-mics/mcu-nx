@@ -1,5 +1,6 @@
 const path = require('path');
 const glob = require('glob');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: glob.sync('./src/index.ts'),
@@ -9,6 +10,14 @@ module.exports = {
     libraryTarget: 'umd',
     library: 'McsReactComponents',
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: './src/style', to: './style' },
+        { from: './components/**/*.less', to: '[path][name].[ext]', context: 'src' },
+      ],
+    }),
+  ],
   module: {
     rules: [
       {
