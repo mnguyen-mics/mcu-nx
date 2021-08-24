@@ -1,7 +1,7 @@
 import * as React from 'react';
-import StackedBarChart, { StackedBarChartProps } from '../StackedBarChart';
+import { BarChart, BarChartProps } from '../../bar-chart/BarChart';
 
-const props: StackedBarChartProps = {
+const props: BarChartProps = {
   dataset: [
     { day: '2020-02-27', data_1: 456, data_2: 65 },
     { day: '2020-02-28', data_1: 3451, data_2: 561 },
@@ -28,4 +28,4 @@ const props: StackedBarChartProps = {
   height: 380,
 };
 
-export default <StackedBarChart {...props} />;
+export default <BarChart {...props} />;
