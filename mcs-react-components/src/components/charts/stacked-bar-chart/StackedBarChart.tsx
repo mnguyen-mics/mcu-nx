@@ -29,10 +29,8 @@ export interface StackedBarChartOptions {
   colors: string[];
   yKeys: YKey[];
   xKey: string;
-  showLegend?: boolean;
+  showLegend?: boolean; // Should add position: bottom | top
   type?: string;
-  yAxisTilte?: string;
-  chartOptions?: Highcharts.Options;
 }
 
 type YKey = { key: string; message: string };
@@ -81,42 +79,48 @@ class StackedBarChart extends React.Component<Props, {}> {
   };
 
   formatSeriesForStacking = () => {
-    return this.props.dataset.map(y => {
-      return {
-        name: y.xKey,
-        data: y.buckets ? this.getSeriesForStacking(y.buckets) : [],
-        type: 'column' as any,
-      };
-    });
-  };
-
-  getSeriesForStacking = (buckets: Datapoint[]) => {
-    const categories = this.getCategoriesForStacking();
-    const series: number[] = [];
-    categories.forEach(c => {
-      const bucket = buckets.find((b: Datapoint) => b.xKey === c);
-      const seriesData = bucket && bucket.yKey ? bucket.yKey : 0;
-      series.push(seriesData as number);
-    });
-
+    const tmpObject = this.getSeriesForStacking(this.props.dataset);
+    const series = [];
+    for (const x in tmpObject) {
+      if (tmpObject.hasOwnProperty(x)) {
+        const xObject = tmpObject[x];
+        const xData = [];
+        for (const y in xObject) {
+          if (xObject.hasOwnProperty(y)) {
+            xData.push({
+              name: y,
+              y: xObject[y],
+            });
+            series.push({
+              name: x,
+              data: xData,
+              type: 'column' as any,
+            });
+          }
+        }
+      }
+    }
     return series;
   };
 
-  getCategoriesForStacking = () => {
-    const categories = new Set();
-    this.props.dataset.forEach(d => {
-      d.buckets?.forEach(b => {
-        categories.add(b.xKey);
+  getSeriesForStacking = (dataset: Datapoint[]) => {
+    const acc: any = {};
+    dataset.forEach(d => {
+      const buckets = d.buckets || [];
+      buckets.forEach(b => {
+        const currentValue = acc[b.xKey as string];
+        acc[b.xKey as string] = currentValue ? currentValue : {};
+        acc[b.xKey as string][d.xKey as string] = b.yKey;
       });
     });
-    return Array.from(categories);
+    return acc;
   };
 
   render() {
     const {
       dataset,
       enableDrilldown,
-      options: { colors, xKey, yKeys, showLegend, type, chartOptions },
+      options: { colors, xKey, yKeys, showLegend, type },
       reducePadding,
       height,
       stacking,
@@ -174,15 +178,7 @@ class StackedBarChart extends React.Component<Props, {}> {
       },
       xAxis: {
         type: 'category',
-        categories:
-          !enableDrilldown && this.hasSubBucket()
-            ? (this.getCategoriesForStacking() as string[])
-            : undefined,
         labels: { style: { fontWeight: '500' } },
-      },
-      yAxis: {
-        ...chartOptions?.yAxis,
-        title: (chartOptions?.yAxis as Highcharts.YAxisOptions)?.title || { text: '' },
       },
       series: !enableDrilldown && this.hasSubBucket() ? seriesForStacking : series,
       drilldown: {
