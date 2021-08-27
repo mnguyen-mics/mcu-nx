@@ -127,6 +127,10 @@ interface DrilldownNode {
   drilldown?: string;
 }
 
+export const defaultColors = [
+  '#00a1df’,’#fd7c12’,’#00ab67’,’#513fab’,’#eb5c5d’,’#003056’,’#d9d9d9',
+];
+
 export function buildDrilldownTree<T>(
   chartType: T,
   buckets: Datapoint[],

@@ -9,6 +9,7 @@ import {
   Dataset,
   Datapoint,
   buildDrilldownTree,
+  defaultColors,
 } from '../utils';
 import { uniqueId, omitBy, isUndefined } from 'lodash';
 
@@ -23,10 +24,11 @@ export interface StackedBarChartProps {
   height?: number;
   reducePadding?: boolean;
   stacking?: boolean;
+  plotLineValue?: number;
 }
 
 export interface StackedBarChartOptions {
-  colors: string[];
+  colors?: string[];
   yKeys: YKey[];
   xKey: string;
   showLegend?: boolean; // Should add position: bottom | top
@@ -91,13 +93,13 @@ class StackedBarChart extends React.Component<Props, {}> {
               name: y,
               y: xObject[y],
             });
-            series.push({
-              name: x,
-              data: xData,
-              type: 'column' as any,
-            });
           }
         }
+        series.push({
+          name: x,
+          data: xData,
+          type: 'column' as any,
+        });
       }
     }
     return series;
@@ -124,7 +126,10 @@ class StackedBarChart extends React.Component<Props, {}> {
       reducePadding,
       height,
       stacking,
+      plotLineValue,
     } = this.props;
+
+    const definedColors = colors ? colors : defaultColors;
 
     let datasetWithDrilldownIds = dataset;
     if (!!enableDrilldown) {
@@ -160,6 +165,16 @@ class StackedBarChart extends React.Component<Props, {}> {
       };
     }
 
+    const plotLines = plotLineValue
+      ? [
+          {
+            color: '#3c3c3c',
+            width: 2,
+            value: plotLineValue,
+          },
+        ]
+      : [];
+
     const options: Highcharts.Options = {
       ...this.props.options,
       chart: {
@@ -172,7 +187,7 @@ class StackedBarChart extends React.Component<Props, {}> {
       lang: {
         drillUpText: 'Back',
       },
-      colors: this.hasSubBucket() ? undefined : colors,
+      colors: this.hasSubBucket() && !enableDrilldown ? undefined : definedColors,
       plotOptions: {
         column: plotOptionsForColumn,
       },
@@ -195,6 +210,9 @@ class StackedBarChart extends React.Component<Props, {}> {
       tooltip: {
         shared: true,
         ...generateTooltip(),
+      },
+      yAxis: {
+        plotLines: plotLines,
       },
       legend: {
         enabled: showLegend === undefined ? false : showLegend,

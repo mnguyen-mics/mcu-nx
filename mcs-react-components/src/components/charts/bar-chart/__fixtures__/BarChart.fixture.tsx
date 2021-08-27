@@ -26,6 +26,7 @@ const props: BarChartProps = {
   reducePadding: true,
   stacking: false,
   height: 380,
+  plotLineValue: 1000,
 };
 
 export default <BarChart {...props} />;
