@@ -35,7 +35,8 @@ export { default as MenuPresentational } from './components/form-menu/menu-prese
 export { default as MenuSubList } from './components/form-menu/menu-sub-list';
 export { default as SelectorLayout } from './components/element-selector/selector-layout';
 export { default as LabelsSelector } from './components/labels-selector';
-export { default as LegendChart } from './components/legend-chart';
+export { default as LegendChart } from './components/legend-chart/legend-chart';
+export { default as LegendChartWithModal } from './components/legend-chart/legend-chart-with-modal';
 export { default as McsDateRangePicker } from './components/mcs-date-range-picker';
 export { default as MetricsColumn } from './components/metrics-column';
 export { default as MetricsHighlight } from './components/metrics-highlight';
