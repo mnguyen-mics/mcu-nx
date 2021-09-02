@@ -75,9 +75,13 @@ export const generateLegend = (): Partial<Highcharts.LegendOptions> => {
   return {};
 };
 
+export type Format = 'percentage' | 'index' | 'count';
+
 export const generateTooltip = (
   showTooltip: boolean = true,
+  format: Format = 'count',
 ): Partial<Highcharts.TooltipOptions> => {
+  const printedPoint = format === 'percentage' ? `{point.y}% ({point.count})` : '{point.y}';
   return showTooltip
     ? {
         useHTML: false,
@@ -89,7 +93,7 @@ export const generateTooltip = (
         shadow: false,
         hideDelay: 0,
         headerFormat: `<span style="font-size: 12px; font-weight: bold; margin-bottom: 13px;">{point.key}</span><br/><br/>`,
-        pointFormat: `<span style="color:{point.color}; font-size: 20px; margin-right: 20px;">\u25CF</span> {series.name}: <b>{point.y}</b><br/>`,
+        pointFormat: `<span style="color:{point.color}; font-size: 20px; margin-right: 20px;">\u25CF</span> {series.name}: <b>${printedPoint}</b><br/>`,
       }
     : { enabled: false };
 };
@@ -165,6 +169,7 @@ export function buildDrilldownTree<T>(
               name: sub[xKey] as string,
               drilldown: sub.drilldown,
               y: sub[yKey] as number,
+              count: sub[`${yKey}-count`],
             };
           }),
         };

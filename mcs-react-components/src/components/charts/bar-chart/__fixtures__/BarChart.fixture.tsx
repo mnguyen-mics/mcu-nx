@@ -22,6 +22,7 @@ const props: BarChartProps = {
       },
     ],
     xKey: 'day',
+    format: 'count',
   },
   reducePadding: true,
   stacking: false,

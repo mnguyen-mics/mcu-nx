@@ -9,6 +9,7 @@ import {
   Dataset,
   buildDrilldownTree,
   WithSubBuckets,
+  Format,
 } from '../utils';
 import { uniqueId } from 'lodash';
 
@@ -27,6 +28,7 @@ export interface DonutChartOptionsProps {
   showTooltip?: boolean;
   showLabels?: boolean;
   showHover?: boolean;
+  format: Format;
 }
 
 export interface DonutChartProps {
@@ -62,6 +64,8 @@ class DonutChart extends React.Component<Props, {}> {
     innerRadius: boolean,
     colors: string[],
     enableDrilldown: boolean,
+    xKey: string,
+    yKey: string,
     showLabels?: boolean,
   ): Highcharts.SeriesPieOptions => {
     return {
@@ -71,8 +75,9 @@ class DonutChart extends React.Component<Props, {}> {
       data: dataset.map((d: Datapoint, i: number) => {
         const drilldownId = enableDrilldown && !!d.buckets ? uniqueId() : undefined;
         return {
-          name: d.key as string,
-          y: d.value as number,
+          name: d[xKey] as string,
+          y: d[yKey] as number,
+          count: d[`${yKey}-count`],
           selected: showLabels ? !showLabels : true,
           color: colors[i % colors.length],
           drilldown: drilldownId,
@@ -85,12 +90,22 @@ class DonutChart extends React.Component<Props, {}> {
   render() {
     const {
       dataset,
-      options: { innerRadius, isHalf, text, colors, showTooltip, showLabels },
+      options: { innerRadius, isHalf, text, colors, showTooltip, showLabels, format },
       height,
       enableDrilldown,
     } = this.props;
+    const xKey = 'key';
+    const yKey = 'value';
 
-    const series = this.formatSeries(dataset, innerRadius, colors, !!enableDrilldown, showLabels);
+    const series = this.formatSeries(
+      dataset,
+      innerRadius,
+      colors,
+      !!enableDrilldown,
+      xKey,
+      yKey,
+      showLabels,
+    );
     const seriesData: Dataset = this.initDrilldownIds(
       series.data as Highcharts.SeriesPieDataOptions[],
     );
@@ -99,7 +114,7 @@ class DonutChart extends React.Component<Props, {}> {
       innerSize: innerRadius ? '65%' : '0%',
     };
     const drilldown = !!enableDrilldown
-      ? buildDrilldownTree<Pie>('pie', seriesData, [], 'key', 'value', seriesPieOptions)
+      ? buildDrilldownTree<Pie>('pie', seriesData, [], xKey, yKey, seriesPieOptions)
       : [];
 
     const options: Highcharts.Options = {
@@ -159,7 +174,7 @@ class DonutChart extends React.Component<Props, {}> {
       },
       tooltip: {
         shared: true,
-        ...generateTooltip(showTooltip ? showTooltip : false),
+        ...generateTooltip(showTooltip ? showTooltip : false, format),
       },
     };
 

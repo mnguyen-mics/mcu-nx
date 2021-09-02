@@ -10,6 +10,7 @@ import {
   Datapoint,
   buildDrilldownTree,
   defaultColors,
+  Format,
 } from '../utils';
 import { uniqueId, omitBy, isUndefined } from 'lodash';
 
@@ -33,6 +34,7 @@ export interface StackedBarChartOptions {
   xKey: string;
   showLegend?: boolean; // Should add position: bottom | top
   type?: string;
+  format: Format;
 }
 
 type YKey = { key: string; message: string };
@@ -51,6 +53,7 @@ class StackedBarChart extends React.Component<Props, {}> {
         name: d[xKey],
         id: d[xKey] as string,
         y: d[y.key] ? (d[y.key] as number) : 0,
+        count: d[`${y.key}-count`],
       };
       if (enableDrilldown && !!d.buckets)
         return {
@@ -80,8 +83,8 @@ class StackedBarChart extends React.Component<Props, {}> {
     });
   };
 
-  formatSeriesForStacking = () => {
-    const tmpObject = this.getSeriesForStacking(this.props.dataset);
+  formatSeriesForStacking = (yKey: string) => {
+    const tmpObject = this.getSeriesForStacking(this.props.dataset, yKey);
     const series = [];
     for (const x in tmpObject) {
       if (tmpObject.hasOwnProperty(x)) {
@@ -91,7 +94,8 @@ class StackedBarChart extends React.Component<Props, {}> {
           if (xObject.hasOwnProperty(y)) {
             xData.push({
               name: y,
-              y: xObject[y],
+              y: xObject[y].y,
+              count: xObject[y].count,
             });
           }
         }
@@ -105,14 +109,17 @@ class StackedBarChart extends React.Component<Props, {}> {
     return series;
   };
 
-  getSeriesForStacking = (dataset: Datapoint[]) => {
+  getSeriesForStacking = (dataset: Datapoint[], yKey: string) => {
     const acc: any = {};
     dataset.forEach(d => {
       const buckets = d.buckets || [];
       buckets.forEach(b => {
         const currentValue = acc[b.xKey as string];
         acc[b.xKey as string] = currentValue ? currentValue : {};
-        acc[b.xKey as string][d.xKey as string] = b.yKey;
+        acc[b.xKey as string][d.xKey as string] = {
+          y: b[yKey],
+          count: b[`${yKey}-count`],
+        };
       });
     });
     return acc;
@@ -122,7 +129,7 @@ class StackedBarChart extends React.Component<Props, {}> {
     const {
       dataset,
       enableDrilldown,
-      options: { colors, xKey, yKeys, showLegend, type },
+      options: { colors, xKey, yKeys, showLegend, type, format },
       reducePadding,
       height,
       stacking,
@@ -142,7 +149,9 @@ class StackedBarChart extends React.Component<Props, {}> {
       }) as Dataset;
     }
     const series = this.formatSeries(datasetWithDrilldownIds, yKeys, xKey, !!enableDrilldown);
-    const seriesForStacking = this.formatSeriesForStacking() as Highcharts.SeriesOptionsType[];
+    const seriesForStacking = this.formatSeriesForStacking(
+      yKeys[0].key,
+    ) as Highcharts.SeriesOptionsType[];
     // TODO: Handle multiple yKeys
     const drilldown = !!enableDrilldown
       ? buildDrilldownTree<Bar>('bar', datasetWithDrilldownIds, [], xKey, yKeys[0].key)
@@ -209,7 +218,7 @@ class StackedBarChart extends React.Component<Props, {}> {
       },
       tooltip: {
         shared: true,
-        ...generateTooltip(),
+        ...generateTooltip(true, format),
       },
       yAxis: {
         plotLines: plotLines,
