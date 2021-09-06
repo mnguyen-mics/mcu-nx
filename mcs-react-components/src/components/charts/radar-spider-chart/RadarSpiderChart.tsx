@@ -136,7 +136,7 @@ class RadarSpiderChart extends React.Component<Props, {}> {
       },
       tooltip: {
         shared: true,
-        ...generateTooltip(undefined, undefined, tooltip),
+        ...generateTooltip(undefined, undefined, tooltip, true),
       },
       legend: {
         enabled: showLegend === undefined ? false : showLegend,

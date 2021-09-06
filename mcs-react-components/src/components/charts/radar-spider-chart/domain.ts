@@ -10,7 +10,9 @@ export const generateTooltip = (
   showTooltip: boolean = true,
   useTimeFormatter: boolean = false,
   tooltip?: TooltipChart,
+  withCount: boolean = false,
 ): Partial<Highcharts.TooltipOptions> => {
+  const pointFormat = withCount ? `{point.y}% count:{point.count}` : `{point.y}`;
   return showTooltip
     ? {
         useHTML: false,
@@ -23,7 +25,7 @@ export const generateTooltip = (
         hideDelay: 0,
         headerFormat: `<span style="font-size: 12px; font-weight: bold; margin-bottom: 13px;">{point.key}</span><br/><br/>`,
         pointFormat: `<span style="color:{point.color}; font-size: 20px; margin-right: 20px;">\u25CF</span> {series.name}: <b>${
-          tooltip ? tooltip.formatter : '{point.y}'
+          tooltip ? tooltip.formatter : pointFormat
         }</b><br/>`,
         pointFormatter: useTimeFormatter
           ? function callback() {
