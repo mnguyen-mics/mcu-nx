@@ -80,8 +80,13 @@ export type Format = 'percentage' | 'index' | 'count';
 export const generateTooltip = (
   showTooltip: boolean = true,
   format: Format = 'count',
+  customFormat?: string,
 ): Partial<Highcharts.TooltipOptions> => {
-  const printedPoint = format === 'percentage' ? `{point.y}% ({point.count})` : '{point.y}';
+  const printedPoint = customFormat
+    ? customFormat
+    : format === 'percentage'
+    ? `{point.y}% ({point.count})`
+    : '{point.y}';
   return showTooltip
     ? {
         useHTML: false,
