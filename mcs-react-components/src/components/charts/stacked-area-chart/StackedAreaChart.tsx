@@ -10,6 +10,7 @@ import {
   generateTooltip,
   BASE_CHART_HEIGHT,
   OnDragEnd,
+  defaultColors,
 } from '../utils';
 
 export interface StackedAreaChartProps {
@@ -21,9 +22,9 @@ export interface StackedAreaChartProps {
 type Dataset = Array<{ [key: string]: string | number | Date | undefined }>;
 
 interface ChartOptions {
-  colors: string[];
   yKeys: YKey[];
   xKey: XKey;
+  colors?: string[];
   isDraggable?: boolean;
   onDragEnd?: OnDragEnd;
 }
@@ -52,7 +53,7 @@ class StackedAreaChart extends React.Component<Props, {}> {
     dataset: Dataset,
     xKey: string,
     yKeys: YKey[],
-    colors: string[],
+    colors: string[] = defaultColors,
   ): Highcharts.SeriesOptionsType[] => {
     return yKeys.map((y, i) => {
       return {
@@ -125,7 +126,7 @@ class StackedAreaChart extends React.Component<Props, {}> {
       title: {
         text: '',
       },
-      colors: colors,
+      colors: colors || defaultColors,
       plotOptions: {
         area: {
           animation: true,

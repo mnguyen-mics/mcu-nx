@@ -136,7 +136,7 @@ class StackedBarChart extends React.Component<Props, {}> {
       plotLineValue,
     } = this.props;
 
-    const definedColors = colors ? colors : defaultColors;
+    const definedColors = colors || defaultColors;
 
     let datasetWithDrilldownIds = dataset;
     if (!!enableDrilldown) {

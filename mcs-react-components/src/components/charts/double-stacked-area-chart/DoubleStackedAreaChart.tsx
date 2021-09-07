@@ -11,6 +11,7 @@ import {
   BASE_CHART_HEIGHT,
   OnDragEnd,
   generateDraggable,
+  defaultColors,
 } from '../utils';
 
 export interface DoubleStackedAreaChartProps {
@@ -24,9 +25,9 @@ export type Dataset = Array<{
 }>;
 
 interface ChartOptions {
-  colors: string[];
   yKeys: yKey[];
   xKey: string;
+  colors?: string[];
   isDraggable?: boolean;
   onDragEnd?: OnDragEnd;
 }
@@ -45,7 +46,7 @@ class DoubleStackedAreaChart extends React.Component<Props, {}> {
     dataset: Dataset,
     xKey: string,
     yKeys: yKey[],
-    colors: string[],
+    colors: string[] = defaultColors,
   ): Highcharts.SeriesOptionsType[] => {
     return yKeys.map((y, i) => {
       return {
@@ -123,7 +124,7 @@ class DoubleStackedAreaChart extends React.Component<Props, {}> {
       title: {
         text: '',
       },
-      colors: colors,
+      colors: colors || defaultColors,
       plotOptions: {
         area: {
           animation: true,

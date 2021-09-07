@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Highcharts, { DataLabelsFilterOptionsObject, SeriesAreaOptions } from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { generateTooltip } from '../utils';
+import { defaultColors, generateTooltip } from '../utils';
 
 require('highcharts/highcharts-more')(Highcharts);
 
@@ -80,9 +80,7 @@ class RadarChart extends React.Component<Props> {
         polar: true,
         height: height,
       },
-      colors: colors
-        ? colors
-        : ['#00a1df', '#fd7c12', '#00ab67', '#513fab', '#eb5c5d', '#003056', '#d9d9d9'],
+      colors: colors || defaultColors,
       title: {
         text: '',
       },

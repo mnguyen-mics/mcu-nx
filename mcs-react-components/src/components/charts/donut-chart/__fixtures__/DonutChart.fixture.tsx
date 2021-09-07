@@ -25,7 +25,7 @@ const props: DonutChartProps = {
     showHover: true,
     innerRadius: true,
     isHalf: false,
-    colors: ['#003056', '#04416c', '#095382', '#0c6599', '#0c78b0', '#098cc7', '#00a1df'],
+    format: 'count',
   },
 };
 

@@ -80,7 +80,7 @@ const props: BarChartProps = {
   dataset: dataset,
   options: {
     showLegend: true,
-    colors: ['#8A008C', '#7677DB'],
+    format: 'count',
     yKeys: [
       {
         key: 'data_1',
