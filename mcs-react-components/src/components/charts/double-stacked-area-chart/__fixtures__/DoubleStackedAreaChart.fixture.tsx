@@ -10,7 +10,6 @@ const props: DoubleStackedAreaChartProps = {
     { day: '2020-03-02', data_1: 889, data_2: 53 },
   ],
   options: {
-    colors: ['#8A008C', '#7677DB'],
     yKeys: [
       {
         key: 'data_1',

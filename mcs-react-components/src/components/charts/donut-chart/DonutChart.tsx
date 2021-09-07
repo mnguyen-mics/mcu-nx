@@ -10,6 +10,7 @@ import {
   buildDrilldownTree,
   WithSubBuckets,
   Format,
+  defaultColors,
 } from '../utils';
 import { uniqueId } from 'lodash';
 
@@ -24,7 +25,7 @@ export interface DonutChartOptionsProps {
   innerRadius: boolean;
   isHalf: boolean;
   text?: TextProps;
-  colors: string[];
+  colors?: string[];
   showTooltip?: boolean;
   showLabels?: boolean;
   showHover?: boolean;
@@ -62,7 +63,7 @@ class DonutChart extends React.Component<Props, {}> {
   formatSeries = (
     dataset: Dataset,
     innerRadius: boolean,
-    colors: string[],
+    colors: string[] = defaultColors,
     enableDrilldown: boolean,
     xKey: string,
     yKey: string,
@@ -143,7 +144,7 @@ class DonutChart extends React.Component<Props, {}> {
         verticalAlign: 'middle',
         y: isHalf ? -30 : -5,
       },
-      colors: colors,
+      colors: colors || defaultColors,
       plotOptions: {
         pie: {
           dataLabels: {

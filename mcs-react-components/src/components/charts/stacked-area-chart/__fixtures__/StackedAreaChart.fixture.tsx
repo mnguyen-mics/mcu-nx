@@ -10,7 +10,6 @@ const propsForDayMode: StackedAreaChartProps = {
     { day: '2020-03-02', data_1: 889, data_2: 53 },
   ],
   options: {
-    colors: ['#8A008C', '#7677DB'],
     yKeys: [
       {
         key: 'data_1',
@@ -125,7 +124,6 @@ const propsForHourMode: StackedAreaChartProps = {
     },
   ],
   options: {
-    colors: ['#8A008C'],
     yKeys: [
       {
         key: 'user_points_count',
@@ -166,7 +164,6 @@ const propsForDefaultMode: StackedAreaChartProps = {
     { category: 'z', y: 6 },
   ],
   options: {
-    colors: ['#8A008C'],
     yKeys: [
       {
         key: 'y',

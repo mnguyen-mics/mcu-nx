@@ -10,7 +10,6 @@ const props: BarChartProps = {
   ],
   options: {
     showLegend: true,
-    colors: ['#8A008C', '#7677DB'],
     yKeys: [
       {
         key: 'data_1',
