@@ -9,6 +9,7 @@ import {
   buildDrilldownTree,
   WithSubBuckets,
   defaultColors,
+  PieChartFormat,
 } from '../utils';
 import { uniqueId } from 'lodash';
 
@@ -25,11 +26,6 @@ export interface PieChartLegend {
   enabled: boolean;
   position: 'bottom' | 'right';
 }
-export interface TextProps {
-  value?: string;
-  text?: string;
-}
-
 export interface PieChartProps {
   height?: number;
   dataset: Dataset;
@@ -40,7 +36,7 @@ export interface PieChartProps {
   isHalf?: boolean;
   dataLabels?: PieDataLabels;
   tooltip?: string;
-  text?: TextProps;
+  format?: PieChartFormat;
 }
 
 type Props = PieChartProps;
@@ -93,33 +89,28 @@ class PieChart extends React.Component<Props, {}> {
   };
 
   formatDataLabel = (): string => {
-    const { legend, dataLabels, drilldown } = this.props;
+    const { legend, dataLabels, format } = this.props;
     if (dataLabels?.format) return dataLabels?.format;
-    if (drilldown) return `${!!legend?.enabled ? '' : '<b>{point.name}</b>: '}<b>{point.percentage:.2f} %</b>`;
-    return `${!!legend?.enabled ? '' : '<b>{point.name}</b>: '}{point.percentage:.2f} %`;
+    return `${!!legend?.enabled ? '' : '{point.name}: '}${
+      format !== 'count' ? '{point.percentage:.2f}%' : '{point.y}'
+    }`;
   };
 
   formatTooltip = (): string => {
-    const { legend, tooltip } = this.props;
+    const { legend, tooltip, format } = this.props;
     if (tooltip) return tooltip;
-    return `${!!legend?.enabled ? '' : '{point.name}: '}{point.percentage:.2f} %`;
+    return `${!!legend?.enabled ? '' : '{point.name}: '}${
+      format !== 'count' ? '{point.percentage:.2f}%' : '{point.y}'
+    }`;
   };
 
   render() {
-    const { dataset, height, legend, colors, drilldown, innerRadius, isHalf, dataLabels, text } =
+    const { dataset, height, legend, colors, drilldown, innerRadius, isHalf, dataLabels } =
       this.props;
     const xKey = 'key';
     const yKey = 'value';
 
-    const chartColors = colors || [
-      '#00a1df',
-      '#fd7c12',
-      '#00ab67',
-      '#513fab',
-      '#eb5c5d',
-      '#003056',
-      '#d9d9d9',
-    ];
+    const chartColors = colors || defaultColors;
 
     const series = this.formatSeries(
       dataset,
@@ -162,7 +153,7 @@ class PieChart extends React.Component<Props, {}> {
         drillUpText: 'Back',
       },
       title: {
-        text: text ? `<div>${text.value}</div><br /><div>${text.text}</div>` : '',
+        text: '',
         align: 'center',
         verticalAlign: 'middle',
         y: isHalf ? -30 : -5,
@@ -173,10 +164,11 @@ class PieChart extends React.Component<Props, {}> {
           dataLabels: {
             enabled: dataLabels ? !!dataLabels.enabled : true,
             format: this.formatDataLabel(),
-            distance: dataLabels?.distance || 0,
             filter: dataLabels?.filter,
             style: {
               color: 'rgba(0, 0, 0, 0.65)',
+              fontWeight: 'normal',
+              fontFamily: drilldown ? 'LLCircularWeb-Medium' : 'LLCircularWeb-Book',
             },
           },
           startAngle: isHalf ? -90 : 0,
@@ -210,12 +202,17 @@ class PieChart extends React.Component<Props, {}> {
       },
     };
 
+    // Passing undefined as distance value breaks the chart
+    if (dataLabels?.distance !== undefined && options && options?.plotOptions?.pie?.dataLabels) {
+      options.plotOptions.pie.dataLabels.distance = dataLabels?.distance;
+    }
+
     return (
       <div
         style={{
-          overflow: 'hidden',
           height: height || (isHalf ? BASE_CHART_HEIGHT / 2 : BASE_CHART_HEIGHT),
         }}
+        className={'mcs-pieChart'}
       >
         <HighchartsReact highcharts={Highcharts} options={options} style={{ width: '100%' }} />
       </div>

@@ -23,7 +23,7 @@ export { default as McsTabs } from './components/mcs-tabs';
 export { default as TableView } from './components/table-view';
 export { default as SelectionNotifyer } from './components/table-view';
 export { default as TableSelector } from './components/table-selector';
-export { default as DonutChart } from './components/charts/donut-chart';
+export { default as PieChart } from './components/charts/pie-chart';
 export { default as EmptyChart } from './components/charts/empty-chart';
 export { default as StackedBarChart } from './components/charts/stacked-bar-chart';
 export { default as BarChart } from './components/charts/bar-chart';
