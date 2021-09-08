@@ -41,7 +41,6 @@ export { default as McsDateRangePicker } from './components/mcs-date-range-picke
 export { default as MetricsColumn } from './components/metrics-column';
 export { default as MetricsHighlight } from './components/metrics-highlight';
 export { default as MultiSelect } from './components/multi-select';
-export { default as PieChart } from './components/charts/pie-chart';
 export { default as Progress } from './components/progress';
 export { default as SearchAndMultiSelect } from './components/search-multi-select';
 export { default as Fade } from './components/transition/fade';
