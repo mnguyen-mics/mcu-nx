@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the legendchartWithModal 1`] = `
+<div
+  className="mcs-legend-container"
+>
+  <div
+    style={
+      Object {
+        "float": "left",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "backgroundColor": "#003056",
+          "borderRadius": "5px",
+          "float": "left",
+          "height": "4px",
+          "marginLeft": "10px",
+          "marginTop": "18px",
+          "width": "30px",
+        }
+      }
+    />
+    <span
+      style={
+        Object {
+          "float": "right",
+          "lineHeight": "40px",
+          "marginLeft": "5px",
+        }
+      }
+    >
+      Domain #1
+    </span>
+  </div>
+  <div
+    style={
+      Object {
+        "float": "left",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "backgroundColor": "#00ab67",
+          "borderRadius": "5px",
+          "float": "left",
+          "height": "4px",
+          "marginLeft": "10px",
+          "marginTop": "18px",
+          "width": "30px",
+        }
+      }
+    />
+    <span
+      style={
+        Object {
+          "float": "right",
+          "lineHeight": "40px",
+          "marginLeft": "5px",
+        }
+      }
+    >
+      Domain #2
+    </span>
+  </div>
+  <div
+    style={
+      Object {
+        "borderLeft": "1px solid #f0f0f0",
+        "float": "left",
+        "height": "40px",
+        "lineHeight": "40px",
+        "marginLeft": "10px",
+      }
+    }
+  >
+    <button
+      className="mcs-invisible-button"
+      onClick={[Function]}
+    >
+      <span
+        className="mcs-icon "
+        style={
+          Object {
+            "color": "#d0d0d0",
+            "marginLeft": "10px",
+          }
+        }
+      >
+        <i
+          className="mcs-pen"
+          style={Object {}}
+        />
+      </span>
+    </button>
+  </div>
+</div>
+`;
