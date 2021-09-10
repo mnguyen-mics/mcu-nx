@@ -77,6 +77,8 @@ export const generateLegend = (): Partial<Highcharts.LegendOptions> => {
 
 export type Format = 'percentage' | 'index' | 'count';
 
+export type PieChartFormat = 'percentage' | 'count';
+
 export const generateTooltip = (
   showTooltip: boolean = true,
   format: Format = 'count',
