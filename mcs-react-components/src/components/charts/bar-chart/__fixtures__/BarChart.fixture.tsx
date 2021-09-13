@@ -4,7 +4,7 @@ import barChartWithDrilldownProps from '../__examples__/BarChartDrilldown';
 import barChartLegendRightProps from '../__examples__/BarChartLegendRight';
 import barChartCategory from '../__examples__/CategoryBarChart';
 import barChartStacked from '../__examples__/StackedBarChart';
-import { BarChart } from '../BarChart';
+import BarChart from '../BarChart';
 
 export default {
   'bars with index': <BarChart {...barChartProps} />,

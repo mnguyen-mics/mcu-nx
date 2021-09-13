@@ -201,7 +201,7 @@ class BarChart extends React.Component<Props, {}> {
       lang: {
         drillUpText: 'Back',
       },
-      colors: this.hasSubBucket() && !drilldown ? undefined : definedColors,
+      colors: definedColors,
       plotOptions: {
         column: plotOptionsForColumn,
       },
