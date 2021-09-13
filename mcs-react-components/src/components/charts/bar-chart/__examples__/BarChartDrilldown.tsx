@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { BarChart, BarChartProps } from '../../bar-chart/BarChart';
+import { BarChartProps } from '../BarChart';
+import { defaultColors } from '../../utils';
 
 const dataset: any = [
   {
@@ -78,21 +78,19 @@ const dataset: any = [
 
 const props: BarChartProps = {
   dataset: dataset,
-  options: {
-    showLegend: true,
-    format: 'count',
-    yKeys: [
-      {
-        key: 'data_1',
-        message: 'Data 1',
-      },
-    ],
-    xKey: 'day',
-  },
-  reducePadding: true,
+  colors: defaultColors,
+  yKeys: [
+    {
+      key: 'data_1',
+      message: 'Data 1',
+    },
+  ],
+  format: 'count',
+  xKey: 'day',
+  bigBars: true,
   stacking: false,
-  enableDrilldown: true,
+  drilldown: true,
   height: 380,
 };
 
-export default <BarChart {...props} />;
+export default props;

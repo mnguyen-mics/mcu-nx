@@ -79,16 +79,23 @@ export type Format = 'percentage' | 'index' | 'count';
 
 export type PieChartFormat = 'percentage' | 'count';
 
+function formatTooltip(format: Format) {
+  switch (format) {
+    case 'count':
+      return '{point.y}';
+    case 'percentage':
+      return '{point.y}% ({point.count})';
+    case 'index':
+      return '{point.y}% ({point.percentage}% - {point.count})';
+  }
+}
+
 export const generateTooltip = (
   showTooltip: boolean = true,
   format: Format = 'count',
   customFormat?: string,
 ): Partial<Highcharts.TooltipOptions> => {
-  const printedPoint = customFormat
-    ? customFormat
-    : format === 'percentage'
-    ? `{point.y}% ({point.count})`
-    : '{point.y}';
+  const printedPoint = customFormat ? customFormat : formatTooltip(format);
   return showTooltip
     ? {
         useHTML: false,
@@ -148,6 +155,29 @@ export const defaultColors = [
   '#d9d9d9',
 ];
 
+type LegendPosition = 'bottom' | 'right';
+export interface Legend {
+  position?: LegendPosition;
+  enabled: boolean;
+}
+
+export function buildLegendOptions(legend?: Legend): Highcharts.LegendOptions {
+  const alignRight =
+    legend?.position === 'right'
+      ? {
+          layout: 'vertical' as Highcharts.OptionsLayoutValue,
+          align: 'right' as Highcharts.AlignValue,
+          verticalAlign: 'middle' as Highcharts.VerticalAlignValue,
+        }
+      : {};
+  return legend?.enabled
+    ? {
+        ...alignRight,
+        enabled: true,
+      }
+    : { enabled: false };
+}
+
 export function buildDrilldownTree<T>(
   chartType: T,
   buckets: Datapoint[],
@@ -183,6 +213,7 @@ export function buildDrilldownTree<T>(
               drilldown: sub.drilldown,
               y: sub[yKey] as number,
               count: sub[`${yKey}-count`],
+              percentage: sub[`${yKey}-percentage`],
             };
           }),
         };

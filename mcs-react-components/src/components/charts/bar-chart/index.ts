@@ -1,3 +1,2 @@
-import { BarChart } from './BarChart';
-export { BarChartOptions } from './BarChart';
+import BarChart from './BarChart';
 export default BarChart;
