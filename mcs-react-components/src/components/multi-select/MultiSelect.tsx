@@ -3,7 +3,7 @@ import { CheckOutlined } from '@ant-design/icons';
 import { Menu, Button } from 'antd';
 import { MenuInfo } from '../../../node_modules/rc-menu/lib/interface';
 import SubMenu from 'antd/lib/menu/SubMenu';
-import { Dropdown } from '../popupContainer/PopupContainer';
+import { Dropdown } from '../popup-container/PopupContainer';
 
 export interface MultiSelectProps<T> {
   displayElement: JSX.Element;

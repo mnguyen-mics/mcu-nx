@@ -3,7 +3,7 @@ import { Tag, Tooltip, Input, Button, Menu } from 'antd';
 import { MenuInfo } from '../../../node_modules/rc-menu/lib/interface';
 import McsIcon from '../mcs-icon';
 import { FormattedMessage, defineMessages } from 'react-intl';
-import { Dropdown } from '../popupContainer/PopupContainer';
+import { Dropdown } from '../popup-container/PopupContainer';
 import { Label } from '../../models/labels/labels';
 
 export interface LabelsSelectorProps {

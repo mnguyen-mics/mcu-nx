@@ -5,7 +5,7 @@ import { TableProps, ColumnProps } from 'antd/lib/table';
 import { TableRowSelection, TablePaginationConfig } from 'antd/lib/table/interface';
 import { PaginationProps } from 'antd/lib/pagination/Pagination';
 import { MenuInfo } from '../../../../node_modules/rc-menu/lib/interface';
-import { Dropdown } from '../../popupContainer/PopupContainer';
+import { Dropdown } from '../../popup-container/PopupContainer';
 import McsIcon from '../../mcs-icon';
 import SelectionNotifyer from '../selection-notifyer';
 

@@ -3,7 +3,7 @@ import { DownOutlined } from '@ant-design/icons';
 import { Checkbox, Menu } from 'antd';
 import Input from 'antd/lib/input/Input';
 import { MenuInfo } from '../../../node_modules/rc-menu/lib/interface';
-import { Dropdown } from '../popupContainer/PopupContainer';
+import { Dropdown } from '../popup-container/PopupContainer';
 
 export interface MenuItemProps {
   key: string;

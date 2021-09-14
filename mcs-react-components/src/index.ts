@@ -55,3 +55,4 @@ export { default as McsHeader } from './components/mcs-header';
 export { default as RadarChart } from './components/charts/radar-chart';
 export { default as EmptyRecords } from './components/empty-records';
 export { default as RelatedRecords } from './components/related-records';
+export { default as PopupContainer } from './components/popup-container';
