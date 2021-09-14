@@ -3,7 +3,7 @@ import { CalendarOutlined, ClockCircleOutlined, DownOutlined } from '@ant-design
 import { Button, DatePicker, Menu } from 'antd';
 import moment from 'moment';
 import { MenuInfo } from '../../../node_modules/rc-menu/lib/interface';
-import { Dropdown } from '../popupContainer/PopupContainer';
+import { Dropdown } from '../popup-container/PopupContainer';
 import McsMoment, { convertMcsDateToMoment } from '../../utils/McsMoment';
 import { InjectedIntlProps, defineMessages, injectIntl } from 'react-intl';
 import OnOutsideClick from 'react-outclick';
