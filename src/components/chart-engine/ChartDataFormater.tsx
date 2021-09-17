@@ -14,6 +14,7 @@ import { Dataset } from "@mediarithmics-private/mcs-components-library/lib/compo
 import {
   BarChartOptions,
   ChartConfig,
+  ChartType,
   PieChartOptions,
   RadarChartOptions,
 } from "./ChartDataFetcher";
@@ -42,20 +43,36 @@ class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
 
   formatDatasetAsKeyValue(
     buckets: OTQLBucket[],
-    xKey?: string
+    xKey: string,
+    yKey: string
   ): Dataset | undefined {
     if (!buckets || buckets.length === 0) return undefined;
     else {
       const dataset: any = buckets.map((buck) => {
         return {
-          [xKey || "key"]: buck.key as string,
-          value: buck.count as number,
+          [xKey]: buck.key as string,
+          [yKey]: buck.count as number,
           buckets: this.formatDatasetAsKeyValue(
-            buck.aggregations?.buckets[0]?.buckets || []
+            buck.aggregations?.buckets[0]?.buckets || [],
+            xKey,
+            yKey
           ),
         };
       });
       return dataset;
+    }
+  }
+
+  getXKeyForChart(type: ChartType, options: PieChartOptions | RadarChartOptions | BarChartOptions) {
+    switch (type.toLowerCase()) {
+      case "pie":
+        return "key"
+      case "radar":
+        return (options as RadarChartOptions).xKey || "key"
+      case "bars":
+        return (options as BarChartOptions).xKey || "key"
+      default: 
+        return "key"
     }
   }
 
@@ -70,35 +87,47 @@ class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
       const buckets =
         dataResult.rows[0]?.aggregations?.buckets[0]?.buckets || [];
 
+      const options = chartConfig.options || {}
+      const xKey = this.getXKeyForChart(chartConfig.type, chartConfig.options)
+      const yKey = {
+        key: "value",
+        message: "count"
+      }
+      const withYKey = {
+        ...options,
+        yKeys: [yKey]
+      }
       switch (chartConfig.type.toLowerCase()) {
         case "pie":
-          const pieDataset = this.formatDatasetAsKeyValue(buckets);
+          const pieDataset = this.formatDatasetAsKeyValue(buckets, xKey, yKey.key);
           return (
             <PieChart
               dataset={pieDataset}
-              {...(chartConfig.options as PieChartOptions)}
+              {...withYKey}
             />
           );
         case "radar":
           let radarDataset = this.formatDatasetAsKeyValue(
             buckets,
-            (chartConfig.options as BarChartOptions).xKey
+            xKey,
+            yKey.key
           );
           return (
             <RadarChart
               dataset={radarDataset as any}
-              {...(chartConfig.options as RadarChartOptions)}
+              {...withYKey}
             />
           );
         case "bars":
           let barsDataset = this.formatDatasetAsKeyValue(
             buckets,
-            (chartConfig.options as BarChartOptions).xKey
+            xKey,
+            yKey.key
           );
           return (
             <BarChart
               dataset={barsDataset as any}
-              {...(chartConfig.options as BarChartOptions)}
+              {...withYKey}
             />
           );
         default:

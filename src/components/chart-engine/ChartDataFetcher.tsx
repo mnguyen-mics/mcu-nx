@@ -7,6 +7,7 @@ import { PieChartProps } from "@mediarithmics-private/mcs-components-library/lib
 import { RadarChartProps } from "@mediarithmics-private/mcs-components-library/lib/components/charts/radar-chart";
 import { BarChartProps } from "@mediarithmics-private/mcs-components-library/lib/components/charts/bar-chart/BarChart";
 import { Alert } from "antd";
+import { MockedData } from "./MockedData";
 export type ChartType = "pie" | "bars" | "radar" | "metric";
 
 type ChartDatasetType = "otql";
@@ -25,7 +26,7 @@ export interface ChartConfig {
   type: ChartType;
   colors?: string[];
   dataset: ChartDataset;
-  options: PieChartOptions | RadarChartOptions | BarChartOptions;
+  options?: PieChartOptions | RadarChartOptions | BarChartOptions;
 }
 
 interface ChartDataFetcherProps {

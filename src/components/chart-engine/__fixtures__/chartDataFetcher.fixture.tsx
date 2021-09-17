@@ -63,7 +63,6 @@ const chartConfigBars: ChartConfig = {
     ],
   },
 };
-console.log(container);
 export default (
   <IocProvider container={container}>
     <ChartDataFetcher chartConfig={chartConfigPie} datamartId={"144"} />
