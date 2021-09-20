@@ -10,6 +10,7 @@ export type MentionTagProps = {
   mention: Mention;
   tooltip?: string;
   className?: string;
+  customContent?: string;
 };
 
 class MentionTag extends React.Component<MentionTagProps, State> {
@@ -26,11 +27,11 @@ class MentionTag extends React.Component<MentionTagProps, State> {
   };
 
   render() {
-    const { mention, tooltip } = this.props;
+    const { mention, tooltip, customContent } = this.props;
     if (tooltip) {
       return (
         <Tooltip className='mcs-mentionTag_block' title={tooltip} placement='right'>
-          <Tag className={this.getMentionClass(mention)}>{mention}</Tag>
+          <Tag className={this.getMentionClass(mention)}>{customContent || mention}</Tag>
           <InfoCircleFilled />
         </Tooltip>
       );
