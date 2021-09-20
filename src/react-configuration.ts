@@ -56,7 +56,7 @@
 
 
  var MCS_CONSTANTS = {
-    'API_URL' : 'https://api.mediarithmics.local',
+    'API_URL' : 'https://api.mediarithmics.com',
     'ASSETS_URL' : 'https://assets.mediarithmics.local',
     'FEATURES' : defaultFeatures,
     'SITE_NAME' : 'mediarithmics | navigator',

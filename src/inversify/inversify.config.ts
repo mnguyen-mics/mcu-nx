@@ -9,7 +9,7 @@ import OrganisationService, {
 import { IQueryService, QueryService } from "../services/QueryService";
 
 export const container = new Container();
-
+container.bind<IQueryService>(TYPES.IQueryService).to(QueryService);
 container.bind<IAuthService>(TYPES.IAuthService).to(AuthService);
 container.bind<ILabelService>(TYPES.ILabelService).to(LabelService);
 container
@@ -17,7 +17,8 @@ container
   .to(OrganisationService)
   .inSingletonScope();
 
-container.bind<IQueryService>(TYPES.IQueryService).to(QueryService);
+
+
 export const { lazyInject } = getDecorators(container, false);
 
 export default { container };
