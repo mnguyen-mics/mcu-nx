@@ -12,7 +12,8 @@ export type ChartType = "pie" | "bars" | "radar" | "metric";
 type ChartDatasetType = "otql";
 interface ChartDataset {
   type: ChartDatasetType;
-  query_text: string;
+  query_text?: string;
+  query_id?: string;
 }
 
 export type PieChartOptions = Omit<PieChartProps, "dataset" | "colors">;
@@ -55,11 +56,32 @@ class ChartDataFetcher extends React.Component<Props, ChartDataFetcherState> {
     const { datamartId, chartConfig } = this.props;
 
     if (chartConfig.dataset.type.toLowerCase() === "otql") {
-      this.fetchOtqlData(datamartId, chartConfig.dataset.query_text);
+      if (chartConfig.dataset.query_text) {
+        this.fetchOtqlDataByQueryText(datamartId, chartConfig.dataset.query_text);
+      }
+
+      if (chartConfig.dataset.query_id) {
+        this.fetchOtqlDataByQueryId(datamartId, chartConfig.dataset.query_id);
+      }
     }
   }
 
-  fetchOtqlData(datamartId: string, query_text: string) {
+  fetchOtqlDataByQueryId(datamartId: string, query_id: string) {
+    return this._queryService
+      .getQuery(datamartId, query_id)
+      .then((queryResp) => queryResp.data)
+      .then((q) => {
+        return this.fetchOtqlDataByQueryText(datamartId, q.query_text);
+      })
+      .catch((r) => {
+        this.setState({
+          hasError: true,
+          loading: false,
+        });
+      });
+  }
+
+  fetchOtqlDataByQueryText(datamartId: string, query_text: string) {
     return this._queryService
       .runOTQLQuery(datamartId, query_text, {
         use_cache: true,
