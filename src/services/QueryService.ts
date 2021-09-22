@@ -4,8 +4,14 @@ import {
   QueryPrecisionMode,
 } from "../models/datamart/graphdb/OTQLResult";
 import { injectable } from "inversify";
+import { QueryResource } from "../models/datamart/DatamartResource";
 
 export interface IQueryService {
+  getQuery: (
+    datamartId: string,
+    queryId: string
+  ) => Promise<DataResponse<QueryResource>>;
+
   runOTQLQuery: (
     datamartId: string,
     query: string,
@@ -24,6 +30,13 @@ export interface IQueryService {
 
 @injectable()
 export class QueryService implements IQueryService {
+  getQuery(
+    datamartId: string,
+    queryId: string
+  ): Promise<DataResponse<QueryResource>> {
+    const endpoint = `datamarts/${datamartId}/queries/${queryId}`;
+    return ApiService.getRequest(endpoint);
+  }
   runOTQLQuery(
     datamartId: string,
     query: string,

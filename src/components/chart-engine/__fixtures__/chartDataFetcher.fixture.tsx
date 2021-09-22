@@ -11,7 +11,7 @@ const chartConfigPie: ChartConfig = {
   type: "pie",
   dataset: {
     type: "otql",
-    query_text: "SELECT { nature @map } FROM ActivityEvent",
+    query_id: "23",
   },
   options: {
     innerRadius: true,
