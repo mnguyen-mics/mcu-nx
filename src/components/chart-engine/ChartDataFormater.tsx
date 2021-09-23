@@ -31,6 +31,8 @@ interface ChartDataFormaterState {
 
 type Props = ChartDataFormaterProps;
 
+const BASE_CHART_HEIGHT = 400;
+
 class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
   constructor(props: Props) {
     super(props);
@@ -93,17 +95,19 @@ class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
         key: "value",
         message: "count"
       }
-      const withYKey = {
+      const withKeys = {
         ...options,
-        yKeys: [yKey]
+        yKeys: [yKey],
+        xKey: xKey
       }
       switch (chartConfig.type.toLowerCase()) {
         case "pie":
           const pieDataset = this.formatDatasetAsKeyValue(buckets, xKey, yKey.key);
           return (
             <PieChart
+              innerRadius={false}
               dataset={pieDataset}
-              {...withYKey}
+              {...withKeys}
             />
           );
         case "radar":
@@ -115,7 +119,8 @@ class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
           return (
             <RadarChart
               dataset={radarDataset as any}
-              {...withYKey}
+              height={BASE_CHART_HEIGHT}
+              {...withKeys}
             />
           );
         case "bars":
@@ -127,7 +132,8 @@ class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
           return (
             <BarChart
               dataset={barsDataset as any}
-              {...withYKey}
+              format={"count"}
+              {...withKeys}
             />
           );
         default:
