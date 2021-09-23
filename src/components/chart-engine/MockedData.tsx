@@ -1,3 +1,5 @@
+import { OTQLResultType, QueryPrecisionMode } from "../../models/datamart/graphdb/OTQLResult";
+
 export const MockedData = {
   status: "ok",
   data: {
@@ -5,8 +7,8 @@ export const MockedData = {
     timed_out: false,
     offset: null,
     limit: null,
-    result_type: "AGGREGATION",
-    precision: "FULL_PRECISION",
+    result_type: "AGGREGATION" as OTQLResultType,
+    precision: "FULL_PRECISION" as QueryPrecisionMode,
     sampling_ratio: null,
     rows: [
       {
@@ -121,103 +123,7 @@ export const MockedData = {
                 {
                   key: "online_order_return",
                   count: 56223,
-                },
-                {
-                  key: "basket_add",
-                  count: 5559,
-                },
-                {
-                  key: "$cleaned_referrer",
-                  count: 1969,
-                },
-                {
-                  key: "$content_corrections",
-                  count: 103,
-                },
-                {
-                  key: "*)(!(!(!(objectClass=*)))",
-                  count: 4,
-                },
-                {
-                  key: "*)(!(objectClass=*)",
-                  count: 4,
-                },
-                {
-                  key: "*)(objectClass=*",
-                  count: 4,
-                },
-                {
-                  key: "%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd",
-                  count: 3,
-                },
-                {
-                  key: "%2e%2e%5c%2e%2e%5c%2e%2e%5c%2e%2e%5c%2e%2e%5c%2e%2e%5c%2e%2e%5c%2e%2e%5c%2e%2e%5c%2e%2e%5cwindows%5cwin.ini",
-                  count: 3,
-                },
-                {
-                  key: "(select abs(1))",
-                  count: 3,
-                },
-                {
-                  key: "(select sba(1))",
-                  count: 3,
-                },
-                {
-                  key: "*)(!(!(objectClass=*))",
-                  count: 3,
-                },
-                {
-                  key: "..././..././..././..././..././..././..././..././..././..././etc/passwd",
-                  count: 3,
-                },
-                {
-                  key: ".../.\\.../.\\.../.\\.../.\\.../.\\.../.\\.../.\\.../.\\.../.\\.../.\\windows/win.ini",
-                  count: 3,
-                },
-                {
-                  key: "...\\./...\\./...\\./...\\./...\\./...\\./...\\./...\\./...\\./...\\./windows/win.ini",
-                  count: 3,
-                },
-                {
-                  key: "...\\.\\...\\.\\...\\.\\...\\.\\...\\.\\...\\.\\...\\.\\...\\.\\...\\.\\...\\.\\windows\\win.ini",
-                  count: 3,
-                },
-                {
-                  key: "../../../../../../../../../../../../../../../../etc/passwd",
-                  count: 3,
-                },
-                {
-                  key: "../../../../../../../../../../../../../../../../windows/win.ini",
-                  count: 3,
-                },
-                {
-                  key: "../../../../../../../../../../../../../../../../winnt/win.ini",
-                  count: 3,
-                },
-                {
-                  key: "..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\windows\\win.ini",
-                  count: 3,
-                },
-                {
-                  key: "..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\winnt\\win.ini",
-                  count: 3,
-                },
-                {
-                  key: "/etc/passwd",
-                  count: 3,
-                },
-                {
-                  key: "\\windows\\win.ini",
-                  count: 3,
-                },
-                {
-                  key: "c:\\windows\\win.ini",
-                  count: 3,
-                },
-                {
-                  key: "eval(compile('for x in range(1):\\n import time\\n time.sleep(20)','a','single'))",
-                  count: 3,
-                },
+                }
               ],
             },
           ],
@@ -323,111 +229,7 @@ export const MockedData = {
                 {
                   key: "$unknown",
                   count: 252113,
-                },
-                {
-                  key: "$error",
-                  count: 70352,
-                },
-                {
-                  key: "online_order_return",
-                  count: 56223,
-                },
-                {
-                  key: "basket_add",
-                  count: 5559,
-                },
-                {
-                  key: "$cleaned_referrer",
-                  count: 1969,
-                },
-                {
-                  key: "$content_corrections",
-                  count: 103,
-                },
-                {
-                  key: "*)(!(!(!(objectClass=*)))",
-                  count: 4,
-                },
-                {
-                  key: "*)(!(objectClass=*)",
-                  count: 4,
-                },
-                {
-                  key: "*)(objectClass=*",
-                  count: 4,
-                },
-                {
-                  key: "%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd",
-                  count: 3,
-                },
-                {
-                  key: "%2e%2e%5c%2e%2e%5c%2e%2e%5c%2e%2e%5c%2e%2e%5c%2e%2e%5c%2e%2e%5c%2e%2e%5c%2e%2e%5c%2e%2e%5cwindows%5cwin.ini",
-                  count: 3,
-                },
-                {
-                  key: "(select abs(1))",
-                  count: 3,
-                },
-                {
-                  key: "(select sba(1))",
-                  count: 3,
-                },
-                {
-                  key: "*)(!(!(objectClass=*))",
-                  count: 3,
-                },
-                {
-                  key: "..././..././..././..././..././..././..././..././..././..././etc/passwd",
-                  count: 3,
-                },
-                {
-                  key: ".../.\\.../.\\.../.\\.../.\\.../.\\.../.\\.../.\\.../.\\.../.\\.../.\\windows/win.ini",
-                  count: 3,
-                },
-                {
-                  key: "...\\./...\\./...\\./...\\./...\\./...\\./...\\./...\\./...\\./...\\./windows/win.ini",
-                  count: 3,
-                },
-                {
-                  key: "...\\.\\...\\.\\...\\.\\...\\.\\...\\.\\...\\.\\...\\.\\...\\.\\...\\.\\...\\.\\windows\\win.ini",
-                  count: 3,
-                },
-                {
-                  key: "../../../../../../../../../../../../../../../../etc/passwd",
-                  count: 3,
-                },
-                {
-                  key: "../../../../../../../../../../../../../../../../windows/win.ini",
-                  count: 3,
-                },
-                {
-                  key: "../../../../../../../../../../../../../../../../winnt/win.ini",
-                  count: 3,
-                },
-                {
-                  key: "..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\windows\\win.ini",
-                  count: 3,
-                },
-                {
-                  key: "..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\..\\winnt\\win.ini",
-                  count: 3,
-                },
-                {
-                  key: "/etc/passwd",
-                  count: 3,
-                },
-                {
-                  key: "\\windows\\win.ini",
-                  count: 3,
-                },
-                {
-                  key: "c:\\windows\\win.ini",
-                  count: 3,
-                },
-                {
-                  key: "eval(compile('for x in range(1):\\n import time\\n time.sleep(20)','a','single'))",
-                  count: 3,
-                },
+                }
               ],
             },
           ],
