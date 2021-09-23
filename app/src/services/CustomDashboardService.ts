@@ -18,9 +18,7 @@ export interface GetCustomDashboardsOption extends PaginatedApiParam {
 export interface ICustomDashboardService {
   getDashboards: (
     datamartId: string,
-    archived?: boolean,
-    firstResult?: number,
-    maxResults?: number,
+    filters?: object,
   ) => Promise<DataListResponse<CustomDashboardResource> | null>;
 
   getDashboard: (
@@ -38,17 +36,20 @@ export interface ICustomDashboardService {
 export class CustomDashboardService implements ICustomDashboardService {
   getDashboards(
     datamartId: string,
-    archived?: boolean,
-    firstResult?: number,
-    maxResults?: number,
+    filters: object = {},
   ): Promise<DataListResponse<CustomDashboardResource> | null> {
     const endpoint = `datamarts/${datamartId}/dashboards`;
-    return ApiService.getRequest<DataListResponse<CustomDashboardResource>>(endpoint).catch(
-      (err: any) => {
-        log.warn('Cannot retrieve custom dashboard', err);
-        return null;
-      },
-    );
+
+    const options = {
+      ...filters,
+    };
+    return ApiService.getRequest<DataListResponse<CustomDashboardResource>>(
+      endpoint,
+      options,
+    ).catch((err: any) => {
+      log.warn('Cannot retrieve custom dashboard', err);
+      return null;
+    });
   }
 
   getDashboard(

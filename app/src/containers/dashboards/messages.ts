@@ -37,8 +37,28 @@ export default defineMessages({
     id: 'dashboards.upload.error',
     defaultMessage: 'Upload message',
   },
-  zzz: {
-    id: 'dashboards.zzz',
-    defaultMessage: 'ZZZZZZZ',
+  emptyTableMessage: {
+    id: 'dashboards.table.empty',
+    defaultMessage: 'No dashboards found',
+  },
+  unknownOrganisation: {
+    id: 'dashboards.table.unknownOrganisation',
+    defaultMessage: 'Organisation',
+  },
+  segmentBuilder: {
+    id: 'dashboards.table.segmentBuilder',
+    defaultMessage: 'Segment builder',
+  },
+  segment: {
+    id: 'dashboards.table.segment',
+    defaultMessage: 'Segment',
+  },
+  segmentBuilders: {
+    id: 'dashboards.table.segmentBuilders',
+    defaultMessage: 'Segment builders',
+  },
+  segments: {
+    id: 'dashboards.table.segments',
+    defaultMessage: 'Segments',
   },
 });

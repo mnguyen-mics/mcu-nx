@@ -19,6 +19,7 @@ interface RouterProps {
 
 interface DashboardsActionbarProps {
   onUploadDone: (organisationId: string, filter: Filters) => void;
+  innerElement?: React.ReactNode;
 }
 
 interface DashboardsActionbarState {
@@ -102,6 +103,7 @@ class DashboardsActionbar extends React.Component<Props, DashboardsActionbarStat
         params: { organisationId },
       },
       intl: { formatMessage },
+      innerElement,
     } = this.props;
 
     const breadcrumbPaths = [
@@ -113,9 +115,12 @@ class DashboardsActionbar extends React.Component<Props, DashboardsActionbarStat
     return (
       <Actionbar pathItems={breadcrumbPaths}>
         {this.renderModal()}
-        <Button className='mcs-primary' type='primary'>
-          <McsIcon type='plus' /> <FormattedMessage {...messages.newDashboard} />
-        </Button>
+        <div className='mcs-actionbar_innerElementsPanel'>
+          {innerElement}
+          <Button className='mcs-primary' type='primary'>
+            <McsIcon type='plus' /> <FormattedMessage {...messages.newDashboard} />
+          </Button>
+        </div>
       </Actionbar>
     );
   }

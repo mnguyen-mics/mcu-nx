@@ -2,9 +2,9 @@
   "name": "new-computing-console",
   "version": "1.2.0",
   "dependencies": {
-    "@ant-design/compatible": "^1.0.8",
     "@mediarithmics-private/advanced-components": "1.2.11",
     "@mediarithmics-private/mcs-components-library": "5.2.10",
+    "@ant-design/icons": "^4.2.2",
     "antd": "4.10.3",
     "inversify": "^5.0.1",
     "inversify-inject-decorators": "^3.1.0",

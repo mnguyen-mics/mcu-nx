@@ -18,6 +18,7 @@ export interface Filters {
   status?: string[];
   keywords?: string;
   archived?: boolean;
+  scope?: string;
 }
 
 interface RouterParams {
@@ -44,6 +45,7 @@ export interface ItemListProps<T = any> extends ViewComponentWithFiltersProps<T>
   pageSettings: PageSetting[];
   emptyTable: EmptyTableProps;
   additionnalComponent?: React.ReactNode;
+  filters: Filters;
 }
 
 type Props<T = any> = ItemListProps<T> & RouteComponentProps<RouterParams>;
@@ -58,6 +60,7 @@ class ItemList<T> extends React.Component<Props<T>> {
         params: { organisationId },
       },
       pageSettings,
+      filters,
     } = this.props;
 
     if (!isSearchValid(search, pageSettings)) {
@@ -67,9 +70,9 @@ class ItemList<T> extends React.Component<Props<T>> {
         state: { reloadDataSource: true },
       });
     } else {
-      const filters = parseSearch(search, pageSettings);
-
-      fetchList(organisationId, filters, true);
+      const filtersA = parseSearch(search, pageSettings);
+      filtersA.scope = filters.scope;
+      fetchList(organisationId, filtersA, true);
     }
   }
 
@@ -82,6 +85,7 @@ class ItemList<T> extends React.Component<Props<T>> {
         params: { organisationId },
       },
       pageSettings,
+      filters,
     } = this.props;
 
     const {
@@ -89,9 +93,14 @@ class ItemList<T> extends React.Component<Props<T>> {
       match: {
         params: { organisationId: previousOrganisationId },
       },
+      filters: previousFilters,
     } = previousProps;
 
-    if (!compareSearches(search, previousSearch) || organisationId !== previousOrganisationId) {
+    if (
+      !compareSearches(search, previousSearch) ||
+      organisationId !== previousOrganisationId ||
+      filters !== previousFilters
+    ) {
       if (!isSearchValid(search, pageSettings)) {
         history.replace({
           pathname: pathname,
@@ -99,8 +108,9 @@ class ItemList<T> extends React.Component<Props<T>> {
           state: { reloadDataSource: organisationId !== previousOrganisationId },
         });
       } else {
-        const filters = parseSearch(search, pageSettings);
-        fetchList(organisationId, filters, false);
+        const filtersA = parseSearch(search, pageSettings);
+        filtersA.scope = filters.scope;
+        fetchList(organisationId, filtersA, false);
       }
     }
   }
@@ -152,15 +162,13 @@ class ItemList<T> extends React.Component<Props<T>> {
     };
 
     return (
-      <div className='mcs-table-container'>
+      <div className='mcs-itemList_container'>
         {additionnalComponent}
         {!rest.dataSource.length && !rest.loading ? (
           <EmptyTableView
             iconType={iconType}
             message={message}
-            className={`mcs-table-view-empty mcs-empty-card ${
-              rest?.className ? rest.className : ''
-            }`}
+            className={`${rest?.className ? rest.className : ''}`}
           />
         ) : (
           <TableViewFilters pagination={pagination} {...rest} />
