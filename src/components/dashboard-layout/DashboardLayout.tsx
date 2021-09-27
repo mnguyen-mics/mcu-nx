@@ -3,6 +3,8 @@ import React from 'react';
 import { Responsive, WidthProvider, Layout, Layouts } from 'react-grid-layout';
 import ChartDataFetcher from '../chart-engine';
 import { ChartConfig } from '../chart-engine/ChartDataFetcher';
+import LazyLoad from 'react-lazyload';
+import { FormattedMessage } from 'react-intl';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -73,10 +75,10 @@ export default class DashboardLayout extends React.Component<Props> {
                     h: card.h
                 }
             })
-            return <div>
-                <ContentHeader
-                    title={section.title}
-                />
+            return <div className={"mcs-section"}>
+                <div className={"mcs-subtitle2"}>
+                    {section.title}
+                </div>
                 <ResponsiveReactGridLayout
                     cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
                     layouts={{ lg: layouts }}
@@ -87,11 +89,20 @@ export default class DashboardLayout extends React.Component<Props> {
                 </ResponsiveReactGridLayout>
             </div>
         })
-        return <div>{sections}</div>
+        return <div className={"mcs-dashboardLayout"}>{sections}</div>
     }
 
 
     render() {
-        return this.generateDOM()
+        return <LazyLoad
+            overflow={true}
+            resize={true}
+            scroll={true}
+            offset={50}
+            height={350}
+            style={{ height: '100%' }}
+        >
+            {this.generateDOM()}
+        </LazyLoad>
     }
 }
