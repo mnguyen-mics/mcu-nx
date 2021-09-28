@@ -1,8 +1,9 @@
 import { generateMissingdefinitionItemFromRoute, NavigatorMenuDefinition } from './domain';
 import { HomePage } from '../containers/home';
+import { DashboardsPage } from '../containers/dashboards';
 
 const homeMenuDefinition: NavigatorMenuDefinition = {
-  iconType: 'library',
+  iconType: 'users',
   displayName: 'home',
   type: 'simple',
   ...generateMissingdefinitionItemFromRoute({
@@ -12,4 +13,18 @@ const homeMenuDefinition: NavigatorMenuDefinition = {
   }),
 };
 
-export const menuDefinitions: NavigatorMenuDefinition[] = [homeMenuDefinition];
+const dashboardsMenuDefinition: NavigatorMenuDefinition = {
+  iconType: 'library',
+  displayName: 'Dashboards',
+  type: 'simple',
+  ...generateMissingdefinitionItemFromRoute({
+    path: '/dashboards',
+    layout: 'main',
+    contentComponent: DashboardsPage,
+  }),
+};
+
+export const menuDefinitions: NavigatorMenuDefinition[] = [
+  homeMenuDefinition,
+  dashboardsMenuDefinition,
+];
