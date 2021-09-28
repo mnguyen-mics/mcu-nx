@@ -12,7 +12,7 @@ function isLocalStorageSupported(): boolean {
   try {
     localStorage.setItem(LOCAL_STORAGE_TEST, 'true');
     localStorage.removeItem(LOCAL_STORAGE_TEST);
-    return false;
+    return true;
   } catch (e) {
     return false;
   }
