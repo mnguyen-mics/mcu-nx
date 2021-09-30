@@ -51,7 +51,7 @@ const props = {
                         "x": 0,
                         "y": 0,
                         "w": 12,
-                        "h": 3,
+                        "h": 4,
                         "charts": [
                             {
                                 "title": "Gender",
@@ -73,7 +73,7 @@ const props = {
                         "x": 0,
                         "y": 0,
                         "w": 6,
-                        "h": 3,
+                        "h": 4,
                         "charts": [
                             {
                                 "title": "Age range",
@@ -89,7 +89,7 @@ const props = {
                         "x": 6,
                         "y": 0,
                         "w": 6,
-                        "h": 3,
+                        "h": 4,
                         "charts": [
                             {
                                 "title": "Social class",
@@ -115,7 +115,7 @@ const props = {
                             "x": 0,
                             "y": 0,
                             "w": 6,
-                            "h": 3,
+                            "h": 4,
                             "charts": [
                                 {
                                     "title": "Top 10 interests",
@@ -134,7 +134,7 @@ const props = {
                             "x": 6,
                             "y": 0,
                             "w": 6,
-                            "h": 3,
+                            "h": 4,
                             "charts": [
                                 {
                                     "title": "Top 10 purchase intents",

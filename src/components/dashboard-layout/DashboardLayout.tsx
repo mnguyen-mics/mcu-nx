@@ -8,6 +8,8 @@ import { FormattedMessage } from 'react-intl';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
+const BASE_FRAMEWORK_HEIGHT = 96;
+
 interface Props {
     datamart_id: string,
     schema: DashboardContentSchema;
@@ -84,6 +86,11 @@ export default class DashboardLayout extends React.Component<Props> {
                     layouts={{ lg: layouts }}
                     isDraggable={false}
                     isResizable={false}
+                    measureBeforeMount={false}
+                    compactType={'vertical'}
+                    preventCollision={true}
+                    // Disable dragging & resizabling
+                    rowHeight={BASE_FRAMEWORK_HEIGHT}
                 >
                     {cards}
                 </ResponsiveReactGridLayout>
