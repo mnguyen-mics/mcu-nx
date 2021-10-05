@@ -85,6 +85,10 @@ class RadarChart extends React.Component<Props> {
         tickmarkPlacement: 'on',
         lineWidth: 0,
         gridLineDashStyle: 'Dash',
+        labels: {
+          overflow: 'justify',
+          align: 'center',
+        },
       },
       yAxis: {
         gridLineInterpolation: 'polygon',
@@ -129,8 +133,10 @@ class RadarChart extends React.Component<Props> {
       },
       legend: {
         enabled: legend?.enabled ? true : false,
-        align: legend?.position ? (legend?.position === 'bottom' ? 'center' : 'right') : 'center',
+        align: 'center',
         verticalAlign: legend?.position && legend?.position === 'right' ? 'middle' : 'bottom',
+        layout: legend?.position && legend.position === 'right' ? 'vertical' : 'horizontal',
+        x: legend?.position && legend.position === 'right' ? 270 : 0,
       },
       tooltip: {
         ...generateTooltip(true, format, tooltip?.format),
