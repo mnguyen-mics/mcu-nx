@@ -79,6 +79,10 @@ export type Format = 'percentage' | 'index' | 'count';
 
 export type PieChartFormat = 'percentage' | 'count';
 
+export type Tooltip = {
+  format?: string;
+};
+
 function formatTooltip(format: Format) {
   switch (format) {
     case 'count':

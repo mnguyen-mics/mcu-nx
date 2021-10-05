@@ -5,7 +5,6 @@ import HighchartsReact from 'highcharts-react-official';
 import { compose } from 'recompose';
 import {
   generateTooltip,
-  BASE_CHART_HEIGHT,
   Dataset,
   Datapoint,
   buildDrilldownTree,
@@ -13,6 +12,8 @@ import {
   Format,
   Legend,
   buildLegendOptions,
+  Tooltip,
+  BASE_CHART_HEIGHT,
 } from '../utils';
 import { uniqueId, omitBy, isUndefined } from 'lodash';
 
@@ -32,6 +33,7 @@ export interface BarChartProps {
   xKey: string;
   legend?: Legend;
   type?: string;
+  tooltip?: Tooltip;
   format: Format;
 }
 
@@ -139,9 +141,21 @@ class BarChart extends React.Component<Props, {}> {
       height,
       stacking,
       plotLineValue,
+      tooltip,
     } = this.props;
 
     const definedColors = colors || defaultColors;
+
+    const hasSeriesWithCustomDisplay = (
+      chartSeries: YKey[],
+      chartStacking?: boolean,
+      chartDrilldown?: boolean,
+    ) => {
+      return (
+        chartSeries &&
+        (chartSeries.length === 1 || (chartSeries.length > 1 && (chartStacking || chartDrilldown)))
+      );
+    };
 
     let datasetWithDrilldownIds = dataset;
     if (!!drilldown) {
@@ -165,7 +179,12 @@ class BarChart extends React.Component<Props, {}> {
 
     let plotOptionsForColumn = {};
 
-    if (bigBars && (stacking || drilldown || !this.hasSubBucket())) {
+    if (
+      (typeof bigBars === 'undefined' &&
+        !this.hasSubBucket() &&
+        hasSeriesWithCustomDisplay(yKeys, stacking, drilldown)) ||
+      bigBars
+    ) {
       plotOptionsForColumn = {
         ...plotOptionsForColumn,
         pointPadding: 0.05,
@@ -193,7 +212,7 @@ class BarChart extends React.Component<Props, {}> {
     const options: Highcharts.Options = {
       chart: {
         type: type || 'column',
-        height: height ? height : BASE_CHART_HEIGHT,
+        height: height || BASE_CHART_HEIGHT,
       },
       title: {
         text: '',
@@ -223,10 +242,13 @@ class BarChart extends React.Component<Props, {}> {
       },
       tooltip: {
         shared: true,
-        ...generateTooltip(true, format),
+        ...generateTooltip(true, format, tooltip?.format),
       },
       yAxis: {
         plotLines: plotLines,
+        title: {
+          text: '',
+        },
       },
       legend: buildLegendOptions(legend),
     };

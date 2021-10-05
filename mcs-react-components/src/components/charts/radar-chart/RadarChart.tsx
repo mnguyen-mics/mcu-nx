@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Highcharts, { DataLabelsFilterOptionsObject, SeriesAreaOptions } from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { defaultColors, generateTooltip } from '../utils';
+import { defaultColors, generateTooltip, Tooltip } from '../utils';
 
 require('highcharts/highcharts-more')(Highcharts);
 
@@ -35,10 +35,6 @@ type DataLabels = {
   enabled?: boolean;
   format?: string;
   filter?: DataLabelsFilterOptionsObject;
-};
-
-type Tooltip = {
-  format?: string;
 };
 
 type Props = RadarChartProps;
