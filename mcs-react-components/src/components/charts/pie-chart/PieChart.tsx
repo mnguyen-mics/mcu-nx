@@ -15,7 +15,7 @@ import { uniqueId } from 'lodash';
 type Pie = 'pie';
 
 export interface PieDataLabels {
-  enabled: boolean;
+  enabled?: boolean;
   distance?: number;
   format?: string;
   filter?: Highcharts.DataLabelsFilterOptionsObject;
@@ -34,8 +34,12 @@ export interface PieChartProps {
   innerRadius: boolean;
   isHalf?: boolean;
   dataLabels?: PieDataLabels;
-  tooltip?: string;
+  tooltip?: Tooltip;
   format?: PieChartFormat;
+}
+
+interface Tooltip {
+  format: string;
 }
 
 type Props = PieChartProps;
@@ -97,7 +101,7 @@ class PieChart extends React.Component<Props, {}> {
 
   formatTooltip = (): string => {
     const { legend, tooltip, format } = this.props;
-    if (tooltip) return tooltip;
+    if (tooltip) return tooltip.format;
     return `${!!legend?.enabled ? '' : '{point.name}: '}${
       format !== 'count' ? '{point.percentage:.2f}%' : '{point.y}'
     }`;
@@ -138,7 +142,7 @@ class PieChart extends React.Component<Props, {}> {
         plotShadow: false,
         type: 'pie',
         animation: false,
-        height: height,
+        height,
         style: { fontFamily: '' },
       },
       xAxis: {
@@ -161,7 +165,7 @@ class PieChart extends React.Component<Props, {}> {
       plotOptions: {
         pie: {
           dataLabels: {
-            enabled: dataLabels ? !!dataLabels.enabled : true,
+            enabled: typeof dataLabels?.enabled === 'boolean' ? dataLabels?.enabled : true,
             format: this.formatDataLabel(),
             filter: dataLabels?.filter,
             style: {
@@ -177,9 +181,7 @@ class PieChart extends React.Component<Props, {}> {
         },
       },
       legend: {
-        width: 90,
-        itemWidth: 90,
-        verticalAlign: legend?.position === 'bottom' ? legend?.position : 'top',
+        verticalAlign: legend?.position === 'right' ? 'middle' : 'bottom',
         align: legend?.position === 'right' ? legend?.position : 'center',
         layout: 'vertical',
       },

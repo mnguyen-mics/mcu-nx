@@ -23,12 +23,14 @@ const propsForDefault: PieChartProps = {
   dataset: data,
   innerRadius: true,
   dataLabels: {
-    enabled: true,
     filter: {
       property: 'percentage',
       operator: '>',
       value: 1,
     },
+  },
+  tooltip: {
+    format: 'CUSTOM {point.name} {point.percentage:.2f}%',
   },
 };
 
