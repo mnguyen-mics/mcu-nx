@@ -15,18 +15,23 @@ const props = {
                         "x": 0,
                         "y": 0,
                         "w": 12,
-                        "h": 5,
-                        "layout": "vertical",
+                        "h": 6,
+                        "layout": "horizontal",
                         "charts": [
                             {
-                                "title": "Total number of user points",
-                                "type": "Metric",
+                                "title": "Age range",
+                                "type": "Pie",
                                 "dataset": {
                                     "type": "OTQL",
-                                    "query_id": "50170"
-                                },
-                                "options": {
-                                    "xKey": "key"
+                                    "query_id": "50172"
+                                }
+                            },
+                            {
+                                "title": "Age range",
+                                "type": "Pie",
+                                "dataset": {
+                                    "type": "OTQL",
+                                    "query_id": "50172"
                                 }
                             },
                             {
@@ -142,9 +147,6 @@ const props = {
                                     "dataset": {
                                         "type": "OTQL",
                                         "query_id": "50173"
-                                    },
-                                    "options": {
-                                        "xKey": "key"
                                     }
                                 }
                             ]
