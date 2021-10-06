@@ -111,17 +111,6 @@ export default class DashboardLayout extends React.Component<Props> {
   }
 
   render() {
-    return (
-      <LazyLoad
-        overflow={true}
-        resize={true}
-        scroll={true}
-        offset={50}
-        height={350}
-        style={{ height: "100%" }}
-      >
-        {this.generateDOM()}
-      </LazyLoad>
-    );
+    return this.generateDOM();
   }
 }
