@@ -6,7 +6,7 @@ import { defaultColors, generateTooltip, Tooltip } from '../utils';
 require('highcharts/highcharts-more')(Highcharts);
 
 export interface RadarChartProps {
-  height: number;
+  height?: number;
   dataset: Dataset;
   xKey: string;
   yKeys: YKeys[];
@@ -87,7 +87,6 @@ class RadarChart extends React.Component<Props> {
         gridLineDashStyle: 'Dash',
         labels: {
           overflow: 'justify',
-          align: 'center',
         },
       },
       yAxis: {
@@ -133,16 +132,21 @@ class RadarChart extends React.Component<Props> {
       },
       legend: {
         enabled: legend?.enabled ? true : false,
-        align: 'center',
+        align: legend?.position ? (legend?.position === 'bottom' ? 'center' : 'right') : 'center',
         verticalAlign: legend?.position && legend?.position === 'right' ? 'middle' : 'bottom',
         layout: legend?.position && legend.position === 'right' ? 'vertical' : 'horizontal',
-        x: legend?.position && legend.position === 'right' ? 270 : 0,
       },
       tooltip: {
         ...generateTooltip(true, format, tooltip?.format),
       },
     };
-    return <HighchartsReact highcharts={Highcharts} options={options} style={{ width: '100%' }} />;
+    return (
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={options}
+        containerProps={{ style: { height: '100%' } }}
+      />
+    );
   }
 }
 

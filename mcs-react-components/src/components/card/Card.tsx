@@ -34,7 +34,10 @@ class Card extends React.Component<CardProps> {
             </Col>
           </Row>
         )}
-        <Row style={this.props.type === 'flex' ? { flex: 1 } : { display: 'block' }}>
+        <Row
+          style={this.props.type === 'flex' ? { flex: 1 } : { display: 'block' }}
+          className='mcs-card_content'
+        >
           {isLoading ? (
             <Col span={24} className='text-center'>
               <Spin />

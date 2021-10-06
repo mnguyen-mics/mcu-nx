@@ -24,7 +24,6 @@ const props: BarChartProps = {
   format: 'index',
   bigBars: true,
   stacking: false,
-  height: 380,
   plotLineValue: 100,
 };
 

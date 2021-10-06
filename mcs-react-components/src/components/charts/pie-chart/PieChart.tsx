@@ -3,7 +3,6 @@ import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { compose } from 'recompose';
 import {
-  BASE_CHART_HEIGHT,
   Datapoint,
   Dataset,
   buildDrilldownTree,
@@ -208,14 +207,11 @@ class PieChart extends React.Component<Props, {}> {
     }
 
     return (
-      <div
-        style={{
-          height: height || (isHalf ? BASE_CHART_HEIGHT / 2 : BASE_CHART_HEIGHT),
-        }}
-        className={'mcs-pieChart'}
-      >
-        <HighchartsReact highcharts={Highcharts} options={options} style={{ width: '100%' }} />
-      </div>
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={options}
+        containerProps={{ style: { height: '100%' } }}
+      />
     );
   }
 }
