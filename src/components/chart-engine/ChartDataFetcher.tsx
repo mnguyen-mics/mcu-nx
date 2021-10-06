@@ -7,7 +7,7 @@ import { PieChartProps } from "@mediarithmics-private/mcs-components-library/lib
 import { RadarChartProps } from "@mediarithmics-private/mcs-components-library/lib/components/charts/radar-chart";
 import { BarChartProps } from "@mediarithmics-private/mcs-components-library/lib/components/charts/bar-chart/BarChart";
 import { Alert } from "antd";
-import { MockedData } from "./MockedData";
+
 export type ChartType = "pie" | "bars" | "radar" | "metric";
 
 type ChartDatasetType = "otql";
@@ -32,6 +32,7 @@ export interface ChartConfig {
 interface ChartDataFetcherProps {
   datamartId: string;
   chartConfig: ChartConfig;
+  chartContainerStyle?: React.CSSProperties;
 }
 
 interface ChartDataFetcherState {
@@ -58,7 +59,10 @@ class ChartDataFetcher extends React.Component<Props, ChartDataFetcherState> {
 
     if (chartConfig.dataset.type.toLowerCase() === "otql") {
       if (chartConfig.dataset.query_text) {
-        this.fetchOtqlDataByQueryText(datamartId, chartConfig.dataset.query_text);
+        this.fetchOtqlDataByQueryText(
+          datamartId,
+          chartConfig.dataset.query_text
+        );
       }
 
       if (chartConfig.dataset.query_id) {
@@ -104,7 +108,7 @@ class ChartDataFetcher extends React.Component<Props, ChartDataFetcherState> {
 
   render() {
     const { fetchedData, loading, hasError } = this.state;
-    const { chartConfig } = this.props;
+    const { chartConfig, chartContainerStyle } = this.props;
     if (hasError) {
       return (
         <Alert
@@ -117,7 +121,7 @@ class ChartDataFetcher extends React.Component<Props, ChartDataFetcherState> {
     }
 
     return (
-      <div>
+      <div style={chartContainerStyle}>
         <div className={"mcs-chartDataFetcher_header"}>
           <h2 className={"mcs-chartDataFetcher_header_title"}>
             {chartConfig.title}
@@ -129,12 +133,14 @@ class ChartDataFetcher extends React.Component<Props, ChartDataFetcherState> {
             />
           )}
         </div>
-        {fetchedData && fetchedData.rows.length > 0 && (
-          <ChartDataFormater
-            dataResult={fetchedData}
-            chartConfig={chartConfig}
-          />
-        )}
+        <div className="mcs-chartDataFetcher_content_container">
+          {fetchedData && fetchedData.rows.length > 0 && (
+            <ChartDataFormater
+              dataResult={fetchedData}
+              chartConfig={chartConfig}
+            />
+          )}
+        </div>
       </div>
     );
   }

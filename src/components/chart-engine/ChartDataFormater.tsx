@@ -65,16 +65,23 @@ class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
     }
   }
 
-  getXKeyForChart(type: ChartType, options: PieChartOptions | RadarChartOptions | BarChartOptions) {
+  getXKeyForChart(
+    type: ChartType,
+    options: PieChartOptions | RadarChartOptions | BarChartOptions
+  ) {
     switch (type.toLowerCase()) {
       case "pie":
-        return "key"
+        return "key";
       case "radar":
-        return (options as RadarChartOptions).xKey || "key"
+        return options && (options as RadarChartOptions).xKey
+          ? (options as RadarChartOptions).xKey
+          : "key";
       case "bars":
-        return (options as BarChartOptions).xKey || "key"
-      default: 
-        return "key"
+        return options && (options as BarChartOptions).xKey
+          ? (options as BarChartOptions).xKey
+          : "key";
+      default:
+        return "key";
     }
   }
 
@@ -89,20 +96,24 @@ class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
       const buckets =
         dataResult.rows[0]?.aggregations?.buckets[0]?.buckets || [];
 
-      const options = chartConfig.options || {}
-      const xKey = this.getXKeyForChart(chartConfig.type, chartConfig.options)
+      const options = chartConfig.options || {};
+      const xKey = this.getXKeyForChart(chartConfig.type, chartConfig.options);
       const yKey = {
         key: "value",
-        message: "count"
-      }
+        message: "count",
+      };
       const withKeys = {
         ...options,
         yKeys: [yKey],
-        xKey: xKey
-      }
+        xKey: xKey,
+      };
       switch (chartConfig.type.toLowerCase()) {
         case "pie":
-          const pieDataset = this.formatDatasetAsKeyValue(buckets, xKey, yKey.key);
+          const pieDataset = this.formatDatasetAsKeyValue(
+            buckets,
+            xKey,
+            yKey.key
+          );
           return (
             <PieChart
               innerRadius={false}
@@ -119,7 +130,6 @@ class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
           return (
             <RadarChart
               dataset={radarDataset as any}
-              height={BASE_CHART_HEIGHT}
               {...withKeys}
             />
           );
@@ -133,6 +143,7 @@ class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
             <BarChart
               dataset={barsDataset as any}
               format={"count"}
+              yKeys={{ key: "value", message: "count" }}
               {...withKeys}
             />
           );
