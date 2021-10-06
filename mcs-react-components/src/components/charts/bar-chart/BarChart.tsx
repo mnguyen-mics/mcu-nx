@@ -13,7 +13,6 @@ import {
   Legend,
   buildLegendOptions,
   Tooltip,
-  BASE_CHART_HEIGHT,
 } from '../utils';
 import { uniqueId, omitBy, isUndefined } from 'lodash';
 
@@ -146,17 +145,6 @@ class BarChart extends React.Component<Props, {}> {
 
     const definedColors = colors || defaultColors;
 
-    const hasSeriesWithCustomDisplay = (
-      chartSeries: YKey[],
-      chartStacking?: boolean,
-      chartDrilldown?: boolean,
-    ) => {
-      return (
-        chartSeries &&
-        (chartSeries.length === 1 || (chartSeries.length > 1 && (chartStacking || chartDrilldown)))
-      );
-    };
-
     let datasetWithDrilldownIds = dataset;
     if (!!drilldown) {
       datasetWithDrilldownIds = dataset.map(d => {
@@ -179,12 +167,7 @@ class BarChart extends React.Component<Props, {}> {
 
     let plotOptionsForColumn = {};
 
-    if (
-      (typeof bigBars === 'undefined' &&
-        !this.hasSubBucket() &&
-        hasSeriesWithCustomDisplay(yKeys, stacking, drilldown)) ||
-      bigBars
-    ) {
+    if (!(bigBars === false)) {
       plotOptionsForColumn = {
         ...plotOptionsForColumn,
         pointPadding: 0.05,
@@ -212,7 +195,7 @@ class BarChart extends React.Component<Props, {}> {
     const options: Highcharts.Options = {
       chart: {
         type: type || 'column',
-        height: height || BASE_CHART_HEIGHT,
+        height: height,
       },
       title: {
         text: '',
@@ -258,7 +241,7 @@ class BarChart extends React.Component<Props, {}> {
       <HighchartsReact
         highcharts={Highcharts}
         options={sanitizedOptions}
-        style={{ width: '100%' }}
+        containerProps={{ style: { height: '100%' } }}
       />
     );
   }

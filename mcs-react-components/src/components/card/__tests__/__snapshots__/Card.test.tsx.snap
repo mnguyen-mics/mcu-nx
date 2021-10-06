@@ -38,7 +38,7 @@ exports[`renders the Card 1`] = `
     </div>
   </div>
   <div
-    className="ant-row"
+    className="ant-row mcs-card_content"
     style={
       Object {
         "display": "block",
