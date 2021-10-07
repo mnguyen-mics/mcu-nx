@@ -2,6 +2,7 @@
 
 exports[`renders the tree select filter 1`] = `
 <span
+  className="mcs-treeSelectFilter"
   id="123"
 >
   <div
