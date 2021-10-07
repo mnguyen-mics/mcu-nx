@@ -1,6 +1,8 @@
 const path = require('path');
 const glob = require("glob");
 
+const CopyPlugin = require('copy-webpack-plugin');
+
 module.exports = {
   entry: 	glob.sync('./src/index.ts'),
   output: {
@@ -49,4 +51,17 @@ module.exports = {
 		extensions: ['.tsx', '.ts', '.jsx', '.js'],
 	},
   performance: { hints: false },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: './src/styles', to: './style' },
+        { from: './components/**/*.less', to: '[path][name].[ext]', context: 'src' },
+        {
+          from: './assets/**/*.png',
+          to: '[path][name].[ext]',
+          context: 'src'
+        },
+      ],
+    }),
+  ],
 };

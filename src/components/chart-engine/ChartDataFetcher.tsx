@@ -1,12 +1,14 @@
 import * as React from "react";
 import { OTQLResult } from "../../models/datamart/graphdb/OTQLResult";
 import ChartDataFormater from "./ChartDataFormater";
-import { QueryService } from "../../services/QueryService";
+import { IQueryService, QueryService } from "../../services/QueryService";
 import { Loading } from "@mediarithmics-private/mcs-components-library";
 import { PieChartProps } from "@mediarithmics-private/mcs-components-library/lib/components/charts/pie-chart/PieChart";
 import { RadarChartProps } from "@mediarithmics-private/mcs-components-library/lib/components/charts/radar-chart";
 import { BarChartProps } from "@mediarithmics-private/mcs-components-library/lib/components/charts/bar-chart/BarChart";
 import { Alert } from "antd";
+import { lazyInject } from "../../inversify/inversify.config";
+import { TYPES } from "../../constants/types";
 
 export type ChartType = "pie" | "bars" | "radar" | "metric";
 
@@ -43,7 +45,9 @@ interface ChartDataFetcherState {
 
 type Props = ChartDataFetcherProps;
 class ChartDataFetcher extends React.Component<Props, ChartDataFetcherState> {
-  private _queryService = new QueryService();
+  @lazyInject(TYPES.IQueryService)
+  private _queryService: IQueryService;
+  
   constructor(props: Props) {
     super(props);
 

@@ -1,4 +1,5 @@
 import { Container } from "inversify";
+import "reflect-metadata";
 import { TYPES } from "../constants/types";
 import { IAuthService, AuthService } from "../services/AuthService";
 import getDecorators from "inversify-inject-decorators";
