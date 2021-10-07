@@ -63,10 +63,24 @@ const chartConfigBars: ChartConfig = {
     ],
   },
 };
+
+const chartConfigMetric: ChartConfig = {
+  title: "Chart 4",
+  type: "metric",
+  dataset: {
+    type: "otql",
+    query_text: "SELECT @count{} FROM UserPoint",
+  },
+  options: {
+    format: "count"
+  },
+};
+
 export default (
   <IocProvider container={container}>
-    <ChartDataFetcher chartConfig={chartConfigPie} datamartId={"144"} />
-    <ChartDataFetcher chartConfig={chartConfigRadar} datamartId={"144"} />
-    <ChartDataFetcher chartConfig={chartConfigBars} datamartId={"144"} />
+    <ChartDataFetcher chartConfig={chartConfigPie} datamartId={"1414"} />
+    <ChartDataFetcher chartConfig={chartConfigRadar} datamartId={"1414"} />
+    <ChartDataFetcher chartConfig={chartConfigBars} datamartId={"1414"} />
+    <ChartDataFetcher chartConfig={chartConfigMetric} datamartId={"1414"} />
   </IocProvider>
 );

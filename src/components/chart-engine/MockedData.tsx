@@ -1,4 +1,26 @@
-import { OTQLResultType, QueryPrecisionMode } from "../../models/datamart/graphdb/OTQLResult";
+import {
+  OTQLResultType,
+  QueryPrecisionMode,
+} from "../../models/datamart/graphdb/OTQLResult";
+
+export const MockedMetricData = {
+  status: "ok",
+  data: {
+    took: 401,
+    timed_out: false,
+    offset: null,
+    limit: null,
+    result_type: "COUNT",
+    precision: "FULL_PRECISION",
+    sampling_ratio: null,
+    rows: [
+      {
+        count: 469582500,
+      },
+    ],
+    cache_hit: false,
+  },
+};
 
 export const MockedData = {
   status: "ok",
@@ -123,7 +145,7 @@ export const MockedData = {
                 {
                   key: "online_order_return",
                   count: 56223,
-                }
+                },
               ],
             },
           ],
@@ -229,7 +251,7 @@ export const MockedData = {
                 {
                   key: "$unknown",
                   count: 252113,
-                }
+                },
               ],
             },
           ],

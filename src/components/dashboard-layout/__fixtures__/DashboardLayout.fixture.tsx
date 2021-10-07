@@ -2,7 +2,52 @@ import React from 'react';
 import DashboardLayout from '../DashboardLayout'
 import { FetchMock } from '@react-mock/fetch'
 import { LocalStorageMock } from '@react-mock/localstorage'
-import { MockedData } from '../../chart-engine/MockedData';
+import { MockedData, MockedMetricData } from '../../chart-engine/MockedData';
+
+const propsMetric = {
+    datamart_id: "1415",
+    schema: {
+        "sections": [
+            {
+                "title": "Summary",
+                "cards": [
+                    {
+                        "x": 0,
+                        "y": 0,
+                        "w": 12,
+                        "h": 1,
+                        "layout": "horizontal",
+                        "charts": [
+                            {
+                                "title": "Total number of user points",
+                                "type": "Metric",
+                                "dataset": {
+                                    "type": "OTQL",
+                                    "query_id": "50170"
+                                },
+                                "options": {
+                                    "xKey": "key"
+                                }
+                            },
+                            {
+                                "title": "Overall income increase (%)",
+                                "type": "Metric",
+                                "dataset": {
+                                    "type": "OTQL",
+                                    "query_id": "50170"
+                                },
+                                "options": {
+                                    "xKey": "key",
+                                    "format": "percentage"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
 
 const props = {
     datamart_id: "1414",
@@ -159,7 +204,8 @@ const props = {
 
 const fetchmockOptions = [
     { matcher: 'glob:/undefined/v1/datamarts/*/queries/*', response: { data: "Select @count() from UserPoint" } },
-    { matcher: 'glob:/undefined/v1/datamarts/1414/query_executions/otql*', response: MockedData }
+    { matcher: 'glob:/undefined/v1/datamarts/1414/query_executions/otql*', response: MockedData },
+    { matcher: 'glob:/undefined/v1/datamarts/1415/query_executions/otql*', response: MockedMetricData }
 ]
 
 export default {
@@ -168,6 +214,7 @@ export default {
             items={{ access_token: 're4lt0k3n' }}
         >
             <FetchMock mocks={fetchmockOptions}>
+                <DashboardLayout {...propsMetric}></DashboardLayout>
                 <DashboardLayout {...props}></DashboardLayout>
             </FetchMock>
         </LocalStorageMock>

@@ -9,6 +9,8 @@ import { BarChartProps } from "@mediarithmics-private/mcs-components-library/lib
 import { Alert } from "antd";
 import { lazyInject } from "../../inversify/inversify.config";
 import { TYPES } from "../../constants/types";
+import { MockedData, MockedMetricData } from "./MockedData";
+import { Dataset, PieChartFormat } from "@mediarithmics-private/mcs-components-library/lib/components/charts/utils";
 
 export type ChartType = "pie" | "bars" | "radar" | "metric";
 
@@ -19,16 +21,22 @@ interface ChartDataset {
   query_id?: string;
 }
 
+export interface MetricChartProps {
+  dataset: Dataset;
+  format: PieChartFormat;
+}
+
 export type PieChartOptions = Omit<PieChartProps, "dataset" | "colors">;
 export type RadarChartOptions = Omit<RadarChartProps, "dataset" | "colors">;
 export type BarChartOptions = Omit<BarChartProps, "dataset" | "colors">;
+export type MetricChartOptions = Omit<MetricChartProps, "dataset" | "colors">;
 
 export interface ChartConfig {
   title: string;
   type: ChartType;
   colors?: string[];
   dataset: ChartDataset;
-  options?: PieChartOptions | RadarChartOptions | BarChartOptions;
+  options?: PieChartOptions | RadarChartOptions | BarChartOptions | MetricChartOptions;
 }
 
 interface ChartDataFetcherProps {
@@ -48,6 +56,13 @@ class ChartDataFetcher extends React.Component<Props, ChartDataFetcherState> {
   @lazyInject(TYPES.IQueryService)
   private _queryService: IQueryService;
   
+  private queryService(): IQueryService {
+    if (! this._queryService)
+      this._queryService = new QueryService();
+
+    return this._queryService
+  }
+
   constructor(props: Props) {
     super(props);
 
@@ -76,7 +91,7 @@ class ChartDataFetcher extends React.Component<Props, ChartDataFetcherState> {
   }
 
   fetchOtqlDataByQueryId(datamartId: string, query_id: string) {
-    return this._queryService
+    return this.queryService()
       .getQuery(datamartId, query_id)
       .then((queryResp) => queryResp.data)
       .then((q) => {
@@ -91,7 +106,7 @@ class ChartDataFetcher extends React.Component<Props, ChartDataFetcherState> {
   }
 
   fetchOtqlDataByQueryText(datamartId: string, query_text: string) {
-    return this._queryService
+    return this.queryService()
       .runOTQLQuery(datamartId, query_text, {
         use_cache: true,
       })
