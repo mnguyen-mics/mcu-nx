@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
+const path = require('path');
 const paths = require('./paths');
 
 module.exports = merge(common, {
@@ -43,6 +44,15 @@ module.exports = merge(common, {
         ],
       },
     ],
+  },
+
+  resolve: {
+    alias: {
+      antd: path.resolve('./node_modules/antd'),
+      react: path.resolve('./node_modules/react'),
+      'react-dom': path.resolve('./node_modules/react-dom'),
+      '@ant-design/icons': path.resolve('./node_modules/@ant-design/icons'),
+    },
   },
 
   plugins: [
