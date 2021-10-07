@@ -83,7 +83,6 @@ class SwitchBySearch extends React.Component<Props, SwitchBySearchState> {
   };
 
   setWorkspaceItem = (storageKey: string, orgIds: string[]) => {
-    debugger
     LocalStorage.setItem({ [storageKey]: JSON.stringify(orgIds) });
   };
 

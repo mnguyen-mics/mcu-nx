@@ -52,7 +52,7 @@ class OrganizationListSwitcher extends React.Component<Props, OrganizationListSw
     const { isVisible } = this.state;
 
     const currentWorkspace = workspace(organisationId || organisationIdFromState);
-    debugger
+    
     const workspaceNb = workspaces.length;
     return (
       <Dropdown
