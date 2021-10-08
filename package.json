@@ -12,7 +12,7 @@
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
-    "@mediarithmics-private/mcs-components-library": "6.7.0",
+    "@mediarithmics-private/mcs-components-library": "6.8.0",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
     "@splitsoftware/splitio": "^10.15.5",
     "@svgr/webpack": "5.5.0",
