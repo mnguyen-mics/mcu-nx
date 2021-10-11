@@ -10,7 +10,10 @@ import { Alert } from "antd";
 import { lazyInject } from "../../inversify/inversify.config";
 import { TYPES } from "../../constants/types";
 import { MockedData, MockedMetricData } from "./MockedData";
-import { Dataset, PieChartFormat } from "@mediarithmics-private/mcs-components-library/lib/components/charts/utils";
+import {
+  Dataset,
+  PieChartFormat,
+} from "@mediarithmics-private/mcs-components-library/lib/components/charts/utils";
 
 export type ChartType = "pie" | "bars" | "radar" | "metric";
 
@@ -36,7 +39,11 @@ export interface ChartConfig {
   type: ChartType;
   colors?: string[];
   dataset: ChartDataset;
-  options?: PieChartOptions | RadarChartOptions | BarChartOptions | MetricChartOptions;
+  options?:
+    | PieChartOptions
+    | RadarChartOptions
+    | BarChartOptions
+    | MetricChartOptions;
 }
 
 interface ChartDataFetcherProps {
@@ -55,12 +62,11 @@ type Props = ChartDataFetcherProps;
 class ChartDataFetcher extends React.Component<Props, ChartDataFetcherState> {
   @lazyInject(TYPES.IQueryService)
   private _queryService: IQueryService;
-  
-  private queryService(): IQueryService {
-    if (! this._queryService)
-      this._queryService = new QueryService();
 
-    return this._queryService
+  private queryService(): IQueryService {
+    if (!this._queryService) this._queryService = new QueryService();
+
+    return this._queryService;
   }
 
   constructor(props: Props) {

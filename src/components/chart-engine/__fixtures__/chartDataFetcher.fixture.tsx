@@ -72,7 +72,7 @@ const chartConfigMetric: ChartConfig = {
     query_text: "SELECT @count{} FROM UserPoint",
   },
   options: {
-    format: "count"
+    format: "count",
   },
 };
 
