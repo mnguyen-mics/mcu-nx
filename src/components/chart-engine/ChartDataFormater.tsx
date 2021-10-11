@@ -17,8 +17,11 @@ import {
   ChartType,
   PieChartOptions,
   RadarChartOptions,
+  MetricChartOptions,
 } from "./ChartDataFetcher";
+import { formatMetric } from "../../utils/MetricHelper";
 import { Alert } from "antd";
+
 interface ChartDataFormaterProps {
   dataResult: OTQLResult;
   chartConfig: ChartConfig;
@@ -67,7 +70,11 @@ class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
 
   getXKeyForChart(
     type: ChartType,
-    options: PieChartOptions | RadarChartOptions | BarChartOptions
+    options:
+      | PieChartOptions
+      | RadarChartOptions
+      | BarChartOptions
+      | MetricChartOptions
   ) {
     switch (type.toLowerCase()) {
       case "pie":
@@ -83,6 +90,10 @@ class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
       default:
         return "key";
     }
+  }
+
+  private renderAlert(msg: string): JSX.Element {
+    return <Alert message="Error" description={msg} type="error" showIcon />;
   }
 
   renderChart(): JSX.Element {
@@ -115,11 +126,7 @@ class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
             yKey.key
           );
           return (
-            <PieChart
-              innerRadius={false}
-              dataset={pieDataset}
-              {...withKeys}
-            />
+            <PieChart innerRadius={false} dataset={pieDataset} {...withKeys} />
           );
         case "radar":
           let radarDataset = this.formatDatasetAsKeyValue(
@@ -127,12 +134,7 @@ class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
             xKey,
             yKey.key
           );
-          return (
-            <RadarChart
-              dataset={radarDataset as any}
-              {...withKeys}
-            />
-          );
+          return <RadarChart dataset={radarDataset as any} {...withKeys} />;
         case "bars":
           let barsDataset = this.formatDatasetAsKeyValue(
             buckets,
@@ -148,17 +150,32 @@ class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
             />
           );
         default:
-          return (
-            <Alert
-              message="Error"
-              description="Unknown chart type. Please check available charts types"
-              type="error"
-              showIcon
-            />
+          return this.renderAlert(
+            `Dataset of type aggregation result doesn't match ${chartConfig.type.toLowerCase()} chart type`
           );
       }
+    } else if (isCountResult(dataResult.rows)) {
+      if (chartConfig.type.toLowerCase() === "metric") {
+        let value = dataResult.rows;
+        const opt = chartConfig.options as MetricChartOptions;
+
+        return (
+          <div className="mcs-dashboardMetric">
+            {formatMetric(
+              value[0].count,
+              opt.format && opt.format === "percentage" ? "0,0 %" : "0,0"
+            )}
+          </div>
+        );
+      } else {
+        return this.renderAlert(
+          `Dataset of type count result doesn't match ${chartConfig.type.toLowerCase()} chart type`
+        );
+      }
     } else {
-      return <div />;
+      return this.renderAlert(
+        `Undefined dataset for ${chartConfig.type.toLowerCase()} chart`
+      );
     }
   }
 
