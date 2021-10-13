@@ -1,17 +1,14 @@
-import {
-  OTQLResultType,
-  QueryPrecisionMode,
-} from "../../models/datamart/graphdb/OTQLResult";
+import { OTQLResultType, QueryPrecisionMode } from '../../models/datamart/graphdb/OTQLResult';
 
 export const MockedMetricData = {
-  status: "ok",
+  status: 'ok',
   data: {
     took: 401,
     timed_out: false,
     offset: null,
     limit: null,
-    result_type: "COUNT",
-    precision: "FULL_PRECISION",
+    result_type: 'COUNT',
+    precision: 'FULL_PRECISION',
     sampling_ratio: null,
     rows: [
       {
@@ -23,127 +20,127 @@ export const MockedMetricData = {
 };
 
 export const MockedData = {
-  status: "ok",
+  status: 'ok',
   data: {
     took: 35647,
     timed_out: false,
     offset: null,
     limit: null,
-    result_type: "AGGREGATION" as OTQLResultType,
-    precision: "FULL_PRECISION" as QueryPrecisionMode,
+    result_type: 'AGGREGATION' as OTQLResultType,
+    precision: 'FULL_PRECISION' as QueryPrecisionMode,
     sampling_ratio: null,
     rows: [
       {
         aggregations: {
           bucket_aggregations: [
             {
-              name: "map_nature",
-              field_name: "nature",
-              path: "activity_events",
-              type: "map",
+              name: 'map_nature',
+              field_name: 'nature',
+              path: 'activity_events',
+              type: 'map',
               buckets: [
                 {
-                  key: "item_view",
+                  key: 'item_view',
                   count: 2061861759,
                 },
                 {
-                  key: "$set_user_profile_properties",
+                  key: '$set_user_profile_properties',
                   count: 1879809579,
                 },
                 {
-                  key: "navigation",
+                  key: 'navigation',
                   count: 1711861375,
                 },
                 {
-                  key: "search",
+                  key: 'search',
                   count: 968938644,
                 },
                 {
-                  key: "home",
+                  key: 'home',
                   count: 865440106,
                 },
                 {
-                  key: "$ad_view",
+                  key: '$ad_view',
                   count: 662437456,
                 },
                 {
-                  key: "user_identifiers_association",
+                  key: 'user_identifiers_association',
                   count: 412896957,
                 },
                 {
-                  key: "basket_view",
+                  key: 'basket_view',
                   count: 306154024,
                 },
                 {
-                  key: "offline_order",
+                  key: 'offline_order',
                   count: 146434077,
                 },
                 {
-                  key: "$quit_while_running",
+                  key: '$quit_while_running',
                   count: 103539522,
                 },
                 {
-                  key: "transaction_confirmed",
+                  key: 'transaction_confirmed',
                   count: 35372196,
                 },
                 {
-                  key: "editorials",
+                  key: 'editorials',
                   count: 23228163,
                 },
                 {
-                  key: "online_order",
+                  key: 'online_order',
                   count: 14965317,
                 },
                 {
-                  key: "$conversion",
+                  key: '$conversion',
                   count: 14814680,
                 },
                 {
-                  key: "artist_view",
+                  key: 'artist_view',
                   count: 14105875,
                 },
                 {
-                  key: "services",
+                  key: 'services',
                   count: 13407881,
                 },
                 {
-                  key: "set_user_profile_properties",
+                  key: 'set_user_profile_properties',
                   count: 12541016,
                 },
                 {
-                  key: "transaction confirmed",
+                  key: 'transaction confirmed',
                   count: 8547354,
                 },
                 {
-                  key: "$email_mapping",
+                  key: '$email_mapping',
                   count: 8357670,
                 },
                 {
-                  key: "$ad_click",
+                  key: '$ad_click',
                   count: 4178144,
                 },
                 {
-                  key: "$email_sent",
+                  key: '$email_sent',
                   count: 3913705,
                 },
                 {
-                  key: "offline_order_return",
+                  key: 'offline_order_return',
                   count: 2206333,
                 },
                 {
-                  key: "festival_view",
+                  key: 'festival_view',
                   count: 1334529,
                 },
                 {
-                  key: "$unknown",
+                  key: '$unknown',
                   count: 252113,
                 },
                 {
-                  key: "$error",
+                  key: '$error',
                   count: 70352,
                 },
                 {
-                  key: "online_order_return",
+                  key: 'online_order_return',
                   count: 56223,
                 },
               ],
@@ -151,105 +148,105 @@ export const MockedData = {
           ],
           buckets: [
             {
-              name: "map_nature",
-              field_name: "nature",
-              path: "activity_events",
-              type: "map",
+              name: 'map_nature',
+              field_name: 'nature',
+              path: 'activity_events',
+              type: 'map',
               buckets: [
                 {
-                  key: "item_view",
+                  key: 'item_view',
                   count: 2061861759,
                 },
                 {
-                  key: "$set_user_profile_properties",
+                  key: '$set_user_profile_properties',
                   count: 1879809579,
                 },
                 {
-                  key: "navigation",
+                  key: 'navigation',
                   count: 1711861375,
                 },
                 {
-                  key: "search",
+                  key: 'search',
                   count: 968938644,
                 },
                 {
-                  key: "home",
+                  key: 'home',
                   count: 865440106,
                 },
                 {
-                  key: "$ad_view",
+                  key: '$ad_view',
                   count: 662437456,
                 },
                 {
-                  key: "user_identifiers_association",
+                  key: 'user_identifiers_association',
                   count: 412896957,
                 },
                 {
-                  key: "basket_view",
+                  key: 'basket_view',
                   count: 306154024,
                 },
                 {
-                  key: "offline_order",
+                  key: 'offline_order',
                   count: 146434077,
                 },
                 {
-                  key: "$quit_while_running",
+                  key: '$quit_while_running',
                   count: 103539522,
                 },
                 {
-                  key: "transaction_confirmed",
+                  key: 'transaction_confirmed',
                   count: 35372196,
                 },
                 {
-                  key: "editorials",
+                  key: 'editorials',
                   count: 23228163,
                 },
                 {
-                  key: "online_order",
+                  key: 'online_order',
                   count: 14965317,
                 },
                 {
-                  key: "$conversion",
+                  key: '$conversion',
                   count: 14814680,
                 },
                 {
-                  key: "artist_view",
+                  key: 'artist_view',
                   count: 14105875,
                 },
                 {
-                  key: "services",
+                  key: 'services',
                   count: 13407881,
                 },
                 {
-                  key: "set_user_profile_properties",
+                  key: 'set_user_profile_properties',
                   count: 12541016,
                 },
                 {
-                  key: "transaction confirmed",
+                  key: 'transaction confirmed',
                   count: 8547354,
                 },
                 {
-                  key: "$email_mapping",
+                  key: '$email_mapping',
                   count: 8357670,
                 },
                 {
-                  key: "$ad_click",
+                  key: '$ad_click',
                   count: 4178144,
                 },
                 {
-                  key: "$email_sent",
+                  key: '$email_sent',
                   count: 3913705,
                 },
                 {
-                  key: "offline_order_return",
+                  key: 'offline_order_return',
                   count: 2206333,
                 },
                 {
-                  key: "festival_view",
+                  key: 'festival_view',
                   count: 1334529,
                 },
                 {
-                  key: "$unknown",
+                  key: '$unknown',
                   count: 252113,
                 },
               ],

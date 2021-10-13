@@ -16,9 +16,9 @@ export interface DatamartWithMetricResource extends DatamartResource {
   audience_segment_metrics: AudienceSegmentMetricResource[];
 }
 
-export type DatamartType = "DATAMART" | "CROSS_DATAMART";
+export type DatamartType = 'DATAMART' | 'CROSS_DATAMART';
 
-export type QueryLanguage = "SELECTORQL" | "OTQL" | "JSON_OTQL";
+export type QueryLanguage = 'SELECTORQL' | 'OTQL' | 'JSON_OTQL';
 
 export type QueryLanguageSubtype = 'PARAMETRIC';
 
@@ -69,30 +69,27 @@ export interface AutoCompleteResource {
   field_name: string;
 }
 
-export type ErrorQueryResource =
-  | ValidationErrorResource
-  | ParsingErrorResource
-  | ValidResource;
+export type ErrorQueryResource = ValidationErrorResource | ParsingErrorResource | ValidResource;
 
 export interface ErrorResource {
-  type: "PARSING_ERROR" | "VALID" | "VALIDATION_ERROR";
+  type: 'PARSING_ERROR' | 'VALID' | 'VALIDATION_ERROR';
 }
 
 export interface ParsingErrorResource extends ErrorResource {
-  type: "PARSING_ERROR";
+  type: 'PARSING_ERROR';
   error: ErroTypeResource;
-  status: "error";
+  status: 'error';
 }
 
 export interface ValidResource extends ErrorResource {
-  type: "VALID";
-  status: "ok";
+  type: 'VALID';
+  status: 'ok';
 }
 
 export interface ValidationErrorResource extends ErrorResource {
-  type: "VALIDATION_ERROR";
+  type: 'VALIDATION_ERROR';
   error: ErroTypeResource;
-  status: "error";
+  status: 'error';
 }
 
 export interface ErroTypeResource {
@@ -101,7 +98,7 @@ export interface ErroTypeResource {
     row: number;
     col: number;
   };
-  error_type: "PARSING" | "TYPINGS" | "FIELD" | "DIRECTIVE";
+  error_type: 'PARSING' | 'TYPINGS' | 'FIELD' | 'DIRECTIVE';
 }
 
 export interface AudienceSegmentMetricResource {
@@ -110,14 +107,14 @@ export interface AudienceSegmentMetricResource {
   datamartId: string;
   queryId: string;
   technical_name:
-    | "user_accounts"
-    | "emails"
-    | "desktop_cookie_ids"
-    | "mobile_ad_ids"
-    | "mobile_cookie_ids";
+    | 'user_accounts'
+    | 'emails'
+    | 'desktop_cookie_ids'
+    | 'mobile_ad_ids'
+    | 'mobile_cookie_ids';
   display_name: string;
   icon: string;
-  status: "DRAFT" | "LIVE" | "ARCHIVED";
+  status: 'DRAFT' | 'LIVE' | 'ARCHIVED';
   creationDate: number;
   lastModifiedDate: number;
   lastPublishedDate: number;

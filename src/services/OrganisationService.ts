@@ -38,6 +38,7 @@ export interface IOrganisationService {
 
 @injectable()
 export default class OrganisationService implements IOrganisationService {
+  logoCache: { [orgId: string]: Blob } = {};
   getWorkspace(organisationId: string): Promise<DataResponse<UserWorkspaceResource>> {
     const endpoint = `organisations/${organisationId}/workspace`;
     return ApiService.getRequest(endpoint);
@@ -56,18 +57,6 @@ export default class OrganisationService implements IOrganisationService {
 
     return ApiService.getRequest(endpoint, undefined, headers, options);
   }
-
-  logoCache: { [orgId: string]: Blob } = {};
-  private doGetLogo = (organisationId: string) => {
-    const endpoint = `organisations/${organisationId}/logo`;
-    const headers = { Accept: 'image/png' };
-    return ApiService.getRequest<Blob>(endpoint, undefined, headers)
-      .catch(() => this.getStandardLogo())
-      .then(blobLogo => {
-        this.logoCache[organisationId] = blobLogo;
-        return blobLogo;
-      });
-  };
 
   getLogoCache = (organisationId: string) => {
     return this.logoCache[organisationId];
@@ -142,4 +131,14 @@ export default class OrganisationService implements IOrganisationService {
     };
     return ApiService.deleteRequest(endpoint, options);
   }
+  private doGetLogo = (organisationId: string) => {
+    const endpoint = `organisations/${organisationId}/logo`;
+    const headers = { Accept: 'image/png' };
+    return ApiService.getRequest<Blob>(endpoint, undefined, headers)
+      .catch(() => this.getStandardLogo())
+      .then(blobLogo => {
+        this.logoCache[organisationId] = blobLogo;
+        return blobLogo;
+      });
+  };
 }

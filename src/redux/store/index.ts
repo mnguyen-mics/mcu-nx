@@ -23,7 +23,7 @@ function bindDependencies(
   const injections = dependencies.map(dependency => {
     return container.container.get(dependency);
   });
-  return (func as Function).bind(func, ...injections);
+  return func.bind(func, ...injections);
 }
 
 export { bindDependencies };
@@ -49,19 +49,15 @@ function configureStore(
   middlewares.push(apiRequest);
   middlewares.push(sagaMiddleware);
 
-  const composeEnhancers =
-    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // eslint-disable-line no-undef, no-underscore-dangle
+  const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // eslint-disable-line no-undef, no-underscore-dangle
 
   const store = preloadedState
     ? createStore(
         rootReducer,
-        preloadedState,
+        preloadedState as any,
         composeEnhancers(applyMiddleware(...middlewares)),
       )
-    : createStore(
-        rootReducer,
-        composeEnhancers(applyMiddleware(...middlewares)),
-      );
+    : createStore(rootReducer, composeEnhancers(applyMiddleware(...middlewares)));
 
   sagaMiddleware.run(sagas);
 
@@ -71,5 +67,5 @@ function configureStore(
 export default bindDependencies(configureStore, [
   TYPES.IAuthService,
   TYPES.ILabelService,
-  TYPES.IOrganisationService
+  TYPES.IOrganisationService,
 ]);

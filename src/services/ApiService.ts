@@ -13,7 +13,6 @@ export interface ApiResponse {
 //   status: 'ok'
 // }
 
-
 export interface DataResponse<T> extends ApiResponse {
   // extends OkResponse
   data: T;
@@ -90,8 +89,7 @@ function request(
   const url = `${baseUrl}${endpoint}${paramsToQueryString(options.params)}`;
 
   const requestHeaders = new Headers(options.headers || {});
-  
-  
+
   requestHeaders.append('X-Requested-By', 'mediarithmics-navigator');
 
   if (!options.localUrl && options.authenticated) {

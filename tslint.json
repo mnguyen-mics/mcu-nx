@@ -1,15 +1,14 @@
 {
   "extends": ["tslint:latest", "tslint-react", "tslint-eslint-rules", "tslint-config-prettier"],
-  "rules": {    
+  "rules": {
+    "array-type": [true, "array-simple"],
     "arrow-parens": false,
     "arrow-return-shorthand": [false],
     "comment-format": [true, "check-space"],
     "import-blacklist": [true, "rxjs"],
     "interface-over-type-literal": false,
     "member-access": false,
-    "member-ordering": [true, {
-      "order": "fields-first"
-    }],
+    "member-ordering": false,
     "newline-before-return": false,
     "no-any": false,
     "no-empty-interface": false,
@@ -18,9 +17,12 @@
     "no-null-keyword": false,
     "no-require-imports": false,
     "no-switch-case-fall-through": true,
-    "no-this-assignment": [true, {
-      "allow-destructuring": true
-    }],
+    "no-this-assignment": [
+      true,
+      {
+        "allow-destructuring": true
+      }
+    ],
     "object-literal-sort-keys": false,
     "object-literal-shorthand": false,
     "one-variable-per-declaration": [false],
@@ -29,8 +31,14 @@
     "prefer-method-signature": false,
     "prefer-template": [true, "allow-single-concat"],
     "triple-equals": [true, "allow-null-check"],
-    "typedef": [true,"parameter", "property-declaration"],
-    "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case", "allow-leading-underscore"],
+    "typedef": [true, "parameter", "property-declaration"],
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-pascal-case",
+      "allow-leading-underscore"
+    ],
     "interface-name": false,
     "jsx-no-multiline-js": false,
     "curly": false,
@@ -38,6 +46,6 @@
     "no-var-requires": false,
     "prefer-conditional-expression": false,
     "max-classes-per-file": false,
-    "no-implicit-dependencies": [true, "dev"]
+    "no-object-literal-type-assertion": false
   }
 }

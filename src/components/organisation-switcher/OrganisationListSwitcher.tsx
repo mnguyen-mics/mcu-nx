@@ -19,7 +19,7 @@ export interface OrganizationListSwitcherState {
 export interface StoreProps {
   workspaces: UserWorkspaceResource[];
   workspace: (organisationId: string) => UserWorkspaceResource;
-  organisationIdFromState?: string;
+  organisationIdFromState: string;
 }
 
 const maxOrgOrCommunity = 6;
@@ -46,13 +46,13 @@ class OrganizationListSwitcher extends React.Component<Props, OrganizationListSw
       },
       workspace,
       workspaces,
-      organisationIdFromState
+      organisationIdFromState,
     } = this.props;
 
     const { isVisible } = this.state;
 
     const currentWorkspace = workspace(organisationId || organisationIdFromState);
-    
+
     const workspaceNb = workspaces.length;
     return (
       <Dropdown
@@ -96,7 +96,7 @@ class OrganizationListSwitcher extends React.Component<Props, OrganizationListSw
 const mapStateToProps = (state: MicsReduxState) => ({
   workspaces: state.session.connectedUser.workspaces,
   workspace: getWorkspace(state),
-  organisationIdFromState: state.session.workspace.organisation_id
+  organisationIdFromState: state.session.workspace.organisation_id,
 });
 
 export default compose<Props, {}>(

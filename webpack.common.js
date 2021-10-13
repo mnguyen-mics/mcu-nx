@@ -1,22 +1,22 @@
 const path = require('path');
-const glob = require("glob");
+const glob = require('glob');
 
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: 	glob.sync('./src/index.ts'),
+  entry: glob.sync('./src/index.ts'),
   output: {
     path: path.resolve(__dirname, 'lib'),
-		filename: 'index.js',
-		libraryTarget: 'umd',
-		library: 'McsAdvancedComponents',
+    filename: 'index.js',
+    libraryTarget: 'umd',
+    library: 'McsAdvancedComponents',
   },
   module: {
     rules: [
-			{
+      {
         test: /\.ts|\.tsx$/,
-				include: path.resolve('src'),
-				loaders: ['babel-loader', 'ts-loader'],
+        include: path.resolve('src'),
+        loaders: ['babel-loader', 'ts-loader'],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -46,10 +46,10 @@ module.exports = {
         use: ['file-loader'],
       },
     ],
-	},
-	resolve: {
-		extensions: ['.tsx', '.ts', '.jsx', '.js'],
-	},
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.jsx', '.js'],
+  },
   performance: { hints: false },
   plugins: [
     new CopyPlugin({
@@ -59,7 +59,7 @@ module.exports = {
         {
           from: './assets/**/*.png',
           to: '[path][name].[ext]',
-          context: 'src'
+          context: 'src',
         },
       ],
     }),

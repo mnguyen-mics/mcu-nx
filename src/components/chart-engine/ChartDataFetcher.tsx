@@ -1,49 +1,44 @@
-import * as React from "react";
-import { OTQLResult } from "../../models/datamart/graphdb/OTQLResult";
-import ChartDataFormater from "./ChartDataFormater";
-import { IQueryService, QueryService } from "../../services/QueryService";
-import { Loading } from "@mediarithmics-private/mcs-components-library";
-import { PieChartProps } from "@mediarithmics-private/mcs-components-library/lib/components/charts/pie-chart/PieChart";
-import { RadarChartProps } from "@mediarithmics-private/mcs-components-library/lib/components/charts/radar-chart";
-import { BarChartProps } from "@mediarithmics-private/mcs-components-library/lib/components/charts/bar-chart/BarChart";
-import { Alert } from "antd";
-import { lazyInject } from "../../inversify/inversify.config";
-import { TYPES } from "../../constants/types";
-import { MockedData, MockedMetricData } from "./MockedData";
-import {
-  Dataset,
-  PieChartFormat,
-} from "@mediarithmics-private/mcs-components-library/lib/components/charts/utils";
+import * as React from 'react';
+import { OTQLResult } from '../../models/datamart/graphdb/OTQLResult';
+import ChartDataFormater from './ChartDataFormater';
+import { IQueryService, QueryService } from '../../services/QueryService';
+import { Loading } from '@mediarithmics-private/mcs-components-library';
+import { PieChartProps } from '@mediarithmics-private/mcs-components-library/lib/components/charts/pie-chart/PieChart';
+import { RadarChartProps } from '@mediarithmics-private/mcs-components-library/lib/components/charts/radar-chart';
+import { BarChartProps } from '@mediarithmics-private/mcs-components-library/lib/components/charts/bar-chart/BarChart';
+import { Alert } from 'antd';
+import { lazyInject } from '../../inversify/inversify.config';
+import { TYPES } from '../../constants/types';
 
-export type ChartType = "pie" | "bars" | "radar" | "metric";
+import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 
-type ChartDatasetType = "otql";
+export type ChartType = 'pie' | 'bars' | 'radar' | 'metric';
+
+export type ChartDatasetType = 'otql';
 interface ChartDataset {
   type: ChartDatasetType;
   query_text?: string;
   query_id?: string;
 }
 
+export declare type MetricChartFormat = 'percentage' | 'count';
+
 export interface MetricChartProps {
   dataset: Dataset;
-  format: PieChartFormat;
+  format?: MetricChartFormat;
 }
 
-export type PieChartOptions = Omit<PieChartProps, "dataset" | "colors">;
-export type RadarChartOptions = Omit<RadarChartProps, "dataset" | "colors">;
-export type BarChartOptions = Omit<BarChartProps, "dataset" | "colors">;
-export type MetricChartOptions = Omit<MetricChartProps, "dataset" | "colors">;
+export type PieChartOptions = Omit<PieChartProps, 'dataset' | 'colors'>;
+export type RadarChartOptions = Omit<RadarChartProps, 'dataset' | 'colors'>;
+export type BarChartOptions = Omit<BarChartProps, 'dataset' | 'colors'>;
+export type MetricChartOptions = Omit<MetricChartProps, 'dataset' | 'colors'>;
 
 export interface ChartConfig {
   title: string;
   type: ChartType;
   colors?: string[];
   dataset: ChartDataset;
-  options?:
-    | PieChartOptions
-    | RadarChartOptions
-    | BarChartOptions
-    | MetricChartOptions;
+  options?: PieChartOptions | RadarChartOptions | BarChartOptions | MetricChartOptions;
 }
 
 interface ChartDataFetcherProps {
@@ -53,7 +48,7 @@ interface ChartDataFetcherProps {
 }
 
 interface ChartDataFetcherState {
-  fetchedData: OTQLResult;
+  fetchedData?: OTQLResult;
   loading: boolean;
   hasError: boolean;
 }
@@ -73,7 +68,6 @@ class ChartDataFetcher extends React.Component<Props, ChartDataFetcherState> {
     super(props);
 
     this.state = {
-      fetchedData: null,
       loading: true,
       hasError: false,
     };
@@ -82,12 +76,9 @@ class ChartDataFetcher extends React.Component<Props, ChartDataFetcherState> {
   componentDidMount() {
     const { datamartId, chartConfig } = this.props;
 
-    if (chartConfig.dataset.type.toLowerCase() === "otql") {
+    if (chartConfig.dataset.type.toLowerCase() === 'otql') {
       if (chartConfig.dataset.query_text) {
-        this.fetchOtqlDataByQueryText(
-          datamartId,
-          chartConfig.dataset.query_text
-        );
+        this.fetchOtqlDataByQueryText(datamartId, chartConfig.dataset.query_text);
       }
 
       if (chartConfig.dataset.query_id) {
@@ -96,14 +87,14 @@ class ChartDataFetcher extends React.Component<Props, ChartDataFetcherState> {
     }
   }
 
-  fetchOtqlDataByQueryId(datamartId: string, query_id: string) {
+  fetchOtqlDataByQueryId(datamartId: string, queryId: string) {
     return this.queryService()
-      .getQuery(datamartId, query_id)
-      .then((queryResp) => queryResp.data)
-      .then((q) => {
+      .getQuery(datamartId, queryId)
+      .then(queryResp => queryResp.data)
+      .then(q => {
         return this.fetchOtqlDataByQueryText(datamartId, q.query_text);
       })
-      .catch((r) => {
+      .catch(r => {
         this.setState({
           hasError: true,
           loading: false,
@@ -111,19 +102,19 @@ class ChartDataFetcher extends React.Component<Props, ChartDataFetcherState> {
       });
   }
 
-  fetchOtqlDataByQueryText(datamartId: string, query_text: string) {
+  fetchOtqlDataByQueryText(datamartId: string, queryText: string) {
     return this.queryService()
-      .runOTQLQuery(datamartId, query_text, {
+      .runOTQLQuery(datamartId, queryText, {
         use_cache: true,
       })
-      .then((otqlResultResp) => otqlResultResp.data)
-      .then((otqlResult) => {
+      .then(otqlResultResp => otqlResultResp.data)
+      .then(otqlResult => {
         this.setState({
           fetchedData: otqlResult,
           loading: false,
         });
       })
-      .catch((r) => {
+      .catch(r => {
         this.setState({
           hasError: true,
           loading: false,
@@ -137,33 +128,25 @@ class ChartDataFetcher extends React.Component<Props, ChartDataFetcherState> {
     if (hasError) {
       return (
         <Alert
-          message="Error"
-          description="Cannot fetch data for chart"
-          type="error"
-          showIcon
+          message='Error'
+          description='Cannot fetch data for chart'
+          type='error'
+          showIcon={true}
         />
       );
     }
 
     return (
       <div style={chartContainerStyle}>
-        <div className={"mcs-chartDataFetcher_header"}>
-          <h2 className={"mcs-chartDataFetcher_header_title"}>
-            {chartConfig.title}
-          </h2>
+        <div className={'mcs-chartDataFetcher_header'}>
+          <h2 className={'mcs-chartDataFetcher_header_title'}>{chartConfig.title}</h2>
           {loading && (
-            <Loading
-              className={"mcs-chartDataFetcher_header_loader"}
-              isFullScreen={false}
-            />
+            <Loading className={'mcs-chartDataFetcher_header_loader'} isFullScreen={false} />
           )}
         </div>
-        <div className="mcs-chartDataFetcher_content_container">
+        <div className='mcs-chartDataFetcher_content_container'>
           {fetchedData && fetchedData.rows.length > 0 && (
-            <ChartDataFormater
-              dataResult={fetchedData}
-              chartConfig={chartConfig}
-            />
+            <ChartDataFormater dataResult={fetchedData} chartConfig={chartConfig} />
           )}
         </div>
       </div>
