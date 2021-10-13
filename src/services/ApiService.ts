@@ -13,6 +13,7 @@ export interface ApiResponse {
 //   status: 'ok'
 // }
 
+
 export interface DataResponse<T> extends ApiResponse {
   // extends OkResponse
   data: T;
