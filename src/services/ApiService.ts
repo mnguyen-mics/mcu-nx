@@ -89,8 +89,7 @@ function request(
   const url = `${baseUrl}${endpoint}${paramsToQueryString(options.params)}`;
 
   const requestHeaders = new Headers(options.headers || {});
-  
-  
+
   requestHeaders.append('X-Requested-By', 'mediarithmics-navigator');
 
   if (!options.localUrl && options.authenticated) {

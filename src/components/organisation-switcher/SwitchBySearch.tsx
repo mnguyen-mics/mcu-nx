@@ -137,11 +137,7 @@ class SwitchBySearch extends React.Component<Props, SwitchBySearchState> {
   };
 
   renderChildrenMenu = (children: UserWorkspaceResource[]) => {
-    return (
-      <React.Fragment>
-        {children.map(child => this.renderNodeMenu(child))}
-      </React.Fragment>
-    );
+    return <React.Fragment>{children.map(child => this.renderNodeMenu(child))}</React.Fragment>;
   };
 
   renderNodeMenu = (node: UserWorkspaceResource) => {

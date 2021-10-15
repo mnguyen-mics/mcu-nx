@@ -125,7 +125,6 @@ class AuthenticatedRoute extends React.Component<Props> {
       computedMatch: {
         params: { organisationId },
       },
-      connectedUserLoaded,
       intl: { formatMessage },
       render,
       errorRender,

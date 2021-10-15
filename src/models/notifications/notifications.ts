@@ -1,4 +1,4 @@
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage } from 'react-intl';
 
 export interface Notification {
   level: string;

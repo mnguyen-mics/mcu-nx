@@ -1,5 +1,5 @@
-import * as React from "react";
-import KeycloakService from "../services/KeycloakService";
+import * as React from 'react';
+import KeycloakService from '../services/KeycloakService';
 
 class RenderOnAuthenticated extends React.Component {
   render() {

@@ -3,6 +3,7 @@ import {
   UserWorkspaceResource,
   UserProfileResource,
 } from '../models/directory/UserProfileResource';
+import { Cookies } from '@mediarithmics-private/mcs-components-library/lib/models/timeline/timeline';
 
 const REQUEST = 'REQUEST';
 const SUCCESS = 'SUCCESS';
@@ -32,13 +33,26 @@ export type MicsReduxState = {
   session: {
     workspace: UserWorkspaceResource;
     connectedUser: UserProfileResource;
+    cookies: Cookies;
     connectedUserLoaded: boolean;
     isFechingCookies: boolean;
     isFetchingWorkspace: boolean;
     isUploadingLogo: boolean;
     logoUrl: string;
   };
-}
+  labels: {
+    labelsApi: {
+      isFetching: boolean;
+      data: any;
+      total: number;
+      status: string;
+      count: number;
+      first_result: number;
+      max_result: number;
+      max_results: number;
+    };
+  };
+};
 
 export type Payload = { [key: string]: any };
 
@@ -65,34 +79,34 @@ const defaultMetadata = {
   total: 0,
 };
 
-export const createRequestMetadataReducer = (
-  requestTypes: CreateRequestType,
-) => (state = defaultMetadata, action: Action<Payload>) => {
-  switch (action.type) {
-    case requestTypes.REQUEST:
-      return {
-        ...state,
-        isFetching: true,
-      };
-    case requestTypes.SUCCESS:
-      return {
-        ...state,
-        isFetching: false,
-        total: action.payload.total,
-      };
-    case requestTypes.FAILURE:
-      return {
-        ...state,
-        isFetching: false,
-        error: action.payload,
-      };
-    case requestTypes.EXPIRED_PASSWORD:
-      return {
-        ...state,
-        isFetching: false,
-        error: action.payload,
-      };
-    default:
-      return state;
-  }
-};
+export const createRequestMetadataReducer =
+  (requestTypes: CreateRequestType) =>
+  (state = defaultMetadata, action: Action<Payload>) => {
+    switch (action.type) {
+      case requestTypes.REQUEST:
+        return {
+          ...state,
+          isFetching: true,
+        };
+      case requestTypes.SUCCESS:
+        return {
+          ...state,
+          isFetching: false,
+          total: action.payload.total,
+        };
+      case requestTypes.FAILURE:
+        return {
+          ...state,
+          isFetching: false,
+          error: action.payload,
+        };
+      case requestTypes.EXPIRED_PASSWORD:
+        return {
+          ...state,
+          isFetching: false,
+          error: action.payload,
+        };
+      default:
+        return state;
+    }
+  };

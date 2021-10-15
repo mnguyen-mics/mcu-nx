@@ -36,4 +36,3 @@ export function formateList<T>(a: { [key: string]: T }) {
     return a[k];
   });
 }
-

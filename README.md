@@ -28,7 +28,6 @@ We use [nvm](https://github.com/creationix/nvm) to set the nodejs version.
 - `npm install @mediarithmics-private/advanced-components`
 - `'import { TopBar, Logo } from '@mediarithmics-private/advanced-components'` Import a component form library index main entry point
 
-
 ## Developing and testing in Navigator
 
 - `cd ~/dev/advanced-components` go into the library directory

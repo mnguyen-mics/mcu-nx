@@ -7,7 +7,7 @@ module.exports = merge(common, {
   devtool: 'eval-source-maps',
   watchOptions: {
     aggregateTimeout: 300,
-    poll: 1000
+    poll: 1000,
   },
   externals: ['antd', 'react', 'react-dom'],
 });

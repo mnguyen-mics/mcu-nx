@@ -1,45 +1,50 @@
-import React from "react";
-import DashboardLayout from "../DashboardLayout";
-import { FetchMock } from "@react-mock/fetch";
-import { LocalStorageMock } from "@react-mock/localstorage";
-import { MockedData, MockedMetricData } from "../../chart-engine/MockedData";
+import React from 'react';
+import DashboardLayout from '../DashboardLayout';
+import { FetchMock } from '@react-mock/fetch';
+import { LocalStorageMock } from '@react-mock/localstorage';
+import { MockedData, MockedMetricData } from '../../chart-engine/MockedData';
+import {
+  ChartDatasetType,
+  ChartType,
+  MetricChartOptions,
+} from '../../chart-engine/ChartDataFetcher';
 
 const propsMetric = {
-  datamart_id: "1415",
+  datamart_id: '1415',
   schema: {
     sections: [
       {
-        title: "Summary",
+        title: 'Summary',
         cards: [
           {
             x: 0,
             y: 0,
             w: 12,
             h: 1,
-            layout: "horizontal",
+            layout: 'horizontal',
             charts: [
               {
-                title: "Total number of user points",
-                type: "Metric",
+                title: 'Total number of user points',
+                type: 'metric' as ChartType,
                 dataset: {
-                  type: "OTQL",
-                  query_id: "50170",
+                  type: 'otql' as ChartDatasetType,
+                  query_id: '50170',
                 },
                 options: {
-                  xKey: "key",
-                },
+                  xKey: 'key',
+                } as MetricChartOptions,
               },
               {
-                title: "Overall income increase (%)",
-                type: "Metric",
+                title: 'Overall income increase (%)',
+                type: 'metric' as ChartType,
                 dataset: {
-                  type: "OTQL",
-                  query_id: "50170",
+                  type: 'otql' as ChartDatasetType,
+                  query_id: '50170',
                 },
                 options: {
-                  xKey: "key",
-                  format: "percentage",
-                },
+                  xKey: 'key',
+                  format: 'percentage',
+                } as MetricChartOptions,
               },
             ],
           },
@@ -50,44 +55,25 @@ const propsMetric = {
 };
 
 const props = {
-  datamart_id: "1414",
+  datamart_id: '1414',
   schema: {
     sections: [
       {
-        title: "General Information",
+        title: 'General Information',
         cards: [
           {
             x: 0,
             y: 0,
             w: 12,
             h: 6,
-            layout: "horizontal",
+            layout: 'horizontal',
             charts: [
               {
-                title: "Age range",
-                type: "Pie",
+                title: 'Age range',
+                type: 'pie' as ChartType,
                 dataset: {
-                  type: "OTQL",
-                  query_id: "50172",
-                },
-              },
-              {
-                title: "Age range",
-                type: "Pie",
-                dataset: {
-                  type: "OTQL",
-                  query_id: "50172",
-                },
-              },
-              {
-                title: "Device form factors",
-                type: "Bars",
-                dataset: {
-                  type: "OTQL",
-                  query_id: "50171",
-                },
-                options: {
-                  xKey: "key",
+                  type: 'otql' as ChartDatasetType,
+                  query_id: '50172',
                 },
               },
             ],
@@ -95,7 +81,7 @@ const props = {
         ],
       },
       {
-        title: "Demographics",
+        title: 'Demographics',
         cards: [
           {
             x: 0,
@@ -104,16 +90,16 @@ const props = {
             h: 4,
             charts: [
               {
-                title: "Gender",
-                type: "Pie",
+                title: 'Gender',
+                type: 'pie' as ChartType,
                 dataset: {
-                  type: "OTQL",
-                  query_id: "50168",
+                  type: 'otql' as ChartDatasetType,
+                  query_id: '50168',
                 },
                 options: {
                   legend: {
                     enabled: true,
-                    position: "right",
+                    position: 'right',
                   },
                 },
               },
@@ -126,11 +112,11 @@ const props = {
             h: 4,
             charts: [
               {
-                title: "Age range",
-                type: "Pie",
+                title: 'Age range',
+                type: 'pie' as ChartType,
                 dataset: {
-                  type: "OTQL",
-                  query_id: "50172",
+                  type: 'otql' as ChartDatasetType,
+                  query_id: '50172',
                 },
               },
             ],
@@ -142,15 +128,15 @@ const props = {
             h: 4,
             charts: [
               {
-                title: "Social class",
-                type: "Bars",
+                title: 'Social class',
+                type: 'bars' as ChartType,
                 dataset: {
-                  type: "OTQL",
-                  query_id: "50169",
+                  type: 'otql' as ChartDatasetType,
+                  query_id: '50169',
                 },
                 options: {
-                  type: "bar",
-                  xKey: "key",
+                  type: 'bar' as ChartType,
+                  xKey: 'key',
                 },
               },
             ],
@@ -158,7 +144,7 @@ const props = {
         ],
       },
       {
-        title: "Behavioral",
+        title: 'Behavioral',
         cards: [
           {
             x: 0,
@@ -167,15 +153,15 @@ const props = {
             h: 4,
             charts: [
               {
-                title: "Top 10 interests",
-                type: "Radar",
+                title: 'Top 10 interests',
+                type: 'radar' as ChartType,
                 dataset: {
-                  type: "OTQL",
-                  query_id: "50167",
+                  type: 'otql' as ChartDatasetType,
+                  query_id: '50167',
                 },
                 options: {
-                  xKey: "key",
-                },
+                  xKey: 'key',
+                } as any,
               },
             ],
           },
@@ -186,11 +172,11 @@ const props = {
             h: 4,
             charts: [
               {
-                title: "Top 10 purchase intents",
-                type: "Bars",
+                title: 'Top 10 purchase intents',
+                type: 'bars' as ChartType,
                 dataset: {
-                  type: "OTQL",
-                  query_id: "50173",
+                  type: 'otql' as ChartDatasetType,
+                  query_id: '50173',
                 },
               },
             ],
@@ -203,25 +189,25 @@ const props = {
 
 const fetchmockOptions = [
   {
-    matcher: "glob:/undefined/v1/datamarts/*/queries/*",
-    response: { data: "Select @count() from UserPoint" },
+    matcher: 'glob:/undefined/v1/datamarts/*/queries/*',
+    response: { data: 'Select @count() from UserPoint' },
   },
   {
-    matcher: "glob:/undefined/v1/datamarts/1414/query_executions/otql*",
+    matcher: 'glob:/undefined/v1/datamarts/1414/query_executions/otql*',
     response: MockedData,
   },
   {
-    matcher: "glob:/undefined/v1/datamarts/1415/query_executions/otql*",
+    matcher: 'glob:/undefined/v1/datamarts/1415/query_executions/otql*',
     response: MockedMetricData,
   },
 ];
 
 export default {
   component: (
-    <LocalStorageMock items={{ access_token: "re4lt0k3n" }}>
+    <LocalStorageMock items={{ access_token: 're4lt0k3n' }}>
       <FetchMock mocks={fetchmockOptions}>
-        <DashboardLayout {...propsMetric}></DashboardLayout>
-        <DashboardLayout {...props}></DashboardLayout>
+        <DashboardLayout {...propsMetric} />
+        <DashboardLayout {...props} />
       </FetchMock>
     </LocalStorageMock>
   ),

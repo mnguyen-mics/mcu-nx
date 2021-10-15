@@ -1,4 +1,3 @@
-
 import ApiService from '../../services/ApiService';
 
 export const CALL_API = Symbol('Call Api');

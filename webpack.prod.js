@@ -18,6 +18,6 @@ module.exports = merge(common, {
       amd: 'react-dom',
       umd: 'react-dom',
     },
-    antd: 'antd'
+    antd: 'antd',
   },
 });

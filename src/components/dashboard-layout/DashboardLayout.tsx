@@ -1,16 +1,15 @@
-import LazyLoad from "react-lazyload";
-import { Card } from "@mediarithmics-private/mcs-components-library";
-import React, { CSSProperties } from "react";
-import { Responsive, WidthProvider, Layout, Layouts } from "react-grid-layout";
-import ChartDataFetcher from "../chart-engine";
-import { ChartConfig } from "../chart-engine/ChartDataFetcher";
-import cuid from "cuid";
+import { Card } from '@mediarithmics-private/mcs-components-library';
+import React, { CSSProperties } from 'react';
+import { Responsive, WidthProvider } from 'react-grid-layout';
+import ChartDataFetcher from '../chart-engine';
+import { ChartConfig } from '../chart-engine/ChartDataFetcher';
+import cuid from 'cuid';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 const BASE_FRAMEWORK_HEIGHT = 96;
 
-interface Props {
+export interface DashboardLayoutProps {
   datamart_id: string;
   schema: DashboardContentSchema;
 }
@@ -29,12 +28,12 @@ interface DashboardContentSection {
   cards: DashboardContentCard[];
 }
 
-interface DashboardContentSchema {
+export interface DashboardContentSchema {
   sections: DashboardContentSection[];
 }
 
-export default class DashboardLayout extends React.Component<Props> {
-  constructor(props: Props) {
+export default class DashboardLayout extends React.Component<DashboardLayoutProps> {
+  constructor(props: DashboardLayoutProps) {
     super(props);
   }
 
@@ -46,25 +45,22 @@ export default class DashboardLayout extends React.Component<Props> {
         datamartId={datamart_id}
         chartConfig={chart}
         chartContainerStyle={cssProperties}
-      ></ChartDataFetcher>
+      />
     );
   }
 
-  computeCSSProperties = (
-    numberOfCharts: number,
-    layout: string = "horizontal"
-  ) => {
-    if (layout === "horizontal")
+  computeCSSProperties = (numberOfCharts: number, layout: string = 'horizontal') => {
+    if (layout === 'horizontal')
       return {
         width: `${100 / numberOfCharts}%`,
-        float: "left" as any,
-        height: "100%",
+        float: 'left' as any,
+        height: '100%',
       };
     else return { height: `${100 / numberOfCharts}%` };
   };
 
   generateDOM(): React.ReactElement {
-    const sections = this.props.schema.sections.map((section) => {
+    const sections = this.props.schema.sections.map((section, i) => {
       const cards = section.cards.map((card, index) => {
         return this.renderCard(card, index);
       });
@@ -78,15 +74,15 @@ export default class DashboardLayout extends React.Component<Props> {
         };
       });
       return (
-        <div key={cuid()} className={"mcs-section"}>
-          <div className={"mcs-subtitle2"}>{section.title}</div>
+        <div key={cuid()} className={'mcs-section'}>
+          <div className={'mcs-subtitle2'}>{section.title}</div>
           <ResponsiveReactGridLayout
             cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
             layouts={{ lg: layouts }}
             isDraggable={false}
             isResizable={false}
             measureBeforeMount={false}
-            compactType={"vertical"}
+            compactType={'vertical'}
             preventCollision={true}
             // Disable dragging & resizabling
             rowHeight={BASE_FRAMEWORK_HEIGHT}
@@ -96,9 +92,9 @@ export default class DashboardLayout extends React.Component<Props> {
         </div>
       );
     });
-    return <div className={"mcs-dashboardLayout"}>{sections}</div>;
+    return <div className={'mcs-dashboardLayout'}>{sections}</div>;
   }
-  
+
   renderCard(card: DashboardContentCard, i: number) {
     const charts = card.charts.map((chart, index) => {
       return this.renderChart(
@@ -109,7 +105,7 @@ export default class DashboardLayout extends React.Component<Props> {
     });
     return (
       <div key={i.toString()}>
-        <Card className="mcs-cardFlex">{charts}</Card>
+        <Card className='mcs-cardFlex'>{charts}</Card>
       </div>
     );
   }

@@ -6,11 +6,5 @@ import { sessionSagas } from './Session/sagas';
 import { labelsSagas } from './Labels/sagas';
 import { featuresSagas } from './Features/sagas';
 export default function* sagas() {
-  yield all([
-    ...appSagas,
-    ...sessionSagas,
-    ...loginSagas,
-    ...labelsSagas,
-    ...featuresSagas,
-  ]);
+  yield all([...appSagas, ...sessionSagas, ...loginSagas, ...labelsSagas, ...featuresSagas]);
 }

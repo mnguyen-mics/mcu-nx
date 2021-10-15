@@ -6,14 +6,13 @@ import SessionReducers from '../Session/reducer';
 import NotificationsReducers from '../Notifications/reducer';
 import AppReducer from '../App/reducer';
 
-const allReducers = Object.assign(
-  {},
-  AppReducer,
-  FeaturesReducer,
-  NotificationsReducers,
-  LoginReducers,
-  SessionReducers,
-  LabelsReducers,
-);
+const allReducers = {
+  ...AppReducer,
+  ...FeaturesReducer,
+  ...NotificationsReducers,
+  ...LoginReducers,
+  ...SessionReducers,
+  ...LabelsReducers,
+};
 
 export default combineReducers(allReducers);

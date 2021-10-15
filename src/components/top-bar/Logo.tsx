@@ -47,20 +47,12 @@ class Logo extends React.Component<Props> {
       },
     } = previousProps;
     if (organisationId !== previousOrganisationId) {
-
       this.props.getLogoRequest({ organisationId: organisationId });
     }
   }
 
   render() {
-    const {
-      mode,
-      logoUrl,
-      linkPath,
-      match: {
-        params: { organisationId },
-      },
-    } = this.props;
+    const { mode, logoUrl, linkPath } = this.props;
 
     return (
       <div className='mcs-logo-placeholder'>

@@ -1,1 +1,1 @@
-export type Index<T>= { [key: string]: T};
+export type Index<T> = { [key: string]: T };

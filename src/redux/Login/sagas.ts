@@ -3,31 +3,15 @@
 
 import 'regenerator-runtime/runtime';
 import { delay } from 'redux-saga';
-import {
-  getContext,
-  call,
-  put,
-  take,
-  race,
-  fork,
-  all,
-  select,
-} from 'redux-saga/effects';
+import { getContext, call, put, take, race, fork, all, select } from 'redux-saga/effects';
 import { SplitFactory } from '@splitsoftware/splitio';
 import log from '../../utils/Logger';
-import {
-  LOG_IN,
-  LOG_OUT,
-  CONNECTED_USER,
-  STORE_ORG_FEATURES,
-} from '../action-types';
+import { LOG_IN, LOG_OUT, CONNECTED_USER, STORE_ORG_FEATURES } from '../action-types';
 import { logIn } from './actions';
 import { getConnectedUser } from '../Session/actions';
 import { setOrgFeature, setClientFeature } from '../Features/actions';
 import { getStoredConnectedUser } from '../Session/selectors';
 import { UserProfileResource } from '../../models/directory/UserProfileResource';
-
-
 
 function* authorize(credentialsOrRefreshToken: any) {
   const _authService = yield getContext('authService');
