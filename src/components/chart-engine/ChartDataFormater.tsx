@@ -98,7 +98,6 @@ class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
 
   renderChart(): JSX.Element {
     const { dataResult, chartConfig } = this.props;
-
     if (
       dataResult &&
       isAggregateResult(dataResult.rows) &&
@@ -106,7 +105,6 @@ class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
     ) {
       const buckets =
         dataResult.rows[0]?.aggregations?.buckets[0]?.buckets || [];
-
       const options = chartConfig.options || {};
       const xKey = this.getXKeyForChart(chartConfig.type, chartConfig.options);
       const yKey = {
@@ -158,12 +156,11 @@ class ChartDataFormater extends React.Component<Props, ChartDataFormaterState> {
       if (chartConfig.type.toLowerCase() === "metric") {
         let value = dataResult.rows;
         const opt = chartConfig.options as MetricChartOptions;
-
         return (
           <div className="mcs-dashboardMetric">
             {formatMetric(
               value[0].count,
-              opt.format && opt.format === "percentage" ? "0,0 %" : "0,0"
+              opt && opt.format && opt.format === "percentage" ? "0,0 %" : "0,0"
             )}
           </div>
         );

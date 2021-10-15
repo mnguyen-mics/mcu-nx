@@ -4,6 +4,7 @@ import React, { CSSProperties } from "react";
 import { Responsive, WidthProvider, Layout, Layouts } from "react-grid-layout";
 import ChartDataFetcher from "../chart-engine";
 import { ChartConfig } from "../chart-engine/ChartDataFetcher";
+import cuid from "cuid";
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -37,10 +38,11 @@ export default class DashboardLayout extends React.Component<Props> {
     super(props);
   }
 
-  renderChart(chart: ChartConfig, cssProperties?: CSSProperties) {
+  renderChart(chart: ChartConfig, key: string, cssProperties?: CSSProperties) {
     const { datamart_id } = this.props;
     return (
       <ChartDataFetcher
+        key={key.toString()}
         datamartId={datamart_id}
         chartConfig={chart}
         chartContainerStyle={cssProperties}
@@ -76,7 +78,7 @@ export default class DashboardLayout extends React.Component<Props> {
         };
       });
       return (
-        <div className={"mcs-section"}>
+        <div key={cuid()} className={"mcs-section"}>
           <div className={"mcs-subtitle2"}>{section.title}</div>
           <ResponsiveReactGridLayout
             cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
@@ -96,11 +98,13 @@ export default class DashboardLayout extends React.Component<Props> {
     });
     return <div className={"mcs-dashboardLayout"}>{sections}</div>;
   }
+  
   renderCard(card: DashboardContentCard, i: number) {
-    const charts = card.charts.map((chart) => {
+    const charts = card.charts.map((chart, index) => {
       return this.renderChart(
         chart,
-        this.computeCSSProperties(card.charts.length, card.layout)
+        index.toString(),
+        this.computeCSSProperties(card.charts.length, card.layout),
       );
     });
     return (
