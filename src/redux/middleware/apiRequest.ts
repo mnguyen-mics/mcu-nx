@@ -1,7 +1,8 @@
+// @ts-ignore
 import ApiService from '../../services/ApiService';
 
 export const CALL_API = Symbol('Call Api');
-
+// @ts-ignore
 export default store => next => action => {
   const callAPI = action[CALL_API];
 
@@ -9,32 +10,18 @@ export default store => next => action => {
     return next(action);
   }
 
-  const {
-    method,
-    endpoint,
-    params,
-    headers,
-    body,
-    types,
-    authenticated,
-    adminApi,
-    localUrl,
-    others = {},
-  } = callAPI;
+  const { method, endpoint, params, body, types, others = {} } = callAPI;
   const [requestType, failureType, successType] = types;
   const { dispatch } = store;
-  const options = {
-    adminApi,
-    localUrl,
-  };
 
+  // @ts-ignore
   const onRequest = type => {
     return {
       type,
       others,
     };
   };
-
+  // @ts-ignore
   const onRequestSuccess = (type, payload) => {
     return {
       type,
@@ -44,7 +31,7 @@ export default store => next => action => {
       others,
     };
   };
-
+  // @ts-ignore
   const onRequestFailure = (type, error) => {
     return {
       type,
