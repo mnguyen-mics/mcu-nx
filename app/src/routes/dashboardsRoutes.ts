@@ -1,5 +1,5 @@
 import { generateRoutesFromDefinition, NavigatorDefinition, NavigatorRoute } from './domain';
-import DashboardsPage from '../containers/dashboards/DashboardsPage';
+import DashboardsPage from '../containers/Dashboards/DashboardsPage';
 
 export const dashboardsDefinition: NavigatorDefinition = {
   dashboards: {

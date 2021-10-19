@@ -1,16 +1,29 @@
 import { generateMissingdefinitionItemFromRoute, NavigatorMenuDefinition } from './domain';
-import { HomePage } from '../containers/home';
-import { DashboardsPage } from '../containers/dashboards';
+import { HomePage } from '../containers/Home';
+import { DashboardsPage } from '../containers/Dashboards';
+import { pluginsDefinition } from './pluginRoutes';
 
 const homeMenuDefinition: NavigatorMenuDefinition = {
   iconType: 'users',
-  displayName: 'home',
+  displayName: 'Home',
   type: 'simple',
   ...generateMissingdefinitionItemFromRoute({
     path: '/home',
     layout: 'main',
     contentComponent: HomePage,
   }),
+};
+
+const pluginsMenuDefinition: NavigatorMenuDefinition = {
+  iconType: 'creative',
+  displayName: 'Plugins',
+  type: 'multi',
+  subMenuItems: [
+    {
+      ...generateMissingdefinitionItemFromRoute(pluginsDefinition.pluginBatchDefinitionList),
+      displayName: 'Batch Definitions',
+    },
+  ],
 };
 
 const dashboardsMenuDefinition: NavigatorMenuDefinition = {
@@ -26,5 +39,6 @@ const dashboardsMenuDefinition: NavigatorMenuDefinition = {
 
 export const menuDefinitions: NavigatorMenuDefinition[] = [
   homeMenuDefinition,
+  pluginsMenuDefinition,
   dashboardsMenuDefinition,
 ];

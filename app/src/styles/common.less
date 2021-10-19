@@ -77,6 +77,38 @@
   background: rgba(0, 0, 0, 0.2);
 }
 
+// Computin console action bar style
+
 .mcs-actionbar_innerElementsPanel {
   display: inline;
+  .mcs-primary {
+    .mcs-icon {
+      padding-right: 5px;
+      vertical-align: middle;
+    }
+  }
+  .mcs-actionBar_filters {
+    float: left;
+    .mcs-actionBar_filterInput {
+      width: 160px;
+      margin-left: 10px;
+      height: 32px;
+      .ant-select-selector {
+        height: 32px;
+        .ant-select-selection-search-input {
+          height: 32px;
+        }
+        .mcs-actionBar_iconFilter {
+          float: right;
+          margin-top: 10px;
+        }
+        .ant-select-selection-item {
+          line-height: 32px;
+        }
+        .ant-select-selection-placeholder {
+          line-height: 32px;
+        }
+      }
+    }
+  }
 }

@@ -78,6 +78,23 @@ export const PAGINATION_SEARCH_SETTINGS: SearchSetting[] = [
   },
 ];
 
+export const PLUGIN_SEARCH_SETTINGS: SearchSetting[] = [
+  {
+    paramName: 'group_id',
+    defaultValue: '',
+    deserialize: (query: Index<string>) => query.group_id,
+    serialize: (value: string) => value,
+    isValid: () => true,
+  },
+  {
+    paramName: 'artifact_id',
+    defaultValue: '',
+    deserialize: (query: Index<string>) => query.artifact_id,
+    serialize: (value: string) => value,
+    isValid: () => true,
+  },
+];
+
 export interface PaginationSearchSettings {
   currentPage: number;
   pageSize: number;
