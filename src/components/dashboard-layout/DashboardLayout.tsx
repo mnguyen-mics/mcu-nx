@@ -1,9 +1,9 @@
 import { Card } from '@mediarithmics-private/mcs-components-library';
 import React, { CSSProperties } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
-import ChartDataFetcher from '../chart-engine';
-import { ChartConfig } from '../chart-engine/ChartDataFetcher';
+import Chart from '../chart-engine';
 import cuid from 'cuid';
+import { ChartConfig } from '../../services/ChartDatasetService';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -40,12 +40,7 @@ export default class DashboardLayout extends React.Component<DashboardLayoutProp
   renderChart(chart: ChartConfig, key: string, cssProperties?: CSSProperties) {
     const { datamart_id } = this.props;
     return (
-      <ChartDataFetcher
-        key={key.toString()}
-        datamartId={datamart_id}
-        chartConfig={chart}
-        chartContainerStyle={cssProperties}
-      />
+      <Chart datamartId={datamart_id} chartConfig={chart} chartContainerStyle={cssProperties} />
     );
   }
 

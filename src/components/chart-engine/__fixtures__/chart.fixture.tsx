@@ -1,9 +1,10 @@
 import 'reflect-metadata';
 import * as React from 'react';
-import ChartDataFetcher, { ChartConfig } from '../ChartDataFetcher';
+import Chart from '../Chart';
 import { IocProvider } from '../../../inversify/inversify.react';
 import { container } from '../../../inversify/inversify.config';
 import config from '../../../react-configuration';
+import { ChartConfig } from '../../../services/ChartDatasetService';
 
 (global as any).window.MCS_CONSTANTS = config;
 const chartConfigPie: ChartConfig = {
@@ -78,9 +79,9 @@ const chartConfigMetric: ChartConfig = {
 
 export default (
   <IocProvider container={container}>
-    <ChartDataFetcher chartConfig={chartConfigPie} datamartId={'1414'} />
-    <ChartDataFetcher chartConfig={chartConfigRadar} datamartId={'1414'} />
-    <ChartDataFetcher chartConfig={chartConfigBars} datamartId={'1414'} />
-    <ChartDataFetcher chartConfig={chartConfigMetric} datamartId={'1414'} />
+    <Chart chartConfig={chartConfigPie} datamartId={'1414'} />
+    <Chart chartConfig={chartConfigRadar} datamartId={'1414'} />
+    <Chart chartConfig={chartConfigBars} datamartId={'1414'} />
+    <Chart chartConfig={chartConfigMetric} datamartId={'1414'} />
   </IocProvider>
 );

@@ -3,7 +3,7 @@ import DashboardLayout from '../DashboardLayout';
 import { FetchMock } from '@react-mock/fetch';
 import { LocalStorageMock } from '@react-mock/localstorage';
 import { MockedData, MockedMetricData } from '../../chart-engine/MockedData';
-import { SourceType, ChartType, MetricChartOptions } from '../../chart-engine/ChartDataFetcher';
+import { ChartType, MetricChartOptions, SourceType } from '../../../services/ChartDatasetService';
 
 const propsMetric = {
   datamart_id: '1415',
@@ -223,7 +223,7 @@ const props = {
                 title: 'Top 10 purchase intents',
                 type: 'bars' as ChartType,
                 dataset: {
-                  type: 'zip',
+                  type: 'join',
                   sources: [
                     {
                       type: 'otql' as SourceType,

@@ -1,3 +1,3 @@
-import ChartDataFetcher from './ChartDataFetcher';
+import Chart from './Chart';
 
-export default ChartDataFetcher;
+export default Chart;
