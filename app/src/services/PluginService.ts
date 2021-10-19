@@ -1,11 +1,7 @@
 import { injectable } from 'inversify';
 import { PluginResource, PluginType, PluginVersionResource } from '../models/plugin/plugins';
 import { PaginatedApiParam } from '../utils/ApiHelper';
-import { ApiService } from '@mediarithmics-private/advanced-components';
-import {
-  DataListResponse,
-  DataResponse,
-} from '@mediarithmics-private/advanced-components/lib/services/ApiService';
+import ApiService, { DataListResponse, DataResponse } from './ApiService';
 
 interface GetPluginOptions extends Omit<PaginatedApiParam, 'first_result'> {
   plugin_type?: PluginType;
