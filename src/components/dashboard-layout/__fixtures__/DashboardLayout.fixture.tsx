@@ -175,8 +175,35 @@ const props = {
                 title: 'Top 10 purchase intents',
                 type: 'bars' as ChartType,
                 dataset: {
-                  type: 'otql' as ChartDatasetType,
+                  type: 'otql',
                   query_id: '50173',
+                },
+              },
+            ],
+          },
+          {
+            x: 0,
+            y: 4,
+            w: 6,
+            h: 4,
+            charts: [
+              {
+                title: 'Top 10 purchase intents',
+                type: 'bars' as ChartType,
+                dataset: {
+                  type: 'zip',
+                  sources: [
+                    {
+                      type: 'otql' as ChartDatasetType,
+                      series_title: 'datamart',
+                      query_id: '50172',
+                    },
+                    {
+                      type: 'otql' as ChartDatasetType,
+                      series_title: 'segment',
+                      query_id: '50173',
+                    },
+                  ],
                 },
               },
             ],
