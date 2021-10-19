@@ -3,11 +3,7 @@ import DashboardLayout from '../DashboardLayout';
 import { FetchMock } from '@react-mock/fetch';
 import { LocalStorageMock } from '@react-mock/localstorage';
 import { MockedData, MockedMetricData } from '../../chart-engine/MockedData';
-import {
-  ChartDatasetType,
-  ChartType,
-  MetricChartOptions,
-} from '../../chart-engine/ChartDataFetcher';
+import { SourceType, ChartType, MetricChartOptions } from '../../chart-engine/ChartDataFetcher';
 
 const propsMetric = {
   datamart_id: '1415',
@@ -27,7 +23,7 @@ const propsMetric = {
                 title: 'Total number of user points',
                 type: 'metric' as ChartType,
                 dataset: {
-                  type: 'otql' as ChartDatasetType,
+                  type: 'otql' as SourceType,
                   query_id: '50170',
                 },
                 options: {
@@ -38,12 +34,48 @@ const propsMetric = {
                 title: 'Overall income increase (%)',
                 type: 'metric' as ChartType,
                 dataset: {
-                  type: 'otql' as ChartDatasetType,
+                  type: 'otql' as SourceType,
                   query_id: '50170',
                 },
                 options: {
                   xKey: 'key',
                   format: 'percentage',
+                } as MetricChartOptions,
+              },
+            ],
+          },
+          {
+            x: 0,
+            y: 1,
+            w: 6,
+            h: 4,
+            layout: 'horizontal',
+            charts: [
+              {
+                title: 'User point per interest',
+                type: 'pie' as ChartType,
+                dataset: {
+                  type: 'to-list' as SourceType,
+                  sources: [
+                    {
+                      type: 'otql',
+                      series_title: 'automotive',
+                      query_id: '50170',
+                    },
+                    {
+                      type: 'otql',
+                      series_title: 'fashion',
+                      query_id: '50171',
+                    },
+                    {
+                      type: 'otql',
+                      series_title: 'home',
+                      query_id: '50172',
+                    },
+                  ],
+                },
+                options: {
+                  xKey: 'key',
                 } as MetricChartOptions,
               },
             ],
@@ -72,7 +104,7 @@ const props = {
                 title: 'Age range',
                 type: 'pie' as ChartType,
                 dataset: {
-                  type: 'otql' as ChartDatasetType,
+                  type: 'otql' as SourceType,
                   query_id: '50172',
                 },
               },
@@ -93,7 +125,7 @@ const props = {
                 title: 'Gender',
                 type: 'pie' as ChartType,
                 dataset: {
-                  type: 'otql' as ChartDatasetType,
+                  type: 'otql' as SourceType,
                   query_id: '50168',
                 },
                 options: {
@@ -115,7 +147,7 @@ const props = {
                 title: 'Age range',
                 type: 'pie' as ChartType,
                 dataset: {
-                  type: 'otql' as ChartDatasetType,
+                  type: 'otql' as SourceType,
                   query_id: '50172',
                 },
               },
@@ -131,7 +163,7 @@ const props = {
                 title: 'Social class',
                 type: 'bars' as ChartType,
                 dataset: {
-                  type: 'otql' as ChartDatasetType,
+                  type: 'otql' as SourceType,
                   query_id: '50169',
                 },
                 options: {
@@ -156,7 +188,7 @@ const props = {
                 title: 'Top 10 interests',
                 type: 'radar' as ChartType,
                 dataset: {
-                  type: 'otql' as ChartDatasetType,
+                  type: 'otql' as SourceType,
                   query_id: '50167',
                 },
                 options: {
@@ -194,12 +226,12 @@ const props = {
                   type: 'zip',
                   sources: [
                     {
-                      type: 'otql' as ChartDatasetType,
+                      type: 'otql' as SourceType,
                       series_title: 'datamart',
                       query_id: '50172',
                     },
                     {
-                      type: 'otql' as ChartDatasetType,
+                      type: 'otql' as SourceType,
                       series_title: 'segment',
                       query_id: '50173',
                     },

@@ -34,7 +34,7 @@ interface YKey {
   message: string;
 }
 
-type SourceType = 'otql' | 'join';
+export type SourceType = 'otql' | 'join' | 'to-list';
 
 const DEFAULT_Y_KEY = {
   key: 'value',
@@ -149,12 +149,39 @@ class ChartDataFetcher extends React.Component<Props, ChartDataFetcherState> {
       return Promise.all(childSources.map(s => this.buildDataset(datamartId, s))).then(datasets => {
         return this.aggregateDatasets(datasets as AggregateDataset[]);
       });
+    } else if (sourceType === 'to-list') {
+      const aggregationSource = source as AggregationSource;
+      const childSources = aggregationSource.sources;
+      return Promise.all(childSources.map(s => this.buildDataset(datamartId, s))).then(datasets => {
+        return this.aggregateCountsIntoList(datasets as CountDataset[], childSources);
+      });
     } else {
       return new Promise((resolve, reject) => reject(`Unknown source type ${sourceType}`));
     }
   }
 
-  aggregateDatasets(datasets: Array<AggregateDataset | undefined>): AbstractDataset | undefined {
+  aggregateCountsIntoList(
+    datasets: Array<CountDataset | undefined>,
+    sources: AbstractSource[],
+  ): AggregateDataset | undefined {
+    const { chartConfig } = this.props;
+    const xKey = getXKeyForChart(chartConfig.type, chartConfig.options);
+    const dataset = datasets.map((d: CountDataset, index: number) => {
+      return {
+        [xKey]: sources[index].series_title,
+        [DEFAULT_Y_KEY.key]: d.value,
+      };
+    });
+    return {
+      dataset: dataset,
+      metadata: {
+        seriesTitles: [DEFAULT_Y_KEY.key],
+      },
+      type: 'aggregate',
+    };
+  }
+
+  aggregateDatasets(datasets: Array<AggregateDataset | undefined>): AggregateDataset | undefined {
     const { chartConfig } = this.props;
     const xKey = getXKeyForChart(chartConfig.type, chartConfig.options);
 
