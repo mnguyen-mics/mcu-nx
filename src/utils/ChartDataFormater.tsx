@@ -3,16 +3,9 @@ import {
   isCountResult,
   OTQLBucket,
   OTQLResult,
-} from '../../models/datamart/graphdb/OTQLResult';
+} from '../models/datamart/graphdb/OTQLResult';
 import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
-import {
-  BarChartOptions,
-  ChartConfig,
-  ChartType,
-  PieChartOptions,
-  RadarChartOptions,
-  MetricChartOptions,
-} from './ChartDataFetcher';
+import { ChartType } from '../services/ChartDatasetService';
 
 type DatasetType = 'aggregate' | 'count';
 
@@ -48,21 +41,14 @@ export function formatDatasetAsKeyValue(
   return dataset;
 }
 
-export function getXKeyForChart(
-  type: ChartType,
-  options?: PieChartOptions | RadarChartOptions | BarChartOptions | MetricChartOptions,
-) {
+export function getXKeyForChart(type: ChartType, xKey?: string) {
   switch (type.toLowerCase()) {
     case 'pie':
       return 'key';
     case 'radar':
-      return options && (options as RadarChartOptions).xKey
-        ? (options as RadarChartOptions).xKey
-        : 'key';
+      return xKey ? xKey : 'key';
     case 'bars':
-      return options && (options as BarChartOptions).xKey
-        ? (options as BarChartOptions).xKey
-        : 'key';
+      return xKey ? xKey : 'key';
     default:
       return 'key';
   }
@@ -70,13 +56,12 @@ export function getXKeyForChart(
 
 export function formatDataset(
   dataResult: OTQLResult,
-  chartConfig: ChartConfig,
+  xKey: string,
   seriesTitle: string,
 ): AbstractDataset | undefined {
   if (dataResult && isAggregateResult(dataResult.rows) && !isCountResult(dataResult.rows)) {
     const buckets = dataResult.rows[0]?.aggregations?.buckets[0]?.buckets || [];
 
-    const xKey = getXKeyForChart(chartConfig.type, chartConfig.options);
     const yKey = {
       key: seriesTitle,
       message: seriesTitle,
