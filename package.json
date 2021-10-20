@@ -2,7 +2,7 @@
   "name": "new-computing-console",
   "version": "1.2.0",
   "dependencies": {
-    "@mediarithmics-private/advanced-components": "1.2.11",
+    "@mediarithmics-private/advanced-components": "3.7.1",
     "@mediarithmics-private/mcs-components-library": "5.2.10",
     "@ant-design/icons": "^4.2.2",
     "antd": "4.10.3",
