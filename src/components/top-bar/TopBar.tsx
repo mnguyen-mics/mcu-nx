@@ -11,6 +11,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router';
 import { compose } from 'recompose';
 import { UserProfileResource } from '../../models/directory/UserProfileResource';
 import { MicsReduxState } from '../../redux/ReduxHelper';
@@ -33,7 +34,9 @@ interface TopBarProps {
   color?: string;
 }
 
-type Props = TopBarMapStateToProps & TopBarProps;
+type RouteProps = RouteComponentProps<{ organisation_id: string }>;
+
+type Props = TopBarMapStateToProps & TopBarProps & RouteProps;
 
 export const buildAccountsMenu = () => [
   <Link to='/logout' key={1}>
@@ -124,4 +127,7 @@ const mapStateToProps = (state: MicsReduxState) => ({
   userEmail: state.session.connectedUser.email,
 });
 
-export default compose<TopBarMapStateToProps, TopBarProps>(connect(mapStateToProps))(TopBar);
+export default compose<TopBarMapStateToProps & RouteProps, TopBarProps>(
+  withRouter,
+  connect(mapStateToProps),
+)(TopBar);
