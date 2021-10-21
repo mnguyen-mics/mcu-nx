@@ -47,7 +47,7 @@ interface ChartState {
 
 type Props = ChartProps;
 class Chart extends React.Component<Props, ChartState> {
-  @lazyInject(TYPES.IQueryService)
+  @lazyInject(TYPES.IChartDatasetService)
   private _chartDatasetService: IChartDatasetService;
 
   private chartDatasetService(): IChartDatasetService {
