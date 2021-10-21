@@ -240,6 +240,31 @@ const props = {
               },
             ],
           },
+          {
+            x: 0,
+            y: 4,
+            w: 6,
+            h: 4,
+            charts: [
+              {
+                title: 'Top 10 purchase intents',
+                type: 'bars' as ChartType,
+                dataset: {
+                  type: 'to-percentages',
+                  sources: [
+                    {
+                      type: 'otql' as SourceType,
+                      series_title: 'segment',
+                      query_id: '50173',
+                    },
+                  ],
+                },
+                options: {
+                  format: 'percentage',
+                },
+              },
+            ],
+          },
         ],
       },
     ],
