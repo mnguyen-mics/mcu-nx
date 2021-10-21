@@ -52,6 +52,11 @@ export type MicsReduxState = {
       max_results: number;
     };
   };
+  keycloakPostLogin: {
+    isFetching: boolean;
+    hasFailed: boolean;
+    done: boolean;
+  };
 };
 
 export type Payload = { [key: string]: any };

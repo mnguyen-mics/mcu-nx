@@ -2,6 +2,7 @@ import 'whatwg-fetch';
 import { isEmpty } from 'lodash';
 import LocalStorage from './LocalStorage';
 import { ACCESS_TOKEN } from './AuthService';
+import { KeycloakService } from '..';
 
 export type StatusCode = 'ok' | 'error';
 
@@ -84,87 +85,103 @@ function request(
     authenticated?: boolean;
   } = {},
 ) {
-  const baseUrl = options.adminApi ? ADMIN_API_URL : options.localUrl ? LOCAL_URL : API_URL;
+  const isKeycloakEnabled = KeycloakService.isKeycloakEnabled();
+  const requestFunction = () => {
+    const baseUrl = options.adminApi ? ADMIN_API_URL : options.localUrl ? LOCAL_URL : API_URL;
 
-  const url = `${baseUrl}${endpoint}${paramsToQueryString(options.params)}`;
+    const url = `${baseUrl}${endpoint}${paramsToQueryString(options.params)}`;
 
-  const requestHeaders = new Headers(options.headers || {});
+    const requestHeaders = new Headers(options.headers || {});
 
-  requestHeaders.append('X-Requested-By', 'mediarithmics-navigator');
+    requestHeaders.append('X-Requested-By', 'mediarithmics-navigator');
 
-  if (!options.localUrl && options.authenticated) {
-    const token = LocalStorage.getItem(ACCESS_TOKEN);
-    if (token) {
-      requestHeaders.append('Authorization', token);
-    } else {
-      Promise.reject(`Error. Authenticated without token, endpoint:${endpoint}`);
-    }
-  }
-
-  const config: RequestInit = {
-    method,
-    headers: requestHeaders,
-  };
-
-  if (options.body instanceof FormData || options.body instanceof Blob) {
-    config.body = options.body;
-  } else if (options.body) {
-    if (isEmpty(options.headers)) {
-      // default headers: application/json
-      requestHeaders.append('Accept', 'application/json');
-      requestHeaders.append('Content-Type', 'application/json');
-      config.body = JSON.stringify(options.body);
-    } else {
-      config.body = options.body;
-    }
-  }
-
-  if (options.withCredentials) {
-    config.credentials = 'include';
-  }
-
-  const checkAndParse = (response: Response) => {
-    const contentType = response.headers.get('Content-Type');
-
-    if (
-      // redirect to login page when 401 except for expired password
-      // because we want to catch the error on Login/sagas.js
-      response.status === 401 &&
-      response.url !== `${API_URL}authentication/refresh_tokens`
-    ) {
-      const event = new Event('unauthorizedEvent');
-      document.dispatchEvent(event);
-    }
-
-    if (
-      contentType &&
-      (contentType.indexOf('image/png') !== -1 ||
-        contentType.indexOf('application/octet-stream') !== -1)
-    ) {
-      return response.blob().then(blob => {
-        if (!response.ok) {
-          Promise.reject(blob);
+    if (isKeycloakEnabled) {
+      if (!options.localUrl && KeycloakService.isLoggedIn()) {
+        const token = KeycloakService.getToken();
+        if (token) {
+          requestHeaders.append('Authorization', `Bearer ${token}`);
+        } else {
+          Promise.reject(`Error. Authenticated without token, endpoint:${endpoint}`);
         }
-        return blob;
-      });
-    } else if (contentType && contentType.indexOf('text/html') !== -1) {
-      return response.status < 400 ? Promise.resolve() : Promise.reject(response);
-    } else if (contentType && contentType.indexOf('text/plain') !== -1) {
-      return response.status < 400 ? response.text() : Promise.reject(response);
+      }
+    } else {
+      if (!options.localUrl && options.authenticated) {
+        const token = LocalStorage.getItem(ACCESS_TOKEN);
+        if (token) {
+          requestHeaders.append('Authorization', token);
+        } else {
+          Promise.reject(`Error. Authenticated without token, endpoint:${endpoint}`);
+        }
+      }
     }
 
-    // Considered as a json response by default
-    return response.json().then(json => {
-      if (!response.ok) {
-        return Promise.reject(json);
+    const config: RequestInit = {
+      method,
+      headers: requestHeaders,
+    };
+
+    if (options.body instanceof FormData || options.body instanceof Blob) {
+      config.body = options.body;
+    } else if (options.body) {
+      if (isEmpty(options.headers)) {
+        // default headers: application/json
+        requestHeaders.append('Accept', 'application/json');
+        requestHeaders.append('Content-Type', 'application/json');
+        config.body = JSON.stringify(options.body);
+      } else {
+        config.body = options.body;
+      }
+    }
+
+    if (options.withCredentials) {
+      config.credentials = 'include';
+    }
+
+    const checkAndParse = (response: Response) => {
+      const contentType = response.headers.get('Content-Type');
+
+      if (
+        // redirect to login page when 401 except for expired password
+        // because we want to catch the error on Login/sagas.js
+        response.status === 401 &&
+        response.url !== `${API_URL}authentication/refresh_tokens`
+      ) {
+        const event = new Event('unauthorizedEvent');
+        document.dispatchEvent(event);
       }
 
-      return json;
-    });
+      if (
+        contentType &&
+        (contentType.indexOf('image/png') !== -1 ||
+          contentType.indexOf('application/octet-stream') !== -1)
+      ) {
+        return response.blob().then(blob => {
+          if (!response.ok) {
+            Promise.reject(blob);
+          }
+          return blob;
+        });
+      } else if (contentType && contentType.indexOf('text/html') !== -1) {
+        return response.status < 400 ? Promise.resolve() : Promise.reject(response);
+      } else if (contentType && contentType.indexOf('text/plain') !== -1) {
+        return response.status < 400 ? response.text() : Promise.reject(response);
+      }
+
+      // Considered as a json response by default
+      return response.json().then(json => {
+        if (!response.ok) {
+          return Promise.reject(json);
+        }
+
+        return json;
+      });
+    };
+
+    return fetch(url, config) // eslint-disable-line no-undef
+      .then(checkAndParse);
   };
 
-  return fetch(url, config) // eslint-disable-line no-undef
-    .then(checkAndParse);
+  return isKeycloakEnabled ? KeycloakService.updateToken(requestFunction) : requestFunction();
 }
 
 function getRequest<T>(
