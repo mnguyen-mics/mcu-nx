@@ -130,6 +130,26 @@ export class ChartDatasetService implements IChartDatasetService {
             `Wrong number of arguments for to-percentages transformation, 1 expected ${childSources.length} provided`,
           ),
         );
+    } else if (sourceType === 'index') {
+      const percentageSources = source as AggregationSource;
+      const childSources = percentageSources.sources;
+      if (childSources && childSources.length === 2) {
+        return Promise.all(
+          childSources.map(s => this.fetchDatasetForSource(datamartId, chartType, xKey, s)),
+        ).then(datasets => {
+          return this.indexDataset(
+            datasets[0] as AggregateDataset,
+            datasets[1] as AggregateDataset,
+            xKey,
+          );
+        });
+      } else {
+        return new Promise((resolve, reject) =>
+          reject(
+            `Wrong number of arguments for to-percentages transformation, 2 expected ${childSources.length} provided`,
+          ),
+        );
+      }
     } else {
       return new Promise((resolve, reject) => reject(`Unknown source type ${sourceType}`));
     }
@@ -172,6 +192,51 @@ export class ChartDatasetService implements IChartDatasetService {
       dataset: percentageDataset,
       type: 'aggregate',
     };
+  }
+  indexDataset(
+    sourceDataset: AggregateDataset,
+    toBeComparedWithDataset: AggregateDataset,
+    xKey: string,
+  ): AbstractDataset | undefined {
+    const sourceTitles = sourceDataset.metadata.seriesTitles;
+
+    const comparedDatasetTitle = toBeComparedWithDataset.metadata.seriesTitles[0];
+
+    const toBeComparedWithPercentageDataset = this.toPercentagesDataset(
+      xKey,
+      toBeComparedWithDataset,
+    );
+
+    const sourcePercentageDataset = this.toPercentagesDataset(xKey, sourceDataset);
+
+    const sourceIndexDataset = sourcePercentageDataset.dataset.map(line => {
+      const lineValue = line[`${sourceTitles[0]}-count`] as number;
+      const linePercentage = line[sourceTitles[0]] as number;
+      const toBecomparedWithPercentageLine = toBeComparedWithPercentageDataset.dataset.find(
+        comparedLine => comparedLine[xKey] === line[xKey],
+      );
+      const toBeComparedWithPercentage =
+        toBecomparedWithPercentageLine && toBecomparedWithPercentageLine[comparedDatasetTitle]
+          ? (toBecomparedWithPercentageLine[comparedDatasetTitle] as number)
+          : 0;
+      const lineIndex =
+        toBeComparedWithPercentage !== 0 && linePercentage
+          ? (linePercentage / toBeComparedWithPercentage) * 100
+          : 0;
+      return {
+        [xKey]: line[xKey],
+        [`${sourceTitles[0]}-percentage`]: linePercentage
+          ? parseFloat(linePercentage?.toFixed(2))
+          : undefined,
+        [`${sourceTitles[0]}-count`]: lineValue,
+        [sourceTitles[0]]: parseFloat(lineIndex?.toFixed(2)),
+      };
+    });
+    return {
+      type: 'aggregate',
+      dataset: sourceIndexDataset,
+      metadata: { seriesTitles: sourceTitles },
+    } as AggregateDataset;
   }
 
   private aggregateCountsIntoList(
