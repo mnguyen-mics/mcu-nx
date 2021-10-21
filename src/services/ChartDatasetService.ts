@@ -10,8 +10,6 @@ import { injectable } from 'inversify';
 import { PieChartProps } from '@mediarithmics-private/mcs-components-library/lib/components/charts/pie-chart/PieChart';
 import { RadarChartProps } from '@mediarithmics-private/mcs-components-library/lib/components/charts/radar-chart';
 import { BarChartProps } from '@mediarithmics-private/mcs-components-library/lib/components/charts/bar-chart/BarChart';
-import { lazyInject } from '../inversify/inversify.config';
-import { TYPES } from '../constants/types';
 import {
   Datapoint,
   Dataset,
@@ -75,14 +73,8 @@ export interface IChartDatasetService {
 
 @injectable()
 export class ChartDatasetService implements IChartDatasetService {
-  @lazyInject(TYPES.IQueryService)
-  private _queryService: IQueryService;
-
-  private queryService(): IQueryService {
-    if (!this._queryService) this._queryService = new QueryService();
-
-    return this._queryService;
-  }
+  // TODO: Put back injection for this service
+  private queryService: IQueryService = new QueryService();
 
   private executeOtqlQuery(datamartId: string, otqlSource: OTQLSource): Promise<OTQLResult> {
     if (otqlSource.query_text) {
@@ -195,15 +187,13 @@ export class ChartDatasetService implements IChartDatasetService {
   }
 
   private fetchOtqlDataByQueryId(datamartId: string, queryId: string): Promise<OTQLResult> {
-    return this.queryService()
-      .getQuery(datamartId, queryId)
-      .then(q => {
-        return this.fetchOtqlDataByQueryText(datamartId, q.data.query_text);
-      });
+    return this.queryService.getQuery(datamartId, queryId).then(q => {
+      return this.fetchOtqlDataByQueryText(datamartId, q.data.query_text);
+    });
   }
 
   private fetchOtqlDataByQueryText(datamartId: string, queryText: string): Promise<OTQLResult> {
-    return this.queryService()
+    return this.queryService
       .runOTQLQuery(datamartId, queryText, {
         use_cache: true,
       })
