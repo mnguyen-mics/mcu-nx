@@ -131,7 +131,7 @@ class MainMenu extends React.Component<Props, NavigatorMenuState> {
         };
         return (
           <SubMenu
-            key={itemDef.iconType}
+            key={itemDef.displayName}
             onTitleClick={onTitleClick}
             title={
               <span>

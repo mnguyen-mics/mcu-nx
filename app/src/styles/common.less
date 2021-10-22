@@ -77,11 +77,12 @@
   background: rgba(0, 0, 0, 0.2);
 }
 
-// Computin console action bar style
+// Common action bar style
 
 .mcs-actionbar_innerElementsPanel {
   display: inline;
   .mcs-primary {
+    height: 38px;
     .mcs-icon {
       padding-right: 5px;
       vertical-align: middle;
@@ -92,23 +93,12 @@
     .mcs-actionBar_filterInput {
       width: 160px;
       margin-left: 10px;
-      height: 32px;
-      .ant-select-selector {
-        height: 32px;
-        .ant-select-selection-search-input {
-          height: 32px;
-        }
-        .mcs-actionBar_iconFilter {
-          float: right;
-          margin-top: 10px;
-        }
-        .ant-select-selection-item {
-          line-height: 32px;
-        }
-        .ant-select-selection-placeholder {
-          line-height: 32px;
-        }
+      .mcs-actionBar_iconFilter {
+        float: right;
       }
+    }
+    .mcs-actionBar-batchInstanceFilterInput {
+      width: 400px;
     }
   }
 }

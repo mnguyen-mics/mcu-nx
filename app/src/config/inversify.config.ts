@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import { Container } from 'inversify';
 import getDecorators from 'inversify-inject-decorators';
 import {
@@ -9,6 +8,7 @@ import { OrganisationService, IOrganisationService } from './../services/Organis
 import { DatamartService, IDatamartService } from './../services/DatamartService';
 import { TYPES } from './../constants/types';
 import { IPluginService, PluginService } from '../services/PluginService';
+import { BatchService, IBatchService } from '../services/BatchService';
 
 export const container = new Container();
 
@@ -16,6 +16,7 @@ container.bind<ICustomDashboardService>(TYPES.ICustomDashboardService).to(Custom
 container.bind<IOrganisationService>(TYPES.IOrganisationService).to(OrganisationService);
 container.bind<IDatamartService>(TYPES.IDatamartService).to(DatamartService);
 container.bind<IPluginService>(TYPES.IPluginService).to(PluginService);
+container.bind<IBatchService>(TYPES.IBatchService).to(BatchService);
 
 export const { lazyInject } = getDecorators(container, false);
 
