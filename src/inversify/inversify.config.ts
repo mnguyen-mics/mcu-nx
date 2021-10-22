@@ -7,8 +7,18 @@ import { ILabelService, LabelService } from '../services/LabelsService';
 import OrganisationService, { IOrganisationService } from '../services/OrganisationService';
 import { IQueryService, QueryService } from '../services/QueryService';
 import { ChartDatasetService, IChartDatasetService } from '../services/ChartDatasetService';
+import {
+  ActivitiesAnalyticsService,
+  IActivitiesAnalyticsService,
+} from '../services/ActivitiesAnalyticsService';
 
 export const container = new Container();
+
+container
+  .bind<IActivitiesAnalyticsService>(TYPES.IActivitiesAnalyticsService)
+  .to(ActivitiesAnalyticsService);
+
+container.bind<IChartDatasetService>(TYPES.IChartDatasetService).to(ChartDatasetService);
 container.bind<IQueryService>(TYPES.IQueryService).to(QueryService);
 container.bind<IAuthService>(TYPES.IAuthService).to(AuthService);
 container.bind<ILabelService>(TYPES.ILabelService).to(LabelService);
@@ -16,8 +26,6 @@ container
   .bind<IOrganisationService>(TYPES.IOrganisationService)
   .to(OrganisationService)
   .inSingletonScope();
-
-container.bind<IChartDatasetService>(TYPES.IChartDatasetService).to(ChartDatasetService);
 
 export const { lazyInject } = getDecorators(container, false);
 

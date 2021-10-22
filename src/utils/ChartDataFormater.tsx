@@ -6,6 +6,13 @@ import {
 } from '../models/datamart/graphdb/OTQLResult';
 import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 import { ChartType } from '../services/ChartDatasetService';
+import { ReportView } from '../models/report/ReportView';
+import {
+  ActivitiesAnalyticsDimension,
+  ActivitiesAnalyticsMetric,
+} from './ActivitiesAnalyticsReportHelper';
+import { normalizeReportView } from './MetricHelper';
+import { Dimension, Metric } from '../models/report/ReportRequestBody';
 
 type DatasetType = 'aggregate' | 'count';
 
@@ -26,7 +33,7 @@ export interface CountDataset extends AbstractDataset {
   value: number;
 }
 
-export function formatDatasetAsKeyValue(
+export function formatDatasetAsKeyValueForOtql(
   buckets: OTQLBucket[],
   xKey: string,
   yKey: string,
@@ -35,7 +42,29 @@ export function formatDatasetAsKeyValue(
     return {
       [xKey]: buck.key as string,
       [yKey]: buck.count as number,
-      buckets: formatDatasetAsKeyValue(buck.aggregations?.buckets[0]?.buckets || [], xKey, yKey),
+      buckets: formatDatasetAsKeyValueForOtql(
+        buck.aggregations?.buckets[0]?.buckets || [],
+        xKey,
+        yKey,
+      ),
+    };
+  });
+  return dataset;
+}
+
+export function formatDatasetAsKeyValueForReportView(
+  datas: ReportView,
+  xKey: string,
+  yKey: string,
+  metricName: ActivitiesAnalyticsMetric,
+  dimensionName: ActivitiesAnalyticsDimension,
+): Dataset {
+  const normalizedReportView = normalizeReportView(datas);
+
+  const dataset: any = normalizedReportView.map(data => {
+    return {
+      [xKey]: data[dimensionName],
+      [yKey]: data[metricName],
     };
   });
   return dataset;
@@ -54,7 +83,7 @@ export function getXKeyForChart(type: ChartType, xKey?: string) {
   }
 }
 
-export function formatDataset(
+export function formatDatasetForOtql(
   dataResult: OTQLResult,
   xKey: string,
   seriesTitle: string,
@@ -66,7 +95,8 @@ export function formatDataset(
       key: seriesTitle,
       message: seriesTitle,
     };
-    const dataset = formatDatasetAsKeyValue(buckets, xKey, yKey.key);
+    const dataset = formatDatasetAsKeyValueForOtql(buckets, xKey, yKey.key);
+
     return {
       metadata: {
         seriesTitles: [seriesTitle],
@@ -82,5 +112,42 @@ export function formatDataset(
     } as CountDataset;
   } else {
     return undefined;
+  }
+}
+
+export function formatDatasetForReportView(
+  dataResult: ReportView,
+  hasDimensions: boolean,
+  xKey: string,
+  metric: Metric<ActivitiesAnalyticsMetric>,
+  dimension: Dimension<ActivitiesAnalyticsDimension>,
+  seriesTitle: string,
+): AbstractDataset | undefined {
+  if (hasDimensions) {
+    const yKey = {
+      key: seriesTitle,
+      message: seriesTitle,
+    };
+    const dataset = formatDatasetAsKeyValueForReportView(
+      dataResult,
+      xKey,
+      yKey.key,
+      metric.expression,
+      dimension.name,
+    );
+    return {
+      metadata: {
+        seriesTitles: [seriesTitle],
+      },
+      type: 'aggregate',
+      dataset: dataset,
+    } as AggregateDataset;
+  } else {
+    const normalizedReportView = normalizeReportView(dataResult);
+    const value = normalizedReportView[0][metric.expression];
+    return {
+      type: 'count',
+      value: value,
+    } as CountDataset;
   }
 }
