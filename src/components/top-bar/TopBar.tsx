@@ -19,7 +19,6 @@ import OrganisationListSwitcher from '../organisation-switcher/OrganisationListS
 import Logo from './Logo';
 import messages from './messages';
 import { Alert } from 'antd';
-import KeycloakService from '../../services/KeycloakService';
 
 interface TopBarMapStateToProps {
   connectedUser: UserProfileResource;
@@ -39,26 +38,11 @@ type RouteProps = RouteComponentProps<{ organisation_id: string }>;
 
 type Props = TopBarMapStateToProps & TopBarProps & RouteProps;
 
-export const buildAccountsMenu = () => {
-  const formattedMessage = <FormattedMessage {...messages.logout} />;
-  if (KeycloakService.isKeycloakEnabled()) {
-    const logOut = () => {
-      KeycloakService.doLogout();
-    };
-
-    return [
-      <div onClick={logOut} key={1}>
-        {formattedMessage}
-      </div>,
-    ];
-  } else {
-    return [
-      <Link to='/logout' key={1}>
-        {formattedMessage}
-      </Link>,
-    ];
-  }
-};
+export const buildAccountsMenu = () => [
+  <Link to='/logout' key={1}>
+    <FormattedMessage {...messages.logout} />
+  </Link>,
+];
 
 class TopBar extends React.Component<Props> {
   getAppMenuSections(): AppsMenuSections {
