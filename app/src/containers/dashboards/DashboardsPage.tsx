@@ -144,7 +144,7 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
         return Promise.all(
           datamarts.map(datamart => {
             return this._dashboardService
-              .getDashboards(datamart.id, options)
+              .getDashboards(datamart.id, organisationId, options)
               .then(resultDashboards => {
                 if (resultDashboards) return resultDashboards.data;
                 else return [];
@@ -281,7 +281,7 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
         isHideable: false,
         render: (text: string, record: CustomDashboardResource) => (
           <span className='mcs-dashboardsTable_OrgColumn'>
-            {this.getOrgNameByDatamartId(record.datamart_id)}
+            {this.getOrgNameByDatamartId(record.organisation_id ? record.organisation_id : '-')}
           </span>
         ),
       },
