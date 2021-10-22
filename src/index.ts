@@ -24,4 +24,3 @@ export { default as errorMessages } from './utils/errorMessage';
 export { default as NoAccess } from './utils/NoAccess';
 export { default as KeycloakService } from './services/KeycloakService';
 export { default as RenderOnAuthenticated } from './utils/RenderOnAuthenticated';
-export { default as ApiService } from './services/ApiService';

@@ -24,7 +24,7 @@ export interface AuthenticatedRouteProps {
   path: string;
 }
 
-export type RouteParams = { organisationId: string };
+type RouteParams = { organisationId: string };
 
 interface MissingRouterProps {
   computedMatch: match<RouteParams>;
@@ -32,6 +32,7 @@ interface MissingRouterProps {
 
 export interface MapStateToProps {
   accessGrantedToOrganisation: (organisationId: string) => boolean;
+  connectedUserLoaded: boolean;
   getWorkspaceRequest: (organisationId: string) => void;
   hasWorkspaceLoaded: (organisationId: string) => boolean;
   getLabels: (organisationId: string) => void;
@@ -155,6 +156,7 @@ class AuthenticatedRoute extends React.Component<Props> {
 const mapStateToProps = (state: MicsReduxState) => ({
   accessGrantedToOrganisation: SessionHelper.hasAccessToOrganisation(state),
   hasWorkspaceLoaded: SessionHelper.hasWorkspace(state),
+  connectedUserLoaded: state.session.connectedUserLoaded,
   hasDatamarts: SessionHelper.hasDatamarts(state),
 });
 
