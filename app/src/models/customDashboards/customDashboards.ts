@@ -6,7 +6,7 @@ export interface CustomDashboardResource {
   builder_ids: string[]; // If scope contains builders, the IDs of the builders where you want to see the dashboard
   archived: boolean;
   dashboard_content_id?: string;
-  datamart_id: string;
+  organisation_id?: string;
   creation_ts: Date;
   created_by: string;
   last_modified_ts?: Date;
