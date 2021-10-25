@@ -5,6 +5,8 @@ import { IocProvider } from '../../../inversify/inversify.react';
 import { container } from '../../../inversify/inversify.config';
 import config from '../../../react-configuration';
 import { ChartConfig } from '../../../services/ChartDatasetService';
+import { Provider } from 'react-redux';
+import configureStore from '../../../redux/store';
 
 (global as any).window.MCS_CONSTANTS = config;
 const chartConfigPie: ChartConfig = {
@@ -76,12 +78,14 @@ const chartConfigMetric: ChartConfig = {
     format: 'count',
   },
 };
-
+const store = configureStore();
 export default (
-  <IocProvider container={container}>
-    <Chart chartConfig={chartConfigPie} datamartId={'1414'} />
-    <Chart chartConfig={chartConfigRadar} datamartId={'1414'} />
-    <Chart chartConfig={chartConfigBars} datamartId={'1414'} />
-    <Chart chartConfig={chartConfigMetric} datamartId={'1414'} />
-  </IocProvider>
+  <Provider store={store}>
+    <IocProvider container={container}>
+      <Chart chartConfig={chartConfigPie} datamartId={'1414'} />
+      <Chart chartConfig={chartConfigRadar} datamartId={'1414'} />
+      <Chart chartConfig={chartConfigBars} datamartId={'1414'} />
+      <Chart chartConfig={chartConfigMetric} datamartId={'1414'} />
+    </IocProvider>
+  </Provider>
 );

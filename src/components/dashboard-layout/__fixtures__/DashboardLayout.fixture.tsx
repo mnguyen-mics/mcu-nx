@@ -2,8 +2,17 @@ import React from 'react';
 import DashboardLayout from '../DashboardLayout';
 import { FetchMock } from '@react-mock/fetch';
 import { LocalStorageMock } from '@react-mock/localstorage';
-import { MockedData, MockedMetricData } from '../../chart-engine/MockedData';
+import {
+  MockedData,
+  MockedMetricData,
+  MockedAnalytics,
+  MockedAnalyticsMetrics,
+} from '../../chart-engine/MockedData';
 import { ChartType, MetricChartOptions, SourceType } from '../../../services/ChartDatasetService';
+import { Provider } from 'react-redux';
+import { IocProvider } from '../../..';
+import configureStore from '../../../redux/store';
+import { container } from '../../../inversify/inversify.config';
 
 const propsMetric = {
   datamart_id: '1415',
@@ -298,6 +307,86 @@ const props = {
   },
 };
 
+const propsAnalytics1 = {
+  datamart_id: '1416',
+  schema: {
+    sections: [
+      {
+        title: 'Analytics metric',
+        cards: [
+          {
+            x: 0,
+            charts: [
+              {
+                title: 'Active users',
+                type: 'Metric',
+                dataset: {
+                  type: 'activities_analytics',
+                  query_json: {
+                    dimensions: [],
+                    metrics: [
+                      {
+                        expression: 'users',
+                      },
+                    ],
+                  },
+                },
+                options: {},
+              },
+            ],
+            y: 0,
+            h: 2,
+            layout: 'vertical',
+            w: 4,
+          },
+        ],
+      },
+    ],
+  },
+};
+
+const propsAnalytics2 = {
+  datamart_id: '1414',
+  schema: {
+    sections: [
+      {
+        title: '',
+        cards: [
+          {
+            x: 0,
+            charts: [
+              {
+                title: 'Sessions per day',
+                type: 'Bars',
+                dataset: {
+                  type: 'activities_analytics',
+                  query_json: {
+                    dimensions: [
+                      {
+                        name: 'date_yyyy_mm_dd',
+                      },
+                    ],
+                    metrics: [
+                      {
+                        expression: 'sessions',
+                      },
+                    ],
+                  },
+                },
+                options: {},
+              },
+            ],
+            y: 0,
+            h: 5,
+            layout: 'vertical',
+            w: 4,
+          },
+        ],
+      },
+    ],
+  },
+};
+
 const fetchmockOptions = [
   {
     matcher: 'glob:/undefined/v1/datamarts/*/queries/*',
@@ -311,15 +400,29 @@ const fetchmockOptions = [
     matcher: 'glob:/undefined/v1/datamarts/1415/query_executions/otql*',
     response: MockedMetricData,
   },
+  {
+    matcher: 'glob:/undefined/v1/datamarts/1414/user_activities_analytics*',
+    response: MockedAnalytics,
+  },
+  {
+    matcher: 'glob:/undefined/v1/datamarts/1416/user_activities_analytics*',
+    response: MockedAnalyticsMetrics,
+  },
 ];
-
+const store = configureStore();
 export default {
   component: (
-    <LocalStorageMock items={{ access_token: 're4lt0k3n' }}>
-      <FetchMock mocks={fetchmockOptions}>
-        <DashboardLayout {...propsMetric} />
-        <DashboardLayout {...props} />
-      </FetchMock>
-    </LocalStorageMock>
+    <Provider store={store}>
+      <IocProvider container={container}>
+        <LocalStorageMock items={{ access_token: 're4lt0k3n' }}>
+          <FetchMock mocks={fetchmockOptions}>
+            <DashboardLayout {...propsMetric} />
+            <DashboardLayout {...props} />
+            <DashboardLayout {...propsAnalytics1} />
+            <DashboardLayout {...propsAnalytics2} />
+          </FetchMock>
+        </LocalStorageMock>
+      </IocProvider>
+    </Provider>
   ),
 };

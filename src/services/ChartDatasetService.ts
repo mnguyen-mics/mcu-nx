@@ -2,7 +2,8 @@ import {
   AbstractDataset,
   AggregateDataset,
   CountDataset,
-  formatDataset,
+  formatDatasetForOtql,
+  formatDatasetForReportView,
   getXKeyForChart,
 } from '../utils/ChartDataFormater';
 import { IQueryService, QueryService } from './QueryService';
@@ -15,20 +16,31 @@ import {
   Dataset,
 } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 import { OTQLResult } from '../models/datamart/graphdb/OTQLResult';
+import {
+  ActivitiesAnalyticsService,
+  IActivitiesAnalyticsService,
+} from './ActivitiesAnalyticsService';
+import { DateRange, ReportRequestBody } from '../models/report/ReportRequestBody';
+import {
+  ActivitiesAnalyticsDimension,
+  ActivitiesAnalyticsMetric,
+} from '../utils/ActivitiesAnalyticsReportHelper';
+import moment from 'moment';
 
 export type ChartType = 'pie' | 'bars' | 'radar' | 'metric';
-export type SourceType = 'otql' | 'join' | 'to-list';
+export type SourceType = 'otql' | 'join' | 'to-list' | 'activities_analytics';
 
 const DEFAULT_Y_KEY = {
   key: 'value',
   message: 'count',
 };
-
 interface AbstractSource {
   type: SourceType;
   series_title?: string;
 }
-
+export interface ActivitiesAnalyticsSource extends AbstractSource {
+  query_json: ReportRequestBody<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>;
+}
 export interface OTQLSource extends AbstractSource {
   query_text?: string;
   query_id?: string;
@@ -75,6 +87,15 @@ export interface IChartDatasetService {
 export class ChartDatasetService implements IChartDatasetService {
   // TODO: Put back injection for this service
   private queryService: IQueryService = new QueryService();
+  private activitiesAnalyticsService: IActivitiesAnalyticsService =
+    new ActivitiesAnalyticsService();
+
+  private defaultDateRange: DateRange[] = [
+    {
+      start_date: moment().subtract(30, 'days').format('YYYY-MM-DD'),
+      end_date: moment().format('YYYY-MM-DD'),
+    },
+  ];
 
   private executeOtqlQuery(datamartId: string, otqlSource: OTQLSource): Promise<OTQLResult> {
     if (otqlSource.query_text) {
@@ -94,64 +115,95 @@ export class ChartDatasetService implements IChartDatasetService {
   ): Promise<AbstractDataset | undefined> {
     const sourceType = source.type.toLowerCase();
     const seriesTitle = source.series_title ? source.series_title : DEFAULT_Y_KEY.key;
-    if (sourceType === 'otql') {
-      const otqlSource = source as OTQLSource;
-      return this.executeOtqlQuery(datamartId, otqlSource).then(res => {
-        return formatDataset(res, xKey, seriesTitle);
-      });
-    } else if (sourceType === 'join') {
-      const aggregationSource = source as AggregationSource;
-      const childSources = aggregationSource.sources;
-      return Promise.all(
-        childSources.map(s => this.fetchDatasetForSource(datamartId, chartType, xKey, s)),
-      ).then(datasets => {
-        return this.aggregateDatasets(xKey, datasets as AggregateDataset[]);
-      });
-    } else if (sourceType === 'to-list') {
-      const aggregationSource = source as AggregationSource;
-      const childSources = aggregationSource.sources;
-      return Promise.all(
-        childSources.map(s => this.fetchDatasetForSource(datamartId, chartType, xKey, s)),
-      ).then(datasets => {
-        return this.aggregateCountsIntoList(xKey, datasets as CountDataset[], childSources);
-      });
-    } else if (sourceType === 'to-percentages') {
-      const aggregationSource = source as AggregationSource;
-      const childSources = aggregationSource.sources;
-      if (childSources.length === 1)
-        return this.fetchDatasetForSource(datamartId, chartType, xKey, childSources[0]).then(
-          dataset => {
-            return this.toPercentagesDataset(xKey, dataset as AggregateDataset);
-          },
-        );
-      else
-        return new Promise((resolve, reject) =>
-          reject(
-            `Wrong number of arguments for to-percentages transformation, 1 expected ${childSources.length} provided`,
-          ),
-        );
-    } else if (sourceType === 'index') {
-      const percentageSources = source as AggregationSource;
-      const childSources = percentageSources.sources;
-      if (childSources && childSources.length === 2) {
+
+    switch (sourceType) {
+      case 'otql':
+        const otqlSource = source as OTQLSource;
+        return this.executeOtqlQuery(datamartId, otqlSource).then(res => {
+          return formatDatasetForOtql(res, xKey, seriesTitle);
+        });
+
+      case 'join':
+        const aggregationSource = source as AggregationSource;
+        const childSources = aggregationSource.sources;
         return Promise.all(
           childSources.map(s => this.fetchDatasetForSource(datamartId, chartType, xKey, s)),
         ).then(datasets => {
-          return this.indexDataset(
-            datasets[0] as AggregateDataset,
-            datasets[1] as AggregateDataset,
-            xKey,
-          );
+          return this.aggregateDatasets(xKey, datasets as AggregateDataset[]);
         });
-      } else {
-        return new Promise((resolve, reject) =>
-          reject(
-            `Wrong number of arguments for to-percentages transformation, 2 expected ${childSources.length} provided`,
-          ),
-        );
-      }
-    } else {
-      return new Promise((resolve, reject) => reject(`Unknown source type ${sourceType}`));
+
+      case 'to-list':
+        const aggregationSource2 = source as AggregationSource;
+        const childSources2 = aggregationSource2.sources;
+        return Promise.all(
+          childSources2.map(s => this.fetchDatasetForSource(datamartId, chartType, xKey, s)),
+        ).then(datasets => {
+          return this.aggregateCountsIntoList(xKey, datasets as CountDataset[], childSources2);
+        });
+
+      case 'to-percentages':
+        const aggregationSource3 = source as AggregationSource;
+        const childSources3 = aggregationSource3.sources;
+        if (childSources3.length === 1)
+          return this.fetchDatasetForSource(datamartId, chartType, xKey, childSources3[0]).then(
+            dataset => {
+              return this.toPercentagesDataset(xKey, dataset as AggregateDataset);
+            },
+          );
+        else
+          return new Promise((resolve, reject) =>
+            reject(
+              `Wrong number of arguments for to-percentages transformation, 1 expected ${childSources3.length} provided`,
+            ),
+          );
+
+      case 'index':
+        const percentageSources = source as AggregationSource;
+        const childSources4 = percentageSources.sources;
+        if (childSources4 && childSources4.length === 2) {
+          return Promise.all(
+            childSources4.map(s => this.fetchDatasetForSource(datamartId, chartType, xKey, s)),
+          ).then(datasets => {
+            return this.indexDataset(
+              datasets[0] as AggregateDataset,
+              datasets[1] as AggregateDataset,
+              xKey,
+            );
+          });
+        } else {
+          return new Promise((resolve, reject) =>
+            reject(
+              `Wrong number of arguments for to-percentages transformation, 2 expected ${childSources.length} provided`,
+            ),
+          );
+        }
+      case 'activities_analytics':
+        const activitiesAnalyticsSource = source as ActivitiesAnalyticsSource;
+        const activitiesAnalyticsSourceJson = activitiesAnalyticsSource.query_json;
+
+        const dateRanges: DateRange[] =
+          activitiesAnalyticsSourceJson.date_ranges || this.defaultDateRange;
+
+        return this.activitiesAnalyticsService
+          .getAnalytics(
+            datamartId,
+            activitiesAnalyticsSourceJson.metrics,
+            dateRanges,
+            activitiesAnalyticsSourceJson.dimensions,
+            activitiesAnalyticsSourceJson.dimension_filter_clauses,
+          )
+          .then(res => {
+            return formatDatasetForReportView(
+              res.data.report_view,
+              !!activitiesAnalyticsSourceJson.dimensions.length,
+              xKey,
+              activitiesAnalyticsSourceJson.metrics[0],
+              activitiesAnalyticsSourceJson.dimensions[0],
+              seriesTitle,
+            );
+          });
+      default:
+        return new Promise((resolve, reject) => reject(`Unknown source type ${sourceType}`));
     }
   }
 
@@ -193,6 +245,7 @@ export class ChartDatasetService implements IChartDatasetService {
       type: 'aggregate',
     };
   }
+
   indexDataset(
     sourceDataset: AggregateDataset,
     toBeComparedWithDataset: AggregateDataset,

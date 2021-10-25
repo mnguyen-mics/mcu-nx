@@ -4,6 +4,7 @@ const TYPES = {
   IOrganisationService: Symbol.for('organisationService'),
   IQueryService: Symbol.for('queryService'),
   IChartDatasetService: Symbol.for('chartDatasetService'),
+  IActivitiesAnalyticsService: Symbol.for('activitiesAnalyticsService'),
 };
 
 export { TYPES };
