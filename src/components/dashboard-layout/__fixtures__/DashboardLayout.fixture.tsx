@@ -241,14 +241,14 @@ const props = {
             ],
           },
           {
-            x: 0,
+            x: 6,
             y: 4,
             w: 6,
             h: 4,
             charts: [
               {
                 title: 'Top 10 purchase intents',
-                type: 'bars' as ChartType,
+                type: 'radar' as ChartType,
                 dataset: {
                   type: 'to-percentages',
                   sources: [
@@ -261,6 +261,33 @@ const props = {
                 },
                 options: {
                   format: 'percentage',
+                },
+              },
+            ],
+          },
+          {
+            x: 0,
+            y: 4,
+            w: 6,
+            h: 4,
+            charts: [
+              {
+                title: 'Top 10 purchase intents',
+                type: 'bars' as ChartType,
+                dataset: {
+                  type: 'index',
+                  sources: [
+                    {
+                      type: 'otql' as SourceType,
+                      series_title: 'datamart',
+                      query_id: '50172',
+                    },
+                    {
+                      type: 'otql' as SourceType,
+                      series_title: 'segment',
+                      query_id: '50173',
+                    },
+                  ],
                 },
               },
             ],

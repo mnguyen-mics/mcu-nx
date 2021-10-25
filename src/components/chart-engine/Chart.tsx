@@ -100,13 +100,7 @@ class Chart extends React.Component<Props, ChartState> {
           <RadarChart dataset={dataset as any} {...(sanitizedwithKeys as RadarChartOptions)} />
         );
       case 'bars':
-        return (
-          <BarChart
-            dataset={dataset as any}
-            {...(sanitizedwithKeys as BarChartOptions)}
-            format={'count'}
-          />
-        );
+        return <BarChart dataset={dataset as any} {...(sanitizedwithKeys as BarChartOptions)} />;
       default:
         return (
           <Alert
