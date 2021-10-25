@@ -285,9 +285,17 @@ export class ChartDatasetService implements IChartDatasetService {
         [sourceTitles[0]]: parseFloat(lineIndex?.toFixed(2)),
       };
     });
+
+    const refinedIndexDataset = sourceIndexDataset
+      .sort((a, b) => {
+        const firstIndex = a[sourceTitles[0]] as number;
+        const secondIndex = b[sourceTitles[0]] as number;
+        return secondIndex - firstIndex;
+      })
+      .slice(0, 10);
     return {
       type: 'aggregate',
-      dataset: sourceIndexDataset,
+      dataset: refinedIndexDataset,
       metadata: { seriesTitles: sourceTitles },
     } as AggregateDataset;
   }
