@@ -1,5 +1,5 @@
 import { generateRoutesFromDefinition, NavigatorDefinition, NavigatorRoute } from './domain';
-import HomePage from '../containers/home/HomePage';
+import HomePage from '../containers/Home/HomePage';
 
 export const homeDefinition: NavigatorDefinition = {
   home: {

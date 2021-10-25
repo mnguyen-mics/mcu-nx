@@ -1,4 +1,5 @@
 import * as React from 'react';
+import _ from 'lodash';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { compose } from 'recompose';
 import {
@@ -19,6 +20,8 @@ export interface Filters {
   keywords?: string;
   archived?: boolean;
   scope?: string;
+  group_id?: string;
+  artifact_id?: string;
 }
 
 interface RouterParams {
@@ -45,7 +48,6 @@ export interface ItemListProps<T = any> extends ViewComponentWithFiltersProps<T>
   pageSettings: PageSetting[];
   emptyTable: EmptyTableProps;
   additionnalComponent?: React.ReactNode;
-  filters: Filters;
 }
 
 type Props<T = any> = ItemListProps<T> & RouteComponentProps<RouterParams>;
@@ -60,7 +62,6 @@ class ItemList<T> extends React.Component<Props<T>> {
         params: { organisationId },
       },
       pageSettings,
-      filters,
     } = this.props;
 
     if (!isSearchValid(search, pageSettings)) {
@@ -70,9 +71,8 @@ class ItemList<T> extends React.Component<Props<T>> {
         state: { reloadDataSource: true },
       });
     } else {
-      const filtersA = parseSearch(search, pageSettings);
-      filtersA.scope = filters.scope;
-      fetchList(organisationId, filtersA, true);
+      const filters = parseSearch(search, pageSettings);
+      fetchList(organisationId, filters, true);
     }
   }
 
@@ -85,7 +85,6 @@ class ItemList<T> extends React.Component<Props<T>> {
         params: { organisationId },
       },
       pageSettings,
-      filters,
     } = this.props;
 
     const {
@@ -93,14 +92,9 @@ class ItemList<T> extends React.Component<Props<T>> {
       match: {
         params: { organisationId: previousOrganisationId },
       },
-      filters: previousFilters,
     } = previousProps;
 
-    if (
-      !compareSearches(search, previousSearch) ||
-      organisationId !== previousOrganisationId ||
-      filters !== previousFilters
-    ) {
+    if (!compareSearches(search, previousSearch) || organisationId !== previousOrganisationId) {
       if (!isSearchValid(search, pageSettings)) {
         history.replace({
           pathname: pathname,
@@ -108,9 +102,8 @@ class ItemList<T> extends React.Component<Props<T>> {
           state: { reloadDataSource: organisationId !== previousOrganisationId },
         });
       } else {
-        const filtersA = parseSearch(search, pageSettings);
-        filtersA.scope = filters.scope;
-        fetchList(organisationId, filtersA, false);
+        const filters = parseSearch(search, pageSettings);
+        fetchList(organisationId, filters, false);
       }
     }
   }

@@ -11,7 +11,7 @@ import { CustomDashboardResource } from '../../models/customDashboards/customDas
 import { PAGINATION_SEARCH_SETTINGS } from '../../utils/LocationSearchHelper';
 import DashboardActionBar from './DashboardActionBar';
 import messages from './messages';
-import { lazyInject } from './../../config/inversify.config';
+import { lazyInject } from '../../config/inversify.config';
 import { TYPES } from '../../constants/types';
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
 import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
@@ -22,6 +22,7 @@ import { UserProfileResource } from '@mediarithmics-private/advanced-components/
 import { InjectedNotificationProps } from '../Notifications/injectNotifications';
 import { DatamartResource } from '../../models/datamart/DatamartResource';
 import { getPaginatedApiParam } from '../../utils/ApiHelper';
+import { Card } from '@mediarithmics-private/mcs-components-library';
 
 const { Content } = Layout;
 
@@ -236,8 +237,8 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
   renderInputPlaceholder(value: string) {
     return (
       <div>
-        <span className='mcs-dashboardsFilters_placeholder'>{value}</span>
-        <FilterOutlined className='mcs-dashboards_filterIcon' />
+        <span className='mcs-actionBar_placeholderFilter'>{value}</span>
+        <FilterOutlined className='mcs-actionBar_iconFilter' />
       </div>
     );
   }
@@ -246,7 +247,7 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
     const { optionsOrg } = this.state;
 
     return (
-      <div className='mcs-dashboardsFilters'>
+      <div className='mcs-actionBar_filters'>
         <Select
           showSearch={true}
           allowClear={true}
@@ -255,7 +256,7 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
           onSelect={this.onSelectScope}
           onClear={this.clearScopeFilterAndRefreshTable}
           placeholder={this.renderInputPlaceholder('Scope')}
-          className='mcs-dashboardsFilters_scope mcs-dashboardsFilters_input'
+          className='mcs-actionBar_filterInput'
         />
         <Select
           showSearch={true}
@@ -263,7 +264,7 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
           showArrow={false}
           options={optionsOrg}
           placeholder={this.renderInputPlaceholder('Organisation')}
-          className='mcs-dashboardsFilters_organisation mcs-dashboardsFilters_input'
+          className='mcs-actionBar_filterInput'
         />
       </div>
     );
@@ -323,17 +324,18 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
         />
         <div className='ant-layout'>
           <Content className='mcs-content-container'>
-            <ItemList
-              fetchList={this.fetchDashboardList}
-              dataSource={this.state.data}
-              loading={this.state.loading}
-              total={this.state.total}
-              columns={dataColumnsDefinition}
-              pageSettings={PAGINATION_SEARCH_SETTINGS}
-              emptyTable={emptyTable}
-              filters={this.state.filters}
-              className='mcs-dashboardsTable_Container'
-            />
+            <Card>
+              <ItemList
+                fetchList={this.fetchDashboardList}
+                dataSource={this.state.data}
+                loading={this.state.loading}
+                total={this.state.total}
+                columns={dataColumnsDefinition}
+                pageSettings={PAGINATION_SEARCH_SETTINGS}
+                emptyTable={emptyTable}
+                className='mcs-dashboardsTable_Container'
+              />
+            </Card>
           </Content>
         </div>
       </div>

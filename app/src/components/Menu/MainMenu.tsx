@@ -167,7 +167,7 @@ class MainMenu extends React.Component<Props, NavigatorMenuState> {
                       className='mcs-menuMentionTag mcs-menuMentionTag--east'
                     />
                   )}
-                  <Link to={linkUrl}>subMenuItem.displayName</Link>
+                  <Link to={linkUrl}>{subMenuItem.displayName}</Link>
                 </Menu.Item>
               );
             })}
