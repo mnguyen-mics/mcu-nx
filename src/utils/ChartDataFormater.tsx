@@ -12,7 +12,6 @@ import {
   ActivitiesAnalyticsMetric,
 } from './ActivitiesAnalyticsReportHelper';
 import { normalizeReportView } from './MetricHelper';
-import { Dimension, Metric } from '../models/report/ReportRequestBody';
 
 type DatasetType = 'aggregate' | 'count';
 
@@ -117,13 +116,12 @@ export function formatDatasetForOtql(
 
 export function formatDatasetForReportView(
   dataResult: ReportView,
-  hasDimensions: boolean,
   xKey: string,
-  metric: Metric<ActivitiesAnalyticsMetric>,
-  dimension: Dimension<ActivitiesAnalyticsDimension>,
   seriesTitle: string,
+  metric: ActivitiesAnalyticsMetric,
+  dimension?: ActivitiesAnalyticsDimension,
 ): AbstractDataset | undefined {
-  if (hasDimensions) {
+  if (dimension) {
     const yKey = {
       key: seriesTitle,
       message: seriesTitle,
@@ -132,8 +130,8 @@ export function formatDatasetForReportView(
       dataResult,
       xKey,
       yKey.key,
-      metric.expression,
-      dimension.name,
+      metric,
+      dimension,
     );
     return {
       metadata: {
@@ -144,7 +142,8 @@ export function formatDatasetForReportView(
     } as AggregateDataset;
   } else {
     const normalizedReportView = normalizeReportView(dataResult);
-    const value = normalizedReportView[0][metric.expression];
+
+    const value = normalizedReportView[0][metric];
     return {
       type: 'count',
       value: value,
