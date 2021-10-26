@@ -51,6 +51,27 @@ const propsMetric = {
                   format: 'percentage',
                 } as MetricChartOptions,
               },
+              {
+                title: 'Test percentage value (%)',
+                type: 'metric' as ChartType,
+                dataset: {
+                  type: 'ratio' as SourceType,
+                  sources: [
+                    {
+                      type: 'otql' as SourceType,
+                      query_id: '50174',
+                    },
+                    {
+                      type: 'otql' as SourceType,
+                      query_id: '50175',
+                    },
+                  ],
+                },
+                options: {
+                  xKey: 'key',
+                  format: 'percentage',
+                } as MetricChartOptions,
+              },
             ],
           },
           {

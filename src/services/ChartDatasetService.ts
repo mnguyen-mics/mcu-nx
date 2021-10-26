@@ -28,7 +28,7 @@ import {
 import moment from 'moment';
 
 export type ChartType = 'pie' | 'bars' | 'radar' | 'metric';
-export type SourceType = 'otql' | 'join' | 'to-list' | 'activities_analytics';
+export type SourceType = 'otql' | 'join' | 'to-list' | 'activities_analytics' | 'ratio';
 
 const DEFAULT_Y_KEY = {
   key: 'value',
@@ -53,6 +53,10 @@ export interface MetricChartProps {
   format?: MetricChartFormat;
 }
 export interface AggregationSource extends AbstractSource {
+  sources: AbstractSource[];
+}
+
+export interface RatioSource extends AbstractSource {
   sources: AbstractSource[];
 }
 
@@ -87,6 +91,7 @@ export interface IChartDatasetService {
 export class ChartDatasetService implements IChartDatasetService {
   // TODO: Put back injection for this service
   private queryService: IQueryService = new QueryService();
+
   private activitiesAnalyticsService: IActivitiesAnalyticsService =
     new ActivitiesAnalyticsService();
 
@@ -203,6 +208,25 @@ export class ChartDatasetService implements IChartDatasetService {
                 : undefined,
             );
           });
+
+      case 'ratio':
+        const ratioSource = source as RatioSource;
+        const datasetValue = this.fetchDatasetForSource(
+          datamartId,
+          chartType,
+          xKey,
+          ratioSource.sources[0],
+        );
+        const datasetTotal = this.fetchDatasetForSource(
+          datamartId,
+          chartType,
+          xKey,
+          ratioSource.sources[1],
+        );
+        return Promise.all([datasetValue, datasetTotal]).then(datasets => {
+          return this.ratioDataset(datasets[0] as CountDataset, datasets[1] as CountDataset);
+        });
+
       default:
         return new Promise((resolve, reject) => reject(`Unknown source type ${sourceType}`));
     }
@@ -299,6 +323,26 @@ export class ChartDatasetService implements IChartDatasetService {
       dataset: refinedIndexDataset,
       metadata: { seriesTitles: sourceTitles },
     } as AggregateDataset;
+  }
+
+  private ratioDataset(
+    datasetValue: CountDataset | undefined,
+    datasetTotal: CountDataset | undefined,
+  ): CountDataset | undefined {
+    if (
+      !datasetValue ||
+      datasetValue.type !== 'count' ||
+      !datasetTotal ||
+      datasetTotal.type !== 'count' ||
+      datasetTotal.value === 0
+    )
+      return undefined;
+    else {
+      return {
+        value: datasetValue.value / datasetTotal.value,
+        type: 'count',
+      };
+    }
   }
 
   private aggregateCountsIntoList(
