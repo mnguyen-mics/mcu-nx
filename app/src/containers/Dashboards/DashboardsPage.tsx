@@ -16,11 +16,9 @@ import { TYPES } from '../../constants/types';
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
 import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
 import { ICustomDashboardService } from '../../services/CustomDashboardService';
-import { IDatamartService } from '../../services/DatamartService';
 import { IOrganisationService } from '../../services/OrganisationService';
 import { UserProfileResource } from '@mediarithmics-private/advanced-components/lib/models/directory/UserProfileResource';
 import { InjectedNotificationProps } from '../Notifications/injectNotifications';
-import { DatamartResource } from '../../models/datamart/DatamartResource';
 import { getPaginatedApiParam } from '../../utils/ApiHelper';
 import { Card } from '@mediarithmics-private/mcs-components-library';
 
@@ -77,39 +75,13 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
   @lazyInject(TYPES.ICustomDashboardService)
   private _dashboardService: ICustomDashboardService;
 
-  @lazyInject(TYPES.IDatamartService)
-  private _datamartService: IDatamartService;
-
   @lazyInject(TYPES.IOrganisationService)
   private _organisationService: IOrganisationService;
 
-  getDatamartsOfSelectedOrg = (orgId: string) => {
-    return this._datamartService.getDatamarts(orgId, undefined).then(x => x.data);
-  };
-
   private organisationsMap = new Map();
-  private datamartIdToOrganisationIdMap = new Map();
-
-  fillDatamartsMap = (datamarts: DatamartResource[]) => {
-    datamarts.forEach(datamart =>
-      this.datamartIdToOrganisationIdMap.set(datamart.id, datamart.organisation_id),
-    );
-  };
-
-  getOrgNameByDatamartId = (datamartId: string) => {
-    if (this.datamartIdToOrganisationIdMap.has(datamartId)) {
-      const orgId = this.datamartIdToOrganisationIdMap.get(datamartId);
-
-      if (this.organisationsMap.has(orgId)) return `${this.organisationsMap.get(orgId)} - ${orgId}`;
-      else return `${this.props.intl.formatMessage(messages.unknownOrganisation)} ${orgId}`;
-    } else
-      return `${this.props.intl.formatMessage(
-        messages.unknownOrganisation,
-      )} (datamart ${datamartId})`;
-  };
 
   fetchDashboardList = (organisationId: string, filter: Filters) => {
-    if (this.organisationsMap.size === 0)
+    if (!this.organisationsMap.get(organisationId))
       this._organisationService
         .getOrganisation(organisationId)
         .then(resultOrganisations => {
@@ -139,34 +111,26 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
     }
 
     this.setState({ loading: true }, () => {
-      const promiseDatamarts = this.getDatamartsOfSelectedOrg(organisationId);
-      promiseDatamarts.then(datamarts => {
-        this.fillDatamartsMap(datamarts);
-        return Promise.all(
-          datamarts.map(datamart => {
-            return this._dashboardService
-              .getDashboards(datamart.id, organisationId, options)
-              .then(resultDashboards => {
-                if (resultDashboards) return resultDashboards.data;
-                else return [];
-              });
-          }),
-        )
-          .then(arrayOfArraysDashboards => lodash.flattenDeep(arrayOfArraysDashboards))
-          .then(dashboards => {
-            this.setState({
-              loading: false,
-              data: dashboards,
-              total: dashboards.length,
-            });
-          })
-          .catch(e => {
-            this.props.notifyError(e);
-            this.setState({
-              loading: false,
-            });
+      return this._dashboardService
+        .getDashboards(organisationId, options)
+        .then(resultDashboards => {
+          if (resultDashboards) return resultDashboards.data;
+          else return [];
+        })
+        .then(arrayOfArraysDashboards => lodash.flattenDeep(arrayOfArraysDashboards))
+        .then(dashboards => {
+          this.setState({
+            loading: false,
+            data: dashboards,
+            total: dashboards.length,
           });
-      });
+        })
+        .catch(e => {
+          this.props.notifyError(e);
+          this.setState({
+            loading: false,
+          });
+        });
     });
   };
 
@@ -282,7 +246,7 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
         isHideable: false,
         render: (text: string, record: CustomDashboardResource) => (
           <span className='mcs-dashboardsTable_OrgColumn'>
-            {this.getOrgNameByDatamartId(record.organisation_id ? record.organisation_id : '-')}
+            {record.organisation_id ? this.organisationsMap.get(record.organisation_id) : '-'}
           </span>
         ),
       },
