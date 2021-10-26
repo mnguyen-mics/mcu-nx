@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom';
 export interface FullScreenFormModalProps {
   opened?: boolean;
   blurred?: boolean;
+  className?: string;
 }
 
 export default class FullScreenModal extends React.Component<FullScreenFormModalProps> {

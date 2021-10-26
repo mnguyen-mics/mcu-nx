@@ -1,12 +1,13 @@
 import * as React from 'react';
 
 export interface ProgressProps {
+  className?: string;
   percent: number;
   label?: string;
 }
 
 const Progress: React.SFC<ProgressProps> = props => {
-  const { percent, label } = props;
+  const { percent, label, className } = props;
 
   let bgClass = 'success';
   if (percent > 50 && percent < 80) {
@@ -16,7 +17,7 @@ const Progress: React.SFC<ProgressProps> = props => {
   }
 
   return (
-    <div className='mcs-progress-wrapper'>
+    <div className={`mcs-progress-wrapper ${className ? className : ''}`}>
       {label ? <div className='mcs-progress-label'>{label}</div> : null}
       <div className='mcs-progress'>
         <div className='mcs-progress-outer'>

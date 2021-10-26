@@ -6,6 +6,7 @@ interface Options {
 }
 
 export interface LegendChartProps {
+  className?: string;
   identifier: string;
   options: Options[];
 }
@@ -15,9 +16,9 @@ class LegendChart extends React.Component<LegendChartProps> {
     super(props);
   }
   render() {
-    const { options } = this.props;
+    const { options, className } = this.props;
     return (
-      <div className='mcs-legend-container'>
+      <div className={`mcs-legend-container ${className ? className : ''}`}>
         {options.map(option => {
           return (
             <div key={option.domain} className='wrapper'>

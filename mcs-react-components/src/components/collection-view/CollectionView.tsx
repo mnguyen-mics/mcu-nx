@@ -9,6 +9,7 @@ export interface CollectionViewProps {
   gutter?: number;
   span?: number;
   loading?: boolean;
+  className?: string;
 }
 
 class CollectionView extends React.Component<CollectionViewProps> {
@@ -20,7 +21,7 @@ class CollectionView extends React.Component<CollectionViewProps> {
 
   render() {
     const prefixCls = 'mcs-collection-view';
-    const { collectionItems, gutter, span, pagination, loading } = this.props;
+    const { collectionItems, gutter, span, pagination, loading, className } = this.props;
 
     return loading ? (
       <Row className={`${prefixCls}-loading`}>
@@ -29,7 +30,7 @@ class CollectionView extends React.Component<CollectionViewProps> {
         </Row>
       </Row>
     ) : (
-      <div className={prefixCls}>
+      <div className={`${prefixCls} ${className ? className : ''}`}>
         <Row gutter={gutter}>
           {collectionItems.map(item => {
             return (

@@ -5,7 +5,7 @@ exports[`renders the SelectorLayout with children 1`] = `
   className="ant-layout mcs-selector-layout"
 >
   <div
-    className="ant-row ant-row-space-between ant-row-middle mcs-actionbar-edit "
+    className="ant-row ant-row-space-between ant-row-middle mcs-actionbar-edit  "
     style={Object {}}
   >
     <div
@@ -81,7 +81,7 @@ exports[`renders the SelectorLayout with no element 1`] = `
   className="ant-layout mcs-selector-layout"
 >
   <div
-    className="ant-row ant-row-space-between ant-row-middle mcs-actionbar-edit "
+    className="ant-row ant-row-space-between ant-row-middle mcs-actionbar-edit  "
     style={Object {}}
   >
     <div

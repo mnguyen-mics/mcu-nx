@@ -3,6 +3,7 @@ import Button from '../../button';
 import McsIcon from '../../mcs-icon';
 
 export interface FormModalWrapperProps {
+  className?: string;
   formId: string;
   footer?: React.ReactNode;
   onClose: React.MouseEventHandler<HTMLSpanElement>;
@@ -13,10 +14,10 @@ export interface FormModalWrapperProps {
  * See example at http://redux-form.com/6.8.0/examples/remoteSubmit/
  */
 const FormModalWrapper: React.SFC<FormModalWrapperProps> = props => {
-  const { footer, onClose, children } = props;
+  const { footer, onClose, children, className } = props;
 
   return (
-    <div className='mcs-form-modal'>
+    <div className={`mcs-form-modal ${className ? className : ''}`}>
       <Button className='form-close' onClick={onClose}>
         <McsIcon type='close-big' />
       </Button>

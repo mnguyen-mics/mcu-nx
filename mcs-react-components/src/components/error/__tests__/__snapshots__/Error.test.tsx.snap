@@ -2,7 +2,7 @@
 
 exports[`renders the Error component 1`] = `
 <div
-  className="mcs-error"
+  className="mcs-error "
   style={
     Object {
       "color": "red",

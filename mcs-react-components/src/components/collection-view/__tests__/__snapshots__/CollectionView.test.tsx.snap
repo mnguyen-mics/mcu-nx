@@ -2,7 +2,7 @@
 
 exports[`should display a collection view with items and pagination 1`] = `
 <div
-  className="mcs-collection-view"
+  className="mcs-collection-view "
 >
   <div
     className="ant-row"

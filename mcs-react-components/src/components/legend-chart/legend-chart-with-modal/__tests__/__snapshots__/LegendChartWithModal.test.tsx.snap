@@ -2,7 +2,7 @@
 
 exports[`renders the legendchartWithModal 1`] = `
 <div
-  className="mcs-legend-container"
+  className="mcs-legend-container "
 >
   <div
     style={

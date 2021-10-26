@@ -5,12 +5,13 @@ import McsIcon from '../../../mcs-icon';
 import { Device as IDevice, FormFactor } from '../../../../models/timeline/timeline';
 
 export interface DeviceProps {
+  className?: string;
   vectorId: string;
   device?: IDevice;
 }
 
 const Device = (props: DeviceProps) => {
-  const { vectorId, device } = props;
+  const { vectorId, device, className } = props;
 
   const formFactorIcon = (f?: FormFactor) => {
     switch (f) {
@@ -25,7 +26,11 @@ const Device = (props: DeviceProps) => {
     }
   };
   return device && vectorId ? (
-    <Row gutter={10} key={vectorId} className='table-line border-top'>
+    <Row
+      gutter={10}
+      key={vectorId}
+      className={`table-line border-top ${className ? className : ''}`}
+    >
       <Col className='table-left' span={12}>
         <span style={{ float: 'left' }}>{formFactorIcon(device.form_factor)}</span>
         <span style={{ float: 'left' }}>

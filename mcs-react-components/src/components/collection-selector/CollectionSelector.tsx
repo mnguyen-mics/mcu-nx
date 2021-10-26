@@ -25,6 +25,7 @@ export interface CollectionSelectorProps<T extends SelectableItem> {
   close: () => void;
   addButtonText: string;
   noElementText: string;
+  className?: string;
 }
 
 interface State<T> {
@@ -192,7 +193,8 @@ class CollectionSelector<T extends SelectableItem> extends React.Component<
   };
 
   render() {
-    const { actionBarTitle, close, displayFiltering, addButtonText, noElementText } = this.props;
+    const { actionBarTitle, close, displayFiltering, addButtonText, noElementText, className } =
+      this.props;
     const { isLoading, currentPage, total, pageSize, noElement } = this.state;
 
     const pagination: PaginationProps = {
@@ -221,6 +223,7 @@ class CollectionSelector<T extends SelectableItem> extends React.Component<
 
     return (
       <SelectorLayout
+        className={className}
         actionBarTitle={actionBarTitle}
         handleAdd={this.handleAdd}
         handleClose={close}

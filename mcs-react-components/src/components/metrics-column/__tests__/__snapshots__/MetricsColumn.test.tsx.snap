@@ -4,7 +4,7 @@ exports[`renders the metrics column 1`] = `
 LoadedCheerio {
   "0": Node {
     "attribs": Object {
-      "class": "mcs-metrics-column",
+      "class": "mcs-metrics-column ",
     },
     "children": Array [
       Node {

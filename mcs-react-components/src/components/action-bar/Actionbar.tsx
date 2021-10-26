@@ -6,6 +6,7 @@ import McsIcon from '../mcs-icon';
 const BreadcrumbItem = Breadcrumb.Item;
 
 export interface ActionbarProps extends BreadcrumbProps {
+  className?: string;
   edition?: boolean;
   pathItems: React.ReactNode[];
   backgroundColor?: string;
@@ -16,7 +17,8 @@ type Props = ActionbarProps;
 
 class Actionbar extends React.Component<Props> {
   render() {
-    const { edition, pathItems, backgroundColor, inverted, children, ...rest } = this.props;
+    const { edition, pathItems, backgroundColor, inverted, className, children, ...rest } =
+      this.props;
 
     return (
       <Row
@@ -24,7 +26,7 @@ class Actionbar extends React.Component<Props> {
         justify='space-between'
         className={`${edition ? 'mcs-actionbar-edit' : 'mcs-actionbar'} ${
           inverted ? 'inverted' : ''
-        }`}
+        } ${className ? className : ''}`}
         style={backgroundColor ? { backgroundColor } : {}}
       >
         <Breadcrumb

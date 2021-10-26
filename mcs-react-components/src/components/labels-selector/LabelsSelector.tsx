@@ -7,6 +7,7 @@ import { Dropdown } from '../popup-container/PopupContainer';
 import { Label } from '../../models/labels/labels';
 
 export interface LabelsSelectorProps {
+  className?: string;
   labels: Label[];
   selectedLabels: Label[];
   onChange: (a: Label[]) => void;
@@ -77,7 +78,7 @@ class LabelsSelector extends React.Component<LabelsSelectorProps, LabelsSelector
   };
 
   render() {
-    const { labels, selectedLabels, buttonMessage } = this.props;
+    const { labels, selectedLabels, buttonMessage, className } = this.props;
 
     const { inputValue, inputVisible } = this.state;
 
@@ -121,7 +122,7 @@ class LabelsSelector extends React.Component<LabelsSelectorProps, LabelsSelector
     };
 
     return (
-      <div className='mcs-labelsSelector'>
+      <div className={`mcs-labelsSelector ${className ? className : ''}`}>
         {selectedLabels.map(label => {
           const isLongTag = label.name.length > 20;
           const labelelem = (

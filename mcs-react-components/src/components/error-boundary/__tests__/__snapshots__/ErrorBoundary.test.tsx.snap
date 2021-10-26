@@ -8,7 +8,7 @@ exports[`renders the ErrorBoundary 1`] = `
 
 exports[`uses the onError when an error occurs 1`] = `
 <div
-  className="ant-layout"
+  className="ant-layout "
 >
   Something went wrong
 </div>

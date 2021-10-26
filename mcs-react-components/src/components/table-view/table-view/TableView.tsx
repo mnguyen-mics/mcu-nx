@@ -45,6 +45,7 @@ export interface ExtendedTableRowSelection<T = any> extends TableRowSelection<T>
 }
 
 export interface TableViewProps<T> extends TableProps<T> {
+  className?: string;
   columns?: Array<DataColumnDefinition<T>>;
   visibilitySelectedColumns?: Array<DataColumnDefinition<T>>;
   actionsColumnsDefinition?: Array<ActionsColumnDefinition<T>>;

@@ -6,6 +6,7 @@ import { OriginProps } from '../../../../models/timeline/timeline';
 const moment = _moment;
 
 export interface Props {
+  className?: string;
   title: string;
   noOriginText: string;
   origin: OriginProps;
@@ -32,10 +33,13 @@ const renderLine = (key: string, value: string | number) => {
 
 class Origin extends React.Component<Props> {
   render() {
-    const { origin, title, noOriginText } = this.props;
+    const { origin, title, noOriginText, className } = this.props;
 
     return (
-      <Row gutter={10} className='section table-line border-top mcs-origin'>
+      <Row
+        gutter={10}
+        className={`section table-line border-top mcs-origin ${className ? className : ''}`}
+      >
         <Col span={5} className='section-title'>
           {title}
         </Col>

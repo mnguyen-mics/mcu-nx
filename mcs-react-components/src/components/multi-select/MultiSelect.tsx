@@ -6,6 +6,7 @@ import SubMenu from 'antd/lib/menu/SubMenu';
 import { Dropdown } from '../popup-container/PopupContainer';
 
 export interface MultiSelectProps<T> {
+  className?: string;
   displayElement: JSX.Element;
   items: T[];
   subItems?: T[];
@@ -105,7 +106,7 @@ class MultiSelect<T> extends React.Component<MultiSelectProps<T>, MultiSelectSta
   }
 
   render() {
-    const { displayElement, buttonClass } = this.props;
+    const { displayElement, buttonClass, className } = this.props;
     const { overlayVisible } = this.state;
     const menu = this.buildMenuItems();
 
@@ -115,6 +116,7 @@ class MultiSelect<T> extends React.Component<MultiSelectProps<T>, MultiSelectSta
         trigger={['click']}
         onVisibleChange={this.handleVisibleChange}
         visible={overlayVisible}
+        className={className}
       >
         <Button className={buttonClass}>{displayElement}</Button>
       </Dropdown>

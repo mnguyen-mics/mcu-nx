@@ -11,10 +11,10 @@ export interface StandardModalProps
 
 export default class StandardModal extends React.Component<StandardModalProps, any> {
   public render() {
-    const { opened, onClose, children, isBackdrop } = this.props;
+    const { opened, onClose, children, isBackdrop, className } = this.props;
     const click = isBackdrop ? onClose : () => ({});
     return (
-      <FullScreenModal opened={opened} blurred={false}>
+      <FullScreenModal opened={opened} blurred={false} className={className ? className : ''}>
         <div className='mcs-form-card-modal dark' onClick={click}>
           <div className='mcs-form-modal-container'>{children}</div>
         </div>

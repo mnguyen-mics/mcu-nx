@@ -12,7 +12,7 @@ exports[`should render a date range picker without the start date 1`] = `
     id="123"
   >
     <button
-      className="ant-btn ant-dropdown-trigger mcs-dateRangePicker"
+      className="ant-btn ant-dropdown-trigger mcs-dateRangePicker "
       onClick={[Function]}
       onMouseDown={[Function]}
       onTouchStart={[Function]}
@@ -79,7 +79,7 @@ exports[`should render a disabled date range picker 1`] = `
     id="123"
   >
     <button
-      className="ant-btn ant-dropdown-trigger mcs-dateRangePicker"
+      className="ant-btn ant-dropdown-trigger mcs-dateRangePicker "
       disabled={true}
       onClick={[Function]}
       type="button"

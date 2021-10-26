@@ -15,6 +15,7 @@ export interface Trend {
 }
 
 export interface CounterProps extends LoadingCounterValue {
+  className?: string;
   iconType: McsIconType;
   iconStyle?: React.CSSProperties;
   title: React.ReactNode | string;
@@ -24,10 +25,10 @@ export interface CounterProps extends LoadingCounterValue {
 
 export default class Counter extends React.Component<CounterProps> {
   render() {
-    const { iconType, iconStyle, title, value, loading, unit, trend } = this.props;
+    const { iconType, iconStyle, title, value, loading, unit, trend, className } = this.props;
 
     return (
-      <div className='mcs-counter'>
+      <div className={`mcs-counter ${className ? className : ''}`}>
         <McsIcon type={iconType} styleIcon={iconStyle ? iconStyle : {}} />
         <div className='title'>{title}</div>
         <div className='number'>

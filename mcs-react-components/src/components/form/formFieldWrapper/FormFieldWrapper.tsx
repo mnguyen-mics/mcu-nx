@@ -7,6 +7,7 @@ import { TooltipProps } from 'antd/lib/tooltip';
 import McsIcon from '../../mcs-icon';
 
 export interface FormFieldWrapperProps {
+  className?: string;
   hasMarginBottom?: boolean;
   helpToolTipProps?: TooltipProps;
   hoverToolTipProps?: TooltipProps;
@@ -27,6 +28,7 @@ const defaultRowProps: Partial<RowProps> = {
 const FormFieldWrapper: React.SFC<FormItemProps & FormFieldWrapperProps> = props => {
   const {
     children,
+    className,
     hasMarginBottom,
     helpToolTipProps,
     hoverToolTipProps,
@@ -47,7 +49,7 @@ const FormFieldWrapper: React.SFC<FormItemProps & FormFieldWrapperProps> = props
   );
 
   return (
-    <div className={hasMarginBottom ? '' : 'form-field-wrapper'}>
+    <div className={`${hasMarginBottom ? '' : 'form-field-wrapper'} ${className ? className : ''}`}>
       <Form.Item
         label={label && renderedLabel}
         {...(!small && defaultFieldGridConfig)}

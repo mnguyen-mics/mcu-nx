@@ -2,7 +2,7 @@
 
 exports[`renders the labelsSelector component 1`] = `
 <div
-  className="mcs-labelsSelector"
+  className="mcs-labelsSelector "
 >
   <span
     className="ant-tag mcs-labelsSelector_tag"

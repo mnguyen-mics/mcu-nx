@@ -6,6 +6,7 @@ export interface Metric {
 }
 
 export interface MetricsColumnProps {
+  className?: string;
   metrics: Metric[];
   isLoading?: boolean;
 }
@@ -16,7 +17,7 @@ class MetricsColumn extends React.Component<MetricsColumnProps> {
   };
 
   render() {
-    const { metrics, isLoading } = this.props;
+    const { metrics, isLoading, className } = this.props;
 
     const height = 375;
     const nbOfVal: number = metrics ? metrics.length : 1;
@@ -24,7 +25,7 @@ class MetricsColumn extends React.Component<MetricsColumnProps> {
     const prefixCls = 'mcs-metrics-column';
 
     return (
-      <div className={prefixCls}>
+      <div className={`${prefixCls} ${className ? className : ''}`}>
         {metrics.map(metric => {
           return (
             <div key={metric.name} style={{ height: `${cellHeight}px` }}>

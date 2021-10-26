@@ -2,7 +2,7 @@
 
 exports[`renders the MenuSubList 1`] = `
 <div
-  className="mcs-menu-sub-list"
+  className="mcs-menu-sub-list "
 >
   <button
     className="menu-item"
@@ -41,7 +41,7 @@ exports[`renders the MenuSubList 1`] = `
 
 exports[`renders the MenuSubList with submenu 1`] = `
 <div
-  className="mcs-menu-sub-list"
+  className="mcs-menu-sub-list "
 >
   <button
     className="menu-item opened"
