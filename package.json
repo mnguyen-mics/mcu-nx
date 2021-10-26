@@ -2,7 +2,7 @@
   "name": "new-computing-console",
   "version": "1.2.0",
   "dependencies": {
-    "@mediarithmics-private/advanced-components": "3.7.1",
+    "@mediarithmics-private/advanced-components": "3.10.0",
     "@mediarithmics-private/mcs-components-library": "5.2.10",
     "@ant-design/icons": "^4.2.2",
     "antd": "4.10.3",
@@ -38,9 +38,9 @@
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "start": "npm run start:local",
     "prettier-check": "prettier -c .",
-    "start:local": "cross-env NODE_ENV=local API_ENV=local BABEL_ENV=dev NODE_OPTIONS=--max_old_space_size=4000 webpack-dev-server --config webpack.dev.js",
-    "start:prod": "cross-env NODE_ENV=local API_ENV=prod BABEL_ENV=dev NODE_OPTIONS=--max_old_space_size=4000 webpack-dev-server --config webpack.dev.js",
-    "build": "cross-env NODE_ENV=production BABEL_ENV=production NODE_OPTIONS=--max_old_space_size=4000 webpack --config webpack.prod.js && cd dist && zip -r mediarithmics-computing-console.zip . && mv mediarithmics-computing-console.zip ./.. && cd ..",
+    "start:local": "cross-env NODE_ENV=local API_ENV=local BABEL_ENV=dev NODE_OPTIONS=--max_old_space_size=8000 webpack-dev-server --config webpack.dev.js",
+    "start:prod": "cross-env NODE_ENV=local API_ENV=prod BABEL_ENV=dev NODE_OPTIONS=--max_old_space_size=8000 webpack-dev-server --config webpack.dev.js",
+    "build": "cross-env NODE_ENV=production BABEL_ENV=production NODE_OPTIONS=--max_old_space_size=8000 webpack --config webpack.prod.js && cd dist && zip -r mediarithmics-computing-console.zip . && mv mediarithmics-computing-console.zip ./.. && cd ..",
     "translation-file": "npm run build && node scripts/translate.js"
   },
   "devDependencies": {

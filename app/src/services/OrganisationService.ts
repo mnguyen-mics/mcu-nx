@@ -1,4 +1,8 @@
-import ApiService, { DataResponse, DataListResponse } from './ApiService';
+import { ApiService } from '@mediarithmics-private/advanced-components';
+import {
+  DataListResponse,
+  DataResponse,
+} from '@mediarithmics-private/advanced-components/lib/services/ApiService';
 import { Cookie, OrganisationResource } from '../models/organisation/organisation';
 import { UserWorkspaceResource } from '../models/directory/UserProfileResource';
 import { injectable } from 'inversify';
@@ -42,7 +46,7 @@ export class OrganisationService implements IOrganisationService {
     const headers = { Accept: 'image/png' };
     return ApiService.getRequest<Blob>(endpoint, undefined, headers)
       .catch(() => this.getStandardLogo())
-      .then(blobLogo => {
+      .then((blobLogo: Blob) => {
         this.logoCache[organisationId] = blobLogo;
         return blobLogo;
       });

@@ -17,6 +17,7 @@ class HomePage extends React.Component<Props> {
         params: { organisationId },
       },
     } = this.props;
+
     return (
       <div className='ant-layout'>
         <Content className='mcs-content-container'>

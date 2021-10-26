@@ -1,5 +1,4 @@
 /* eslint-disable import/extensions */
-import ApiService, { DataListResponse, DataResponse } from './ApiService';
 import log from '../utils/Logger';
 import { PaginatedApiParam } from './../utils/ApiHelper';
 import { injectable } from 'inversify';
@@ -7,6 +6,11 @@ import {
   CustomDashboardResource,
   CustomDashboardContentResource,
 } from '../models/customDashboards/customDashboards';
+import { ApiService } from '@mediarithmics-private/advanced-components';
+import {
+  DataListResponse,
+  DataResponse,
+} from '@mediarithmics-private/advanced-components/lib/services/ApiService';
 
 export interface GetCustomDashboardsOption extends PaginatedApiParam {
   datamartId?: string;
