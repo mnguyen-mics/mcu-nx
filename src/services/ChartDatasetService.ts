@@ -195,11 +195,12 @@ export class ChartDatasetService implements IChartDatasetService {
           .then(res => {
             return formatDatasetForReportView(
               res.data.report_view,
-              !!activitiesAnalyticsSourceJson.dimensions.length,
               xKey,
-              activitiesAnalyticsSourceJson.metrics[0],
-              activitiesAnalyticsSourceJson.dimensions[0],
               seriesTitle,
+              activitiesAnalyticsSourceJson.metrics[0].expression.toLocaleLowerCase() as ActivitiesAnalyticsMetric,
+              activitiesAnalyticsSourceJson.dimensions[0]
+                ? (activitiesAnalyticsSourceJson.dimensions[0].name.toLocaleLowerCase() as ActivitiesAnalyticsDimension)
+                : undefined,
             );
           });
       default:
