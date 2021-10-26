@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import { render } from 'enzyme';
 import MultiSelect, { MultiSelectProps } from '../MultiSelect';
 
@@ -28,10 +27,6 @@ it('renders the multi select', () => {
     buttonClass: 'test-class',
   };
 
-  const component = render(
-    <IntlProvider locale='en'>
-      <MultiSelect {...props} />
-    </IntlProvider>,
-  );
+  const component = render(<MultiSelect {...props} />);
   expect(component).toMatchSnapshot();
 });

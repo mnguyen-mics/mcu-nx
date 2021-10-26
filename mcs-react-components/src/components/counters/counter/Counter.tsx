@@ -2,7 +2,7 @@ import * as React from 'react';
 import McsIcon, { McsIconType } from '../../mcs-icon';
 import { UpOutlined, DownOutlined } from '@ant-design/icons';
 import { Spin, Statistic } from 'antd';
-import { FormattedNumber } from 'react-intl';
+import numeral from 'numeral';
 
 export interface LoadingCounterValue {
   value?: number;
@@ -36,7 +36,7 @@ export default class Counter extends React.Component<CounterProps> {
             <Spin />
           ) : value !== undefined && value !== null ? (
             <React.Fragment>
-              <FormattedNumber value={value} />
+              {numeral(value).format('0,0')}
               {unit ? ' ' + unit : ''}
               {trend ? (
                 <Statistic

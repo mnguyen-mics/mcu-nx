@@ -2,8 +2,11 @@ import 'jest';
 import * as React from 'react';
 import * as TestRenderer from 'react-test-renderer';
 import Counter, { CounterProps } from '../Counter';
-import { IntlProvider } from 'react-intl';
-
+jest.mock('numeral', (value: number) => ({
+  default: () => ({
+    format: () => value,
+  }),
+}));
 it('renders the Counter', () => {
   const props: CounterProps = {
     iconType: 'users',
@@ -16,11 +19,7 @@ it('renders the Counter', () => {
     },
     unit: 'Users',
   };
-  const component = TestRenderer.create(
-    <IntlProvider locale='en'>
-      <Counter {...props} />
-    </IntlProvider>,
-  );
+  const component = TestRenderer.create(<Counter {...props} />);
   const res = component.toJSON();
   expect(res).toMatchSnapshot();
 });

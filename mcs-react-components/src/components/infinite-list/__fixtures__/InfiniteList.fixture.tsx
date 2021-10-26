@@ -1,16 +1,17 @@
 import * as React from 'react';
 import { List } from 'antd';
-import { IntlProvider } from 'react-intl';
 import InfiniteList, { InfiniteListProps } from '../InfiniteList';
+
+const messages = {
+  searchBarPlaceholder: 'Enter your search here',
+  loadingSearchBarPlaceholder: 'Loading, please wait....',
+};
 
 const props: InfiniteListProps = {
   fetchData: () => Promise.resolve(['ouane', 'tou', 'tri']),
   renderItem: item => <List.Item>{item}</List.Item>,
   storeItemData: () => undefined,
+  messages,
 };
 
-export default (
-  <IntlProvider locale='en'>
-    <InfiniteList {...props} />
-  </IntlProvider>
-);
+export default <InfiniteList {...props} />;

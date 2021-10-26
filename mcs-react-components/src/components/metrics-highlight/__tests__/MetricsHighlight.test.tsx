@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import { render } from 'enzyme';
 import { MetricsColumnProps } from '../../metrics-column/MetricsColumn';
 import MetricsHighlight from '../MetricsHighlight';
@@ -13,10 +12,6 @@ it('renders the metrics highlight', () => {
     ],
   };
 
-  const component = render(
-    <IntlProvider locale='en'>
-      <MetricsHighlight {...props} />
-    </IntlProvider>,
-  );
+  const component = render(<MetricsHighlight {...props} />);
   expect(component).toMatchSnapshot();
 });

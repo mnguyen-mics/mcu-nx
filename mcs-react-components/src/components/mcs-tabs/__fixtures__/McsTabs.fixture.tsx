@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import McsTabs, { McTabsProps } from '../McsTabs';
 
 const props: McTabsProps = {
@@ -25,8 +24,4 @@ const props: McTabsProps = {
   ],
 };
 
-export default (
-  <IntlProvider locale='en'>
-    <McsTabs {...props} />
-  </IntlProvider>
-);
+export default <McsTabs {...props} />;

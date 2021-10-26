@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import MultiSelect, { MultiSelectProps } from '../MultiSelect';
 
 const props: MultiSelectProps<string> = {
@@ -22,8 +21,4 @@ const props: MultiSelectProps<string> = {
   buttonClass: 'test-class',
 };
 
-export default (
-  <IntlProvider locale='en'>
-    <MultiSelect {...props} />
-  </IntlProvider>
-);
+export default <MultiSelect {...props} />;

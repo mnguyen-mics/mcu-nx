@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import CollectionView, { CollectionViewProps } from '../CollectionView';
 import { Col } from 'antd';
 
@@ -24,8 +23,4 @@ const props: CollectionViewProps = {
   },
 };
 
-export default (
-  <IntlProvider locale='en'>
-    <CollectionView {...props} />
-  </IntlProvider>
-);
+export default <CollectionView {...props} />;

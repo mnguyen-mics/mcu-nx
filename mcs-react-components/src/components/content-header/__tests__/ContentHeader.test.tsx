@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import * as TestRenderer from 'react-test-renderer';
 
 import ContentHeader, { ContentHeaderProps } from '../ContentHeader';
@@ -10,11 +9,7 @@ it('renders a medium content header', () => {
     size: 'medium',
   };
 
-  const component = TestRenderer.create(
-    <IntlProvider locale='en'>
-      <ContentHeader {...props} />
-    </IntlProvider>,
-  );
+  const component = TestRenderer.create(<ContentHeader {...props} />);
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
@@ -25,11 +20,7 @@ it('renders a large content header', () => {
     size: 'large',
   };
 
-  const component = TestRenderer.create(
-    <IntlProvider locale='en'>
-      <ContentHeader {...props} />
-    </IntlProvider>,
-  );
+  const component = TestRenderer.create(<ContentHeader {...props} />);
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
@@ -41,11 +32,7 @@ it('renders the "evolved" content header', () => {
     loading: false,
   };
 
-  const component = TestRenderer.create(
-    <IntlProvider locale='en'>
-      <ContentHeader {...props} />
-    </IntlProvider>,
-  );
+  const component = TestRenderer.create(<ContentHeader {...props} />);
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
@@ -57,11 +44,7 @@ it('renders the loading content header', () => {
     loading: true,
   };
 
-  const component = TestRenderer.create(
-    <IntlProvider locale='en'>
-      <ContentHeader {...props} />
-    </IntlProvider>,
-  );
+  const component = TestRenderer.create(<ContentHeader {...props} />);
   const tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });

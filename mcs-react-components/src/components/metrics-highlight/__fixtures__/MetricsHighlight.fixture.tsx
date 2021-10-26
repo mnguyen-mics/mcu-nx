@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
+
 import { MetricsColumnProps } from '../../metrics-column/MetricsColumn';
 import MetricsHighlight from '../MetricsHighlight';
 
@@ -11,8 +11,4 @@ const props: MetricsColumnProps = {
   ],
 };
 
-export default (
-  <IntlProvider locale='en'>
-    <MetricsHighlight {...props} />
-  </IntlProvider>
-);
+export default <MetricsHighlight {...props} />;

@@ -1,26 +1,13 @@
 import * as React from 'react';
 import DeviceCard, { DeviceCardProps } from '../DeviceCard';
-import { IntlProvider, defineMessages } from 'react-intl';
 
 const props: DeviceCardProps = {
-  messages: defineMessages({
-    deviceTitle: {
-      id: 'id1',
-      defaultMessage: 'User Device',
-    },
-    emtyDevice: {
-      id: 'id2',
-      defaultMessage: 'This user has no Devices',
-    },
-    viewMore: {
-      id: 'id3',
-      defaultMessage: 'View More',
-    },
-    viewLess: {
-      id: 'id4',
-      defaultMessage: 'View Less',
-    },
-  }),
+  messages: {
+    deviceTitle: 'User Device',
+    emptyDevice: 'This user has no Devices',
+    viewMore: 'View More',
+    viewLess: 'View Less',
+  },
   dataSource: [
     {
       type: 'USER_AGENT',
@@ -57,8 +44,4 @@ const props: DeviceCardProps = {
   isLoading: false,
 };
 
-export default (
-  <IntlProvider locale='en'>
-    <DeviceCard {...props} />
-  </IntlProvider>
-);
+export default <DeviceCard {...props} />;

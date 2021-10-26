@@ -1,6 +1,5 @@
 import * as React from 'react';
 import CounterDashboard, { CounterDashboardProps } from '../CounterDashboard';
-import { IntlProvider } from 'react-intl';
 
 const props: CounterDashboardProps = {
   counters: [
@@ -37,8 +36,4 @@ const props: CounterDashboardProps = {
   invertedColor: false,
 };
 
-export default (
-  <IntlProvider locale='en'>
-    <CounterDashboard {...props} />
-  </IntlProvider>
-);
+export default <CounterDashboard {...props} />;

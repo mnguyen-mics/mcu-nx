@@ -1,11 +1,18 @@
 import * as React from 'react';
-import { injectIntl, FormattedMessage, InjectedIntlProps } from 'react-intl';
 import Card from '../../../card';
 import Device from '../device';
 import { UserAgentIdentifierInfo } from '../../../../models/timeline/timeline';
+import { AbstractMessages } from '../../../../utils/IntlHelper';
+
+export interface DeviceCardMessages extends AbstractMessages {
+  deviceTitle: string;
+  emptyDevice: string;
+  viewMore: string;
+  viewLess: string;
+}
 
 export interface DeviceCardProps {
-  messages: { [propertyName: string]: FormattedMessage.MessageDescriptor };
+  messages: DeviceCardMessages;
   dataSource: UserAgentIdentifierInfo[];
   isLoading: boolean;
   className?: string;
@@ -15,7 +22,7 @@ interface State {
   showMore: boolean;
 }
 
-type Props = DeviceCardProps & InjectedIntlProps;
+type Props = DeviceCardProps;
 
 class DeviceCard extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -26,13 +33,7 @@ class DeviceCard extends React.Component<Props, State> {
   }
 
   render() {
-    const {
-      intl: { formatMessage },
-      dataSource,
-      isLoading,
-      messages,
-      className,
-    } = this.props;
+    const { dataSource, isLoading, messages, className } = this.props;
 
     const userAgents = dataSource || [];
     let accountsFormatted: any[] = [];
@@ -49,7 +50,7 @@ class DeviceCard extends React.Component<Props, State> {
 
     return (
       <Card
-        title={formatMessage(messages.deviceTitle)}
+        title={messages.deviceTitle}
         isLoading={isLoading}
         className={`mcs-device-card ${className ? className : ''}`}
       >
@@ -62,9 +63,7 @@ class DeviceCard extends React.Component<Props, State> {
             );
           })}
         {(accountsFormatted.length === 0 || dataSource.length === 0) && (
-          <span>
-            <FormattedMessage {...messages.emptyDevice} />
-          </span>
+          <span>{messages.emptyDevice}</span>
         )}
         {canViewMore ? (
           !this.state.showMore ? (
@@ -73,7 +72,7 @@ class DeviceCard extends React.Component<Props, State> {
                 className='mcs-card-footer-link mcs-deviceCard_viewMoreLink'
                 onClick={handleViewMore(true)}
               >
-                <FormattedMessage {...messages.viewMore} />
+                {messages.viewMore}
               </button>
             </div>
           ) : (
@@ -82,7 +81,7 @@ class DeviceCard extends React.Component<Props, State> {
                 className='mcs-card-footer-link mcs-deviceCard_viewLessLink'
                 onClick={handleViewMore(false)}
               >
-                <FormattedMessage {...messages.viewLess} />
+                {messages.viewLess}
               </button>
             </div>
           )
@@ -92,4 +91,4 @@ class DeviceCard extends React.Component<Props, State> {
   }
 }
 
-export default injectIntl(DeviceCard);
+export default DeviceCard;

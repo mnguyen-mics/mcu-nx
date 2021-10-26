@@ -1,7 +1,10 @@
 import * as React from 'react';
 import LabelsSelector, { LabelsSelectorProps } from '../LabelsSelector';
-import { IntlProvider } from 'react-intl';
 
+const messages = {
+  labelNoResults: 'No Results',
+  labelButton: 'Label',
+};
 const props: LabelsSelectorProps = {
   labels: [
     {
@@ -34,10 +37,7 @@ const props: LabelsSelectorProps = {
   onChange: () => {
     return true;
   },
+  messages,
 };
 
-export default (
-  <IntlProvider locale='en'>
-    <LabelsSelector {...props} />
-  </IntlProvider>
-);
+export default <LabelsSelector {...props} />;

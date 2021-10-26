@@ -2,8 +2,11 @@ import 'jest';
 import * as React from 'react';
 import * as TestRenderer from 'react-test-renderer';
 import CounterDashboard, { CounterDashboardProps } from '../CounterDashboard';
-import { IntlProvider } from 'react-intl';
-
+jest.mock('numeral', (value: number) => ({
+  default: () => ({
+    format: () => value,
+  }),
+}));
 it('renders the Counter', () => {
   const props: CounterDashboardProps = {
     counters: [
@@ -38,11 +41,7 @@ it('renders the Counter', () => {
       },
     ],
   };
-  const component = TestRenderer.create(
-    <IntlProvider locale='en'>
-      <CounterDashboard {...props} />
-    </IntlProvider>,
-  );
+  const component = TestRenderer.create(<CounterDashboard {...props} />);
   const res = component.toJSON();
   expect(res).toMatchSnapshot();
 });
