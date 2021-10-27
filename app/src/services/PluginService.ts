@@ -23,6 +23,7 @@ export interface IPluginService {
     pluginId: string,
     versionId: string,
   ) => Promise<DataResponse<PluginVersionResource>>;
+  createPlugin: (body: Partial<PluginResource>) => Promise<DataResponse<PluginResource>>;
 }
 
 @injectable()
@@ -70,5 +71,9 @@ export class PluginService implements IPluginService {
   ): Promise<DataResponse<PluginVersionResource>> {
     const endpoint = `plugins/${pluginId}/versions/${versionId}`;
     return ApiService.getRequest(endpoint);
+  }
+  createPlugin(body: Partial<PluginResource>): Promise<DataResponse<PluginResource>> {
+    const endpoint = `plugins`;
+    return ApiService.postRequest(endpoint, body);
   }
 }

@@ -14,6 +14,7 @@ interface RouterProps {
 
 interface DashboardsActionbarProps {
   innerElement?: React.ReactNode;
+  openDrawer: () => void;
 }
 
 interface DashboardsActionbarState {
@@ -40,6 +41,7 @@ class BatchDefinitionListActionBar extends React.Component<Props, DashboardsActi
       },
       intl: { formatMessage },
       innerElement,
+      openDrawer,
     } = this.props;
 
     // Plugins home page ?
@@ -56,7 +58,7 @@ class BatchDefinitionListActionBar extends React.Component<Props, DashboardsActi
       <Actionbar pathItems={breadcrumbPaths}>
         <div className='mcs-actionbar_innerElementsPanel'>
           {innerElement}
-          <Button className='mcs-primary' type='primary'>
+          <Button className='mcs-primary' type='primary' onClick={openDrawer}>
             <McsIcon type='plus' /> <FormattedMessage {...messages.newBatchPlugin} />
           </Button>
         </div>
