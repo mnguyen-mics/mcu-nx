@@ -118,7 +118,7 @@ class Chart extends React.Component<Props, ChartState> {
     const opt = chartConfig.options as MetricChartOptions;
     return (
       <div className='mcs-dashboardMetric'>
-        {formatMetric(count, opt && opt.format && opt.format === 'percentage' ? '0,0 %' : '0,0')}
+        {formatMetric(count, opt && opt.format && opt.format === 'percentage' ? '0,0.00 %' : '0,0')}
       </div>
     );
   }
