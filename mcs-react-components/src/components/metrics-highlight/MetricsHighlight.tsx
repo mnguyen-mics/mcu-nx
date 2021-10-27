@@ -8,14 +8,14 @@ class MetricsHighlight extends React.Component<MetricsColumnProps> {
   };
 
   render() {
-    const { metrics, isLoading } = this.props;
+    const { metrics, isLoading, className } = this.props;
 
     const nbOfVal: number = metrics ? metrics.length : 1;
     const cellSize: number = Math.round(24 / nbOfVal);
     const prefixCls = 'mcs-metrics-column';
 
     return (
-      <div className={prefixCls}>
+      <div className={`${prefixCls} ${className ? className : ''}`}>
         <Row>
           {metrics.map(metric => {
             return (

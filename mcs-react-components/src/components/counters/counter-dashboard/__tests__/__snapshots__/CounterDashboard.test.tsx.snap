@@ -2,10 +2,10 @@
 
 exports[`renders the Counter 1`] = `
 <div
-  className="mcs-counter-dashboard "
+  className="mcs-counter-dashboard  "
 >
   <div
-    className="mcs-counter"
+    className="mcs-counter "
   >
     <span
       className="mcs-icon "
@@ -87,7 +87,7 @@ exports[`renders the Counter 1`] = `
     </div>
   </div>
   <div
-    className="mcs-counter"
+    className="mcs-counter "
   >
     <span
       className="mcs-icon "
@@ -128,7 +128,7 @@ exports[`renders the Counter 1`] = `
     </div>
   </div>
   <div
-    className="mcs-counter"
+    className="mcs-counter "
   >
     <span
       className="mcs-icon "
@@ -153,7 +153,7 @@ exports[`renders the Counter 1`] = `
     </div>
   </div>
   <div
-    className="mcs-counter"
+    className="mcs-counter "
   >
     <span
       className="mcs-icon "

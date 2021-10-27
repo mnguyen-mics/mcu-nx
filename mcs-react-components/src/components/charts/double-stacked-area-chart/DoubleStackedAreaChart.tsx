@@ -15,6 +15,7 @@ import {
 } from '../utils';
 
 export interface DoubleStackedAreaChartProps {
+  className?: string;
   dataset: Dataset;
   options: ChartOptions;
   style?: React.CSSProperties;
@@ -111,6 +112,7 @@ class DoubleStackedAreaChart extends React.Component<Props, {}> {
 
   render() {
     const {
+      className,
       dataset,
       options: { xKey, yKeys, colors, isDraggable, onDragEnd },
       style,
@@ -183,7 +185,7 @@ class DoubleStackedAreaChart extends React.Component<Props, {}> {
     };
 
     return (
-      <div style={style}>
+      <div className={className ? className : ''} style={style}>
         <HighchartsReact highcharts={Highcharts} options={options} style={{ width: '100%' }} />
       </div>
     );

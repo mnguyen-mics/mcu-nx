@@ -15,6 +15,7 @@ interface LegendOption {
 }
 
 export interface LegendChartWithModalProps {
+  className?: string;
   options: LegendOption[];
   legends: Legend[];
   onLegendChange: (a: string, b: string) => void;
@@ -39,7 +40,7 @@ class LegendChartWithModal extends React.Component<
   }
 
   render() {
-    const { options } = this.props;
+    const { options, className } = this.props;
     const renderPicker = () => {
       const { legends } = this.props;
       const radioStyle = {
@@ -114,7 +115,7 @@ class LegendChartWithModal extends React.Component<
 
     const onClick = () => renderModal(this);
     return (
-      <div className='mcs-legend-container'>
+      <div className={`mcs-legend-container ${className ? className : ''}`}>
         {options.map(option => {
           return (
             <div key={option.domain} style={{ float: 'left' }}>

@@ -20,6 +20,7 @@ import { selectionNotifyerMessagesMock } from '../../utils/TableViewHelpers';
 import { DatamartWithMetricResource } from '../../models/datamart/DatamartResource';
 
 export interface TableSelectorProps<T extends SelectableItem> {
+  className?: string;
   actionBarTitle: string;
   columnsDefinitions: Array<DataColumnDefinition<T>>;
   displayFiltering?: boolean;
@@ -318,7 +319,8 @@ class TableSelector<T extends SelectableItem> extends React.Component<Props<T>, 
   };
 
   render() {
-    const { actionBarTitle, close, displayFiltering, filtersOptions, messages } = this.props;
+    const { actionBarTitle, close, displayFiltering, filtersOptions, messages, className } =
+      this.props;
 
     const { elementsById, allElementIds, isLoading, currentPage, total, pageSize, noElement } =
       this.state;
@@ -357,7 +359,7 @@ class TableSelector<T extends SelectableItem> extends React.Component<Props<T>, 
 
     return (
       <SelectorLayout
-        className='mcs-table-edit-container'
+        className={`mcs-table-edit-container ${className ? className : ''}`}
         actionBarTitle={actionBarTitle}
         handleAdd={this.handleAdd}
         handleClose={close}

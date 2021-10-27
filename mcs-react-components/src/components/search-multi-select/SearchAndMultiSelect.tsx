@@ -11,6 +11,7 @@ export interface MenuItemProps {
 }
 
 export interface SearchAndMultiSelectProps {
+  className?: string;
   onClick: (elementKey: string) => void;
   placeholder?: string;
   datasource: MenuItemProps[];
@@ -69,7 +70,7 @@ export default class SearchAndMultiSelect extends React.Component<
   };
 
   render() {
-    const { placeholder, datasource } = this.props;
+    const { placeholder, datasource, className } = this.props;
     const { inputValue, dropdownVisibility } = this.state;
     const prefixCls = 'mcs-search-multi-select';
 
@@ -91,7 +92,7 @@ export default class SearchAndMultiSelect extends React.Component<
 
     return (
       <Dropdown
-        className={prefixCls}
+        className={`prefixCls ${className ? className : ''}`}
         overlay={menu}
         trigger={['click']}
         visible={dropdownVisibility}

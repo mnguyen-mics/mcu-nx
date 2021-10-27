@@ -5,7 +5,7 @@ exports[`renders a basic tableSelector 1`] = `
   className="ant-layout mcs-selector-layout"
 >
   <div
-    className="ant-row ant-row-space-between ant-row-middle mcs-actionbar-edit "
+    className="ant-row ant-row-space-between ant-row-middle mcs-actionbar-edit  "
     style={Object {}}
   >
     <div
@@ -66,7 +66,7 @@ exports[`renders a basic tableSelector 1`] = `
     className="ant-layout"
   >
     <main
-      className="ant-layout-content mcs-edit-container mcs-table-edit-container"
+      className="ant-layout-content mcs-edit-container mcs-table-edit-container "
     >
       <div>
         <div

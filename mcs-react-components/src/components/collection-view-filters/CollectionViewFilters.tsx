@@ -14,12 +14,12 @@ class CollectionViewFilters extends React.Component<CollectionViewFiltersProps> 
   render() {
     const prefixCls = 'mcs-collection-view-filters';
 
-    const { searchOptions } = this.props;
+    const { searchOptions, className } = this.props;
 
     const searchInput = searchOptions ? <Search {...searchOptions} /> : null;
 
     return (
-      <div className={prefixCls}>
+      <div className={`${prefixCls} ${className ? className : ''}`}>
         <Row className={`${prefixCls}-table-header`}>
           <Col span={24}>{searchInput}</Col>
         </Row>

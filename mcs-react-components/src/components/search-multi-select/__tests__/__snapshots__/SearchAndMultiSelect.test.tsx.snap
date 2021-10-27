@@ -5,7 +5,7 @@ exports[`renders the SearchAndMultiSelect 1`] = `
   id="123"
 >
   <span
-    className="ant-input-affix-wrapper ant-dropdown-trigger mcs-search-multi-select"
+    className="ant-input-affix-wrapper ant-dropdown-trigger prefixCls "
     onMouseUp={[Function]}
   >
     <input

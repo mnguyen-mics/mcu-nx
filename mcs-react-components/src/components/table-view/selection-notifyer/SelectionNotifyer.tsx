@@ -6,6 +6,7 @@ import Button from '../../button';
 import { ExtendedTableRowSelection } from '../table-view/TableView';
 
 export interface SelectionNotifyerProps<T> {
+  className?: string;
   messages?: {
     allRowsSelected: string;
     unselectAll: string;
@@ -27,7 +28,7 @@ const defaultMessages = {
 
 class SelectionNotifyer extends React.Component<SelectionNotifyerProps<any>> {
   render() {
-    const { rowSelection, pagination, messages } = this.props;
+    const { rowSelection, pagination, messages, className } = this.props;
     let content: JSX.Element = <span />;
 
     const msgs = messages || defaultMessages;
@@ -65,7 +66,13 @@ class SelectionNotifyer extends React.Component<SelectionNotifyerProps<any>> {
       }
     }
 
-    const alert = <Alert message={content} type='warning' className='selected-rows-alert' />;
+    const alert = (
+      <Alert
+        message={content}
+        type='warning'
+        className={`selected-rows-alert ${className ? className : ''}`}
+      />
+    );
 
     const toShow = !!(
       rowSelection &&

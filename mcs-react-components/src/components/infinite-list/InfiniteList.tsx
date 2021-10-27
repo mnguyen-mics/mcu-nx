@@ -24,6 +24,7 @@ export interface InfiniteListFilters {
 }
 
 export interface InfiniteListProps<T = any> {
+  className?: string;
   fetchData: (filter: InfiniteListFilters) => Promise<T[]>;
   renderItem: (item: T) => React.ReactNode;
   storeItemData: (item: T) => void;
@@ -122,10 +123,10 @@ class InfiniteList<T> extends React.Component<Props<T>, State<T>> {
   };
 
   render() {
-    const { intl } = this.props;
+    const { intl, className } = this.props;
     const { data, loading, hasMore, initialLoading } = this.state;
     return (
-      <div className='mcs-infinite-list'>
+      <div className={`mcs-infinite-list ${className ? className : ''}`}>
         <InfiniteScroll
           initialLoad={false}
           loadMore={this.handleInfiniteOnLoad}

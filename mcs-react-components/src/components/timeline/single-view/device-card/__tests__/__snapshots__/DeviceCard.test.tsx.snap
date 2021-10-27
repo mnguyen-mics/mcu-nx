@@ -2,7 +2,7 @@
 
 exports[`renders the DeviceCard 1`] = `
 <div
-  className="ant-row mcs-card mcs-device-card"
+  className="ant-row mcs-card mcs-device-card "
   style={
     Object {
       "display": "block",
@@ -33,7 +33,7 @@ exports[`renders the DeviceCard 1`] = `
     }
   >
     <div
-      className="ant-row table-line border-top"
+      className="ant-row table-line border-top "
       style={
         Object {
           "marginLeft": -5,

@@ -10,6 +10,7 @@ export interface SubMenu {
 }
 
 export interface MenuSubListProps {
+  className?: string;
   title: string;
   subtitles: string[];
   submenu: SubMenu[] | (() => Promise<SubMenu[]>);
@@ -62,7 +63,7 @@ class MenuSubList extends React.Component<Props, MenuSubListState> {
   };
 
   render() {
-    const { title, subtitles, submenu } = this.props;
+    const { title, subtitles, submenu, className } = this.props;
 
     const { fetching, fetchedMenu } = this.state;
 
@@ -72,7 +73,7 @@ class MenuSubList extends React.Component<Props, MenuSubListState> {
     }
 
     return (
-      <div className='mcs-menu-sub-list'>
+      <div className={`mcs-menu-sub-list ${className ? className : ''}`}>
         <button
           className={this.state.open ? 'menu-item opened' : 'menu-item'}
           onClick={this.openMenuItem}

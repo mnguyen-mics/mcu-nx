@@ -4,13 +4,14 @@ import { Row, Col } from 'antd';
 import McsIcon, { McsIconType } from '../../mcs-icon';
 
 export interface EmptyChartProps {
+  className?: string;
   title: React.ReactNode;
   icon?: McsIconType;
 }
 
-const EmptyChart: React.SFC<EmptyChartProps> = ({ title, icon }) => {
+const EmptyChart: React.SFC<EmptyChartProps> = ({ title, icon, className }) => {
   return (
-    <Row className='mcs-empty-chart-no-data'>
+    <Row className={`mcs-empty-chart-no-data ${className ? className : ''}`}>
       <Col span={24} className=''>
         <McsIcon type={icon!} />
       </Col>

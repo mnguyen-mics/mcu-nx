@@ -8,6 +8,7 @@ export interface DeviceCardProps {
   messages: { [propertyName: string]: FormattedMessage.MessageDescriptor };
   dataSource: UserAgentIdentifierInfo[];
   isLoading: boolean;
+  className?: string;
 }
 
 interface State {
@@ -30,6 +31,7 @@ class DeviceCard extends React.Component<Props, State> {
       dataSource,
       isLoading,
       messages,
+      className,
     } = this.props;
 
     const userAgents = dataSource || [];
@@ -49,7 +51,7 @@ class DeviceCard extends React.Component<Props, State> {
       <Card
         title={formatMessage(messages.deviceTitle)}
         isLoading={isLoading}
-        className={'mcs-device-card'}
+        className={`mcs-device-card ${className ? className : ''}`}
       >
         {accountsFormatted &&
           accountsFormatted.map(agent => {

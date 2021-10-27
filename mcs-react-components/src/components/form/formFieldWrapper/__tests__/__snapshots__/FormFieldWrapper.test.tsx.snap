@@ -2,7 +2,7 @@
 
 exports[`Should render the FormFieldWrapper 1`] = `
 <div
-  className="form-field-wrapper"
+  className="form-field-wrapper "
 >
   <div
     className="ant-row ant-form-item"

@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 export interface ContentHeaderProps {
+  className?: string;
   title: React.ReactNode;
   subTitle?: React.ReactNode;
   loading?: boolean;
@@ -9,7 +10,7 @@ export interface ContentHeaderProps {
 
 class ContentHeader extends React.Component<ContentHeaderProps> {
   render() {
-    const { title, subTitle, loading, size } = this.props;
+    const { title, subTitle, loading, size, className } = this.props;
 
     const content = (
       <div>
@@ -23,7 +24,7 @@ class ContentHeader extends React.Component<ContentHeaderProps> {
     );
 
     return (
-      <div className='mcs-contentHeader'>
+      <div className={`mcs-contentHeader ${className ? className : ''}`}>
         {loading ? <i className='mcs-table-cell-loading-large' /> : content}
       </div>
     );

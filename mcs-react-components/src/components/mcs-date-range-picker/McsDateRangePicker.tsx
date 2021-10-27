@@ -14,6 +14,7 @@ export interface McsDateRangeValue {
 }
 
 export interface McsDateRangePickerProps {
+  className?: string;
   values: McsDateRangeValue;
   onChange: (values: McsDateRangeValue) => void;
   format?: string;
@@ -199,7 +200,7 @@ class McsDateRangePicker extends React.Component<Props, McsDateRangePickerState>
   };
 
   renderRangesDropdown() {
-    const { intl, disabled, values } = this.props;
+    const { intl, disabled, values, className } = this.props;
     const { ranges, showDropdown, rangeType } = this.state;
     const fromMoment = values.from.toMoment();
     const toMoment = values.to.toMoment();
@@ -251,7 +252,7 @@ class McsDateRangePicker extends React.Component<Props, McsDateRangePickerState>
     return (
       <OnOutsideClick onOutsideClick={this.handleClick} display={'inline'}>
         <Dropdown
-          className='mcs-dateRangePicker'
+          className={`mcs-dateRangePicker ${className ? className : ''}`}
           overlay={menu}
           trigger={['click']}
           disabled={disabled}

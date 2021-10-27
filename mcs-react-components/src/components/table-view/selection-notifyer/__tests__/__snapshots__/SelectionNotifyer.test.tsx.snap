@@ -13,7 +13,7 @@ exports[`renders the SelectionNotifyer with 3 items selected 1`] = `
   }
 >
   <div
-    className="ant-alert ant-alert-warning ant-alert-no-icon selected-rows-alert"
+    className="ant-alert ant-alert-warning ant-alert-no-icon selected-rows-alert "
     data-show={true}
     role="alert"
     style={Object {}}
@@ -61,7 +61,7 @@ exports[`renders the SelectionNotifyer with all items selected 1`] = `
   }
 >
   <div
-    className="ant-alert ant-alert-warning ant-alert-no-icon selected-rows-alert"
+    className="ant-alert ant-alert-warning ant-alert-no-icon selected-rows-alert "
     data-show={true}
     role="alert"
     style={Object {}}
@@ -109,7 +109,7 @@ exports[`renders the SelectionNotifyer with all the page items selected 1`] = `
   }
 >
   <div
-    className="ant-alert ant-alert-warning ant-alert-no-icon selected-rows-alert"
+    className="ant-alert ant-alert-warning ant-alert-no-icon selected-rows-alert "
     data-show={true}
     role="alert"
     style={Object {}}

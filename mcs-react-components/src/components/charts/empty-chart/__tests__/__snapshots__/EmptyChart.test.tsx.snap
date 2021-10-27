@@ -2,7 +2,7 @@
 
 exports[`Should render the EmptyChart 1`] = `
 <div
-  className="ant-row mcs-empty-chart-no-data"
+  className="ant-row mcs-empty-chart-no-data "
   style={Object {}}
 >
   <div

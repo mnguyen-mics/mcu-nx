@@ -2,7 +2,7 @@
 
 exports[`renders the legendchart 1`] = `
 <div
-  className="mcs-legend-container"
+  className="mcs-legend-container "
 >
   <div
     className="wrapper"

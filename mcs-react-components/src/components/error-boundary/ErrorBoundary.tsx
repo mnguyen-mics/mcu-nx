@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 export interface ErrorBoundaryProps {
+  className?: string;
   errorMessage: string;
   onError: (error: any, info: any) => void;
 }
@@ -24,11 +25,11 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, State> {
   }
 
   render() {
-    const { errorMessage, children } = this.props;
+    const { errorMessage, children, className } = this.props;
     const { error } = this.state;
 
     if (error) {
-      return <div className='ant-layout'>{errorMessage}</div>;
+      return <div className={`ant-layout ${className ? className : ''}`}>{errorMessage}</div>;
     } else {
       return children;
     }

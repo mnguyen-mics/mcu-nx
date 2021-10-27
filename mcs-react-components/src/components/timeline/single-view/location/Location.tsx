@@ -7,11 +7,12 @@ export interface LocationProps {
   latitude: number;
   containerWidth?: number;
   mapboxToken?: string;
+  className?: string;
 }
 
 class Location extends React.Component<LocationProps> {
   render() {
-    const { longitude, latitude, mapboxToken } = this.props;
+    const { longitude, latitude, mapboxToken, className } = this.props;
 
     const settings = {
       dragPan: false,
@@ -28,7 +29,7 @@ class Location extends React.Component<LocationProps> {
       mapboxToken;
 
     return longitude && latitude && mapToken ? (
-      <Row gutter={10} className='table-line section border-top'>
+      <Row gutter={10} className={`table-line section border-top ${className ? className : ''}`}>
         <Col span={24} style={{ height: '100px', margin: '-5px -20px' }}>
           <ReactMapGL
             {...settings}

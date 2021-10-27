@@ -2,7 +2,7 @@
 
 exports[`should display a collection view filters with pagination and a search panel 1`] = `
 <div
-  className="mcs-collection-view-filters"
+  className="mcs-collection-view-filters "
 >
   <div
     className="ant-row mcs-collection-view-filters-table-header"
@@ -72,7 +72,7 @@ exports[`should display a collection view filters with pagination and a search p
       style={Object {}}
     >
       <div
-        className="mcs-collection-view"
+        className="mcs-collection-view "
       >
         <div
           className="ant-row"
@@ -726,7 +726,7 @@ exports[`should display a collection view filters with pagination and a search p
 
 exports[`should display a loading collection view filters 1`] = `
 <div
-  className="mcs-collection-view-filters"
+  className="mcs-collection-view-filters "
 >
   <div
     className="ant-row mcs-collection-view-filters-table-header"

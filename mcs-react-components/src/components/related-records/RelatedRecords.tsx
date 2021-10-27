@@ -3,6 +3,7 @@ import * as React from 'react';
 import EmptyRecords, { EmptyRecordsProps } from '../empty-records';
 
 export interface RelatedRecordsProps {
+  className?: string;
   emptyOption: EmptyRecordsProps;
   isLoading?: boolean;
 }
@@ -13,10 +14,10 @@ class RelatedRecords extends React.Component<RelatedRecordsProps> {
   };
 
   render() {
-    const { children, emptyOption, isLoading } = this.props;
+    const { children, emptyOption, isLoading, className } = this.props;
 
     return (
-      <Spin spinning={isLoading}>
+      <Spin spinning={isLoading} className={className}>
         {React.Children.count(children) > 0 ? (
           <div className='mcs-relatedRecords_container'>{children}</div>
         ) : (
