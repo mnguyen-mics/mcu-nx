@@ -23,9 +23,6 @@ exports[`renders the Counter 1`] = `
     <div
       className="number"
     >
-      <span>
-        424,242
-      </span>
        Users
       <div
         className="ant-statistic"
@@ -146,9 +143,6 @@ exports[`renders the Counter 1`] = `
     <div
       className="number"
     >
-      <span>
-        464,646
-      </span>
       
     </div>
   </div>

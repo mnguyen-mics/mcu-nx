@@ -3,7 +3,6 @@ import * as React from 'react';
 import * as TestRenderer from 'react-test-renderer';
 import { StatusCode } from '../../../utils/ApiResponses';
 import TableSelector, { TableSelectorProps } from '../TableSelector';
-
 interface Data {
   id: string;
   name: string;

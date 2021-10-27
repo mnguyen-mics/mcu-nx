@@ -1,19 +1,11 @@
 import * as React from 'react';
-import { compose } from 'recompose';
 import { List, Spin, Input } from 'antd';
 import * as InfiniteScroll from 'react-infinite-scroller';
-import { injectIntl, InjectedIntlProps, defineMessages } from 'react-intl';
-
-const messages = defineMessages({
-  searchBarPlaceholder: {
-    id: 'settings.services.infinite.scroll.searchBar.placeholder',
-    defaultMessage: 'Enter your search here',
-  },
-  loadingSearchBarPlaceholder: {
-    id: 'settings.services.infinite.scroll.loading.data.searchBar.placeholder',
-    defaultMessage: 'Loading, please wait....',
-  },
-});
+import { AbstractMessages } from '../../utils/IntlHelper';
+export interface InfiniteListMessages extends AbstractMessages {
+  searchBarPlaceholder: string;
+  loadingSearchBarPlaceholder: string;
+}
 
 const InputSearch = Input.Search;
 
@@ -28,9 +20,10 @@ export interface InfiniteListProps<T = any> {
   fetchData: (filter: InfiniteListFilters) => Promise<T[]>;
   renderItem: (item: T) => React.ReactNode;
   storeItemData: (item: T) => void;
+  messages: InfiniteListMessages;
 }
 
-type Props<T = any> = InfiniteListProps<T> & InjectedIntlProps;
+type Props<T = any> = InfiniteListProps<T>;
 
 interface State<T> {
   data: T[];
@@ -123,8 +116,9 @@ class InfiniteList<T> extends React.Component<Props<T>, State<T>> {
   };
 
   render() {
-    const { intl, className } = this.props;
+    const { className } = this.props;
     const { data, loading, hasMore, initialLoading } = this.state;
+    const { messages } = this.props;
     return (
       <div className={`mcs-infinite-list ${className ? className : ''}`}>
         <InfiniteScroll
@@ -136,7 +130,7 @@ class InfiniteList<T> extends React.Component<Props<T>, State<T>> {
           {initialLoading ? (
             <div>
               <InputSearch
-                placeholder={intl.formatMessage(messages.loadingSearchBarPlaceholder)}
+                placeholder={messages.loadingSearchBarPlaceholder}
                 className='mcs-infinite-list-searchbar'
                 disabled={true}
               />
@@ -147,7 +141,7 @@ class InfiniteList<T> extends React.Component<Props<T>, State<T>> {
           ) : (
             <div>
               <InputSearch
-                placeholder={intl.formatMessage(messages.searchBarPlaceholder)}
+                placeholder={messages.searchBarPlaceholder}
                 onSearch={this.onSearch}
                 className='mcs-infinite-list-searchbar'
                 onChange={this.onChange}
@@ -171,4 +165,4 @@ class InfiniteList<T> extends React.Component<Props<T>, State<T>> {
   }
 }
 
-export default compose<Props, InfiniteListProps>(injectIntl)(InfiniteList);
+export default InfiniteList;

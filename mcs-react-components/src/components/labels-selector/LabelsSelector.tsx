@@ -2,16 +2,21 @@ import * as React from 'react';
 import { Tag, Tooltip, Input, Button, Menu } from 'antd';
 import { MenuInfo } from '../../../node_modules/rc-menu/lib/interface';
 import McsIcon from '../mcs-icon';
-import { FormattedMessage, defineMessages } from 'react-intl';
 import { Dropdown } from '../popup-container/PopupContainer';
 import { Label } from '../../models/labels/labels';
+import { AbstractMessages } from '../../utils/IntlHelper';
 
+export interface LabelsSelectorMessages extends AbstractMessages {
+  labelNoResults: string;
+  labelButton: string;
+}
 export interface LabelsSelectorProps {
   className?: string;
   labels: Label[];
   selectedLabels: Label[];
   onChange: (a: Label[]) => void;
   buttonMessage?: string;
+  messages: LabelsSelectorMessages;
 }
 
 interface LabelsSelectorState {
@@ -19,17 +24,6 @@ interface LabelsSelectorState {
   inputValue: string;
   input?: HTMLInputElement;
 }
-
-const messages = defineMessages({
-  labelNoResults: {
-    id: 'components.labelsSelector.noResults',
-    defaultMessage: 'No Results',
-  },
-  labelButton: {
-    id: 'components.labelsSelector.label.button',
-    defaultMessage: 'Label',
-  },
-});
 
 class LabelsSelector extends React.Component<LabelsSelectorProps, LabelsSelectorState> {
   input: React.RefObject<Input>;
@@ -78,7 +72,7 @@ class LabelsSelector extends React.Component<LabelsSelectorProps, LabelsSelector
   };
 
   render() {
-    const { labels, selectedLabels, buttonMessage, className } = this.props;
+    const { labels, selectedLabels, buttonMessage, messages, className } = this.props;
 
     const { inputValue, inputVisible } = this.state;
 
@@ -113,9 +107,7 @@ class LabelsSelector extends React.Component<LabelsSelectorProps, LabelsSelector
               return <Menu.Item key={label.id}>{label.name}</Menu.Item>;
             })
           ) : (
-            <Menu.Item disabled={true}>
-              <FormattedMessage {...messages.labelNoResults} />
-            </Menu.Item>
+            <Menu.Item disabled={true}>{messages.labelNoResults}</Menu.Item>
           )}
         </Menu>
       );
@@ -166,7 +158,7 @@ class LabelsSelector extends React.Component<LabelsSelectorProps, LabelsSelector
         {!inputVisible && (
           <Button size='small' className='mcs-labelsSelector_button' onClick={this.showInput}>
             <McsIcon type='plus' />
-            {buttonMessage || messages.labelButton.defaultMessage}
+            {buttonMessage || messages.labelButton}
           </Button>
         )}
       </div>

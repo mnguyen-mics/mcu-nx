@@ -18,10 +18,7 @@ exports[`renders the MenuSubList 1`] = `
       </div>
       <div
         className="subtitles"
-      >
-        subtitle_1, 
-        subtitle_2
-      </div>
+      />
     </div>
     <div
       className="selector"

@@ -2,8 +2,10 @@ import 'jest';
 import * as React from 'react';
 import * as TestRenderer from 'react-test-renderer';
 import LabelsSelector, { LabelsSelectorProps } from '../LabelsSelector';
-import { IntlProvider } from 'react-intl';
-
+const messages = {
+  labelNoResults: 'No Results',
+  labelButton: 'Label',
+};
 it('renders the labelsSelector component', () => {
   const props: LabelsSelectorProps = {
     labels: [
@@ -37,13 +39,10 @@ it('renders the labelsSelector component', () => {
     onChange: () => {
       return 'Label';
     },
+    messages,
   };
 
-  const component = TestRenderer.create(
-    <IntlProvider locale='en'>
-      <LabelsSelector {...props} />
-    </IntlProvider>,
-  );
+  const component = TestRenderer.create(<LabelsSelector {...props} />);
   const res = component.toJSON();
   expect(res).toMatchSnapshot();
 });

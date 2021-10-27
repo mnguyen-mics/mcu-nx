@@ -86,11 +86,7 @@ class TableViewFilters<T> extends React.Component<
     ) : null;
 
     const dateRangePicker = dateRangePickerOptions ? (
-      <McsDateRangePicker
-        values={dateRangePickerOptions.values}
-        format={dateRangePickerOptions.format}
-        onChange={dateRangePickerOptions.onChange}
-      />
+      <McsDateRangePicker {...dateRangePickerOptions} />
     ) : null;
 
     const filtersMultiSelect = filtersOptions

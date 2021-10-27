@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import LegendChart, { LegendChartProps } from '../LegendChart';
 
 const props: LegendChartProps = {
@@ -12,8 +11,4 @@ const props: LegendChartProps = {
   ],
 };
 
-export default (
-  <IntlProvider locale='en'>
-    <LegendChart {...props} />
-  </IntlProvider>
-);
+export default <LegendChart {...props} />;

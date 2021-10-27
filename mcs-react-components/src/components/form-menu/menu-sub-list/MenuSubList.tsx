@@ -1,8 +1,12 @@
 import * as React from 'react';
 import * as cuid from 'cuid';
 import { Spin } from 'antd';
-import { FormattedMessage } from 'react-intl';
 import McsIcon from '../../mcs-icon';
+import { AbstractMessages } from '../../../utils/IntlHelper';
+
+export interface MenuSubListMessages extends AbstractMessages {
+  empty: string;
+}
 
 export interface SubMenu {
   title: string;
@@ -14,6 +18,7 @@ export interface MenuSubListProps {
   title: string;
   subtitles: string[];
   submenu: SubMenu[] | (() => Promise<SubMenu[]>);
+  messages: MenuSubListMessages;
 }
 
 export interface MenuSubListState {
@@ -63,7 +68,7 @@ class MenuSubList extends React.Component<Props, MenuSubListState> {
   };
 
   render() {
-    const { title, subtitles, submenu, className } = this.props;
+    const { title, subtitles, submenu, messages, className } = this.props;
 
     const { fetching, fetchedMenu } = this.state;
 
@@ -103,12 +108,7 @@ class MenuSubList extends React.Component<Props, MenuSubListState> {
             )}
             {!fetching && !displayMenu.length && (
               <div className='menu-item small'>
-                <div className='content alone small text-center'>
-                  <FormattedMessage
-                    id='components.formMenu.menuSubList.empty'
-                    defaultMessage='Empty'
-                  />
-                </div>
+                <div className='content alone small text-center'>{messages.empty}</div>
               </div>
             )}
             {!fetching &&

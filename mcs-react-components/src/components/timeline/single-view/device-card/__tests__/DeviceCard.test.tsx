@@ -2,28 +2,15 @@ import 'jest';
 import * as React from 'react';
 import * as TestRenderer from 'react-test-renderer';
 import DeviceCard, { DeviceCardProps } from '../DeviceCard';
-import { IntlProvider, defineMessages } from 'react-intl';
 
 it('renders the DeviceCard', () => {
   const props: DeviceCardProps = {
-    messages: defineMessages({
-      deviceTitle: {
-        id: 'id1',
-        defaultMessage: 'User Device',
-      },
-      emtyDevice: {
-        id: 'id2',
-        defaultMessage: 'This user has no Devices',
-      },
-      viewMore: {
-        id: 'id3',
-        defaultMessage: 'View More',
-      },
-      viewLess: {
-        id: 'id4',
-        defaultMessage: 'View Less',
-      },
-    }),
+    messages: {
+      deviceTitle: 'User Device',
+      emptyDevice: 'This user has no Devices',
+      viewMore: 'View More',
+      viewLess: 'View Less',
+    },
     dataSource: [
       {
         type: 'USER_AGENT',
@@ -59,11 +46,7 @@ it('renders the DeviceCard', () => {
     ],
     isLoading: false,
   };
-  const component = TestRenderer.create(
-    <IntlProvider locale='en'>
-      <DeviceCard {...props} />
-    </IntlProvider>,
-  );
+  const component = TestRenderer.create(<DeviceCard {...props} />);
   const res = component.toJSON();
   expect(res).toMatchSnapshot();
 });

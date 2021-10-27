@@ -1,6 +1,8 @@
 import * as React from 'react';
 import MenuSubList, { MenuSubListProps } from '../MenuSubList';
-
+const messages = {
+  empty: 'Empty',
+};
 const props: MenuSubListProps = {
   title: 'Title',
   subtitles: ['subtitle_1', 'subtitle_2'],
@@ -18,6 +20,7 @@ const props: MenuSubListProps = {
       },
     },
   ],
+  messages,
 };
 
 export default <MenuSubList {...props} />;

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Counter, { CounterProps } from '../Counter';
-import { IntlProvider } from 'react-intl';
 
 const props: CounterProps = {
   iconType: 'users',
@@ -14,8 +13,4 @@ const props: CounterProps = {
   unit: 'Users',
 };
 
-export default (
-  <IntlProvider locale='en'>
-    <Counter {...props} />
-  </IntlProvider>
-);
+export default <Counter {...props} />;

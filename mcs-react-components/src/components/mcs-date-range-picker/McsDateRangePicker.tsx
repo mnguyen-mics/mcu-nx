@@ -5,8 +5,8 @@ import moment from 'moment';
 import { MenuInfo } from '../../../node_modules/rc-menu/lib/interface';
 import { Dropdown } from '../popup-container/PopupContainer';
 import McsMoment, { convertMcsDateToMoment } from '../../utils/McsMoment';
-import { InjectedIntlProps, defineMessages, injectIntl } from 'react-intl';
 import OnOutsideClick from 'react-outclick';
+import { AbstractMessages } from '../../utils/IntlHelper';
 
 export interface McsDateRangeValue {
   from: McsMoment;
@@ -21,6 +21,7 @@ export interface McsDateRangePickerProps {
   disabled?: boolean;
   excludeToday?: boolean;
   startDate?: number;
+  messages: McsDateRangePickerMessages;
 }
 
 interface McsDateRangePickerState {
@@ -28,6 +29,17 @@ interface McsDateRangePickerState {
   datePickerOpen?: boolean;
   ranges: Range[];
   rangeType: 'ABSOLUTE' | 'RELATIVE';
+}
+
+export interface McsDateRangePickerMessages extends AbstractMessages {
+  TODAY: string;
+  YESTERDAY: string;
+  LAST_7_DAYS: string;
+  LAST_30_DAYS: string;
+  LOOKBACK_WINDOW: string;
+  CUSTOM: string;
+  ABSOLUTE_TIME_RANGE: string;
+  RELATIVE_TIME_RANGE: string;
 }
 
 interface Range {
@@ -38,48 +50,10 @@ interface Range {
 
 const { RangePicker } = DatePicker;
 
-const messages = defineMessages({
-  TODAY: {
-    id: 'components.mcsDateRangePicker.range.today',
-    defaultMessage: 'Today',
-  },
-  YESTERDAY: {
-    id: 'components.mcsDateRangePicker.range.yesterday',
-    defaultMessage: 'Yesterday',
-  },
-  LAST_7_DAYS: {
-    id: 'components.mcsDateRangePicker.range.last7days',
-    defaultMessage: 'Last 7 days',
-  },
-  LAST_30_DAYS: {
-    id: 'components.mcsDateRangePicker.range.last30days',
-    defaultMessage: 'Last 30 days',
-  },
-  LOOKBACK_WINDOW: {
-    id: 'components.mcsDateRangePicker.lookBackWindow',
-    defaultMessage: 'Lookback Window',
-  },
-  CUSTOM: {
-    id: 'components.mcsDateRangePicker.custom',
-    defaultMessage: 'Custom',
-  },
-  ABSOLUTE_TIME_RANGE: {
-    id: 'components.mcsDateRangePicker.absoluteTimeRange',
-    defaultMessage: 'Absolute time range',
-  },
-  RELATIVE_TIME_RANGE: {
-    id: 'components.mcsDateRangePicker.relativeTimeRange',
-    defaultMessage: 'Relative time ranges',
-  },
-});
-
-type Props = McsDateRangePickerProps & InjectedIntlProps;
+type Props = McsDateRangePickerProps;
+const defaultFormat = 'YYYY-MM-DD';
 
 class McsDateRangePicker extends React.Component<Props, McsDateRangePickerState> {
-  static defaultProps: Partial<McsDateRangePickerProps> = {
-    format: 'YYYY-MM-DD',
-  };
-
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -132,7 +106,7 @@ class McsDateRangePicker extends React.Component<Props, McsDateRangePickerState>
   };
 
   getSelectedPresettedRange() {
-    const { values, format, intl } = this.props;
+    const { values, format, messages } = this.props;
     const { ranges } = this.state;
 
     const selectedRange = ranges.find(range => {
@@ -140,11 +114,11 @@ class McsDateRangePicker extends React.Component<Props, McsDateRangePickerState>
     });
 
     if (selectedRange) {
-      return intl.formatMessage(messages[selectedRange.name]);
+      return messages[selectedRange.name];
     }
-    return `${convertMcsDateToMoment(values.from.raw())!.format(format)} ~ ${convertMcsDateToMoment(
-      values.to.raw(),
-    )!.format(format)}`;
+    return `${convertMcsDateToMoment(values.from.raw())!.format(
+      format || defaultFormat,
+    )} ~ ${convertMcsDateToMoment(values.to.raw())!.format(format || defaultFormat)}`;
   }
 
   handleDatePickerMenuChange = (dates: [moment.Moment, moment.Moment]) => {
@@ -200,7 +174,7 @@ class McsDateRangePicker extends React.Component<Props, McsDateRangePickerState>
   };
 
   renderRangesDropdown() {
-    const { intl, disabled, values, className } = this.props;
+    const { disabled, values, messages, className } = this.props;
     const { ranges, showDropdown, rangeType } = this.state;
     const fromMoment = values.from.toMoment();
     const toMoment = values.to.toMoment();
@@ -228,20 +202,20 @@ class McsDateRangePicker extends React.Component<Props, McsDateRangePickerState>
           </Menu.Item>
         </Menu.ItemGroup>
         <Menu.ItemGroup
-          title={intl.formatMessage(messages.RELATIVE_TIME_RANGE)}
+          title={messages.RELATIVE_TIME_RANGE}
           className={'mcs-dateRangePicker_menu_timeType'}
         >
           {ranges.map(item => {
             return (
               <Menu.Item
                 className={
-                  this.getSelectedPresettedRange() === intl.formatMessage(messages[item.name])
+                  this.getSelectedPresettedRange() === messages[item.name]
                     ? 'mcs-dateRangePicker_menu_item mcs-dateRangePicker_menu_item--selected'
                     : 'mcs-dateRangePicker_menu_item'
                 }
                 key={item.name}
               >
-                {intl.formatMessage(messages[item.name])}
+                {messages[item.name]}
               </Menu.Item>
             );
           })}
@@ -273,4 +247,4 @@ class McsDateRangePicker extends React.Component<Props, McsDateRangePickerState>
   }
 }
 
-export default injectIntl(McsDateRangePicker);
+export default McsDateRangePicker;

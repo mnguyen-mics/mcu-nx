@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import McsTabs, { McTabsProps } from '../McsTabs';
 import { render } from 'enzyme';
 
@@ -27,10 +26,6 @@ it('renders the tabs', () => {
     ],
   };
 
-  const component = render(
-    <IntlProvider locale='en'>
-      <McsTabs {...props} />
-    </IntlProvider>,
-  );
+  const component = render(<McsTabs {...props} />);
   expect(component).toMatchSnapshot();
 });

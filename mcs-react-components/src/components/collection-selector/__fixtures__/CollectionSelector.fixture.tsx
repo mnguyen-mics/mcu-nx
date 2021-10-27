@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { IntlProvider } from 'react-intl';
 import CollectionSelector, { CollectionSelectorProps } from '../CollectionSelector';
 import { SelectableItem, SearchFilter } from '../../../utils';
 import faker from 'faker';
@@ -80,8 +79,4 @@ const props: CollectionSelectorProps<Data> = {
   selectedIds: Object.keys(Array.apply(0, Array(12))),
 };
 
-export default (
-  <IntlProvider locale='en'>
-    <CollectionSelector {...props} />
-  </IntlProvider>
-);
+export default <CollectionSelector {...props} />;
