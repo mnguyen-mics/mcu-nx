@@ -27,8 +27,15 @@ import { TYPES } from '../../../constants/types';
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';
-import { Card, McsTabs, TableViewFilters } from '@mediarithmics-private/mcs-components-library';
+import {
+  Card,
+  EmptyTableView,
+  McsTabs,
+  TableViewFilters,
+} from '@mediarithmics-private/mcs-components-library';
 import { BatchInstanceOptions, IBatchService } from '../../../services/BatchService';
+import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
+import { DataListResponse } from '@mediarithmics-private/advanced-components/lib/services/ApiService';
 // import { JobExecutionStatus } from '../../../models/job/jobs';
 
 const { Content } = Layout;
@@ -53,6 +60,8 @@ interface State {
   currentPage2: number;
   pageSize2: number;
   options: Array<{ value: string }>;
+  noInitialNonPeriodicData: boolean;
+  noInitialPeriodicData: boolean;
 }
 
 class BatchInstanceList extends React.Component<Props, State> {
@@ -73,6 +82,8 @@ class BatchInstanceList extends React.Component<Props, State> {
       pageSize: 10,
       currentPage2: 1,
       pageSize2: 10,
+      noInitialPeriodicData: false,
+      noInitialNonPeriodicData: false,
     };
   }
 
@@ -100,8 +111,8 @@ class BatchInstanceList extends React.Component<Props, State> {
     return Promise.all(promises)
       .then(res => {
         const filterOptions = res[0];
-        const periodicInstances = res[1];
-        const nonPeriodicInstances = res[2];
+        const periodicInstances = res[1] as DataListResponse<IntegrationBatchResource>;
+        const nonPeriodicInstances = res[2] as DataListResponse<IntegrationBatchResource>;
         this.setState({
           periodicInstances: periodicInstances.data,
           isLoadingPeriodicInstances: false,
@@ -112,6 +123,8 @@ class BatchInstanceList extends React.Component<Props, State> {
           options: _.uniq(filterOptions.data as string[]).map(elt => {
             return { value: elt };
           }),
+          noInitialNonPeriodicData: nonPeriodicInstances.data.length === 0,
+          noInitialPeriodicData: periodicInstances.data.length === 0,
         });
       })
       .catch(err => {
@@ -265,6 +278,8 @@ class BatchInstanceList extends React.Component<Props, State> {
       pageSize2,
       currentPage2,
       pageSize,
+      noInitialPeriodicData,
+      noInitialNonPeriodicData,
     } = this.state;
 
     const dataColumnsDefinition: Array<DataColumnDefinition<IntegrationBatchResource>> = [
@@ -360,26 +375,50 @@ class BatchInstanceList extends React.Component<Props, State> {
       periodicTotal,
     };
 
+    const emptyPeriodicTable: {
+      iconType: McsIconType;
+      message: string;
+    } = {
+      iconType: 'library',
+      message: formatMessage(messages.emptyPeriodicTableMessage),
+    };
+    const emptyNonPeriodicTable: {
+      iconType: McsIconType;
+      message: string;
+    } = {
+      iconType: 'library',
+      message: formatMessage(messages.emptyNonPeriodicTableMessage),
+    };
+
     const tabs = [
       {
         title: 'Overview',
         display: (
           <React.Fragment>
             <Card title={formatMessage(messages.nonPeriodicInstances)}>
-              <TableViewFilters
-                dataSource={nonPeriodicInstances}
-                columns={dataColumnsDefinition}
-                loading={isLoadingNonPeriodicInstances}
-                pagination={pagination}
-              />
+              {noInitialNonPeriodicData ? (
+                <EmptyTableView {...emptyNonPeriodicTable} />
+              ) : (
+                <TableViewFilters
+                  dataSource={nonPeriodicInstances}
+                  columns={dataColumnsDefinition}
+                  loading={isLoadingNonPeriodicInstances}
+                  pagination={pagination}
+                />
+              )}
             </Card>
+
             <Card title={formatMessage(messages.periodicInstances)}>
-              <TableViewFilters
-                dataSource={periodicInstances}
-                columns={dataColumnsDefinition2}
-                loading={isLoadingPeriodicInstances}
-                pagination={pagination2}
-              />
+              {noInitialPeriodicData ? (
+                <EmptyTableView {...emptyPeriodicTable} />
+              ) : (
+                <TableViewFilters
+                  dataSource={periodicInstances}
+                  columns={dataColumnsDefinition2}
+                  loading={isLoadingPeriodicInstances}
+                  pagination={pagination2}
+                />
+              )}
             </Card>
           </React.Fragment>
         ),
