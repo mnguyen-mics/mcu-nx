@@ -33,9 +33,13 @@ export default defineMessages({
     id: 'jobs.batchInstances.list.column.cron',
     defaultMessage: 'Cron',
   },
-  emptyTableMessage: {
-    id: 'jobs.batchInstances.list.emptyTable',
-    defaultMessage: 'No batch instance found.',
+  emptyPeriodicTableMessage: {
+    id: 'jobs.batchInstances.periodicList.emptyTable',
+    defaultMessage: 'No periodic instance found.',
+  },
+  emptyNonPeriodicTableMessage: {
+    id: 'jobs.batchInstances.nonPeriodicList.emptyTable',
+    defaultMessage: 'No non-periodic instance found.',
   },
   nonPeriodicInstances: {
     id: 'jobs.batchInstances.list.nonPeriodic.title',
