@@ -1,0 +1,405 @@
+import * as React from 'react';
+import _ from 'lodash';
+import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { Link } from 'react-router-dom';
+import cronstrue from 'cronstrue';
+// import queryString from 'query-string';
+import {
+  FilterOutlined,
+  PauseCircleFilled,
+  PlayCircleFilled,
+  ClockCircleOutlined,
+} from '@ant-design/icons';
+import { Layout, Tag } from 'antd';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { compose } from 'recompose';
+import messages from '../messages';
+import BatchInstanceListActionBar from './BatchInstanceListActionBar';
+import { CronStatus, IntegrationBatchResource } from '../../../models/plugin/plugins';
+import {
+  PAGINATION_SEARCH_SETTINGS,
+  PLUGIN_SEARCH_SETTINGS,
+  updateSearch,
+} from '../../../utils/LocationSearchHelper';
+import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
+import { lazyInject } from '../../../config/inversify.config';
+import { TYPES } from '../../../constants/types';
+import injectNotifications, {
+  InjectedNotificationProps,
+} from '../../Notifications/injectNotifications';
+import { Card, McsTabs, TableViewFilters } from '@mediarithmics-private/mcs-components-library';
+import { BatchInstanceOptions, IBatchService } from '../../../services/BatchService';
+// import { JobExecutionStatus } from '../../../models/job/jobs';
+
+const { Content } = Layout;
+
+const BATCH_INSTANCE_SEARCH_SETTINGS = [...PAGINATION_SEARCH_SETTINGS, ...PLUGIN_SEARCH_SETTINGS];
+
+interface RouteProps {
+  organisationId: string;
+}
+
+type Props = InjectedIntlProps & InjectedNotificationProps & RouteComponentProps<RouteProps>;
+
+interface State {
+  nonPeriodicInstances: IntegrationBatchResource[];
+  isLoadingNonPeriodicInstances: boolean;
+  periodicInstances: IntegrationBatchResource[];
+  isLoadingPeriodicInstances: boolean;
+  periodicTotal: number;
+  nonPeriodicTotal: number;
+  currentPage: number;
+  pageSize: number;
+  currentPage2: number;
+  pageSize2: number;
+  options: Array<{ value: string }>;
+}
+
+class BatchInstanceList extends React.Component<Props, State> {
+  @lazyInject(TYPES.IBatchService)
+  private _batchService: IBatchService;
+
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      isLoadingNonPeriodicInstances: false,
+      isLoadingPeriodicInstances: false,
+      nonPeriodicInstances: [],
+      periodicInstances: [],
+      periodicTotal: 0,
+      nonPeriodicTotal: 0,
+      options: [],
+      currentPage: 1,
+      pageSize: 10,
+      currentPage2: 1,
+      pageSize2: 10,
+    };
+  }
+
+  componentDidMount() {
+    const {
+      notifyError,
+      match: {
+        params: { organisationId },
+      },
+    } = this.props;
+    this.setState({
+      isLoadingPeriodicInstances: true,
+      isLoadingNonPeriodicInstances: true,
+    });
+    const promises: Array<Promise<any>> = [
+      this._batchService.getAllInstanceFilterProperties(),
+      this._batchService.getBatchInstances(organisationId, {
+        cronStatus: ['ACTIVE' as CronStatus, 'PAUSED'],
+      }),
+      this._batchService.getBatchInstances(organisationId, {
+        cronStatus: [],
+      }),
+    ];
+
+    return Promise.all(promises)
+      .then(res => {
+        const filterOptions = res[0];
+        const periodicInstances = res[1];
+        const nonPeriodicInstances = res[2];
+        this.setState({
+          periodicInstances: periodicInstances.data,
+          isLoadingPeriodicInstances: false,
+          periodicTotal: periodicInstances.total || periodicInstances.count,
+          nonPeriodicInstances: nonPeriodicInstances.data,
+          isLoadingNonPeriodicInstances: false,
+          nonPeriodicTotal: nonPeriodicInstances.total || nonPeriodicInstances.count,
+          options: _.uniq(filterOptions.data as string[]).map(elt => {
+            return { value: elt };
+          }),
+        });
+      })
+      .catch(err => {
+        notifyError(err);
+        this.setState({
+          isLoadingNonPeriodicInstances: false,
+          isLoadingPeriodicInstances: false,
+        });
+      });
+  }
+
+  onClear = (filterProperty: 'group_id' | 'artifact_id' | 'version_id') => () => {
+    const {
+      history,
+      location: { search: currentSearch, pathname },
+    } = this.props;
+    const params: any = {};
+    params[`${filterProperty}`] = '';
+    const nextLocation = {
+      pathname,
+      search: updateSearch(currentSearch, params, BATCH_INSTANCE_SEARCH_SETTINGS),
+    };
+    history.push(nextLocation);
+  };
+
+  onSelect = (filterProperty: 'group_id' | 'artifact_id' | 'version_id') => (value: string) => {
+    const { currentPage, currentPage2, pageSize, pageSize2 } = this.state;
+    const options: any = {};
+    options[`${filterProperty}`] = value;
+    this.fetchBatchInstances(currentPage2, pageSize2, options, true).then(() => {
+      this.fetchBatchInstances(currentPage, pageSize, options);
+    });
+  };
+
+  renderActionBarInnerElements() {
+    return <span />;
+    // const { options } = this.state;
+    // const {
+    //   location: { search },
+    // } = this.props;
+
+    // const defaultGroupId = queryString.parse(search).group_id || undefined;
+
+    // return (
+    //   <div className='mcs-actionBar_filters'>
+    //     <Select
+    //       mode='tags'
+    //       className='mcs-actionBar_filterInput mcs-actionBar-batchInstanceFilterInput'
+    //       placeholder={this.renderInputPlaceholder('Group Id, Artifact Id or Version')}
+    //       showSearch={true}
+    //       allowClear={true}
+    //       showArrow={false}
+    //       options={options}
+    //       onSelect={this.onSelect('group_id')}
+    //       onClear={this.onClear('group_id')}
+    //       defaultValue={defaultGroupId}
+    //     />
+    //   </div>
+    // );
+  }
+
+  fetchBatchInstances = (
+    currentPage: number,
+    pageSize: number,
+    options?: BatchInstanceOptions,
+    fetchPeriodic?: boolean,
+  ) => {
+    const {
+      notifyError,
+      match: {
+        params: { organisationId },
+      },
+    } = this.props;
+    if (fetchPeriodic) {
+      this.setState({
+        isLoadingPeriodicInstances: true,
+      });
+      return this._batchService
+        .getBatchInstances(organisationId, {
+          first_result: currentPage,
+          max_results: pageSize,
+          cronStatus: ['ACTIVE' as CronStatus, 'PAUSED'],
+        })
+        .then(res => {
+          this.setState({
+            periodicInstances: res.data,
+            isLoadingPeriodicInstances: false,
+            periodicTotal: res.total || res.count,
+            currentPage2: currentPage,
+            pageSize2: pageSize,
+          });
+        })
+        .catch(err => {
+          notifyError(err);
+          this.setState({
+            isLoadingPeriodicInstances: false,
+          });
+        });
+    } else {
+      this.setState({
+        isLoadingNonPeriodicInstances: true,
+      });
+      return this._batchService
+        .getBatchInstances(organisationId, {
+          first_result: currentPage,
+          max_results: pageSize,
+          cronStatus: [],
+        })
+        .then(res => {
+          this.setState({
+            nonPeriodicInstances: res.data,
+            isLoadingNonPeriodicInstances: false,
+            nonPeriodicTotal: res.total || res.count,
+            currentPage: currentPage,
+            pageSize: pageSize,
+          });
+        })
+        .catch(err => {
+          notifyError(err);
+          this.setState({
+            isLoadingNonPeriodicInstances: false,
+          });
+        });
+    }
+  };
+
+  renderInputPlaceholder(value: string) {
+    return (
+      <React.Fragment>
+        <span className='mcs-actionBar_placeholderFilter'>{value}</span>
+        <FilterOutlined className='mcs-actionBar_iconFilter' />
+      </React.Fragment>
+    );
+  }
+
+  render() {
+    const {
+      intl: { formatMessage },
+      match: {
+        params: { organisationId },
+      },
+    } = this.props;
+    const {
+      periodicInstances,
+      nonPeriodicInstances,
+      isLoadingPeriodicInstances,
+      isLoadingNonPeriodicInstances,
+      periodicTotal,
+      nonPeriodicTotal,
+      currentPage,
+      pageSize2,
+      currentPage2,
+      pageSize,
+    } = this.state;
+
+    const dataColumnsDefinition: Array<DataColumnDefinition<IntegrationBatchResource>> = [
+      {
+        title: formatMessage(messages.group),
+        key: 'group_id',
+        isHideable: false,
+        render: (text: string, record: IntegrationBatchResource) => (
+          <Link
+            className='mcs-batchInstanceTable_GroupId'
+            to={`/o/${organisationId}/plugins/batch_instances/${record.id}`}
+          >
+            {record.group_id}
+          </Link>
+        ),
+      },
+      {
+        title: formatMessage(messages.artifactId),
+        key: 'artifact_id',
+        isHideable: false,
+        render: (text: string, record: IntegrationBatchResource) => (
+          <Link
+            className='mcs-batchInstanceTable_artifactId'
+            to={`/o/${organisationId}/plugins/batch_instances/${record.id}`}
+          >
+            {record.artifact_id}
+          </Link>
+        ),
+      },
+      {
+        title: formatMessage(messages.currentVersion),
+        key: 'version_id',
+        isHideable: false,
+        render: (text: string, record: IntegrationBatchResource) => (
+          <Tag className='mcs-batchInstanceTable_currentVersion' color='purple'>
+            {record.version_id}
+          </Tag>
+        ),
+      },
+    ];
+
+    const getCronStatusIcon = (cronStatus?: CronStatus) => {
+      if (!cronStatus) return 'No status';
+      if (cronStatus === ('ACTIVE' as CronStatus)) {
+        return <PlayCircleFilled className='mcs-batchInstanceTable_playIcon' />;
+      } else {
+        return <PauseCircleFilled className='mcs-batchInstanceTable_pauseIcon' />;
+      }
+    };
+
+    const dataColumnsDefinition2: Array<DataColumnDefinition<IntegrationBatchResource>> =
+      dataColumnsDefinition.slice();
+    dataColumnsDefinition2.unshift(
+      {
+        title: formatMessage(messages.cronStatus),
+        key: 'cron_status',
+        isHideable: false,
+        render: (text: string, record: IntegrationBatchResource) =>
+          getCronStatusIcon(record.cronStatus),
+      },
+      {
+        title: formatMessage(messages.cron),
+        key: 'cron',
+        isHideable: false,
+        render: (text: string, record: IntegrationBatchResource) => {
+          return (
+            <span>
+              <ClockCircleOutlined />
+              {` ${record.cron ? cronstrue.toString(record.cron) : '-'}`}
+            </span>
+          );
+        },
+      },
+    );
+
+    const pagination = {
+      current: currentPage,
+      pageSize: pageSize,
+      onChange: (page: number, size: number) =>
+        this.fetchBatchInstances(page, size, undefined, false),
+      onShowSizeChange: (current: number, size: number) =>
+        this.fetchBatchInstances(1, size, undefined, false),
+      nonPeriodicTotal,
+    };
+
+    const pagination2 = {
+      current: currentPage2,
+      pageSize: pageSize2,
+      onChange: (page: number, size: number) =>
+        this.fetchBatchInstances(page, size, undefined, true),
+      onShowSizeChange: (current: number, size: number) =>
+        this.fetchBatchInstances(1, size, undefined, true),
+      periodicTotal,
+    };
+
+    const tabs = [
+      {
+        title: 'Overview',
+        display: (
+          <React.Fragment>
+            <Card title={formatMessage(messages.nonPeriodicInstances)}>
+              <TableViewFilters
+                dataSource={nonPeriodicInstances}
+                columns={dataColumnsDefinition}
+                loading={isLoadingNonPeriodicInstances}
+                pagination={pagination}
+              />
+            </Card>
+            <Card title={formatMessage(messages.periodicInstances)}>
+              <TableViewFilters
+                dataSource={periodicInstances}
+                columns={dataColumnsDefinition2}
+                loading={isLoadingPeriodicInstances}
+                pagination={pagination2}
+              />
+            </Card>
+          </React.Fragment>
+        ),
+      },
+      {
+        title: 'Executions',
+      },
+    ];
+
+    return (
+      <div className='ant-layout'>
+        <BatchInstanceListActionBar innerElement={this.renderActionBarInnerElements()} />
+        <div className='ant-layout'>
+          <Content className='mcs-content-container'>
+            <McsTabs items={tabs} />
+          </Content>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default compose<Props, {}>(withRouter, injectIntl, injectNotifications)(BatchInstanceList);

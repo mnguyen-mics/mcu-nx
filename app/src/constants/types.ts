@@ -3,6 +3,7 @@ const TYPES = {
   IDatamartService: Symbol.for('datamartService'),
   IOrganisationService: Symbol.for('organisationService'),
   IPluginService: Symbol.for('pluginService'),
+  IBatchService: Symbol.for('batchService'),
 };
 
 export { TYPES };

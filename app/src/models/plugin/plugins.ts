@@ -7,7 +7,6 @@ export interface PluginResource {
   artifact_id: string;
   current_version_id?: string;
 }
-
 export interface PluginVersionResource {
   id: string;
   plugin_id: string;
@@ -19,6 +18,28 @@ export interface PluginVersionResource {
   max_qps: number;
   archived: boolean;
 }
+
+export interface PluginInstance {
+  id: string;
+  artifact_id: string;
+  group_id: string;
+  version_id: string;
+  version_value: string;
+  organisation_id: string;
+}
+
+export interface IntegrationBatchResource extends PluginInstance {
+  name?: string;
+  creation_ts: number;
+  last_modified_ts?: number;
+  created_by: string;
+  last_modified_by?: string;
+  cron?: string;
+  cronStatus?: CronStatus;
+  archived: boolean;
+}
+
+export type CronStatus = 'ACTIVE ' | 'PAUSED';
 
 export type PluginType =
   | 'DISPLAY_CAMPAIGN_EDITOR'

@@ -2,10 +2,11 @@
   "name": "new-computing-console",
   "version": "1.2.0",
   "dependencies": {
+    "@ant-design/icons": "^4.2.2",
     "@mediarithmics-private/advanced-components": "3.10.0",
     "@mediarithmics-private/mcs-components-library": "5.2.10",
-    "@ant-design/icons": "^4.2.2",
     "antd": "4.10.3",
+    "cronstrue": "^1.122.0",
     "inversify": "^5.0.1",
     "inversify-inject-decorators": "^3.1.0",
     "js-cookie": "^3.0.1",

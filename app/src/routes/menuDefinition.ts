@@ -2,6 +2,7 @@ import { generateMissingdefinitionItemFromRoute, NavigatorMenuDefinition } from 
 import { HomePage } from '../containers/Home';
 import { DashboardsPage } from '../containers/Dashboards';
 import { pluginsDefinition } from './pluginRoutes';
+import { jobsDefinition } from './jobRoutes';
 
 const homeMenuDefinition: NavigatorMenuDefinition = {
   iconType: 'users',
@@ -26,6 +27,18 @@ const pluginsMenuDefinition: NavigatorMenuDefinition = {
   ],
 };
 
+const jobsMenuDefinition: NavigatorMenuDefinition = {
+  iconType: 'library',
+  displayName: 'Jobs',
+  type: 'multi',
+  subMenuItems: [
+    {
+      ...generateMissingdefinitionItemFromRoute(jobsDefinition.jobBatchInstanceList),
+      displayName: 'Batch Instances',
+    },
+  ],
+};
+
 const dashboardsMenuDefinition: NavigatorMenuDefinition = {
   iconType: 'library',
   displayName: 'Dashboards',
@@ -40,5 +53,6 @@ const dashboardsMenuDefinition: NavigatorMenuDefinition = {
 export const menuDefinitions: NavigatorMenuDefinition[] = [
   homeMenuDefinition,
   pluginsMenuDefinition,
+  jobsMenuDefinition,
   dashboardsMenuDefinition,
 ];

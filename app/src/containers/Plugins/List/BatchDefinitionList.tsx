@@ -23,8 +23,8 @@ import { IPluginService } from '../../../services/PluginService';
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';
-import { Card } from '@mediarithmics-private/mcs-components-library';
 import { Link } from 'react-router-dom';
+import { Card } from '@mediarithmics-private/mcs-components-library';
 
 const { Content } = Layout;
 
