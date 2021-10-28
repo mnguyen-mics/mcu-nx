@@ -35,7 +35,7 @@ exports[`renders the SelectorLayout with children 1`] = `
       className="left-part-margin"
     >
       <button
-        className="ant-btn add-button"
+        className="ant-btn add-button mcs-addButton"
         onClick={[Function]}
         type="button"
       >
@@ -111,7 +111,7 @@ exports[`renders the SelectorLayout with no element 1`] = `
       className="left-part-margin"
     >
       <button
-        className="ant-btn add-button"
+        className="ant-btn add-button mcs-addButton"
         onClick={[Function]}
         type="button"
       >
