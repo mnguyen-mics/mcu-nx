@@ -4,6 +4,7 @@ import { Responsive, WidthProvider } from 'react-grid-layout';
 import Chart from '../chart-engine';
 import cuid from 'cuid';
 import { ChartConfig } from '../../services/ChartDatasetService';
+import McsLazyLoad from '../lazyload';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -37,10 +38,15 @@ export default class DashboardLayout extends React.Component<DashboardLayoutProp
     super(props);
   }
 
-  renderChart(chart: ChartConfig, key: string, cssProperties?: CSSProperties) {
+  renderChart(chart: ChartConfig, cssProperties?: CSSProperties) {
     const { datamart_id } = this.props;
     return (
-      <Chart datamartId={datamart_id} chartConfig={chart} chartContainerStyle={cssProperties} />
+      <Chart
+        key={cuid()}
+        datamartId={datamart_id}
+        chartConfig={chart}
+        chartContainerStyle={cssProperties}
+      />
     );
   }
 
@@ -92,15 +98,12 @@ export default class DashboardLayout extends React.Component<DashboardLayoutProp
 
   renderCard(card: DashboardContentCard, i: number) {
     const charts = card.charts.map((chart, index) => {
-      return this.renderChart(
-        chart,
-        index.toString(),
-        this.computeCSSProperties(card.charts.length, card.layout),
-      );
+      return this.renderChart(chart, this.computeCSSProperties(card.charts.length, card.layout));
     });
+    const cardComponent = <Card className='mcs-cardFlex'>{charts}</Card>;
     return (
       <div key={i.toString()}>
-        <Card className='mcs-cardFlex'>{charts}</Card>
+        <McsLazyLoad key={cuid()} child={cardComponent} />
       </div>
     );
   }

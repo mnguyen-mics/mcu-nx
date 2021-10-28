@@ -2,6 +2,7 @@ export { default as ForgotPassword } from './components/forgot-password';
 export { default as Login } from './components/login-page';
 export { default as OrganizationListSwitcher } from './components/organisation-switcher';
 export { default as DashboardLayout } from './components/dashboard-layout';
+export { default as McsLazyLoad } from './components/lazyload';
 export { default as TopBar } from './components/top-bar';
 export { default as advancedComponentLibReducers } from './redux/reducers';
 export { IocProvider } from './inversify/inversify.react';
