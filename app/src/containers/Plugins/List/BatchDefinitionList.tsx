@@ -2,7 +2,7 @@ import * as React from 'react';
 import _ from 'lodash';
 import queryString from 'query-string';
 import { FilterOutlined } from '@ant-design/icons';
-import { Layout, Select, Tag } from 'antd';
+import { Layout, Select, Tag, Drawer } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import messages from './messages';
@@ -23,6 +23,7 @@ import { IPluginService } from '../../../services/PluginService';
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';
+import IntergrationBatchEditDrawer from '../Edit/IntegrationBatchEditDrawer';
 import { Link } from 'react-router-dom';
 import { Card } from '@mediarithmics-private/mcs-components-library';
 
@@ -42,6 +43,7 @@ interface State {
   total: number;
   groupIdOptions: Array<{ value: string }>;
   artifactIdOptions: Array<{ value: string }>;
+  isVisibleDrawer: boolean;
 }
 
 class BatchDefinitionList extends React.Component<Props, State> {
@@ -56,6 +58,7 @@ class BatchDefinitionList extends React.Component<Props, State> {
       total: 0,
       groupIdOptions: [],
       artifactIdOptions: [],
+      isVisibleDrawer: false,
     };
   }
 
@@ -188,6 +191,41 @@ class BatchDefinitionList extends React.Component<Props, State> {
     );
   }
 
+  openDrawer = () => {
+    this.setState({
+      isVisibleDrawer: true,
+    });
+  };
+
+  closeDrawer = () => {
+    this.setState({
+      isVisibleDrawer: false,
+    });
+  };
+
+  saveIntegrationBatchPlugin = (integrationBatchPluginResource: Partial<PluginResource>) => {
+    const {
+      notifyError,
+      history,
+      match: {
+        params: { organisationId },
+      },
+    } = this.props;
+    this._pluginService
+      .createPlugin({
+        ...integrationBatchPluginResource,
+        plugin_type: 'INTEGRATION_BATCH',
+      })
+      .then(res => {
+        const pluginId = res.data.id;
+        const newPathName = `/o/${organisationId}/plugins/batch_definitions/${pluginId}`;
+        history.push(newPathName);
+      })
+      .catch(err => {
+        notifyError(err);
+      });
+  };
+
   render() {
     const {
       intl: { formatMessage },
@@ -195,7 +233,7 @@ class BatchDefinitionList extends React.Component<Props, State> {
         params: { organisationId },
       },
     } = this.props;
-    const { data, loading, total } = this.state;
+    const { data, loading, total, isVisibleDrawer } = this.state;
 
     const dataColumnsDefinition: Array<DataColumnDefinition<PluginResource>> = [
       {
@@ -260,7 +298,10 @@ class BatchDefinitionList extends React.Component<Props, State> {
 
     return (
       <div className='ant-layout'>
-        <BatchDefinitionListActionBar innerElement={this.renderActionBarInnerElements()} />
+        <BatchDefinitionListActionBar
+          innerElement={this.renderActionBarInnerElements()}
+          openDrawer={this.openDrawer}
+        />
         <div className='ant-layout'>
           <Content className='mcs-content-container'>
             <Card>
@@ -276,6 +317,18 @@ class BatchDefinitionList extends React.Component<Props, State> {
               />
             </Card>
           </Content>
+          <Drawer
+            className='mcs-batchPluginEdit-drawer'
+            width='400'
+            bodyStyle={{ padding: '0' }}
+            title={formatMessage(messages.batchEditDrawerTitle)}
+            placement={'right'}
+            closable={true}
+            onClose={this.closeDrawer}
+            visible={isVisibleDrawer}
+          >
+            <IntergrationBatchEditDrawer save={this.saveIntegrationBatchPlugin} />
+          </Drawer>
         </div>
       </div>
     );

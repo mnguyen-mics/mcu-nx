@@ -1,4 +1,3 @@
-import { DrawableContent } from './../components/Drawer/index';
 import { Action } from 'redux-actions';
 import { ThemeColorsShape } from './injectThemeColors';
 import {
@@ -65,7 +64,6 @@ export type MicsReduxState = {
     collapsed: boolean;
     mode: string;
   };
-  DrawableContents: DrawableContent[];
 };
 
 export type Payload = { [key: string]: any };

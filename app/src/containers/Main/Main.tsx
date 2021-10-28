@@ -24,6 +24,7 @@ import { LayoutManager } from '../../components/layoutManager';
 import log from 'loglevel';
 import { Loading, Error } from '@mediarithmics-private/mcs-components-library';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
+import Notifications from '../Notifications/Notifications';
 
 const basePath = '/o/:organisationId(\\d+)';
 interface MapStateToProps {
@@ -127,7 +128,12 @@ class Main extends React.Component<JoinedProps, MainState> {
           ? route.editComponent
           : route.contentComponent;
       const authenticatedRouteRender = (props: any) => {
-        return <LayoutManager routeComponent={<ElementTag />} />;
+        return (
+          <React.Fragment>
+            <Notifications />
+            <LayoutManager routeComponent={<ElementTag />} />
+          </React.Fragment>
+        );
       };
       return (
         <AuthenticatedRoute

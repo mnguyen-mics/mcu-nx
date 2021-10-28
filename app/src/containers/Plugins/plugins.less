@@ -4,3 +4,57 @@
     float: right;
   }
 }
+
+.mcs-batchPluginEdit-drawer {
+  .ant-drawer-header {
+    background-color: @info-color;
+    border-radius: 0;
+    padding-left: 40px;
+    .ant-drawer-title {
+      color: #ffffff;
+      font-size: 12px;
+    }
+    .ant-drawer-close {
+      color: #ffffff;
+    }
+  }
+  .mcs-batchPluginEdit-drawer-form {
+    height: 100%;
+    width: 100%;
+    font-weight: 400;
+    .mcs-batchPluginEdit-drawer-container {
+      position: relative;
+      overflow: hidden;
+      .mcs-batchPluginEdit-drawer-form-label {
+        font-weight: 500;
+        font-size: 10px;
+      }
+      .mcs-batchPluginEdit-drawer-form-description {
+        font-size: 10px;
+      }
+      .mcs-batchPluginEdit-drawer-item-value {
+        margin-bottom: 30px;
+      }
+      .mcs-batchPluginEdit-drawer-form-item {
+        .ant-form-item-label {
+          font-weight: 500;
+          padding-bottom: 0px;
+          font-size: 10px;
+        }
+        .mcs-batchPluginEdit-drawer-form-input {
+          margin-top: 10px;
+        }
+        .mcs-batchPluginEdit-drawer-form-item-sample {
+          opacity: 0.25;
+          font-size: 10px;
+          font-style: italic;
+        }
+      }
+      .mcs-batchPluginEdit-drawer-saveButton {
+        position: absolute;
+        right: 40px;
+        bottom: 40px;
+      }
+    }
+  }
+}
