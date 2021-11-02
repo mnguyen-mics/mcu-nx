@@ -8,12 +8,20 @@ import {
 } from '../utils/ChartDataFormater';
 import { IQueryService, QueryService } from './QueryService';
 import { injectable } from 'inversify';
-import { PieChartProps } from '@mediarithmics-private/mcs-components-library/lib/components/charts/pie-chart/PieChart';
+import {
+  PieChartLegend,
+  PieChartProps,
+  PieDataLabels,
+} from '@mediarithmics-private/mcs-components-library/lib/components/charts/pie-chart/PieChart';
 import { RadarChartProps } from '@mediarithmics-private/mcs-components-library/lib/components/charts/radar-chart';
 import { BarChartProps } from '@mediarithmics-private/mcs-components-library/lib/components/charts/bar-chart/BarChart';
 import {
   Datapoint,
   Dataset,
+  Format,
+  Legend,
+  PieChartFormat,
+  Tooltip,
 } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 import { OTQLResult } from '../models/datamart/graphdb/OTQLResult';
 import {
@@ -80,8 +88,51 @@ export interface ChartConfig {
   type: ChartType;
   colors?: string[];
   dataset: AbstractSource;
-  options?: ChartOptions;
+  options?: ChartApiOptions;
 }
+
+interface PieChartApiProps {
+  height?: number;
+  legend?: PieChartLegend;
+  drilldown?: boolean;
+  inner_radius: boolean;
+  is_half?: boolean;
+  data_labels?: PieDataLabels;
+  tooltip?: Tooltip;
+  format?: PieChartFormat;
+}
+
+interface RadarChartApiProps {
+  height?: number;
+  data_labels?: PieDataLabels;
+  tooltip?: Tooltip;
+  format?: Format;
+  legend?: Legend;
+}
+
+interface BarChartApiProps {
+  drilldown?: boolean;
+  height?: number;
+  big_bars?: boolean;
+  stacking?: boolean;
+  plot_line_value?: number;
+  legend?: Legend;
+  type?: string;
+  tooltip?: Tooltip;
+  format: Format;
+}
+
+interface MetricChartApiProps {
+  format?: MetricChartFormat;
+}
+
+export type ChartApiOptions = (
+  | PieChartApiProps
+  | RadarChartApiProps
+  | BarChartApiProps
+  | MetricChartApiProps
+) &
+  WithOptionalXKey;
 
 export interface IChartDatasetService {
   fetchDataset(datamartId: string, chartConfig: ChartConfig): Promise<AbstractDataset | undefined>;

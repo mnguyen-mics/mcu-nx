@@ -180,6 +180,10 @@ const props = {
                   type: 'otql' as SourceType,
                   query_id: '50172',
                 },
+                options: {
+                  is_half: true,
+                  inner_radius: true,
+                },
               },
             ],
           },
@@ -198,6 +202,8 @@ const props = {
                 },
                 options: {
                   type: 'bar' as ChartType,
+                  big_bars: false,
+                  plot_line_value: 25000000,
                   xKey: 'key',
                 },
               },
