@@ -90,7 +90,7 @@ function formatTooltip(format: Format) {
     case 'percentage':
       return '{point.y}% ({point.count})';
     case 'index':
-      return '{point.y}% ({point.percentage}% - {point.count})';
+      return '{point.y} ({point.percentage}% - {point.count})';
   }
 }
 
