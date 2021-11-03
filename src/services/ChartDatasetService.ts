@@ -249,14 +249,17 @@ export class ChartDatasetService implements IChartDatasetService {
             activitiesAnalyticsSourceJson.dimension_filter_clauses,
           )
           .then(res => {
+            const metricNames = activitiesAnalyticsSourceJson.metrics.map(m =>
+              m.expression.toLocaleLowerCase(),
+            );
+            const dimensionNames = activitiesAnalyticsSourceJson.dimensions.map(d =>
+              d.name.toLocaleLowerCase(),
+            );
             return formatDatasetForReportView(
               res.data.report_view,
               xKey,
-              seriesTitle,
-              activitiesAnalyticsSourceJson.metrics[0].expression.toLocaleLowerCase() as ActivitiesAnalyticsMetric,
-              activitiesAnalyticsSourceJson.dimensions[0]
-                ? (activitiesAnalyticsSourceJson.dimensions[0].name.toLocaleLowerCase() as ActivitiesAnalyticsDimension)
-                : undefined,
+              metricNames as ActivitiesAnalyticsMetric[],
+              dimensionNames as ActivitiesAnalyticsDimension[],
             );
           });
 

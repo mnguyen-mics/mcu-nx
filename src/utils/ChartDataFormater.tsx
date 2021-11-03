@@ -11,7 +11,7 @@ import {
   ActivitiesAnalyticsDimension,
   ActivitiesAnalyticsMetric,
 } from './ActivitiesAnalyticsReportHelper';
-import { normalizeReportView } from './MetricHelper';
+import { bucketizeReportView, normalizeReportView } from './MetricHelper';
 
 type DatasetType = 'aggregate' | 'count';
 
@@ -52,21 +52,12 @@ export function formatDatasetAsKeyValueForOtql(
 }
 
 export function formatDatasetAsKeyValueForReportView(
-  datas: ReportView,
   xKey: string,
-  yKey: string,
-  metricName: ActivitiesAnalyticsMetric,
-  dimensionName: ActivitiesAnalyticsDimension,
+  datas: ReportView,
+  dimensions: string[],
 ): Dataset {
   const normalizedReportView = normalizeReportView(datas);
-
-  const dataset: any = normalizedReportView.map(data => {
-    return {
-      [xKey]: data[dimensionName],
-      [yKey]: data[metricName],
-    };
-  });
-  return dataset;
+  return bucketizeReportView(xKey, normalizedReportView, dimensions) || normalizedReportView;
 }
 
 export function getXKeyForChart(type: ChartType, xKey?: string) {
@@ -117,25 +108,14 @@ export function formatDatasetForOtql(
 export function formatDatasetForReportView(
   dataResult: ReportView,
   xKey: string,
-  seriesTitle: string,
-  metric: ActivitiesAnalyticsMetric,
-  dimension?: ActivitiesAnalyticsDimension,
+  metrics: ActivitiesAnalyticsMetric[],
+  dimensions: ActivitiesAnalyticsDimension[],
 ): AbstractDataset | undefined {
-  if (dimension) {
-    const yKey = {
-      key: seriesTitle,
-      message: seriesTitle,
-    };
-    const dataset = formatDatasetAsKeyValueForReportView(
-      dataResult,
-      xKey,
-      yKey.key,
-      metric,
-      dimension,
-    );
+  if (dimensions.length > 0) {
+    const dataset = formatDatasetAsKeyValueForReportView(xKey, dataResult, dimensions);
     return {
       metadata: {
-        seriesTitles: [seriesTitle],
+        seriesTitles: metrics.map(m => m.toLocaleLowerCase()),
       },
       type: 'aggregate',
       dataset: dataset,
@@ -143,7 +123,7 @@ export function formatDatasetForReportView(
   } else {
     const normalizedReportView = normalizeReportView(dataResult);
 
-    const value = normalizedReportView[0][metric];
+    const value = normalizedReportView[0][metrics[0]];
     return {
       type: 'count',
       value: value,

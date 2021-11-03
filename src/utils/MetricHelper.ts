@@ -1,3 +1,7 @@
+import {
+  Datapoint,
+  Dataset,
+} from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 import { Index } from '@mediarithmics-private/mcs-components-library/lib/utils';
 import numeral from 'numeral';
 import { ReportView } from '../models/report/ReportView';
@@ -31,7 +35,7 @@ export function formatMetric(
  *  ...
  * ]
  *
- * @param {Object} reportView an object comming from performance api
+ * @param {Object} reportView an object coming from performance api
  * @return {Object} normalized object
  */
 export function normalizeReportView<T = Index<any>>(reportView: ReportView): T[] {
@@ -46,4 +50,54 @@ export function normalizeReportView<T = Index<any>>(reportView: ReportView): T[]
       {},
     );
   }) as T[];
+}
+
+export function sumMetrics(datapoints: Datapoint[], dimensions: string[]): Datapoint {
+  return datapoints.reduce((acc, datapoint) => {
+    let nextAcc = acc;
+    Object.keys(datapoint).forEach((fieldKey: string) => {
+      if (dimensions.indexOf(fieldKey) === -1) {
+        const currentValue = (acc[fieldKey] as number) || 0;
+        const toAdd = (datapoint[fieldKey] as number) || 0;
+        nextAcc = {
+          ...nextAcc,
+          [fieldKey]: currentValue + toAdd,
+        };
+      }
+    });
+    return nextAcc;
+  }, {});
+}
+
+export function bucketizeReportView(
+  xKey: string,
+  dataset: Dataset,
+  dimensions: string[],
+): Dataset | undefined {
+  if (dimensions.length === 0) return undefined;
+  else {
+    const currentDimension = dimensions[0].toLowerCase() as string;
+    const leftDimensions = dimensions.splice(1);
+    let childDatasets: { [key: string]: any[] } = {};
+    // Group datapoints by current dimension
+    dataset.forEach(datapoint => {
+      const currentAcc = childDatasets[datapoint[currentDimension] as string] || [];
+      childDatasets = {
+        ...childDatasets,
+        [datapoint[currentDimension] as string]: currentAcc.concat([datapoint]),
+      };
+      delete datapoint[currentDimension];
+    });
+    // Apply the grouping recursively on children datasets, while summing metrics at each level
+    return Object.keys(childDatasets).reduce((acc: any, key: string) => {
+      const metrics = sumMetrics(childDatasets[key], leftDimensions);
+      return acc.concat([
+        {
+          [xKey]: key,
+          ...metrics,
+          buckets: bucketizeReportView(xKey, childDatasets[key], leftDimensions),
+        },
+      ]);
+    }, []);
+  }
 }
