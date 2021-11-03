@@ -120,6 +120,8 @@ interface BarChartApiProps {
   type?: string;
   tooltip?: Tooltip;
   format: Format;
+  hide_x_axis?: boolean;
+  hide_y_axis?: boolean;
 }
 
 interface MetricChartApiProps {
