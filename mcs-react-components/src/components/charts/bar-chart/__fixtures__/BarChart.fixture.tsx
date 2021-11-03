@@ -6,6 +6,7 @@ import barChartCategory from '../__examples__/CategoryBarChart';
 import barChartStacked from '../__examples__/StackedBarChart';
 import BarChart from '../BarChart';
 import barChartCustomTooltipProps from '../__examples__/BarChartPropsCustomTooltip';
+import barChartInvisibleXAndYAxisProps from '../__examples__/BarChartInvisibleXAndYAxis';
 
 export default {
   'bars with index': <BarChart {...barChartProps} />,
@@ -14,4 +15,5 @@ export default {
   'multi series with buckets': <BarChart {...barChartCategory} />,
   'stacked with bottom legend': <BarChart {...barChartStacked} />,
   'custom tooltip bar chart': <BarChart {...barChartCustomTooltipProps} />,
+  'invisible xAxis and yAxis': <BarChart {...barChartInvisibleXAndYAxisProps} />,
 };
