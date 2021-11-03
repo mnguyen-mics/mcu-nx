@@ -19,6 +19,7 @@ import { isUndefined, omitBy } from 'lodash';
 import { formatMetric } from '../../utils/MetricHelper';
 import {
   BarChartOptions,
+  ChartApiOptions,
   ChartConfig,
   ChartDatasetService,
   ChartOptions,
@@ -27,6 +28,7 @@ import {
   MetricChartOptions,
   RadarChartOptions,
 } from '../../services/ChartDatasetService';
+import { keysToCamel } from '../../utils/CaseUtils';
 
 interface YKey {
   key: string;
@@ -85,9 +87,10 @@ class Chart extends React.Component<Props, ChartState> {
 
   renderAggregateChart(xKey: string, yKeys: YKey[], dataset: Dataset) {
     const { chartConfig } = this.props;
-    const options = chartConfig.options || {};
+    const options: ChartApiOptions = chartConfig.options || {};
+    const formattedOptions: ChartOptions = keysToCamel(options) as ChartOptions;
     const withKeys = {
-      ...options,
+      ...formattedOptions,
       yKeys: yKeys,
       xKey: xKey,
     };
@@ -179,7 +182,7 @@ class Chart extends React.Component<Props, ChartState> {
 
     const xKey = getXKeyForChart(
       chartConfig.type,
-      chartConfig.options && (chartConfig.options as ChartOptions).xKey,
+      chartConfig.options && (chartConfig.options as ChartApiOptions).xKey,
     );
     return (
       <div style={chartContainerStyle}>
