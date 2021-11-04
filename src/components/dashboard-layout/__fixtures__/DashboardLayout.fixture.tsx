@@ -6,6 +6,7 @@ import {
   MockedData,
   MockedMetricData,
   MockedAnalytics,
+  MockedAnalytics2,
   MockedAnalyticsMetrics,
 } from '../../chart-engine/MockedData';
 import { ChartType, MetricChartOptions, SourceType } from '../../../services/ChartDatasetService';
@@ -414,6 +415,51 @@ const propsAnalytics2 = {
   },
 };
 
+const propsAnalytics3 = {
+  datamart_id: '1417',
+  schema: {
+    sections: [
+      {
+        title: '',
+        cards: [
+          {
+            x: 0,
+            charts: [
+              {
+                title: 'Sessions per day',
+                type: 'Bars',
+                dataset: {
+                  type: 'activities_analytics',
+                  query_json: {
+                    dimensions: [
+                      {
+                        name: 'date_yyyy_mm_dd',
+                      },
+                      {
+                        name: 'city',
+                      },
+                    ],
+                    metrics: [
+                      {
+                        expression: 'sessions',
+                      },
+                    ],
+                  },
+                },
+                options: {},
+              },
+            ],
+            y: 0,
+            h: 5,
+            layout: 'vertical',
+            w: 4,
+          },
+        ],
+      },
+    ],
+  },
+};
+
 const fetchmockOptions = [
   {
     matcher: 'glob:/undefined/v1/datamarts/*/queries/*',
@@ -432,6 +478,10 @@ const fetchmockOptions = [
     response: MockedAnalytics,
   },
   {
+    matcher: 'glob:/undefined/v1/datamarts/1417/user_activities_analytics*',
+    response: MockedAnalytics2,
+  },
+  {
     matcher: 'glob:/undefined/v1/datamarts/1416/user_activities_analytics*',
     response: MockedAnalyticsMetrics,
   },
@@ -447,6 +497,7 @@ export default {
             <DashboardLayout {...props} />
             <DashboardLayout {...propsAnalytics1} />
             <DashboardLayout {...propsAnalytics2} />
+            <DashboardLayout {...propsAnalytics3} />
           </FetchMock>
         </LocalStorageMock>
       </IocProvider>
