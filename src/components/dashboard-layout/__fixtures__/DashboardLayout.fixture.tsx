@@ -91,6 +91,7 @@ const propsMetric = {
                       type: 'otql',
                       series_title: 'automotive',
                       query_id: '50170',
+                      precision: 'LOWER_PRECISION',
                     },
                     {
                       type: 'otql',
