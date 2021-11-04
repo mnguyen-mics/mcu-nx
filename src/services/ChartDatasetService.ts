@@ -23,7 +23,7 @@ import {
   PieChartFormat,
   Tooltip,
 } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
-import { OTQLResult } from '../models/datamart/graphdb/OTQLResult';
+import { OTQLResult, QueryPrecisionMode } from '../models/datamart/graphdb/OTQLResult';
 import {
   ActivitiesAnalyticsService,
   IActivitiesAnalyticsService,
@@ -52,6 +52,7 @@ export interface ActivitiesAnalyticsSource extends AbstractSource {
 export interface OTQLSource extends AbstractSource {
   query_text?: string;
   query_id?: string;
+  precision?: QueryPrecisionMode;
 }
 
 export declare type MetricChartFormat = 'percentage' | 'count';
@@ -155,9 +156,9 @@ export class ChartDatasetService implements IChartDatasetService {
 
   private executeOtqlQuery(datamartId: string, otqlSource: OTQLSource): Promise<OTQLResult> {
     if (otqlSource.query_text) {
-      return this.fetchOtqlDataByQueryText(datamartId, otqlSource.query_text);
+      return this.fetchOtqlDataByQueryText(datamartId, otqlSource.query_text, otqlSource.precision);
     } else if (otqlSource.query_id) {
-      return this.fetchOtqlDataByQueryId(datamartId, otqlSource.query_id);
+      return this.fetchOtqlDataByQueryId(datamartId, otqlSource.query_id, otqlSource.precision);
     } else {
       return new Promise((resolve, reject) => reject('No query defined for otql type source'));
     }
@@ -455,16 +456,25 @@ export class ChartDatasetService implements IChartDatasetService {
     } as AggregateDataset;
   }
 
-  private fetchOtqlDataByQueryId(datamartId: string, queryId: string): Promise<OTQLResult> {
+  private fetchOtqlDataByQueryId(
+    datamartId: string,
+    queryId: string,
+    precision?: QueryPrecisionMode,
+  ): Promise<OTQLResult> {
     return this.queryService.getQuery(datamartId, queryId).then(q => {
-      return this.fetchOtqlDataByQueryText(datamartId, q.data.query_text);
+      return this.fetchOtqlDataByQueryText(datamartId, q.data.query_text, precision);
     });
   }
 
-  private fetchOtqlDataByQueryText(datamartId: string, queryText: string): Promise<OTQLResult> {
+  private fetchOtqlDataByQueryText(
+    datamartId: string,
+    queryText: string,
+    precision?: QueryPrecisionMode,
+  ): Promise<OTQLResult> {
     return this.queryService
       .runOTQLQuery(datamartId, queryText, {
         use_cache: true,
+        precision: precision,
       })
       .then(otqlResultResp => otqlResultResp.data);
   }
