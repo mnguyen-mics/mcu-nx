@@ -14,7 +14,7 @@ import {
   buildLegendOptions,
   Tooltip,
 } from '../utils';
-import { uniqueId, omitBy, isUndefined } from 'lodash';
+import { uniqueId, omitBy, isUndefined, cloneDeep } from 'lodash';
 
 HighchartsDrilldown(Highcharts);
 
@@ -34,6 +34,8 @@ export interface BarChartProps {
   type?: string;
   tooltip?: Tooltip;
   format: Format;
+  hideXAxis?: boolean;
+  hideYAxis?: boolean;
 }
 
 type YKey = { key: string; message: string };
@@ -141,6 +143,8 @@ class BarChart extends React.Component<Props, {}> {
       stacking,
       plotLineValue,
       tooltip,
+      hideXAxis,
+      hideYAxis,
     } = this.props;
 
     const definedColors = colors || defaultColors;
@@ -236,7 +240,28 @@ class BarChart extends React.Component<Props, {}> {
       legend: buildLegendOptions(legend),
     };
 
-    const sanitizedOptions = omitBy(options, isUndefined);
+    // Introducing XAxis and YAxis hidden visibility property broke
+    // the classic display even if the hidden visibility
+    // is falsy. So we need to create a specific options in this case.
+    const optionsWithoutAxis = cloneDeep(options);
+
+    if (hideYAxis) {
+      optionsWithoutAxis.yAxis = {
+        visible: false,
+      };
+    }
+
+    if (hideXAxis) {
+      optionsWithoutAxis.xAxis = {
+        visible: false,
+      };
+    }
+
+    const sanitizedOptions = omitBy(
+      hideXAxis || hideYAxis ? optionsWithoutAxis : options,
+      isUndefined,
+    );
+
     return (
       <HighchartsReact
         highcharts={Highcharts}
