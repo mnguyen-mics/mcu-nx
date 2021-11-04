@@ -28,12 +28,15 @@ import {
   ActivitiesAnalyticsService,
   IActivitiesAnalyticsService,
 } from './ActivitiesAnalyticsService';
-import { DateRange, ReportRequestBody } from '../models/report/ReportRequestBody';
+import { BooleanOperator, DateRange, ReportRequestBody } from '../models/report/ReportRequestBody';
 import {
   ActivitiesAnalyticsDimension,
   ActivitiesAnalyticsMetric,
 } from '../utils/ActivitiesAnalyticsReportHelper';
 import moment from 'moment';
+import { AbstractScope } from '../models/datamart/graphdb/Scope';
+import { QueryScopeAdapter } from '../utils/QueryScopeAdapter';
+import { QueryLanguage, QueryShape } from '../models/datamart/DatamartResource';
 
 export type ChartType = 'pie' | 'bars' | 'radar' | 'metric';
 export type SourceType = 'otql' | 'join' | 'to-list' | 'activities_analytics' | 'ratio';
@@ -138,13 +141,18 @@ export type ChartApiOptions = (
   WithOptionalXKey;
 
 export interface IChartDatasetService {
-  fetchDataset(datamartId: string, chartConfig: ChartConfig): Promise<AbstractDataset | undefined>;
+  fetchDataset(
+    datamartId: string,
+    chartConfig: ChartConfig,
+    scope?: AbstractScope,
+  ): Promise<AbstractDataset | undefined>;
 }
 
 @injectable()
 export class ChartDatasetService implements IChartDatasetService {
   // TODO: Put back injection for this service
   private queryService: IQueryService = new QueryService();
+  private scopeAdapter: QueryScopeAdapter = new QueryScopeAdapter(this.queryService);
 
   private activitiesAnalyticsService: IActivitiesAnalyticsService =
     new ActivitiesAnalyticsService();
@@ -156,14 +164,43 @@ export class ChartDatasetService implements IChartDatasetService {
     },
   ];
 
-  private executeOtqlQuery(datamartId: string, otqlSource: OTQLSource): Promise<OTQLResult> {
+  private fetchOtqlQuery(datamartId: string, otqlSource: OTQLSource): Promise<QueryShape> {
     if (otqlSource.query_text) {
-      return this.fetchOtqlDataByQueryText(datamartId, otqlSource.query_text, otqlSource.precision);
+      const resource = {
+        datamart_id: datamartId,
+        query_text: otqlSource.query_text,
+        query_language: 'OTQL' as QueryLanguage,
+      };
+      return Promise.resolve(resource);
     } else if (otqlSource.query_id) {
-      return this.fetchOtqlDataByQueryId(datamartId, otqlSource.query_id, otqlSource.precision);
+      return this.queryService.getQuery(datamartId, otqlSource.query_id).then(res => res.data);
     } else {
-      return new Promise((resolve, reject) => reject('No query defined for otql type source'));
+      return Promise.reject('No query defined for otql type source');
     }
+  }
+
+  private executeOtqlQuery(
+    datamartId: string,
+    otqlSource: OTQLSource,
+    scope?: AbstractScope,
+  ): Promise<OTQLResult> {
+    const otqlScope = this.scopeAdapter.buildScopeOtqlQuery(datamartId, scope);
+    return this.fetchOtqlQuery(datamartId, otqlSource)
+      .then(dashboardQueryResource => {
+        return this.scopeAdapter.scopeQueryWithWhereClause(
+          datamartId,
+          dashboardQueryResource,
+          otqlScope,
+        );
+      })
+      .then(adaptedQueryText => {
+        return this.queryService.runOTQLQuery(datamartId, adaptedQueryText, {
+          precision: otqlSource.precision,
+        });
+      })
+      .then(res => {
+        return res.data;
+      });
   }
 
   private fetchDatasetForSource(
@@ -171,6 +208,7 @@ export class ChartDatasetService implements IChartDatasetService {
     chartType: ChartType,
     xKey: string,
     source: AbstractSource,
+    scope?: AbstractScope,
   ): Promise<AbstractDataset | undefined> {
     const sourceType = source.type.toLowerCase();
     const seriesTitle = source.series_title ? source.series_title : DEFAULT_Y_KEY.key;
@@ -178,7 +216,7 @@ export class ChartDatasetService implements IChartDatasetService {
     switch (sourceType) {
       case 'otql':
         const otqlSource = source as OTQLSource;
-        return this.executeOtqlQuery(datamartId, otqlSource).then(res => {
+        return this.executeOtqlQuery(datamartId, otqlSource, scope).then(res => {
           return formatDatasetForOtql(res, xKey, seriesTitle);
         });
 
@@ -186,7 +224,7 @@ export class ChartDatasetService implements IChartDatasetService {
         const aggregationSource = source as AggregationSource;
         const childSources = aggregationSource.sources;
         return Promise.all(
-          childSources.map(s => this.fetchDatasetForSource(datamartId, chartType, xKey, s)),
+          childSources.map(s => this.fetchDatasetForSource(datamartId, chartType, xKey, s, scope)),
         ).then(datasets => {
           return this.aggregateDatasets(xKey, datasets as AggregateDataset[]);
         });
@@ -195,7 +233,7 @@ export class ChartDatasetService implements IChartDatasetService {
         const aggregationSource2 = source as AggregationSource;
         const childSources2 = aggregationSource2.sources;
         return Promise.all(
-          childSources2.map(s => this.fetchDatasetForSource(datamartId, chartType, xKey, s)),
+          childSources2.map(s => this.fetchDatasetForSource(datamartId, chartType, xKey, s, scope)),
         ).then(datasets => {
           return this.aggregateCountsIntoList(xKey, datasets as CountDataset[], childSources2);
         });
@@ -204,16 +242,18 @@ export class ChartDatasetService implements IChartDatasetService {
         const aggregationSource3 = source as AggregationSource;
         const childSources3 = aggregationSource3.sources;
         if (childSources3.length === 1)
-          return this.fetchDatasetForSource(datamartId, chartType, xKey, childSources3[0]).then(
-            dataset => {
-              return this.toPercentagesDataset(xKey, dataset as AggregateDataset);
-            },
-          );
+          return this.fetchDatasetForSource(
+            datamartId,
+            chartType,
+            xKey,
+            childSources3[0],
+            scope,
+          ).then(dataset => {
+            return this.toPercentagesDataset(xKey, dataset as AggregateDataset);
+          });
         else
-          return new Promise((resolve, reject) =>
-            reject(
-              `Wrong number of arguments for to-percentages transformation, 1 expected ${childSources3.length} provided`,
-            ),
+          return Promise.reject(
+            `Wrong number of arguments for to-percentages transformation, 1 expected ${childSources3.length} provided`,
           );
 
       case 'index':
@@ -221,7 +261,9 @@ export class ChartDatasetService implements IChartDatasetService {
         const childSources4 = percentageSources.sources;
         if (childSources4 && childSources4.length === 2) {
           return Promise.all(
-            childSources4.map(s => this.fetchDatasetForSource(datamartId, chartType, xKey, s)),
+            childSources4.map(s =>
+              this.fetchDatasetForSource(datamartId, chartType, xKey, s, scope),
+            ),
           ).then(datasets => {
             return this.indexDataset(
               datasets[0] as AggregateDataset,
@@ -230,10 +272,8 @@ export class ChartDatasetService implements IChartDatasetService {
             );
           });
         } else {
-          return new Promise((resolve, reject) =>
-            reject(
-              `Wrong number of arguments for to-percentages transformation, 2 expected ${childSources.length} provided`,
-            ),
+          return Promise.reject(
+            `Wrong number of arguments for to-percentages transformation, 2 expected ${childSources4.length} provided`,
           );
         }
       case 'activities_analytics':
@@ -242,28 +282,38 @@ export class ChartDatasetService implements IChartDatasetService {
 
         const dateRanges: DateRange[] =
           activitiesAnalyticsSourceJson.date_ranges || this.defaultDateRange;
-
-        return this.activitiesAnalyticsService
-          .getAnalytics(
-            datamartId,
-            activitiesAnalyticsSourceJson.metrics,
-            dateRanges,
-            activitiesAnalyticsSourceJson.dimensions,
-            activitiesAnalyticsSourceJson.dimension_filter_clauses,
-          )
-          .then(res => {
-            const metricNames = activitiesAnalyticsSourceJson.metrics.map(m =>
-              m.expression.toLocaleLowerCase(),
-            );
-            const dimensionNames = activitiesAnalyticsSourceJson.dimensions.map(d =>
-              d.name.toLocaleLowerCase(),
-            );
-            return formatDatasetForReportView(
-              res.data.report_view,
-              xKey,
-              metricNames as ActivitiesAnalyticsMetric[],
-              dimensionNames as ActivitiesAnalyticsDimension[],
-            );
+        return this.scopeAdapter
+          .buildScopeAnalyticsQuery(datamartId, scope)
+          .then(analyticsScope => {
+            const dashboardQueryFilters =
+              activitiesAnalyticsSourceJson.dimension_filter_clauses?.filters || [];
+            const scopingQueryFilters = analyticsScope ? [analyticsScope] : [];
+            const scopedDimensionFilterClauses = {
+              operator: 'AND' as BooleanOperator,
+              filters: dashboardQueryFilters.concat(scopingQueryFilters),
+            };
+            return this.activitiesAnalyticsService
+              .getAnalytics(
+                datamartId,
+                activitiesAnalyticsSourceJson.metrics,
+                dateRanges,
+                activitiesAnalyticsSourceJson.dimensions,
+                scopedDimensionFilterClauses,
+              )
+              .then(res => {
+                const metricNames = activitiesAnalyticsSourceJson.metrics.map(m =>
+                  m.expression.toLocaleLowerCase(),
+                );
+                const dimensionNames = activitiesAnalyticsSourceJson.dimensions.map(d =>
+                  d.name.toLocaleLowerCase(),
+                );
+                return formatDatasetForReportView(
+                  res.data.report_view,
+                  xKey,
+                  metricNames as ActivitiesAnalyticsMetric[],
+                  dimensionNames as ActivitiesAnalyticsDimension[],
+                );
+              });
           });
 
       case 'ratio':
@@ -273,30 +323,36 @@ export class ChartDatasetService implements IChartDatasetService {
           chartType,
           xKey,
           ratioSource.sources[0],
+          scope,
         );
         const datasetTotal = this.fetchDatasetForSource(
           datamartId,
           chartType,
           xKey,
           ratioSource.sources[1],
+          scope,
         );
         return Promise.all([datasetValue, datasetTotal]).then(datasets => {
           return this.ratioDataset(datasets[0] as CountDataset, datasets[1] as CountDataset);
         });
 
       default:
-        return new Promise((resolve, reject) => reject(`Unknown source type ${sourceType}`));
+        return Promise.reject(`Unknown source type ${sourceType}`);
     }
   }
 
-  fetchDataset(datamartId: string, chartConfig: ChartConfig): Promise<AbstractDataset | undefined> {
+  fetchDataset(
+    datamartId: string,
+    chartConfig: ChartConfig,
+    scope?: AbstractScope,
+  ): Promise<AbstractDataset | undefined> {
     const source = chartConfig.dataset;
     const chartType = chartConfig.type;
     const xKey = getXKeyForChart(
       chartType,
       chartConfig.options && (chartConfig.options as ChartOptions).xKey,
     );
-    return this.fetchDatasetForSource(datamartId, chartType, xKey, source);
+    return this.fetchDatasetForSource(datamartId, chartType, xKey, source, scope);
   }
 
   private toPercentagesDataset(xKey: string, dataset: AggregateDataset): AggregateDataset {
@@ -456,28 +512,5 @@ export class ChartDatasetService implements IChartDatasetService {
       type: 'aggregate',
       dataset: newDataset,
     } as AggregateDataset;
-  }
-
-  private fetchOtqlDataByQueryId(
-    datamartId: string,
-    queryId: string,
-    precision?: QueryPrecisionMode,
-  ): Promise<OTQLResult> {
-    return this.queryService.getQuery(datamartId, queryId).then(q => {
-      return this.fetchOtqlDataByQueryText(datamartId, q.data.query_text, precision);
-    });
-  }
-
-  private fetchOtqlDataByQueryText(
-    datamartId: string,
-    queryText: string,
-    precision?: QueryPrecisionMode,
-  ): Promise<OTQLResult> {
-    return this.queryService
-      .runOTQLQuery(datamartId, queryText, {
-        use_cache: true,
-        precision: precision,
-      })
-      .then(otqlResultResp => otqlResultResp.data);
   }
 }

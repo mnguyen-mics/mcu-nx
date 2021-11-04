@@ -5,6 +5,7 @@ import Chart from '../chart-engine';
 import cuid from 'cuid';
 import { ChartConfig, ChartType } from '../../services/ChartDatasetService';
 import McsLazyLoad from '../lazyload';
+import { AbstractScope } from '../../models/datamart/graphdb/Scope';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -13,6 +14,7 @@ const BASE_FRAMEWORK_HEIGHT = 96;
 export interface DashboardLayoutProps {
   datamart_id: string;
   schema: DashboardContentSchema;
+  scope?: AbstractScope;
 }
 
 interface DashboardContentCard {
@@ -39,13 +41,14 @@ export default class DashboardLayout extends React.Component<DashboardLayoutProp
   }
 
   renderChart(chart: ChartConfig, cssProperties?: CSSProperties) {
-    const { datamart_id } = this.props;
+    const { datamart_id, scope } = this.props;
     return (
       <Chart
         key={cuid()}
         datamartId={datamart_id}
         chartConfig={chart}
         chartContainerStyle={cssProperties}
+        scope={scope}
       />
     );
   }

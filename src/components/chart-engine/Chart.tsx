@@ -29,6 +29,7 @@ import {
   RadarChartOptions,
 } from '../../services/ChartDatasetService';
 import { keysToCamel } from '../../utils/CaseUtils';
+import { AbstractScope } from '../../models/datamart/graphdb/Scope';
 
 interface YKey {
   key: string;
@@ -39,6 +40,7 @@ interface ChartProps {
   datamartId: string;
   chartConfig: ChartConfig;
   chartContainerStyle?: React.CSSProperties;
+  scope?: AbstractScope;
 }
 
 interface ChartState {
@@ -68,9 +70,9 @@ class Chart extends React.Component<Props, ChartState> {
   }
 
   componentDidMount() {
-    const { datamartId, chartConfig } = this.props;
+    const { datamartId, chartConfig, scope } = this.props;
     this.chartDatasetService()
-      .fetchDataset(datamartId, chartConfig)
+      .fetchDataset(datamartId, chartConfig, scope)
       .then(formattedData => {
         this.setState({
           formattedData: formattedData,
