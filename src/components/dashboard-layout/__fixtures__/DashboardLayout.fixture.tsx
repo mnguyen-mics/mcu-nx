@@ -472,6 +472,38 @@ const propsAnalytics3 = {
             layout: 'vertical',
             w: 4,
           },
+          {
+            x: 0,
+            charts: [
+              {
+                title: 'Sessions per day',
+                type: 'Bars',
+                dataset: {
+                  type: 'activities_analytics',
+                  query_json: {
+                    dimensions: [
+                      {
+                        name: 'date_yyyy_mm_dd',
+                      },
+                    ],
+                    metrics: [
+                      {
+                        expression: 'sessions',
+                      },
+                    ],
+                  },
+                },
+                options: {
+                  hide_x_axis: true,
+                  hide_y_axis: true,
+                },
+              },
+            ],
+            y: 0,
+            h: 5,
+            layout: 'vertical',
+            w: 4,
+          },
         ],
       },
     ],
