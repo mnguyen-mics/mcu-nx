@@ -1,7 +1,11 @@
 import ApiService, { DataResponse } from './ApiService';
 import { OTQLResult, QueryPrecisionMode } from '../models/datamart/graphdb/OTQLResult';
 import { injectable } from 'inversify';
-import { QueryResource } from '../models/datamart/DatamartResource';
+import {
+  QueryResource,
+  QueryTranslationRequest,
+  QueryTranslationResource,
+} from '../models/datamart/DatamartResource';
 
 export interface IQueryService {
   getQuery: (datamartId: string, queryId: string) => Promise<DataResponse<QueryResource>>;
@@ -20,10 +24,23 @@ export interface IQueryService {
       content_type?: string;
     },
   ) => Promise<DataResponse<OTQLResult>>;
+
+  translateQuery: (
+    datamartId: string,
+    query: QueryTranslationRequest,
+  ) => Promise<DataResponse<QueryTranslationResource>>;
 }
 
 @injectable()
 export class QueryService implements IQueryService {
+  translateQuery(
+    datamartId: string,
+    query: QueryTranslationRequest,
+  ): Promise<DataResponse<QueryTranslationResource>> {
+    const endpoint = `datamarts/${datamartId}/query_translations`;
+    return ApiService.postRequest(endpoint, query);
+  }
+
   getQuery(datamartId: string, queryId: string): Promise<DataResponse<QueryResource>> {
     const endpoint = `datamarts/${datamartId}/queries/${queryId}`;
     return ApiService.getRequest(endpoint);

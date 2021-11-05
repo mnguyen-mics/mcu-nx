@@ -1,0 +1,128 @@
+import { QueryShape, QueryTranslationRequest } from '../models/datamart/DatamartResource';
+import { AbstractScope, SegmentScope } from '../models/datamart/graphdb/Scope';
+import { DimensionFilter } from '../models/report/ReportRequestBody';
+import { IQueryService } from '../services/QueryService';
+
+export class QueryScopeAdapter {
+  queryService: IQueryService;
+
+  constructor(queryService: IQueryService) {
+    this.queryService = queryService;
+  }
+
+  private convertToOtql(datamartId: string, query: QueryShape): Promise<string> {
+    const queryTranslationRequest: QueryTranslationRequest = {
+      input_query_language: 'JSON_OTQL',
+      output_query_language: 'OTQL',
+      input_query_language_subtype: query.query_language_subtype,
+      input_query_text: query.query_text,
+    };
+    if (query.query_language === 'JSON_OTQL') {
+      return this.queryService.translateQuery(datamartId, queryTranslationRequest).then(res => {
+        return res.data.output_query_text;
+      });
+    } else if (query.query_language === 'OTQL') {
+      return Promise.resolve(query.query_text);
+    } else {
+      return Promise.reject(`Unknown query language ${query.query_language}`);
+    }
+  }
+
+  private hasWhereClause(text: string) {
+    return text.toLowerCase().indexOf('where') > -1;
+  }
+
+  private extractOtqlWhereClause(text: string): string {
+    const formattedText = text.toLowerCase();
+    const wherePosition = formattedText.indexOf('where');
+    const whereClause = this.hasWhereClause(text)
+      ? text.substr(wherePosition + 5, formattedText.length)
+      : ' ';
+    return whereClause;
+  }
+
+  buildScopeAnalyticsQuery(
+    datamartId: string,
+    scope?: AbstractScope,
+  ): Promise<DimensionFilter | undefined> {
+    if (!scope) return Promise.resolve(undefined);
+
+    if (scope.type === 'SEGMENT') {
+      const segmentScope = scope as SegmentScope;
+      return Promise.resolve({
+        dimension_name: 'segment_id',
+        expressions: [segmentScope.segmentId],
+        operator: 'EXACT',
+      });
+    } else {
+      return Promise.reject('Unhandled scope type for analytics query');
+    }
+  }
+
+  buildScopeOtqlQuery(datamartId: string, scope?: AbstractScope): QueryShape | undefined {
+    if (!scope) return undefined;
+
+    if (scope.query) {
+      return scope.query;
+    } else if (scope.type === 'SEGMENT') {
+      const segmentScope = scope as SegmentScope;
+      const queryDoc = {
+        operations: [],
+        from: 'UserPoint',
+        where: {
+          type: 'OBJECT',
+          field: 'segments',
+          expressions: [
+            {
+              type: 'FIELD',
+              field: 'id',
+              comparison: {
+                type: 'STRING',
+                operator: 'EQ',
+                values: [segmentScope.segmentId],
+              },
+            },
+          ],
+          boolean_operator: 'OR',
+        },
+      };
+      return {
+        datamart_id: datamartId,
+        query_language: 'JSON_OTQL',
+        query_text: JSON.stringify(queryDoc),
+      };
+    } else {
+      return undefined;
+    }
+  }
+
+  private appendAdditionalQuery(query: string, additionalQuery?: string) {
+    if (!additionalQuery) return query;
+
+    if (this.hasWhereClause(query)) {
+      return `${query} AND ${additionalQuery}`;
+    } else {
+      return `${query} WHERE ${additionalQuery}`;
+    }
+  }
+
+  scopeQueryWithWhereClause(
+    datamartId: string,
+    dashboardQuery: QueryShape,
+    sourceQuery?: QueryShape,
+  ): Promise<string> {
+    const dashboardOtqlQueryPromise = this.convertToOtql(datamartId, dashboardQuery);
+    const sourceOtqlQueryPromise: Promise<string | undefined> = sourceQuery
+      ? this.convertToOtql(datamartId, sourceQuery)
+      : new Promise(resolve => resolve(undefined));
+    return Promise.all([dashboardOtqlQueryPromise, sourceOtqlQueryPromise]).then(
+      ([dashboardOtqlQuery, sourceOtqlQuery]) => {
+        const additionalQuery = sourceOtqlQuery
+          ? this.extractOtqlWhereClause(sourceOtqlQuery)
+          : undefined;
+        const scopedQuery = this.appendAdditionalQuery(dashboardOtqlQuery, additionalQuery);
+        return scopedQuery;
+      },
+    );
+  }
+}
