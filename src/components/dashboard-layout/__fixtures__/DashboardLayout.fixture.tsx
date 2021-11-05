@@ -385,6 +385,23 @@ const propsAnalytics2 = {
             x: 0,
             charts: [
               {
+                title: 'Active users',
+                type: 'Metric',
+                dataset: {
+                  type: 'activities_analytics',
+                  query_json: {
+                    dimensions: [],
+                    metrics: [
+                      {
+                        expression: 'users',
+                      },
+                    ],
+                  },
+                },
+                options: {},
+              },
+
+              {
                 title: 'Sessions per day',
                 type: 'Bars',
                 dataset: {
@@ -406,9 +423,9 @@ const propsAnalytics2 = {
               },
             ],
             y: 0,
-            h: 5,
+            h: 4,
             layout: 'vertical',
-            w: 4,
+            w: 12,
           },
         ],
       },
