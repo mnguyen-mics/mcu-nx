@@ -288,10 +288,14 @@ export class ChartDatasetService implements IChartDatasetService {
             const dashboardQueryFilters =
               activitiesAnalyticsSourceJson.dimension_filter_clauses?.filters || [];
             const scopingQueryFilters = analyticsScope ? [analyticsScope] : [];
-            const scopedDimensionFilterClauses = {
-              operator: 'AND' as BooleanOperator,
-              filters: dashboardQueryFilters.concat(scopingQueryFilters),
-            };
+            const queryFilters = dashboardQueryFilters.concat(scopingQueryFilters);
+            const scopedDimensionFilterClauses =
+              queryFilters.length > 0
+                ? {
+                    operator: 'AND' as BooleanOperator,
+                    filters: queryFilters,
+                  }
+                : undefined;
             return this.activitiesAnalyticsService
               .getAnalytics(
                 datamartId,

@@ -35,9 +35,7 @@ export class QueryScopeAdapter {
   private extractOtqlWhereClause(text: string): string {
     const formattedText = text.toLowerCase();
     const wherePosition = formattedText.indexOf('where');
-    const whereClause = this.hasWhereClause(text)
-      ? text.substr(wherePosition + 5, formattedText.length)
-      : ' ';
+    const whereClause = text.substr(wherePosition + 5, formattedText.length);
     return whereClause;
   }
 
@@ -117,9 +115,10 @@ export class QueryScopeAdapter {
       : new Promise(resolve => resolve(undefined));
     return Promise.all([dashboardOtqlQueryPromise, sourceOtqlQueryPromise]).then(
       ([dashboardOtqlQuery, sourceOtqlQuery]) => {
-        const additionalQuery = sourceOtqlQuery
-          ? this.extractOtqlWhereClause(sourceOtqlQuery)
-          : undefined;
+        const additionalQuery =
+          sourceOtqlQuery && this.hasWhereClause(sourceOtqlQuery)
+            ? this.extractOtqlWhereClause(sourceOtqlQuery)
+            : undefined;
         const scopedQuery = this.appendAdditionalQuery(dashboardOtqlQuery, additionalQuery);
         return scopedQuery;
       },

@@ -144,7 +144,11 @@ test('test the query is correctly scoped', cb => {
     query_text: QUERY2,
     query_language: 'OTQL',
   };
-  const resultQueryPromise = adapter.adaptToScope('123', queryResource1, queryResource2);
+  const resultQueryPromise = adapter.scopeQueryWithWhereClause(
+    '123',
+    queryResource1,
+    queryResource2,
+  );
   resultQueryPromise.then(query => {
     expect(query).toBe(`select {id} from UserPoint where${WHERE_CLAUSE1} AND ${WHERE_CLAUSE2}`);
     cb();
@@ -160,7 +164,7 @@ test('test the query is correctly non scoped', cb => {
     query_text: QUERY1,
     query_language: 'OTQL',
   };
-  const resultQueryPromise = adapter.adaptToScope('123', queryResource1, undefined);
+  const resultQueryPromise = adapter.scopeQueryWithWhereClause('123', queryResource1, undefined);
   resultQueryPromise.then(query => {
     expect(query).toBe(`select {id} from UserPoint where${WHERE_CLAUSE1}`);
     cb();
