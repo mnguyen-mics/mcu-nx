@@ -32,12 +32,17 @@ class McsTabs extends React.Component<McTabsProps> {
   }
 
   render() {
-    const { items, ...rest } = this.props;
+    const { items, animated, ...rest } = this.props;
     const menuItems = this.buildMenuItems();
 
     return (
       <div>
-        <Tabs className='mcs-tabs' defaultActiveKey={items[0].key || '0'} {...rest} animated={true}>
+        <Tabs
+          className='mcs-tabs'
+          defaultActiveKey={items[0].key || '0'}
+          {...rest}
+          animated={animated !== undefined ? animated : true}
+        >
           {menuItems}
         </Tabs>
       </div>
