@@ -196,6 +196,7 @@ export class ChartDatasetService implements IChartDatasetService {
       .then(adaptedQueryText => {
         return this.queryService.runOTQLQuery(datamartId, adaptedQueryText, {
           precision: otqlSource.precision,
+          use_cache: true,
         });
       })
       .then(res => {
