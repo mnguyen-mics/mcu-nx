@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Row, Col, Spin } from 'antd';
+import { Row, Col, Spin, Pagination } from 'antd';
 import cuid from 'cuid';
-import Pagination, { PaginationProps } from 'antd/lib/pagination/Pagination';
+import { PaginationProps } from 'antd/lib/pagination/Pagination';
 
 export interface CollectionViewProps {
   collectionItems: JSX.Element[];
