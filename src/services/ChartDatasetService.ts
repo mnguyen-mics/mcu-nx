@@ -51,11 +51,13 @@ interface AbstractSource {
 }
 export interface ActivitiesAnalyticsSource extends AbstractSource {
   query_json: ReportRequestBody<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>;
+  adapt_to_scope?: boolean;
 }
 export interface OTQLSource extends AbstractSource {
   query_text?: string;
   query_id?: string;
   precision?: QueryPrecisionMode;
+  adapt_to_scope?: boolean;
 }
 
 export declare type MetricChartFormat = 'percentage' | 'count';
@@ -209,7 +211,7 @@ export class ChartDatasetService implements IChartDatasetService {
     chartType: ChartType,
     xKey: string,
     source: AbstractSource,
-    scope?: AbstractScope,
+    providedScope?: AbstractScope,
   ): Promise<AbstractDataset | undefined> {
     const sourceType = source.type.toLowerCase();
     const seriesTitle = source.series_title ? source.series_title : DEFAULT_Y_KEY.key;
@@ -217,6 +219,7 @@ export class ChartDatasetService implements IChartDatasetService {
     switch (sourceType) {
       case 'otql':
         const otqlSource = source as OTQLSource;
+        const scope = otqlSource.adapt_to_scope ? providedScope : undefined;
         return this.executeOtqlQuery(datamartId, otqlSource, scope).then(res => {
           return formatDatasetForOtql(res, xKey, seriesTitle);
         });
@@ -225,7 +228,9 @@ export class ChartDatasetService implements IChartDatasetService {
         const aggregationSource = source as AggregationSource;
         const childSources = aggregationSource.sources;
         return Promise.all(
-          childSources.map(s => this.fetchDatasetForSource(datamartId, chartType, xKey, s, scope)),
+          childSources.map(s =>
+            this.fetchDatasetForSource(datamartId, chartType, xKey, s, providedScope),
+          ),
         ).then(datasets => {
           return this.aggregateDatasets(xKey, datasets as AggregateDataset[]);
         });
@@ -234,7 +239,9 @@ export class ChartDatasetService implements IChartDatasetService {
         const aggregationSource2 = source as AggregationSource;
         const childSources2 = aggregationSource2.sources;
         return Promise.all(
-          childSources2.map(s => this.fetchDatasetForSource(datamartId, chartType, xKey, s, scope)),
+          childSources2.map(s =>
+            this.fetchDatasetForSource(datamartId, chartType, xKey, s, providedScope),
+          ),
         ).then(datasets => {
           return this.aggregateCountsIntoList(xKey, datasets as CountDataset[], childSources2);
         });
@@ -263,7 +270,7 @@ export class ChartDatasetService implements IChartDatasetService {
         if (childSources4 && childSources4.length === 2) {
           return Promise.all(
             childSources4.map(s =>
-              this.fetchDatasetForSource(datamartId, chartType, xKey, s, scope),
+              this.fetchDatasetForSource(datamartId, chartType, xKey, s, providedScope),
             ),
           ).then(datasets => {
             return this.indexDataset(
@@ -280,15 +287,16 @@ export class ChartDatasetService implements IChartDatasetService {
       case 'activities_analytics':
         const activitiesAnalyticsSource = source as ActivitiesAnalyticsSource;
         const activitiesAnalyticsSourceJson = activitiesAnalyticsSource.query_json;
+        const analyticsScope = activitiesAnalyticsSource.adapt_to_scope ? providedScope : undefined;
 
         const dateRanges: DateRange[] =
           activitiesAnalyticsSourceJson.date_ranges || this.defaultDateRange;
         return this.scopeAdapter
-          .buildScopeAnalyticsQuery(datamartId, scope)
-          .then(analyticsScope => {
+          .buildScopeAnalyticsQuery(datamartId, analyticsScope)
+          .then(analyticsScopeFilter => {
             const dashboardQueryFilters =
               activitiesAnalyticsSourceJson.dimension_filter_clauses?.filters || [];
-            const scopingQueryFilters = analyticsScope ? [analyticsScope] : [];
+            const scopingQueryFilters = analyticsScopeFilter ? [analyticsScopeFilter] : [];
             const queryFilters = dashboardQueryFilters.concat(scopingQueryFilters);
             const scopedDimensionFilterClauses =
               queryFilters.length > 0
@@ -349,7 +357,7 @@ export class ChartDatasetService implements IChartDatasetService {
   fetchDataset(
     datamartId: string,
     chartConfig: ChartConfig,
-    scope?: AbstractScope,
+    providedScope?: AbstractScope,
   ): Promise<AbstractDataset | undefined> {
     const source = chartConfig.dataset;
     const chartType = chartConfig.type;
@@ -357,7 +365,7 @@ export class ChartDatasetService implements IChartDatasetService {
       chartType,
       chartConfig.options && (chartConfig.options as ChartOptions).xKey,
     );
-    return this.fetchDatasetForSource(datamartId, chartType, xKey, source, scope);
+    return this.fetchDatasetForSource(datamartId, chartType, xKey, source, providedScope);
   }
 
   private toPercentagesDataset(xKey: string, dataset: AggregateDataset): AggregateDataset {
