@@ -423,7 +423,7 @@ const propsAnalytics2 = {
               },
             ],
             y: 0,
-            h: 4,
+            h: 1,
             layout: 'vertical',
             w: 12,
           },
@@ -476,6 +476,91 @@ const propsAnalytics3 = {
             x: 0,
             charts: [
               {
+                title: 'Active users',
+                type: 'Metric',
+                dataset: {
+                  type: 'activities_analytics',
+                  query_json: {
+                    dimensions: [],
+                    metrics: [
+                      {
+                        expression: 'users',
+                      },
+                    ],
+                  },
+                },
+                options: {},
+              },
+              {
+                title: 'Sessions per day',
+                type: 'Bars',
+                dataset: {
+                  type: 'activities_analytics',
+                  query_json: {
+                    dimensions: [
+                      {
+                        name: 'date_yyyy_mm_dd',
+                      },
+                    ],
+                    metrics: [
+                      {
+                        expression: 'sessions',
+                      },
+                    ],
+                  },
+                },
+                options: {
+                  hide_x_axis: true,
+                  hide_y_axis: true,
+                },
+              },
+              {
+                title: 'Sessions per day',
+                type: 'Bars',
+                dataset: {
+                  type: 'activities_analytics',
+                  query_json: {
+                    dimensions: [
+                      {
+                        name: 'date_yyyy_mm_dd',
+                      },
+                    ],
+                    metrics: [
+                      {
+                        expression: 'sessions',
+                      },
+                    ],
+                  },
+                },
+                options: {
+                  hide_x_axis: true,
+                  hide_y_axis: true,
+                },
+              },
+              {
+                title: 'Sessions per day',
+                type: 'Bars',
+                dataset: {
+                  type: 'activities_analytics',
+                  query_json: {
+                    dimensions: [
+                      {
+                        name: 'date_yyyy_mm_dd',
+                      },
+                    ],
+                    metrics: [
+                      {
+                        expression: 'sessions',
+                      },
+                    ],
+                  },
+                },
+                options: {
+                  hide_x_axis: true,
+                  hide_y_axis: true,
+                },
+              },
+              {
                 title: 'Sessions per day',
                 type: 'Bars',
                 dataset: {
@@ -501,8 +586,8 @@ const propsAnalytics3 = {
             ],
             y: 0,
             h: 5,
-            layout: 'vertical',
-            w: 4,
+            layout: 'horizontal',
+            w: 12,
           },
         ],
       },
@@ -516,11 +601,11 @@ const fetchmockOptions = [
     response: { data: 'Select @count() from UserPoint' },
   },
   {
-    matcher: 'glob:/undefined/v1/datamarts/1414/query_executions/otql*',
+    matcher: 'glob:/undefined/v1/datamarts/1414/query_executions/otql?use_cache=true*',
     response: MockedData,
   },
   {
-    matcher: 'glob:/undefined/v1/datamarts/1415/query_executions/otql*',
+    matcher: 'glob:/undefined/v1/datamarts/1415/query_executions/otql?use_cache=true*',
     response: MockedMetricData,
   },
   {
