@@ -17,7 +17,7 @@ export { default as NotificationsReducers } from './redux/Notifications/reducer'
 export { default as Store } from './redux/store';
 export { logIn, logOut } from './redux/Login/actions';
 export { default as AuthenticatedRoute } from './utils/AuthenticatedRoute';
-export { MicsReduxState } from './utils/ReduxHelper';
+export { MicsReduxState, createRequestTypes } from './utils/ReduxHelper';
 export { isAppInitialized } from './redux/App/selectors';
 export { default as Logo } from './components/top-bar/Logo';
 export { default as errorMessages } from './utils/errorMessage';
@@ -56,13 +56,20 @@ export {
   FormDataFileField,
   FormDataFile,
 } from './components/plugin-form/ConnectedFields/FormDataFile';
+export { default as keycloakPostLoginSagas } from './redux/KeycloakPostLogin/sagas';
+export { default as keycloakPostLoginReducer } from './redux/KeycloakPostLogin/reducer';
+export {
+  default as injectThemeColors,
+  InjectedThemeColorsProps,
+  ThemeColorsShape,
+} from './utils/ThemeColors';
 
 // Services
 
 export { TYPES } from './constants/types';
 export { lazyInject } from './inversify/inversify.config';
 export { default as KeycloakService } from './services/KeycloakService';
-export { IAuthService } from './services/AuthService';
+export { IAuthService, AuthService } from './services/AuthService';
 export { default as ApiService } from './services/ApiService';
 export { default as PluginInstanceService } from './services/PluginInstanceService';
 export { default as PluginService } from './services/PluginService';
@@ -103,3 +110,4 @@ export {
 } from './models/plugin/Plugins';
 export { PluginLayout } from './models/plugin/PluginLayout';
 export { UserWorkspaceResource, UserProfileResource } from './models/directory/UserProfileResource';
+export { ITagService, TagService } from './services/TagService';

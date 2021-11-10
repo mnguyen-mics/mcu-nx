@@ -18,6 +18,8 @@ const initKeycloak = (onAuthenticatedCallback: any) => {
     });
 };
 
+const getClientId = () => _keycloak.clientId;
+
 const doLogin = _keycloak.login;
 
 const doLogout = _keycloak.logout;
@@ -40,6 +42,7 @@ const isKeycloakEnabled = (): boolean => {
 
 const KeycloakService = {
   initKeycloak,
+  getClientId,
   doLogin,
   doLogout,
   isLoggedIn,

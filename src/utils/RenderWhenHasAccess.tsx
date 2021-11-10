@@ -14,6 +14,7 @@ import { InjectedIntlProps, injectIntl } from 'react-intl';
 export interface RenderWhenHasAccessProps {
   requiredFeatures?: string | string[];
   requireDatamart?: boolean;
+  renderOnError?: React.ReactNode;
 }
 
 export interface MapStateToProps {
@@ -92,6 +93,7 @@ class RenderWhenHasAccess extends React.Component<Props> {
   render() {
     const {
       children,
+      renderOnError,
       accessGrantedToOrganisation,
       match: {
         params: { organisationId },
@@ -99,11 +101,15 @@ class RenderWhenHasAccess extends React.Component<Props> {
       intl: { formatMessage },
     } = this.props;
 
-    return accessGrantedToOrganisation(organisationId) && this.checkIfHasFeatures() ? (
-      children
+    const errorRendered = renderOnError ? (
+      renderOnError
     ) : (
       <Error message={formatMessage(errorMessages.generic)} />
     );
+
+    return accessGrantedToOrganisation(organisationId) && this.checkIfHasFeatures()
+      ? children
+      : { errorRendered };
   }
 }
 
