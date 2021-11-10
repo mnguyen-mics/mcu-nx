@@ -57,6 +57,7 @@ export default class DashboardLayout extends React.Component<DashboardLayoutProp
     charts: ChartConfig[],
     layout: string = 'horizontal',
     chartType: ChartType,
+    cardHeight: number,
   ) => {
     const horizontalCssProperties = {
       float: 'left' as any,
@@ -65,33 +66,41 @@ export default class DashboardLayout extends React.Component<DashboardLayoutProp
 
     const isMetricChartType = chartType.toLowerCase() === 'metric';
     const metricChartsList = charts.filter(chart => chart.type.toLowerCase() === 'metric');
-    const metricChartSize = 20;
-    const otherThanMetricChartSize =
-      (100 - metricChartsList.length * metricChartSize) / (charts.length - metricChartsList.length);
+    const gridColumnHeight = 96;
+    const cardHeightInPixel = cardHeight * gridColumnHeight;
+    const metricHeigthInPx = 63;
+
+    const otherThanMetricChartHeigth =
+      (cardHeightInPixel -
+        metricChartsList.length * metricHeigthInPx -
+        (charts.length - metricChartsList.length) * 28) /
+      (charts.length - metricChartsList.length);
+
+    const metricChartWidthSize = 20;
+    const otherThanMetricChartWidth =
+      (100 - metricChartsList.length * metricChartWidthSize) /
+      (charts.length - metricChartsList.length);
 
     if (layout === 'horizontal') {
       if (isMetricChartType && charts.length > 1) {
         return {
           ...horizontalCssProperties,
-          width: `${metricChartSize}%`,
+          width: `${metricChartWidthSize}%`,
         };
       }
       return {
         ...horizontalCssProperties,
         width:
           !isMetricChartType && metricChartsList
-            ? `${otherThanMetricChartSize}%`
+            ? `${otherThanMetricChartWidth}%`
             : `${100 / charts.length}%`,
       };
     } else {
       if (isMetricChartType && charts.length > 1) {
-        return { minHeight: '85px', height: `${metricChartSize}%` };
+        return { height: `${metricHeigthInPx}px` };
       }
       return {
-        height:
-          !isMetricChartType && metricChartsList
-            ? `${otherThanMetricChartSize}%`
-            : `${100 / charts.length}%`,
+        height: `${otherThanMetricChartHeigth}px`,
       };
     }
   };
@@ -136,7 +145,7 @@ export default class DashboardLayout extends React.Component<DashboardLayoutProp
     const charts = card.charts.map((chart, index) => {
       return this.renderChart(
         chart,
-        this.computeCSSProperties(card.charts, card.layout, chart.type),
+        this.computeCSSProperties(card.charts, card.layout, chart.type, card.h),
       );
     });
     const cardComponent = <Card className='mcs-cardFlex'>{charts}</Card>;

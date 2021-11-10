@@ -187,7 +187,7 @@ class Chart extends React.Component<Props, ChartState> {
       chartConfig.options && (chartConfig.options as ChartApiOptions).xKey,
     );
     return (
-      <div style={chartContainerStyle}>
+      <div style={chartContainerStyle} className={'mcs-chart'}>
         <div className={'mcs-chart_header'}>
           <h2 className={'mcs-chart_header_title'}>{chartConfig.title}</h2>
           {loading && <Loading className={'mcs-chart_header_loader'} isFullScreen={false} />}
