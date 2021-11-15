@@ -206,6 +206,11 @@ export class ChartDatasetService implements IChartDatasetService {
       });
   }
 
+  private getScope(adaptToScope?: boolean, providedScope?: AbstractScope) {
+    const shouldAdaptToScope = adaptToScope === undefined ? true : adaptToScope;
+    return shouldAdaptToScope ? providedScope : undefined;
+  }
+
   private fetchDatasetForSource(
     datamartId: string,
     chartType: ChartType,
@@ -219,7 +224,7 @@ export class ChartDatasetService implements IChartDatasetService {
     switch (sourceType) {
       case 'otql':
         const otqlSource = source as OTQLSource;
-        const scope = otqlSource.adapt_to_scope ? providedScope : undefined;
+        const scope = this.getScope(otqlSource.adapt_to_scope, providedScope);
         return this.executeOtqlQuery(datamartId, otqlSource, scope).then(res => {
           return formatDatasetForOtql(res, xKey, seriesTitle);
         });
@@ -287,7 +292,10 @@ export class ChartDatasetService implements IChartDatasetService {
       case 'activities_analytics':
         const activitiesAnalyticsSource = source as ActivitiesAnalyticsSource;
         const activitiesAnalyticsSourceJson = activitiesAnalyticsSource.query_json;
-        const analyticsScope = activitiesAnalyticsSource.adapt_to_scope ? providedScope : undefined;
+        const analyticsScope = this.getScope(
+          activitiesAnalyticsSource.adapt_to_scope,
+          providedScope,
+        );
 
         const dateRanges: DateRange[] =
           activitiesAnalyticsSourceJson.date_ranges || this.defaultDateRange;
