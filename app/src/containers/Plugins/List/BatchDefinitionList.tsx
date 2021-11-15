@@ -5,7 +5,7 @@ import { FilterOutlined } from '@ant-design/icons';
 import { Layout, Select, Tag, Drawer } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
-import messages from './messages';
+import messages from '../messages';
 import ItemList, { Filters } from '../../../components/ItemList';
 import BatchDefinitionListActionBar from './BatchDefinitionListActionBar';
 import { PluginResource } from '../../../models/plugin/plugins';

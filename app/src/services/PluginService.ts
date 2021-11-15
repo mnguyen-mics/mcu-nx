@@ -12,9 +12,11 @@ interface GetPluginOptions extends Omit<PaginatedApiParam, 'first_result'> {
   artifact_id?: string;
   group_id?: string;
   organisation_id?: string;
+  current_version_id?: string;
 }
 
 export interface IPluginService {
+  getPlugin: (id: string) => Promise<DataResponse<PluginResource>>;
   getPlugins: (
     options: GetPluginOptions,
     withArchivedPluginVersion?: boolean,
@@ -23,11 +25,19 @@ export interface IPluginService {
     pluginId: string,
     versionId: string,
   ) => Promise<DataResponse<PluginVersionResource>>;
+  getPluginVersions: (
+    pluginId: string,
+    params?: object,
+  ) => Promise<DataListResponse<PluginVersionResource>>;
   createPlugin: (body: Partial<PluginResource>) => Promise<DataResponse<PluginResource>>;
 }
 
 @injectable()
 export class PluginService implements IPluginService {
+  getPlugin(pluginId: string): Promise<DataResponse<PluginResource>> {
+    const endpoint = `plugins/${pluginId}`;
+    return ApiService.getRequest(endpoint);
+  }
   getPlugins(
     options: GetPluginOptions = {},
     withArchivedPluginVersion: boolean = false,
@@ -75,5 +85,12 @@ export class PluginService implements IPluginService {
   createPlugin(body: Partial<PluginResource>): Promise<DataResponse<PluginResource>> {
     const endpoint = `plugins`;
     return ApiService.postRequest(endpoint, body);
+  }
+  getPluginVersions(
+    pluginId: string,
+    params: object = {},
+  ): Promise<DataListResponse<PluginVersionResource>> {
+    const endpoint = `plugins/${pluginId}/versions`;
+    return ApiService.getRequest(endpoint, params);
   }
 }

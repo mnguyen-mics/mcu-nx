@@ -26,7 +26,7 @@ export function normalizeArrayOfObject<T, K extends keyof T>(arr: T[], key: K): 
         [keyValue]: object,
       };
     } else {
-      return '';
+      return acc;
     }
   }, {});
 }
