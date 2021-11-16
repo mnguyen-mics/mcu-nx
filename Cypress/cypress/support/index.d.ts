@@ -3,7 +3,7 @@
 declare namespace Cypress {
   interface Chainable<Subject> {
     /**
-     * Log in navigator. Default values are 'dev@mediarithmics.com' and 'aoc', so remember to change this if you are doing calls on prod° environment..
+     * Log in computing-console. Default values are 'dev@mediarithmics.com' and 'aoc', so remember to change this if you are doing calls on prod° environment..
      * @example
      * cy.login('toto**at**mediarithmics.com', '1234')
      */
@@ -19,6 +19,14 @@ declare namespace Cypress {
     switchOrg(organisationName: string): Chainable<any>;
 
     goToHome(organisationId: string): Chainable<any>;
+
+    /**
+     * Set the last update of a password of an user to one year ago from the current date
+     * @param email
+     * @example
+     * cy.expirePasssword('dev@mediarithmics.com')
+     */
+    expirePassword(email: string): void;
 
     /**
      * Save local storage between two tests in a single test suite.

@@ -10,10 +10,6 @@
 //
 //
 
-before(() => {
-  cy.wait(10000);
-});
-
 // -- This is a parent command --
 Cypress.Commands.add(
   'login',
@@ -49,6 +45,12 @@ Cypress.Commands.add('switchOrg', organisationName => {
 
 Cypress.Commands.add('goToHome', organisationId => {
   cy.visit(`#/o/${organisationId}/home`);
+});
+
+Cypress.Commands.add('expirePassword', email => {
+  cy.exec(
+    `sh cypress/support/expirePassword.sh ${Cypress.env('virtualPlatformName')}-bastion ${email}`,
+  );
 });
 
 // Storing local storage cache between tests
