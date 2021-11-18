@@ -1,13 +1,12 @@
 import * as React from 'react';
-import { OrganisationResource } from '../../models/organisation/organisation';
-import { lazyInject } from '../../config/inversify.config';
-import { TYPES } from '../../constants/types';
-import { IOrganisationService } from '../../services/OrganisationService';
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../../containers/Notifications/injectNotifications';
 import { compose } from 'recompose';
 import { Spin } from 'antd';
+import { lazyInject, TYPES } from '@mediarithmics-private/advanced-components';
+import { IOrganisationService } from '@mediarithmics-private/advanced-components/lib/services/OrganisationService';
+import { OrganisationResource } from '@mediarithmics-private/advanced-components/lib/models/organisation/organisation';
 
 interface OrganisationNameProps {
   organisationId?: string;

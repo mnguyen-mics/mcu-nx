@@ -12,15 +12,12 @@ import { Tag } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import messages from '../messages';
-import { CronStatus, IntegrationBatchResource } from '../../../models/plugin/plugins';
 import {
   PAGINATION_SEARCH_SETTINGS,
   PLUGIN_SEARCH_SETTINGS,
   updateSearch,
 } from '../../../utils/LocationSearchHelper';
 import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
-import { lazyInject } from '../../../config/inversify.config';
-import { TYPES } from '../../../constants/types';
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';
@@ -29,12 +26,17 @@ import {
   EmptyTableView,
   TableViewFilters,
 } from '@mediarithmics-private/mcs-components-library';
-import {
-  IntegrationBatchInstanceOptions,
-  IIntegrationBatchService,
-} from '../../../services/IntegrationBatchService';
+
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
 import { DataListResponse } from '@mediarithmics-private/advanced-components/lib/services/ApiService';
+import {
+  lazyInject,
+  TYPES,
+  IntegrationBatchInstanceOptions,
+  IIntegrationBatchService,
+  CronStatus,
+  IntegrationBatchResource,
+} from '@mediarithmics-private/advanced-components';
 
 const BATCH_INSTANCE_SEARCH_SETTINGS = [...PAGINATION_SEARCH_SETTINGS, ...PLUGIN_SEARCH_SETTINGS];
 
@@ -235,6 +237,10 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
       </React.Fragment>
     );
   }
+
+  saveBatchInstance = () => {
+    //
+  };
 
   render() {
     const {

@@ -13,6 +13,14 @@ export default defineMessages({
     id: 'jobs.batchInstances.list.actionBar.newBatchInstance',
     defaultMessage: 'New Batch Instance',
   },
+  editBatchInstance: {
+    id: 'jobs.batchInstances.list.actionBar.editBatchInstance',
+    defaultMessage: 'Edit {name}',
+  },
+  save: {
+    id: 'jobs.batchInstances.form.save',
+    defaultMessage: 'Save',
+  },
   group: {
     id: 'jobs.batchInstances.list.column.group',
     defaultMessage: 'Group',

@@ -6,7 +6,7 @@ import { compose } from 'recompose';
 import { Actionbar, McsIcon } from '@mediarithmics-private/mcs-components-library';
 import messages from '../messages';
 import { Link } from 'react-router-dom';
-import { PluginResource } from '../../../models/plugin/plugins';
+import { PluginResource } from '@mediarithmics-private/advanced-components';
 import { RollbackOutlined } from '@ant-design/icons';
 
 interface RouterProps {

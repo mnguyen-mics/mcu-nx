@@ -7,20 +7,22 @@ import { Layout, Tag, Select } from 'antd';
 import { FilterOutlined } from '@ant-design/icons';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 import ItemList, { Filters } from '../../components/ItemList';
-import { CustomDashboardResource } from '../../models/customDashboards/customDashboards';
 import { PAGINATION_SEARCH_SETTINGS } from '../../utils/LocationSearchHelper';
 import DashboardActionBar from './DashboardActionBar';
 import messages from './messages';
-import { lazyInject } from '../../config/inversify.config';
-import { TYPES } from '../../constants/types';
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
 import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
-import { ICustomDashboardService } from '../../services/CustomDashboardService';
-import { IOrganisationService } from '../../services/OrganisationService';
 import { UserProfileResource } from '@mediarithmics-private/advanced-components/lib/models/directory/UserProfileResource';
 import { InjectedNotificationProps } from '../Notifications/injectNotifications';
 import { getPaginatedApiParam } from '../../utils/ApiHelper';
 import { Card } from '@mediarithmics-private/mcs-components-library';
+import {
+  lazyInject,
+  TYPES,
+  CustomDashboardResource,
+  ICustomDashboardService,
+} from '@mediarithmics-private/advanced-components';
+import { IOrganisationService } from '@mediarithmics-private/advanced-components/lib/services/OrganisationService';
 
 const { Content } = Layout;
 

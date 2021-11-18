@@ -1,14 +1,10 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable jsx-quotes */
-/* eslint-disable react/jsx-filename-extension */
 import { Button, Form, Input, Select } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { UserWorkspaceResource } from '../../../models/directory/UserProfileResource';
-import { PluginResource } from '../../../models/plugin/plugins';
+import { PluginResource, UserWorkspaceResource } from '@mediarithmics-private/advanced-components';
 import { MicsReduxState } from '../../../utils/ReduxHelper';
 import messages from './messages';
 
@@ -20,11 +16,11 @@ interface MapStateToProps {
   workspaces?: UserWorkspaceResource[];
 }
 
-export interface IntegrationBatchEditDrawerProps {
+export interface IntegrationBatchFormProps {
   save: (integrationBatchPluginResource: Partial<PluginResource>) => void;
 }
 
-type Props = IntegrationBatchEditDrawerProps & InjectedIntlProps & MapStateToProps;
+type Props = IntegrationBatchFormProps & InjectedIntlProps & MapStateToProps;
 
 interface State {
   organisationIdOption?: string;
@@ -32,7 +28,7 @@ interface State {
   artifactIdOptions?: string;
 }
 
-class IntergrationBatchEditDrawer extends React.Component<Props, State> {
+class IntegrationBatchForm extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {};
@@ -80,26 +76,17 @@ class IntergrationBatchEditDrawer extends React.Component<Props, State> {
     } = this.props;
 
     return (
-      <Form layout='vertical' className='mcs-batchPluginEdit-drawer-form'>
-        <Content className='mcs-content-container mcs-batchPluginEdit-drawer-container'>
-          <div className='mcs-batchPluginEdit-drawer-form-label'>
-            {formatMessage(messages.pluginType)}
-          </div>
-          <div
-            className='mcs-batchPluginEdit-drawer-form-description'
-            style={{ marginBottom: '30px' }}
-          >
+      <Form layout='vertical' className='mcs-form_layout'>
+        <Content className='mcs-content-container mcs-form_container'>
+          <div className='mcs-form_label'>{formatMessage(messages.pluginType)}</div>
+          <div className='mcs-form_description' style={{ marginBottom: '30px' }}>
             {formatMessage(messages.integrationBatchType)}
           </div>
           <Form.Item
-            label={
-              <div className='mcs-batchPluginEdit-drawer-form-label'>
-                {formatMessage(messages.organisation)}
-              </div>
-            }
-            className='mcs-batchPluginEdit-drawer-form-item'
+            label={<div className='mcs-form_label'>{formatMessage(messages.organisation)}</div>}
+            className='mcs-form_item'
           >
-            <div className='mcs-batchPluginEdit-drawer-form-description'>
+            <div className='mcs-form_description'>
               {formatMessage(messages.organisationDescription)}
             </div>
             <Select
@@ -114,19 +101,11 @@ class IntergrationBatchEditDrawer extends React.Component<Props, State> {
             />
           </Form.Item>
           <Form.Item
-            label={
-              <div className='mcs-batchPluginEdit-drawer-form-label'>
-                {formatMessage(messages.groupId)}
-              </div>
-            }
-            className='mcs-batchPluginEdit-drawer-form-item'
+            label={<div className='mcs-form_label'>{formatMessage(messages.groupId)}</div>}
+            className='mcs-form_item'
           >
-            <div className='mcs-batchPluginEdit-drawer-form-description'>
-              {formatMessage(messages.groupIdDescription)}
-            </div>
-            <div className='mcs-batchPluginEdit-drawer-form-item-sample'>
-              {formatMessage(messages.groupIdSample)}
-            </div>
+            <div className='mcs-form_description'>{formatMessage(messages.groupIdDescription)}</div>
+            <div className='mcs-form_item-sample'>{formatMessage(messages.groupIdSample)}</div>
             <Input
               className='mcs-batchPluginEdit-drawer-form-input-groupId'
               placeholder='com.mediarithmics.batches'
@@ -135,14 +114,10 @@ class IntergrationBatchEditDrawer extends React.Component<Props, State> {
             />
           </Form.Item>
           <Form.Item
-            label={
-              <div className='mcs-batchPluginEdit-drawer-form-label'>
-                {formatMessage(messages.artifactId)}
-              </div>
-            }
-            className='mcs-batchPluginEdit-drawer-form-item'
+            label={<div className='mcs-form_label'>{formatMessage(messages.artifactId)}</div>}
+            className='mcs-form_item'
           >
-            <div className='mcs-batchPluginEdit-drawer-form-description'>
+            <div className='mcs-form_description'>
               {formatMessage(messages.artifactIdDescription)}
             </div>
             <Input
@@ -154,10 +129,10 @@ class IntergrationBatchEditDrawer extends React.Component<Props, State> {
           </Form.Item>
           <Button
             onClick={this.handleSubmit}
-            className='mcs-primary mcs-batchPluginEdit-drawer-saveButton'
+            className='mcs-primary mcs-form_saveButton'
             type='primary'
           >
-            {'Save'}
+            {formatMessage(messages.save)}
           </Button>
         </Content>
       </Form>
@@ -169,7 +144,7 @@ const mapStateToProps = (state: MicsReduxState) => ({
   workspaces: state.session.connectedUser.workspaces,
 });
 
-export default compose<Props, IntegrationBatchEditDrawerProps>(
+export default compose<Props, IntegrationBatchFormProps>(
   connect(mapStateToProps),
   injectIntl,
-)(IntergrationBatchEditDrawer);
+)(IntegrationBatchForm);
