@@ -1,6 +1,6 @@
 export interface PublicJobExecutionResource {
   id: string;
-  status: JobExecutionStatus;
+  status: JobExecutionPublicStatus;
   creation_date: number;
   start_date?: number;
   duration?: number;
@@ -12,17 +12,8 @@ export interface PublicJobExecutionResource {
   erroneous_tasks?: number;
   external_model_name: ExternalModelName;
 }
-export type JobExecutionStatus =
-  | 'WAITING_DEPENDENT_JOB'
-  | 'SCHEDULED'
-  | 'PENDING'
-  | 'RUNNING'
-  | 'SUCCEEDED'
-  | 'FAILED'
-  | 'EXECUTOR_NOT_RESPONDING'
-  | 'LOST'
-  | 'SUCCESS'
-  | 'CANCELED';
+
+export type JobExecutionPublicStatus = 'PENDING' | 'RUNNING' | 'SUCCEEDED' | 'FAILED' | 'CANCELED';
 
 export type ExternalModelName =
   | 'PUBLIC_EXPORT'

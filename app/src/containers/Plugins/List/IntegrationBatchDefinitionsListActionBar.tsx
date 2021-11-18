@@ -27,7 +27,7 @@ type Props = RouteComponentProps<RouterProps> &
   InjectedIntlProps &
   IntegrationBatchDefinitionListActionBarProps;
 
-class IntegrationBatchDefinitionListActionBar extends React.Component<
+class IntegrationBatchDefinitionsListActionBar extends React.Component<
   Props,
   DashboardsActionbarState
 > {
@@ -51,10 +51,10 @@ class IntegrationBatchDefinitionListActionBar extends React.Component<
 
     // Plugins home page ?
     const breadcrumbPaths = [
-      <Link key='1' to={`/o/${organisationId}/plugins/batch_definitions`}>
+      <Link key='1' to={`/o/${organisationId}/plugins/integration_batch_definitions`}>
         {formatMessage(messages.plugins)}
       </Link>,
-      <Link key='2' to={`/o/${organisationId}/plugins/batch_definitions`}>
+      <Link key='2' to={`/o/${organisationId}/plugins/integration_batch_definitions`}>
         {formatMessage(messages.pluginBatchDefinitions)}
       </Link>,
     ];
@@ -75,4 +75,4 @@ class IntegrationBatchDefinitionListActionBar extends React.Component<
 export default compose<Props, IntegrationBatchDefinitionListActionBarProps>(
   injectIntl,
   withRouter,
-)(IntegrationBatchDefinitionListActionBar);
+)(IntegrationBatchDefinitionsListActionBar);

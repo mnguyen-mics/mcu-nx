@@ -3,18 +3,16 @@ import _ from 'lodash';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 import cronstrue from 'cronstrue';
-// import queryString from 'query-string';
 import {
   FilterOutlined,
   PauseCircleFilled,
   PlayCircleFilled,
   ClockCircleOutlined,
 } from '@ant-design/icons';
-import { Layout, Tag } from 'antd';
+import { Tag } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import messages from '../messages';
-import IntegrationBatchInstanceListActionBar from './IntegrationBatchInstanceListActionBar';
 import { CronStatus, IntegrationBatchResource } from '../../../models/plugin/plugins';
 import {
   PAGINATION_SEARCH_SETTINGS,
@@ -30,7 +28,6 @@ import injectNotifications, {
 import {
   Card,
   EmptyTableView,
-  McsTabs,
   TableViewFilters,
 } from '@mediarithmics-private/mcs-components-library';
 import {
@@ -39,9 +36,6 @@ import {
 } from '../../../services/IntegrationBatchService';
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
 import { DataListResponse } from '@mediarithmics-private/advanced-components/lib/services/ApiService';
-// import { JobExecutionStatus } from '../../../models/job/jobs';
-
-const { Content } = Layout;
 
 const BATCH_INSTANCE_SEARCH_SETTINGS = [...PAGINATION_SEARCH_SETTINGS, ...PLUGIN_SEARCH_SETTINGS];
 
@@ -67,7 +61,7 @@ interface State {
   noInitialPeriodicData: boolean;
 }
 
-class IntegrationBatchInstanceList extends React.Component<Props, State> {
+class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State> {
   @lazyInject(TYPES.IIntegrationBatchService)
   private _integrationBatchService: IIntegrationBatchService;
 
@@ -97,6 +91,8 @@ class IntegrationBatchInstanceList extends React.Component<Props, State> {
         params: { organisationId },
       },
     } = this.props;
+    const { pageSize, pageSize2 } = this.state;
+
     this.setState({
       isLoadingPeriodicInstances: true,
       isLoadingNonPeriodicInstances: true,
@@ -105,9 +101,13 @@ class IntegrationBatchInstanceList extends React.Component<Props, State> {
       this._integrationBatchService.getAllInstanceFilterProperties(),
       this._integrationBatchService.getIntegrationBatchInstances(organisationId, {
         cronStatus: ['ACTIVE' as CronStatus, 'PAUSED'],
+        first_result: 0,
+        max_results: pageSize,
       }),
       this._integrationBatchService.getIntegrationBatchInstances(organisationId, {
         cronStatus: [],
+        first_result: 0,
+        max_results: pageSize2,
       }),
     ];
 
@@ -162,35 +162,8 @@ class IntegrationBatchInstanceList extends React.Component<Props, State> {
     });
   };
 
-  renderActionBarInnerElements() {
-    return <span />;
-    // const { options } = this.state;
-    // const {
-    //   location: { search },
-    // } = this.props;
-
-    // const defaultGroupId = queryString.parse(search).group_id || undefined;
-
-    // return (
-    //   <div className='mcs-actionBar_filters'>
-    //     <Select
-    //       mode='tags'
-    //       className='mcs-actionBar_filterInput mcs-actionBar-batchInstanceFilterInput'
-    //       placeholder={this.renderInputPlaceholder('Group Id, Artifact Id or Version')}
-    //       showSearch={true}
-    //       allowClear={true}
-    //       showArrow={false}
-    //       options={options}
-    //       onSelect={this.onSelect('group_id')}
-    //       onClear={this.onClear('group_id')}
-    //       defaultValue={defaultGroupId}
-    //     />
-    //   </div>
-    // );
-  }
-
   fetchIntegrationBatchInstances = (
-    currentPage: number,
+    page: number,
     pageSize: number,
     options?: IntegrationBatchInstanceOptions,
     fetchPeriodic?: boolean,
@@ -201,13 +174,14 @@ class IntegrationBatchInstanceList extends React.Component<Props, State> {
         params: { organisationId },
       },
     } = this.props;
+    const firstResult = (page - 1) * pageSize;
     if (fetchPeriodic) {
       this.setState({
         isLoadingPeriodicInstances: true,
       });
       return this._integrationBatchService
         .getIntegrationBatchInstances(organisationId, {
-          first_result: currentPage,
+          first_result: firstResult,
           max_results: pageSize,
           cronStatus: ['ACTIVE' as CronStatus, 'PAUSED'],
         })
@@ -216,7 +190,7 @@ class IntegrationBatchInstanceList extends React.Component<Props, State> {
             periodicInstances: res.data,
             isLoadingPeriodicInstances: false,
             periodicTotal: res.total || res.count,
-            currentPage2: currentPage,
+            currentPage2: page,
             pageSize2: pageSize,
           });
         })
@@ -232,7 +206,7 @@ class IntegrationBatchInstanceList extends React.Component<Props, State> {
       });
       return this._integrationBatchService
         .getIntegrationBatchInstances(organisationId, {
-          first_result: currentPage,
+          first_result: firstResult,
           max_results: pageSize,
           cronStatus: [],
         })
@@ -241,7 +215,7 @@ class IntegrationBatchInstanceList extends React.Component<Props, State> {
             nonPeriodicInstances: res.data,
             isLoadingNonPeriodicInstances: false,
             nonPeriodicTotal: res.total || res.count,
-            currentPage: currentPage,
+            currentPage: page,
             pageSize: pageSize,
           });
         })
@@ -293,7 +267,7 @@ class IntegrationBatchInstanceList extends React.Component<Props, State> {
         render: (text: string, record: IntegrationBatchResource) => (
           <Link
             className='mcs-batchInstanceTable_GroupId'
-            to={`/o/${organisationId}/plugins/batch_instances/${record.id}`}
+            to={`/o/${organisationId}/jobs/integration_batch_instances/${record.id}`}
           >
             {record.group_id}
           </Link>
@@ -306,7 +280,7 @@ class IntegrationBatchInstanceList extends React.Component<Props, State> {
         render: (text: string, record: IntegrationBatchResource) => (
           <Link
             className='mcs-batchInstanceTable_artifactId'
-            to={`/o/${organisationId}/plugins/batch_instances/${record.id}`}
+            to={`/o/${organisationId}/jobs/integration_batch_instances/${record.id}`}
           >
             {record.artifact_id}
           </Link>
@@ -393,53 +367,34 @@ class IntegrationBatchInstanceList extends React.Component<Props, State> {
       message: formatMessage(messages.emptyNonPeriodicTableMessage),
     };
 
-    const tabs = [
-      {
-        title: 'Overview',
-        display: (
-          <React.Fragment>
-            <Card title={formatMessage(messages.nonPeriodicInstances)}>
-              {noInitialNonPeriodicData ? (
-                <EmptyTableView {...emptyNonPeriodicTable} />
-              ) : (
-                <TableViewFilters
-                  dataSource={nonPeriodicInstances}
-                  columns={dataColumnsDefinition}
-                  loading={isLoadingNonPeriodicInstances}
-                  pagination={pagination}
-                />
-              )}
-            </Card>
-
-            <Card title={formatMessage(messages.periodicInstances)}>
-              {noInitialPeriodicData ? (
-                <EmptyTableView {...emptyPeriodicTable} />
-              ) : (
-                <TableViewFilters
-                  dataSource={periodicInstances}
-                  columns={dataColumnsDefinition2}
-                  loading={isLoadingPeriodicInstances}
-                  pagination={pagination2}
-                />
-              )}
-            </Card>
-          </React.Fragment>
-        ),
-      },
-      {
-        title: 'Executions',
-      },
-    ];
-
     return (
-      <div className='ant-layout'>
-        <IntegrationBatchInstanceListActionBar innerElement={this.renderActionBarInnerElements()} />
-        <div className='ant-layout'>
-          <Content className='mcs-content-container'>
-            <McsTabs items={tabs} />
-          </Content>
-        </div>
-      </div>
+      <React.Fragment>
+        <Card title={formatMessage(messages.nonPeriodicInstances)}>
+          {noInitialNonPeriodicData ? (
+            <EmptyTableView {...emptyNonPeriodicTable} />
+          ) : (
+            <TableViewFilters
+              dataSource={nonPeriodicInstances}
+              columns={dataColumnsDefinition}
+              loading={isLoadingNonPeriodicInstances}
+              pagination={pagination}
+            />
+          )}
+        </Card>
+
+        <Card title={formatMessage(messages.periodicInstances)}>
+          {noInitialPeriodicData ? (
+            <EmptyTableView {...emptyPeriodicTable} />
+          ) : (
+            <TableViewFilters
+              dataSource={periodicInstances}
+              columns={dataColumnsDefinition2}
+              loading={isLoadingPeriodicInstances}
+              pagination={pagination2}
+            />
+          )}
+        </Card>
+      </React.Fragment>
     );
   }
 }
@@ -448,4 +403,4 @@ export default compose<Props, {}>(
   withRouter,
   injectIntl,
   injectNotifications,
-)(IntegrationBatchInstanceList);
+)(IntegrationBatchInstancesOverviewTab);
