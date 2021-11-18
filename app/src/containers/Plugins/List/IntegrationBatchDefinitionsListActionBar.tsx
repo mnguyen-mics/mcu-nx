@@ -63,7 +63,11 @@ class IntegrationBatchDefinitionsListActionBar extends React.Component<
       <Actionbar pathItems={breadcrumbPaths}>
         <div className='mcs-actionbar_innerElementsPanel'>
           {innerElement}
-          <Button className='mcs-primary' type='primary' onClick={openDrawer}>
+          <Button
+            className='mcs-primary mcs-batchDefinitionListActionBar_createBatchButton'
+            type='primary'
+            onClick={openDrawer}
+          >
             <McsIcon type='plus' /> <FormattedMessage {...messages.newBatchPlugin} />
           </Button>
         </div>
