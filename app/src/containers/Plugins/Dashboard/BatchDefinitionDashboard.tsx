@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { Layout, Spin, Tag } from 'antd';
+import { Layout, Tag } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import ItemList, { Filters } from '../../../components/ItemList';
@@ -23,8 +23,8 @@ import { Card } from '@mediarithmics-private/mcs-components-library';
 import messages from '../messages';
 import DashboardHeader from '../../../components/DashboardHeader/DashboardHeader';
 import OrganisationName from '../../../components/Common/OrganisationName';
-import { normalizeArrayOfObject } from '../../../utils/Normalizer';
-import { Index } from '../../../utils/Types';
+// import { normalizeArrayOfObject } from '../../../utils/Normalizer';
+// import { Index } from '../../../utils/Types';
 
 const { Content } = Layout;
 
@@ -43,8 +43,8 @@ interface State {
   plugin?: PluginResource;
   pluginVersions: PluginVersionResource[];
   total: number;
-  isLoadingInstances: boolean;
-  pluginInstances?: Index<PluginResource>;
+  // isLoadingInstances: boolean;
+  // pluginInstances?: Index<PluginResource>;
 }
 
 class BatchDefinitionList extends React.Component<Props, State> {
@@ -58,14 +58,14 @@ class BatchDefinitionList extends React.Component<Props, State> {
       isLoadingPluginVersions: false,
       pluginVersions: [],
       total: 0,
-      isLoadingInstances: true,
+      // isLoadingInstances: true,
     };
   }
 
   componentDidMount() {
     const {
       match: {
-        params: { pluginId, organisationId },
+        params: { pluginId },
       },
       notifyError,
     } = this.props;
@@ -90,26 +90,26 @@ class BatchDefinitionList extends React.Component<Props, State> {
         });
       })
       .then(() => {
-        const { plugin } = this.state;
-        this._pluginService
-          .getPlugins({
-            plugin_type: 'INTEGRATION_BATCH',
-            organisation_id: organisationId,
-            artifact_id: plugin?.artifact_id,
-            group_id: plugin?.group_id,
-          })
-          .then(res => {
-            this.setState({
-              pluginInstances: normalizeArrayOfObject(res.data, 'current_version_id'),
-              isLoadingInstances: false,
-            });
-          })
-          .catch(err => {
-            notifyError(err);
-            this.setState({
-              isLoadingInstances: false,
-            });
-          });
+        // const { plugin } = this.state;
+        // this._pluginService
+        //   .getPlugins({
+        //     plugin_type: 'INTEGRATION_BATCH',
+        //     organisation_id: organisationId,
+        //     artifact_id: plugin?.artifact_id,
+        //     group_id: plugin?.group_id,
+        //   })
+        //   .then(res => {
+        //     this.setState({
+        //       pluginInstances: normalizeArrayOfObject(res.data, 'current_version_id'),
+        //       isLoadingInstances: false,
+        //     });
+        //   })
+        //   .catch(err => {
+        //     notifyError(err);
+        //     this.setState({
+        //       isLoadingInstances: false,
+        //     });
+        //   });
       })
       .catch(err => {
         this.setState({
@@ -157,8 +157,8 @@ class BatchDefinitionList extends React.Component<Props, State> {
       isLoadingPluginVersions,
       pluginVersions,
       total,
-      pluginInstances,
-      isLoadingInstances,
+      // pluginInstances,
+      // isLoadingInstances,
     } = this.state;
 
     const dataColumnsDefinition: Array<DataColumnDefinition<PluginVersionResource>> = [
@@ -168,20 +168,20 @@ class BatchDefinitionList extends React.Component<Props, State> {
         isHideable: false,
         render: (text: string, record: PluginVersionResource) => <Tag color='blue'>{text}</Tag>,
       },
-      {
-        title: formatMessage(messages.instances),
-        key: 'instances',
-        isHideable: false,
-        render: (text: string, record: PluginVersionResource) => {
-          return pluginInstances && !isLoadingInstances ? (
-            `${_.uniq(Object.keys(pluginInstances)).length} ${formatMessage(
-              messages.activeInstances,
-            )}`
-          ) : (
-            <Spin />
-          );
-        },
-      },
+      // {
+      //   title: formatMessage(messages.instances),
+      //   key: 'instances',
+      //   isHideable: false,
+      //   render: (text: string, record: PluginVersionResource) => {
+      //     return pluginInstances && !isLoadingInstances ? (
+      //       `${_.uniq(Object.keys(pluginInstances)).length} ${formatMessage(
+      //         messages.activeInstances,
+      //       )}`
+      //     ) : (
+      //       <Spin />
+      //     );
+      //   },
+      // },
       // {
       //   title: formatMessage(messages.executions),
       //   key: 'executions',
