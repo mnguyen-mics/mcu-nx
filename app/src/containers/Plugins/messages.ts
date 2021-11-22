@@ -37,4 +37,32 @@ export default defineMessages({
     id: 'plugins.batchEditDrawer.title',
     defaultMessage: 'Batches > New batch plugin',
   },
+  image: {
+    id: 'plugins.batchDefinitions.dashboard.versionTable.image',
+    defaultMessage: 'Image',
+  },
+  instances: {
+    id: 'plugins.batchDefinitions.dashboard.versionTable.instances',
+    defaultMessage: 'Instances',
+  },
+  executions: {
+    id: 'plugins.batchDefinitions.dashboard.versionTable.executions',
+    defaultMessage: 'Executions',
+  },
+  newVersion: {
+    id: 'plugins.batchDefinitions.dashboard.actionBar.newVersion',
+    defaultMessage: 'New version',
+  },
+  backToPlugins: {
+    id: 'plugins.batchDefinitions.dashboard.actionBar.backToPlugins',
+    defaultMessage: 'Back To Plugins',
+  },
+  for: {
+    id: 'plugins.batchDefinitions.dashboard.title.for',
+    defaultMessage: 'for',
+  },
+  activeInstances: {
+    id: 'plugins.batchDefinitions.dashboard.versionTable.activeInstances',
+    defaultMessage: 'active instance(s)',
+  },
 });

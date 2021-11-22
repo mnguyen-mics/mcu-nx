@@ -4,7 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import { compose } from 'recompose';
 import { Actionbar, McsIcon } from '@mediarithmics-private/mcs-components-library';
-import messages from './messages';
+import messages from '../messages';
 import { UploadFile } from 'antd/lib/upload/interface';
 import { Link } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ interface RouterProps {
   organisationId: string;
 }
 
-interface DashboardsActionbarProps {
+interface IntegrationBatchDefinitionListActionBarProps {
   innerElement?: React.ReactNode;
   openDrawer: () => void;
 }
@@ -23,9 +23,14 @@ interface DashboardsActionbarState {
   isLoading: boolean;
 }
 
-type Props = RouteComponentProps<RouterProps> & InjectedIntlProps & DashboardsActionbarProps;
+type Props = RouteComponentProps<RouterProps> &
+  InjectedIntlProps &
+  IntegrationBatchDefinitionListActionBarProps;
 
-class BatchDefinitionListActionBar extends React.Component<Props, DashboardsActionbarState> {
+class IntegrationBatchDefinitionListActionBar extends React.Component<
+  Props,
+  DashboardsActionbarState
+> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -67,7 +72,7 @@ class BatchDefinitionListActionBar extends React.Component<Props, DashboardsActi
   }
 }
 
-export default compose<Props, DashboardsActionbarProps>(
+export default compose<Props, IntegrationBatchDefinitionListActionBarProps>(
   injectIntl,
   withRouter,
-)(BatchDefinitionListActionBar);
+)(IntegrationBatchDefinitionListActionBar);

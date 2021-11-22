@@ -1,11 +1,17 @@
 import { generateRoutesFromDefinition, NavigatorDefinition, NavigatorRoute } from './domain';
-import BatchDefinitionsList from '../containers/Plugins/List/BatchDefinitionList';
+import IntegrationBatchDefinitionList from '../containers/Plugins/List/IntegrationBatchDefinitionList';
+import IntegrationBatchDefinitionDashboard from '../containers/Plugins/Dashboard/IntegrationBatchDefinitionDashboard';
 
 export const pluginsDefinition: NavigatorDefinition = {
   pluginBatchDefinitionList: {
     path: '/plugins/batch_definitions',
     layout: 'main',
-    contentComponent: BatchDefinitionsList,
+    contentComponent: IntegrationBatchDefinitionList,
+  },
+  pluginBatchDefinitionDashboard: {
+    path: '/plugins/batch_definitions/:pluginId',
+    layout: 'main',
+    contentComponent: IntegrationBatchDefinitionDashboard,
   },
 };
 
