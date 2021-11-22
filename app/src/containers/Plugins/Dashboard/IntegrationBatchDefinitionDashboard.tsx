@@ -4,7 +4,7 @@ import { Layout, Tag } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import ItemList, { Filters } from '../../../components/ItemList';
-import BatchDefinitionDashboardActionbar from './BatchDefinitionDashboardActionbar';
+import BatchDefinitionDashboardActionbar from './IntegrationBatchDefinitionDashboardActionbar';
 import { PluginResource, PluginVersionResource } from '../../../models/plugin/plugins';
 import {
   PAGINATION_SEARCH_SETTINGS,
@@ -47,7 +47,7 @@ interface State {
   // pluginInstances?: Index<PluginResource>;
 }
 
-class BatchDefinitionList extends React.Component<Props, State> {
+class IntegrationBatchDefinitionList extends React.Component<Props, State> {
   @lazyInject(TYPES.IPluginService)
   private _pluginService: IPluginService;
 
@@ -120,7 +120,7 @@ class BatchDefinitionList extends React.Component<Props, State> {
       });
   }
 
-  fetchBatchDefinitionVersions = (organisationId: string, filters: Filters) => {
+  fetchIntegrationBatchDefinitionVersions = (organisationId: string, filters: Filters) => {
     const {
       notifyError,
       match: {
@@ -223,7 +223,7 @@ class BatchDefinitionList extends React.Component<Props, State> {
             <DashboardHeader title={title} subtitle={subtitle} isLoading={isLoadingPlugin} />
             <Card title='Versions'>
               <ItemList
-                fetchList={this.fetchBatchDefinitionVersions}
+                fetchList={this.fetchIntegrationBatchDefinitionVersions}
                 dataSource={pluginVersions}
                 loading={isLoadingPluginVersions}
                 total={total}
@@ -240,4 +240,8 @@ class BatchDefinitionList extends React.Component<Props, State> {
   }
 }
 
-export default compose<Props, {}>(withRouter, injectIntl, injectNotifications)(BatchDefinitionList);
+export default compose<Props, {}>(
+  withRouter,
+  injectIntl,
+  injectNotifications,
+)(IntegrationBatchDefinitionList);

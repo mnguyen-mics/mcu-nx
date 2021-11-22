@@ -14,7 +14,7 @@ import { Layout, Tag } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import messages from '../messages';
-import BatchInstanceListActionBar from './BatchInstanceListActionBar';
+import IntegrationBatchInstanceListActionBar from './IntegrationBatchInstanceListActionBar';
 import { CronStatus, IntegrationBatchResource } from '../../../models/plugin/plugins';
 import {
   PAGINATION_SEARCH_SETTINGS,
@@ -33,7 +33,10 @@ import {
   McsTabs,
   TableViewFilters,
 } from '@mediarithmics-private/mcs-components-library';
-import { BatchInstanceOptions, IBatchService } from '../../../services/BatchService';
+import {
+  IntegrationBatchInstanceOptions,
+  IIntegrationBatchService,
+} from '../../../services/IntegrationBatchService';
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
 import { DataListResponse } from '@mediarithmics-private/advanced-components/lib/services/ApiService';
 // import { JobExecutionStatus } from '../../../models/job/jobs';
@@ -64,9 +67,9 @@ interface State {
   noInitialPeriodicData: boolean;
 }
 
-class BatchInstanceList extends React.Component<Props, State> {
-  @lazyInject(TYPES.IBatchService)
-  private _batchService: IBatchService;
+class IntegrationBatchInstanceList extends React.Component<Props, State> {
+  @lazyInject(TYPES.IIntegrationBatchService)
+  private _integrationBatchService: IIntegrationBatchService;
 
   constructor(props: Props) {
     super(props);
@@ -99,11 +102,11 @@ class BatchInstanceList extends React.Component<Props, State> {
       isLoadingNonPeriodicInstances: true,
     });
     const promises: Array<Promise<any>> = [
-      this._batchService.getAllInstanceFilterProperties(),
-      this._batchService.getBatchInstances(organisationId, {
+      this._integrationBatchService.getAllInstanceFilterProperties(),
+      this._integrationBatchService.getIntegrationBatchInstances(organisationId, {
         cronStatus: ['ACTIVE' as CronStatus, 'PAUSED'],
       }),
-      this._batchService.getBatchInstances(organisationId, {
+      this._integrationBatchService.getIntegrationBatchInstances(organisationId, {
         cronStatus: [],
       }),
     ];
@@ -154,8 +157,8 @@ class BatchInstanceList extends React.Component<Props, State> {
     const { currentPage, currentPage2, pageSize, pageSize2 } = this.state;
     const options: any = {};
     options[`${filterProperty}`] = value;
-    this.fetchBatchInstances(currentPage2, pageSize2, options, true).then(() => {
-      this.fetchBatchInstances(currentPage, pageSize, options);
+    this.fetchIntegrationBatchInstances(currentPage2, pageSize2, options, true).then(() => {
+      this.fetchIntegrationBatchInstances(currentPage, pageSize, options);
     });
   };
 
@@ -186,10 +189,10 @@ class BatchInstanceList extends React.Component<Props, State> {
     // );
   }
 
-  fetchBatchInstances = (
+  fetchIntegrationBatchInstances = (
     currentPage: number,
     pageSize: number,
-    options?: BatchInstanceOptions,
+    options?: IntegrationBatchInstanceOptions,
     fetchPeriodic?: boolean,
   ) => {
     const {
@@ -202,8 +205,8 @@ class BatchInstanceList extends React.Component<Props, State> {
       this.setState({
         isLoadingPeriodicInstances: true,
       });
-      return this._batchService
-        .getBatchInstances(organisationId, {
+      return this._integrationBatchService
+        .getIntegrationBatchInstances(organisationId, {
           first_result: currentPage,
           max_results: pageSize,
           cronStatus: ['ACTIVE' as CronStatus, 'PAUSED'],
@@ -227,8 +230,8 @@ class BatchInstanceList extends React.Component<Props, State> {
       this.setState({
         isLoadingNonPeriodicInstances: true,
       });
-      return this._batchService
-        .getBatchInstances(organisationId, {
+      return this._integrationBatchService
+        .getIntegrationBatchInstances(organisationId, {
           first_result: currentPage,
           max_results: pageSize,
           cronStatus: [],
@@ -359,9 +362,9 @@ class BatchInstanceList extends React.Component<Props, State> {
       current: currentPage,
       pageSize: pageSize,
       onChange: (page: number, size: number) =>
-        this.fetchBatchInstances(page, size, undefined, false),
+        this.fetchIntegrationBatchInstances(page, size, undefined, false),
       onShowSizeChange: (current: number, size: number) =>
-        this.fetchBatchInstances(1, size, undefined, false),
+        this.fetchIntegrationBatchInstances(1, size, undefined, false),
       nonPeriodicTotal,
     };
 
@@ -369,9 +372,9 @@ class BatchInstanceList extends React.Component<Props, State> {
       current: currentPage2,
       pageSize: pageSize2,
       onChange: (page: number, size: number) =>
-        this.fetchBatchInstances(page, size, undefined, true),
+        this.fetchIntegrationBatchInstances(page, size, undefined, true),
       onShowSizeChange: (current: number, size: number) =>
-        this.fetchBatchInstances(1, size, undefined, true),
+        this.fetchIntegrationBatchInstances(1, size, undefined, true),
       periodicTotal,
     };
 
@@ -430,7 +433,7 @@ class BatchInstanceList extends React.Component<Props, State> {
 
     return (
       <div className='ant-layout'>
-        <BatchInstanceListActionBar innerElement={this.renderActionBarInnerElements()} />
+        <IntegrationBatchInstanceListActionBar innerElement={this.renderActionBarInnerElements()} />
         <div className='ant-layout'>
           <Content className='mcs-content-container'>
             <McsTabs items={tabs} />
@@ -441,4 +444,8 @@ class BatchInstanceList extends React.Component<Props, State> {
   }
 }
 
-export default compose<Props, {}>(withRouter, injectIntl, injectNotifications)(BatchInstanceList);
+export default compose<Props, {}>(
+  withRouter,
+  injectIntl,
+  injectNotifications,
+)(IntegrationBatchInstanceList);

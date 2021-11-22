@@ -7,7 +7,7 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import messages from '../messages';
 import ItemList, { Filters } from '../../../components/ItemList';
-import BatchDefinitionListActionBar from './BatchDefinitionListActionBar';
+import IntegrationBatchDefinitionListActionBar from './IntegrationBatchDefinitionListActionBar';
 import { PluginResource } from '../../../models/plugin/plugins';
 import {
   PAGINATION_SEARCH_SETTINGS,
@@ -46,7 +46,7 @@ interface State {
   isVisibleDrawer: boolean;
 }
 
-class BatchDefinitionList extends React.Component<Props, State> {
+class IntegrationBatchDefinitionList extends React.Component<Props, State> {
   @lazyInject(TYPES.IPluginService)
   private _pluginService: IPluginService;
 
@@ -156,7 +156,7 @@ class BatchDefinitionList extends React.Component<Props, State> {
     );
   }
 
-  fetchBatchDefinitions = (organisationId: string, filters: Filters) => {
+  fetchIntegrationBatchDefinitions = (organisationId: string, filters: Filters) => {
     const { notifyError } = this.props;
     this.setState({
       loading: true,
@@ -298,7 +298,7 @@ class BatchDefinitionList extends React.Component<Props, State> {
 
     return (
       <div className='ant-layout'>
-        <BatchDefinitionListActionBar
+        <IntegrationBatchDefinitionListActionBar
           innerElement={this.renderActionBarInnerElements()}
           openDrawer={this.openDrawer}
         />
@@ -306,7 +306,7 @@ class BatchDefinitionList extends React.Component<Props, State> {
           <Content className='mcs-content-container'>
             <Card>
               <ItemList
-                fetchList={this.fetchBatchDefinitions}
+                fetchList={this.fetchIntegrationBatchDefinitions}
                 dataSource={data}
                 loading={loading}
                 total={total}
@@ -335,4 +335,8 @@ class BatchDefinitionList extends React.Component<Props, State> {
   }
 }
 
-export default compose<Props, {}>(withRouter, injectIntl, injectNotifications)(BatchDefinitionList);
+export default compose<Props, {}>(
+  withRouter,
+  injectIntl,
+  injectNotifications,
+)(IntegrationBatchDefinitionList);

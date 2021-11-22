@@ -5,71 +5,66 @@ import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import { compose } from 'recompose';
 import { Actionbar, McsIcon } from '@mediarithmics-private/mcs-components-library';
 import messages from '../messages';
+import { UploadFile } from 'antd/lib/upload/interface';
 import { Link } from 'react-router-dom';
-import { PluginResource } from '../../../models/plugin/plugins';
-import { RollbackOutlined } from '@ant-design/icons';
 
 interface RouterProps {
   organisationId: string;
 }
 
-interface BatchDefinitionDashboardActionbarProps {
-  plugin?: PluginResource;
+interface IntegrationBatchDefinitionListActionBarProps {
   innerElement?: React.ReactNode;
+  openDrawer: () => void;
 }
 
-interface State {
+interface DashboardsActionbarState {
+  isModalOpen: boolean;
+  fileList: UploadFile[];
   isLoading: boolean;
 }
 
 type Props = RouteComponentProps<RouterProps> &
   InjectedIntlProps &
-  BatchDefinitionDashboardActionbarProps;
+  IntegrationBatchDefinitionListActionBarProps;
 
-class BatchDefinitionDashboardActionBar extends React.Component<Props, State> {
+class IntegrationBatchDefinitionListActionBar extends React.Component<
+  Props,
+  DashboardsActionbarState
+> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      isModalOpen: false,
+      fileList: [],
       isLoading: false,
     };
   }
-
-  redirect = () => {
-    const {
-      match: {
-        params: { organisationId },
-      },
-      history,
-    } = this.props;
-    history.push(`/o/${organisationId}/plugins/batch_definitions`);
-  };
-
   render() {
     const {
-      plugin,
       match: {
         params: { organisationId },
       },
       intl: { formatMessage },
       innerElement,
+      openDrawer,
     } = this.props;
 
+    // Plugins home page ?
     const breadcrumbPaths = [
       <Link key='1' to={`/o/${organisationId}/plugins/batch_definitions`}>
+        {formatMessage(messages.plugins)}
+      </Link>,
+      <Link key='2' to={`/o/${organisationId}/plugins/batch_definitions`}>
         {formatMessage(messages.pluginBatchDefinitions)}
       </Link>,
-      plugin?.name,
     ];
 
     return (
       <Actionbar pathItems={breadcrumbPaths}>
         <div className='mcs-actionbar_innerElementsPanel'>
           {innerElement}
-          <Button className='mcs-primary mcs-actionbar_backToPlugins' onClick={this.redirect}>
-            <RollbackOutlined /> <FormattedMessage {...messages.backToPlugins} />
-          </Button>
-          <Button className='mcs-primary' type='primary'>
-            <McsIcon type='plus' /> <FormattedMessage {...messages.newVersion} />
+          <Button className='mcs-primary' type='primary' onClick={openDrawer}>
+            <McsIcon type='plus' /> <FormattedMessage {...messages.newBatchPlugin} />
           </Button>
         </div>
       </Actionbar>
@@ -77,7 +72,7 @@ class BatchDefinitionDashboardActionBar extends React.Component<Props, State> {
   }
 }
 
-export default compose<Props, BatchDefinitionDashboardActionbarProps>(
+export default compose<Props, IntegrationBatchDefinitionListActionBarProps>(
   injectIntl,
   withRouter,
-)(BatchDefinitionDashboardActionBar);
+)(IntegrationBatchDefinitionListActionBar);

@@ -12,16 +12,16 @@ import { PaginatedApiParam } from '../utils/ApiHelper';
 //   PublicJobExecutionResource,
 // } from '../models/job/jobs';
 
-export interface BatchInstanceOptions extends PaginatedApiParam {
+export interface IntegrationBatchInstanceOptions extends PaginatedApiParam {
   group_id?: string;
   artifact_id?: string;
   cronStatus?: CronStatus[];
 }
 
-export interface IBatchService extends PluginInstanceService<IntegrationBatchResource> {
-  getBatchInstances: (
+export interface IIntegrationBatchService extends PluginInstanceService<IntegrationBatchResource> {
+  getIntegrationBatchInstances: (
     organisationId: string,
-    options: BatchInstanceOptions,
+    options: IntegrationBatchInstanceOptions,
   ) => Promise<DataListResponse<IntegrationBatchResource>>;
   getAllInstanceFilterProperties: () => Promise<DataListResponse<string>>;
   // getBatchInstanceExecutions: (
@@ -30,17 +30,17 @@ export interface IBatchService extends PluginInstanceService<IntegrationBatchRes
 }
 
 @injectable()
-export class BatchService
+export class IntegrationBatchService
   extends PluginInstanceService<IntegrationBatchResource>
-  implements IBatchService
+  implements IIntegrationBatchService
 {
   constructor() {
     super('integration_batch_instances');
   }
 
-  getBatchInstances(
+  getIntegrationBatchInstances(
     organisationId: string,
-    options: BatchInstanceOptions = {},
+    options: IntegrationBatchInstanceOptions = {},
   ): Promise<DataListResponse<IntegrationBatchResource>> {
     const params = {
       organisation_id: organisationId,
