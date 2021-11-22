@@ -100,12 +100,12 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
     const promises: Array<Promise<any>> = [
       this._integrationBatchService.getAllInstanceFilterProperties(),
       this._integrationBatchService.getIntegrationBatchInstances(organisationId, {
-        cronStatus: ['ACTIVE' as CronStatus, 'PAUSED'],
+        is_periodic: true,
         first_result: 0,
         max_results: pageSize,
       }),
       this._integrationBatchService.getIntegrationBatchInstances(organisationId, {
-        cronStatus: [],
+        is_periodic: false,
         first_result: 0,
         max_results: pageSize2,
       }),
@@ -183,7 +183,7 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
         .getIntegrationBatchInstances(organisationId, {
           first_result: firstResult,
           max_results: pageSize,
-          cronStatus: ['ACTIVE' as CronStatus, 'PAUSED'],
+          is_periodic: true,
         })
         .then(res => {
           this.setState({
@@ -208,7 +208,7 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
         .getIntegrationBatchInstances(organisationId, {
           first_result: firstResult,
           max_results: pageSize,
-          cronStatus: [],
+          is_periodic: false,
         })
         .then(res => {
           this.setState({
@@ -315,7 +315,7 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
         key: 'cron_status',
         isHideable: false,
         render: (text: string, record: IntegrationBatchResource) =>
-          getCronStatusIcon(record.cronStatus),
+          getCronStatusIcon(record.cron_status),
       },
       {
         title: formatMessage(messages.cron),

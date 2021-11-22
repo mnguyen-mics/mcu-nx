@@ -15,7 +15,8 @@ import {
 export interface IntegrationBatchInstanceOptions extends PaginatedApiParam {
   group_id?: string;
   artifact_id?: string;
-  cronStatus?: CronStatus[];
+  cron_status?: CronStatus;
+  is_periodic?: boolean;
 }
 
 export interface IIntegrationBatchService extends PluginInstanceService<IntegrationBatchResource> {
