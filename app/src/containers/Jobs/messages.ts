@@ -85,4 +85,8 @@ export default defineMessages({
     id: 'jobs.batchExecutions.list.jobStatus.failed',
     defaultMessage: 'Failed',
   },
+  for: {
+    id: 'plugins.batchExecutions.dashboard.title.for',
+    defaultMessage: 'for',
+  },
 });

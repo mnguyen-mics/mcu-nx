@@ -1,7 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
-import { Link } from 'react-router-dom';
 import cronstrue from 'cronstrue';
 import {
   FilterOutlined,
@@ -243,6 +242,7 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
       match: {
         params: { organisationId },
       },
+      history,
     } = this.props;
     const {
       periodicInstances,
@@ -265,12 +265,7 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
         key: 'group_id',
         isHideable: false,
         render: (text: string, record: IntegrationBatchResource) => (
-          <Link
-            className='mcs-batchInstanceTable_GroupId'
-            to={`/o/${organisationId}/jobs/integration_batch_instances/${record.id}`}
-          >
-            {record.group_id}
-          </Link>
+          <Tag className='mcs-batchInstanceTable_groupId'>{record.group_id}</Tag>
         ),
       },
       {
@@ -278,12 +273,9 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
         key: 'artifact_id',
         isHideable: false,
         render: (text: string, record: IntegrationBatchResource) => (
-          <Link
-            className='mcs-batchInstanceTable_artifactId'
-            to={`/o/${organisationId}/jobs/integration_batch_instances/${record.id}`}
-          >
+          <Tag className='mcs-batchInstanceTable_artifactId' color='blue'>
             {record.artifact_id}
-          </Link>
+          </Tag>
         ),
       },
       {
@@ -359,12 +351,22 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
       iconType: 'library',
       message: formatMessage(messages.emptyPeriodicTableMessage),
     };
+
     const emptyNonPeriodicTable: {
       iconType: McsIconType;
       message: string;
     } = {
       iconType: 'library',
       message: formatMessage(messages.emptyNonPeriodicTableMessage),
+    };
+
+    const onRow = (record: IntegrationBatchResource) => {
+      return {
+        onClick: () => {
+          history.push(`/o/${organisationId}/jobs/integration_batch_instances/${record.id}`);
+        },
+        className: 'mcs-batchInstanceTable_row',
+      };
     };
 
     return (
@@ -378,6 +380,7 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
               columns={dataColumnsDefinition}
               loading={isLoadingNonPeriodicInstances}
               pagination={pagination}
+              onRow={onRow}
             />
           )}
         </Card>
@@ -391,6 +394,7 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
               columns={dataColumnsDefinition2}
               loading={isLoadingPeriodicInstances}
               pagination={pagination2}
+              onRow={onRow}
             />
           )}
         </Card>
