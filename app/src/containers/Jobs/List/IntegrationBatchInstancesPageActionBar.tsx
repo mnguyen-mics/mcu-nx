@@ -12,7 +12,7 @@ interface RouterProps {
   organisationId: string;
 }
 
-interface BatchInstanceListActionBarProps {
+interface IntegrationBatchInstancesPageActionBarProps {
   innerElement?: React.ReactNode;
 }
 
@@ -22,9 +22,11 @@ interface State {
   isLoading: boolean;
 }
 
-type Props = RouteComponentProps<RouterProps> & InjectedIntlProps & BatchInstanceListActionBarProps;
+type Props = RouteComponentProps<RouterProps> &
+  InjectedIntlProps &
+  IntegrationBatchInstancesPageActionBarProps;
 
-class BatchInstanceListActionBar extends React.Component<Props, State> {
+class IntegrationBatchInstancesPageActionBar extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -44,10 +46,10 @@ class BatchInstanceListActionBar extends React.Component<Props, State> {
 
     // Plugins home page ?
     const breadcrumbPaths = [
-      <Link key='1' to={`/o/${organisationId}/plugins/batch_instances`}>
+      <Link key='1' to={`/o/${organisationId}/jobs/integration_batch_instances`}>
         {formatMessage(messages.jobs)}
       </Link>,
-      <Link key='2' to={`/o/${organisationId}/plugins/batch_instances`}>
+      <Link key='2' to={`/o/${organisationId}/jobs/integration_batch_instances`}>
         {formatMessage(messages.jobBatchInstances)}
       </Link>,
     ];
@@ -65,7 +67,7 @@ class BatchInstanceListActionBar extends React.Component<Props, State> {
   }
 }
 
-export default compose<Props, BatchInstanceListActionBarProps>(
+export default compose<Props, IntegrationBatchInstancesPageActionBarProps>(
   injectIntl,
   withRouter,
-)(BatchInstanceListActionBar);
+)(IntegrationBatchInstancesPageActionBar);

@@ -7,7 +7,7 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import messages from '../messages';
 import ItemList, { Filters } from '../../../components/ItemList';
-import IntegrationBatchDefinitionListActionBar from './IntegrationBatchDefinitionListActionBar';
+import IntegrationBatchDefinitionsListActionBar from './IntegrationBatchDefinitionsListActionBar';
 import { PluginResource } from '../../../models/plugin/plugins';
 import {
   PAGINATION_SEARCH_SETTINGS,
@@ -46,7 +46,7 @@ interface State {
   isVisibleDrawer: boolean;
 }
 
-class IntegrationBatchDefinitionList extends React.Component<Props, State> {
+class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
   @lazyInject(TYPES.IPluginService)
   private _pluginService: IPluginService;
 
@@ -218,7 +218,7 @@ class IntegrationBatchDefinitionList extends React.Component<Props, State> {
       })
       .then(res => {
         const pluginId = res.data.id;
-        const newPathName = `/o/${organisationId}/plugins/batch_definitions/${pluginId}`;
+        const newPathName = `/o/${organisationId}/plugins/integration_batch_definitions/${pluginId}`;
         history.push(newPathName);
       })
       .catch(err => {
@@ -251,7 +251,7 @@ class IntegrationBatchDefinitionList extends React.Component<Props, State> {
         render: (text: string, record: PluginResource) => (
           <Link
             className='mcs-batchDefinitionTable_GroupId'
-            to={`/o/${organisationId}/plugins/batch_definitions/${record.id}`}
+            to={`/o/${organisationId}/plugins/integration_batch_definitions/${record.id}`}
           >
             {record.group_id}
           </Link>
@@ -264,7 +264,7 @@ class IntegrationBatchDefinitionList extends React.Component<Props, State> {
         render: (text: string, record: PluginResource) => (
           <Link
             className='mcs-batchDefinitionTable_artifactId'
-            to={`/o/${organisationId}/plugins/batch_definitions/${record.id}`}
+            to={`/o/${organisationId}/plugins/integration_batch_definitions/${record.id}`}
           >
             {record.artifact_id}
           </Link>
@@ -298,7 +298,7 @@ class IntegrationBatchDefinitionList extends React.Component<Props, State> {
 
     return (
       <div className='ant-layout'>
-        <IntegrationBatchDefinitionListActionBar
+        <IntegrationBatchDefinitionsListActionBar
           innerElement={this.renderActionBarInnerElements()}
           openDrawer={this.openDrawer}
         />
@@ -339,4 +339,4 @@ export default compose<Props, {}>(
   withRouter,
   injectIntl,
   injectNotifications,
-)(IntegrationBatchDefinitionList);
+)(IntegrationBatchDefinitionsList);

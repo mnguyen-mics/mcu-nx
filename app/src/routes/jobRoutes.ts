@@ -1,11 +1,11 @@
 import { generateRoutesFromDefinition, NavigatorDefinition, NavigatorRoute } from './domain';
-import BatchInstancesList from '../containers/Jobs/List/IntegrationBatchInstancesList';
+import IntegrationBatchInstancesPage from '../containers/Jobs/List/IntegrationBatchInstancesPage';
 
 export const jobsDefinition: NavigatorDefinition = {
   jobBatchInstanceList: {
-    path: '/jobs/batch_instances',
+    path: '/jobs/integration_batch_instances',
     layout: 'main',
-    contentComponent: BatchInstancesList,
+    contentComponent: IntegrationBatchInstancesPage,
   },
 };
 

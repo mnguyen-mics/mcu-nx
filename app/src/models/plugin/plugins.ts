@@ -35,7 +35,7 @@ export interface IntegrationBatchResource extends PluginInstance {
   created_by: string;
   last_modified_by?: string;
   cron?: string;
-  cronStatus?: CronStatus;
+  cron_status?: CronStatus;
   archived: boolean;
 }
 

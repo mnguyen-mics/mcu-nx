@@ -53,4 +53,36 @@ export default defineMessages({
     id: 'jobs.batchInstances.list.column.lastExecutions',
     defaultMessage: 'Last executions',
   },
+  jobStatus: {
+    id: 'jobs.batchExecutions.list.column.jobStatus',
+    defaultMessage: 'Status',
+  },
+  jobStartDate: {
+    id: 'jobs.batchExecutions.list.column.jobStartDate',
+    defaultMessage: 'Start Date',
+  },
+  jobDuration: {
+    id: 'jobs.batchExecutions.list.column.jobStajobDuration',
+    defaultMessage: 'Duration',
+  },
+  pendingStatus: {
+    id: 'jobs.batchExecutions.list.jobStatus.pending',
+    defaultMessage: 'Pending',
+  },
+  runningStatus: {
+    id: 'jobs.batchExecutions.list.jobStatus.running',
+    defaultMessage: 'Running',
+  },
+  succeededStatus: {
+    id: 'jobs.batchExecutions.list.jobStatus.succeeded',
+    defaultMessage: 'Succeeded',
+  },
+  canceledStatus: {
+    id: 'jobs.batchExecutions.list.jobStatus.canceled',
+    defaultMessage: 'Canceled',
+  },
+  failedStatus: {
+    id: 'jobs.batchExecutions.list.jobStatus.failed',
+    defaultMessage: 'Failed',
+  },
 });
