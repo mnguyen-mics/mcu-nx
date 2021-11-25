@@ -72,7 +72,8 @@ export type PluginType =
   | 'DATA_CONNECTOR'
   | 'SCENARIO_NODE_PROCESSOR'
   | 'ML_FUNCTION'
-  | 'SCENARIO_CUSTOM_ACTION';
+  | 'SCENARIO_CUSTOM_ACTION'
+  | 'INTEGRATION_BATCH';
 
 export type ErrorRecoveryStrategy =
   | 'STORE_WITH_ERROR_ID'
