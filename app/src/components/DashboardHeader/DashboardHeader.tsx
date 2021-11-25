@@ -4,6 +4,7 @@ interface DashboardHeaderProps {
   className?: string;
   title?: React.ReactNode;
   subtitle?: React.ReactNode;
+  rightElement?: React.ReactNode;
   isLoading: boolean;
 }
 
@@ -17,14 +18,17 @@ class DashboardHeader extends React.Component<Props> {
     };
   }
   render() {
-    const { title, subtitle, className, isLoading } = this.props;
+    const { title, subtitle, className, rightElement, isLoading } = this.props;
 
     const content = (
       <React.Fragment>
-        <div className='mcs-dashboardHeader_title'>{title}</div>
-        <div className='mcs-dashboardHeader_subtitle'>
-          <span className='mcs-dashboardHeader_subtitleText'>{subtitle}</span>
+        <div>
+          <div className='mcs-dashboardHeader_title'>{title}</div>
+          <div className='mcs-dashboardHeader_subtitle'>
+            <span className='mcs-dashboardHeader_subtitleText'>{subtitle}</span>
+          </div>
         </div>
+        <div>{rightElement}</div>
       </React.Fragment>
     );
 

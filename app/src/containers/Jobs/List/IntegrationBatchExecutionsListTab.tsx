@@ -28,7 +28,14 @@ interface RouteProps {
   organisationId: string;
 }
 
-type Props = InjectedIntlProps & InjectedNotificationProps & RouteComponentProps<RouteProps>;
+interface IntegrationBatchExecutionsListTabProps {
+  batchInstanceId?: string;
+}
+
+type Props = InjectedIntlProps &
+  InjectedNotificationProps &
+  RouteComponentProps<RouteProps> &
+  IntegrationBatchExecutionsListTabProps;
 
 interface State {
   executions: PublicJobExecutionResource[];
@@ -56,37 +63,28 @@ class IntegrationBatchExecutionsListTab extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    const {
-      notifyError,
-      match: {
-        params: { organisationId },
-      },
-    } = this.props;
     this.setState({
       isLoading: true,
     });
-    const { pageSize } = this.state;
-    this._batchService
-      .getBatchInstanceExecutionsForOrganisation(organisationId, {
-        first_result: 0,
-        max_results: pageSize,
-      })
-      .then(res => {
-        this.setState({
-          executions: res.data,
-          isLoading: false,
-          total: res.total || res.data.length,
-        });
-      })
-      .catch(err => {
-        notifyError(err);
-        this.setState({
-          isLoading: false,
-        });
-      });
+    const { currentPage, pageSize } = this.state;
+    this.fetchExecutions(currentPage, pageSize);
   }
 
-  fetchExecutions = (organisationId: string, currentPage: number, pageSize: number) => {
+  fetchExecutions(currentPage: number, pageSize: number) {
+    const {
+      match: {
+        params: { organisationId },
+      },
+      batchInstanceId,
+    } = this.props;
+    if (batchInstanceId) {
+      this.fetchExecutionsForInstance(batchInstanceId, currentPage, pageSize);
+    } else {
+      this.fetchExecutionsForOrg(organisationId, currentPage, pageSize);
+    }
+  }
+
+  fetchExecutionsForOrg = (organisationId: string, currentPage: number, pageSize: number) => {
     const { notifyError } = this.props;
     this.setState({
       isLoading: true,
@@ -102,6 +100,36 @@ class IntegrationBatchExecutionsListTab extends React.Component<Props, State> {
           executions: res.data,
           isLoading: false,
           total: res.total || res.count,
+          currentPage: currentPage,
+          pageSize: pageSize,
+        });
+      })
+      .catch(err => {
+        notifyError(err);
+        this.setState({
+          isLoading: false,
+        });
+      });
+  };
+
+  fetchExecutionsForInstance = (instanceId: string, currentPage: number, pageSize: number) => {
+    const { notifyError } = this.props;
+    this.setState({
+      isLoading: true,
+    });
+    const firstResult = (currentPage - 1) * pageSize;
+    this._batchService
+      .getBatchInstanceExecutions(instanceId, {
+        first_result: firstResult,
+        max_results: pageSize,
+      })
+      .then(res => {
+        this.setState({
+          executions: res.data,
+          isLoading: false,
+          total: res.total || res.count,
+          currentPage: currentPage,
+          pageSize: pageSize,
         });
       })
       .catch(err => {
@@ -169,9 +197,6 @@ class IntegrationBatchExecutionsListTab extends React.Component<Props, State> {
   render() {
     const {
       intl: { formatMessage },
-      match: {
-        params: { organisationId },
-      },
     } = this.props;
     const { executions, isLoading, total, currentPage, pageSize } = this.state;
 
@@ -220,9 +245,8 @@ class IntegrationBatchExecutionsListTab extends React.Component<Props, State> {
     const pagination = {
       currentPage: currentPage,
       pageSize: pageSize,
-      onChange: (page: number, size: number) => this.fetchExecutions(organisationId, page, size),
-      onShowSizeChange: (current: number, size: number) =>
-        this.fetchExecutions(organisationId, 1, size),
+      onChange: (page: number, size: number) => this.fetchExecutions(page, size),
+      onShowSizeChange: (current: number, size: number) => this.fetchExecutions(1, size),
       total,
     };
 
@@ -243,7 +267,7 @@ class IntegrationBatchExecutionsListTab extends React.Component<Props, State> {
   }
 }
 
-export default compose<Props, {}>(
+export default compose<Props, IntegrationBatchExecutionsListTabProps>(
   withRouter,
   injectIntl,
   injectNotifications,

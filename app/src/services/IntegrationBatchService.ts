@@ -1,8 +1,10 @@
 import PluginInstanceService from './PluginInstanceService';
 import { injectable } from 'inversify';
 import { CronStatus, IntegrationBatchResource } from '../models/plugin/plugins';
+import { ApiService } from '@mediarithmics-private/advanced-components';
 import {
-  /* ApiService, */ DataListResponse,
+  DataListResponse,
+  DataResponse,
   StatusCode,
 } from '@mediarithmics-private/advanced-components/lib/services/ApiService';
 import { PaginatedApiParam } from '../utils/ApiHelper';
@@ -20,14 +22,16 @@ export interface IntegrationBatchInstanceOptions extends PaginatedApiParam {
 }
 
 export interface IIntegrationBatchService extends PluginInstanceService<IntegrationBatchResource> {
+  getIntegrationBatchInstance: (id: string) => Promise<DataResponse<IntegrationBatchResource>>;
   getIntegrationBatchInstances: (
     organisationId: string,
     options: IntegrationBatchInstanceOptions,
   ) => Promise<DataListResponse<IntegrationBatchResource>>;
   getAllInstanceFilterProperties: () => Promise<DataListResponse<string>>;
-  // getBatchInstanceExecutions: (
-  //   batchInstanceId: string,
-  // ) => Promise<DataListResponse<PublicJobExecutionResource>>;
+  getBatchInstanceExecutions: (
+    batchInstanceId: string,
+    options: IntegrationBatchInstanceOptions,
+  ) => Promise<DataListResponse<PublicJobExecutionResource>>;
   getBatchInstanceExecutionsForOrganisation: (
     organisationId: string,
     options: PaginatedApiParam,
@@ -54,45 +58,70 @@ export class IntegrationBatchService
     return this.getInstances(params);
   }
 
-  // getBatchInstanceExecutions(
-  //   integrationBatchId: string,
-  // ): Promise<DataListResponse<PublicJobExecutionResource>> {
-  //   // const endpoint = `integration_batch_instances/${integrationBatchId}/executions`;
-  //   // return ApiService.getRequest(endpoint);
+  getIntegrationBatchInstance(id: string): Promise<DataResponse<IntegrationBatchResource>> {
+    const endpoint = `integration_batch_instances/${id}`;
+    return ApiService.getRequest(endpoint);
+  }
 
-  //   // Route does not exist in backend
-  //   // Mock to test:
-  //   return Promise.resolve({
-  //     status: 'ok' as StatusCode,
-  //     count: 4,
-  //     data: [
-  //       {
-  //         id: '1',
-  //         status: 'SUCCESS' as JobExecutionStatus,
-  //         creation_date: 0,
-  //         external_model_name: 'PUBLIC_DATAMART' as ExternalModelName,
-  //       },
-  //       {
-  //         id: '1',
-  //         status: 'FAILED' as JobExecutionStatus,
-  //         creation_date: 0,
-  //         external_model_name: 'PUBLIC_DATAMART' as ExternalModelName,
-  //       },
-  //       {
-  //         id: '1',
-  //         status: 'SUCCESS' as JobExecutionStatus,
-  //         creation_date: 0,
-  //         external_model_name: 'PUBLIC_DATAMART' as ExternalModelName,
-  //       },
-  //       {
-  //         id: '1',
-  //         status: 'FAILED' as JobExecutionStatus,
-  //         creation_date: 0,
-  //         external_model_name: 'PUBLIC_DATAMART' as ExternalModelName,
-  //       },
-  //     ],
-  //   });
-  // }
+  getBatchInstanceExecutions(
+    integrationBatchId: string,
+  ): Promise<DataListResponse<PublicJobExecutionResource>> {
+    return Promise.resolve({
+      status: 'ok' as StatusCode,
+      count: 0,
+      data: [],
+    });
+
+    // const endpoint = `integration_batch_instances/${integrationBatchId}/executions`;
+    // return ApiService.getRequest(endpoint);
+
+    // Route does not exist in backend
+    // Mock to test:
+    // return Promise.resolve({
+    //   status: 'ok' as StatusCode,
+    //   count: 3,
+    //   data: [
+    //     {
+    //       id: '1',
+    //       status: 'SUCCEEDED' as JobExecutionPublicStatus,
+    //       creation_date: 0,
+    //       start_date: 1637085198120,
+    //       duration: 176500000,
+    //       external_model_name: 'PUBLIC_DATAMART' as ExternalModelName,
+    //     },
+    //     {
+    //       id: '2',
+    //       status: 'FAILED' as JobExecutionPublicStatus,
+    //       creation_date: 0,
+    //       start_date: 1637091181000,
+    //       duration: 9999,
+    //       external_model_name: 'PUBLIC_DATAMART' as ExternalModelName,
+    //     },
+    //     {
+    //       id: '3',
+    //       status: 'CANCELED' as JobExecutionPublicStatus,
+    //       creation_date: 0,
+    //       start_date: 1637086188452,
+    //       duration: 123,
+    //       external_model_name: 'PUBLIC_DATAMART' as ExternalModelName,
+    //     },
+    //     {
+    //       id: '4',
+    //       status: 'PENDING' as JobExecutionPublicStatus,
+    //       creation_date: 0,
+    //       external_model_name: 'PUBLIC_DATAMART' as ExternalModelName,
+    //     },
+    //     {
+    //       id: '5',
+    //       status: 'RUNNING' as JobExecutionPublicStatus,
+    //       creation_date: 0,
+    //       start_date: 1637087188452,
+    //       duration: 107613,
+    //       external_model_name: 'PUBLIC_DATAMART' as ExternalModelName,
+    //     },
+    //   ],
+    // });
+  }
 
   getBatchInstanceExecutionsForOrganisation(
     organisationId: string,
@@ -116,7 +145,7 @@ export class IntegrationBatchService
     // Mock to test:
     // return Promise.resolve({
     //   status: 'ok' as StatusCode,
-    //   count: 4,
+    //   count: 5,
     //   data: [
     //     {
     //       id: '1',
