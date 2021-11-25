@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { compose } from 'recompose';
 import { UserProfileResource } from '../../models/directory/UserProfileResource';
-import { MicsReduxState } from '../../redux/ReduxHelper';
+import { MicsReduxState } from '../../utils/ReduxHelper';
 import OrganisationListSwitcher from '../organisation-switcher/OrganisationListSwitcher';
 import Logo from './Logo';
 import messages from './messages';

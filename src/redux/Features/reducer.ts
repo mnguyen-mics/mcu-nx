@@ -1,6 +1,6 @@
 import { STORE_ORG_FEATURES, STORE_FEATURE_FLAG_CLIENT } from '../action-types';
 import { Action } from 'redux-actions';
-import { Payload } from '../ReduxHelper';
+import { Payload } from '../../utils/ReduxHelper';
 
 const features = (
   state = {

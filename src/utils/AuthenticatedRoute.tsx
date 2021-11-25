@@ -12,7 +12,7 @@ import errorMessages from './errorMessage';
 import injectFeatures, { InjectedFeaturesProps } from '../components/Features/injectFeatures';
 import { lazyInject } from '../inversify/inversify.config';
 import { TYPES } from '../constants/types';
-import { MicsReduxState } from '../redux/ReduxHelper';
+import { MicsReduxState } from '../utils/ReduxHelper';
 import { Error } from '@mediarithmics-private/mcs-components-library';
 
 export interface AuthenticatedRouteProps {

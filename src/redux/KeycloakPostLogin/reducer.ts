@@ -4,7 +4,7 @@ import {
   KEYCLOAK_POST_LOGIN_SUCCESS,
 } from '../action-types';
 import { Action } from 'redux-actions';
-import { Payload } from '../ReduxHelper';
+import { Payload } from '../../utils/ReduxHelper';
 
 const keycloakPostLogin = (state = {}, action: Action<Payload>) => {
   switch (action.type) {

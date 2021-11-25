@@ -1,6 +1,6 @@
 import { APP_STARTUP } from '../action-types';
 import { Action } from 'redux-actions';
-import { Payload } from '../ReduxHelper';
+import { Payload } from '../../utils/ReduxHelper';
 
 const app = (
   state = {

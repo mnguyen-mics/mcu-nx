@@ -18,7 +18,7 @@ export { TYPES } from './constants/types';
 export { IAuthService } from './services/AuthService';
 export { lazyInject } from './inversify/inversify.config';
 export { default as AuthenticatedRoute } from './utils/AuthenticatedRoute';
-export { MicsReduxState } from './redux/ReduxHelper';
+export { MicsReduxState } from './utils/ReduxHelper';
 export { isAppInitialized } from './redux/App/selectors';
 export { default as Logo } from './components/top-bar/Logo';
 export { default as errorMessages } from './utils/errorMessage';

@@ -1,5 +1,5 @@
 import { UserWorkspaceResource } from './../../models/directory/UserProfileResource';
-import { MicsReduxState } from '../ReduxHelper';
+import { MicsReduxState } from '../../utils/ReduxHelper';
 import { createSelector } from 'reselect';
 import { normalizeArrayOfObject } from '../../utils/Normalizer';
 

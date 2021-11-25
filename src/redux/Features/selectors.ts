@@ -1,4 +1,4 @@
-import { MicsReduxState } from '../ReduxHelper';
+import { MicsReduxState } from '../../utils/ReduxHelper';
 
 const getOrgFeatures = (state: MicsReduxState) => state.features.organisation;
 

@@ -11,6 +11,8 @@ import {
   ActivitiesAnalyticsService,
   IActivitiesAnalyticsService,
 } from '../services/ActivitiesAnalyticsService';
+import { AssetFileService, IAssetFileService } from '../services/AssetFileService';
+import PluginService, { IPluginService } from '../services/PluginService';
 
 export const container = new Container();
 
@@ -21,6 +23,8 @@ container
 container.bind<IChartDatasetService>(TYPES.IChartDatasetService).to(ChartDatasetService);
 container.bind<IQueryService>(TYPES.IQueryService).to(QueryService);
 container.bind<IAuthService>(TYPES.IAuthService).to(AuthService);
+container.bind<IAssetFileService>(TYPES.IAssetFileService).to(AssetFileService);
+container.bind<IPluginService>(TYPES.IPluginService).to(PluginService);
 container.bind<ILabelService>(TYPES.ILabelService).to(LabelService);
 container
   .bind<IOrganisationService>(TYPES.IOrganisationService)

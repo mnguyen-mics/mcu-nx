@@ -1,6 +1,6 @@
 import { LOG_IN } from '../action-types';
 import { Action } from 'redux-actions';
-import { Payload } from '../ReduxHelper';
+import { Payload } from '../../utils/ReduxHelper';
 
 const defaultLoginState = {
   hasError: false,
