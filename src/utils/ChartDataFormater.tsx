@@ -12,6 +12,7 @@ import {
   ActivitiesAnalyticsMetric,
 } from './ActivitiesAnalyticsReportHelper';
 import { bucketizeReportView, normalizeReportView } from './MetricHelper';
+import { omit } from 'lodash';
 
 type DatasetType = 'aggregate' | 'count';
 
@@ -55,8 +56,27 @@ export function formatDatasetAsKeyValueForReportView(
   xKey: string,
   datas: ReportView,
   dimensions: string[],
+  metric: string,
+  seriesTitle?: string,
 ): Dataset {
   const normalizedReportView = normalizeReportView(datas);
+
+  if (seriesTitle) {
+    const normalizeReportViewWithSeriesTitle = normalizedReportView.map(rv => {
+      return omit(
+        {
+          ...rv,
+          [seriesTitle]: rv[metric],
+        },
+        [metric],
+      );
+    });
+    return (
+      bucketizeReportView(xKey, normalizeReportViewWithSeriesTitle, dimensions) ||
+      normalizeReportViewWithSeriesTitle
+    );
+  }
+
   return bucketizeReportView(xKey, normalizedReportView, dimensions) || normalizedReportView;
 }
 
@@ -110,12 +130,19 @@ export function formatDatasetForReportView(
   xKey: string,
   metrics: ActivitiesAnalyticsMetric[],
   dimensions: ActivitiesAnalyticsDimension[],
+  seriesTitle?: string,
 ): AbstractDataset | undefined {
   if (dimensions.length > 0) {
-    const dataset = formatDatasetAsKeyValueForReportView(xKey, dataResult, dimensions);
+    const dataset = formatDatasetAsKeyValueForReportView(
+      xKey,
+      dataResult,
+      dimensions,
+      metrics[0],
+      seriesTitle,
+    );
     return {
       metadata: {
-        seriesTitles: metrics.map(m => m.toLocaleLowerCase()),
+        seriesTitles: metrics.map(m => seriesTitle || m.toLocaleLowerCase()),
       },
       type: 'aggregate',
       dataset: dataset,
