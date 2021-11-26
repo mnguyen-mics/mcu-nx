@@ -223,3 +223,16 @@ export interface AdLayoutVersionResource {
   ad_layout_id: string;
   status: AdLayoutStatus;
 }
+
+export type CronStatus = 'ACTIVE ' | 'PAUSED';
+
+export interface IntegrationBatchResource extends PluginInstance {
+  name?: string;
+  creation_ts: number;
+  last_modified_ts?: number;
+  created_by: string;
+  last_modified_by?: string;
+  cron?: string;
+  cron_status?: CronStatus;
+  archived: boolean;
+}

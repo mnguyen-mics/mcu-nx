@@ -16,29 +16,30 @@ export interface FormInputNumberProps extends FormFieldWrapperProps {
   small?: boolean;
 }
 
-const FormInputNumber: React.FunctionComponent<FormInputNumberProps & WrappedFieldProps> =
-  props => {
-    let validateStatus = 'success' as 'success' | 'warning' | 'error' | 'validating';
+const FormInputNumber: React.FunctionComponent<
+  FormInputNumberProps & WrappedFieldProps
+> = props => {
+  let validateStatus = 'success' as 'success' | 'warning' | 'error' | 'validating';
 
-    if (props.meta.touched && props.meta.invalid) validateStatus = 'error';
-    if (props.meta.touched && props.meta.warning) validateStatus = 'warning';
+  if (props.meta.touched && props.meta.invalid) validateStatus = 'error';
+  if (props.meta.touched && props.meta.warning) validateStatus = 'warning';
 
-    return (
-      <FormFieldWrapper
-        help={props.meta.touched && (props.meta.warning || props.meta.error)}
-        helpToolTipProps={props.helpToolTipProps}
-        validateStatus={validateStatus}
-        small={props.small}
-        {...props.formItemProps}
-      >
-        <InputNumber
-          className='mcs-formInputNumber'
-          id={props.input.name}
-          {...props.input}
-          {...props.inputNumberProps}
-        />
-      </FormFieldWrapper>
-    );
-  };
+  return (
+    <FormFieldWrapper
+      help={props.meta.touched && (props.meta.warning || props.meta.error)}
+      helpToolTipProps={props.helpToolTipProps}
+      validateStatus={validateStatus}
+      small={props.small}
+      {...props.formItemProps}
+    >
+      <InputNumber
+        className='mcs-formInputNumber'
+        id={props.input.name}
+        {...props.input}
+        {...props.inputNumberProps}
+      />
+    </FormFieldWrapper>
+  );
+};
 
 export default FormInputNumber;

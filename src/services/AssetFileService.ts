@@ -16,7 +16,7 @@ export interface IAssetFileService {
   ) => Promise<DataResponse<AssetFileResource>>;
 }
 @injectable()
-export class AssetFileService implements IAssetFileService {
+export default class AssetFileService implements IAssetFileService {
   getAssetsFiles(
     organisationId: string,
     options: object = {},

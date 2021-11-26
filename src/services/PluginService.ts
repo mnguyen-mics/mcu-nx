@@ -25,12 +25,12 @@ interface GetPluginOptions extends Omit<PaginatedApiParam, 'first_result'> {
   plugin_type?: PluginType;
   artifact_id?: string;
   group_id?: string;
-  organisation_id?: number;
+  organisation_id?: string;
 }
 
 interface GetPluginPresetOptions extends Omit<PaginatedApiParam, 'first_result'> {
   plugin_type?: PluginType;
-  organisation_id?: number;
+  organisation_id?: string;
 }
 
 interface PostPluginPresetResource {
@@ -105,6 +105,7 @@ export interface IPluginService {
     pluginPresetId: string,
     resource: Partial<PluginPresetResource>,
   ) => Promise<DataResponse<PluginPresetResource>>;
+  createPlugin: (body: Partial<PluginResource>) => Promise<DataResponse<PluginResource>>;
 }
 
 @injectable()
@@ -162,6 +163,10 @@ export class PluginService implements IPluginService {
   getPlugin(pluginId: string): Promise<DataResponse<PluginResource>> {
     const endpoint = `plugins/${pluginId}`;
     return ApiService.getRequest(endpoint);
+  }
+  createPlugin(body: Partial<PluginResource>): Promise<DataResponse<PluginResource>> {
+    const endpoint = `plugins`;
+    return ApiService.postRequest(endpoint, body);
   }
   findPluginFromVersionId(versionId: string): Promise<DataResponse<PluginResource>> {
     const endpoint = `plugins/version/${versionId}`;

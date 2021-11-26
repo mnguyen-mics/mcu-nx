@@ -8,6 +8,9 @@ const TYPES = {
   IAssetFileService: Symbol.for('assetFileService'),
   IDataFileService: Symbol.for('dataFileService'),
   IPluginService: Symbol.for('pluginService'),
+  ICustomDashboardService: Symbol.for('customDashboardService'),
+  IDatamartService: Symbol.for('datamartService'),
+  IIntegrationBatchService: Symbol.for('integrationBatchService'),
 };
 
 export { TYPES };

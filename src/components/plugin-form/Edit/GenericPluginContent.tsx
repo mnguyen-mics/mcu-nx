@@ -215,7 +215,7 @@ class PluginContent<T extends PluginInstance> extends React.Component<
 
     return this._pluginService
       .getPluginPresets({
-        organisation_id: +organisationId,
+        organisation_id: organisationId,
         plugin_type: this.props.pluginType,
       })
       .then(res => res.data)

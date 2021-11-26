@@ -11,8 +11,16 @@ import {
   ActivitiesAnalyticsService,
   IActivitiesAnalyticsService,
 } from '../services/ActivitiesAnalyticsService';
-import { AssetFileService, IAssetFileService } from '../services/AssetFileService';
+import AssetFileService, { IAssetFileService } from '../services/AssetFileService';
 import PluginService, { IPluginService } from '../services/PluginService';
+import DataFileService, { IDataFileService } from '../services/DataFileService';
+import CustomDashboardService, {
+  ICustomDashboardService,
+} from '../services/CustomDashboardService';
+import DatamartService, { IDatamartService } from '../services/DatamartService';
+import IntegrationBatchService, {
+  IIntegrationBatchService,
+} from '../services/IntegrationBatchService';
 
 export const container = new Container();
 
@@ -24,8 +32,14 @@ container.bind<IChartDatasetService>(TYPES.IChartDatasetService).to(ChartDataset
 container.bind<IQueryService>(TYPES.IQueryService).to(QueryService);
 container.bind<IAuthService>(TYPES.IAuthService).to(AuthService);
 container.bind<IAssetFileService>(TYPES.IAssetFileService).to(AssetFileService);
+container.bind<IDataFileService>(TYPES.IDataFileService).to(DataFileService);
 container.bind<IPluginService>(TYPES.IPluginService).to(PluginService);
 container.bind<ILabelService>(TYPES.ILabelService).to(LabelService);
+container.bind<ICustomDashboardService>(TYPES.ICustomDashboardService).to(CustomDashboardService);
+container.bind<IDatamartService>(TYPES.IDatamartService).to(DatamartService);
+container
+  .bind<IIntegrationBatchService>(TYPES.IIntegrationBatchService)
+  .to(IntegrationBatchService);
 container
   .bind<IOrganisationService>(TYPES.IOrganisationService)
   .to(OrganisationService)
