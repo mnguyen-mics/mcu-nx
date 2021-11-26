@@ -26,6 +26,9 @@ export { default as RenderOnAuthenticated } from './utils/RenderOnAuthenticated'
 export { default as withValidators } from './components/form/withValidators';
 export { default as GenericPluginContent } from './components/plugin-form/Edit/GenericPluginContent';
 export { PluginContentOuterProps } from './components/plugin-form/Edit/GenericPluginContent';
+export { InjectedDrawerProps } from './components/drawer/injectDrawer';
+export { injectDrawer } from './components/drawer';
+export { default as DrawerManager } from './components/drawer/DrawerManager';
 
 // Services
 

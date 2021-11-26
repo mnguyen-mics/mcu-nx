@@ -70,7 +70,9 @@ class FormLayoutActionbar extends React.Component<Props, State> {
         {message && !disabled ? (
           <Button
             {...submitButtonProps}
-            className={`mcs-primary ${formId ? `mcs-form_saveButton_${formId}` : ''}`}
+            className={`mcs-primary ${
+              formId ? `mcs-form_saveButton_${formId}` : ''
+            } mcs-formLayoutActionBar_button`}
           >
             <McsIcon type='plus' />
             <FormattedMessage {...message} />
