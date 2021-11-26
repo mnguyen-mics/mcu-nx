@@ -495,7 +495,7 @@ export class ChartDatasetService implements IChartDatasetService {
     const dataset = datasets.map((d: CountDataset, index: number) => {
       return {
         [xKey]: sources[index].series_title,
-        [DEFAULT_Y_KEY.key]: d.value,
+        [listSeriesTitle || DEFAULT_Y_KEY.key]: d.value,
       };
     });
 
