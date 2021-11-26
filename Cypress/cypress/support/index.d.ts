@@ -9,7 +9,32 @@ declare namespace Cypress {
      */
     login(email?: string, password?: string): Chainable<any>;
 
+    getAccessToken(
+      email?: string,
+      password?: string,
+      root?: string,
+      realm?: string,
+      client_id?: string,
+      redirect_uri?: string,
+    ): Chainable<any>;
+
+    /**
+     * Logout from computing-console
+     * @param root
+     * @param realm
+     * @param redirect_uri
+     */
     logout(root?: string, realm?: string, redirect_uri?: string): Chainable<any>;
+
+    /**
+     * Initialize test context
+     */
+    initTestContext(): void;
+
+    /**
+     * Enable or disable direct access grant on keycloak to get the access_token directly with API
+     */
+    enableDirectAccessGrant(enable?: boolean): void;
 
     /**
      * Switch current organisation. The full name isn't required, it will click on the first organisation in the list matching the parameter.
@@ -18,6 +43,12 @@ declare namespace Cypress {
      */
     switchOrg(organisationName: string): Chainable<any>;
 
+    /**
+     * Go to the homepage of computing-console
+     * @param organisationId
+     * @example
+     * cy.goToHome('504')
+     */
     goToHome(organisationId: string): Chainable<any>;
 
     /**

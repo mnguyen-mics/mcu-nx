@@ -96,8 +96,9 @@ class IntergrationBatchEditDrawer extends React.Component<Props, State> {
               {formatMessage(messages.organisationDescription)}
             </div>
             <Select
-              className='mcs-batchPluginEdit-drawer-form-input'
+              className='mcs-batchPluginEdit-drawer-form-input-organisationChoice'
               options={this.getOrganisationOptions()}
+              dropdownClassName='mcs-batchPluginEdit-drawer-form-input-organisationChoice-dropdownMenu'
               value={organisationIdOption}
               placeholder='Organisation'
               onChange={this.handleOrganisationChange}
@@ -118,7 +119,7 @@ class IntergrationBatchEditDrawer extends React.Component<Props, State> {
               {formatMessage(messages.groupIdSample)}
             </div>
             <Input
-              className='mcs-batchPluginEdit-drawer-form-input'
+              className='mcs-batchPluginEdit-drawer-form-input-groupId'
               placeholder='com.mediarithmics.batches'
               value={groupIdOption}
               onChange={this.handleGroupIdChange}
@@ -136,7 +137,7 @@ class IntergrationBatchEditDrawer extends React.Component<Props, State> {
               {formatMessage(messages.artifactIdDescription)}
             </div>
             <Input
-              className='mcs-batchPluginEdit-drawer-form-input'
+              className='mcs-batchPluginEdit-drawer-form-input-artifactId'
               placeholder='artifact-id'
               value={artifactIdOptions}
               onChange={this.handleArtifactIdChange}
