@@ -219,12 +219,13 @@ export class ChartDatasetService implements IChartDatasetService {
     providedScope?: AbstractScope,
   ): Promise<AbstractDataset | undefined> {
     const sourceType = source.type.toLowerCase();
-    const seriesTitle = source.series_title ? source.series_title : DEFAULT_Y_KEY.key;
+    const seriesTitle = source.series_title || DEFAULT_Y_KEY.key;
 
     switch (sourceType) {
       case 'otql':
         const otqlSource = source as OTQLSource;
         const scope = this.getScope(otqlSource.adapt_to_scope, providedScope);
+
         return this.executeOtqlQuery(datamartId, otqlSource, scope).then(res => {
           return formatDatasetForOtql(res, xKey, seriesTitle);
         });
@@ -248,7 +249,12 @@ export class ChartDatasetService implements IChartDatasetService {
             this.fetchDatasetForSource(datamartId, chartType, xKey, s, providedScope),
           ),
         ).then(datasets => {
-          return this.aggregateCountsIntoList(xKey, datasets as CountDataset[], childSources2);
+          return this.aggregateCountsIntoList(
+            xKey,
+            datasets as CountDataset[],
+            childSources2,
+            source.series_title,
+          );
         });
 
       case 'to-percentages':
@@ -333,6 +339,7 @@ export class ChartDatasetService implements IChartDatasetService {
                   xKey,
                   metricNames as ActivitiesAnalyticsMetric[],
                   dimensionNames as ActivitiesAnalyticsDimension[],
+                  source.series_title,
                 );
               });
           });
@@ -483,6 +490,7 @@ export class ChartDatasetService implements IChartDatasetService {
     xKey: string,
     datasets: Array<CountDataset | undefined>,
     sources: AbstractSource[],
+    listSeriesTitle?: string,
   ): AggregateDataset | undefined {
     const dataset = datasets.map((d: CountDataset, index: number) => {
       return {
@@ -490,10 +498,11 @@ export class ChartDatasetService implements IChartDatasetService {
         [DEFAULT_Y_KEY.key]: d.value,
       };
     });
+
     return {
       dataset: dataset,
       metadata: {
-        seriesTitles: [DEFAULT_Y_KEY.key],
+        seriesTitles: [listSeriesTitle || DEFAULT_Y_KEY.key],
       },
       type: 'aggregate',
     };
