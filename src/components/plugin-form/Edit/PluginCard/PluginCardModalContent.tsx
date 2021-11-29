@@ -29,7 +29,6 @@ import { Form } from '@ant-design/compatible';
 import { ValidatorProps } from '../../../form/withValidators';
 import { generateFakeId } from '../../../../utils/FakeIdHelper';
 import { injectFeatures, InjectedFeaturesProps } from '../../../Features';
-// import { FeedStatsUnit } from '../../../../utils/FeedsStatsReportHelper';
 import McsMoment from '../../../../utils/McsMoment';
 import { McsDateRangeValue } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-date-range-picker/McsDateRangePicker';
 import { defineMessages, FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
@@ -64,7 +63,6 @@ export interface PluginCardModalContentProps<T> {
   selectedTab: PluginCardModalTab;
   nameField?: PluginExtraField;
   descriptionField?: PluginExtraField;
-  // feedStatsUnit?: FeedStatsUnit;
   pluginChart?: React.ReactNode;
 }
 
@@ -249,8 +247,8 @@ class PluginCardModalContent<T extends LayoutablePlugin> extends React.Component
   };
 
   renderStats = () => {
-    // const { plugin, organisationId, feedStatsUnit } = this.props;
-    // const { dateRange } = this.state;
+    const { pluginChart } = this.props;
+    const { dateRange } = this.state;
 
     return (
       <div className='mcs-pluginModal_feedChart_container'>
@@ -264,15 +262,10 @@ class PluginCardModalContent<T extends LayoutablePlugin> extends React.Component
             <FormattedMessage {...messages.stats_description2} />
           </div>
         </div>
-        {/* TODO: use a pluginChart prop instead of FeedChart here.
-        FeedChart is specific to feed. This file is a generic plugin file.
-        <FeedChart
-          title={this.renderDatePicker()}
-          organisationId={organisationId}
-          feedId={plugin.id}
-          feedStatsUnit={feedStatsUnit}
-          dateRange={dateRange}
-        /> */}
+        {React.cloneElement(pluginChart as React.ReactElement, {
+          dateRange: dateRange,
+          title: this.renderDatePicker(),
+        })}
       </div>
     );
   };

@@ -29,6 +29,33 @@ export { PluginContentOuterProps } from './components/plugin-form/Edit/GenericPl
 export { InjectedDrawerProps } from './components/drawer/injectDrawer';
 export { injectDrawer } from './components/drawer';
 export { default as DrawerManager } from './components/drawer/DrawerManager';
+export {
+  default as PluginCardModalContent,
+  PluginCardModalTab,
+  PluginCardModalContentProps,
+} from './components/plugin-form/Edit/PluginCard/PluginCardModalContent';
+export {
+  default as PluginCard,
+  PluginCardProps,
+} from './components/plugin-form/Edit/PluginCard/PluginCard';
+export {
+  default as PluginCardModal,
+  PluginCardModalProps,
+} from './components/plugin-form/Edit/PluginCard/PluginCardModal';
+export {
+  SpecificFieldsFunction,
+  default as PluginEditForm,
+} from './components/plugin-form/Edit/PluginEditForm';
+export { default as IframeSupport } from './components/plugin-form/ConnectedFields/FormDataFile/HtmlEditor/IframeSupport';
+export {
+  PluginExtraField,
+  default as PluginSectionGenerator,
+} from './components/plugin-form/PluginSectionGenerator';
+export { default as PluginFieldGenerator } from './components/plugin-form/PluginFieldGenerator';
+export {
+  FormDataFileField,
+  FormDataFile,
+} from './components/plugin-form/ConnectedFields/FormDataFile';
 
 // Services
 
