@@ -12,6 +12,10 @@ import { PluginResource } from '../../../models/plugin/plugins';
 import { MicsReduxState } from '../../../utils/ReduxHelper';
 import messages from './messages';
 
+interface OrganisationOption {
+  value: string;
+  label: string;
+}
 interface MapStateToProps {
   workspaces?: UserWorkspaceResource[];
 }
@@ -66,6 +70,9 @@ class IntergrationBatchEditDrawer extends React.Component<Props, State> {
     this.setState({ artifactIdOptions: event.target.value });
   };
 
+  handleOrganisationSearch = (input: string, option: OrganisationOption) =>
+    option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+
   render() {
     const { organisationIdOption, groupIdOption, artifactIdOptions } = this.state;
     const {
@@ -102,6 +109,8 @@ class IntergrationBatchEditDrawer extends React.Component<Props, State> {
               value={organisationIdOption}
               placeholder='Organisation'
               onChange={this.handleOrganisationChange}
+              showSearch={true}
+              filterOption={this.handleOrganisationSearch}
             />
           </Form.Item>
           <Form.Item
