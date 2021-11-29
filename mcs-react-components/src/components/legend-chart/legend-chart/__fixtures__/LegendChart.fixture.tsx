@@ -5,8 +5,12 @@ const props: LegendChartProps = {
   identifier: '123',
   options: [
     {
-      color: '#FFF',
-      domain: 'mics',
+      color: '#AF4',
+      domain: 'mics 1',
+    },
+    {
+      color: '#AFF',
+      domain: 'mics 2',
     },
   ],
 };
