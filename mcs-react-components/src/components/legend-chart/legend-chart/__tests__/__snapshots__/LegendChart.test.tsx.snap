@@ -2,13 +2,13 @@
 
 exports[`renders the legendchart 1`] = `
 <div
-  className="mcs-legend-container "
+  className="mcs-legend-chart "
 >
   <div
-    className="wrapper"
+    className="mcs-legend-chart_item"
   >
     <div
-      className="mcs-line"
+      className="mcs-legend-chart_item_line"
       style={
         Object {
           "backgroundColor": "#FFF",
@@ -16,7 +16,7 @@ exports[`renders the legendchart 1`] = `
       }
     />
     <span
-      className="mcs-legend"
+      className="mcs-legend-chart_item_name"
     >
       mics
     </span>

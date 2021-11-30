@@ -18,17 +18,17 @@ class LegendChart extends React.Component<LegendChartProps> {
   render() {
     const { options, className } = this.props;
     return (
-      <div className={`mcs-legend-container ${className ? className : ''}`}>
+      <div className={`mcs-legend-chart ${className ? className : ''}`}>
         {options.map(option => {
           return (
-            <div key={option.domain} className='wrapper'>
+            <div key={option.domain} className='mcs-legend-chart_item'>
               <div
                 style={{
                   backgroundColor: option.color,
                 }}
-                className='mcs-line'
+                className='mcs-legend-chart_item_line'
               />
-              <span className='mcs-legend'>{option.domain}</span>
+              <span className='mcs-legend-chart_item_name'>{option.domain}</span>
             </div>
           );
         })}
