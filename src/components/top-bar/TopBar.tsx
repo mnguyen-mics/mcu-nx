@@ -98,7 +98,7 @@ class TopBar extends React.Component<Props> {
         {
           name: 'Computing Console',
           icon: <CodeSandboxCircleFilled className='mcs-app_icon mcs-app_developerConsoleIcon' />,
-          url: 'https://computing-console-mics.francecentral.cloudapp.azure.com/frontprod/login',
+          url: 'https://computing-console.mediarithmics.com',
         },
       ];
     }
