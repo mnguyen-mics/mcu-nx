@@ -5,7 +5,7 @@ import * as featureSelector from '../../redux/Features/selectors';
 import * as SessionHelper from '../../redux/Session/selectors';
 import { DatamartResource } from '../../models/datamart/DatamartResource';
 import { UserProfileResource } from '../../models/directory/UserProfileResource';
-import { MicsReduxState } from '../../redux/ReduxHelper';
+import { MicsReduxState } from '../../utils/ReduxHelper';
 
 export interface InjectedFeaturesProps {
   hasFeature: (requiredFeatures?: string | string[], requireDatamart?: boolean) => boolean;

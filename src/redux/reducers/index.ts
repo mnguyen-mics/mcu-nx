@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import FeaturesReducer from '../Features/reducer';
+import FormReducer from './FormReducer';
 import LabelsReducers from '../Labels/reducer';
 import LoginReducers from '../Login/reducer';
 import SessionReducers from '../Session/reducer';
@@ -15,6 +16,7 @@ const allReducers = KeycloakService.isKeycloakEnabled()
       ...LabelsReducers,
       ...SessionReducers,
       ...NotificationsReducers,
+      ...FormReducer,
     }
   : {
       ...AppReducer,
@@ -23,6 +25,7 @@ const allReducers = KeycloakService.isKeycloakEnabled()
       ...LoginReducers,
       ...SessionReducers,
       ...LabelsReducers,
+      ...FormReducer,
     };
 
 export default combineReducers(allReducers);

@@ -1,4 +1,4 @@
-import { MicsReduxState } from '../ReduxHelper';
+import { MicsReduxState } from '../../utils/ReduxHelper';
 
 const isAppInitialized = (state: MicsReduxState) => {
   return state.app.initialized;

@@ -10,7 +10,7 @@ import log from '../../utils/Logger';
 import { logIn } from '../../redux/Login/actions';
 import { Credentials } from '../../services/AuthService';
 import { UserProfileResource } from '../../models/directory/UserProfileResource';
-import { MicsReduxState } from '../../redux/ReduxHelper';
+import { MicsReduxState } from '../../utils/ReduxHelper';
 import LocalStorage from '../../services/LocalStorage';
 import { StaticContext } from 'react-router';
 import { LocationDescriptorObject } from 'history';

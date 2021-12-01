@@ -1,9 +1,13 @@
+import { DrawableContent } from './../components/drawer/index';
 import { Action } from 'redux-actions';
+import { ThemeColorsShape } from './ThemeColors';
 import {
   UserWorkspaceResource,
   UserProfileResource,
 } from '../models/directory/UserProfileResource';
-import { Cookies } from '@mediarithmics-private/mcs-components-library/lib/models/timeline/timeline';
+import { Notification } from '../components/notifications/Notifications';
+import { Label } from '../models/labels/labels';
+import { Cookies } from '../models/user/user';
 
 const REQUEST = 'REQUEST';
 const SUCCESS = 'SUCCESS';
@@ -18,17 +22,24 @@ export interface CreateRequestType {
 }
 
 export type MicsReduxState = {
+  form: {
+    [key: string]: any; // find a way to type all forms
+  };
   app: {
     initialized: boolean;
     initializationError: boolean;
   };
-  login: {
-    hasError: boolean;
-    error: any; // ?
+  theme: {
+    colors: ThemeColorsShape;
   };
   features: {
     organisation: string[];
     client: string;
+  };
+  notifications: Notification[];
+  login: {
+    hasError: boolean;
+    error: any; // ?
   };
   session: {
     workspace: UserWorkspaceResource;
@@ -43,7 +54,7 @@ export type MicsReduxState = {
   labels: {
     labelsApi: {
       isFetching: boolean;
-      data: any;
+      data: Label[];
       total: number;
       status: string;
       count: number;
@@ -52,6 +63,11 @@ export type MicsReduxState = {
       max_results: number;
     };
   };
+  menu: {
+    collapsed: boolean;
+    mode: string;
+  };
+  DrawableContents: DrawableContent[];
   keycloakPostLogin: {
     isFetching: boolean;
     hasFailed: boolean;

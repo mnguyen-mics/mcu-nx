@@ -5,6 +5,12 @@ const TYPES = {
   IQueryService: Symbol.for('queryService'),
   IChartDatasetService: Symbol.for('chartDatasetService'),
   IActivitiesAnalyticsService: Symbol.for('activitiesAnalyticsService'),
+  IAssetFileService: Symbol.for('assetFileService'),
+  IDataFileService: Symbol.for('dataFileService'),
+  IPluginService: Symbol.for('pluginService'),
+  ICustomDashboardService: Symbol.for('customDashboardService'),
+  IDatamartService: Symbol.for('datamartService'),
+  IIntegrationBatchService: Symbol.for('integrationBatchService'),
 };
 
 export { TYPES };
