@@ -41,7 +41,7 @@ class IntegrationBatchDefinitionDashboardActionBar extends React.Component<Props
       },
       history,
     } = this.props;
-    history.push(`/o/${organisationId}/plugins/batch_definitions`);
+    history.push(`/o/${organisationId}/plugins/integration_batch_definitions`);
   };
 
   render() {
@@ -55,7 +55,7 @@ class IntegrationBatchDefinitionDashboardActionBar extends React.Component<Props
     } = this.props;
 
     const breadcrumbPaths = [
-      <Link key='1' to={`/o/${organisationId}/plugins/batch_definitions`}>
+      <Link key='1' to={`/o/${organisationId}/plugins/integration_batch_definitions`}>
         {formatMessage(messages.pluginBatchDefinitions)}
       </Link>,
       plugin?.name,
