@@ -5,7 +5,6 @@ import { UploadProps, UploadFile } from 'antd/lib/upload/interface';
 import { Actionbar, McsIcon } from '@mediarithmics-private/mcs-components-library';
 import { FormTitle } from '../../../form';
 import messages from '../../messages';
-import { Content } from './HtmlEditor/ContentArea';
 import { HtmlEditor } from './HtmlEditor';
 import { AcceptedFile } from './FormDataFile';
 
