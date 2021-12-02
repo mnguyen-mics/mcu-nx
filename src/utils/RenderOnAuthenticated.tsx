@@ -6,7 +6,7 @@ import { errorMessages, MicsReduxState } from '..';
 import { UserProfileResource } from '../models/directory/UserProfileResource';
 import KeycloakService from '../services/KeycloakService';
 import { RouteParams } from './AuthenticatedRoute';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps, Redirect } from 'react-router';
 import { KeycloakPostLogin } from '../redux/KeycloakPostLogin/actions';
 import { InjectedFeaturesProps, injectFeatures } from '../components/Features';
 import RenderWhenHasAccess from './RenderWhenHasAccess';
@@ -15,6 +15,8 @@ import { InjectedIntlProps, injectIntl } from 'react-intl';
 export interface RenderOnAuthenticatedProps {
   requiredFeatures?: string | string[];
   requireDatamart?: boolean;
+  renderOnError?: JSX.Element;
+  getRedirectUriFunction?: () => string | undefined;
 }
 
 interface MapStateToProps {
@@ -56,7 +58,9 @@ class RenderOnAuthenticated extends React.Component<Props> {
       state,
       requiredFeatures,
       requireDatamart,
+      renderOnError,
       intl: { formatMessage },
+      getRedirectUriFunction,
     } = this.props;
 
     const defaultLoading = <Loading isFullScreen={true} />;
@@ -76,8 +80,19 @@ class RenderOnAuthenticated extends React.Component<Props> {
       return defaultError;
     }
 
+    if (getRedirectUriFunction) {
+      const redirectTo = getRedirectUriFunction();
+      if (redirectTo)
+        return <Redirect to={{ pathname: redirectTo, state: this.props.location.state }} />;
+      else return defaultError;
+    }
+
     return (
-      <RenderWhenHasAccess requiredFeatures={requiredFeatures} requireDatamart={requireDatamart}>
+      <RenderWhenHasAccess
+        requiredFeatures={requiredFeatures}
+        requireDatamart={requireDatamart}
+        renderOnError={renderOnError}
+      >
         {children}
       </RenderWhenHasAccess>
     );

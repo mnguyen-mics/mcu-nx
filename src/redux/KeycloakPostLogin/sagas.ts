@@ -14,6 +14,7 @@ import { KeycloakPostLogin } from './actions';
 
 function* keycloakPostLoginHandler() {
   const _authService = yield getContext('authService');
+  const _tagService = yield getContext('tagService');
   try {
     let connectedUser: UserProfileResource | undefined;
 
@@ -65,6 +66,8 @@ function* keycloakPostLoginHandler() {
 
       const clientAction = yield call(clientPromise);
       yield put(setClientFeature(clientAction));
+      _tagService?.addUserAccountProperty(connectedUser.id);
+      _tagService?.setUserProperties(filteredConnectedUser);
 
       yield put(getConnectedUser.success(filteredConnectedUser));
       // Set the global variable userId for Google Analytics
@@ -85,4 +88,5 @@ function* keycloakPostLoginWatcher() {
   yield takeLatest(KEYCLOAK_POST_LOGIN, keycloakPostLoginHandler);
 }
 
-export const keycloakPostLoginSagas = [fork(keycloakPostLoginWatcher)];
+const keycloakPostLoginSagas = [fork(keycloakPostLoginWatcher)];
+export default keycloakPostLoginSagas;

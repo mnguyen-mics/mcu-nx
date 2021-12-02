@@ -21,6 +21,7 @@ import DatamartService, { IDatamartService } from '../services/DatamartService';
 import IntegrationBatchService, {
   IIntegrationBatchService,
 } from '../services/IntegrationBatchService';
+import { ITagService, TagService } from '../services/TagService';
 
 export const container = new Container();
 
@@ -40,6 +41,7 @@ container.bind<IDatamartService>(TYPES.IDatamartService).to(DatamartService);
 container
   .bind<IIntegrationBatchService>(TYPES.IIntegrationBatchService)
   .to(IntegrationBatchService);
+container.bind<ITagService>(TYPES.ITagService).to(TagService);
 container
   .bind<IOrganisationService>(TYPES.IOrganisationService)
   .to(OrganisationService)

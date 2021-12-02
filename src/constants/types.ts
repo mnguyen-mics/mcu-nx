@@ -11,6 +11,7 @@ const TYPES = {
   ICustomDashboardService: Symbol.for('customDashboardService'),
   IDatamartService: Symbol.for('datamartService'),
   IIntegrationBatchService: Symbol.for('integrationBatchService'),
+  ITagService: Symbol.for('tagService'),
 };
 
 export { TYPES };
