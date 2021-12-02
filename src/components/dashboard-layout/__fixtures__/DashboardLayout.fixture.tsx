@@ -598,7 +598,7 @@ const propsAnalytics3 = {
 const fetchmockOptions = [
   {
     matcher: 'glob:/undefined/v1/datamarts/*/queries/*',
-    response: { data: 'Select @count() from UserPoint' },
+    response: { data: { query_text: 'Select @count() from UserPoint', query_language: 'OTQL' } },
   },
   {
     matcher: 'glob:/undefined/v1/datamarts/1414/query_executions/otql?use_cache=true*',
