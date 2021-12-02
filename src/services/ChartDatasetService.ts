@@ -52,12 +52,14 @@ interface AbstractSource {
 export interface ActivitiesAnalyticsSource extends AbstractSource {
   query_json: ReportRequestBody<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>;
   adapt_to_scope?: boolean;
+  datamart_id?: string;
 }
 export interface OTQLSource extends AbstractSource {
   query_text?: string;
   query_id?: string;
   precision?: QueryPrecisionMode;
   adapt_to_scope?: boolean;
+  datamart_id?: string;
 }
 
 export declare type MetricChartFormat = 'percentage' | 'count';
@@ -225,8 +227,9 @@ export class ChartDatasetService implements IChartDatasetService {
       case 'otql':
         const otqlSource = source as OTQLSource;
         const scope = this.getScope(otqlSource.adapt_to_scope, providedScope);
+        const queryDatamartId = otqlSource.datamart_id || datamartId;
 
-        return this.executeOtqlQuery(datamartId, otqlSource, scope).then(res => {
+        return this.executeOtqlQuery(queryDatamartId, otqlSource, scope).then(res => {
           return formatDatasetForOtql(res, xKey, seriesTitle);
         });
 
@@ -297,6 +300,7 @@ export class ChartDatasetService implements IChartDatasetService {
         }
       case 'activities_analytics':
         const activitiesAnalyticsSource = source as ActivitiesAnalyticsSource;
+        const activiesAnalyticsDatamartId = activitiesAnalyticsSource.datamart_id || datamartId;
         const activitiesAnalyticsSourceJson = activitiesAnalyticsSource.query_json;
         const analyticsScope = this.getScope(
           activitiesAnalyticsSource.adapt_to_scope,
@@ -306,7 +310,7 @@ export class ChartDatasetService implements IChartDatasetService {
         const dateRanges: DateRange[] =
           activitiesAnalyticsSourceJson.date_ranges || this.defaultDateRange;
         return this.scopeAdapter
-          .buildScopeAnalyticsQuery(datamartId, analyticsScope)
+          .buildScopeAnalyticsQuery(activiesAnalyticsDatamartId, analyticsScope)
           .then(analyticsScopeFilter => {
             const dashboardQueryFilters =
               activitiesAnalyticsSourceJson.dimension_filter_clauses?.filters || [];
@@ -321,7 +325,7 @@ export class ChartDatasetService implements IChartDatasetService {
                 : undefined;
             return this.activitiesAnalyticsService
               .getAnalytics(
-                datamartId,
+                activiesAnalyticsDatamartId,
                 activitiesAnalyticsSourceJson.metrics,
                 dateRanges,
                 activitiesAnalyticsSourceJson.dimensions,
