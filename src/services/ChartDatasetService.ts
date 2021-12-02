@@ -266,7 +266,7 @@ export class ChartDatasetService implements IChartDatasetService {
             chartType,
             xKey,
             childSources3[0],
-            scope,
+            providedScope,
           ).then(dataset => {
             return this.toPercentagesDataset(xKey, dataset as AggregateDataset);
           });
