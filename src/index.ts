@@ -63,6 +63,10 @@ export {
   InjectedThemeColorsProps,
   ThemeColorsShape,
 } from './utils/ThemeColors';
+export {
+  WithDatamartSelectorProps,
+  withDatamartSelector,
+} from './components/datamart/WithDatamartSelector';
 
 // Services
 
