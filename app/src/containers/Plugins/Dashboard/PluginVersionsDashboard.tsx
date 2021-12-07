@@ -4,7 +4,6 @@ import { Layout, Tag } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import ItemList, { Filters } from '../../../components/ItemList';
-import BatchDefinitionDashboardActionbar from './IntegrationBatchDefinitionDashboardActionbar';
 import {
   PluginResource,
   PluginVersionResource,
@@ -12,6 +11,7 @@ import {
   TYPES,
   IPluginService,
 } from '@mediarithmics-private/advanced-components';
+import PluginVersionsDashboardActionbar from './PluginVersionsDashboardActionbar';
 import {
   PAGINATION_SEARCH_SETTINGS,
   PLUGIN_SEARCH_SETTINGS,
@@ -32,7 +32,10 @@ import OrganisationName from '../../../components/Common/OrganisationName';
 
 const { Content } = Layout;
 
-const BATCH_DEFINITION_SEARCH_SETTINGS = [...PAGINATION_SEARCH_SETTINGS, ...PLUGIN_SEARCH_SETTINGS];
+export const PLUGIN_PAGE_SEARCH_SETTINGS = [
+  ...PAGINATION_SEARCH_SETTINGS,
+  ...PLUGIN_SEARCH_SETTINGS,
+];
 
 interface RouteProps {
   organisationId: string;
@@ -51,7 +54,7 @@ interface State {
   // pluginInstances?: Index<PluginResource>;
 }
 
-class IntegrationBatchDefinitionList extends React.Component<Props, State> {
+class PluginVersionsDashboard extends React.Component<Props, State> {
   @lazyInject(TYPES.IPluginService)
   private _pluginService: IPluginService;
 
@@ -124,7 +127,7 @@ class IntegrationBatchDefinitionList extends React.Component<Props, State> {
       });
   }
 
-  fetchIntegrationBatchDefinitionVersions = (organisationId: string, filters: Filters) => {
+  fetchPluginVersions = (organisationId: string, filters: Filters) => {
     const {
       notifyError,
       match: {
@@ -203,7 +206,7 @@ class IntegrationBatchDefinitionList extends React.Component<Props, State> {
     };
 
     const totalTag = (
-      <div className='mcs-batchDefinitions_totalTag'>
+      <div className='mcs-pluginVersions_totalTag'>
         <Tag color='blue'>{`${total} versions`}</Tag>
       </div>
     );
@@ -221,18 +224,18 @@ class IntegrationBatchDefinitionList extends React.Component<Props, State> {
 
     return (
       <div className='ant-layout'>
-        <BatchDefinitionDashboardActionbar plugin={plugin} />
+        <PluginVersionsDashboardActionbar plugin={plugin} />
         <div className='ant-layout'>
           <Content className='mcs-content-container'>
             <DashboardHeader title={title} subtitle={subtitle} isLoading={isLoadingPlugin} />
             <Card title='Versions'>
               <ItemList
-                fetchList={this.fetchIntegrationBatchDefinitionVersions}
+                fetchList={this.fetchPluginVersions}
                 dataSource={pluginVersions}
                 loading={isLoadingPluginVersions}
                 total={total}
                 columns={dataColumnsDefinition}
-                pageSettings={BATCH_DEFINITION_SEARCH_SETTINGS}
+                pageSettings={PLUGIN_PAGE_SEARCH_SETTINGS}
                 emptyTable={emptyTable}
                 additionnalComponent={totalTag}
               />
@@ -248,4 +251,4 @@ export default compose<Props, {}>(
   withRouter,
   injectIntl,
   injectNotifications,
-)(IntegrationBatchDefinitionList);
+)(PluginVersionsDashboard);

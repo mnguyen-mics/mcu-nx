@@ -12,25 +12,20 @@ interface RouterProps {
   organisationId: string;
 }
 
-interface IntegrationBatchDefinitionListActionBarProps {
+interface PluginsListActionBarProps {
   innerElement?: React.ReactNode;
   openDrawer: () => void;
 }
 
-interface DashboardsActionbarState {
+interface State {
   isModalOpen: boolean;
   fileList: UploadFile[];
   isLoading: boolean;
 }
 
-type Props = RouteComponentProps<RouterProps> &
-  InjectedIntlProps &
-  IntegrationBatchDefinitionListActionBarProps;
+type Props = RouteComponentProps<RouterProps> & InjectedIntlProps & PluginsListActionBarProps;
 
-class IntegrationBatchDefinitionsListActionBar extends React.Component<
-  Props,
-  DashboardsActionbarState
-> {
+class PluginsListActionBar extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -49,13 +44,9 @@ class IntegrationBatchDefinitionsListActionBar extends React.Component<
       openDrawer,
     } = this.props;
 
-    // Plugins home page ?
     const breadcrumbPaths = [
-      <Link key='1' to={`/o/${organisationId}/plugins/integration_batch_definitions`}>
+      <Link key='1' to={`/o/${organisationId}/plugins`}>
         {formatMessage(messages.plugins)}
-      </Link>,
-      <Link key='2' to={`/o/${organisationId}/plugins/integration_batch_definitions`}>
-        {formatMessage(messages.pluginBatchDefinitions)}
       </Link>,
     ];
 
@@ -64,11 +55,11 @@ class IntegrationBatchDefinitionsListActionBar extends React.Component<
         <div className='mcs-actionbar_innerElementsPanel'>
           {innerElement}
           <Button
-            className='mcs-primary mcs-batchDefinitionListActionBar_createBatchButton'
+            className='mcs-primary mcs-pluginsListActionBar_createPluginButton'
             type='primary'
             onClick={openDrawer}
           >
-            <McsIcon type='plus' /> <FormattedMessage {...messages.newBatchPlugin} />
+            <McsIcon type='plus' /> <FormattedMessage {...messages.newPlugin} />
           </Button>
         </div>
       </Actionbar>
@@ -76,7 +67,7 @@ class IntegrationBatchDefinitionsListActionBar extends React.Component<
   }
 }
 
-export default compose<Props, IntegrationBatchDefinitionListActionBarProps>(
+export default compose<Props, PluginsListActionBarProps>(
   injectIntl,
   withRouter,
-)(IntegrationBatchDefinitionsListActionBar);
+)(PluginsListActionBar);

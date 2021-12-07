@@ -93,6 +93,13 @@ export const PLUGIN_SEARCH_SETTINGS: SearchSetting[] = [
     serialize: (value: string) => value,
     isValid: () => true,
   },
+  {
+    paramName: 'plugin_type',
+    defaultValue: '',
+    deserialize: (query: Index<string>) => query.plugin_type,
+    serialize: (value: string) => value,
+    isValid: () => true,
+  },
 ];
 
 export interface PaginationSearchSettings {

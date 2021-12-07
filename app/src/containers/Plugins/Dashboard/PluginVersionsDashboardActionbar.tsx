@@ -13,7 +13,7 @@ interface RouterProps {
   organisationId: string;
 }
 
-interface IntegrationBatchDefinitionDashboardActionbarProps {
+interface PluginVersionsDashboardActionbarProps {
   plugin?: PluginResource;
   innerElement?: React.ReactNode;
 }
@@ -24,9 +24,9 @@ interface State {
 
 type Props = RouteComponentProps<RouterProps> &
   InjectedIntlProps &
-  IntegrationBatchDefinitionDashboardActionbarProps;
+  PluginVersionsDashboardActionbarProps;
 
-class IntegrationBatchDefinitionDashboardActionBar extends React.Component<Props, State> {
+class PluginVersionsDashboardActionbar extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -41,7 +41,7 @@ class IntegrationBatchDefinitionDashboardActionBar extends React.Component<Props
       },
       history,
     } = this.props;
-    history.push(`/o/${organisationId}/plugins/integration_batch_definitions`);
+    history.push(`/o/${organisationId}/plugins`);
   };
 
   render() {
@@ -55,8 +55,8 @@ class IntegrationBatchDefinitionDashboardActionBar extends React.Component<Props
     } = this.props;
 
     const breadcrumbPaths = [
-      <Link key='1' to={`/o/${organisationId}/plugins/integration_batch_definitions`}>
-        {formatMessage(messages.pluginBatchDefinitions)}
+      <Link key='1' to={`/o/${organisationId}/plugins`}>
+        {formatMessage(messages.plugins)}
       </Link>,
       plugin?.name,
     ];
@@ -77,7 +77,7 @@ class IntegrationBatchDefinitionDashboardActionBar extends React.Component<Props
   }
 }
 
-export default compose<Props, IntegrationBatchDefinitionDashboardActionbarProps>(
+export default compose<Props, PluginVersionsDashboardActionbarProps>(
   injectIntl,
   withRouter,
-)(IntegrationBatchDefinitionDashboardActionBar);
+)(PluginVersionsDashboardActionbar);
