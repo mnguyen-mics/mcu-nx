@@ -24,22 +24,33 @@ import {
   Tooltip,
 } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 import { OTQLResult, QueryPrecisionMode } from '../models/datamart/graphdb/OTQLResult';
-import {
-  ActivitiesAnalyticsService,
-  IActivitiesAnalyticsService,
-} from './ActivitiesAnalyticsService';
+import { ActivitiesAnalyticsService } from './analytics/ActivitiesAnalyticsService';
+
+import { CollectionVolumesService } from './analytics/CollectionVolumesService';
+
 import { BooleanOperator, DateRange, ReportRequestBody } from '../models/report/ReportRequestBody';
 import {
   ActivitiesAnalyticsDimension,
   ActivitiesAnalyticsMetric,
-} from '../utils/ActivitiesAnalyticsReportHelper';
+} from '../utils/analytics/ActivitiesAnalyticsReportHelper';
 import moment from 'moment';
 import { AbstractScope } from '../models/datamart/graphdb/Scope';
 import { QueryScopeAdapter } from '../utils/QueryScopeAdapter';
 import { QueryLanguage, QueryShape } from '../models/datamart/DatamartResource';
+import {
+  CollectionVolumesDimension,
+  CollectionVolumesMetric,
+} from '../utils/analytics/CollectionVolumesReportHelper';
+import { IAnalyticsService } from './analytics/AnalyticsService';
 
 export type ChartType = 'pie' | 'bars' | 'radar' | 'metric';
-export type SourceType = 'otql' | 'join' | 'to-list' | 'activities_analytics' | 'ratio';
+export type SourceType =
+  | 'otql'
+  | 'join'
+  | 'to-list'
+  | 'activities_analytics'
+  | 'collection_volumes'
+  | 'ratio';
 
 const DEFAULT_Y_KEY = {
   key: 'value',
@@ -49,8 +60,8 @@ interface AbstractSource {
   type: SourceType;
   series_title?: string;
 }
-export interface ActivitiesAnalyticsSource extends AbstractSource {
-  query_json: ReportRequestBody<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>;
+export interface AnalyticsSource<M, D> extends AbstractSource {
+  query_json: ReportRequestBody<M, D>;
   adapt_to_scope?: boolean;
   datamart_id?: string;
 }
@@ -152,14 +163,23 @@ export interface IChartDatasetService {
   ): Promise<AbstractDataset | undefined>;
 }
 
+type AnalyticsType = 'collections' | 'activities';
+
 @injectable()
 export class ChartDatasetService implements IChartDatasetService {
   // TODO: Put back injection for this service
   private queryService: IQueryService = new QueryService();
   private scopeAdapter: QueryScopeAdapter = new QueryScopeAdapter(this.queryService);
 
-  private activitiesAnalyticsService: IActivitiesAnalyticsService =
-    new ActivitiesAnalyticsService();
+  private activitiesAnalyticsService: IAnalyticsService<
+    ActivitiesAnalyticsMetric,
+    ActivitiesAnalyticsDimension
+  > = new ActivitiesAnalyticsService();
+
+  private collectionsAnalyticsService: IAnalyticsService<
+    CollectionVolumesMetric,
+    CollectionVolumesDimension
+  > = new CollectionVolumesService();
 
   private defaultDateRange: DateRange[] = [
     {
@@ -211,6 +231,103 @@ export class ChartDatasetService implements IChartDatasetService {
   private getScope(adaptToScope?: boolean, providedScope?: AbstractScope) {
     const shouldAdaptToScope = adaptToScope === undefined ? true : adaptToScope;
     return shouldAdaptToScope ? providedScope : undefined;
+  }
+
+  private getAnalyticsService<M, D>(type: AnalyticsType) {
+    if (type === 'activities') return this.activitiesAnalyticsService;
+    else if (type === 'collections') return this.collectionsAnalyticsService;
+    return this.activitiesAnalyticsService;
+  }
+
+  private fetchActivitiesAnalytics(
+    datamartId: string,
+    source: AnalyticsSource<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>,
+    xKey: string,
+    providedScope?: AbstractScope,
+  ) {
+    return this.fetchAnalytics(
+      'activities' as AnalyticsType,
+      datamartId,
+      source,
+      xKey,
+      providedScope,
+    );
+  }
+
+  private fetchCollectionVolumes(
+    datamartId: string,
+    source: AnalyticsSource<CollectionVolumesMetric, CollectionVolumesDimension>,
+    xKey: string,
+    providedScope?: AbstractScope,
+  ) {
+    return this.fetchAnalytics(
+      'collections' as AnalyticsType,
+      datamartId,
+      source,
+      xKey,
+      providedScope,
+    );
+  }
+
+  private handleAnalyticsScope(
+    datamartId: string,
+    adaptToScope?: boolean,
+    providedScope?: AbstractScope,
+  ) {
+    const analyticsScope = this.getScope(adaptToScope, providedScope);
+
+    return this.scopeAdapter.buildScopeAnalyticsQuery(datamartId, analyticsScope);
+  }
+
+  private shouldAdaptToScope<M, D>(type: AnalyticsType, source: AnalyticsSource<M, D>) {
+    return type === 'activities' && source?.adapt_to_scope;
+  }
+
+  private async fetchAnalytics<M extends string, D extends string>(
+    type: AnalyticsType,
+    datamartId: string,
+    source: AnalyticsSource<M, D>,
+    xKey: string,
+    providedScope?: AbstractScope,
+  ) {
+    const analyticsDatamartId = source.datamart_id || datamartId;
+    const analyticsSourceJson = source.query_json;
+
+    const analyticsScopeFilter = await this.handleAnalyticsScope(
+      analyticsDatamartId,
+      this.shouldAdaptToScope<M, D>(type, source),
+      providedScope,
+    );
+
+    const dateRanges: DateRange[] = analyticsSourceJson.date_ranges || this.defaultDateRange;
+    const dashboardQueryFilters = analyticsSourceJson.dimension_filter_clauses?.filters || [];
+    const scopingQueryFilters = analyticsScopeFilter ? [analyticsScopeFilter] : [];
+    const queryFilters = dashboardQueryFilters.concat(scopingQueryFilters);
+    const scopedDimensionFilterClauses =
+      queryFilters.length > 0
+        ? {
+            operator: 'AND' as BooleanOperator,
+            filters: queryFilters,
+          }
+        : undefined;
+    const analyticsResult = await (
+      this.getAnalyticsService(type) as IAnalyticsService<M, D>
+    ).getAnalytics(
+      analyticsDatamartId,
+      analyticsSourceJson.metrics,
+      dateRanges,
+      analyticsSourceJson.dimensions,
+      scopedDimensionFilterClauses,
+    );
+    const metricNames = analyticsSourceJson.metrics.map(m => m.expression.toLocaleLowerCase());
+    const dimensionNames = analyticsSourceJson.dimensions.map(d => d.name.toLocaleLowerCase());
+    return formatDatasetForReportView(
+      analyticsResult.data.report_view,
+      xKey,
+      metricNames,
+      dimensionNames,
+      source.series_title,
+    );
   }
 
   private fetchDatasetForSource(
@@ -299,55 +416,19 @@ export class ChartDatasetService implements IChartDatasetService {
           );
         }
       case 'activities_analytics':
-        const activitiesAnalyticsSource = source as ActivitiesAnalyticsSource;
-        const activiesAnalyticsDatamartId = activitiesAnalyticsSource.datamart_id || datamartId;
-        const activitiesAnalyticsSourceJson = activitiesAnalyticsSource.query_json;
-        const analyticsScope = this.getScope(
-          activitiesAnalyticsSource.adapt_to_scope,
+        return this.fetchActivitiesAnalytics(
+          datamartId,
+          source as AnalyticsSource<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>,
+          xKey,
           providedScope,
         );
-
-        const dateRanges: DateRange[] =
-          activitiesAnalyticsSourceJson.date_ranges || this.defaultDateRange;
-        return this.scopeAdapter
-          .buildScopeAnalyticsQuery(activiesAnalyticsDatamartId, analyticsScope)
-          .then(analyticsScopeFilter => {
-            const dashboardQueryFilters =
-              activitiesAnalyticsSourceJson.dimension_filter_clauses?.filters || [];
-            const scopingQueryFilters = analyticsScopeFilter ? [analyticsScopeFilter] : [];
-            const queryFilters = dashboardQueryFilters.concat(scopingQueryFilters);
-            const scopedDimensionFilterClauses =
-              queryFilters.length > 0
-                ? {
-                    operator: 'AND' as BooleanOperator,
-                    filters: queryFilters,
-                  }
-                : undefined;
-            return this.activitiesAnalyticsService
-              .getAnalytics(
-                activiesAnalyticsDatamartId,
-                activitiesAnalyticsSourceJson.metrics,
-                dateRanges,
-                activitiesAnalyticsSourceJson.dimensions,
-                scopedDimensionFilterClauses,
-              )
-              .then(res => {
-                const metricNames = activitiesAnalyticsSourceJson.metrics.map(m =>
-                  m.expression.toLocaleLowerCase(),
-                );
-                const dimensionNames = activitiesAnalyticsSourceJson.dimensions.map(d =>
-                  d.name.toLocaleLowerCase(),
-                );
-                return formatDatasetForReportView(
-                  res.data.report_view,
-                  xKey,
-                  metricNames as ActivitiesAnalyticsMetric[],
-                  dimensionNames as ActivitiesAnalyticsDimension[],
-                  source.series_title,
-                );
-              });
-          });
-
+      case 'collection_volumes':
+        return this.fetchCollectionVolumes(
+          datamartId,
+          source as AnalyticsSource<CollectionVolumesMetric, CollectionVolumesDimension>,
+          xKey,
+          providedScope,
+        );
       case 'ratio':
         const ratioSource = source as RatioSource;
         const datasetValue = this.fetchDatasetForSource(

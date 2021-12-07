@@ -1,32 +1,24 @@
-import ApiService from './ApiService';
+import ApiService from '../ApiService';
 import { injectable } from 'inversify';
-import { ReportViewResponse } from '../models/report/ReportView';
+import { ReportViewResponse } from '../../models/report/ReportView';
 import {
   ReportRequestBody,
   DimensionFilterClause,
   Metric,
   Dimension,
   DateRange,
-} from '../models/report/ReportRequestBody';
+} from '../../models/report/ReportRequestBody';
 import {
   buildActivitiesAnalyticsRequestBody,
   ActivitiesAnalyticsDimension,
   ActivitiesAnalyticsMetric,
-} from '../utils/ActivitiesAnalyticsReportHelper';
-
-export interface IActivitiesAnalyticsService {
-  getAnalytics: (
-    datamartId: string,
-    metrics: Array<Metric<ActivitiesAnalyticsMetric>>,
-    dateRanges: DateRange[],
-    dimensions?: Array<Dimension<ActivitiesAnalyticsDimension>>,
-    dimensionFilterClauses?: DimensionFilterClause,
-    sampling?: number,
-  ) => Promise<ReportViewResponse>;
-}
+} from '../../utils/analytics/ActivitiesAnalyticsReportHelper';
+import { IAnalyticsService } from './AnalyticsService';
 
 @injectable()
-export class ActivitiesAnalyticsService implements IActivitiesAnalyticsService {
+export class ActivitiesAnalyticsService
+  implements IAnalyticsService<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>
+{
   getAnalytics(
     datamartId: string,
     metrics: Array<Metric<ActivitiesAnalyticsMetric>>,
