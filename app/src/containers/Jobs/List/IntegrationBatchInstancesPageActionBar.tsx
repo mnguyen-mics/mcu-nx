@@ -84,6 +84,7 @@ class IntegrationBatchInstancesPageActionBar extends React.Component<Props, Stat
           onClose={this.closeDrawer}
           visible={isDrawerVisible}
           width='1200'
+          destroyOnClose={true}
         >
           <IntegrationBatchInstanceEditPage onClose={this.closeDrawer} />
         </Drawer>
