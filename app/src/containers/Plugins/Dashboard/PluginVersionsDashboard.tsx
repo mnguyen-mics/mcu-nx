@@ -170,10 +170,22 @@ class PluginVersionsDashboard extends React.Component<Props, State> {
 
     const dataColumnsDefinition: Array<DataColumnDefinition<PluginVersionResource>> = [
       {
-        title: formatMessage(messages.group),
+        title: formatMessage(messages.versionValue),
         key: 'version_id',
         isHideable: false,
-        render: (text: string, record: PluginVersionResource) => <Tag color='blue'>{text}</Tag>,
+        render: (text: string, record: PluginVersionResource) => (
+          <Tag color='blue' className='mcs-pluginVersionsDasboard_versionIdColumn'>
+            {text}
+          </Tag>
+        ),
+      },
+      {
+        title: formatMessage(messages.buildTag),
+        key: 'build_tag',
+        isHideable: false,
+        render: (text: string, record: PluginVersionResource) => (
+          <span className='mcs-pluginVersionsDasboard_buildColumn'>{text}</span>
+        ),
       },
       // {
       //   title: formatMessage(messages.instances),

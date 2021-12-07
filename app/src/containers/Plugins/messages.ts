@@ -25,6 +25,14 @@ export default defineMessages({
     id: 'plugins.batchDefinitions.list.column.group',
     defaultMessage: 'Group',
   },
+  versionValue: {
+    id: 'plugins.batchDefinitions.list.column.version_value',
+    defaultMessage: 'Version Value',
+  },
+  buildTag: {
+    id: 'plugins.batchDefinitions.list.column.build_tag',
+    defaultMessage: 'Build Tag',
+  },
   artifactId: {
     id: 'plugins.batchDefinitions.list.column.artifactId',
     defaultMessage: 'Artifact Id',
