@@ -87,6 +87,7 @@ export interface PluginVersionResource {
   group_id: string;
   artifact_id: string;
   version_id: string;
+  build_tag?: string;
   max_qps: number;
   archived: boolean;
 }
