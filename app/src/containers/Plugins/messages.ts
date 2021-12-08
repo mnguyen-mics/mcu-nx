@@ -9,9 +9,13 @@ export default defineMessages({
     id: 'plugins.batchDefinitions.title',
     defaultMessage: 'Batch Definitions',
   },
-  newBatchPlugin: {
-    id: 'plugins.batchDefinitions.list.actionBar.newBatchPlugin',
-    defaultMessage: 'New Batch Plugin',
+  newPlugin: {
+    id: 'plugins.list.actionBar.newPlugin',
+    defaultMessage: 'New Plugin',
+  },
+  pluginType: {
+    id: 'plugins.list.pluginType',
+    defaultMessage: 'Plugin Type',
   },
   organisation: {
     id: 'plugins.batchDefinitions.list.column.organisation',
@@ -31,11 +35,11 @@ export default defineMessages({
   },
   emptyTableMessage: {
     id: 'plugins.batchDefinitions.list.emptyTable',
-    defaultMessage: 'No batch definition found.',
+    defaultMessage: 'No plugin found.',
   },
-  batchEditDrawerTitle: {
+  pluginEditDrawerTitle: {
     id: 'plugins.batchEditDrawer.title',
-    defaultMessage: 'Batches > New batch plugin',
+    defaultMessage: 'Plugins > New plugin',
   },
   image: {
     id: 'plugins.batchDefinitions.dashboard.versionTable.image',

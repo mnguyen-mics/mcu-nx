@@ -7,31 +7,52 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import messages from '../messages';
 import ItemList, { Filters } from '../../../components/ItemList';
-import IntegrationBatchDefinitionsListActionBar from './IntegrationBatchDefinitionsListActionBar';
 import {
   PluginResource,
   lazyInject,
   TYPES,
   IPluginService,
 } from '@mediarithmics-private/advanced-components';
-import {
-  PAGINATION_SEARCH_SETTINGS,
-  PLUGIN_SEARCH_SETTINGS,
-  updateSearch,
-} from '../../../utils/LocationSearchHelper';
+import { updateSearch } from '../../../utils/LocationSearchHelper';
+import PluginsListActionBar from './PluginsListActionBar';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';
-import IntegrationBatchForm from '../Edit/IntegrationBatchForm';
+import PluginEditDrawer from '../Edit/PluginEditDrawer';
 import { Link } from 'react-router-dom';
 import { Card } from '@mediarithmics-private/mcs-components-library';
+import { PLUGIN_PAGE_SEARCH_SETTINGS } from '../Dashboard/PluginVersionsDashboard';
+import { PluginType } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
+
+export const pluginTypeList: PluginType[] = [
+  'DISPLAY_CAMPAIGN_EDITOR',
+  'DISPLAY_CAMPAIGN_USER_SCENARIO',
+  'EMAIL_CAMPAIGN_EDITOR',
+  'EMAIL_TEMPLATE_EDITOR',
+  'EMAIL_TEMPLATE_RENDERER',
+  'EMAIL_ROUTER',
+  'DISPLAY_AD_EDITOR',
+  'DISPLAY_AD_RENDERER',
+  'RECOMMENDER',
+  'VIDEO_AD_EDITOR',
+  'VIDEO_AD_RENDERER',
+  'STYLE_SHEET',
+  'AUDIENCE_SEGMENT_EXTERNAL_FEED',
+  'AUDIENCE_SEGMENT_TAG_FEED',
+  'BID_OPTIMIZATION_ENGINE',
+  'ATTRIBUTION_PROCESSOR',
+  'ACTIVITY_ANALYZER',
+  'DATA_CONNECTOR',
+  'SCENARIO_NODE_PROCESSOR',
+  'ML_FUNCTION',
+  'SCENARIO_CUSTOM_ACTION',
+  'INTEGRATION_BATCH',
+];
 
 const { Content } = Layout;
-
-const BATCH_DEFINITION_SEARCH_SETTINGS = [...PAGINATION_SEARCH_SETTINGS, ...PLUGIN_SEARCH_SETTINGS];
 
 interface RouteProps {
   organisationId: string;
@@ -48,7 +69,7 @@ interface State {
   isVisibleDrawer: boolean;
 }
 
-class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
+class PluginsList extends React.Component<Props, State> {
   @lazyInject(TYPES.IPluginService)
   private _pluginService: IPluginService;
 
@@ -73,7 +94,6 @@ class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
     } = this.props;
     this._pluginService
       .getPlugins({
-        plugin_type: 'INTEGRATION_BATCH',
         organisation_id: organisationId,
       })
       .then(res => {
@@ -93,21 +113,22 @@ class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
       });
   }
 
-  onClear = (filterProperty: 'group_id' | 'artifact_id') => () => {
+  onClear = (filterProperty: 'group_id' | 'artifact_id' | 'plugin_type') => () => {
     const {
       history,
       location: { search: currentSearch, pathname },
     } = this.props;
-    const params: any = {};
-    params[`${filterProperty}`] = '';
+    const newSearch = queryString.parse(currentSearch);
+    delete newSearch[`${filterProperty}`];
+
     const nextLocation = {
       pathname,
-      search: updateSearch(currentSearch, params, BATCH_DEFINITION_SEARCH_SETTINGS),
+      search: updateSearch(queryString.stringify(newSearch), {}, PLUGIN_PAGE_SEARCH_SETTINGS),
     };
     history.push(nextLocation);
   };
 
-  onSelect = (filterProperty: 'group_id' | 'artifact_id') => (value: string) => {
+  onSelect = (filterProperty: 'group_id' | 'artifact_id' | 'plugin_type') => (value: string) => {
     const {
       history,
       location: { search: currentSearch, pathname },
@@ -116,7 +137,7 @@ class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
     params[`${filterProperty}`] = value;
     const nextLocation = {
       pathname,
-      search: updateSearch(currentSearch, params, BATCH_DEFINITION_SEARCH_SETTINGS),
+      search: updateSearch(currentSearch, params, PLUGIN_PAGE_SEARCH_SETTINGS),
     };
     history.push(nextLocation);
   };
@@ -129,9 +150,28 @@ class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
 
     const defaultGroupId = queryString.parse(search).group_id || undefined;
     const defaultArtifactId = queryString.parse(search).artifact_id || undefined;
+    const defaultPluginType = queryString.parse(search).plugin_type || undefined;
+
+    const pluginTypeOptions = pluginTypeList.map(t => {
+      return {
+        label: t,
+        value: t,
+      };
+    });
 
     return (
       <div className='mcs-actionBar_filters'>
+        <Select
+          className='mcs-actionBar_filterInput'
+          placeholder={this.renderInputPlaceholder('Plugin Type')}
+          showSearch={true}
+          allowClear={true}
+          showArrow={false}
+          options={pluginTypeOptions}
+          onSelect={this.onSelect('plugin_type')}
+          onClear={this.onClear('plugin_type')}
+          defaultValue={defaultPluginType}
+        />
         <Select
           className='mcs-actionBar_filterInput'
           placeholder={this.renderInputPlaceholder('Group Id')}
@@ -158,7 +198,7 @@ class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
     );
   }
 
-  fetchIntegrationBatchDefinitions = (organisationId: string, filters: Filters) => {
+  fetchPlugins = (organisationId: string, filters: Filters) => {
     const { notifyError } = this.props;
     this.setState({
       loading: true,
@@ -166,7 +206,6 @@ class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
     this._pluginService
       .getPlugins({
         ...filters,
-        plugin_type: 'INTEGRATION_BATCH',
         organisation_id: organisationId,
       })
       .then(res => {
@@ -205,7 +244,7 @@ class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
     });
   };
 
-  saveIntegrationBatchPlugin = (integrationBatchPluginResource: Partial<PluginResource>) => {
+  savePlugin = (pluginResource: Partial<PluginResource>) => {
     const {
       notifyError,
       history,
@@ -215,12 +254,11 @@ class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
     } = this.props;
     this._pluginService
       .createPlugin({
-        ...integrationBatchPluginResource,
-        plugin_type: 'INTEGRATION_BATCH',
+        ...pluginResource,
       })
       .then(res => {
         const pluginId = res.data.id;
-        const newPathName = `/o/${organisationId}/plugins/integration_batch_definitions/${pluginId}`;
+        const newPathName = `/o/${organisationId}/plugins/${pluginId}`;
         history.push(newPathName);
       })
       .catch(err => {
@@ -239,11 +277,19 @@ class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
 
     const dataColumnsDefinition: Array<DataColumnDefinition<PluginResource>> = [
       {
+        title: formatMessage(messages.pluginType),
+        key: 'plugin_type',
+        isHideable: false,
+        render: (text: string, record: PluginResource) => (
+          <span className='mcs-pluginTable_pluginType'>{record.plugin_type}</span>
+        ),
+      },
+      {
         title: formatMessage(messages.organisation),
         key: 'organisation_id',
         isHideable: false,
         render: (text: string, record: PluginResource) => (
-          <span className='mcs-batchDefinitionTable_organisation'>{record.organisation_id}</span>
+          <span className='mcs-pluginTable_organisation'>{record.organisation_id}</span>
         ),
       },
       {
@@ -252,8 +298,8 @@ class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
         isHideable: false,
         render: (text: string, record: PluginResource) => (
           <Link
-            className='mcs-batchDefinitionTable_GroupId'
-            to={`/o/${organisationId}/plugins/integration_batch_definitions/${record.id}`}
+            className='mcs-pluginTable_GroupId'
+            to={`/o/${organisationId}/plugins/${record.id}`}
           >
             {record.group_id}
           </Link>
@@ -265,8 +311,8 @@ class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
         isHideable: false,
         render: (text: string, record: PluginResource) => (
           <Link
-            className='mcs-batchDefinitionTable_artifactId'
-            to={`/o/${organisationId}/plugins/integration_batch_definitions/${record.id}`}
+            className='mcs-pluginTable_artifactId'
+            to={`/o/${organisationId}/plugins/${record.id}`}
           >
             {record.artifact_id}
           </Link>
@@ -277,7 +323,7 @@ class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
         key: 'current_version',
         isHideable: false,
         render: (text: string, record: PluginResource) => (
-          <Tag className='mcs-batchDefinitionTable_currentVersion' color='purple'>
+          <Tag className='mcs-pluginTable_currentVersion' color='purple'>
             {record.current_version_id}
           </Tag>
         ),
@@ -293,14 +339,14 @@ class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
     };
 
     const totalTag = (
-      <div className='mcs-batchDefinitions_totalTag'>
+      <div className='mcs-pluginVersions_totalTag'>
         <Tag color='blue'>{`${total} plugins`}</Tag>
       </div>
     );
 
     return (
       <div className='ant-layout'>
-        <IntegrationBatchDefinitionsListActionBar
+        <PluginsListActionBar
           innerElement={this.renderActionBarInnerElements()}
           openDrawer={this.openDrawer}
         />
@@ -308,28 +354,28 @@ class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
           <Content className='mcs-content-container'>
             <Card>
               <ItemList
-                fetchList={this.fetchIntegrationBatchDefinitions}
+                fetchList={this.fetchPlugins}
                 dataSource={data}
                 loading={loading}
                 total={total}
                 columns={dataColumnsDefinition}
-                pageSettings={BATCH_DEFINITION_SEARCH_SETTINGS}
+                pageSettings={PLUGIN_PAGE_SEARCH_SETTINGS}
                 emptyTable={emptyTable}
                 additionnalComponent={totalTag}
               />
             </Card>
           </Content>
           <Drawer
-            className='mcs-form_drawer mcs-integrationBatchForm_drawer'
+            className='mcs-pluginEdit-drawer'
             width='400'
             bodyStyle={{ padding: '0' }}
-            title={formatMessage(messages.batchEditDrawerTitle)}
+            title={formatMessage(messages.pluginEditDrawerTitle)}
             placement={'right'}
             closable={true}
             onClose={this.closeDrawer}
             visible={isVisibleDrawer}
           >
-            <IntegrationBatchForm save={this.saveIntegrationBatchPlugin} />
+            <PluginEditDrawer save={this.savePlugin} />
           </Drawer>
         </div>
       </div>
@@ -337,8 +383,4 @@ class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
   }
 }
 
-export default compose<Props, {}>(
-  withRouter,
-  injectIntl,
-  injectNotifications,
-)(IntegrationBatchDefinitionsList);
+export default compose<Props, {}>(withRouter, injectIntl, injectNotifications)(PluginsList);

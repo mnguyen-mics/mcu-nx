@@ -3,7 +3,7 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   pluginType: {
     id: 'plugin.type',
-    defaultMessage: 'Plugins type',
+    defaultMessage: 'Plugin type',
   },
   integrationBatchType: {
     id: 'plugin.integrationBatch.type',
