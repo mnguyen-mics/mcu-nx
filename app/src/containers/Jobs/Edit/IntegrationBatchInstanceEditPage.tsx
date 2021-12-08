@@ -50,8 +50,10 @@ class IntegrationBatchInstanceEditPage extends React.Component<Props> {
         params: { organisationId },
       },
       history,
+      onClose,
     } = this.props;
-    history.push(`/o/${organisationId}/jobs/integration_batch_instances`);
+    history.push(`/o/${organisationId}/jobs/integration_batch_instances/${pluginInstance.id}`);
+    onClose();
   };
 
   createPluginInstance = (
