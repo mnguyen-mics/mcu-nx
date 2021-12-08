@@ -35,7 +35,7 @@ export default defineMessages({
   },
   emptyTableMessage: {
     id: 'plugins.batchDefinitions.list.emptyTable',
-    defaultMessage: 'No batch definition found.',
+    defaultMessage: 'No plugin found.',
   },
   pluginEditDrawerTitle: {
     id: 'plugins.batchEditDrawer.title',

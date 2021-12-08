@@ -13,11 +13,7 @@ import {
   TYPES,
   IPluginService,
 } from '@mediarithmics-private/advanced-components';
-import {
-  PAGINATION_SEARCH_SETTINGS,
-  PLUGIN_SEARCH_SETTINGS,
-  updateSearch,
-} from '../../../utils/LocationSearchHelper';
+import { updateSearch } from '../../../utils/LocationSearchHelper';
 import PluginsListActionBar from './PluginsListActionBar';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
@@ -29,6 +25,32 @@ import PluginEditDrawer from '../Edit/PluginEditDrawer';
 import { Link } from 'react-router-dom';
 import { Card } from '@mediarithmics-private/mcs-components-library';
 import { PLUGIN_PAGE_SEARCH_SETTINGS } from '../Dashboard/PluginVersionsDashboard';
+import { PluginType } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
+
+export const pluginTypeList: PluginType[] = [
+  'DISPLAY_CAMPAIGN_EDITOR',
+  'DISPLAY_CAMPAIGN_USER_SCENARIO',
+  'EMAIL_CAMPAIGN_EDITOR',
+  'EMAIL_TEMPLATE_EDITOR',
+  'EMAIL_TEMPLATE_RENDERER',
+  'EMAIL_ROUTER',
+  'DISPLAY_AD_EDITOR',
+  'DISPLAY_AD_RENDERER',
+  'RECOMMENDER',
+  'VIDEO_AD_EDITOR',
+  'VIDEO_AD_RENDERER',
+  'STYLE_SHEET',
+  'AUDIENCE_SEGMENT_EXTERNAL_FEED',
+  'AUDIENCE_SEGMENT_TAG_FEED',
+  'BID_OPTIMIZATION_ENGINE',
+  'ATTRIBUTION_PROCESSOR',
+  'ACTIVITY_ANALYZER',
+  'DATA_CONNECTOR',
+  'SCENARIO_NODE_PROCESSOR',
+  'ML_FUNCTION',
+  'SCENARIO_CUSTOM_ACTION',
+  'INTEGRATION_BATCH',
+];
 
 const { Content } = Layout;
 
@@ -96,11 +118,12 @@ class PluginsList extends React.Component<Props, State> {
       history,
       location: { search: currentSearch, pathname },
     } = this.props;
-    const params: any = {};
-    params[`${filterProperty}`] = '';
+    const newSearch = queryString.parse(currentSearch);
+    delete newSearch[`${filterProperty}`];
+
     const nextLocation = {
       pathname,
-      search: updateSearch(currentSearch, params, PLUGIN_PAGE_SEARCH_SETTINGS),
+      search: updateSearch(queryString.stringify(newSearch), {}, PLUGIN_PAGE_SEARCH_SETTINGS),
     };
     history.push(nextLocation);
   };

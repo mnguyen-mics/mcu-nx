@@ -7,6 +7,8 @@ import { compose } from 'recompose';
 import { PluginResource, UserWorkspaceResource } from '@mediarithmics-private/advanced-components';
 import { MicsReduxState } from '../../../utils/ReduxHelper';
 import messages from './messages';
+import { PluginType } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
+import { pluginTypeList } from '../List/PluginsList';
 
 interface OrganisationOption {
   value: string;
