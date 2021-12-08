@@ -3,7 +3,7 @@ import { ThemeColorsShape } from './injectThemeColors';
 import {
   UserWorkspaceResource,
   UserProfileResource,
-} from '../models/directory/UserProfileResource';
+} from '@mediarithmics-private/advanced-components';
 import { Notification } from '../containers/Notifications/Notifications';
 import { Label } from '@mediarithmics-private/mcs-components-library/lib/models/labels/labels';
 

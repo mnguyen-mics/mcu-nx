@@ -3,17 +3,20 @@ import _ from 'lodash';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
-import { lazyInject } from '../../../config/inversify.config';
-import { TYPES } from '../../../constants/types';
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';
-import { IIntegrationBatchService } from '../../../services/IntegrationBatchService';
 import { Content } from 'antd/lib/layout/layout';
 import { Actionbar, McsTabs } from '@mediarithmics-private/mcs-components-library';
+import {
+  CronStatus,
+  IntegrationBatchResource,
+  lazyInject,
+  TYPES,
+  IIntegrationBatchService,
+} from '@mediarithmics-private/advanced-components';
 import IntegrationBatchExecutionsListTab from './IntegrationBatchExecutionsListTab';
 import { Tag } from 'antd';
-import { CronStatus, IntegrationBatchResource } from '../../../models/plugin/plugins';
 import { ClockCircleOutlined, PauseCircleFilled, PlayCircleFilled } from '@ant-design/icons';
 import cronstrue from 'cronstrue';
 import DashboardHeader from '../../../components/DashboardHeader/DashboardHeader';

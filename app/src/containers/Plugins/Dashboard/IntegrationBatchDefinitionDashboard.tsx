@@ -5,7 +5,13 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import ItemList, { Filters } from '../../../components/ItemList';
 import BatchDefinitionDashboardActionbar from './IntegrationBatchDefinitionDashboardActionbar';
-import { PluginResource, PluginVersionResource } from '../../../models/plugin/plugins';
+import {
+  PluginResource,
+  PluginVersionResource,
+  lazyInject,
+  TYPES,
+  IPluginService,
+} from '@mediarithmics-private/advanced-components';
 import {
   PAGINATION_SEARCH_SETTINGS,
   PLUGIN_SEARCH_SETTINGS,
@@ -13,9 +19,7 @@ import {
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
-import { lazyInject } from '../../../config/inversify.config';
-import { TYPES } from '../../../constants/types';
-import { IPluginService } from '../../../services/PluginService';
+
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';

@@ -53,6 +53,13 @@
   background-color: @layout-content-background;
 }
 
+.ant-select-item:active,
+.ant-select-item-option-selected,
+.ant-menu-item:active,
+.ant-menu-submenu-title:active {
+  background: @hover-color !important;
+}
+
 .mcs-content-container {
   padding: 20px 40px 60px;
   height: inherit;
@@ -122,4 +129,9 @@
   -moz-animation: loadingAnimation 1s ease infinite;
   -o-animation: loadingAnimation 1s ease infinite;
   animation: loadingAnimation 1s ease infinite;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
 }

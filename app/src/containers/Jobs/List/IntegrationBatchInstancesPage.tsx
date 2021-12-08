@@ -18,8 +18,17 @@ interface RouteProps {
 
 type Props = InjectedIntlProps & InjectedNotificationProps & RouteComponentProps<RouteProps>;
 
-interface State {}
+interface State {
+  isDrawerVisible: boolean;
+}
 class IntegrationBatchInstancesPage extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      isDrawerVisible: false,
+    };
+  }
+
   renderActionBarInnerElements() {
     return <span />;
     // const { options } = this.state;

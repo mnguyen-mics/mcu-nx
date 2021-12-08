@@ -7,8 +7,6 @@
     "@mediarithmics-private/mcs-components-library": "5.2.10",
     "antd": "4.10.3",
     "cronstrue": "^1.122.0",
-    "inversify": "^5.0.1",
-    "inversify-inject-decorators": "^3.1.0",
     "js-cookie": "^3.0.1",
     "lodash": "^4.17.21",
     "loglevel": "^1.6.8",

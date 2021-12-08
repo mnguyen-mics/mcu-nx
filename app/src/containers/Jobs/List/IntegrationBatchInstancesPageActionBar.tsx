@@ -1,25 +1,23 @@
 import * as React from 'react';
-import { Button } from 'antd';
+import { Button, Drawer } from 'antd';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import { compose } from 'recompose';
 import { Actionbar, McsIcon } from '@mediarithmics-private/mcs-components-library';
 import messages from '../messages';
-import { UploadFile } from 'antd/lib/upload/interface';
 import { Link } from 'react-router-dom';
+import IntegrationBatchInstanceEditPage from '../Edit/IntegrationBatchInstanceEditPage';
 
 interface RouterProps {
   organisationId: string;
 }
 
-interface IntegrationBatchInstancesPageActionBarProps {
-  innerElement?: React.ReactNode;
+interface State {
+  isDrawerVisible: boolean;
 }
 
-interface State {
-  isModalOpen: boolean;
-  fileList: UploadFile[];
-  isLoading: boolean;
+interface IntegrationBatchInstancesPageActionBarProps {
+  innerElement?: React.ReactNode;
 }
 
 type Props = RouteComponentProps<RouterProps> &
@@ -30,11 +28,28 @@ class IntegrationBatchInstancesPageActionBar extends React.Component<Props, Stat
   constructor(props: Props) {
     super(props);
     this.state = {
-      isModalOpen: false,
-      fileList: [],
-      isLoading: false,
+      isDrawerVisible: false,
     };
   }
+
+  // openDrawer = () => {
+  //   return this.props.openNextDrawer<{}>(IntegrationBatchInstanceEditPage, {
+  //     additionalProps: {},
+  //   });
+  // };
+
+  openDrawer = () => {
+    this.setState({
+      isDrawerVisible: true,
+    });
+  };
+
+  closeDrawer = () => {
+    this.setState({
+      isDrawerVisible: false,
+    });
+  };
+
   render() {
     const {
       match: {
@@ -44,7 +59,8 @@ class IntegrationBatchInstancesPageActionBar extends React.Component<Props, Stat
       innerElement,
     } = this.props;
 
-    // Plugins home page ?
+    const { isDrawerVisible } = this.state;
+
     const breadcrumbPaths = [
       <Link key='1' to={`/o/${organisationId}/jobs/integration_batch_instances`}>
         {formatMessage(messages.jobs)}
@@ -58,10 +74,20 @@ class IntegrationBatchInstancesPageActionBar extends React.Component<Props, Stat
       <Actionbar pathItems={breadcrumbPaths}>
         <div className='mcs-actionbar_innerElementsPanel'>
           {innerElement}
-          <Button className='mcs-primary' type='primary'>
+          <Button className='mcs-primary' type='primary' onClick={this.openDrawer}>
             <McsIcon type='plus' /> <FormattedMessage {...messages.newBatchInstance} />
           </Button>
         </div>
+        <Drawer
+          className='mcs-integrationBatchInstanceForm_drawer'
+          closable={false}
+          onClose={this.closeDrawer}
+          visible={isDrawerVisible}
+          width='1200'
+          destroyOnClose={true}
+        >
+          <IntegrationBatchInstanceEditPage onClose={this.closeDrawer} />
+        </Drawer>
       </Actionbar>
     );
   }

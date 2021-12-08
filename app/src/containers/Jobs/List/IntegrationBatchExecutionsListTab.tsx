@@ -11,14 +11,17 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import messages from '../messages';
 import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
-import { lazyInject } from '../../../config/inversify.config';
-import { TYPES } from '../../../constants/types';
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';
 import { TableViewFilters } from '@mediarithmics-private/mcs-components-library';
-import { IIntegrationBatchService } from '../../../services/IntegrationBatchService';
-import { JobExecutionPublicStatus, PublicJobExecutionResource } from '../../../models/job/jobs';
+import {
+  JobExecutionPublicStatus,
+  PublicJobExecutionResource,
+  lazyInject,
+  TYPES,
+  IIntegrationBatchService,
+} from '@mediarithmics-private/advanced-components';
 import { Card } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import McsMoment from '../../../utils/McsMoment';

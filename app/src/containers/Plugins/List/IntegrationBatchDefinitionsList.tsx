@@ -8,7 +8,12 @@ import { compose } from 'recompose';
 import messages from '../messages';
 import ItemList, { Filters } from '../../../components/ItemList';
 import IntegrationBatchDefinitionsListActionBar from './IntegrationBatchDefinitionsListActionBar';
-import { PluginResource } from '../../../models/plugin/plugins';
+import {
+  PluginResource,
+  lazyInject,
+  TYPES,
+  IPluginService,
+} from '@mediarithmics-private/advanced-components';
 import {
   PAGINATION_SEARCH_SETTINGS,
   PLUGIN_SEARCH_SETTINGS,
@@ -17,13 +22,10 @@ import {
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
-import { lazyInject } from '../../../config/inversify.config';
-import { TYPES } from '../../../constants/types';
-import { IPluginService } from '../../../services/PluginService';
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';
-import IntergrationBatchEditDrawer from '../Edit/IntegrationBatchEditDrawer';
+import IntegrationBatchForm from '../Edit/IntegrationBatchForm';
 import { Link } from 'react-router-dom';
 import { Card } from '@mediarithmics-private/mcs-components-library';
 
@@ -318,7 +320,7 @@ class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
             </Card>
           </Content>
           <Drawer
-            className='mcs-batchPluginEdit-drawer'
+            className='mcs-form_drawer mcs-integrationBatchForm_drawer'
             width='400'
             bodyStyle={{ padding: '0' }}
             title={formatMessage(messages.batchEditDrawerTitle)}
@@ -327,7 +329,7 @@ class IntegrationBatchDefinitionsList extends React.Component<Props, State> {
             onClose={this.closeDrawer}
             visible={isVisibleDrawer}
           >
-            <IntergrationBatchEditDrawer save={this.saveIntegrationBatchPlugin} />
+            <IntegrationBatchForm save={this.saveIntegrationBatchPlugin} />
           </Drawer>
         </div>
       </div>

@@ -13,6 +13,10 @@ export default defineMessages({
     id: 'plugin.integrationBatch.edit.organisation',
     defaultMessage: 'Organisation',
   },
+  save: {
+    id: 'plugin.integrationBatch.edit.save',
+    defaultMessage: 'Save',
+  },
   organisationDescription: {
     id: 'plugin.integrationBatch.edit.organisationDescription',
     defaultMessage:
