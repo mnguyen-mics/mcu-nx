@@ -28,6 +28,25 @@ export function truncateUpToHour(date: Date, hourOfDay: number) {
   }
 }
 
+export function formatDate(str: string, format?: string, toUtc?: boolean) {
+  if (!!format) {
+    let formatted = !!toUtc ? moment.utc(str).utc().format(format) : moment(str).format(format);
+    if (formatted === 'Invalid date') {
+      const STRICT = true;
+      formatted = moment.utc(str, 'x', STRICT).format(format);
+      if (formatted === 'Invalid date') {
+        return Promise.reject(`Date ${str} is not formatted correctly`);
+      } else {
+        return Promise.resolve(formatted);
+      }
+    } else {
+      return Promise.resolve(formatted);
+    }
+  } else {
+    return Promise.resolve(str);
+  }
+}
+
 export function getAllDates(
   timeUnit: 'HOUR' | 'DAY',
   dateRange: { from: string; to: string },
