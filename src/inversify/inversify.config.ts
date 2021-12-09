@@ -7,10 +7,7 @@ import { ILabelService, LabelService } from '../services/LabelsService';
 import OrganisationService, { IOrganisationService } from '../services/OrganisationService';
 import { IQueryService, QueryService } from '../services/QueryService';
 import { ChartDatasetService, IChartDatasetService } from '../services/ChartDatasetService';
-import {
-  ActivitiesAnalyticsService,
-  IActivitiesAnalyticsService,
-} from '../services/ActivitiesAnalyticsService';
+import { ActivitiesAnalyticsService } from '../services/analytics/ActivitiesAnalyticsService';
 import AssetFileService, { IAssetFileService } from '../services/AssetFileService';
 import PluginService, { IPluginService } from '../services/PluginService';
 import DataFileService, { IDataFileService } from '../services/DataFileService';
@@ -22,12 +19,30 @@ import IntegrationBatchService, {
   IIntegrationBatchService,
 } from '../services/IntegrationBatchService';
 import { ITagService, TagService } from '../services/TagService';
+import { CollectionVolumesService } from '../services/analytics/CollectionVolumesService';
+import {
+  CollectionVolumesDimension,
+  CollectionVolumesMetric,
+} from '../utils/analytics/CollectionVolumesReportHelper';
+import { IAnalyticsService } from '../services/analytics/AnalyticsService';
+import {
+  ActivitiesAnalyticsDimension,
+  ActivitiesAnalyticsMetric,
+} from '../utils/analytics/ActivitiesAnalyticsReportHelper';
 
 export const container = new Container();
 
 container
-  .bind<IActivitiesAnalyticsService>(TYPES.IActivitiesAnalyticsService)
+  .bind<IAnalyticsService<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>>(
+    TYPES.IActivitiesAnalyticsService,
+  )
   .to(ActivitiesAnalyticsService);
+
+container
+  .bind<IAnalyticsService<CollectionVolumesMetric, CollectionVolumesDimension>>(
+    TYPES.ICollectionVolumesService,
+  )
+  .to(CollectionVolumesService);
 
 container.bind<IChartDatasetService>(TYPES.IChartDatasetService).to(ChartDatasetService);
 container.bind<IQueryService>(TYPES.IQueryService).to(QueryService);

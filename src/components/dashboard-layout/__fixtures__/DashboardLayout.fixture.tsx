@@ -8,6 +8,7 @@ import {
   MockedAnalytics,
   MockedAnalytics2,
   MockedAnalyticsMetrics,
+  MockedCollectionMetrics,
 } from '../../chart-engine/MockedData';
 import { ChartType, MetricChartOptions, SourceType } from '../../../services/ChartDatasetService';
 import { Provider } from 'react-redux';
@@ -583,6 +584,25 @@ const propsAnalytics3 = {
                   hide_y_axis: true,
                 },
               },
+              {
+                title: 'Collections volumes',
+                type: 'metric',
+                dataset: {
+                  type: 'collection_volumes',
+                  query_json: {
+                    dimensions: [],
+                    metrics: [
+                      {
+                        expression: 'count',
+                      },
+                    ],
+                  },
+                },
+                options: {
+                  hide_x_axis: true,
+                  hide_y_axis: true,
+                },
+              },
             ],
             y: 0,
             h: 5,
@@ -619,6 +639,10 @@ const fetchmockOptions = [
   {
     matcher: 'glob:/undefined/v1/datamarts/1416/user_activities_analytics*',
     response: MockedAnalyticsMetrics,
+  },
+  {
+    matcher: 'glob:/undefined/v1/platform_monitoring/collections*',
+    response: MockedCollectionMetrics,
   },
 ];
 const store = configureStore();

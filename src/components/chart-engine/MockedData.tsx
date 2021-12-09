@@ -353,3 +353,15 @@ export const MockedAnalyticsMetrics = {
     },
   },
 };
+
+export const MockedCollectionMetrics = {
+  status: 'ok',
+  data: {
+    report_view: {
+      items_per_page: 100,
+      total_items: 1,
+      columns_headers: ['count'],
+      rows: [[13661544]],
+    },
+  },
+};

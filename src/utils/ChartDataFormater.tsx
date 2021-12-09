@@ -7,10 +7,6 @@ import {
 import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 import { ChartType } from '../services/ChartDatasetService';
 import { ReportView } from '../models/report/ReportView';
-import {
-  ActivitiesAnalyticsDimension,
-  ActivitiesAnalyticsMetric,
-} from './ActivitiesAnalyticsReportHelper';
 import { bucketizeReportView, normalizeReportView } from './MetricHelper';
 import { omit } from 'lodash';
 
@@ -128,21 +124,21 @@ export function formatDatasetForOtql(
 export function formatDatasetForReportView(
   dataResult: ReportView,
   xKey: string,
-  metrics: ActivitiesAnalyticsMetric[],
-  dimensions: ActivitiesAnalyticsDimension[],
+  metricNames: string[],
+  dimensionNames: string[],
   seriesTitle?: string,
 ): AbstractDataset | undefined {
-  if (dimensions.length > 0) {
+  if (dimensionNames.length > 0) {
     const dataset = formatDatasetAsKeyValueForReportView(
       xKey,
       dataResult,
-      dimensions,
-      metrics[0],
+      dimensionNames,
+      metricNames[0],
       seriesTitle,
     );
     return {
       metadata: {
-        seriesTitles: metrics.map(m => seriesTitle || m.toLocaleLowerCase()),
+        seriesTitles: metricNames.map(m => seriesTitle || m.toLocaleLowerCase()),
       },
       type: 'aggregate',
       dataset: dataset,
@@ -150,7 +146,7 @@ export function formatDatasetForReportView(
   } else {
     const normalizedReportView = normalizeReportView(dataResult);
 
-    const value = normalizedReportView[0][metrics[0]];
+    const value = normalizedReportView[0][metricNames[0]];
     return {
       type: 'count',
       value: value,
