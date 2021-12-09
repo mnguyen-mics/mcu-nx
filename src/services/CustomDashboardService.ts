@@ -43,6 +43,7 @@ export default class CustomDashboardService implements ICustomDashboardService {
     const options = {
       ...filters,
       searching_organisation_id: organisationId,
+      organisation_id: organisationId,
     };
     return ApiService.getRequest<DataListResponse<CustomDashboardResource>>(
       endpoint,
