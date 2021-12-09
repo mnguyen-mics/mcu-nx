@@ -21,6 +21,10 @@ const pluginsMenuDefinition: NavigatorMenuDefinition = {
   type: 'multi',
   subMenuItems: [
     {
+      ...generateMissingdefinitionItemFromRoute(pluginsDefinition.pluginsOverview),
+      displayName: 'Overview',
+    },
+    {
       ...generateMissingdefinitionItemFromRoute(pluginsDefinition.pluginsList),
       displayName: 'Plugin List',
     },

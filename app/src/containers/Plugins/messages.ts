@@ -5,6 +5,10 @@ export default defineMessages({
     id: 'plugins.title',
     defaultMessage: 'Plugins',
   },
+  pluginsOverview: {
+    id: 'plugins.overview.title',
+    defaultMessage: 'Overview',
+  },
   pluginBatchDefinitions: {
     id: 'plugins.batchDefinitions.title',
     defaultMessage: 'Batch Definitions',
