@@ -1,3 +1,4 @@
+import { QueryFragment } from '../../components/chart-engine/Chart';
 import {
   QueryResource,
   QueryTranslationRequest,
@@ -146,6 +147,7 @@ test('test the query is correctly scoped', cb => {
   };
   const resultQueryPromise = adapter.scopeQueryWithWhereClause(
     '123',
+    {},
     queryResource1,
     queryResource2,
   );
@@ -164,9 +166,92 @@ test('test the query is correctly non scoped', cb => {
     query_text: QUERY1,
     query_language: 'OTQL',
   };
-  const resultQueryPromise = adapter.scopeQueryWithWhereClause('123', queryResource1, undefined);
+  const resultQueryPromise = adapter.scopeQueryWithWhereClause(
+    '123',
+    {},
+    queryResource1,
+    undefined,
+  );
   resultQueryPromise.then(query => {
     expect(query).toBe(`select {id} from UserPoint where${WHERE_CLAUSE1}`);
+    cb();
+  });
+});
+
+test('test the query is correctly formatted with query fragment', cb => {
+  const queryServiceMock = new QueryServiceMock();
+  const adapter = new QueryScopeAdapter(queryServiceMock);
+  const queryResource1: QueryResource = {
+    id: 'xxx',
+    datamart_id: 'xxx',
+    query_text: QUERY1,
+    query_language: 'OTQL',
+  };
+  const queryResource2: QueryResource = {
+    id: 'xxx',
+    datamart_id: 'xxx',
+    query_text: QUERY2,
+    query_language: 'OTQL',
+  };
+
+  const queryFragment: QueryFragment = {
+    compartments: [
+      {
+        type: 'otql',
+        starting_object_type: 'UserPoint',
+        fragment: 'profiles {compartment_id IN ["1234"]}',
+      },
+    ],
+  };
+  const resultQueryPromise = adapter.scopeQueryWithWhereClause(
+    '123',
+    queryFragment,
+    queryResource1,
+    queryResource2,
+  );
+  resultQueryPromise.then(query => {
+    expect(query).toBe(
+      `select {id} from UserPoint where activity_events { app_id = 1 } AND  segments { id = 123 } AND profiles {compartment_id IN [\"1234\"]}`,
+    );
+    cb();
+  });
+});
+
+test('test the query is correctly not to be formatted with query fragment', cb => {
+  const queryServiceMock = new QueryServiceMock();
+  const adapter = new QueryScopeAdapter(queryServiceMock);
+  const queryResource1: QueryResource = {
+    id: 'xxx',
+    datamart_id: 'xxx',
+    query_text: QUERY1,
+    query_language: 'OTQL',
+  };
+  const queryResource2: QueryResource = {
+    id: 'xxx',
+    datamart_id: 'xxx',
+    query_text: QUERY2,
+    query_language: 'OTQL',
+  };
+
+  const queryFragment: QueryFragment = {
+    compartments: [
+      {
+        type: 'otql',
+        starting_object_type: 'UserProfile',
+        fragment: 'profiles {compartment_id IN ["1234"]}',
+      },
+    ],
+  };
+  const resultQueryPromise = adapter.scopeQueryWithWhereClause(
+    '123',
+    queryFragment,
+    queryResource1,
+    queryResource2,
+  );
+  resultQueryPromise.then(query => {
+    expect(query).toBe(
+      `select {id} from UserPoint where activity_events { app_id = 1 } AND  segments { id = 123 }`,
+    );
     cb();
   });
 });

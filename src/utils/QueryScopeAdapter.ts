@@ -1,3 +1,4 @@
+import { QueryFragment } from '../components/chart-engine/Chart';
 import { QueryShape, QueryTranslationRequest } from '../models/datamart/DatamartResource';
 import { AbstractScope, SegmentScope } from '../models/datamart/graphdb/Scope';
 import { DimensionFilter } from '../models/report/ReportRequestBody';
@@ -37,6 +38,17 @@ export class QueryScopeAdapter {
     const wherePosition = formattedText.indexOf('where');
     const whereClause = text.substr(wherePosition + 5, formattedText.length);
     return whereClause;
+  }
+
+  private extractOtqlFromClause(text: string): string {
+    const formattedText = text.toLowerCase();
+    const fromPosition = formattedText.indexOf('from');
+    const wherePosition = formattedText.indexOf('where');
+    const fromClause = text.substr(
+      fromPosition + 4,
+      wherePosition === -1 ? formattedText.length : wherePosition,
+    );
+    return fromClause;
   }
 
   buildScopeAnalyticsQuery(
@@ -96,7 +108,6 @@ export class QueryScopeAdapter {
 
   private appendAdditionalQuery(query: string, additionalQuery?: string) {
     if (!additionalQuery) return query;
-
     if (this.hasWhereClause(query)) {
       return `${query} AND ${additionalQuery}`;
     } else {
@@ -106,6 +117,7 @@ export class QueryScopeAdapter {
 
   scopeQueryWithWhereClause(
     datamartId: string,
+    queryFragment: QueryFragment,
     dashboardQuery: QueryShape,
     sourceQuery?: QueryShape,
   ): Promise<string> {
@@ -119,7 +131,22 @@ export class QueryScopeAdapter {
           sourceOtqlQuery && this.hasWhereClause(sourceOtqlQuery)
             ? this.extractOtqlWhereClause(sourceOtqlQuery)
             : undefined;
-        const scopedQuery = this.appendAdditionalQuery(dashboardOtqlQuery, additionalQuery);
+        let scopedQuery = this.appendAdditionalQuery(dashboardOtqlQuery, additionalQuery);
+
+        if (Object.keys(queryFragment).length > 0) {
+          for (const [key, value] of Object.entries(queryFragment)) {
+            if (key && value.length > 0) {
+              value.forEach(f => {
+                const matchingStartingObjectType = this.extractOtqlFromClause(scopedQuery).indexOf(
+                  f.starting_object_type,
+                );
+                if (matchingStartingObjectType !== -1) {
+                  scopedQuery = this.appendAdditionalQuery(scopedQuery, f.fragment as string);
+                }
+              });
+            }
+          }
+        }
         return scopedQuery;
       },
     );
