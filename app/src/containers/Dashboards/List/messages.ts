@@ -61,4 +61,8 @@ export default defineMessages({
     id: 'dashboards.table.segments',
     defaultMessage: 'Segments',
   },
+  modifyDashboard: {
+    id: 'dashboards.table.modifyAction',
+    defaultMessage: 'Modify',
+  },
 });

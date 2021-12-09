@@ -29,7 +29,9 @@
     "reflect-metadata": "^0.1.12",
     "reselect": "^4.0.0",
     "web-vitals": "^1.1.1",
-    "whatwg-fetch": "^3.6.2"
+    "whatwg-fetch": "^3.6.2",
+    "react-ace": "^9.5.0",
+    "ace-builds": "^1.4.13"
   },
   "scripts": {
     "test:tslint": "tslint -c tslint.json 'app/src/**/*.{ts,tsx}'",
@@ -107,7 +109,8 @@
     "webpack-cli": "^3.3.7",
     "webpack-dev-middleware": "^2.0.6",
     "webpack-dev-server": "^3.11.0",
-    "webpack-merge": "^4.1.4"
+    "webpack-merge": "^4.1.4",
+    "ace-builds": "^1.4.13"
   },
   "engines": {
     "node": ">=10.0.0"

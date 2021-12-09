@@ -1,6 +1,6 @@
 import { generateMissingdefinitionItemFromRoute, NavigatorMenuDefinition } from './domain';
 import { HomePage } from '../containers/Home';
-import { DashboardsPage } from '../containers/Dashboards';
+import { DashboardsPage } from '../containers/Dashboards/List';
 import { pluginsDefinition } from './pluginRoutes';
 import { jobsDefinition } from './jobRoutes';
 
