@@ -42,6 +42,8 @@ import {
   CollectionVolumesMetric,
 } from '../utils/analytics/CollectionVolumesReportHelper';
 import { IAnalyticsService } from './analytics/AnalyticsService';
+import DatasetDateFormatter from '../utils/transformations/FormatDatesTransformation';
+import { formatDate } from '../utils/DateHelper';
 
 export type ChartType = 'pie' | 'bars' | 'radar' | 'metric';
 export type SourceType =
@@ -50,7 +52,8 @@ export type SourceType =
   | 'to-list'
   | 'activities_analytics'
   | 'collection_volumes'
-  | 'ratio';
+  | 'ratio'
+  | 'format_dates';
 
 const DEFAULT_Y_KEY = {
   key: 'value',
@@ -85,6 +88,16 @@ export interface AggregationSource extends AbstractSource {
 
 export interface RatioSource extends AbstractSource {
   sources: AbstractSource[];
+}
+
+export interface DateOptions {
+  format?: string;
+  buckets?: DateOptions;
+}
+
+export interface DateFormatSource extends AbstractSource {
+  date_options: DateOptions;
+  source: AbstractSource;
 }
 
 export type PieChartOptions = Omit<PieChartProps, 'dataset' | 'colors'>;
@@ -170,6 +183,10 @@ export class ChartDatasetService implements IChartDatasetService {
   // TODO: Put back injection for this service
   private queryService: IQueryService = new QueryService();
   private scopeAdapter: QueryScopeAdapter = new QueryScopeAdapter(this.queryService);
+
+  private datasetDateFormatter: DatasetDateFormatter = new DatasetDateFormatter((date, format) =>
+    formatDate(date, format),
+  );
 
   private activitiesAnalyticsService: IAnalyticsService<
     ActivitiesAnalyticsMetric,
@@ -449,6 +466,20 @@ export class ChartDatasetService implements IChartDatasetService {
           return this.ratioDataset(datasets[0] as CountDataset, datasets[1] as CountDataset);
         });
 
+      case 'format_dates':
+        const dateFormatSource = source as DateFormatSource;
+        const format = dateFormatSource.date_options;
+        const datasetToBeFormatted = this.fetchDatasetForSource(
+          datamartId,
+          chartType,
+          xKey,
+          dateFormatSource.source,
+          scope,
+        );
+        return datasetToBeFormatted.then(result => {
+          if (result) return this.datasetDateFormatter.applyFormatDates(result, xKey, format);
+          else return Promise.resolve(undefined);
+        });
       default:
         return Promise.reject(`Unknown source type ${sourceType}`);
     }

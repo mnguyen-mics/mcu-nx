@@ -43,10 +43,14 @@ interface ChartProps {
   scope?: AbstractScope;
 }
 
+interface ErrorContext {
+  description: string;
+}
+
 interface ChartState {
   formattedData?: AbstractDataset;
   loading: boolean;
-  hasError: boolean;
+  errorContext?: ErrorContext;
 }
 
 type Props = ChartProps;
@@ -65,7 +69,7 @@ class Chart extends React.Component<Props, ChartState> {
 
     this.state = {
       loading: true,
-      hasError: false,
+      errorContext: undefined,
     };
   }
 
@@ -81,7 +85,9 @@ class Chart extends React.Component<Props, ChartState> {
       })
       .catch(e => {
         this.setState({
-          hasError: true,
+          errorContext: {
+            description: e,
+          },
           loading: false,
         });
       });
@@ -169,13 +175,13 @@ class Chart extends React.Component<Props, ChartState> {
   }
 
   render() {
-    const { formattedData, loading, hasError } = this.state;
+    const { formattedData, loading, errorContext } = this.state;
     const { chartConfig, chartContainerStyle } = this.props;
-    if (hasError) {
+    if (!!errorContext) {
       return (
         <Alert
           message='Error'
-          description='Cannot fetch data for chart'
+          description={`Cannot fetch data for chart: ${errorContext.description}`}
           type='error'
           showIcon={true}
         />

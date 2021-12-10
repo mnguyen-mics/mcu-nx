@@ -406,21 +406,25 @@ const propsAnalytics2 = {
                 title: 'Sessions per day',
                 type: 'Bars',
                 dataset: {
-                  type: 'activities_analytics',
-                  query_json: {
-                    dimensions: [
-                      {
-                        name: 'date_yyyy_mm_dd',
-                      },
-                    ],
-                    metrics: [
-                      {
-                        expression: 'sessions',
-                      },
-                    ],
+                  type: 'format_dates',
+                  format: 'YY_MM',
+                  source: {
+                    type: 'activities_analytics',
+                    query_json: {
+                      dimensions: [
+                        {
+                          name: 'date_yyyy_mm_dd',
+                        },
+                      ],
+                      metrics: [
+                        {
+                          expression: 'sessions',
+                        },
+                      ],
+                    },
                   },
+                  options: {},
                 },
-                options: {},
               },
             ],
             y: 0,
@@ -496,23 +500,27 @@ const propsAnalytics3 = {
                 title: 'Sessions per day',
                 type: 'Bars',
                 dataset: {
-                  type: 'activities_analytics',
-                  query_json: {
-                    dimensions: [
-                      {
-                        name: 'date_yyyy_mm_dd',
-                      },
-                    ],
-                    metrics: [
-                      {
-                        expression: 'sessions',
-                      },
-                    ],
+                  type: 'format_dates',
+                  format: 'YY_MM',
+                  source: {
+                    type: 'activities_analytics',
+                    query_json: {
+                      dimensions: [
+                        {
+                          name: 'date_yyyy_mm_dd',
+                        },
+                      ],
+                      metrics: [
+                        {
+                          expression: 'sessions',
+                        },
+                      ],
+                    },
                   },
-                },
-                options: {
-                  hide_x_axis: true,
-                  hide_y_axis: true,
+                  options: {
+                    hide_x_axis: true,
+                    hide_y_axis: true,
+                  },
                 },
               },
               {
@@ -623,6 +631,11 @@ const fetchmockOptions = [
   {
     matcher: 'glob:/undefined/v1/datamarts/1414/query_executions/otql?use_cache=true*',
     response: MockedData,
+  },
+  {
+    matcher:
+      'glob:/undefined/v1/datamarts/1415/query_executions/otql?precision=LOWER_PRECISION&use_cache=true*',
+    response: MockedMetricData,
   },
   {
     matcher: 'glob:/undefined/v1/datamarts/1415/query_executions/otql?use_cache=true*',
