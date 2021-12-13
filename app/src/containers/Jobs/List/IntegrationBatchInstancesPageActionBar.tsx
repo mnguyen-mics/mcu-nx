@@ -32,12 +32,6 @@ class IntegrationBatchInstancesPageActionBar extends React.Component<Props, Stat
     };
   }
 
-  // openDrawer = () => {
-  //   return this.props.openNextDrawer<{}>(IntegrationBatchInstanceEditPage, {
-  //     additionalProps: {},
-  //   });
-  // };
-
   openDrawer = () => {
     this.setState({
       isDrawerVisible: true,

@@ -25,11 +25,11 @@ const IntegrationBatchFormPage = GenericPluginContent as React.ComponentClass<
 
 export interface IntegrationBatchInstanceEditPageProps {
   onClose: () => void;
+  integrationBatchInstanceId?: string;
 }
 
 export interface BatchInstanceRouteParams {
   organisationId: string;
-  batchInstanceId?: string;
 }
 
 type Props = IntegrationBatchInstanceEditPageProps &
@@ -81,9 +81,7 @@ class IntegrationBatchInstanceEditPage extends React.Component<Props> {
   render() {
     const {
       intl: { formatMessage },
-      match: {
-        params: { batchInstanceId },
-      },
+      integrationBatchInstanceId,
       onClose,
     } = this.props;
 
@@ -103,7 +101,7 @@ class IntegrationBatchInstanceEditPage extends React.Component<Props> {
         listSubTitle={messages.newBatchInstance}
         breadcrumbPaths={breadcrumbPaths}
         pluginInstanceService={this._integrationBatchService}
-        pluginInstanceId={batchInstanceId}
+        pluginInstanceId={integrationBatchInstanceId}
         createPluginInstance={this.createPluginInstance}
         onSaveOrCreatePluginInstance={this.onSaveOrCreatePluginInstance}
         onClose={onClose}

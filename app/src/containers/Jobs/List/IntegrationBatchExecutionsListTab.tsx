@@ -14,7 +14,7 @@ import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-libr
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';
-import { TableViewFilters } from '@mediarithmics-private/mcs-components-library';
+import { TableViewFilters, Card } from '@mediarithmics-private/mcs-components-library';
 import {
   JobExecutionPublicStatus,
   PublicJobExecutionResource,
@@ -22,8 +22,6 @@ import {
   TYPES,
   IIntegrationBatchService,
 } from '@mediarithmics-private/advanced-components';
-import { Card } from 'antd';
-import { Content } from 'antd/lib/layout/layout';
 import McsMoment from '../../../utils/McsMoment';
 import moment from 'moment';
 
@@ -254,18 +252,14 @@ class IntegrationBatchExecutionsListTab extends React.Component<Props, State> {
     };
 
     return (
-      <Content className='mcs-content-container'>
-        <Card>
-          <React.Fragment>
-            <TableViewFilters
-              dataSource={executions}
-              columns={dataColumnsDefinition}
-              loading={isLoading}
-              pagination={pagination}
-            />
-          </React.Fragment>
-        </Card>
-      </Content>
+      <Card>
+        <TableViewFilters
+          dataSource={executions}
+          columns={dataColumnsDefinition}
+          loading={isLoading}
+          pagination={pagination}
+        />
+      </Card>
     );
   }
 }
