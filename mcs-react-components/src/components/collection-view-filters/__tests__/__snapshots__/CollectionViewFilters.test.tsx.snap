@@ -634,6 +634,7 @@ exports[`should display a collection view filters with pagination and a search p
               className="ant-pagination-options"
             >
               <div
+                aria-label="Page Size"
                 className="ant-select ant-pagination-options-size-changer ant-select-single ant-select-show-arrow"
                 onBlur={[Function]}
                 onFocus={[Function]}
@@ -653,7 +654,9 @@ exports[`should display a collection view filters with pagination and a search p
                       aria-activedescendant="undefined_list_0"
                       aria-autocomplete="list"
                       aria-controls="undefined_list"
+                      aria-expanded={false}
                       aria-haspopup="listbox"
+                      aria-label="Page Size"
                       aria-owns="undefined_list"
                       autoComplete="off"
                       className="ant-select-selection-search-input"
