@@ -53,7 +53,7 @@ export type SourceType =
   | 'activities_analytics'
   | 'collection_volumes'
   | 'ratio'
-  | 'format_dates';
+  | 'format-dates';
 
 const DEFAULT_Y_KEY = {
   key: 'value',
@@ -97,7 +97,7 @@ export interface DateOptions {
 
 export interface DateFormatSource extends AbstractSource {
   date_options: DateOptions;
-  source: AbstractSource;
+  sources: AbstractSource[];
 }
 
 export type PieChartOptions = Omit<PieChartProps, 'dataset' | 'colors'>;
@@ -466,14 +466,14 @@ export class ChartDatasetService implements IChartDatasetService {
           return this.ratioDataset(datasets[0] as CountDataset, datasets[1] as CountDataset);
         });
 
-      case 'format_dates':
+      case 'format-dates':
         const dateFormatSource = source as DateFormatSource;
         const format = dateFormatSource.date_options;
         const datasetToBeFormatted = this.fetchDatasetForSource(
           datamartId,
           chartType,
           xKey,
-          dateFormatSource.source,
+          dateFormatSource.sources[0],
           scope,
         );
         return datasetToBeFormatted.then(result => {
