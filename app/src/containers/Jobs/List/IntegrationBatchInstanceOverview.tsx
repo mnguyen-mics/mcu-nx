@@ -1,13 +1,13 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';
 import { Content } from 'antd/lib/layout/layout';
-import { Actionbar, McsTabs } from '@mediarithmics-private/mcs-components-library';
+import { Actionbar, McsIcon, McsTabs } from '@mediarithmics-private/mcs-components-library';
 import {
   CronStatus,
   IntegrationBatchResource,
@@ -16,13 +16,14 @@ import {
   IIntegrationBatchService,
 } from '@mediarithmics-private/advanced-components';
 import IntegrationBatchExecutionsListTab from './IntegrationBatchExecutionsListTab';
-import { Tag } from 'antd';
+import { Button, Drawer, Tag } from 'antd';
 import { ClockCircleOutlined, PauseCircleFilled, PlayCircleFilled } from '@ant-design/icons';
 import cronstrue from 'cronstrue';
 import DashboardHeader from '../../../components/DashboardHeader/DashboardHeader';
 import OrganisationName from '../../../components/Common/OrganisationName';
 import messages from '../messages';
 import { Link } from 'react-router-dom';
+import IntegrationBatchInstanceEditPage from '../Edit/IntegrationBatchInstanceEditPage';
 
 interface RouteProps {
   organisationId: string;
@@ -34,6 +35,7 @@ type Props = InjectedIntlProps & InjectedNotificationProps & RouteComponentProps
 interface State {
   integrationBatchinstance?: IntegrationBatchResource;
   isLoading: boolean;
+  isDrawerVisible?: boolean;
 }
 
 class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
@@ -82,6 +84,18 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
     }
   }
 
+  closeDrawer = () => {
+    this.setState({
+      isDrawerVisible: false,
+    });
+  };
+
+  openDrawer = () => {
+    this.setState({
+      isDrawerVisible: true,
+    });
+  };
+
   render() {
     const {
       match: {
@@ -90,7 +104,7 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
       intl: { formatMessage },
     } = this.props;
 
-    const { integrationBatchinstance, isLoading } = this.state;
+    const { integrationBatchinstance, isLoading, isDrawerVisible } = this.state;
 
     const tabs = [
       {
@@ -140,7 +154,26 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
 
     return (
       <div className='ant-layout'>
-        <Actionbar pathItems={breadcrumbPaths} />
+        <Actionbar pathItems={breadcrumbPaths}>
+          <div className='mcs-actionbar_innerElementsPanel'>
+            <Button className='mcs-primary' onClick={this.openDrawer}>
+              <McsIcon type='pen' /> <FormattedMessage {...messages.edit} />
+            </Button>
+          </div>
+          <Drawer
+            className='mcs-integrationBatchInstanceForm_drawer'
+            closable={false}
+            onClose={this.closeDrawer}
+            visible={isDrawerVisible}
+            width='1200'
+            destroyOnClose={true}
+          >
+            <IntegrationBatchInstanceEditPage
+              onClose={this.closeDrawer}
+              integrationBatchInstanceId={batchInstanceId}
+            />
+          </Drawer>
+        </Actionbar>
         <div className='ant-layout'>
           <Content className='mcs-content-container'>
             {integrationBatchinstance && (

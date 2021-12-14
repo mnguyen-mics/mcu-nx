@@ -17,6 +17,14 @@ export default defineMessages({
     id: 'jobs.batchInstances.list.actionBar.editBatchInstance',
     defaultMessage: 'Edit {name}',
   },
+  name: {
+    id: 'jobs.batchInstances.list.name',
+    defaultMessage: 'Name',
+  },
+  edit: {
+    id: 'jobs.batchInstances.list.edit',
+    defaultMessage: 'Edit',
+  },
   save: {
     id: 'jobs.batchInstances.form.save',
     defaultMessage: 'Save',

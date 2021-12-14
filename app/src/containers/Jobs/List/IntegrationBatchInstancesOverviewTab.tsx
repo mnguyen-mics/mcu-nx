@@ -8,7 +8,7 @@ import {
   PlayCircleFilled,
   ClockCircleOutlined,
 } from '@ant-design/icons';
-import { Tag } from 'antd';
+import { Drawer, Tag } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import messages from '../messages';
@@ -17,7 +17,10 @@ import {
   PLUGIN_SEARCH_SETTINGS,
   updateSearch,
 } from '../../../utils/LocationSearchHelper';
-import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
+import {
+  ActionsColumnDefinition,
+  DataColumnDefinition,
+} from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';
@@ -37,6 +40,8 @@ import {
   CronStatus,
   IntegrationBatchResource,
 } from '@mediarithmics-private/advanced-components';
+import IntegrationBatchInstanceEditPage from '../Edit/IntegrationBatchInstanceEditPage';
+import { Link } from 'react-router-dom';
 
 const BATCH_INSTANCE_SEARCH_SETTINGS = [...PAGINATION_SEARCH_SETTINGS, ...PLUGIN_SEARCH_SETTINGS];
 
@@ -60,6 +65,8 @@ interface State {
   options: Array<{ value: string }>;
   noInitialNonPeriodicData: boolean;
   noInitialPeriodicData: boolean;
+  isDrawerVisible: boolean;
+  pluginInstanceId?: string;
 }
 
 class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State> {
@@ -82,6 +89,7 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
       pageSize2: 10,
       noInitialPeriodicData: false,
       noInitialNonPeriodicData: false,
+      isDrawerVisible: false,
     };
   }
 
@@ -238,8 +246,17 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
     );
   }
 
-  saveBatchInstance = () => {
-    //
+  editIntegrationBatchInstance = (instance: IntegrationBatchResource) => {
+    this.setState({
+      isDrawerVisible: true,
+      pluginInstanceId: instance.id,
+    });
+  };
+
+  closeDrawer = () => {
+    this.setState({
+      isDrawerVisible: false,
+    });
   };
 
   render() {
@@ -248,7 +265,7 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
       match: {
         params: { organisationId },
       },
-      history,
+      // history,
     } = this.props;
     const {
       periodicInstances,
@@ -263,15 +280,43 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
       pageSize,
       noInitialPeriodicData,
       noInitialNonPeriodicData,
+      isDrawerVisible,
+      pluginInstanceId,
     } = this.state;
 
+    const actionColumns: Array<ActionsColumnDefinition<IntegrationBatchResource>> = [
+      {
+        className: 'mcs-audienceSegmentTable_dropDownMenu',
+        key: 'action',
+        actions: () => [
+          {
+            message: formatMessage(messages.edit),
+            callback: this.editIntegrationBatchInstance,
+            className: 'mcs-integrationBatchInstanceTable_dropDownMenu--edit',
+          },
+        ],
+      },
+    ];
+
     const dataColumnsDefinition: Array<DataColumnDefinition<IntegrationBatchResource>> = [
+      {
+        title: formatMessage(messages.name),
+        key: 'name',
+        isHideable: false,
+        render: (text: string, record: IntegrationBatchResource) => (
+          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.id}`}>
+            {text}
+          </Link>
+        ),
+      },
       {
         title: formatMessage(messages.group),
         key: 'group_id',
         isHideable: false,
         render: (text: string, record: IntegrationBatchResource) => (
-          <Tag className='mcs-batchInstanceTable_groupId'>{record.group_id}</Tag>
+          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.id}`}>
+            <Tag className='mcs-batchInstanceTable_groupId'>{record.group_id}</Tag>
+          </Link>
         ),
       },
       {
@@ -279,9 +324,11 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
         key: 'artifact_id',
         isHideable: false,
         render: (text: string, record: IntegrationBatchResource) => (
-          <Tag className='mcs-batchInstanceTable_artifactId' color='blue'>
-            {record.artifact_id}
-          </Tag>
+          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.id}`}>
+            <Tag className='mcs-batchInstanceTable_artifactId' color='blue'>
+              {record.artifact_id}
+            </Tag>
+          </Link>
         ),
       },
       {
@@ -289,9 +336,11 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
         key: 'version_id',
         isHideable: false,
         render: (text: string, record: IntegrationBatchResource) => (
-          <Tag className='mcs-batchInstanceTable_currentVersion' color='purple'>
-            {record.version_id}
-          </Tag>
+          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.id}`}>
+            <Tag className='mcs-batchInstanceTable_currentVersion' color='purple'>
+              {record.version_id}
+            </Tag>
+          </Link>
         ),
       },
     ];
@@ -366,14 +415,14 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
       message: formatMessage(messages.emptyNonPeriodicTableMessage),
     };
 
-    const onRow = (record: IntegrationBatchResource) => {
-      return {
-        onClick: () => {
-          history.push(`/o/${organisationId}/jobs/integration_batch_instances/${record.id}`);
-        },
-        className: 'mcs-batchInstanceTable_row',
-      };
-    };
+    // const onRow = (record: IntegrationBatchResource) => {
+    //   return {
+    //     onClick: () => {
+    //       history.push(`/o/${organisationId}/jobs/integration_batch_instances/${record.id}`);
+    //     },
+    //     className: 'mcs-batchInstanceTable_row',
+    //   };
+    // };
 
     return (
       <React.Fragment>
@@ -385,8 +434,8 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
               dataSource={nonPeriodicInstances}
               columns={dataColumnsDefinition}
               loading={isLoadingNonPeriodicInstances}
+              actionsColumnsDefinition={actionColumns}
               pagination={pagination}
-              onRow={onRow}
             />
           )}
         </Card>
@@ -399,11 +448,24 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
               dataSource={periodicInstances}
               columns={dataColumnsDefinition2}
               loading={isLoadingPeriodicInstances}
+              actionsColumnsDefinition={actionColumns}
               pagination={pagination2}
-              onRow={onRow}
             />
           )}
         </Card>
+        <Drawer
+          className='mcs-integrationBatchInstanceForm_drawer'
+          closable={false}
+          onClose={this.closeDrawer}
+          visible={isDrawerVisible}
+          width='1200'
+          destroyOnClose={true}
+        >
+          <IntegrationBatchInstanceEditPage
+            onClose={this.closeDrawer}
+            integrationBatchInstanceId={pluginInstanceId}
+          />
+        </Drawer>
       </React.Fragment>
     );
   }
