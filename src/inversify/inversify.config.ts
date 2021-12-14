@@ -29,6 +29,12 @@ import {
   ActivitiesAnalyticsDimension,
   ActivitiesAnalyticsMetric,
 } from '../utils/analytics/ActivitiesAnalyticsReportHelper';
+import AudienceSegmentService, {
+  IAudienceSegmentService,
+} from '../services/AudienceSegmentService';
+import StandardSegmentBuilderService, {
+  IStandardSegmentBuilderService,
+} from '../services/StandardSegmentBuilderService';
 
 export const container = new Container();
 
@@ -61,6 +67,10 @@ container
   .bind<IOrganisationService>(TYPES.IOrganisationService)
   .to(OrganisationService)
   .inSingletonScope();
+container.bind<IAudienceSegmentService>(TYPES.IAudienceSegmentService).to(AudienceSegmentService);
+container
+  .bind<IStandardSegmentBuilderService>(TYPES.IStandardSegmentBuilderService)
+  .to(StandardSegmentBuilderService);
 
 export const { lazyInject } = getDecorators(container, false);
 
