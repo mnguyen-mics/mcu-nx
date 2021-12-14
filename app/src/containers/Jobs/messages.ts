@@ -29,6 +29,10 @@ export default defineMessages({
     id: 'jobs.batchInstances.form.save',
     defaultMessage: 'Save',
   },
+  run: {
+    id: 'jobs.batchInstances.actionbar.run',
+    defaultMessage: 'Run',
+  },
   group: {
     id: 'jobs.batchInstances.list.column.group',
     defaultMessage: 'Group',
@@ -104,5 +108,29 @@ export default defineMessages({
   for: {
     id: 'plugins.batchExecutions.dashboard.title.for',
     defaultMessage: 'for',
+  },
+  newExecution: {
+    id: 'plugins.batchExecutions.dashboard.newExecution',
+    defaultMessage: 'New Integration Batch Instance execution',
+  },
+  modalStartDateContent: {
+    id: 'plugins.batchExecutions.dashboard.modalStartDateContent',
+    defaultMessage: 'Please select a date time to start your next execution: ',
+  },
+  newExecutionSuccessMessage: {
+    id: 'plugins.batchExecutions.dashboard.newExecutionSuccessMessage',
+    defaultMessage: 'Your new execution has been successfully created!',
+  },
+  newStatusMessage: {
+    id: 'plugins.batchExecutions.dashboard.newStatusMessage',
+    defaultMessage: 'Your Integration Batch Instance status has been successfully updated!',
+  },
+  pauseBatchInstance: {
+    id: 'plugins.batchExecutions.dashboard.pauseBatchInstance',
+    defaultMessage: 'Pause Batch Instance',
+  },
+  activateBatchInstance: {
+    id: 'plugins.batchExecutions.dashboard.activateBatchInstance',
+    defaultMessage: 'Activate Batch Instance',
   },
 });

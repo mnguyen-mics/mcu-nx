@@ -1,5 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
+import moment from 'moment';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
@@ -16,8 +17,13 @@ import {
   IIntegrationBatchService,
 } from '@mediarithmics-private/advanced-components';
 import IntegrationBatchExecutionsListTab from './IntegrationBatchExecutionsListTab';
-import { Button, Drawer, Tag } from 'antd';
-import { ClockCircleOutlined, PauseCircleFilled, PlayCircleFilled } from '@ant-design/icons';
+import { Button, Drawer, Tag, Modal, DatePicker, message } from 'antd';
+import {
+  ClockCircleOutlined,
+  ExclamationCircleOutlined,
+  PauseCircleFilled,
+  PlayCircleFilled,
+} from '@ant-design/icons';
 import cronstrue from 'cronstrue';
 import DashboardHeader from '../../../components/DashboardHeader/DashboardHeader';
 import OrganisationName from '../../../components/Common/OrganisationName';
@@ -33,9 +39,11 @@ interface RouteProps {
 type Props = InjectedIntlProps & InjectedNotificationProps & RouteComponentProps<RouteProps>;
 
 interface State {
-  integrationBatchinstance?: IntegrationBatchResource;
+  integrationBatchInstance?: IntegrationBatchResource;
   isLoading: boolean;
   isDrawerVisible?: boolean;
+  startDate?: number;
+  shouldUpdateExecutions: boolean;
 }
 
 class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
@@ -46,10 +54,15 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
     super(props);
     this.state = {
       isLoading: true,
+      shouldUpdateExecutions: false,
     };
   }
 
   componentDidMount() {
+    this.fetchIntegrationBatchInstance();
+  }
+
+  fetchIntegrationBatchInstance = () => {
     const {
       notifyError,
       match: {
@@ -64,7 +77,7 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
       .getIntegrationBatchInstance(batchInstanceId)
       .then(res => {
         this.setState({
-          integrationBatchinstance: res.data,
+          integrationBatchInstance: res.data,
           isLoading: false,
         });
       })
@@ -74,7 +87,7 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
           isLoading: false,
         });
       });
-  }
+  };
 
   getCronStatusIcon(cronStatus: CronStatus) {
     if (cronStatus === ('ACTIVE' as CronStatus)) {
@@ -96,6 +109,129 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
     });
   };
 
+  showModal = () => {
+    const {
+      intl: { formatMessage },
+    } = this.props;
+    Modal.confirm({
+      title: formatMessage(messages.newExecution),
+      icon: <ExclamationCircleOutlined />,
+      content: (
+        <React.Fragment>
+          <div>{formatMessage(messages.modalStartDateContent)}</div>
+          <br />
+          <DatePicker
+            format='YYYY-MM-DD HH:mm:ss'
+            disabledDate={this.disabledDate}
+            showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }}
+            style={{ width: '100%' }}
+            onOk={this.onDatePickerOk}
+            onChange={this.onDatePickerChange}
+          />
+        </React.Fragment>
+      ),
+      onOk: this.onModalOk,
+    });
+  };
+
+  onModalOk = () => {
+    const {
+      notifyError,
+      match: {
+        params: { organisationId, batchInstanceId },
+      },
+      intl: { formatMessage },
+    } = this.props;
+    const { startDate } = this.state;
+    this.setState({
+      shouldUpdateExecutions: false,
+    });
+
+    this._integrationBatchService
+      .createIntegrationBatchInstanceExecution(batchInstanceId, {
+        organisation_id: organisationId,
+        external_model_name: 'PUBLIC_INTEGRATION_BATCH',
+        start_date: startDate,
+        status: 'PENDING',
+      })
+      .then(res => {
+        this.setState({
+          shouldUpdateExecutions: true,
+        });
+        this.fetchIntegrationBatchInstance();
+        message.success(formatMessage(messages.newExecutionSuccessMessage), 3);
+      })
+      .catch(err => {
+        notifyError(err);
+      });
+  };
+
+  onDatePickerOk = (date: any) => {
+    this.setState({
+      startDate: moment(date).unix(),
+    });
+  };
+
+  onDatePickerChange = (date: any, dateString: string) => {
+    this.setState({
+      startDate: moment(date).unix(),
+    });
+  };
+
+  disabledDate = (current: any) => {
+    return current && current < moment().endOf('day');
+  };
+
+  renderActivePauseButton = () => {
+    const { integrationBatchInstance } = this.state;
+    const {
+      intl: { formatMessage },
+      notifyError,
+    } = this.props;
+    const onClickElement = (status: CronStatus) => () => {
+      if (integrationBatchInstance?.id)
+        this._integrationBatchService
+          .updateIntegrationBatchInstance(integrationBatchInstance?.id, {
+            ...integrationBatchInstance,
+            cron_status: status,
+          })
+          .then(res => {
+            this.fetchIntegrationBatchInstance();
+            message.success(formatMessage(messages.newStatusMessage), 3);
+          })
+          .catch(err => {
+            notifyError(err);
+          });
+    };
+
+    const activeButton = (
+      <Button
+        className='mcs-primary mcs-integrationBatchInstance_actionBar_activate'
+        type='primary'
+        onClick={onClickElement('ACTIVE' as CronStatus)}
+      >
+        <McsIcon type='play' />
+        <FormattedMessage {...messages.activateBatchInstance} />
+      </Button>
+    );
+    const pauseButton = (
+      <Button
+        className='mcs-primary mcs-integrationBatchInstance_actionBar_pause'
+        type='primary'
+        onClick={onClickElement('PAUSED')}
+      >
+        <McsIcon type='pause' />
+        <FormattedMessage {...messages.pauseBatchInstance} />
+      </Button>
+    );
+
+    if (!integrationBatchInstance?.cron_status) return;
+
+    return integrationBatchInstance && integrationBatchInstance.cron_status === 'PAUSED'
+      ? activeButton
+      : pauseButton;
+  };
+
   render() {
     const {
       match: {
@@ -104,42 +240,48 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
       intl: { formatMessage },
     } = this.props;
 
-    const { integrationBatchinstance, isLoading, isDrawerVisible } = this.state;
+    const { integrationBatchInstance, isLoading, isDrawerVisible, shouldUpdateExecutions } =
+      this.state;
 
     const tabs = [
       {
         title: 'Executions',
-        display: <IntegrationBatchExecutionsListTab batchInstanceId={batchInstanceId} />,
+        display: (
+          <IntegrationBatchExecutionsListTab
+            shouldUpdateExecutions={shouldUpdateExecutions}
+            batchInstanceId={batchInstanceId}
+          />
+        ),
       },
     ];
 
     const title = (
       <React.Fragment>
-        {integrationBatchinstance?.cron_status && (
+        {integrationBatchInstance?.cron_status && (
           <React.Fragment>
-            {this.getCronStatusIcon(integrationBatchinstance.cron_status)}
+            {this.getCronStatusIcon(integrationBatchInstance.cron_status)}
             <span>&nbsp;</span>
           </React.Fragment>
         )}
-        {integrationBatchinstance?.name ? integrationBatchinstance.name : ''}
+        {integrationBatchInstance?.name ? integrationBatchInstance.name : ''}
       </React.Fragment>
     );
 
     const subtitle = (
       <React.Fragment>
-        <Tag>{integrationBatchinstance?.group_id}</Tag>
-        <Tag color='blue'>{integrationBatchinstance?.artifact_id}</Tag>
-        <Tag color='purple'>{integrationBatchinstance?.version_id}</Tag>
+        <Tag>{integrationBatchInstance?.group_id}</Tag>
+        <Tag color='blue'>{integrationBatchInstance?.artifact_id}</Tag>
+        <Tag color='purple'>{integrationBatchInstance?.version_id}</Tag>
         {formatMessage(messages.for)}
-        {` ${integrationBatchinstance?.organisation_id} `}
-        <OrganisationName organisationId={integrationBatchinstance?.organisation_id} />
+        {` ${integrationBatchInstance?.organisation_id} `}
+        <OrganisationName organisationId={integrationBatchInstance?.organisation_id} />
       </React.Fragment>
     );
 
-    const cronElem = integrationBatchinstance?.cron ? (
+    const cronElem = integrationBatchInstance?.cron ? (
       <div>
         <ClockCircleOutlined />
-        {` Scheduled ${cronstrue.toString(integrationBatchinstance.cron)}`}
+        {` Scheduled ${cronstrue.toString(integrationBatchInstance.cron)}`}
       </div>
     ) : undefined;
 
@@ -156,6 +298,10 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
       <div className='ant-layout'>
         <Actionbar pathItems={breadcrumbPaths}>
           <div className='mcs-actionbar_innerElementsPanel'>
+            {this.renderActivePauseButton()}
+            <Button className='mcs-primary' type='primary' onClick={this.showModal}>
+              <McsIcon type='bolt' /> <FormattedMessage {...messages.run} />
+            </Button>
             <Button className='mcs-primary' onClick={this.openDrawer}>
               <McsIcon type='pen' /> <FormattedMessage {...messages.edit} />
             </Button>
@@ -176,7 +322,7 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
         </Actionbar>
         <div className='ant-layout'>
           <Content className='mcs-content-container'>
-            {integrationBatchinstance && (
+            {integrationBatchInstance && (
               <DashboardHeader
                 title={title}
                 subtitle={subtitle}
