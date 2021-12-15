@@ -117,7 +117,7 @@ export default class CustomDashboardService implements ICustomDashboardService {
     const body: CustomDashboardContentResource = {
       ...resource,
       organisation_id: organisationId,
-    } as any;
+    } as CustomDashboardContentResource;
 
     return ApiService.putRequest<DataResponse<CustomDashboardContentResource>>(
       endpoint,
@@ -136,7 +136,7 @@ export default class CustomDashboardService implements ICustomDashboardService {
     const body: CustomDashboardResource = {
       ...resource,
       organisation_id: organisationId,
-    } as any;
+    } as CustomDashboardResource;
 
     return ApiService.postRequest<DataResponse<CustomDashboardResource>>(endpoint, body).catch(
       (err: any) => {
@@ -155,7 +155,7 @@ export default class CustomDashboardService implements ICustomDashboardService {
     const body: CustomDashboardResource = {
       ...resource,
       organisation_id: organisationId,
-    } as any;
+    } as CustomDashboardResource;
 
     return ApiService.putRequest<DataResponse<CustomDashboardResource>>(endpoint, body).catch(
       (err: any) => {
