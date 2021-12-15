@@ -13,6 +13,8 @@ const TYPES = {
   IDatamartService: Symbol.for('datamartService'),
   IIntegrationBatchService: Symbol.for('integrationBatchService'),
   ITagService: Symbol.for('tagService'),
+  IAudienceSegmentService: Symbol.for('audienceSegmentService'),
+  IStandardSegmentBuilderService: Symbol.for('standardSegmentBuilderService'),
 };
 
 export { TYPES };

@@ -13,6 +13,14 @@ export interface PublicJobExecutionResource {
   external_model_name: ExternalModelName;
 }
 
+export interface BaseExecutionResource<I, R> extends PublicJobExecutionResource {
+  parameters?: I;
+  result?: R;
+  error?: {
+    message: string;
+  };
+}
+
 export type JobExecutionPublicStatus = 'PENDING' | 'RUNNING' | 'SUCCEEDED' | 'FAILED' | 'CANCELED';
 
 export type ExternalModelName =
