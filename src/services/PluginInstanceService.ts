@@ -5,7 +5,6 @@ import { PluginLayout } from '../models/plugin/PluginLayout';
 import { injectable, inject } from 'inversify';
 import { TYPES } from '../constants/types';
 import { PluginInstance } from '../models/plugin/Plugins';
-import { PublicJobExecutionResource } from '..';
 
 export interface IPluginInstanceService<T> {
   getInstances: (options: object) => Promise<DataListResponse<T>>;
@@ -14,15 +13,7 @@ export interface IPluginInstanceService<T> {
     id: string,
     options?: object,
   ) => Promise<DataListResponse<PropertyResourceShape>>;
-  getInstanceExecutions: (
-    id: string,
-    options?: object,
-  ) => Promise<DataListResponse<PublicJobExecutionResource>>;
   updatePluginInstance: (id: string, options: object) => Promise<DataResponse<T>>;
-  createInstanceExecution: (
-    instanceId: string,
-    executionResource: Partial<PublicJobExecutionResource>,
-  ) => Promise<DataResponse<PublicJobExecutionResource>>;
   updatePluginInstanceProperty: (
     organisationId: string,
     id: string,
@@ -69,15 +60,6 @@ abstract class PluginInstanceService<T extends PluginInstance>
     return ApiService.getRequest(endpoint, options);
   };
 
-  getInstanceExecutions = (
-    id: string,
-    options: object = {},
-  ): Promise<DataListResponse<PublicJobExecutionResource>> => {
-    const endpoint = `${this.entityPath}/${id}/executions`;
-
-    return ApiService.getRequest(endpoint, options);
-  };
-
   updatePluginInstance = (id: string, options: object = {}): Promise<DataResponse<T>> => {
     const endpoint = `${this.entityPath}/${id}`;
 
@@ -86,15 +68,6 @@ abstract class PluginInstanceService<T extends PluginInstance>
     };
 
     return ApiService.putRequest(endpoint, params);
-  };
-
-  createInstanceExecution = (
-    instanceId: string,
-    executionResource: Partial<PublicJobExecutionResource>,
-  ): Promise<DataResponse<PublicJobExecutionResource>> => {
-    const endpoint = `${this.entityPath}/${instanceId}/executions`;
-
-    return ApiService.postRequest(endpoint, executionResource);
   };
 
   updatePluginInstanceProperty = (

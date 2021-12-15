@@ -5,6 +5,7 @@ import { DataListResponse, DataResponse, StatusCode } from './ApiService';
 import { PaginatedApiParam } from '../utils/ApiHelper';
 import { PublicJobExecutionResource } from '../models/job/jobs';
 import { PluginLayout } from '../models/plugin/PluginLayout';
+import { ApiService } from '..';
 
 export interface IntegrationBatchInstanceOptions extends PaginatedApiParam {
   group_id?: string;
@@ -78,15 +79,15 @@ export default class IntegrationBatchService
       count: 0,
       data: [],
     });
-    // TODO: replace with :
-    // return this.getInstanceExecutions(integrationBatchId);
   }
 
   createIntegrationBatchInstanceExecution(
     instanceId: string,
     executionResource: Partial<PublicJobExecutionResource>,
   ): Promise<DataResponse<PublicJobExecutionResource>> {
-    return this.createInstanceExecution(instanceId, executionResource);
+    const endpoint = `integration_batch_instances/${instanceId}/executions`;
+
+    return ApiService.postRequest(endpoint, executionResource);
   }
 
   getBatchInstanceExecutionsForOrganisation(
