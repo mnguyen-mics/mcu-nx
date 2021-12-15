@@ -41,6 +41,10 @@ export default defineMessages({
     id: 'plugins.batchDefinitions.list.column.build_tag',
     defaultMessage: 'Build Tag',
   },
+  imageName: {
+    id: 'plugins.batchDefinitions.list.column.image_name',
+    defaultMessage: 'Image Name',
+  },
   artifactId: {
     id: 'plugins.batchDefinitions.list.column.artifactId',
     defaultMessage: 'Artifact Id',

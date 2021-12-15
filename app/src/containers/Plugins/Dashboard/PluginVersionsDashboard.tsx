@@ -179,14 +179,23 @@ class PluginVersionsDashboard extends React.Component<Props, State> {
           </Tag>
         ),
       },
-      {
-        title: formatMessage(messages.buildTag),
-        key: 'build_tag',
-        isHideable: false,
-        render: (text: string, record: PluginVersionResource) => (
-          <span className='mcs-pluginVersionsDasboard_buildColumn'>{text}</span>
-        ),
-      },
+      plugin?.plugin_type === 'INTEGRATION_BATCH'
+        ? {
+            title: formatMessage(messages.imageName),
+            key: 'image_name',
+            isHideable: false,
+            render: (text: string, record: PluginVersionResource) => (
+              <span className='mcs-pluginVersionsDasboard_imageColumn'>{text}</span>
+            ),
+          }
+        : {
+            title: formatMessage(messages.buildTag),
+            key: 'build_tag',
+            isHideable: false,
+            render: (text: string, record: PluginVersionResource) => (
+              <span className='mcs-pluginVersionsDasboard_buildColumn'>{text}</span>
+            ),
+          },
       // {
       //   title: formatMessage(messages.instances),
       //   key: 'instances',
