@@ -26,31 +26,7 @@ import { Link } from 'react-router-dom';
 import { Card } from '@mediarithmics-private/mcs-components-library';
 import { PLUGIN_PAGE_SEARCH_SETTINGS } from '../Dashboard/PluginVersionsDashboard';
 import { PluginType } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
-
-export const pluginTypeList: PluginType[] = [
-  'DISPLAY_CAMPAIGN_EDITOR',
-  'DISPLAY_CAMPAIGN_USER_SCENARIO',
-  'EMAIL_CAMPAIGN_EDITOR',
-  'EMAIL_TEMPLATE_EDITOR',
-  'EMAIL_TEMPLATE_RENDERER',
-  'EMAIL_ROUTER',
-  'DISPLAY_AD_EDITOR',
-  'DISPLAY_AD_RENDERER',
-  'RECOMMENDER',
-  'VIDEO_AD_EDITOR',
-  'VIDEO_AD_RENDERER',
-  'STYLE_SHEET',
-  'AUDIENCE_SEGMENT_EXTERNAL_FEED',
-  'AUDIENCE_SEGMENT_TAG_FEED',
-  'BID_OPTIMIZATION_ENGINE',
-  'ATTRIBUTION_PROCESSOR',
-  'ACTIVITY_ANALYZER',
-  'DATA_CONNECTOR',
-  'SCENARIO_NODE_PROCESSOR',
-  'ML_FUNCTION',
-  'SCENARIO_CUSTOM_ACTION',
-  'INTEGRATION_BATCH',
-];
+import { getPaginatedApiParam } from '../../../utils/ApiHelper';
 
 const { Content } = Layout;
 
@@ -64,6 +40,7 @@ interface State {
   loading: boolean;
   data: PluginResource[];
   total: number;
+  pluginTypeOptions: Array<{ value: PluginType }>;
   groupIdOptions: Array<{ value: string }>;
   artifactIdOptions: Array<{ value: string }>;
   isVisibleDrawer: boolean;
@@ -79,6 +56,7 @@ class PluginsList extends React.Component<Props, State> {
       loading: false,
       data: [],
       total: 0,
+      pluginTypeOptions: [],
       groupIdOptions: [],
       artifactIdOptions: [],
       isVisibleDrawer: false,
@@ -93,11 +71,29 @@ class PluginsList extends React.Component<Props, State> {
       notifyError,
     } = this.props;
     this._pluginService
-      .getPlugins({
-        organisation_id: organisationId,
-      })
+      .getPlugins(
+        {
+          organisation_id: organisationId,
+          max_results: 500,
+        },
+        true,
+      )
       .then(res => {
+        const pluginTypes: PluginType[] = [];
+        res.data
+          .map(p => p.plugin_type)
+          .forEach(
+            pluginType =>
+              pluginType &&
+              !pluginTypes.find(type => type === pluginType) &&
+              pluginTypes.push(pluginType),
+          );
         this.setState({
+          pluginTypeOptions: pluginTypes.map(type => {
+            return {
+              value: type,
+            };
+          }),
           groupIdOptions: _.uniq(res.data.map(p => p.group_id)).map(groupdId => {
             return { value: groupdId };
           }),
@@ -143,7 +139,7 @@ class PluginsList extends React.Component<Props, State> {
   };
 
   renderActionBarInnerElements() {
-    const { groupIdOptions, artifactIdOptions } = this.state;
+    const { groupIdOptions, artifactIdOptions, pluginTypeOptions } = this.state;
     const {
       location: { search },
     } = this.props;
@@ -151,13 +147,6 @@ class PluginsList extends React.Component<Props, State> {
     const defaultGroupId = queryString.parse(search).group_id || undefined;
     const defaultArtifactId = queryString.parse(search).artifact_id || undefined;
     const defaultPluginType = queryString.parse(search).plugin_type || undefined;
-
-    const pluginTypeOptions = pluginTypeList.map(t => {
-      return {
-        label: t,
-        value: t,
-      };
-    });
 
     return (
       <div className='mcs-actionBar_filters'>
@@ -171,6 +160,8 @@ class PluginsList extends React.Component<Props, State> {
           onSelect={this.onSelect('plugin_type')}
           onClear={this.onClear('plugin_type')}
           defaultValue={defaultPluginType}
+          dropdownMatchSelectWidth={false}
+          dropdownClassName={'mcs-pluginList_filterDropdown'}
         />
         <Select
           className='mcs-actionBar_filterInput'
@@ -182,6 +173,8 @@ class PluginsList extends React.Component<Props, State> {
           onSelect={this.onSelect('group_id')}
           onClear={this.onClear('group_id')}
           defaultValue={defaultGroupId}
+          dropdownMatchSelectWidth={false}
+          dropdownClassName={'mcs-pluginList_filterDropdown'}
         />
         <Select
           className='mcs-actionBar_filterInput'
@@ -193,6 +186,8 @@ class PluginsList extends React.Component<Props, State> {
           onSelect={this.onSelect('artifact_id')}
           onClear={this.onClear('artifact_id')}
           defaultValue={defaultArtifactId}
+          dropdownMatchSelectWidth={false}
+          dropdownClassName={'mcs-pluginList_filterDropdown'}
         />
       </div>
     );
@@ -203,11 +198,18 @@ class PluginsList extends React.Component<Props, State> {
     this.setState({
       loading: true,
     });
+    const options = {
+      ...filters,
+      ...getPaginatedApiParam(filters.currentPage, filters.pageSize),
+    };
     this._pluginService
-      .getPlugins({
-        ...filters,
-        organisation_id: organisationId,
-      })
+      .getPlugins(
+        {
+          ...options,
+          organisation_id: organisationId,
+        },
+        true,
+      )
       .then(res => {
         this.setState({
           data: res.data,
@@ -277,11 +279,29 @@ class PluginsList extends React.Component<Props, State> {
 
     const dataColumnsDefinition: Array<DataColumnDefinition<PluginResource>> = [
       {
+        title: formatMessage(messages.pluginId),
+        key: 'plugin_id',
+        isHideable: false,
+        render: (text: string, record: PluginResource) => (
+          <Link
+            className='mcs-pluginTable_pluginId'
+            to={`/o/${organisationId}/plugins/${record.id}`}
+          >
+            {record.id}
+          </Link>
+        ),
+      },
+      {
         title: formatMessage(messages.pluginType),
         key: 'plugin_type',
         isHideable: false,
         render: (text: string, record: PluginResource) => (
-          <span className='mcs-pluginTable_pluginType'>{record.plugin_type}</span>
+          <Link
+            className='mcs-pluginTable_pluginType'
+            to={`/o/${organisationId}/plugins/${record.id}`}
+          >
+            {record.plugin_type}
+          </Link>
         ),
       },
       {
@@ -289,7 +309,12 @@ class PluginsList extends React.Component<Props, State> {
         key: 'organisation_id',
         isHideable: false,
         render: (text: string, record: PluginResource) => (
-          <span className='mcs-pluginTable_organisation'>{record.organisation_id}</span>
+          <Link
+            className='mcs-pluginTable_organisation'
+            to={`/o/${organisationId}/plugins/${record.id}`}
+          >
+            {record.organisation_id}
+          </Link>
         ),
       },
       {
@@ -323,9 +348,11 @@ class PluginsList extends React.Component<Props, State> {
         key: 'current_version',
         isHideable: false,
         render: (text: string, record: PluginResource) => (
-          <Tag className='mcs-pluginTable_currentVersion' color='purple'>
-            {record.current_version_id}
-          </Tag>
+          <Link to={`/o/${organisationId}/plugins/${record.id}`}>
+            <Tag className='mcs-pluginTable_currentVersion' color='purple'>
+              {record.current_version_id}
+            </Tag>
+          </Link>
         ),
       },
     ];

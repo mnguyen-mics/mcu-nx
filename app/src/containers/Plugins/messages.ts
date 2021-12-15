@@ -17,6 +17,10 @@ export default defineMessages({
     id: 'plugins.list.actionBar.newPlugin',
     defaultMessage: 'New Plugin',
   },
+  pluginId: {
+    id: 'plugins.list.pluginId',
+    defaultMessage: 'Id',
+  },
   pluginType: {
     id: 'plugins.list.pluginType',
     defaultMessage: 'Plugin Type',
