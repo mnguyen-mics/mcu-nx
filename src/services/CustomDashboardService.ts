@@ -30,6 +30,23 @@ export interface ICustomDashboardService {
     dashboardId: string,
     organisationId: string,
   ) => Promise<DataResponse<CustomDashboardContentResource> | null>;
+
+  createContent: (
+    dashboardId: string,
+    organisationId: string,
+    resource: Partial<CustomDashboardContentResource>,
+  ) => Promise<DataResponse<CustomDashboardContentResource> | null>;
+
+  createDashboard: (
+    organisationId: string,
+    resource: Partial<CustomDashboardResource>,
+  ) => Promise<DataResponse<CustomDashboardResource> | null>;
+
+  modifyDashboard: (
+    dashboardId: string,
+    organisationId: string,
+    resource: Partial<CustomDashboardResource>,
+  ) => Promise<DataResponse<CustomDashboardResource> | null>;
 }
 
 @injectable()
@@ -89,5 +106,62 @@ export default class CustomDashboardService implements ICustomDashboardService {
       log.warn('Cannot retrieve custom dashboard content', err);
       return null;
     });
+  }
+
+  createContent(
+    dashboardId: string,
+    organisationId: string,
+    resource: Partial<CustomDashboardContentResource>,
+  ): Promise<DataResponse<CustomDashboardContentResource> | null> {
+    const endpoint = `dashboards/${dashboardId}/content`;
+    const body: CustomDashboardContentResource = {
+      ...resource,
+      organisation_id: organisationId,
+    } as any;
+
+    return ApiService.putRequest<DataResponse<CustomDashboardContentResource>>(
+      endpoint,
+      body,
+    ).catch((err: any) => {
+      log.warn(`Cannot create custom dashboard content for the dashboard ${dashboardId}`, err);
+      return null;
+    });
+  }
+
+  createDashboard(
+    organisationId: string,
+    resource: Partial<CustomDashboardResource>,
+  ): Promise<DataResponse<CustomDashboardResource> | null> {
+    const endpoint = `dashboards`;
+    const body: CustomDashboardResource = {
+      ...resource,
+      organisation_id: organisationId,
+    } as any;
+
+    return ApiService.postRequest<DataResponse<CustomDashboardResource>>(endpoint, body).catch(
+      (err: any) => {
+        log.warn(`Cannot create dashboard`, err);
+        return null;
+      },
+    );
+  }
+
+  modifyDashboard(
+    dashboardId: string,
+    organisationId: string,
+    resource: Partial<CustomDashboardResource>,
+  ): Promise<DataResponse<CustomDashboardResource> | null> {
+    const endpoint = `dashboards/${dashboardId}`;
+    const body: CustomDashboardResource = {
+      ...resource,
+      organisation_id: organisationId,
+    } as any;
+
+    return ApiService.putRequest<DataResponse<CustomDashboardResource>>(endpoint, body).catch(
+      (err: any) => {
+        log.warn(`Cannot modify the dashboard ${dashboardId}`, err);
+        return null;
+      },
+    );
   }
 }
