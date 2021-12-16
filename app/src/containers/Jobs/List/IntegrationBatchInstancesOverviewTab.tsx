@@ -94,6 +94,27 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
   }
 
   componentDidMount() {
+    this.fetchData();
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    const {
+      match: {
+        params: { organisationId },
+      },
+    } = this.props;
+    const {
+      match: {
+        params: { organisationId: prevOrganisationId },
+      },
+    } = prevProps;
+
+    if (organisationId !== prevOrganisationId) {
+      this.fetchData();
+    }
+  }
+
+  fetchData() {
     const {
       notifyError,
       match: {

@@ -71,6 +71,24 @@ class IntegrationBatchExecutionsListTab extends React.Component<Props, State> {
     this.fetchExecutions(currentPage, pageSize);
   }
 
+  componentDidUpdate(prevProps: Props) {
+    const {
+      match: {
+        params: { organisationId },
+      },
+    } = this.props;
+    const {
+      match: {
+        params: { organisationId: prevOrganisationId },
+      },
+    } = prevProps;
+
+    if (organisationId !== prevOrganisationId) {
+      const { currentPage, pageSize } = this.state;
+      this.fetchExecutions(currentPage, pageSize);
+    }
+  }
+
   fetchExecutions(currentPage: number, pageSize: number) {
     const {
       match: {
