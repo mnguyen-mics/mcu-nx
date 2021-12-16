@@ -1,11 +1,10 @@
 import { injectable } from 'inversify';
 import { CronStatus, IntegrationBatchResource } from '../models/plugin/Plugins';
 import PluginInstanceService from './PluginInstanceService';
-import { DataListResponse, DataResponse, StatusCode } from './ApiService';
+import ApiService, { DataListResponse, DataResponse, StatusCode } from './ApiService';
 import { PaginatedApiParam } from '../utils/ApiHelper';
 import { PublicJobExecutionResource } from '../models/job/jobs';
 import { PluginLayout } from '../models/plugin/PluginLayout';
-import { ApiService } from '..';
 
 export interface IntegrationBatchInstanceOptions extends PaginatedApiParam {
   group_id?: string;
