@@ -29,6 +29,14 @@ export interface QueryTranslationRequest {
   output_query_language: QueryLanguage;
   output_query_language_subtype?: QueryLanguageSubtype;
 }
+export interface QueryCreateRequest {
+  datamart_id: string;
+  major_version?: string;
+  minor_version?: string;
+  query_language: QueryLanguage;
+  query_language_subtype?: QueryLanguageSubtype;
+  query_text: string;
+}
 
 export interface QueryTranslationResource extends QueryTranslationRequest {
   readonly output_query_text: string;
