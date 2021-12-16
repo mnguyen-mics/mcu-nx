@@ -8,7 +8,31 @@ import { PluginResource, UserWorkspaceResource } from '@mediarithmics-private/ad
 import { MicsReduxState } from '../../../utils/ReduxHelper';
 import messages from './messages';
 import { PluginType } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
-import { pluginTypeList } from '../List/PluginsList';
+
+export const pluginTypeList: PluginType[] = [
+  'DISPLAY_CAMPAIGN_EDITOR',
+  'DISPLAY_CAMPAIGN_USER_SCENARIO',
+  'EMAIL_CAMPAIGN_EDITOR',
+  'EMAIL_TEMPLATE_EDITOR',
+  'EMAIL_TEMPLATE_RENDERER',
+  'EMAIL_ROUTER',
+  'DISPLAY_AD_EDITOR',
+  'DISPLAY_AD_RENDERER',
+  'RECOMMENDER',
+  'VIDEO_AD_EDITOR',
+  'VIDEO_AD_RENDERER',
+  'STYLE_SHEET',
+  'AUDIENCE_SEGMENT_EXTERNAL_FEED',
+  'AUDIENCE_SEGMENT_TAG_FEED',
+  'BID_OPTIMIZATION_ENGINE',
+  'ATTRIBUTION_PROCESSOR',
+  'ACTIVITY_ANALYZER',
+  'DATA_CONNECTOR',
+  'SCENARIO_NODE_PROCESSOR',
+  'ML_FUNCTION',
+  'SCENARIO_CUSTOM_ACTION',
+  'INTEGRATION_BATCH',
+];
 
 interface OrganisationOption {
   value: string;
