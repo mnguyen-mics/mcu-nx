@@ -77,16 +77,26 @@ class IntegrationBatchExecutionsListTab extends React.Component<Props, State> {
       match: {
         params: { organisationId },
       },
+      shouldUpdateExecutions,
+      batchInstanceId,
     } = this.props;
     const {
       match: {
         params: { organisationId: prevOrganisationId },
       },
+      shouldUpdateExecutions: prevShouldUpdateExecutions,
     } = prevProps;
 
-    if (organisationId !== prevOrganisationId) {
+    if (prevOrganisationId !== organisationId) {
       const { currentPage, pageSize } = this.state;
       this.fetchExecutions(currentPage, pageSize);
+    }
+    if (
+      prevShouldUpdateExecutions !== shouldUpdateExecutions &&
+      !!shouldUpdateExecutions &&
+      !!batchInstanceId
+    ) {
+      this.fetchExecutionsForInstance(batchInstanceId, 1, 10);
     }
   }
 
@@ -101,17 +111,6 @@ class IntegrationBatchExecutionsListTab extends React.Component<Props, State> {
       this.fetchExecutionsForInstance(batchInstanceId, currentPage, pageSize);
     } else {
       this.fetchExecutionsForOrg(organisationId, currentPage, pageSize);
-    }
-  }
-
-  componentDidUpdate(prevProps: Props) {
-    const { shouldUpdateExecutions, batchInstanceId } = this.props;
-    if (
-      prevProps.shouldUpdateExecutions !== shouldUpdateExecutions &&
-      !!shouldUpdateExecutions &&
-      !!batchInstanceId
-    ) {
-      this.fetchExecutionsForInstance(batchInstanceId, 1, 10);
     }
   }
 
