@@ -3,10 +3,12 @@ import React, { CSSProperties } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import Chart from '../chart-engine';
 import cuid from 'cuid';
-import { ChartConfig, ChartType } from '../../services/ChartDatasetService';
+import { ChartConfig, ChartType, SourceType } from '../../services/ChartDatasetService';
 import McsLazyLoad from '../lazyload';
 import { AbstractScope } from '../../models/datamart/graphdb/Scope';
-
+import DashboardFilter from './dashboard-filter';
+import { QueryFragment } from '../chart-engine/Chart';
+import { DimensionFilter } from '../../models/report/ReportRequestBody';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 const BASE_FRAMEWORK_HEIGHT = 96;
@@ -31,17 +33,53 @@ interface DashboardContentSection {
   cards: DashboardContentCard[];
 }
 
-export interface DashboardContentSchema {
-  sections: DashboardContentSection[];
+type DashboardAvailableFilterType = 'compartments';
+type DashboardValuesRetrieveMethodType = 'query';
+
+export interface DashboardFilterQueryFragments {
+  type: SourceType;
+  starting_object_type: string;
+  fragment: string | DimensionFilter[];
 }
 
-export default class DashboardLayout extends React.Component<DashboardLayoutProps> {
+export interface DashboardAvailableFilters {
+  technical_name: DashboardAvailableFilterType;
+  title: string;
+  values_retrieve_method: DashboardValuesRetrieveMethodType;
+  values_query: string;
+  multi_select: boolean;
+  query_fragments: DashboardFilterQueryFragments[];
+}
+
+export interface DashboardContentSchema {
+  sections: DashboardContentSection[];
+  available_filters?: DashboardAvailableFilters[];
+}
+
+interface FilterValues {
+  [key: string]: string[];
+}
+export interface DashboardLayoutState {
+  dashboardFilterValues: FilterValues;
+  formattedQueryFragment: QueryFragment;
+}
+
+export default class DashboardLayout extends React.Component<
+  DashboardLayoutProps,
+  DashboardLayoutState
+> {
   constructor(props: DashboardLayoutProps) {
     super(props);
+    this.state = {
+      dashboardFilterValues: {},
+      formattedQueryFragment: {},
+    };
   }
 
   renderChart(chart: ChartConfig, cssProperties?: CSSProperties) {
     const { datamart_id, scope } = this.props;
+    const { formattedQueryFragment } = this.state;
+
     return (
       <Chart
         key={cuid()}
@@ -49,6 +87,7 @@ export default class DashboardLayout extends React.Component<DashboardLayoutProp
         chartConfig={chart}
         chartContainerStyle={cssProperties}
         scope={scope}
+        queryFragment={formattedQueryFragment}
       />
     );
   }
@@ -105,8 +144,71 @@ export default class DashboardLayout extends React.Component<DashboardLayoutProp
     }
   };
 
+  handleDashboardFilterChange = (filterTechnicalName: string, filterValues: string[]) => {
+    const { dashboardFilterValues, formattedQueryFragment } = this.state;
+    const { schema } = this.props;
+
+    // deep copy array
+    let newDashboardFilterValues = JSON.parse(JSON.stringify(dashboardFilterValues));
+    let newFormattedQueryFragment = JSON.parse(JSON.stringify(formattedQueryFragment));
+
+    const availableFilter =
+      schema.available_filters &&
+      schema.available_filters.find(
+        f => f.technical_name.toLowerCase() === filterTechnicalName.toLocaleLowerCase(),
+      );
+    const currentFormattedQueryFragment = availableFilter?.query_fragments.map(
+      (q: DashboardFilterQueryFragments) => {
+        let formattedFrament;
+        switch (q.type.toLowerCase()) {
+          case 'otql':
+            formattedFrament = (q.fragment as string).replace(
+              '$values',
+              JSON.stringify(filterValues),
+            );
+            break;
+          case 'activities_analytics':
+            formattedFrament = (q.fragment as DimensionFilter[]).map((f: DimensionFilter) => {
+              return { ...f, expressions: filterValues };
+            });
+            break;
+        }
+
+        return {
+          ...q,
+          fragment: formattedFrament,
+        };
+      },
+    );
+
+    if (newDashboardFilterValues[filterTechnicalName]) {
+      newDashboardFilterValues[filterTechnicalName] = filterValues.length > 0 ? filterValues : {};
+    } else {
+      newDashboardFilterValues = {
+        ...newDashboardFilterValues,
+        [filterTechnicalName]: filterValues,
+      };
+    }
+
+    if (newFormattedQueryFragment[filterTechnicalName]) {
+      newFormattedQueryFragment[filterTechnicalName] =
+        filterValues.length > 0 ? currentFormattedQueryFragment : {};
+    } else {
+      newFormattedQueryFragment = {
+        ...newFormattedQueryFragment,
+        [filterTechnicalName]: currentFormattedQueryFragment,
+      };
+    }
+
+    this.setState({
+      dashboardFilterValues: newDashboardFilterValues,
+      formattedQueryFragment: newFormattedQueryFragment,
+    });
+  };
+
   generateDOM(): React.ReactElement {
-    const sections = this.props.schema.sections.map((section, i) => {
+    const { schema, datamart_id } = this.props;
+    const sections = schema.sections.map((section, i) => {
       const cards = section.cards.map((card, index) => {
         return this.renderCard(card, index);
       });
@@ -138,7 +240,22 @@ export default class DashboardLayout extends React.Component<DashboardLayoutProp
         </div>
       );
     });
-    return <div className={'mcs-dashboardLayout'}>{sections}</div>;
+    return (
+      <div className={'mcs-dashboardLayout'}>
+        <div className={'mcs-dashboardLayout_filters'}>
+          {schema.available_filters &&
+            schema.available_filters.map((filter, index) => (
+              <DashboardFilter
+                key={index.toString()}
+                filter={filter}
+                datamart_id={datamart_id}
+                onFilterChange={this.handleDashboardFilterChange}
+              />
+            ))}
+        </div>
+        {sections}
+      </div>
+    );
   }
 
   renderCard(card: DashboardContentCard, i: number) {

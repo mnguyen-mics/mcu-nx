@@ -30,10 +30,15 @@ import {
 } from '../../services/ChartDatasetService';
 import { keysToCamel } from '../../utils/CaseUtils';
 import { AbstractScope } from '../../models/datamart/graphdb/Scope';
+import { DashboardFilterQueryFragments } from '../dashboard-layout/DashboardLayout';
 
 interface YKey {
   key: string;
   message: string;
+}
+
+export interface QueryFragment {
+  [key: string]: DashboardFilterQueryFragments[];
 }
 
 interface ChartProps {
@@ -41,6 +46,7 @@ interface ChartProps {
   chartConfig: ChartConfig;
   chartContainerStyle?: React.CSSProperties;
   scope?: AbstractScope;
+  queryFragment?: QueryFragment;
 }
 
 interface ErrorContext {
@@ -74,9 +80,9 @@ class Chart extends React.Component<Props, ChartState> {
   }
 
   componentDidMount() {
-    const { datamartId, chartConfig, scope } = this.props;
+    const { datamartId, chartConfig, scope, queryFragment } = this.props;
     this.chartDatasetService()
-      .fetchDataset(datamartId, chartConfig, scope)
+      .fetchDataset(datamartId, chartConfig, scope, queryFragment)
       .then(formattedData => {
         this.setState({
           formattedData: formattedData,

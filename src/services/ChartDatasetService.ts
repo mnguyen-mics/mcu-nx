@@ -28,7 +28,12 @@ import { ActivitiesAnalyticsService } from './analytics/ActivitiesAnalyticsServi
 
 import { CollectionVolumesService } from './analytics/CollectionVolumesService';
 
-import { BooleanOperator, DateRange, ReportRequestBody } from '../models/report/ReportRequestBody';
+import {
+  BooleanOperator,
+  DateRange,
+  DimensionFilter,
+  ReportRequestBody,
+} from '../models/report/ReportRequestBody';
 import {
   ActivitiesAnalyticsDimension,
   ActivitiesAnalyticsMetric,
@@ -44,6 +49,7 @@ import {
 import { IAnalyticsService } from './analytics/AnalyticsService';
 import DatasetDateFormatter from '../utils/transformations/FormatDatesTransformation';
 import { formatDate } from '../utils/DateHelper';
+import { QueryFragment } from '../components/chart-engine/Chart';
 
 export type ChartType = 'pie' | 'bars' | 'radar' | 'metric';
 export type SourceType =
@@ -173,6 +179,7 @@ export interface IChartDatasetService {
     datamartId: string,
     chartConfig: ChartConfig,
     scope?: AbstractScope,
+    queryFragment?: QueryFragment,
   ): Promise<AbstractDataset | undefined>;
 }
 
@@ -224,12 +231,14 @@ export class ChartDatasetService implements IChartDatasetService {
     datamartId: string,
     otqlSource: OTQLSource,
     scope?: AbstractScope,
+    queryFragment?: QueryFragment,
   ): Promise<OTQLResult> {
     const otqlScope = this.scopeAdapter.buildScopeOtqlQuery(datamartId, scope);
     return this.fetchOtqlQuery(datamartId, otqlSource)
       .then(dashboardQueryResource => {
         return this.scopeAdapter.scopeQueryWithWhereClause(
           datamartId,
+          queryFragment || {},
           dashboardQueryResource,
           otqlScope,
         );
@@ -261,6 +270,7 @@ export class ChartDatasetService implements IChartDatasetService {
     source: AnalyticsSource<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>,
     xKey: string,
     providedScope?: AbstractScope,
+    queryFragment?: QueryFragment,
   ) {
     return this.fetchAnalytics(
       'activities' as AnalyticsType,
@@ -268,6 +278,7 @@ export class ChartDatasetService implements IChartDatasetService {
       source,
       xKey,
       providedScope,
+      queryFragment,
     );
   }
 
@@ -306,6 +317,7 @@ export class ChartDatasetService implements IChartDatasetService {
     source: AnalyticsSource<M, D>,
     xKey: string,
     providedScope?: AbstractScope,
+    queryFragment?: QueryFragment,
   ) {
     const analyticsDatamartId = source.datamart_id || datamartId;
     const analyticsSourceJson = source.query_json;
@@ -317,7 +329,19 @@ export class ChartDatasetService implements IChartDatasetService {
     );
 
     const dateRanges: DateRange[] = analyticsSourceJson.date_ranges || this.defaultDateRange;
-    const dashboardQueryFilters = analyticsSourceJson.dimension_filter_clauses?.filters || [];
+    let dashboardQueryFilters = analyticsSourceJson.dimension_filter_clauses?.filters || [];
+    if (queryFragment && Object.keys(queryFragment).length > 0) {
+      for (const [key, value] of Object.entries(queryFragment)) {
+        if (key && value.length > 0) {
+          value.forEach(f => {
+            if (f.type.toLocaleLowerCase() === 'activities_analytics') {
+              dashboardQueryFilters = dashboardQueryFilters.concat(f.fragment as DimensionFilter[]);
+            }
+          });
+        }
+      }
+    }
+
     const scopingQueryFilters = analyticsScopeFilter ? [analyticsScopeFilter] : [];
     const queryFilters = dashboardQueryFilters.concat(scopingQueryFilters);
     const scopedDimensionFilterClauses =
@@ -353,6 +377,7 @@ export class ChartDatasetService implements IChartDatasetService {
     xKey: string,
     source: AbstractSource,
     providedScope?: AbstractScope,
+    queryFragment?: QueryFragment,
   ): Promise<AbstractDataset | undefined> {
     const sourceType = source.type.toLowerCase();
     const seriesTitle = source.series_title || DEFAULT_Y_KEY.key;
@@ -362,17 +387,25 @@ export class ChartDatasetService implements IChartDatasetService {
         const otqlSource = source as OTQLSource;
         const scope = this.getScope(otqlSource.adapt_to_scope, providedScope);
         const queryDatamartId = otqlSource.datamart_id || datamartId;
-
-        return this.executeOtqlQuery(queryDatamartId, otqlSource, scope).then(res => {
-          return formatDatasetForOtql(res, xKey, seriesTitle);
-        });
+        return this.executeOtqlQuery(queryDatamartId, otqlSource, scope, queryFragment).then(
+          res => {
+            return formatDatasetForOtql(res, xKey, seriesTitle);
+          },
+        );
 
       case 'join':
         const aggregationSource = source as AggregationSource;
         const childSources = aggregationSource.sources;
         return Promise.all(
           childSources.map(s =>
-            this.fetchDatasetForSource(datamartId, chartType, xKey, s, providedScope),
+            this.fetchDatasetForSource(
+              datamartId,
+              chartType,
+              xKey,
+              s,
+              providedScope,
+              queryFragment,
+            ),
           ),
         ).then(datasets => {
           return this.aggregateDatasets(xKey, datasets as AggregateDataset[]);
@@ -383,7 +416,14 @@ export class ChartDatasetService implements IChartDatasetService {
         const childSources2 = aggregationSource2.sources;
         return Promise.all(
           childSources2.map(s =>
-            this.fetchDatasetForSource(datamartId, chartType, xKey, s, providedScope),
+            this.fetchDatasetForSource(
+              datamartId,
+              chartType,
+              xKey,
+              s,
+              providedScope,
+              queryFragment,
+            ),
           ),
         ).then(datasets => {
           return this.aggregateCountsIntoList(
@@ -404,6 +444,7 @@ export class ChartDatasetService implements IChartDatasetService {
             xKey,
             childSources3[0],
             providedScope,
+            queryFragment,
           ).then(dataset => {
             return this.toPercentagesDataset(xKey, dataset as AggregateDataset);
           });
@@ -418,7 +459,14 @@ export class ChartDatasetService implements IChartDatasetService {
         if (childSources4 && childSources4.length === 2) {
           return Promise.all(
             childSources4.map(s =>
-              this.fetchDatasetForSource(datamartId, chartType, xKey, s, providedScope),
+              this.fetchDatasetForSource(
+                datamartId,
+                chartType,
+                xKey,
+                s,
+                providedScope,
+                queryFragment,
+              ),
             ),
           ).then(datasets => {
             return this.indexDataset(
@@ -438,6 +486,7 @@ export class ChartDatasetService implements IChartDatasetService {
           source as AnalyticsSource<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>,
           xKey,
           providedScope,
+          queryFragment,
         );
       case 'collection_volumes':
         return this.fetchCollectionVolumes(
@@ -454,6 +503,7 @@ export class ChartDatasetService implements IChartDatasetService {
           xKey,
           ratioSource.sources[0],
           scope,
+          queryFragment,
         );
         const datasetTotal = this.fetchDatasetForSource(
           datamartId,
@@ -461,6 +511,7 @@ export class ChartDatasetService implements IChartDatasetService {
           xKey,
           ratioSource.sources[1],
           scope,
+          queryFragment,
         );
         return Promise.all([datasetValue, datasetTotal]).then(datasets => {
           return this.ratioDataset(datasets[0] as CountDataset, datasets[1] as CountDataset);
@@ -475,6 +526,7 @@ export class ChartDatasetService implements IChartDatasetService {
           xKey,
           dateFormatSource.sources[0],
           scope,
+          queryFragment,
         );
         return datasetToBeFormatted.then(result => {
           if (result) return this.datasetDateFormatter.applyFormatDates(result, xKey, format);
@@ -489,6 +541,7 @@ export class ChartDatasetService implements IChartDatasetService {
     datamartId: string,
     chartConfig: ChartConfig,
     providedScope?: AbstractScope,
+    queryFragment?: QueryFragment,
   ): Promise<AbstractDataset | undefined> {
     const source = chartConfig.dataset;
     const chartType = chartConfig.type;
@@ -496,7 +549,14 @@ export class ChartDatasetService implements IChartDatasetService {
       chartType,
       chartConfig.options && (chartConfig.options as ChartOptions).xKey,
     );
-    return this.fetchDatasetForSource(datamartId, chartType, xKey, source, providedScope);
+    return this.fetchDatasetForSource(
+      datamartId,
+      chartType,
+      xKey,
+      source,
+      providedScope,
+      queryFragment,
+    );
   }
 
   private toPercentagesDataset(xKey: string, dataset: AggregateDataset): AggregateDataset {

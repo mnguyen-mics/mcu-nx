@@ -103,7 +103,7 @@
   },
   "scripts": {
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}' && prettier -c .",
-    "lint:fix": "tslint --fix -c tslint.json \"src/**/*.ts\" && prettier -w .",
+    "lint:fix": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}' && prettier -w .",
     "prettier-check": "prettier -c .",
     "prettier-fix": "prettier -w .",
     "build": "webpack --config webpack.prod.js",

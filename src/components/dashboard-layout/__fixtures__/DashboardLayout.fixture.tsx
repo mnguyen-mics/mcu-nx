@@ -116,6 +116,46 @@ const propsMetric = {
         ],
       },
     ],
+    available_filters: [
+      {
+        technical_name: 'compartments',
+        title: 'Compartment',
+        values_retrieve_method: 'query',
+        values_query: 'SELECT compartments {id @map} FROM UserProfile',
+        multi_select: true,
+        query_fragments: [
+          {
+            type: 'OTQL',
+            starting_object_type: 'UserPoint',
+            fragment: 'profiles {compartment_id IN $values}',
+          },
+          {
+            type: 'OTQL',
+            starting_object_type: 'UserProfile',
+            fragment: 'compartment_id IN $values',
+          },
+        ],
+      },
+      {
+        technical_name: 'compartments1',
+        title: 'Compartment1',
+        values_retrieve_method: 'query',
+        values_query: 'SELECT compartments {id @map} FROM UserProfile',
+        multi_select: true,
+        query_fragments: [
+          {
+            type: 'OTQL',
+            starting_object_type: 'UserPoint',
+            fragment: 'profiles {compartment_id1 IN $values}',
+          },
+          {
+            type: 'OTQL',
+            starting_object_type: 'UserProfile',
+            fragment: 'compartment_id1 IN $values',
+          },
+        ],
+      },
+    ],
   },
 };
 
@@ -620,6 +660,68 @@ const propsAnalytics3 = {
         ],
       },
     ],
+    available_filters: [
+      {
+        technical_name: 'compartments',
+        title: 'Compartment',
+        values_retrieve_method: 'query',
+        values_query: 'SELECT compartments {id @map} FROM UserProfile',
+        multi_select: true,
+        query_fragments: [
+          {
+            type: 'OTQL',
+            starting_object_type: 'UserPoint',
+            fragment: 'profiles {compartment_id IN $values}',
+          },
+          {
+            type: 'OTQL',
+            starting_object_type: 'UserProfile',
+            fragment: 'compartment_id IN $values',
+          },
+          {
+            type: 'activities_analytics',
+            fragment: [
+              {
+                dimension_name: 'segment_id',
+                operator: 'IN_LIST',
+                not: false,
+                expressions: '$values',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        technical_name: 'compartments1',
+        title: 'Compartment1',
+        values_retrieve_method: 'query',
+        values_query: 'SELECT compartments {id @map} FROM UserProfile',
+        multi_select: true,
+        query_fragments: [
+          {
+            type: 'OTQL',
+            starting_object_type: 'UserPoint',
+            fragment: 'profiles {compartment_id1 IN $values}',
+          },
+          {
+            type: 'OTQL',
+            starting_object_type: 'UserProfile',
+            fragment: 'compartment_id1 IN $values',
+          },
+          {
+            type: 'activities_analytics',
+            fragment: [
+              {
+                dimension_name: 'segment_id',
+                operator: 'IN_LIST',
+                not: false,
+                expressions: '$values',
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
 };
 
@@ -656,6 +758,11 @@ const fetchmockOptions = [
   {
     matcher: 'glob:/undefined/v1/platform_monitoring/collections*',
     response: MockedCollectionMetrics,
+  },
+
+  {
+    matcher: 'glob:/undefined/v1/datamarts/*/query_executions/otql*',
+    response: MockedData,
   },
 ];
 const store = configureStore();

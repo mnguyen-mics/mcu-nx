@@ -35,6 +35,7 @@ export class ActivitiesAnalyticsService
         dimensionFilterClauses,
         sampling,
       );
+
     const endpoint = `datamarts/${datamartId}/user_activities_analytics`;
     return ApiService.postRequest(endpoint, report);
   }
