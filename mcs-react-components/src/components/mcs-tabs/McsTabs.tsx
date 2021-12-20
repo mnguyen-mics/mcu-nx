@@ -39,7 +39,7 @@ class McsTabs extends React.Component<McTabsProps> {
       <div>
         <Tabs
           className='mcs-tabs'
-          defaultActiveKey={items[0].key || '0'}
+          defaultActiveKey={items[0] ? items[0].key || '0' : '0'}
           {...rest}
           animated={animated !== undefined ? animated : true}
         >
