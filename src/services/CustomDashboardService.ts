@@ -1,5 +1,4 @@
 /* eslint-disable import/extensions */
-import log from '../utils/Logger';
 import { PaginatedApiParam } from './../utils/ApiHelper';
 import { injectable } from 'inversify';
 import {
@@ -19,34 +18,34 @@ export interface ICustomDashboardService {
   getDashboards: (
     organisationId: string,
     filters?: object,
-  ) => Promise<DataListResponse<CustomDashboardResource> | null>;
+  ) => Promise<DataListResponse<CustomDashboardResource>>;
 
   getDashboard: (
     dashboardId: string,
     organisationId: string,
-  ) => Promise<DataResponse<CustomDashboardResource> | null>;
+  ) => Promise<DataResponse<CustomDashboardResource>>;
 
   getContent: (
     dashboardId: string,
     organisationId: string,
-  ) => Promise<DataResponse<CustomDashboardContentResource> | null>;
+  ) => Promise<DataResponse<CustomDashboardContentResource>>;
 
   createContent: (
     dashboardId: string,
     organisationId: string,
     resource: Partial<CustomDashboardContentResource>,
-  ) => Promise<DataResponse<CustomDashboardContentResource> | null>;
+  ) => Promise<DataResponse<CustomDashboardContentResource>>;
 
   createDashboard: (
     organisationId: string,
     resource: Partial<CustomDashboardResource>,
-  ) => Promise<DataResponse<CustomDashboardResource> | null>;
+  ) => Promise<DataResponse<CustomDashboardResource>>;
 
-  modifyDashboard: (
+  updateDashboard: (
     dashboardId: string,
     organisationId: string,
     resource: Partial<CustomDashboardResource>,
-  ) => Promise<DataResponse<CustomDashboardResource> | null>;
+  ) => Promise<DataResponse<CustomDashboardResource>>;
 }
 
 @injectable()
@@ -54,7 +53,7 @@ export default class CustomDashboardService implements ICustomDashboardService {
   getDashboards(
     organisationId: string,
     filters: object = {},
-  ): Promise<DataListResponse<CustomDashboardResource> | null> {
+  ): Promise<DataListResponse<CustomDashboardResource>> {
     const endpoint = `dashboards`;
 
     const options = {
@@ -62,106 +61,73 @@ export default class CustomDashboardService implements ICustomDashboardService {
       searching_organisation_id: organisationId,
       organisation_id: organisationId,
     };
-    return ApiService.getRequest<DataListResponse<CustomDashboardResource>>(
-      endpoint,
-      options,
-    ).catch((err: any) => {
-      log.warn(`Cannot retrieve dashboards for the organisation ${organisationId}`, err);
-      return null;
-    });
+    return ApiService.getRequest<DataListResponse<CustomDashboardResource>>(endpoint, options);
   }
 
   getDashboard(
     dashboardId: string,
     organisationId: string,
-  ): Promise<DataResponse<CustomDashboardResource> | null> {
+  ): Promise<DataResponse<CustomDashboardResource>> {
     const endpoint = `dashboards/${dashboardId}`;
 
     const options = {
       organisation_id: organisationId,
     };
 
-    return ApiService.getRequest<DataResponse<CustomDashboardResource>>(endpoint, options).catch(
-      (err: any) => {
-        log.warn(`Cannot retrieve the dashboard ${dashboardId}`, err);
-        return null;
-      },
-    );
+    return ApiService.getRequest<DataResponse<CustomDashboardResource>>(endpoint, options);
   }
 
   getContent(
     dashboardId: string,
     organisationId: string,
-  ): Promise<DataResponse<CustomDashboardContentResource> | null> {
+  ): Promise<DataResponse<CustomDashboardContentResource>> {
     const endpoint = `dashboards/${dashboardId}/content`;
 
     const options = {
       organisation_id: organisationId,
     };
 
-    return ApiService.getRequest<DataResponse<CustomDashboardContentResource>>(
-      endpoint,
-      options,
-    ).catch((err: any) => {
-      log.warn('Cannot retrieve custom dashboard content', err);
-      return null;
-    });
+    return ApiService.getRequest<DataResponse<CustomDashboardContentResource>>(endpoint, options);
   }
 
   createContent(
     dashboardId: string,
     organisationId: string,
     resource: Partial<CustomDashboardContentResource>,
-  ): Promise<DataResponse<CustomDashboardContentResource> | null> {
+  ): Promise<DataResponse<CustomDashboardContentResource>> {
     const endpoint = `dashboards/${dashboardId}/content`;
     const body: CustomDashboardContentResource = {
       ...resource,
       organisation_id: organisationId,
     } as CustomDashboardContentResource;
 
-    return ApiService.putRequest<DataResponse<CustomDashboardContentResource>>(
-      endpoint,
-      body,
-    ).catch((err: any) => {
-      log.warn(`Cannot create custom dashboard content for the dashboard ${dashboardId}`, err);
-      return null;
-    });
+    return ApiService.putRequest<DataResponse<CustomDashboardContentResource>>(endpoint, body);
   }
 
   createDashboard(
     organisationId: string,
     resource: Partial<CustomDashboardResource>,
-  ): Promise<DataResponse<CustomDashboardResource> | null> {
+  ): Promise<DataResponse<CustomDashboardResource>> {
     const endpoint = `dashboards`;
     const body: CustomDashboardResource = {
       ...resource,
       organisation_id: organisationId,
     } as CustomDashboardResource;
 
-    return ApiService.postRequest<DataResponse<CustomDashboardResource>>(endpoint, body).catch(
-      (err: any) => {
-        log.warn(`Cannot create dashboard`, err);
-        return null;
-      },
-    );
+    return ApiService.postRequest<DataResponse<CustomDashboardResource>>(endpoint, body);
   }
 
-  modifyDashboard(
+  updateDashboard(
     dashboardId: string,
     organisationId: string,
     resource: Partial<CustomDashboardResource>,
-  ): Promise<DataResponse<CustomDashboardResource> | null> {
+  ): Promise<DataResponse<CustomDashboardResource>> {
     const endpoint = `dashboards/${dashboardId}`;
     const body: CustomDashboardResource = {
       ...resource,
       organisation_id: organisationId,
     } as CustomDashboardResource;
 
-    return ApiService.putRequest<DataResponse<CustomDashboardResource>>(endpoint, body).catch(
-      (err: any) => {
-        log.warn(`Cannot modify the dashboard ${dashboardId}`, err);
-        return null;
-      },
-    );
+    return ApiService.putRequest<DataResponse<CustomDashboardResource>>(endpoint, body);
   }
 }
