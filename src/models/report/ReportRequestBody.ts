@@ -31,17 +31,18 @@ export interface FilterClause<F extends Filter> {
   filters: F[];
 }
 
+export interface MetricFilter extends Filter {
+  metric_name: string;
+  operator: MetricFilterOperator;
+  comparison_value: string;
+}
+
 export interface DimensionFilter extends Filter {
   id?: string;
   dimension_name: string;
   operator: DimensionFilterOperator;
   expressions: string[];
   case_sensitive?: boolean;
-}
-export interface MetricFilter extends Filter {
-  metric_name: string;
-  operator: MetricFilterOperator;
-  comparison_value: string;
 }
 
 export interface Metric<T> {

@@ -4,6 +4,7 @@ import { injectable } from 'inversify';
 import {
   CustomDashboardResource,
   CustomDashboardContentResource,
+  DashboardContentSchema,
 } from '../models/customDashboards/customDashboards';
 import ApiService, { DataListResponse, DataResponse } from './ApiService';
 
@@ -32,8 +33,7 @@ export interface ICustomDashboardService {
 
   createContent: (
     dashboardId: string,
-    organisationId: string,
-    resource: Partial<CustomDashboardContentResource>,
+    contentJson: DashboardContentSchema,
   ) => Promise<DataResponse<CustomDashboardContentResource>>;
 
   createDashboard: (
@@ -92,16 +92,14 @@ export default class CustomDashboardService implements ICustomDashboardService {
 
   createContent(
     dashboardId: string,
-    organisationId: string,
-    resource: Partial<CustomDashboardContentResource>,
+    contentJson: DashboardContentSchema,
   ): Promise<DataResponse<CustomDashboardContentResource>> {
     const endpoint = `dashboards/${dashboardId}/content`;
-    const body: CustomDashboardContentResource = {
-      ...resource,
-      organisation_id: organisationId,
-    } as CustomDashboardContentResource;
 
-    return ApiService.putRequest<DataResponse<CustomDashboardContentResource>>(endpoint, body);
+    return ApiService.putRequest<DataResponse<CustomDashboardContentResource>>(
+      endpoint,
+      contentJson,
+    );
   }
 
   createDashboard(

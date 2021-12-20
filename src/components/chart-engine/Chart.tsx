@@ -30,7 +30,7 @@ import {
 } from '../../services/ChartDatasetService';
 import { keysToCamel } from '../../utils/CaseUtils';
 import { AbstractScope } from '../../models/datamart/graphdb/Scope';
-import { DashboardFilterQueryFragments } from '../dashboard-layout/DashboardLayout';
+import { DashboardFilterQueryFragments } from '../../models/customDashboards/customDashboards';
 
 interface YKey {
   key: string;
