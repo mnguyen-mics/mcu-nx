@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { isAggregateResult, OTQLResult } from '../../models/datamart/graphdb/OTQLResult';
 import { IQueryService, QueryService } from '../../services/QueryService';
-import { DashboardAvailableFilters } from './DashboardLayout';
 import { Select } from 'antd';
 import cuid from 'cuid';
+import { DashboardAvailableFilters } from '../../models/customDashboards/customDashboards';
 
 const { Option } = Select;
 interface DashboardFilterProps {

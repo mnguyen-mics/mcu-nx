@@ -3,12 +3,17 @@ import React, { CSSProperties } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import Chart from '../chart-engine';
 import cuid from 'cuid';
-import { ChartConfig, ChartType, SourceType } from '../../services/ChartDatasetService';
+import { ChartConfig, ChartType } from '../../services/ChartDatasetService';
 import McsLazyLoad from '../lazyload';
 import { AbstractScope } from '../../models/datamart/graphdb/Scope';
 import DashboardFilter from './dashboard-filter';
 import { QueryFragment } from '../chart-engine/Chart';
 import { DimensionFilter } from '../../models/report/ReportRequestBody';
+import {
+  DashboardContentCard,
+  DashboardContentSchema,
+  DashboardFilterQueryFragments,
+} from '../../models/customDashboards/customDashboards';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 const BASE_FRAMEWORK_HEIGHT = 96;
@@ -17,43 +22,6 @@ export interface DashboardLayoutProps {
   datamart_id: string;
   schema: DashboardContentSchema;
   scope?: AbstractScope;
-}
-
-interface DashboardContentCard {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  layout?: string;
-  charts: ChartConfig[];
-}
-
-interface DashboardContentSection {
-  title: string;
-  cards: DashboardContentCard[];
-}
-
-type DashboardAvailableFilterType = 'compartments';
-type DashboardValuesRetrieveMethodType = 'query';
-
-export interface DashboardFilterQueryFragments {
-  type: SourceType;
-  starting_object_type: string;
-  fragment: string | DimensionFilter[];
-}
-
-export interface DashboardAvailableFilters {
-  technical_name: DashboardAvailableFilterType;
-  title: string;
-  values_retrieve_method: DashboardValuesRetrieveMethodType;
-  values_query: string;
-  multi_select: boolean;
-  query_fragments: DashboardFilterQueryFragments[];
-}
-
-export interface DashboardContentSchema {
-  sections: DashboardContentSection[];
-  available_filters?: DashboardAvailableFilters[];
 }
 
 interface FilterValues {
