@@ -30,20 +30,22 @@ class LayoutManager extends React.Component<Props> {
     } = this.props;
     const logoLinkPath = `/o/${organisationId}/home`;
     return (
-      <Layout id='mcs-main-layout' className='mcs-fullScreen'>
-        <TopBar
-          organisationId={organisationId}
-          linkPath={logoLinkPath}
-          prodEnv={process.env.API_ENV === 'prod'}
-        />
-        <Layout className='mcs-fullScreen'>
-          <Sider className='mcs-sider'>
-            <Logo mode={'inline'} linkPath={logoLinkPath} />
-            <MainMenu className='mcs-mainLayout-menu' mode={'inline'} />
-          </Sider>
-          <Layout>{routeComponent}</Layout>
+      <div id='mcs-full-page' className='mcs-fullscreen'>
+        <Layout id='mcs-main-layout' className='mcs-fullScreen'>
+          <TopBar
+            organisationId={organisationId}
+            linkPath={logoLinkPath}
+            prodEnv={process.env.API_ENV === 'prod'}
+          />
+          <Layout>
+            <Sider className='new-mcs-sider'>
+              <Logo mode={'inline'} linkPath={logoLinkPath} />
+              <MainMenu className='mcs-mainLayout-menu' mode={'inline'} />
+            </Sider>
+            <Layout>{routeComponent}</Layout>
+          </Layout>
         </Layout>
-      </Layout>
+      </div>
     );
   }
 }

@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
-    "@mediarithmics-private/advanced-components": "6.4.2",
+    "@mediarithmics-private/advanced-components": "7.1.0",
     "@mediarithmics-private/mcs-components-library": "5.2.10",
     "antd": "4.10.3",
     "cronstrue": "^1.122.0",
