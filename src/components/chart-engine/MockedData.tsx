@@ -365,3 +365,40 @@ export const MockedCollectionMetrics = {
     },
   },
 };
+
+export const MockedFetchDashboard = {
+  status: 'ok',
+  data: [
+    {
+      id: '18',
+      title: 'General Information',
+      scopes: ['home'],
+      segment_ids: [],
+      builder_ids: [],
+      archived: false,
+      dashboard_content_id: '468',
+      organisation_id: '1185',
+      community_id: '1185',
+      created_ts: 1634910365921,
+      created_by: '2886',
+      last_modified_ts: 1634910365921,
+      last_modified_by: '2886',
+    },
+  ],
+  count: 1,
+  total: 1,
+  first_result: 0,
+  max_results: 50,
+};
+
+export const MockedFetchDashboardContent = {
+  status: 'ok',
+  data: {
+    id: '468',
+    content:
+      '{"sections":[{"title":"","cards":[{"x":0,"charts":[{"title":"Active users","type":"Metric","dataset":{"type":"activities_analytics","query_json":{"dimensions":[],"metrics":[{"expression":"users"}]}},"options":{}},{"title":"Site visits per day per channel","type":"Bars","dataset":{"type":"activities_analytics","query_json":{"dimensions":[{"name":"date_yyyy_mm_dd"},{"name":"channel_id"}],"dimension_filter_clauses":{"operator":"OR","filters":[{"dimension_name":"type","operator":"EXACT","expressions":["SITE_VISIT"]}]},"metrics":[{"expression":"sessions"}]}},"options":{"stacking":true,"hide_x_axis":true}}],"y":0,"h":5,"layout":"vertical","w":4},{"x":4,"charts":[{"title":"Offline transactions per day","type":"Bars","dataset":{"type":"activities_analytics","query_json":{"dimensions":[{"name":"date_yyyy_mm_dd"},{"name":"channel_id"}],"dimension_filter_clauses":{"operator":"OR","filters":[{"dimension_name":"channel_id","operator":"IN_LIST","expressions":["2825","2833"]}]},"metrics":[{"expression":"number_of_transactions"}]}},"options":{"stacking":true,"hide_x_axis":true,"hide_y_axis":true,"legend":{"enabled":true,"position":"right"}}},{"title":"Online transactions per day","type":"Bars","dataset":{"type":"activities_analytics","query_json":{"dimensions":[{"name":"date_yyyy_mm_dd"},{"name":"channel_id"}],"dimension_filter_clauses":{"operator":"OR","filters":[{"dimension_name":"channel_id","operator":"IN_LIST","expressions":["2417","2416","2418","2419"]}]},"metrics":[{"expression":"number_of_transactions"}]}},"options":{"stacking":true,"hide_x_axis":true,"hide_y_axis":true,"legend":{"enabled":true,"position":"right"}}}],"y":0,"h":5,"layout":"vertical","w":8}]},{"title":"Collections","cards":[{"x":0,"charts":[{"title":"Volumes per collection (last 30 days)","type":"Bars","dataset":{"type":"collection_volumes","query_json":{"dimensions":[{"name":"date_time"},{"name":"collection"}],"dimension_filter_clauses":{"operator":"AND","filters":[{"dimension_name":"datamart_id","operator":"EXACT","expressions":[1139]}]},"metrics":[{"expression":"count"}]}}}],"y":0,"h":3,"layout":"vertical","w":12}]}]}',
+    organisation_id: '1185',
+    created_ts: 1638957231389,
+    created_by: '2886',
+  },
+};
