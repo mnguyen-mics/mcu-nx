@@ -6,15 +6,20 @@ import { connect } from 'react-redux';
 import { Layout, Tag, Select } from 'antd';
 import { FilterOutlined } from '@ant-design/icons';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
-import ItemList, { Filters } from '../../components/ItemList';
-import { PAGINATION_SEARCH_SETTINGS } from '../../utils/LocationSearchHelper';
+import ItemList, { Filters } from '../../../components/ItemList';
+import { PAGINATION_SEARCH_SETTINGS } from '../../../utils/LocationSearchHelper';
 import DashboardActionBar from './DashboardActionBar';
 import messages from './messages';
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
-import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
+import {
+  ActionsColumnDefinition,
+  DataColumnDefinition,
+} from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
 import { UserProfileResource } from '@mediarithmics-private/advanced-components/lib/models/directory/UserProfileResource';
-import { InjectedNotificationProps } from '../Notifications/injectNotifications';
-import { getPaginatedApiParam } from '../../utils/ApiHelper';
+import injectNotifications, {
+  InjectedNotificationProps,
+} from '../../Notifications/injectNotifications';
+import { getPaginatedApiParam } from '../../../utils/ApiHelper';
 import { Card } from '@mediarithmics-private/mcs-components-library';
 import {
   lazyInject,
@@ -23,6 +28,7 @@ import {
   ICustomDashboardService,
 } from '@mediarithmics-private/advanced-components';
 import { IOrganisationService } from '@mediarithmics-private/advanced-components/lib/services/OrganisationService';
+import { dashboardsDefinition } from '../../../routes/dashboardsRoutes';
 
 const { Content } = Layout;
 
@@ -200,6 +206,21 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
     });
   };
 
+  onClickDashboard = (dashboard: CustomDashboardResource) => {
+    const {
+      history,
+      match: {
+        params: { organisationId },
+      },
+    } = this.props;
+    history.push(
+      `/o/${organisationId}${dashboardsDefinition.dashboardEdit.path.replace(
+        ':dashboardId',
+        dashboard.id,
+      )}`,
+    );
+  };
+
   renderInputPlaceholder(value: string) {
     return (
       <div>
@@ -240,6 +261,18 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
     const {
       intl: { formatMessage },
     } = this.props;
+
+    const actionsColumnsDefinition: Array<ActionsColumnDefinition<CustomDashboardResource>> = [
+      {
+        key: 'action',
+        actions: () => [
+          {
+            message: formatMessage(messages.modifyDashboard),
+            callback: this.onClickDashboard,
+          },
+        ],
+      },
+    ];
 
     const dataColumnsDefinition: Array<DataColumnDefinition<CustomDashboardResource>> = [
       {
@@ -284,10 +317,7 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
 
     return (
       <div className='ant-layout'>
-        <DashboardActionBar
-          onUploadDone={this.fetchDashboardList}
-          innerElement={this.renderActionBarInnerElements()}
-        />
+        <DashboardActionBar innerElement={this.renderActionBarInnerElements()} />
         <div className='ant-layout'>
           <Content className='mcs-content-container'>
             <Card>
@@ -300,6 +330,7 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
                 pageSettings={PAGINATION_SEARCH_SETTINGS}
                 emptyTable={emptyTable}
                 className='mcs-dashboardsTable_Container'
+                actionsColumnsDefinition={actionsColumnsDefinition}
               />
             </Card>
           </Content>
@@ -317,4 +348,5 @@ export default compose<DashboardPageProps, {}>(
   connect(mapStatetoProps),
   withRouter,
   injectIntl,
+  injectNotifications,
 )(DashboardListContent);

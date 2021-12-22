@@ -6,8 +6,8 @@ import { compose } from 'recompose';
 import { Actionbar, McsIcon } from '@mediarithmics-private/mcs-components-library';
 import messages from './messages';
 import { UploadFile } from 'antd/lib/upload/interface';
-import { Filters } from '../../components/ItemList';
 import { Link } from 'react-router-dom';
+import { dashboardsDefinition } from '../../../routes/dashboardsRoutes';
 
 const maxFileSize = 200 * 1024;
 
@@ -18,7 +18,6 @@ interface RouterProps {
 }
 
 interface DashboardsActionbarProps {
-  onUploadDone: (organisationId: string, filter: Filters) => void;
   innerElement?: React.ReactNode;
 }
 
@@ -107,7 +106,7 @@ class DashboardsActionbar extends React.Component<Props, DashboardsActionbarStat
     } = this.props;
 
     const breadcrumbPaths = [
-      <Link key='1' to={`/v2/o/${organisationId}/library/dashboards`}>
+      <Link key='1' to={`/v2/o/${organisationId}${dashboardsDefinition.dashboards.path}`}>
         {formatMessage(messages.dashboards)}
       </Link>,
     ];
@@ -117,9 +116,11 @@ class DashboardsActionbar extends React.Component<Props, DashboardsActionbarStat
         {this.renderModal()}
         <div className='mcs-actionbar_innerElementsPanel'>
           {innerElement}
-          <Button className='mcs-primary' type='primary'>
-            <McsIcon type='plus' /> <FormattedMessage {...messages.newDashboard} />
-          </Button>
+          <Link to={`/o/${organisationId}${dashboardsDefinition.dashboardCreate.path}`}>
+            <Button className='mcs-primary' type='primary'>
+              <McsIcon type='plus' /> <FormattedMessage {...messages.newDashboard} />
+            </Button>
+          </Link>
         </div>
       </Actionbar>
     );

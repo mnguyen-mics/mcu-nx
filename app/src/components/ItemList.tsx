@@ -63,17 +63,20 @@ class ItemList<T> extends React.Component<Props<T>> {
       },
       pageSettings,
     } = this.props;
-
+    let filters = parseSearch(search, pageSettings);
     if (!isSearchValid(search, pageSettings)) {
+      const defaultSearch = buildDefaultSearch(search, pageSettings);
+
       history.replace({
         pathname: pathname,
-        search: buildDefaultSearch(search, pageSettings),
+        search: defaultSearch,
         state: { reloadDataSource: true },
       });
-    } else {
-      const filters = parseSearch(search, pageSettings);
-      fetchList(organisationId, filters, true);
+
+      filters = parseSearch(defaultSearch, pageSettings);
     }
+
+    fetchList(organisationId, filters, true);
   }
 
   componentDidUpdate(previousProps: Props<T>) {
@@ -86,7 +89,6 @@ class ItemList<T> extends React.Component<Props<T>> {
       },
       pageSettings,
     } = this.props;
-
     const {
       location: { search: previousSearch },
       match: {
