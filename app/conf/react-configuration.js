@@ -54,6 +54,7 @@
     'audience-segment_builder_v2',
     'audience-builder-new_design',
     'new-audienceFeatureSelector',
+    'dashboards-new-engine'
   ];
 
   const gravityFeatures = [

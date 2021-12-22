@@ -1,35 +1,55 @@
 import 'reflect-metadata';
 import { Layout } from 'antd';
-import { Card } from '@mediarithmics-private/mcs-components-library';
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
+import {
+  DashboardPageWrapper,
+  ICustomDashboardService,
+  lazyInject,
+  TYPES,
+  withDatamartSelector,
+  WithDatamartSelectorProps,
+} from '@mediarithmics-private/advanced-components/lib';
 interface RouteProps {
   organisationId: string;
 }
 
-type Props = RouteComponentProps<RouteProps>;
+type Props = RouteComponentProps<RouteProps> & WithDatamartSelectorProps;
 const { Content } = Layout;
 class HomePage extends React.Component<Props> {
-  render() {
+  @lazyInject(TYPES.ICustomDashboardService)
+  private _dashboardService: ICustomDashboardService;
+
+  fetchApiDashboards = () => {
     const {
       match: {
         params: { organisationId },
       },
     } = this.props;
+    return this._dashboardService.getDashboardsPageContents(
+      organisationId,
+      { archived: false },
+      'console',
+    );
+  };
 
+  render() {
+    const { selectedDatamartId } = this.props;
     return (
       <div className='ant-layout'>
-        <Content className='mcs-content-container'>
-          <Card>
-            <div>Homepage</div>
-            <div>{process.env.API_ENV}</div>
-            <div>{`OrganisationId: ${organisationId}`}</div>
-          </Card>
-        </Content>
+        <div className='ant-layout'>
+          <Content className='mcs-content-container'>
+            <DashboardPageWrapper
+              datamartId={selectedDatamartId}
+              fetchApiDashboards={this.fetchApiDashboards}
+              isFullScreenLoading={false}
+            />
+          </Content>
+        </div>
       </div>
     );
   }
 }
 
-export default compose<Props, {}>(withRouter)(HomePage);
+export default compose<Props, {}>(withRouter, withDatamartSelector)(HomePage);
