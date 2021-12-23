@@ -50,6 +50,8 @@ import { IAnalyticsService } from './analytics/AnalyticsService';
 import DatasetDateFormatter from '../utils/transformations/FormatDatesTransformation';
 import { formatDate } from '../utils/DateHelper';
 import { QueryFragment } from '../components/chart-engine/Chart';
+import { percentages } from '../utils/transformations/PercentagesTransformation';
+import { indexDataset } from '../utils/transformations/IndexTranformation';
 
 export type ChartType = 'pie' | 'bars' | 'radar' | 'metric';
 export type SourceType =
@@ -88,8 +90,22 @@ export interface MetricChartProps {
   dataset: Dataset;
   format?: MetricChartFormat;
 }
+
 export interface AggregationSource extends AbstractSource {
   sources: AbstractSource[];
+}
+
+export type Order = `descending` | `ascending`;
+
+export interface IndexOptions {
+  minimum_percentage?: number;
+  sort?: Order;
+  limit?: number;
+}
+
+export interface IndexSource extends AbstractSource {
+  sources: AbstractSource[];
+  options: IndexOptions;
 }
 
 export interface RatioSource extends AbstractSource {
@@ -371,6 +387,34 @@ export class ChartDatasetService implements IChartDatasetService {
     );
   }
 
+  private computeIndex(
+    datamartId: string,
+    indexSource: IndexSource,
+    chartType: ChartType,
+    xKey: string,
+    providedScope?: AbstractScope,
+  ) {
+    const childSources4 = indexSource.sources;
+    if (childSources4 && childSources4.length === 2) {
+      return Promise.all(
+        childSources4.map(s =>
+          this.fetchDatasetForSource(datamartId, chartType, xKey, s, providedScope),
+        ),
+      ).then(datasets => {
+        return indexDataset(
+          datasets[0] as AggregateDataset,
+          datasets[1] as AggregateDataset,
+          xKey,
+          indexSource.options,
+        );
+      });
+    } else {
+      return Promise.reject(
+        `Wrong number of arguments for to-percentages transformation, 2 expected ${childSources4.length} provided`,
+      );
+    }
+  }
+
   private fetchDatasetForSource(
     datamartId: string,
     chartType: ChartType,
@@ -446,7 +490,7 @@ export class ChartDatasetService implements IChartDatasetService {
             providedScope,
             queryFragment,
           ).then(dataset => {
-            return this.toPercentagesDataset(xKey, dataset as AggregateDataset);
+            return percentages(xKey, dataset as AggregateDataset);
           });
         else
           return Promise.reject(
@@ -454,32 +498,9 @@ export class ChartDatasetService implements IChartDatasetService {
           );
 
       case 'index':
-        const percentageSources = source as AggregationSource;
-        const childSources4 = percentageSources.sources;
-        if (childSources4 && childSources4.length === 2) {
-          return Promise.all(
-            childSources4.map(s =>
-              this.fetchDatasetForSource(
-                datamartId,
-                chartType,
-                xKey,
-                s,
-                providedScope,
-                queryFragment,
-              ),
-            ),
-          ).then(datasets => {
-            return this.indexDataset(
-              datasets[0] as AggregateDataset,
-              datasets[1] as AggregateDataset,
-              xKey,
-            );
-          });
-        } else {
-          return Promise.reject(
-            `Wrong number of arguments for to-percentages transformation, 2 expected ${childSources4.length} provided`,
-          );
-        }
+        const indexSource = source as IndexSource;
+        return this.computeIndex(datamartId, indexSource, chartType, xKey, providedScope);
+
       case 'activities_analytics':
         return this.fetchActivitiesAnalytics(
           datamartId,
@@ -557,89 +578,6 @@ export class ChartDatasetService implements IChartDatasetService {
       providedScope,
       queryFragment,
     );
-  }
-
-  private toPercentagesDataset(xKey: string, dataset: AggregateDataset): AggregateDataset {
-    const datasetTitle = dataset.metadata.seriesTitles[0];
-
-    const sanitizedDataset = dataset.dataset.filter(line => typeof line[datasetTitle] === 'number');
-    const datasetTotalValue = sanitizedDataset
-      .map(line => {
-        return line[datasetTitle];
-      })
-      .reduce((a: number, b: number) => a + b, 0) as number;
-    const percentageDataset = sanitizedDataset.map(line => {
-      const lineValue = line[datasetTitle] as number;
-      const linePercentage =
-        datasetTotalValue !== 0 ? (lineValue / datasetTotalValue) * 100 : undefined;
-      return {
-        [xKey]: line[xKey],
-        [datasetTitle]: linePercentage ? parseFloat(linePercentage?.toFixed(2)) : undefined,
-        [`${datasetTitle}-count`]: lineValue,
-      };
-    });
-
-    return {
-      metadata: {
-        seriesTitles: [datasetTitle],
-      },
-      dataset: percentageDataset,
-      type: 'aggregate',
-    };
-  }
-
-  indexDataset(
-    sourceDataset: AggregateDataset,
-    toBeComparedWithDataset: AggregateDataset,
-    xKey: string,
-  ): AbstractDataset | undefined {
-    const sourceTitles = sourceDataset.metadata.seriesTitles;
-
-    const comparedDatasetTitle = toBeComparedWithDataset.metadata.seriesTitles[0];
-
-    const toBeComparedWithPercentageDataset = this.toPercentagesDataset(
-      xKey,
-      toBeComparedWithDataset,
-    );
-
-    const sourcePercentageDataset = this.toPercentagesDataset(xKey, sourceDataset);
-
-    const sourceIndexDataset = sourcePercentageDataset.dataset.map(line => {
-      const lineValue = line[`${sourceTitles[0]}-count`] as number;
-      const linePercentage = line[sourceTitles[0]] as number;
-      const toBecomparedWithPercentageLine = toBeComparedWithPercentageDataset.dataset.find(
-        comparedLine => comparedLine[xKey] === line[xKey],
-      );
-      const toBeComparedWithPercentage =
-        toBecomparedWithPercentageLine && toBecomparedWithPercentageLine[comparedDatasetTitle]
-          ? (toBecomparedWithPercentageLine[comparedDatasetTitle] as number)
-          : 0;
-      const lineIndex =
-        toBeComparedWithPercentage !== 0 && linePercentage
-          ? (linePercentage / toBeComparedWithPercentage) * 100
-          : 0;
-      return {
-        [xKey]: line[xKey],
-        [`${sourceTitles[0]}-percentage`]: linePercentage
-          ? parseFloat(linePercentage?.toFixed(2))
-          : undefined,
-        [`${sourceTitles[0]}-count`]: lineValue,
-        [sourceTitles[0]]: parseFloat(lineIndex?.toFixed(2)),
-      };
-    });
-
-    const refinedIndexDataset = sourceIndexDataset
-      .sort((a, b) => {
-        const firstIndex = a[sourceTitles[0]] as number;
-        const secondIndex = b[sourceTitles[0]] as number;
-        return secondIndex - firstIndex;
-      })
-      .slice(0, 10);
-    return {
-      type: 'aggregate',
-      dataset: refinedIndexDataset,
-      metadata: { seriesTitles: sourceTitles },
-    } as AggregateDataset;
   }
 
   private ratioDataset(
