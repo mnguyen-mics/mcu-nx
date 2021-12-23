@@ -12,13 +12,11 @@ export const dashboardsDefinition: NavigatorDefinition = {
     path: '/dashboards/create',
     layout: 'edit',
     editComponent: EditDashboardPage,
-    requiredFeature: 'dashboards-new-engine',
   },
   dashboardEdit: {
     path: '/dashboards/edit/:dashboardId',
     layout: 'edit',
     editComponent: EditDashboardPage,
-    requiredFeature: 'dashboards-new-engine',
   },
 };
 
