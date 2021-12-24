@@ -191,7 +191,7 @@ export default class DashboardLayout extends React.Component<
       });
       return (
         <div key={cuid()} className={'mcs-section'}>
-          <div className={'mcs-subtitle2'}>{section.title}</div>
+          {section.title && <div className={'mcs-subtitle2'}>{section.title}</div>}
           <ResponsiveReactGridLayout
             cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
             layouts={{ lg: layouts }}
