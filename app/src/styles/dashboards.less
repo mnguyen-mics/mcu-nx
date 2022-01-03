@@ -1,7 +1,7 @@
 .mcs-dashboardsTable_TitleColumn {
   font-family: LLCircularWeb-Book;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: bold;
   font-stretch: normal;
   font-style: normal;
 }
@@ -76,9 +76,19 @@
   font-size: 14px;
   min-height: 100px;
   margin-top: 25px;
+  background: #fff;
+  border-radius: 6px;
 
   .ant-form-item-explain-error div::first-letter {
     text-transform: uppercase;
+  }
+
+  .ace_editor {
+    margin: 10px 0;
+  }
+
+  .ace-github .ace_gutter {
+    background: #fff;
   }
 }
 
@@ -144,4 +154,6 @@
   font-family: 'LLCircularWeb-Book';
   font-size: 10px;
   text-align: right;
+  display: flex;
+  flex-direction: column;
 }

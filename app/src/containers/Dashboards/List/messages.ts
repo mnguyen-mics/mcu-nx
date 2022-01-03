@@ -63,6 +63,6 @@ export default defineMessages({
   },
   modifyDashboard: {
     id: 'dashboards.table.modifyAction',
-    defaultMessage: 'Modify',
+    defaultMessage: 'Edit',
   },
 });

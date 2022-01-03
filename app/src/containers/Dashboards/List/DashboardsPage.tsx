@@ -2,7 +2,6 @@ import * as React from 'react';
 import lodash from 'lodash';
 import { compose } from 'recompose';
 import { withRouter, RouteComponentProps } from 'react-router';
-import { connect } from 'react-redux';
 import { Layout, Tag, Select } from 'antd';
 import { FilterOutlined } from '@ant-design/icons';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
@@ -29,6 +28,7 @@ import {
 } from '@mediarithmics-private/advanced-components';
 import { IOrganisationService } from '@mediarithmics-private/advanced-components/lib/services/OrganisationService';
 import { dashboardsDefinition } from '../../../routes/dashboardsRoutes';
+import { Link } from 'react-router-dom';
 
 const { Content } = Layout;
 
@@ -39,6 +39,7 @@ const initialState = {
   filters: {},
   scopeFilter: '',
   optionsOrg: [{ value: '' }],
+  organisationsMap: new Map(),
 };
 
 const optionsScope = [
@@ -51,6 +52,9 @@ const optionsScope = [
   {
     value: 'Home',
   },
+  {
+    value: 'Console',
+  },
 ];
 
 interface DashboardListContentState {
@@ -59,6 +63,7 @@ interface DashboardListContentState {
   total: number;
   filters: Filters;
   optionsOrg: Array<{ value: string }>;
+  organisationsMap: Map<string, string>;
 }
 
 interface RouterProps {
@@ -86,17 +91,18 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
   @lazyInject(TYPES.IOrganisationService)
   private _organisationService: IOrganisationService;
 
-  private organisationsMap = new Map();
-
   fetchDashboardList = (organisationId: string, filter: Filters) => {
-    if (!this.organisationsMap.get(organisationId))
+    const { organisationsMap } = this.state;
+
+    if (!organisationsMap.get(organisationId))
       this._organisationService
         .getOrganisation(organisationId)
         .then(resultOrganisations => {
           if (resultOrganisations) {
-            this.organisationsMap.set(resultOrganisations.data.id, resultOrganisations.data.name);
+            organisationsMap.set(resultOrganisations.data.id, resultOrganisations.data.name);
             this.setState({
               optionsOrg: [{ value: resultOrganisations.data.name }],
+              organisationsMap: organisationsMap,
             });
           }
         })
@@ -121,16 +127,11 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
     this.setState({ loading: true }, () => {
       return this._dashboardService
         .getDashboards(organisationId, options)
-        .then(resultDashboards => {
-          if (resultDashboards) return resultDashboards.data;
-          else return [];
-        })
-        .then(arrayOfArraysDashboards => lodash.flattenDeep(arrayOfArraysDashboards))
         .then(dashboards => {
           this.setState({
             loading: false,
-            data: dashboards,
-            total: dashboards.length,
+            data: dashboards.data,
+            total: dashboards.total ? dashboards.total : dashboards.data.length,
           });
         })
         .catch(e => {
@@ -262,6 +263,8 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
       intl: { formatMessage },
     } = this.props;
 
+    const { data, loading, total, organisationsMap } = this.state;
+
     const actionsColumnsDefinition: Array<ActionsColumnDefinition<CustomDashboardResource>> = [
       {
         key: 'action',
@@ -281,7 +284,7 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
         isHideable: false,
         render: (text: string, record: CustomDashboardResource) => (
           <span className='mcs-dashboardsTable_OrgColumn'>
-            {record.organisation_id ? this.organisationsMap.get(record.organisation_id) : '-'}
+            {record.organisation_id ? organisationsMap.get(record.organisation_id) : '-'}
           </span>
         ),
       },
@@ -290,7 +293,14 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
         key: 'original_name',
         isHideable: false,
         render: (text: string, record: CustomDashboardResource) => (
-          <span className='mcs-dashboardsTable_TitleColumn'>{record.title}</span>
+          <Link
+            to={`/o/${record.organisation_id}${dashboardsDefinition.dashboardEdit.path.replace(
+              ':dashboardId',
+              record.id,
+            )}`}
+          >
+            <span className='mcs-dashboardsTable_TitleColumn'>{record.title}</span>
+          </Link>
         ),
       },
       {
@@ -323,9 +333,9 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
             <Card>
               <ItemList
                 fetchList={this.fetchDashboardList}
-                dataSource={this.state.data}
-                loading={this.state.loading}
-                total={this.state.total}
+                dataSource={data}
+                loading={loading}
+                total={total}
                 columns={dataColumnsDefinition}
                 pageSettings={PAGINATION_SEARCH_SETTINGS}
                 emptyTable={emptyTable}
@@ -340,13 +350,4 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
   }
 }
 
-const mapStatetoProps = (state: UserProfileResource) => ({
-  userProfile: state,
-});
-
-export default compose<DashboardPageProps, {}>(
-  connect(mapStatetoProps),
-  withRouter,
-  injectIntl,
-  injectNotifications,
-)(DashboardListContent);
+export default compose(withRouter, injectIntl, injectNotifications)(DashboardListContent);

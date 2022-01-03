@@ -3,7 +3,7 @@ import { Button, Modal, Upload, message, Spin } from 'antd';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import { compose } from 'recompose';
-import { Actionbar, McsIcon } from '@mediarithmics-private/mcs-components-library';
+import { Actionbar } from '@mediarithmics-private/mcs-components-library';
 import messages from './messages';
 import { UploadFile } from 'antd/lib/upload/interface';
 import { Link } from 'react-router-dom';
@@ -118,7 +118,7 @@ class DashboardsActionbar extends React.Component<Props, DashboardsActionbarStat
           {innerElement}
           <Link to={`/o/${organisationId}${dashboardsDefinition.dashboardCreate.path}`}>
             <Button className='mcs-primary' type='primary'>
-              <McsIcon type='plus' /> <FormattedMessage {...messages.newDashboard} />
+              <FormattedMessage {...messages.newDashboard} />
             </Button>
           </Link>
         </div>

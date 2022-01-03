@@ -20,6 +20,9 @@ import { IStandardSegmentBuilderService } from '@mediarithmics-private/advanced-
 import { IDatamartService } from '@mediarithmics-private/advanced-components/lib/services/DatamartService';
 import {
   ICustomDashboardService,
+  InjectedWorkspaceProps,
+  injectWorkspace,
+  IUsersService,
   lazyInject,
   TYPES,
 } from '@mediarithmics-private/advanced-components';
@@ -67,14 +70,17 @@ const defaultContent = `{
 interface EditDashboardPageState {
   loading: boolean;
   dashboard?: CustomDashboardResource;
+  content?: CustomDashboardContentResource;
   contentTextOrig?: string;
   homeCheckboxChecked: boolean;
   segmentCheckboxChecked: boolean;
   builderCheckboxChecked: boolean;
+  consoleCheckboxChecked: boolean;
   dashboardTitle: string;
   selectedSegments: SelectValue[];
   selectedBuilders: SelectValue[];
   contentText: string;
+  userNamesMap: Map<string, string>;
   existingSegments: LabelValueOption[];
   existingBuilders: LabelValueOption[];
   contentErrorMessage?: string;
@@ -98,14 +104,9 @@ interface LabelValueOption {
   value: string;
 }
 
-export interface EditDashboardPageProps {
-  data?: CustomDashboardResource;
-  organisationId: string;
-}
-
-type Props = EditDashboardPageProps &
-  InjectedIntlProps &
+type Props = InjectedIntlProps &
   InjectedNotificationProps &
+  InjectedWorkspaceProps &
   RouteComponentProps<RouterProps>;
 
 class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
@@ -121,16 +122,21 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
   @lazyInject(TYPES.IDatamartService)
   private _datamartService: IDatamartService;
 
+  @lazyInject(TYPES.IUsersService)
+  private _usersService: IUsersService;
+
   constructor(props: Props) {
     super(props);
     this.state = {
       homeCheckboxChecked: false,
       segmentCheckboxChecked: false,
       builderCheckboxChecked: false,
+      consoleCheckboxChecked: false,
       dashboardTitle: '',
       selectedSegments: [],
       selectedBuilders: [],
       contentText: '',
+      userNamesMap: new Map(),
       loading: true,
       existingSegments: [],
       existingBuilders: [],
@@ -145,7 +151,6 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
         params: { organisationId, dashboardId },
       },
     } = this.props;
-
     this.fetchData(organisationId, dashboardId);
   }
 
@@ -159,9 +164,12 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       fetchPromises.push(
         this.fetchDashboard(organisationId, dashboardId).then(dashboard => {
           this.fillDashboardElements(dashboard);
+          if (dashboard.last_modified_by) this.fetchUser(dashboard.last_modified_by);
+
           if (dashboard.dashboard_content_id)
             return this.fetchContent(organisationId, dashboardId).then(content => {
               this.fillContentElements(content);
+              this.fetchUser(content.created_by);
               return content;
             });
           else return dashboard;
@@ -199,6 +207,28 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
         });
         notifyError(e);
       });
+  };
+
+  fetchUser = (userId: string) => {
+    const { notifyError } = this.props;
+    const { userNamesMap } = this.state;
+
+    if (!userNamesMap.has(userId))
+      this._usersService
+        .getUsersByKeyword(userId)
+        .then(userResponse => {
+          const user = userResponse.data.find(userResource => userResource.id === userId);
+          if (user) {
+            userNamesMap.set(user.id, `${user.first_name} ${user.last_name}`);
+
+            this.setState({
+              userNamesMap: userNamesMap,
+            });
+          }
+        })
+        .catch(e => {
+          notifyError(e);
+        });
   };
 
   fetchBuilders = (
@@ -278,6 +308,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       homeCheckboxChecked: dashboard.scopes.includes('home'),
       segmentCheckboxChecked: dashboard.scopes.includes('segments'),
       builderCheckboxChecked: dashboard.scopes.includes('builders'),
+      consoleCheckboxChecked: dashboard.scopes.includes('console'),
       selectedSegments: this.convertIdsToSelectValues(dashboard.segment_ids),
       selectedBuilders: this.convertIdsToSelectValues(dashboard.builder_ids),
     });
@@ -291,6 +322,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     this.setState({
       contentTextOrig: contentText,
       contentText: contentText,
+      content: content,
     });
   };
 
@@ -356,11 +388,14 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     history.push(`/o/${organisationId}${dashboardsDefinition.dashboards.path}`);
   };
 
-  createNewDashboard = (organisationId: string) => {
+  createNewDashboard = (organisationId: string, communityId: string) => {
     const { contentText } = this.state;
 
     this._dashboardService
-      .createDashboard(organisationId, this.applyChangesOnDashboard(organisationId, {}))
+      .createDashboard(
+        organisationId,
+        this.applyChangesOnDashboard(organisationId, communityId, {}),
+      )
       .then(responseDashboard => {
         if (contentText.length > 0)
           this._dashboardService
@@ -378,7 +413,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       .catch(e => this.props.notifyError(e));
   };
 
-  modifyExistingDashboard = (dashboardId: string, organisationId: string) => {
+  modifyExistingDashboard = (dashboardId: string, organisationId: string, communityId: string) => {
     const { dashboard, contentTextOrig, contentText } = this.state;
 
     const promises: Array<
@@ -389,7 +424,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       this._dashboardService.updateDashboard(
         dashboardId,
         organisationId,
-        this.applyChangesOnDashboard(organisationId, {
+        this.applyChangesOnDashboard(organisationId, communityId, {
           ...dashboard,
         }),
       ),
@@ -420,18 +455,25 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
   };
 
   getSelectedScopes = () => {
-    const { homeCheckboxChecked, segmentCheckboxChecked, builderCheckboxChecked } = this.state;
+    const {
+      homeCheckboxChecked,
+      segmentCheckboxChecked,
+      builderCheckboxChecked,
+      consoleCheckboxChecked,
+    } = this.state;
 
     const scopes: string[] = [];
     if (homeCheckboxChecked) scopes.push('home');
     if (segmentCheckboxChecked) scopes.push('segments');
     if (builderCheckboxChecked) scopes.push('builders');
+    if (consoleCheckboxChecked) scopes.push('console');
 
     return scopes;
   };
 
   applyChangesOnDashboard = (
     organisationId: string,
+    communityId: string,
     dashboard: Partial<CustomDashboardResource>,
   ) => {
     const { dashboardTitle, selectedSegments, selectedBuilders } = this.state;
@@ -444,7 +486,9 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       builder_ids: selectedBuilders.map(val => val.key),
       archived: false,
       organisation_id: organisationId,
-      community_id: organisationId,
+      community_id: communityId,
+      last_modified_by: undefined,
+      last_modified_ts: undefined,
     };
 
     return result;
@@ -462,13 +506,14 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
         match: {
           params: { organisationId },
         },
+        workspace: { community_id },
       } = this.props;
 
       const { dashboard } = this.state;
 
       if (organisationId) {
-        if (dashboard) this.modifyExistingDashboard(dashboard.id, organisationId);
-        else this.createNewDashboard(organisationId);
+        if (dashboard) this.modifyExistingDashboard(dashboard.id, organisationId, community_id);
+        else this.createNewDashboard(organisationId, community_id);
       }
     }
   };
@@ -491,6 +536,12 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     });
   };
 
+  onConsoleCheckboxChange = (e: CheckboxChangeEvent) => {
+    this.setState({
+      consoleCheckboxChecked: e.target.checked,
+    });
+  };
+
   onDashboardTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       dashboardTitle: e.target.value,
@@ -509,7 +560,12 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     });
   };
 
-  formatEditedBy = (modifiedBy: string, modifiedTs: Date) => {
+  formatEditedBy = (
+    modifiedBy: string,
+    modifiedTs: Date,
+    userNamesMap: Map<string, string>,
+    type: string,
+  ) => {
     const date = new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
       month: 'short',
@@ -518,7 +574,9 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       minute: '2-digit',
       second: '2-digit',
     }).format(modifiedTs);
-    return `Last edited by ${modifiedBy} on ${date}`;
+    return `${type} last modified by ${
+      userNamesMap.has(modifiedBy) ? userNamesMap.get(modifiedBy) : modifiedBy
+    } on ${date}`;
   };
 
   validateSegments = (_: RuleObject, value: SelectValue[]): Promise<void> => {
@@ -596,6 +654,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       dashboardTitle,
       segmentCheckboxChecked,
       builderCheckboxChecked,
+      consoleCheckboxChecked,
       contentText,
       homeCheckboxChecked,
       selectedSegments,
@@ -606,6 +665,8 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       existingBuilders,
       contentErrorMessage,
       form,
+      userNamesMap,
+      content,
     } = this.state;
 
     const initialValues = dashboard
@@ -614,6 +675,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
           checkbox_home: homeCheckboxChecked,
           checkbox_segment: segmentCheckboxChecked,
           checkbox_builder: builderCheckboxChecked,
+          checkbox_console: consoleCheckboxChecked,
           select_segments: selectedSegments,
           select_builders: selectedBuilders,
           content_editor: contentText.length > 0 ? contentText : '',
@@ -628,8 +690,22 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
 
     const editedBy =
       dashboard && dashboard.last_modified_by && dashboard.last_modified_ts
-        ? this.formatEditedBy(dashboard.last_modified_by, dashboard.last_modified_ts)
+        ? this.formatEditedBy(
+            dashboard.last_modified_by,
+            dashboard.last_modified_ts,
+            userNamesMap,
+            'Dashboard registration',
+          )
         : null;
+
+    const editedByForContent = content
+      ? this.formatEditedBy(
+          content.created_by,
+          content.created_ts,
+          userNamesMap,
+          'Dashboard content',
+        )
+      : null;
 
     const contentErrorStatus = contentErrorMessage ? 'error' : 'success';
 
@@ -659,6 +735,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
                 </Row>
                 <div className='mcs-dashboardEditor_row_column mcs-dashboardEditor_row_editedBy'>
                   {editedBy && <span>{editedBy}</span>}
+                  {editedByForContent && <span>{editedByForContent}</span>}
                 </div>
               </Row>
               <Form.Item
@@ -734,6 +811,17 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
                   />
                 </Form.Item>
               )}
+
+              <Form.Item
+                name='checkbox_console'
+                valuePropName='checked'
+                className='mcs-dashboardEditor_checkbox'
+              >
+                <Checkbox onChange={this.onConsoleCheckboxChange}>
+                  {intl.formatMessage(messages.console)}
+                </Checkbox>
+              </Form.Item>
+
               <Form.Item
                 className='mcs-dashboardEditor_aceEditor'
                 validateStatus={contentErrorStatus}
@@ -743,13 +831,17 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
                   mode='json'
                   theme='github'
                   onChange={this.onContentTextChange}
-                  fontSize={14}
-                  showPrintMargin={true}
+                  fontSize={12}
+                  showPrintMargin={false}
                   showGutter={true}
-                  highlightActiveLine={true}
+                  highlightActiveLine={false}
                   width='100%'
                   defaultValue={initialValues.content_editor}
+                  minLines={20}
+                  maxLines={1000}
+                  height='auto'
                   setOptions={{
+                    highlightGutterLine: false,
                     enableBasicAutocompletion: true,
                     enableLiveAutocompletion: true,
                     enableSnippets: false,
@@ -766,8 +858,9 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
   }
 }
 
-export default compose<EditDashboardPageProps, {}>(
+export default compose<Props, {}>(
   withRouter,
   injectIntl,
   injectNotifications,
+  injectWorkspace,
 )(EditDashboardPage);
