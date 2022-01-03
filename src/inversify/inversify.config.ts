@@ -14,6 +14,7 @@ import DataFileService, { IDataFileService } from '../services/DataFileService';
 import CustomDashboardService, {
   ICustomDashboardService,
 } from '../services/CustomDashboardService';
+import UsersService, { IUsersService } from '../services/UsersService';
 import DatamartService, { IDatamartService } from '../services/DatamartService';
 import IntegrationBatchService, {
   IIntegrationBatchService,
@@ -71,6 +72,7 @@ container.bind<IAudienceSegmentService>(TYPES.IAudienceSegmentService).to(Audien
 container
   .bind<IStandardSegmentBuilderService>(TYPES.IStandardSegmentBuilderService)
   .to(StandardSegmentBuilderService);
+container.bind<IUsersService>(TYPES.IUsersService).to(UsersService);
 
 export const { lazyInject } = getDecorators(container, false);
 
