@@ -92,6 +92,8 @@ export {
   IIntegrationBatchService,
   IntegrationBatchInstanceOptions,
 } from './services/IntegrationBatchService';
+export { default as UsersService } from './services/UsersService';
+export { IUsersService } from './services/UsersService';
 
 // Models
 
