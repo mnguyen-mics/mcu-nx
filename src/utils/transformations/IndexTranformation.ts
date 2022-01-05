@@ -17,11 +17,7 @@ export function indexDataset(
 
   const minimumPercentage = indexOptions.minimum_percentage || 0;
   const sourceIndexDataset = sourcePercentageDataset.dataset
-    .filter(
-      line =>
-        (line[sourceTitle] || 0 >= minimumPercentage) &&
-        (line[sourceTitle] || 0) >= minimumPercentage,
-    )
+    .filter(line => (line[sourceTitle] || 0) >= minimumPercentage)
     .map(line => {
       const lineValue = line[`${sourceTitle}-count`] as number;
       const linePercentage = line[sourceTitle] as number;
