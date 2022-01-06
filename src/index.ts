@@ -118,3 +118,4 @@ export {
 export { PluginLayout } from './models/plugin/PluginLayout';
 export { UserWorkspaceResource, UserProfileResource } from './models/directory/UserProfileResource';
 export { ITagService, TagService } from './services/TagService';
+export { injectWorkspace, InjectedWorkspaceProps } from './components/datamart';
