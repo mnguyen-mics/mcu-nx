@@ -133,4 +133,17 @@ export default defineMessages({
     id: 'plugins.batchExecutions.dashboard.activateBatchInstance',
     defaultMessage: 'Activate Batch Instance',
   },
+  planExecutions: {
+    id: 'plugins.batchExecutions.dashboard.planExecutions',
+    defaultMessage: 'Plan Executions',
+  },
+  or: {
+    id: 'plugins.batchExecutions.form.or',
+    defaultMessage: 'Or',
+  },
+  periodicityTooltip: {
+    id: 'plugins.batchExecutions.form.periodicityTooltip',
+    defaultMessage:
+      'Double click on a dropdown option to automatically select / unselect a periodicity',
+  },
 });
