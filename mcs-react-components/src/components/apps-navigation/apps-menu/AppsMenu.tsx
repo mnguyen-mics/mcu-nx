@@ -4,6 +4,7 @@ import { Menu } from 'antd';
 export type AppsMenuSections = {
   adminLinks: AppsMenuItem[];
   userLinks: AppsMenuItem[];
+  resourceLinks?: AppsMenuItem[];
 };
 export interface AppsMenuItem {
   icon?: React.ReactElement;
@@ -38,9 +39,9 @@ class AppsMenu extends React.Component<AppsMenuProps> {
     );
   }
 
-  renderSection(links: AppsMenuItem[], isAdmin?: boolean): React.ReactElement[] {
+  renderSection(links: AppsMenuItem[], displayBorder?: boolean): React.ReactElement[] {
     return links.map((link, index) =>
-      this.renderItem(link, !!isAdmin && links.length === index + 1),
+      this.renderItem(link, !!displayBorder && links.length === index + 1),
     );
   }
 
@@ -51,7 +52,8 @@ class AppsMenu extends React.Component<AppsMenuProps> {
       <Menu mode='inline' className={`mcs_appMenu ${className ? className : ''}`}>
         {logo}
         {sections.adminLinks && this.renderSection(sections.adminLinks, true)}
-        {sections.userLinks && this.renderSection(sections.userLinks)}
+        {sections.userLinks && this.renderSection(sections.userLinks, true)}
+        {sections.resourceLinks && this.renderSection(sections.userLinks)}
       </Menu>
     );
   }
