@@ -12,12 +12,7 @@
 import faker from 'faker';
 
 before(() => {
-  cy.enableDirectAccessGrant();
   cy.initTestContext();
-});
-
-after(() => {
-  cy.enableDirectAccessGrant(false);
 });
 
 // -- This is a parent command --
@@ -26,6 +21,7 @@ Cypress.Commands.add(
   (email = `${Cypress.env('devMail')}`, password = `${Cypress.env('devPwd')}`) => {
     cy.visit('/');
     cy.get('#username').type(email);
+    cy.get('#kc-login').click();
     cy.get('#password').type(password);
     cy.get('#kc-login').click();
   },
@@ -73,40 +69,50 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('initTestContext', () => {
-  const organisationName = faker.random.words(3);
-  let accessToken: string;
   let organisationId: string;
-  cy.getAccessToken()
-    .then(response => {
-      accessToken = 'Bearer ' + response.body.access_token;
-    })
-    .then(() => {
-      // organisation creation
-      cy.request({
-        url: `${Cypress.env('apiDomain')}/v1/organisations`,
-        method: 'POST',
-        headers: { Authorization: accessToken },
-        body: {
-          name: `${organisationName}`,
-          // Using faker here isn't such a good idea because of the constraints on the technical name
-          technical_name: `${
-            Math.random().toString(36).substring(2, 10) +
-            Math.random().toString(36).substring(2, 10)
-          }`,
-          market_id: '1',
-        },
-      }).then(orgResponse => {
-        organisationId = orgResponse.body.data.id;
-      });
-    })
-    .then(() => {
+  let datamartId: string;
+  const organisationName = faker.random.words(3);
+  const datamartName = faker.random.words(3);
+  const apiToken = 'api:W1EcVPjvsJyXFID/N3Qh4s8cJuWn3KT2aaROiHHztOZ5+FTkVRJ/WmlbLYdgoYxE';
+  // organisation creation
+  cy.request({
+    url: `${Cypress.env('apiDomain')}/v1/organisations`,
+    method: 'POST',
+    headers: { Authorization: apiToken },
+    body: {
+      name: `${organisationName}`,
+      // Using faker here isn't such a good idea because of the constraints on the technical name
+      technical_name: `${
+        Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10)
+      }`,
+      market_id: '1',
+    },
+  }).then(orgResponse => {
+    organisationId = orgResponse.body.data.id;
+    // Create datamart
+    cy.request({
+      url: `${Cypress.env('apiDomain')}/v1/datamarts`,
+      method: 'POST',
+      headers: { Authorization: apiToken },
+      body: {
+        name: `${datamartName}`,
+        region: 'EUROPE',
+        user_point_system_version: 'v201901',
+        organisation_id: `${organisationId}`,
+        type: 'DATAMART',
+        datafarm: 'DF_EU_DEV',
+      },
+    }).then(datamartResponse => {
+      datamartId = datamartResponse.body.data.id;
       cy.exec(`cat <<EOT > cypress/fixtures/init_infos.json
-          {
-              "accessToken":"${accessToken}",
-              "organisationId":${organisationId},
-              "organisationName":"${organisationName}"
-          }`);
+            {
+                "datamartName":"${datamartName}",
+                "datamartId":${datamartId},
+                "organisationId":${organisationId},
+                "organisationName":"${organisationName}"
+            }`);
     });
+  });
 });
 
 Cypress.Commands.add('switchOrg', organisationName => {

@@ -32,11 +32,6 @@ declare namespace Cypress {
     initTestContext(): void;
 
     /**
-     * Enable or disable direct access grant on keycloak to get the access_token directly with API
-     */
-    enableDirectAccessGrant(enable?: boolean): void;
-
-    /**
      * Switch current organisation. The full name isn't required, it will click on the first organisation in the list matching the parameter.
      * @example
      * cy.switchOrg('yellow velvet')

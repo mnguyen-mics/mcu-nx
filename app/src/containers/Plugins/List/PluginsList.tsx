@@ -151,7 +151,7 @@ class PluginsList extends React.Component<Props, State> {
     return (
       <div className='mcs-actionBar_filters'>
         <Select
-          className='mcs-actionBar_filterInput'
+          className='mcs-actionBar_filterInput mcs-actionBar_filterInput--pluginType'
           placeholder={this.renderInputPlaceholder('Plugin Type')}
           showSearch={true}
           allowClear={true}
@@ -164,7 +164,7 @@ class PluginsList extends React.Component<Props, State> {
           dropdownClassName={'mcs-pluginList_filterDropdown'}
         />
         <Select
-          className='mcs-actionBar_filterInput'
+          className='mcs-actionBar_filterInput mcs-actionBar_filterInput--groupId'
           placeholder={this.renderInputPlaceholder('Group Id')}
           showSearch={true}
           allowClear={true}
@@ -177,7 +177,7 @@ class PluginsList extends React.Component<Props, State> {
           dropdownClassName={'mcs-pluginList_filterDropdown'}
         />
         <Select
-          className='mcs-actionBar_filterInput'
+          className='mcs-actionBar_filterInput mcs-actionBar_filterInput--artifactId'
           placeholder={this.renderInputPlaceholder('Artifact Id')}
           showSearch={true}
           allowClear={true}
