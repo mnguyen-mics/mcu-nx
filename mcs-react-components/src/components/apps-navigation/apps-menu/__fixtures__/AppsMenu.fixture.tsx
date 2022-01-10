@@ -11,6 +11,10 @@ const props: AppsMenuProps = {
       { name: 'Navigator2', url: 'url2' },
       { name: 'Navigator3', url: 'url2' },
     ],
+    resourceLinks: [
+      { name: 'Doc 1', url: 'url2' },
+      { name: 'Doc 2', url: 'url2' },
+    ],
   },
   logo: <div>toto</div>,
   className: 'fake-class-name',

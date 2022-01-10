@@ -72,6 +72,46 @@ exports[`render the AppsMenu 1`] = `
     </a>
   </li>
   <li
+    className="ant-menu-item ant-menu-item-only-child mcs_appMenu_item mcs_appMenu_item--withDivider"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    role="menuitem"
+    style={
+      Object {
+        "paddingLeft": 24,
+      }
+    }
+  >
+    <a
+      href="url2"
+    >
+      <span>
+        Navigator3
+      </span>
+    </a>
+  </li>
+  <li
+    className="ant-menu-item ant-menu-item-only-child mcs_appMenu_item"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    role="menuitem"
+    style={
+      Object {
+        "paddingLeft": 24,
+      }
+    }
+  >
+    <a
+      href="url2"
+    >
+      <span>
+        Navigator2
+      </span>
+    </a>
+  </li>
+  <li
     className="ant-menu-item ant-menu-item-only-child mcs_appMenu_item"
     onClick={[Function]}
     onMouseEnter={[Function]}
