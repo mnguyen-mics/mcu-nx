@@ -25,6 +25,10 @@ export default defineMessages({
     id: 'dashboards.builders',
     defaultMessage: 'Builders',
   },
+  console: {
+    id: 'dashboards.console',
+    defaultMessage: 'Console',
+  },
   builderIds: {
     id: 'dashboards.builderIds',
     defaultMessage: 'Builder Ids',

@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import { compose } from 'recompose';
-import { Actionbar, McsIcon } from '@mediarithmics-private/mcs-components-library';
+import { Actionbar } from '@mediarithmics-private/mcs-components-library';
 import messages from './messages';
 import { UploadFile } from 'antd/lib/upload/interface';
 import { Link } from 'react-router-dom';
@@ -71,7 +71,6 @@ class DashboardCreateActionbar extends React.Component<Props, DashboardCreateAct
           type='primary'
           onClick={handleSave}
         >
-          <McsIcon type='plus' />
           <FormattedMessage {...messages.save} />
         </Button>
       </Actionbar>
