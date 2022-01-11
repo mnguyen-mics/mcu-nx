@@ -53,7 +53,7 @@ class AppsMenu extends React.Component<AppsMenuProps> {
         {logo}
         {sections.adminLinks && this.renderSection(sections.adminLinks, true)}
         {sections.userLinks && this.renderSection(sections.userLinks, true)}
-        {sections.resourceLinks && this.renderSection(sections.userLinks)}
+        {sections.resourceLinks && this.renderSection(sections.resourceLinks)}
       </Menu>
     );
   }

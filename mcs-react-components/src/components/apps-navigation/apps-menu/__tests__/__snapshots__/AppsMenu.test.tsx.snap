@@ -107,7 +107,7 @@ exports[`render the AppsMenu 1`] = `
       href="url2"
     >
       <span>
-        Navigator2
+        Doc 1
       </span>
     </a>
   </li>
@@ -127,7 +127,7 @@ exports[`render the AppsMenu 1`] = `
       href="url2"
     >
       <span>
-        Navigator3
+        Doc 2
       </span>
     </a>
   </li>
