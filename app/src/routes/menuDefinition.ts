@@ -32,7 +32,7 @@ const pluginsMenuDefinition: NavigatorMenuDefinition = {
 };
 
 const jobsMenuDefinition: NavigatorMenuDefinition = {
-  iconType: 'library',
+  iconType: 'automation',
   displayName: 'Jobs',
   type: 'multi',
   subMenuItems: [
@@ -44,7 +44,7 @@ const jobsMenuDefinition: NavigatorMenuDefinition = {
 };
 
 const dashboardsMenuDefinition: NavigatorMenuDefinition = {
-  iconType: 'library',
+  iconType: 'optimization',
   displayName: 'Dashboards',
   type: 'simple',
   ...generateMissingdefinitionItemFromRoute({
