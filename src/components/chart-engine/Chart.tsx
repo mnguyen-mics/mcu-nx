@@ -99,6 +99,14 @@ class Chart extends React.Component<Props, ChartState> {
       });
   }
 
+  pieChartAdaptValueKey(yKey: string, dataset: Dataset) {
+    dataset.forEach(datapoint => {
+      const value = datapoint[yKey];
+      datapoint.value = value;
+      delete datapoint[yKey];
+    });
+  }
+
   renderAggregateChart(xKey: string, yKeys: YKey[], dataset: Dataset) {
     const { chartConfig } = this.props;
     const options: ChartApiOptions = chartConfig.options || {};
@@ -111,6 +119,9 @@ class Chart extends React.Component<Props, ChartState> {
     const sanitizedwithKeys = omitBy(withKeys, isUndefined);
     switch (chartConfig.type.toLowerCase()) {
       case 'pie':
+        // Pie charts do not allow yKey parameter for some reason, and want y value
+        // to be passed explicitely as 'value'
+        this.pieChartAdaptValueKey(yKeys[0].key, dataset);
         return <PieChart innerRadius={false} dataset={dataset} {...sanitizedwithKeys} />;
       case 'radar':
         return (
