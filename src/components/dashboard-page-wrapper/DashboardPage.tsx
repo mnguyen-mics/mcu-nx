@@ -22,6 +22,7 @@ export interface DashboardPageProps {
   datamartAnalyticsConfig?: DatamartUsersAnalyticsWrapperProps[];
   apiDashboards?: DashboardPageContent[];
   datamartId: string;
+  organisationId: string;
   disableAllUserFilter?: boolean;
   defaultSegment?: LabeledValue;
   source?: AudienceSegmentShape | StandardSegmentBuilderQueryDocument;
@@ -47,6 +48,7 @@ class DashboardPage extends React.Component<Props> {
 
   getDashboardPageContent = (
     datamartId: string,
+    organisationId: string,
     dataFileDashboards?: DataFileDashboardResource[],
     datamartAnalyticsConfig?: DatamartUsersAnalyticsWrapperProps[],
     apiDashboards?: DashboardPageContent[],
@@ -72,6 +74,7 @@ class DashboardPage extends React.Component<Props> {
               layout={d.components}
               title={d.name}
               datamartId={d.datamart_id}
+              organisationId={organisationId}
               source={source}
             />
           ))}
@@ -110,6 +113,7 @@ class DashboardPage extends React.Component<Props> {
                 datamartId={datamartId}
                 schema={dashboard.dashboardContent}
                 source={source}
+                organisationId={organisationId}
               />
             ) : (
               <div />
@@ -127,6 +131,7 @@ class DashboardPage extends React.Component<Props> {
           <div className='m-t-40'>
             <ScopedDashboardLayout
               datamartId={datamartId}
+              organisationId={organisationId}
               schema={apiDashboards[0].dashboardContent}
               source={source}
             />
@@ -194,6 +199,7 @@ class DashboardPage extends React.Component<Props> {
       datamartAnalyticsConfig,
       apiDashboards,
       datamartId,
+      organisationId,
       disableAllUserFilter,
       defaultSegment,
       tabsClassname,
@@ -206,6 +212,7 @@ class DashboardPage extends React.Component<Props> {
       <div className={className}>
         {this.getDashboardPageContent(
           datamartId,
+          organisationId,
           dataFileDashboards,
           datamartAnalyticsConfig,
           apiDashboards,

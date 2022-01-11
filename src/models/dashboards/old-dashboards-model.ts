@@ -249,6 +249,7 @@ export interface DashboardWrapperProps {
   title?: string;
   source?: AudienceSegmentShape | StandardSegmentBuilderQueryDocument;
   datamartId: string;
+  organisationId: string;
 }
 
 export interface DatamartUsersAnalyticsWrapperProps {

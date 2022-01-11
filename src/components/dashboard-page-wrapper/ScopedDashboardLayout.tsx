@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { TYPES } from '../../constants/types';
-import { IQueryService } from '../../services/QueryService';
+import { IQueryService, QueryService } from '../../services/QueryService';
 import _ from 'lodash';
 import { Alert, Spin } from 'antd';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
@@ -8,7 +7,6 @@ import { compose } from 'recompose';
 import { QueryCreateRequest, QueryResource } from '../../models/datamart/DatamartResource';
 import DashboardLayout from '../dashboard-layout';
 import { DashboardContentSchema } from '../../models/customDashboards/customDashboards';
-import { lazyInject } from '../../inversify/inversify.config';
 import {
   isStandardSegmentBuilderQueryDocument,
   StandardSegmentBuilderQueryDocument,
@@ -25,6 +23,7 @@ import { injectDrawer } from '../drawer';
 
 interface ScopedDashboardLayoutProps {
   datamartId: string;
+  organisationId: string;
   schema: DashboardContentSchema;
   source?: AudienceSegmentShape | StandardSegmentBuilderQueryDocument;
 }
@@ -39,8 +38,7 @@ interface ScopedDashboardLayoutState {
 type State = ScopedDashboardLayoutState;
 
 class ScopedDashboardLayout extends React.Component<Props, State> {
-  @lazyInject(TYPES.IQueryService)
-  private _queryService: IQueryService;
+  private _queryService: IQueryService = new QueryService();
 
   constructor(props: Props) {
     super(props);
@@ -130,7 +128,7 @@ class ScopedDashboardLayout extends React.Component<Props, State> {
   }
 
   render() {
-    const { datamartId, schema, intl } = this.props;
+    const { datamartId, organisationId, schema, intl } = this.props;
     const { scope, isLoading, hasError } = this.state;
     return hasError ? (
       <Alert type='error' message={intl.formatMessage(messages.errorLoadingScope)} />
@@ -139,6 +137,7 @@ class ScopedDashboardLayout extends React.Component<Props, State> {
     ) : (
       <DashboardLayout
         datamart_id={datamartId}
+        organisationId={organisationId}
         schema={schema}
         scope={scope}
         openNextDrawer={this.props.openNextDrawer}

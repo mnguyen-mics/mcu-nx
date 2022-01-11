@@ -1,3 +1,4 @@
+import { DecoratorsTransformation } from './../utils/transformations/DecoratorsTransformation';
 import {
   AbstractDataset,
   AggregateDataset,
@@ -52,6 +53,9 @@ import { QueryFragment } from '../components/chart-engine/Chart';
 import { percentages } from '../utils/transformations/PercentagesTransformation';
 import { indexDataset } from '../utils/transformations/IndexTranformation';
 import { fetchAndFormatQuery } from '../utils/source/OtqlSourceHelper';
+import ChannelService, { IChannelService } from './ChannelService';
+import CompartmentService, { ICompartmentService } from './CompartmentService';
+import AudienceSegmentService, { IAudienceSegmentService } from './AudienceSegmentService';
 
 export type ChartType = 'pie' | 'bars' | 'radar' | 'metric';
 export type SourceType =
@@ -121,6 +125,18 @@ export interface DateOptions {
 
 export interface DateFormatSource extends AbstractSource {
   date_options: DateOptions;
+  sources: AbstractSource[];
+}
+
+export declare type ModelType = 'CHANNELS' | 'SEGMENTS' | 'COMPARTMENTS';
+
+export interface DecoratorsOptions {
+  model_type?: ModelType;
+  buckets?: DecoratorsOptions;
+}
+
+export interface GetDecoratorsSource extends AbstractSource {
+  decorators_options: DecoratorsOptions;
   sources: AbstractSource[];
 }
 
@@ -195,6 +211,7 @@ export type ChartApiOptions = (
 export interface IChartDatasetService {
   fetchDataset(
     datamartId: string,
+    organisationId: string,
     chartConfig: ChartConfig,
     scope?: AbstractScope,
     queryFragment?: QueryFragment,
@@ -208,9 +225,18 @@ export class ChartDatasetService implements IChartDatasetService {
   // TODO: Put back injection for this service
   private queryService: IQueryService = new QueryService();
   private scopeAdapter: QueryScopeAdapter = new QueryScopeAdapter(this.queryService);
+  private channelService: IChannelService = new ChannelService();
+  private compartmentService: ICompartmentService = new CompartmentService();
+  private audienceSegmentService: IAudienceSegmentService = new AudienceSegmentService();
 
   private datasetDateFormatter: DatasetDateFormatter = new DatasetDateFormatter((date, format) =>
     formatDate(date, format),
+  );
+
+  private decoratorsTransformation: DecoratorsTransformation = new DecoratorsTransformation(
+    this.channelService,
+    this.compartmentService,
+    this.audienceSegmentService,
   );
 
   private activitiesAnalyticsService: IAnalyticsService<
@@ -374,6 +400,7 @@ export class ChartDatasetService implements IChartDatasetService {
 
   private computeIndex(
     datamartId: string,
+    organisationId: string,
     indexSource: IndexSource,
     chartType: ChartType,
     xKey: string,
@@ -383,7 +410,7 @@ export class ChartDatasetService implements IChartDatasetService {
     if (childSources4 && childSources4.length === 2) {
       return Promise.all(
         childSources4.map(s =>
-          this.fetchDatasetForSource(datamartId, chartType, xKey, s, providedScope),
+          this.fetchDatasetForSource(datamartId, organisationId, chartType, xKey, s, providedScope),
         ),
       ).then(datasets => {
         return indexDataset(
@@ -394,14 +421,23 @@ export class ChartDatasetService implements IChartDatasetService {
         );
       });
     } else {
-      return Promise.reject(
-        `Wrong number of arguments for to-percentages transformation, 2 expected ${childSources4.length} provided`,
-      );
+      return this.rejectWrongNumberOfArguments('to-percentages', 2, childSources4.length);
     }
+  }
+
+  private rejectWrongNumberOfArguments(
+    transformationName: string,
+    expected: number,
+    provided: number,
+  ) {
+    return Promise.reject(
+      `Wrong number of arguments for ${transformationName} transformation, ${expected} expected ${provided} provided`,
+    );
   }
 
   private fetchDatasetForSource(
     datamartId: string,
+    organisationId: string,
     chartType: ChartType,
     xKey: string,
     source: AbstractSource,
@@ -429,6 +465,7 @@ export class ChartDatasetService implements IChartDatasetService {
           childSources.map(s =>
             this.fetchDatasetForSource(
               datamartId,
+              organisationId,
               chartType,
               xKey,
               s,
@@ -447,6 +484,7 @@ export class ChartDatasetService implements IChartDatasetService {
           childSources2.map(s =>
             this.fetchDatasetForSource(
               datamartId,
+              organisationId,
               chartType,
               xKey,
               s,
@@ -469,6 +507,7 @@ export class ChartDatasetService implements IChartDatasetService {
         if (childSources3.length === 1)
           return this.fetchDatasetForSource(
             datamartId,
+            organisationId,
             chartType,
             xKey,
             childSources3[0],
@@ -477,14 +516,18 @@ export class ChartDatasetService implements IChartDatasetService {
           ).then(dataset => {
             return percentages(xKey, dataset as AggregateDataset);
           });
-        else
-          return Promise.reject(
-            `Wrong number of arguments for to-percentages transformation, 1 expected ${childSources3.length} provided`,
-          );
+        else return this.rejectWrongNumberOfArguments('to-percentages', 1, childSources3.length);
 
       case 'index':
         const indexSource = source as IndexSource;
-        return this.computeIndex(datamartId, indexSource, chartType, xKey, providedScope);
+        return this.computeIndex(
+          datamartId,
+          organisationId,
+          indexSource,
+          chartType,
+          xKey,
+          providedScope,
+        );
 
       case 'activities_analytics':
         return this.fetchActivitiesAnalytics(
@@ -505,6 +548,7 @@ export class ChartDatasetService implements IChartDatasetService {
         const ratioSource = source as RatioSource;
         const datasetValue = this.fetchDatasetForSource(
           datamartId,
+          organisationId,
           chartType,
           xKey,
           ratioSource.sources[0],
@@ -513,6 +557,7 @@ export class ChartDatasetService implements IChartDatasetService {
         );
         const datasetTotal = this.fetchDatasetForSource(
           datamartId,
+          organisationId,
           chartType,
           xKey,
           ratioSource.sources[1],
@@ -528,6 +573,7 @@ export class ChartDatasetService implements IChartDatasetService {
         const format = dateFormatSource.date_options;
         const datasetToBeFormatted = this.fetchDatasetForSource(
           datamartId,
+          organisationId,
           chartType,
           xKey,
           dateFormatSource.sources[0],
@@ -538,6 +584,40 @@ export class ChartDatasetService implements IChartDatasetService {
           if (result) return this.datasetDateFormatter.applyFormatDates(result, xKey, format);
           else return Promise.resolve(undefined);
         });
+
+      case 'get-decorators':
+        const getDecoratorsSource = source as GetDecoratorsSource;
+        const getDecoratorsOptions = getDecoratorsSource.decorators_options;
+
+        if (getDecoratorsSource.sources.length === 1) {
+          const datasetToBeDecorated = this.fetchDatasetForSource(
+            datamartId,
+            organisationId,
+            chartType,
+            xKey,
+            getDecoratorsSource.sources[0],
+            scope,
+            queryFragment,
+          );
+
+          return datasetToBeDecorated.then(result => {
+            if (result)
+              return this.decoratorsTransformation.applyGetDecorators(
+                result,
+                xKey,
+                getDecoratorsOptions,
+                datamartId,
+                organisationId,
+              );
+            else return Promise.resolve(undefined);
+          });
+        } else
+          return this.rejectWrongNumberOfArguments(
+            'get-decorators',
+            1,
+            getDecoratorsSource.sources.length,
+          );
+
       default:
         return Promise.reject(`Unknown source type ${sourceType}`);
     }
@@ -545,6 +625,7 @@ export class ChartDatasetService implements IChartDatasetService {
 
   fetchDataset(
     datamartId: string,
+    organisationId: string,
     chartConfig: ChartConfig,
     providedScope?: AbstractScope,
     queryFragment?: QueryFragment,
@@ -557,6 +638,7 @@ export class ChartDatasetService implements IChartDatasetService {
     );
     return this.fetchDatasetForSource(
       datamartId,
+      organisationId,
       chartType,
       xKey,
       source,
