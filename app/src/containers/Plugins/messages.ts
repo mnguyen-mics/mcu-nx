@@ -26,11 +26,11 @@ export default defineMessages({
     defaultMessage: 'Plugin Type',
   },
   organisation: {
-    id: 'plugins.batchDefinitions.list.column.organisation',
+    id: 'plugins.list.column.organisation',
     defaultMessage: 'Organisation',
   },
   group: {
-    id: 'plugins.batchDefinitions.list.column.group',
+    id: 'plugins.list.column.group',
     defaultMessage: 'Group',
   },
   versionValue: {
@@ -38,7 +38,7 @@ export default defineMessages({
     defaultMessage: 'Version Value',
   },
   buildTag: {
-    id: 'plugins.batchDefinitions.list.column.build_tag',
+    id: 'plugins.list.column.build_tag',
     defaultMessage: 'Build Tag',
   },
   imageName: {
@@ -46,16 +46,68 @@ export default defineMessages({
     defaultMessage: 'Image Name',
   },
   artifactId: {
-    id: 'plugins.batchDefinitions.list.column.artifactId',
+    id: 'plugins.list.column.artifactId',
     defaultMessage: 'Artifact Id',
   },
   currentVersion: {
-    id: 'plugins.batchDefinitions.list.column.currentVersion',
+    id: 'plugins.list.column.currentVersion',
     defaultMessage: 'Current Version',
   },
   emptyTableMessage: {
-    id: 'plugins.batchDefinitions.list.emptyTable',
+    id: 'plugins.list.emptyTable',
     defaultMessage: 'No plugin found.',
+  },
+  emptyVersionMessage: {
+    id: 'plugins.tab.emptyVersion',
+    defaultMessage: 'No plugin version found.',
+  },
+  deployment: {
+    id: 'plugins.tab.deployment',
+    defaultMessage: 'Deployment',
+  },
+  deploymentRunningContainer: {
+    id: 'plugins.tab.deployment.list.runningContainer',
+    defaultMessage: 'Running Container',
+  },
+  deploymentRunningContainerName: {
+    id: 'plugins.tab.deployment.list.name',
+    defaultMessage: 'Name',
+  },
+  deploymentEmptyTable: {
+    id: 'plugins.tab.deployment.list.emptyTable',
+    defaultMessage: 'No container found.',
+  },
+  deploymentDeployModalTitle: {
+    id: 'plugins.tab.deployment.deployModal.title',
+    defaultMessage: 'Deploy plugin containers in version ',
+  },
+  deploymentDeployModalButton: {
+    id: 'plugins.tab.deployment.deployModal.deployContainer',
+    defaultMessage: 'Deploy containers',
+  },
+  deploymentDeployModalSuccess: {
+    id: 'plugins.tab.deployment.deployModal.success',
+    defaultMessage: 'Your plugin has been successfully deployed!',
+  },
+  deploymentUpgradeModalTitle: {
+    id: 'plugins.tab.deployment.UpgradeModal.title',
+    defaultMessage: 'Upgrade plugin containers in version ',
+  },
+  deploymentUpgradeModalButton: {
+    id: 'plugins.tab.deployment.UpgradeModal.UpgradeContainer',
+    defaultMessage: 'Upgrade containers',
+  },
+  deploymentUpgradeModalSuccess: {
+    id: 'plugins.tab.deployment.UpgradeModal.success',
+    defaultMessage: 'Your plugin has been successfully upgraded!',
+  },
+  deploymentTargetBuildTag: {
+    id: 'plugins.tab.deployment.tagetBuildTag',
+    defaultMessage: 'Please enter the build tag to use :',
+  },
+  deploymentMaintainerId: {
+    id: 'plugins.tab.deployment.maintainerId',
+    defaultMessage: 'You can provide a maintainer id (optional) :',
   },
   pluginEditDrawerTitle: {
     id: 'plugins.batchEditDrawer.title',

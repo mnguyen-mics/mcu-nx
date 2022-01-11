@@ -1,7 +1,7 @@
 import { generateRoutesFromDefinition, NavigatorDefinition, NavigatorRoute } from './domain';
 import PluginsList from '../containers/Plugins/List/PluginsList';
-import PluginVersionsDashboard from '../containers/Plugins/Dashboard/PluginVersionsDashboard';
 import PluginsOverviewPage from '../containers/Plugins/Overview/PluginsOverviewPage';
+import PluginPage from '../containers/Plugins/Dashboard/PluginPage';
 
 export const pluginsDefinition: NavigatorDefinition = {
   pluginsOverview: {
@@ -17,7 +17,7 @@ export const pluginsDefinition: NavigatorDefinition = {
   pluginVersionsDashboard: {
     path: '/plugins/:pluginId',
     layout: 'main',
-    contentComponent: PluginVersionsDashboard,
+    contentComponent: PluginPage,
   },
 };
 
