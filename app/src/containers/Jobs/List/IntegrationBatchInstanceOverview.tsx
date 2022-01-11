@@ -30,6 +30,7 @@ import OrganisationName from '../../../components/Common/OrganisationName';
 import messages from '../messages';
 import { Link } from 'react-router-dom';
 import IntegrationBatchInstanceEditPage from '../Edit/IntegrationBatchInstanceEditPage';
+import IntegrationBatchInstanceExecutionEditPage from '../Edit/IntegrationBatchInstanceExecutionEditPage';
 
 interface RouteProps {
   organisationId: string;
@@ -41,9 +42,10 @@ type Props = InjectedIntlProps & InjectedNotificationProps & RouteComponentProps
 interface State {
   integrationBatchInstance?: IntegrationBatchResource;
   isLoading: boolean;
-  isDrawerVisible?: boolean;
+  isEditionDrawerVisible?: boolean;
   startDate?: number;
   shouldUpdateExecutions: boolean;
+  isExecutionDrawerVisible?: boolean;
 }
 
 class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
@@ -97,16 +99,54 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
     }
   }
 
-  closeDrawer = () => {
+  closeEditionDrawer = () => {
     this.setState({
-      isDrawerVisible: false,
+      isEditionDrawerVisible: false,
     });
   };
 
-  openDrawer = () => {
+  openEditionDrawer = () => {
     this.setState({
-      isDrawerVisible: true,
+      isEditionDrawerVisible: true,
     });
+  };
+
+  closeExecutionDrawer = () => {
+    this.setState({
+      isExecutionDrawerVisible: false,
+    });
+  };
+
+  openExecutionDrawer = () => {
+    this.setState({
+      isExecutionDrawerVisible: true,
+    });
+  };
+
+  onExecutionSave = (cronValue: string) => {
+    const {
+      match: {
+        params: { batchInstanceId },
+      },
+      notifyError,
+    } = this.props;
+    const { integrationBatchInstance } = this.state;
+    if (integrationBatchInstance)
+      this._integrationBatchService
+        .updateIntegrationBatchInstance(batchInstanceId, {
+          ...integrationBatchInstance,
+          cron: cronValue,
+          cron_status: 'ACTIVE' as CronStatus,
+        })
+        .then(res => {
+          this.setState({
+            isExecutionDrawerVisible: false,
+            integrationBatchInstance: res.data,
+          });
+        })
+        .catch(e => {
+          notifyError(e);
+        });
   };
 
   showModal = () => {
@@ -240,8 +280,13 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
       intl: { formatMessage },
     } = this.props;
 
-    const { integrationBatchInstance, isLoading, isDrawerVisible, shouldUpdateExecutions } =
-      this.state;
+    const {
+      integrationBatchInstance,
+      isLoading,
+      isEditionDrawerVisible,
+      isExecutionDrawerVisible,
+      shouldUpdateExecutions,
+    } = this.state;
 
     const tabs = [
       {
@@ -299,24 +344,44 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
         <Actionbar pathItems={breadcrumbPaths}>
           <div className='mcs-actionbar_innerElementsPanel'>
             {this.renderActivePauseButton()}
+            <Button className='mcs-primary' type='primary' onClick={this.openExecutionDrawer}>
+              <McsIcon type='bolt' /> <FormattedMessage {...messages.planExecutions} />
+            </Button>
             <Button className='mcs-primary' type='primary' onClick={this.showModal}>
               <McsIcon type='bolt' /> <FormattedMessage {...messages.run} />
             </Button>
-            <Button className='mcs-primary' onClick={this.openDrawer}>
+            <Button className='mcs-primary' onClick={this.openEditionDrawer}>
               <McsIcon type='pen' /> <FormattedMessage {...messages.edit} />
             </Button>
           </div>
           <Drawer
             className='mcs-integrationBatchInstanceForm_drawer'
             closable={false}
-            onClose={this.closeDrawer}
-            visible={isDrawerVisible}
+            onClose={this.closeEditionDrawer}
+            visible={isEditionDrawerVisible}
             width='1200'
             destroyOnClose={true}
           >
             <IntegrationBatchInstanceEditPage
-              onClose={this.closeDrawer}
+              onClose={this.closeEditionDrawer}
               integrationBatchInstanceId={batchInstanceId}
+            />
+          </Drawer>
+          <Drawer
+            className='mcs-pluginEdit-drawer'
+            closable={true}
+            bodyStyle={{ padding: '0' }}
+            placement={'right'}
+            onClose={this.closeExecutionDrawer}
+            visible={isExecutionDrawerVisible}
+            width='800'
+            destroyOnClose={true}
+            title={formatMessage(messages.planExecutions)}
+          >
+            <IntegrationBatchInstanceExecutionEditPage
+              onClose={this.closeExecutionDrawer}
+              integrationBatchInstance={integrationBatchInstance}
+              onSave={this.onExecutionSave}
             />
           </Drawer>
         </Actionbar>
