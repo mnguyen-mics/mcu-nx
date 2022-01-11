@@ -62,7 +62,7 @@ export const buildAccountsMenu = () => {
 
 class TopBar extends React.Component<Props> {
   getAppMenuSections(): AppsMenuSections {
-    const { connectedUser } = this.props;
+    const { connectedUser, organisationId } = this.props;
 
     const isFromMics =
       connectedUser.workspaces.filter(workspace => workspace.organisation_id === '1').length > 0;
@@ -72,12 +72,12 @@ class TopBar extends React.Component<Props> {
         {
           name: 'Computing Console',
           icon: <CodeSandboxCircleFilled className='mcs-app_icon mcs-app_developerConsoleIcon' />,
-          url: 'https://computing-console.mediarithmics.com',
+          url: `https://computing-console.mediarithmics.com/#/o/${organisationId}/home`,
         },
         {
           name: 'Navigator',
           icon: <CompassFilled className='mcs-app_icon mcs-app_navigatorIcon' />,
-          url: 'https://navigator.mediarithmics.com',
+          url: `https://navigator.mediarithmics.com/#/v2/o/${organisationId}/campaigns/display`,
         },
       ],
       adminLinks: [],
