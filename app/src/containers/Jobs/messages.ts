@@ -73,6 +73,48 @@ export default defineMessages({
     id: 'jobs.batchInstances.list.column.lastExecutions',
     defaultMessage: 'Last executions',
   },
+  executionContainerResourceSizeLow: {
+    id: 'plugins.batchInstances.editPage.executionContainerResourceSize.low',
+    defaultMessage: 'Low',
+  },
+  executionContainerResourceSizeMedium: {
+    id: 'plugins.batchInstances.editPage.executionContainerResourceSize.low',
+    defaultMessage: 'Medium',
+  },
+  executionContainerResourceSizeLarge: {
+    id: 'plugins.batchInstances.editPage.executionContainerResourceSize.low',
+    defaultMessage: 'Large',
+  },
+  executionContainerResourceSizeExtraLarge: {
+    id: 'plugins.batchInstances.editPage.executionContainerResourceSize.low',
+    defaultMessage: 'Extra-Large',
+  },
+  cpuSize: {
+    id: 'plugins.batchInstances.editPage.technicalConfiguration.cpuSize',
+    defaultMessage: 'Cpu size',
+  },
+  ramSize: {
+    id: 'plugins.batchInstances.editPage.technicalConfiguration.ramSize',
+    defaultMessage: 'Ram size',
+  },
+  diskSize: {
+    id: 'plugins.batchInstances.editPage.technicalConfiguration.diskSize',
+    defaultMessage: 'Disk size',
+  },
+  cpuSizeTooltipMsg: {
+    id: 'plugins.batchInstances.editPage.technicalConfiguration.cpuSize.toolTipMessage',
+    defaultMessage:
+      'Low: between 1 and 2 cores, Medium: between 2 and 4 cores, Large: between 4 and 8 cores, Extra-large: between 8 and 16 cores.',
+  },
+  ramSizeTooltipMsg: {
+    id: 'plugins.batchInstances.editPage.technicalConfiguration.ramSize.toolTipMessage',
+    defaultMessage:
+      'Low: between 2 Go and 4 Go, Medium: between 4 Go and 8 Go, Large: between 8 Go and 16 Go, Extra-large: between 16 Go and 32 Go.',
+  },
+  diskSizeTooltipMsg: {
+    id: 'plugins.batchInstances.editPage.technicalConfiguration.diskSize.toolTipMessage',
+    defaultMessage: 'Low: 30 Go,  Medium: 100 Go, Large: 500 Go, Extra-large: 1 To.',
+  },
   jobStatus: {
     id: 'jobs.batchExecutions.list.column.jobStatus',
     defaultMessage: 'Status',
