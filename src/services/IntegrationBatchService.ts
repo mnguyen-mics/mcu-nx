@@ -72,12 +72,11 @@ export default class IntegrationBatchService
 
   getBatchInstanceExecutions(
     integrationBatchId: string,
+    options: PaginatedApiParam = {},
   ): Promise<DataListResponse<PublicJobExecutionResource>> {
-    return Promise.resolve({
-      status: 'ok' as StatusCode,
-      count: 0,
-      data: [],
-    });
+    const endpoint = `integration_batch_instances/${integrationBatchId}/executions`;
+
+    return ApiService.getRequest(endpoint, options);
   }
 
   createIntegrationBatchInstanceExecution(
@@ -91,13 +90,15 @@ export default class IntegrationBatchService
 
   getBatchInstanceExecutionsForOrganisation(
     organisationId: string,
-    options: PaginatedApiParam,
+    options: PaginatedApiParam = {},
   ): Promise<DataListResponse<PublicJobExecutionResource>> {
-    return Promise.resolve({
-      status: 'ok' as StatusCode,
-      count: 0,
-      data: [],
-    });
+    const endpoint = `integration_batch_instances.executions`;
+    const params = {
+      organisation_id: organisationId,
+      ...options,
+    };
+
+    return ApiService.getRequest(endpoint, params);
   }
 
   getAllInstanceFilterProperties() {
