@@ -117,9 +117,9 @@ export enum PluginActionEnum {
 export type PluginAction = keyof typeof PluginActionEnum;
 
 export interface PluginActionArgsResource {
-  targetBuildTag?: string;
-  maintainerId?: string;
-  targetImageName?: string;
+  target_build_tag?: string;
+  maintainer_id?: string;
+  target_image_name?: string;
 }
 
 export interface PluginInstance {
