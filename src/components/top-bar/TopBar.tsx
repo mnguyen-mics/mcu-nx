@@ -70,10 +70,18 @@ class TopBar extends React.Component<Props> {
     const menuSections: AppsMenuSections = {
       userLinks: [
         {
+          name: 'Computing Console',
+          icon: <CodeSandboxCircleFilled className='mcs-app_icon mcs-app_developerConsoleIcon' />,
+          url: 'https://computing-console.mediarithmics.com',
+        },
+        {
           name: 'Navigator',
           icon: <CompassFilled className='mcs-app_icon mcs-app_navigatorIcon' />,
           url: 'https://navigator.mediarithmics.com',
         },
+      ],
+      adminLinks: [],
+      resourceLinks: [
         {
           name: 'Developer Documentation',
           icon: <BookFilled className='mcs-app_icon mcs-app_documentationIcon ' />,
@@ -86,7 +94,6 @@ class TopBar extends React.Component<Props> {
           url: 'https://userguides.mediarithmics.com',
         },
       ],
-      adminLinks: [],
     };
 
     if (isFromMics) {
@@ -94,11 +101,6 @@ class TopBar extends React.Component<Props> {
         {
           name: 'Platform Admin',
           url: 'https://admin.mediarithmics.com:8493',
-        },
-        {
-          name: 'Computing Console',
-          icon: <CodeSandboxCircleFilled className='mcs-app_icon mcs-app_developerConsoleIcon' />,
-          url: 'https://computing-console.mediarithmics.com',
         },
       ];
     }

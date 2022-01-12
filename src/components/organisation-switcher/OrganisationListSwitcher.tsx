@@ -74,6 +74,7 @@ class OrganizationListSwitcher extends React.Component<Props, OrganizationListSw
         trigger={['click']}
         placement='bottomRight'
         onVisibleChange={this.handleVisibleChange}
+        destroyPopupOnHide={true}
       >
         <div className='mcs-organisationListSwitcher_component'>
           <ApartmentOutlined className='mcs-orgnisationListSwitcher_icon' />

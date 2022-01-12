@@ -2,9 +2,8 @@ import React from 'react';
 import { FetchMock } from '@react-mock/fetch';
 import { LocalStorageMock } from '@react-mock/localstorage';
 import { Provider } from 'react-redux';
-import { CustomDashboardService, IocProvider } from '../../../../lib';
 import { container } from '../../../inversify/inversify.config';
-
+import { IocProvider } from '../../../inversify/inversify.react';
 import { HashRouter as Router } from 'react-router-dom';
 import config from '../../../react-configuration';
 import configureStore from '../../../redux/store';
@@ -21,6 +20,7 @@ import {
 } from '../../chart-engine/MockedData';
 import { DashboardContentSections } from '../../../models/dashboards/old-dashboards-model';
 import { IntlProvider } from 'react-intl';
+import CustomDashboardService from '../../../services/CustomDashboardService';
 const fetchmockOptions = [
   {
     matcher:
