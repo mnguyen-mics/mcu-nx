@@ -3,7 +3,7 @@ import { compose } from 'recompose';
 import { Input, Menu } from 'antd';
 import { UserWorkspaceResource } from '../../models/directory/UserProfileResource';
 import { withRouter, RouteComponentProps } from 'react-router';
-import { partition, debounce, uniq } from 'lodash';
+import { partition, debounce, uniq, orderBy } from 'lodash';
 import messages from './messages';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import LocalStorage from '../../services/LocalStorage';
@@ -142,14 +142,16 @@ class SwitchBySearch extends React.Component<Props, SwitchBySearchState> {
 
   renderNodeMenu = (node: UserWorkspaceResource) => {
     const children = this.getChildren(node);
-    if (children.length > 0) {
+
+    const orderedChildren = orderBy(children, [c => c.organisation_name.toLowerCase()], ['asc']);
+    if (orderedChildren.length > 0) {
       return (
         <SubMenu
           key={cuid()}
           title={this.renderOrg(node, true)}
           popupClassName='mcs-organisationListSwitcher_popOverMenu'
         >
-          {this.renderChildrenMenu(children)}
+          {this.renderChildrenMenu(orderedChildren)}
         </SubMenu>
       );
     } else {
@@ -248,6 +250,7 @@ class SwitchBySearch extends React.Component<Props, SwitchBySearchState> {
             className='mcs-organisationListSwitcher_searchInput'
             onSearch={this.handleSearch}
             onChange={this.handleChange}
+            autoFocus={true}
           />
         </div>
         {searchKeyword === ''
