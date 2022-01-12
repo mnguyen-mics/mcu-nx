@@ -7,6 +7,8 @@ import {
   PluginResource,
   PluginPresetResource,
   PluginVersionResource,
+  PluginManagerResource,
+  PluginActionResource,
 } from '../models/plugin/Plugins';
 import { PaginatedApiParam } from './../utils/ApiHelper';
 import ApiService, { DataListResponse, DataResponse } from './ApiService';
@@ -25,6 +27,10 @@ interface GetPluginOptions extends Omit<PaginatedApiParam, 'first_result'> {
   plugin_type?: PluginType;
   artifact_id?: string;
   group_id?: string;
+  organisation_id?: string;
+}
+
+interface GetPluginVersionContainersOptions extends PaginatedApiParam {
   organisation_id?: string;
 }
 
@@ -106,6 +112,16 @@ export interface IPluginService {
     resource: Partial<PluginPresetResource>,
   ) => Promise<DataResponse<PluginPresetResource>>;
   createPlugin: (body: Partial<PluginResource>) => Promise<DataResponse<PluginResource>>;
+  getPluginVersionContainers: (
+    pluginId: string,
+    pluginVersionId: string,
+    params?: GetPluginVersionContainersOptions,
+  ) => Promise<DataListResponse<PluginManagerResource>>;
+  postPluginVersionContainerAction: (
+    pluginId: string,
+    pluginVersionId: string,
+    action: PluginActionResource,
+  ) => Promise<DataResponse<any>>;
 }
 
 @injectable()
@@ -408,6 +424,24 @@ export class PluginService implements IPluginService {
         });
       } else return { plugin: pluginResponse.data, layout: undefined };
     });
+  }
+
+  getPluginVersionContainers(
+    pluginId: string,
+    pluginVersionId: string,
+    params?: GetPluginVersionContainersOptions,
+  ): Promise<DataListResponse<PluginManagerResource>> {
+    const endpoint = `plugins/${pluginId}/versions/${pluginVersionId}/containers`;
+    return ApiService.getRequest<DataListResponse<PluginManagerResource>>(endpoint, params);
+  }
+
+  postPluginVersionContainerAction(
+    pluginId: string,
+    pluginVersionId: string,
+    action: PluginActionResource,
+  ): Promise<DataResponse<any>> {
+    const endpoint = `plugins/${pluginId}/versions/${pluginVersionId}/containers/action`;
+    return ApiService.postRequest(endpoint, action);
   }
 }
 

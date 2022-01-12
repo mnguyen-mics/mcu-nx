@@ -93,6 +93,35 @@ export interface PluginVersionResource {
   archived: boolean;
 }
 
+export interface PluginManagerResource {
+  name: string;
+  runningContainers: RunningContainerResource[];
+}
+
+export interface RunningContainerResource {
+  container: string;
+}
+
+export interface PluginActionResource {
+  action: PluginAction;
+  args: PluginActionArgsResource;
+}
+
+export enum PluginActionEnum {
+  'DEPLOY_PLUGIN',
+  'UPGRADE_ALL_CONTAINERS',
+  'UPDATE_MAINTAINER',
+  'DECLARE_IMAGE_NAME',
+}
+
+export type PluginAction = keyof typeof PluginActionEnum;
+
+export interface PluginActionArgsResource {
+  targetBuildTag?: string;
+  maintainerId?: string;
+  targetImageName?: string;
+}
+
 export interface PluginInstance {
   id?: string;
   artifact_id: string;
