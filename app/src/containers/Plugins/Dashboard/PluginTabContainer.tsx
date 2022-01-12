@@ -19,6 +19,7 @@ import injectNotifications, {
 } from '../../Notifications/injectNotifications';
 import messages from '../messages';
 import PluginDeploymentContainer from './PluginDeploymentContainer';
+import PluginPropertiesContainer from './PluginPropertiesContainer';
 
 interface RouteProps {
   organisationId: string;
@@ -100,6 +101,10 @@ class PluginTabContainer extends React.Component<Props, State> {
     const { currentPluginVersionId, initialPluginVersionContainers, pluginVersionContainerTotal } =
       this.state;
     return [
+      {
+        title: intl.formatMessage(messages.properties),
+        display: <PluginPropertiesContainer pluginVersionId={currentPluginVersionId} />,
+      },
       {
         title: intl.formatMessage(messages.deployment),
         display: (

@@ -141,4 +141,12 @@ export default defineMessages({
     id: 'plugins.batchDefinitions.dashboard.versionTable.activeInstances',
     defaultMessage: 'active instance(s)',
   },
+  noProperties: {
+    id: 'plugins.tab.properies.noProperties',
+    defaultMessage: 'There is no property for this plugin version.',
+  },
+  properties: {
+    id: 'plugins.tab.properies.title',
+    defaultMessage: 'Properties',
+  },
 });
