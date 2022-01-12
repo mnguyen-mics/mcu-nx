@@ -43,6 +43,7 @@ interface PluginEditFormProps extends Omit<ConfigProps<any>, 'form'> {
 export type SpecificFieldsFunction = (
   disabled: boolean,
   fieldNamePrefix: string,
+  formChange?: (fieldName: string, value: string) => void,
 ) => React.ReactNode;
 
 type JoinedProps = PluginEditFormProps &
@@ -195,6 +196,7 @@ class PluginEditForm extends React.Component<JoinedProps, PluginEditFormState> {
       showedMessage,
       pluginLayout,
       renderSpecificFields,
+      change,
     } = this.props;
 
     const InputField: FieldCtor<FormInputProps> = Field as new () => GenericField<FormInputProps>;
@@ -238,7 +240,9 @@ class PluginEditForm extends React.Component<JoinedProps, PluginEditFormState> {
                       validate={[isRequired]}
                       {...fieldProps}
                     />
-                    {renderSpecificFields ? renderSpecificFields(disableFields, 'plugin') : null}
+                    {renderSpecificFields
+                      ? renderSpecificFields(disableFields, 'plugin', change)
+                      : null}
                     {showTechnicalName ? this.renderTechnicalName() : null}
                   </div>
                 </div>

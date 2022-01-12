@@ -226,7 +226,9 @@ export interface AdLayoutVersionResource {
   status: AdLayoutStatus;
 }
 
-export type CronStatus = 'ACTIVE ' | 'PAUSED';
+export type CronStatus = 'ACTIVE' | 'PAUSED';
+
+export type ExecutionContainerResourceSize = 'LOW' | 'MEDIUM' | 'LARGE' | 'XL';
 
 export interface IntegrationBatchResource extends PluginInstance {
   name?: string;
@@ -236,5 +238,8 @@ export interface IntegrationBatchResource extends PluginInstance {
   last_modified_by?: string;
   cron?: string;
   cron_status?: CronStatus;
+  execution_container_cpu_size: ExecutionContainerResourceSize;
+  execution_container_ram_size: ExecutionContainerResourceSize;
+  execution_container_disk_size: ExecutionContainerResourceSize;
   archived: boolean;
 }
