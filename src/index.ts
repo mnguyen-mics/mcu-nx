@@ -114,6 +114,9 @@ export {
   IntegrationBatchResource,
   CronStatus,
   PluginVersionResource,
+  PluginAction,
+  PluginActionResource,
+  PluginManagerResource,
 } from './models/plugin/Plugins';
 export { PluginLayout } from './models/plugin/PluginLayout';
 export { UserWorkspaceResource, UserProfileResource } from './models/directory/UserProfileResource';
