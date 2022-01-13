@@ -25,6 +25,7 @@ import {
   ChartOptions,
   ChartType,
   IChartDatasetService,
+  MetricChartFormat,
   MetricChartOptions,
   RadarChartOptions,
 } from '../../services/ChartDatasetService';
@@ -141,12 +142,25 @@ class Chart extends React.Component<Props, ChartState> {
     }
   }
 
+  getFormat(format?: MetricChartFormat) {
+    switch (format) {
+      case 'count':
+        return '0,0';
+      case 'percentage':
+        return '0,0.00 %';
+      case 'float':
+        return '0,0.00';
+      default:
+        return '0,0';
+    }
+  }
+
   renderMetricChart(count: number) {
     const { chartConfig } = this.props;
     const opt = chartConfig.options as MetricChartOptions;
     return (
       <div className='mcs-dashboardMetric'>
-        {formatMetric(count, opt && opt.format && opt.format === 'percentage' ? '0,0.00 %' : '0,0')}
+        {formatMetric(count, opt && this.getFormat(opt.format))}
       </div>
     );
   }
