@@ -95,7 +95,7 @@ export interface PluginVersionResource {
 
 export interface PluginManagerResource {
   name: string;
-  runningContainers: RunningContainerResource[];
+  running_containers: RunningContainerResource[];
 }
 
 export interface RunningContainerResource {
