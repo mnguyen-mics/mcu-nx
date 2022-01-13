@@ -19,6 +19,7 @@ import injectNotifications, {
 } from '../../Notifications/injectNotifications';
 import messages from '../messages';
 import PluginDeploymentContainer from './PluginDeploymentContainer';
+import PluginPropertiesContainer from './PluginPropertiesContainer';
 
 interface RouteProps {
   organisationId: string;
@@ -37,6 +38,7 @@ type Props = PluginTabContainerProps &
   RouteComponentProps<RouteProps>;
 
 interface State {
+  tabKey: string;
   currentPluginVersionId: string;
   initialPluginVersionContainers: PluginManagerResource[];
   pluginVersionContainerTotal: number;
@@ -51,6 +53,7 @@ class PluginTabContainer extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      tabKey: 'properties',
       currentPluginVersionId: props.initialPluginVersionId,
       initialPluginVersionContainers: [],
       pluginVersionContainerTotal: 0,
@@ -101,6 +104,12 @@ class PluginTabContainer extends React.Component<Props, State> {
       this.state;
     return [
       {
+        key: 'properties',
+        title: intl.formatMessage(messages.properties),
+        display: <PluginPropertiesContainer pluginVersionId={currentPluginVersionId} />,
+      },
+      {
+        key: 'deployment',
         title: intl.formatMessage(messages.deployment),
         display: (
           <PluginDeploymentContainer
@@ -217,15 +226,20 @@ class PluginTabContainer extends React.Component<Props, State> {
     );
   };
 
+  onTabChange = (activeKey: string) => {
+    this.setState({ tabKey: activeKey });
+  };
+
   render() {
     const { initialPluginVersionId, pluginVersions, plugin } = this.props;
-    const { initialPluginVersionContainers } = this.state;
+    const { initialPluginVersionContainers, tabKey } = this.state;
 
     const initialVersion = pluginVersions.find(version => version.id === initialPluginVersionId);
 
     const pluginVersionSelector = (
       <React.Fragment>
-        {plugin &&
+        {tabKey === 'deployment' &&
+          plugin &&
           plugin.current_version_id &&
           plugin.plugin_type !== 'INTEGRATION_BATCH' &&
           (initialPluginVersionContainers.length > 0 ? (
@@ -247,7 +261,12 @@ class PluginTabContainer extends React.Component<Props, State> {
     );
 
     return (
-      <McsTabs tabBarExtraContent={pluginVersionSelector} items={this.buildPluginTabsItems()} />
+      <McsTabs
+        defaultActiveKey={tabKey}
+        onChange={this.onTabChange}
+        tabBarExtraContent={pluginVersionSelector}
+        items={this.buildPluginTabsItems()}
+      />
     );
   }
 }
