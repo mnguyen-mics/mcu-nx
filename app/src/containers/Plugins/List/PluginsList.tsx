@@ -13,7 +13,11 @@ import {
   TYPES,
   IPluginService,
 } from '@mediarithmics-private/advanced-components';
-import { updateSearch } from '../../../utils/LocationSearchHelper';
+import {
+  PAGINATION_SEARCH_SETTINGS,
+  PLUGIN_SEARCH_SETTINGS,
+  updateSearch,
+} from '../../../utils/LocationSearchHelper';
 import PluginsListActionBar from './PluginsListActionBar';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
@@ -24,12 +28,15 @@ import injectNotifications, {
 import PluginEditDrawer from '../Edit/PluginEditDrawer';
 import { Link } from 'react-router-dom';
 import { Card } from '@mediarithmics-private/mcs-components-library';
-import { PLUGIN_PAGE_SEARCH_SETTINGS } from '../Dashboard/PluginVersionsDashboard';
 import { PluginType } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
 import { getPaginatedApiParam } from '../../../utils/ApiHelper';
 
 const { Content } = Layout;
 
+export const PLUGIN_PAGE_SEARCH_SETTINGS = [
+  ...PAGINATION_SEARCH_SETTINGS,
+  ...PLUGIN_SEARCH_SETTINGS,
+];
 interface RouteProps {
   organisationId: string;
 }
