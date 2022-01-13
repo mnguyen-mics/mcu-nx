@@ -84,7 +84,7 @@ export interface OTQLSource extends AbstractSource {
   datamart_id?: string;
 }
 
-export declare type MetricChartFormat = 'percentage' | 'count';
+export declare type MetricChartFormat = 'percentage' | 'count' | 'float';
 
 export interface MetricChartProps {
   dataset: Dataset;
