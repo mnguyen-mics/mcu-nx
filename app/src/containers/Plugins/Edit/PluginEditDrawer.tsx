@@ -110,7 +110,8 @@ class PluginEditDrawer extends React.Component<Props, State> {
   };
 
   handleOrganisationSearch = (input: string, option: OrganisationOption) =>
-    option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+    option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
+    option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 
   render() {
     const { organisationIdOption, groupIdOption, artifactIdOptions, pluginTypeOption } = this.state;

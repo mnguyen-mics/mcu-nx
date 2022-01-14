@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
@@ -62,6 +62,24 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
 
   componentDidMount() {
     this.fetchIntegrationBatchInstance();
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    const {
+      history,
+      match: {
+        params: { organisationId },
+      },
+    } = this.props;
+    const {
+      match: {
+        params: { organisationId: prevOrganisationId },
+      },
+    } = prevProps;
+
+    if (prevOrganisationId !== organisationId) {
+      history.push(`/o/${organisationId}/jobs/integration_batch_instances`);
+    }
   }
 
   fetchIntegrationBatchInstance = () => {
@@ -163,6 +181,8 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
           <DatePicker
             format='YYYY-MM-DD HH:mm:ss'
             disabledDate={this.disabledDate}
+            disabledTime={this.disabledTime}
+            defaultValue={moment()}
             showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }}
             style={{ width: '100%' }}
             onOk={this.onDatePickerOk}
@@ -221,7 +241,36 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
   };
 
   disabledDate = (current: any) => {
-    return current && current < moment().endOf('day');
+    return current && current < moment().startOf('day');
+  };
+
+  disabledTime = (date: any) => ({
+    disabledHours: () => this.disabledHours(date),
+    disabledMinutes: () => this.disabledMinutes(date),
+  });
+
+  disabledHours = (date: Moment | null) => {
+    const now = moment();
+    const disabledHours: number[] = [];
+    if (!date?.isSame(now, 'date')) return disabledHours;
+    else {
+      for (let i = 0; i < now.hour(); i += 1) {
+        disabledHours.push(i);
+      }
+      return disabledHours;
+    }
+  };
+
+  disabledMinutes = (date: Moment | null) => {
+    const now = moment();
+    const disabledMinutes: number[] = [];
+    if (!date?.isSame(now, 'date') || !date?.isSame(now, 'hour')) return disabledMinutes;
+    else {
+      for (let i = 0; i < now.minute(); i += 1) {
+        disabledMinutes.push(i);
+      }
+      return disabledMinutes;
+    }
   };
 
   renderActivePauseButton = () => {
