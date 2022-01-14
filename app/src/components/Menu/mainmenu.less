@@ -1,9 +1,7 @@
 #mcs-main-layout {
   .ant-layout-sider {
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12),
-      0 1px 5px 0 rgba(0, 0, 0, 0.2);
     z-index: 2;
-
+    box-shadow: none;
     .ant-menu-submenu-title {
       .mcs-icon {
         vertical-align: middle;
@@ -68,17 +66,19 @@
       margin-right: 16px;
     }
   }
+
   .ant-menu-item-selected,
   .ant-menu-submenu-selected {
     .ant-menu-submenu-title {
-      border-left: 5px solid @info-color;
+      border-left: none;
+      color: rgba(0, 0, 0, 0.65);
       padding-left: 20px !important;
     }
   }
 
   .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
     background: none;
-    border-left: 5px solid @info-color;
+    border-right: 5px solid @info-color;
   }
 
   .ant-menu-inline .ant-menu-selected::after,
@@ -189,5 +189,65 @@
         -webkit-box-orient: vertical;
       }
     }
+  }
+}
+
+.mcs-asideMenu {
+  .ant-menu-inline.mcs-menu-inline .ant-menu-item,
+  .ant-menu-vertical .ant-menu-item {
+    border-left: 5px solid transparent;
+    margin-left: -1px;
+    left: 1px;
+    position: relative;
+    z-index: 1;
+    color: @info-color;
+  }
+
+  .ant-menu-inline.mcs-menu-inline .ant-menu-selected,
+  .ant-menu-inline .ant-menu-item-selected {
+    border-right: @border-width-base @border-style-base @border-color-split;
+    transform: translateZ(0);
+    border-left: none !important;
+    &:after {
+      border-left: none;
+      border-color: @info-color;
+    }
+  }
+
+  .ant-menu-item-selected {
+    a,
+    a:hover {
+      color: @info-color;
+      font-weight: bold;
+    }
+  }
+
+  .ant-menu-horizontal {
+    .ant-menu-item-selected,
+    .ant-menu-item:hover {
+      color: @info-color;
+      border-bottom: 4px @border-style-base @info-color;
+    }
+  }
+
+  .ant-menu-item-selected {
+    background-color: #e6fcff;
+    border-right-color: @info-color;
+  }
+
+  .ant-menu-item:hover,
+  .ant-menu-item-active,
+  .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
+  .ant-menu-submenu-active,
+  .ant-menu-submenu-title:hover {
+    color: @info-color!important;
+  }
+
+  .ant-menu.ant-menu-vertical.ant-menu-sub.ant-menu-open {
+    overflow-y: scroll;
+  }
+
+  .ant-menu-item a:hover {
+    color: @info-color;
   }
 }
