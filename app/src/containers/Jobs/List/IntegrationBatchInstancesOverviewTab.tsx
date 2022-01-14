@@ -7,8 +7,11 @@ import {
   PauseCircleFilled,
   PlayCircleFilled,
   ClockCircleOutlined,
+  ClockCircleFilled,
+  CheckCircleFilled,
+  CloseCircleFilled,
 } from '@ant-design/icons';
-import { Drawer, Tag } from 'antd';
+import { Drawer, Tag, Tooltip } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import messages from '../messages';
@@ -39,6 +42,8 @@ import {
   IIntegrationBatchService,
   CronStatus,
   IntegrationBatchResource,
+  PublicJobExecutionResource,
+  JobExecutionPublicStatus,
 } from '@mediarithmics-private/advanced-components';
 import IntegrationBatchInstanceEditPage from '../Edit/IntegrationBatchInstanceEditPage';
 import { Link } from 'react-router-dom';
@@ -51,10 +56,15 @@ interface RouteProps {
 
 type Props = InjectedIntlProps & InjectedNotificationProps & RouteComponentProps<RouteProps>;
 
+interface IntegrationBatchLine {
+  instance: IntegrationBatchResource;
+  execs: PublicJobExecutionResource[];
+}
+
 interface State {
-  nonPeriodicInstances: IntegrationBatchResource[];
+  nonPeriodicInstances: IntegrationBatchLine[];
   isLoadingNonPeriodicInstances: boolean;
-  periodicInstances: IntegrationBatchResource[];
+  periodicInstances: IntegrationBatchLine[];
   isLoadingPeriodicInstances: boolean;
   periodicTotal: number;
   nonPeriodicTotal: number;
@@ -114,6 +124,33 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
     }
   }
 
+  getBatchInstanceLines = (dataListResponse: DataListResponse<IntegrationBatchResource>) => {
+    const result = dataListResponse.data.map(ins => {
+      if (ins.id) {
+        return this._integrationBatchService
+          .getBatchInstanceExecutions(ins.id, { max_results: 10 })
+          .then(execsRes => {
+            return {
+              instance: ins,
+              execs: execsRes.data,
+            };
+          });
+      } else {
+        return Promise.resolve({
+          instance: ins,
+          execs: [],
+        });
+      }
+    });
+
+    return Promise.all(result).then(res => {
+      return {
+        ...dataListResponse,
+        data: res,
+      };
+    });
+  };
+
   fetchData() {
     const {
       notifyError,
@@ -129,35 +166,40 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
     });
     const promises: Array<Promise<any>> = [
       this._integrationBatchService.getAllInstanceFilterProperties(),
-      this._integrationBatchService.getIntegrationBatchInstances(organisationId, {
-        is_periodic: true,
-        first_result: 0,
-        max_results: pageSize,
-      }),
-      this._integrationBatchService.getIntegrationBatchInstances(organisationId, {
-        is_periodic: false,
-        first_result: 0,
-        max_results: pageSize2,
-      }),
+      this._integrationBatchService
+        .getIntegrationBatchInstances(organisationId, {
+          is_periodic: true,
+          first_result: 0,
+          max_results: pageSize,
+        })
+        .then(this.getBatchInstanceLines),
+      this._integrationBatchService
+        .getIntegrationBatchInstances(organisationId, {
+          is_periodic: false,
+          first_result: 0,
+          max_results: pageSize2,
+        })
+        .then(this.getBatchInstanceLines),
     ];
 
-    return Promise.all(promises)
+    Promise.all(promises)
       .then(res => {
         const filterOptions = res[0];
-        const periodicInstances = res[1] as DataListResponse<IntegrationBatchResource>;
-        const nonPeriodicInstances = res[2] as DataListResponse<IntegrationBatchResource>;
+        const periodicInstanceLines = res[1] as DataListResponse<IntegrationBatchLine>;
+        const nonPeriodicInstanceLines = res[2] as DataListResponse<IntegrationBatchLine>;
+
         this.setState({
-          periodicInstances: periodicInstances.data,
+          periodicInstances: periodicInstanceLines.data,
           isLoadingPeriodicInstances: false,
-          periodicTotal: periodicInstances.total || periodicInstances.count,
-          nonPeriodicInstances: nonPeriodicInstances.data,
+          periodicTotal: periodicInstanceLines.total || periodicInstanceLines.count,
+          nonPeriodicInstances: nonPeriodicInstanceLines.data,
           isLoadingNonPeriodicInstances: false,
-          nonPeriodicTotal: nonPeriodicInstances.total || nonPeriodicInstances.count,
+          nonPeriodicTotal: nonPeriodicInstanceLines.total || nonPeriodicInstanceLines.count,
           options: _.uniq(filterOptions.data as string[]).map(elt => {
             return { value: elt };
           }),
-          noInitialNonPeriodicData: nonPeriodicInstances.data.length === 0,
-          noInitialPeriodicData: periodicInstances.data.length === 0,
+          noInitialNonPeriodicData: nonPeriodicInstanceLines.data.length === 0,
+          noInitialPeriodicData: periodicInstanceLines.data.length === 0,
         });
       })
       .catch(err => {
@@ -215,6 +257,7 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
           max_results: pageSize,
           is_periodic: true,
         })
+        .then(this.getBatchInstanceLines)
         .then(res => {
           this.setState({
             periodicInstances: res.data,
@@ -240,6 +283,7 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
           max_results: pageSize,
           is_periodic: false,
         })
+        .then(this.getBatchInstanceLines)
         .then(res => {
           this.setState({
             nonPeriodicInstances: res.data,
@@ -267,10 +311,10 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
     );
   }
 
-  editIntegrationBatchInstance = (instance: IntegrationBatchResource) => {
+  editIntegrationBatchInstance = (integrationBatchLine: IntegrationBatchLine) => {
     this.setState({
       isDrawerVisible: true,
-      pluginInstanceId: instance.id,
+      pluginInstanceId: integrationBatchLine.instance.id,
     });
   };
 
@@ -280,13 +324,60 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
     });
   };
 
+  renderLastExecStatuses(execs: PublicJobExecutionResource[]) {
+    return (
+      <div className='mcs-batchInstanceTable_lastExecutionsStatuses'>
+        {execs.map(exec => {
+          return this.renderSingleStatus(exec.status);
+        })}
+      </div>
+    );
+  }
+
+  renderSingleStatus(status: JobExecutionPublicStatus): JSX.Element {
+    const {
+      intl: { formatMessage },
+    } = this.props;
+    switch (status) {
+      case 'PENDING':
+        return (
+          <Tooltip title={formatMessage(messages.pendingStatus)}>
+            <ClockCircleFilled className='mcs-batchInstanceTable_lastExecutionsStatus_pending' />
+          </Tooltip>
+        );
+      case 'RUNNING':
+        return (
+          <Tooltip title={formatMessage(messages.runningStatus)}>
+            <PlayCircleFilled className='mcs-batchInstanceTable_lastExecutionsStatus_running' />
+          </Tooltip>
+        );
+      case 'SUCCEEDED':
+        return (
+          <Tooltip title={formatMessage(messages.succeededStatus)}>
+            <CheckCircleFilled className='mcs-batchInstanceTable_lastExecutionsStatus_succeeded' />
+          </Tooltip>
+        );
+      case 'FAILED':
+        return (
+          <Tooltip title={formatMessage(messages.failedStatus)}>
+            <CloseCircleFilled className='mcs-batchInstanceTable_lastExecutionsStatus_failed' />
+          </Tooltip>
+        );
+      case 'CANCELED':
+        return (
+          <Tooltip title={formatMessage(messages.canceledStatus)}>
+            <CloseCircleFilled className='mcs-batchInstanceTable_lastExecutionsStatus_canceled' />
+          </Tooltip>
+        );
+    }
+  }
+
   render() {
     const {
       intl: { formatMessage },
       match: {
         params: { organisationId },
       },
-      // history,
     } = this.props;
     const {
       periodicInstances,
@@ -305,7 +396,7 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
       pluginInstanceId,
     } = this.state;
 
-    const actionColumns: Array<ActionsColumnDefinition<IntegrationBatchResource>> = [
+    const actionColumns: Array<ActionsColumnDefinition<IntegrationBatchLine>> = [
       {
         className: 'mcs-audienceSegmentTable_dropDownMenu',
         key: 'action',
@@ -319,14 +410,14 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
       },
     ];
 
-    const dataColumnsDefinition: Array<DataColumnDefinition<IntegrationBatchResource>> = [
+    const dataColumnsDefinition: Array<DataColumnDefinition<IntegrationBatchLine>> = [
       {
         title: formatMessage(messages.name),
         key: 'name',
         isHideable: false,
-        render: (text: string, record: IntegrationBatchResource) => (
-          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.id}`}>
-            {text}
+        render: (text: string, record: IntegrationBatchLine) => (
+          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.instance.id}`}>
+            {record.instance.name}
           </Link>
         ),
       },
@@ -334,9 +425,9 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
         title: formatMessage(messages.group),
         key: 'group_id',
         isHideable: false,
-        render: (text: string, record: IntegrationBatchResource) => (
-          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.id}`}>
-            <Tag className='mcs-batchInstanceTable_groupId'>{record.group_id}</Tag>
+        render: (text: string, record: IntegrationBatchLine) => (
+          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.instance.id}`}>
+            <Tag className='mcs-batchInstanceTable_groupId'>{record.instance.group_id}</Tag>
           </Link>
         ),
       },
@@ -344,10 +435,10 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
         title: formatMessage(messages.artifactId),
         key: 'artifact_id',
         isHideable: false,
-        render: (text: string, record: IntegrationBatchResource) => (
-          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.id}`}>
+        render: (text: string, record: IntegrationBatchLine) => (
+          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.instance.id}`}>
             <Tag className='mcs-batchInstanceTable_artifactId' color='blue'>
-              {record.artifact_id}
+              {record.instance.artifact_id}
             </Tag>
           </Link>
         ),
@@ -356,11 +447,21 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
         title: formatMessage(messages.currentVersion),
         key: 'version_id',
         isHideable: false,
-        render: (text: string, record: IntegrationBatchResource) => (
-          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.id}`}>
+        render: (text: string, record: IntegrationBatchLine) => (
+          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.instance.id}`}>
             <Tag className='mcs-batchInstanceTable_currentVersion' color='purple'>
-              {record.version_id}
+              {record.instance.version_id}
             </Tag>
+          </Link>
+        ),
+      },
+      {
+        title: formatMessage(messages.lastExecutions),
+        key: 'last_executions',
+        isHideable: false,
+        render: (text: string, record: IntegrationBatchLine) => (
+          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.instance.id}`}>
+            {this.renderLastExecStatuses(record.execs)}
           </Link>
         ),
       },
@@ -375,25 +476,25 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
       }
     };
 
-    const dataColumnsDefinition2: Array<DataColumnDefinition<IntegrationBatchResource>> =
+    const dataColumnsDefinition2: Array<DataColumnDefinition<IntegrationBatchLine>> =
       dataColumnsDefinition.slice();
     dataColumnsDefinition2.unshift(
       {
         title: formatMessage(messages.cronStatus),
         key: 'cron_status',
         isHideable: false,
-        render: (text: string, record: IntegrationBatchResource) =>
-          getCronStatusIcon(record.cron_status),
+        render: (text: string, record: IntegrationBatchLine) =>
+          getCronStatusIcon(record.instance.cron_status),
       },
       {
         title: formatMessage(messages.cron),
         key: 'cron',
         isHideable: false,
-        render: (text: string, record: IntegrationBatchResource) => {
+        render: (text: string, record: IntegrationBatchLine) => {
           return (
             <span>
               <ClockCircleOutlined />
-              {` ${record.cron ? cronstrue.toString(record.cron) : '-'}`}
+              {` ${record.instance.cron ? cronstrue.toString(record.instance.cron) : '-'}`}
             </span>
           );
         },
@@ -435,15 +536,6 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
       iconType: 'library',
       message: formatMessage(messages.emptyNonPeriodicTableMessage),
     };
-
-    // const onRow = (record: IntegrationBatchResource) => {
-    //   return {
-    //     onClick: () => {
-    //       history.push(`/o/${organisationId}/jobs/integration_batch_instances/${record.id}`);
-    //     },
-    //     className: 'mcs-batchInstanceTable_row',
-    //   };
-    // };
 
     return (
       <React.Fragment>
