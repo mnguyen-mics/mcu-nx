@@ -104,7 +104,7 @@ class Chart extends React.Component<Props, ChartState> {
     dataset.forEach(datapoint => {
       const value = datapoint[yKey];
       datapoint.value = value;
-      delete datapoint[yKey];
+      if (yKey !== 'value') delete datapoint[yKey];
     });
   }
 
