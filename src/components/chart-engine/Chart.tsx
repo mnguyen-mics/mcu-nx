@@ -18,6 +18,8 @@ import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/compo
 import { isUndefined, omitBy } from 'lodash';
 import { formatMetric } from '../../utils/MetricHelper';
 import {
+  AbstractSource,
+  AggregationSource,
   BarChartOptions,
   ChartApiOptions,
   ChartConfig,
@@ -27,11 +29,18 @@ import {
   IChartDatasetService,
   MetricChartFormat,
   MetricChartOptions,
+  OTQLSource,
   RadarChartOptions,
 } from '../../services/ChartDatasetService';
 import { keysToCamel } from '../../utils/CaseUtils';
 import { AbstractScope } from '../../models/datamart/graphdb/Scope';
 import { DashboardFilterQueryFragments } from '../../models/customDashboards/customDashboards';
+import { InjectedDrawerProps } from '../..';
+import ChartMetadataInfo from './ChartMetadataInfo';
+import { fetchAndFormatQuery } from '../../utils/source/OtqlSourceHelper';
+import { IQueryService, QueryService } from '../../services/QueryService';
+import { QueryScopeAdapter } from '../../utils/QueryScopeAdapter';
+import { ArrowsAltOutlined } from '@ant-design/icons';
 
 interface YKey {
   key: string;
@@ -60,7 +69,7 @@ interface ChartState {
   errorContext?: ErrorContext;
 }
 
-type Props = ChartProps;
+type Props = ChartProps & InjectedDrawerProps;
 class Chart extends React.Component<Props, ChartState> {
   @lazyInject(TYPES.IChartDatasetService)
   private _chartDatasetService: IChartDatasetService;
@@ -205,6 +214,89 @@ class Chart extends React.Component<Props, ChartState> {
     }
   }
 
+  private queryService: IQueryService = new QueryService();
+  private scopeAdapter: QueryScopeAdapter = new QueryScopeAdapter(this.queryService);
+
+  private async extractOtqlQueriesHelper(source: AbstractSource): Promise<string[]> {
+    const { datamartId, scope, queryFragment } = this.props;
+    switch (source.type.toLocaleLowerCase()) {
+      case 'ratio':
+      case 'join':
+      case 'to-list':
+      case 'index':
+      case 'format-dates':
+      case 'to-percentages':
+        const joinSource = source as AggregationSource;
+        const childSources = joinSource.sources.map(_source =>
+          this.extractOtqlQueriesHelper.bind(this)(_source),
+        );
+        return Promise.all(childSources).then(results => {
+          return results.reduce((acc: string[], x: string[]) => {
+            return x.concat(acc);
+          }, []);
+        });
+      case 'otql':
+        const otqlSource = source as OTQLSource;
+        const _datamartId = otqlSource.datamart_id || datamartId;
+        const scopedQueryText = await fetchAndFormatQuery(
+          this.queryService,
+          this.scopeAdapter,
+          _datamartId,
+          otqlSource,
+          scope,
+          queryFragment,
+        );
+        return scopedQueryText ? [scopedQueryText] : [];
+      default:
+        return [];
+    }
+  }
+
+  async extractOtqlQueriesFromDataset() {
+    const { chartConfig } = this.props;
+    const queries = await this.extractOtqlQueriesHelper(chartConfig.dataset);
+    return queries;
+  }
+
+  async closeDrawer() {
+    this.props.closeNextDrawer();
+  }
+
+  async openDrawer(title: string, formattedData?: AbstractDataset) {
+    let _dataset: Dataset = [];
+    if (formattedData && formattedData.type === 'aggregate') {
+      const aggregateDataset = formattedData as AggregateDataset;
+      _dataset = aggregateDataset.dataset;
+    } else if (formattedData && formattedData.type === 'count') {
+      const countDataset = formattedData as CountDataset;
+      _dataset = [
+        {
+          key: 'count',
+          value: countDataset.value,
+        },
+      ];
+    }
+    const queries = await this.extractOtqlQueriesFromDataset();
+    if (queries) {
+      this.props.openNextDrawer(ChartMetadataInfo, {
+        size: 'small',
+        className: 'mcs-chartMetaDataInfo_drawer',
+        additionalProps: {
+          onCloseDrawer: this.closeDrawer.bind(this),
+          title: title,
+          datainfo: {
+            dataset: _dataset,
+          },
+          query_infos: queries.map(x => {
+            return {
+              query_text: x,
+            };
+          }),
+        },
+      });
+    }
+  }
+
   render() {
     const { formattedData, loading, errorContext } = this.state;
     const { chartConfig, chartContainerStyle } = this.props;
@@ -223,10 +315,19 @@ class Chart extends React.Component<Props, ChartState> {
       chartConfig.type,
       chartConfig.options && (chartConfig.options as ChartApiOptions).xKey,
     );
+
+    const openDrawer = () => this.openDrawer(chartConfig.title, formattedData);
     return (
       <div style={chartContainerStyle} className={'mcs-chart'}>
         <div className={'mcs-chart_header'}>
-          <h2 className={'mcs-chart_header_title'}>{chartConfig.title}</h2>
+          <h2
+            style={{ cursor: 'pointer' }}
+            className={'mcs-chart_header_title'}
+            onClick={openDrawer}
+          >
+            {chartConfig.title}
+            <ArrowsAltOutlined className={'mcs-hoverableIcon'} />
+          </h2>
           {loading && <Loading className={'mcs-chart_header_loader'} isFullScreen={false} />}
         </div>
         <div className='mcs-chart_content_container'>

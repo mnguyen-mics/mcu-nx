@@ -20,6 +20,8 @@ import {
 import { AbstractScope, QueryScope, SegmentScope } from '../../models/datamart/graphdb/Scope';
 import { isAudienceSegmentShape, isUserQuerySegment } from '../../models/Segments/Edit/domain';
 import messages from './messages';
+import { InjectedDrawerProps } from '../..';
+import { injectDrawer } from '../drawer';
 
 interface ScopedDashboardLayoutProps {
   datamartId: string;
@@ -27,7 +29,7 @@ interface ScopedDashboardLayoutProps {
   source?: AudienceSegmentShape | StandardSegmentBuilderQueryDocument;
 }
 
-type Props = ScopedDashboardLayoutProps & InjectedIntlProps;
+type Props = ScopedDashboardLayoutProps & InjectedIntlProps & InjectedDrawerProps;
 
 interface ScopedDashboardLayoutState {
   scope?: AbstractScope;
@@ -135,9 +137,18 @@ class ScopedDashboardLayout extends React.Component<Props, State> {
     ) : isLoading ? (
       <Spin size={'small'} />
     ) : (
-      <DashboardLayout datamart_id={datamartId} schema={schema} scope={scope} />
+      <DashboardLayout
+        datamart_id={datamartId}
+        schema={schema}
+        scope={scope}
+        openNextDrawer={this.props.openNextDrawer}
+        closeNextDrawer={this.props.closeNextDrawer}
+      />
     );
   }
 }
 
-export default compose<Props, ScopedDashboardLayoutProps>(injectIntl)(ScopedDashboardLayout);
+export default compose<Props, ScopedDashboardLayoutProps>(
+  injectIntl,
+  injectDrawer,
+)(ScopedDashboardLayout);

@@ -14,6 +14,8 @@ import {
 } from '../../models/dashboards/old-dashboards-model';
 import { StandardSegmentBuilderQueryDocument } from '../../models/standardSegmentBuilder/StandardSegmentBuilderResource';
 import { AudienceSegmentShape } from '../../models/audienceSegment/AudienceSegmentResource';
+import { injectDrawer } from '../drawer';
+import { InjectedDrawerProps } from '../..';
 
 export interface DashboardPageProps {
   dataFileDashboards?: DataFileDashboardResource[];
@@ -36,9 +38,9 @@ const messagesDashboardPage = defineMessages({
   },
 });
 
-type Props = DashboardPageProps & InjectedFeaturesProps & InjectedIntlProps;
+type Props = DashboardPageProps & InjectedFeaturesProps & InjectedIntlProps & InjectedDrawerProps;
 
-export class DashboardPage extends React.Component<Props> {
+class DashboardPage extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -218,4 +220,8 @@ export class DashboardPage extends React.Component<Props> {
   }
 }
 
-export default compose<Props, DashboardPageProps>(injectFeatures, injectIntl)(DashboardPage);
+export default compose<Props, DashboardPageProps>(
+  injectFeatures,
+  injectIntl,
+  injectDrawer,
+)(DashboardPage);

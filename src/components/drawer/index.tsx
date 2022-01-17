@@ -8,6 +8,7 @@ export interface DrawableContentOptions<T = {}> {
   additionalProps: T;
   size?: DrawerSize;
   isModal?: boolean;
+  className?: string;
 }
 
 export interface DrawableContent extends DrawableContentOptions {
