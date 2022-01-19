@@ -172,6 +172,8 @@ class TableView<
         ...DEFAULT_PAGINATION_OPTION,
         ...(pagination as PaginationProps),
       };
+    } else if (pagination === false) {
+      newPagination = false;
     } else {
       newPagination = {
         ...DEFAULT_PAGINATION_OPTION,
