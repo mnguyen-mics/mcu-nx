@@ -13,6 +13,12 @@ class DatasetDateFormatter {
     this.formatDate = _formatDate;
   }
 
+  addSkippedValues(from: Datapoint, to: Datapoint): void {
+    Object.keys(from).forEach(key => {
+      if (!to[key]) to[key] = from[key];
+    });
+  }
+
   reaggregateByKey(dataset: Dataset, xKey: string) {
     const result: { [k: string]: any } = {};
     dataset.forEach(datapoint => {
@@ -27,6 +33,7 @@ class DatasetDateFormatter {
         }
       });
       newAcc[xKey] = datapoint[xKey];
+      this.addSkippedValues(currentAcc, newAcc);
       result[datapoint[xKey] as string] = newAcc;
     });
     const aggregatedDataset: Dataset = [];
