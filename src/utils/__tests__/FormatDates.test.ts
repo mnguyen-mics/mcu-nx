@@ -294,3 +294,87 @@ test('Aggregate dataset with buckets formatted recursively', done => {
     done();
   });
 });
+
+test('Aggregate dataset and dont lose buckets when the point is aggregated', done => {
+  const datapoint1: any = {
+    key: '1638937721358',
+    count1: 2,
+    count2: 4,
+    buckets: [
+      {
+        key: '2021-12-07 00:10:00',
+        count1: 2,
+        count2: 4,
+      },
+      {
+        key: '2021-12-08 00:10:00',
+        count1: 3,
+        count2: 5,
+      },
+    ],
+  };
+
+  const dateOptions = {
+    buckets: {
+      format: 'YYYY_MM_DD',
+    },
+  };
+
+  const dataset: AggregateDataset = {
+    type: 'aggregate',
+    metadata: {
+      seriesTitles: ['count'],
+    },
+    dataset: [
+      datapoint1,
+      {
+        key: '1638937721358',
+        count2: 3,
+        count3: 6,
+      },
+      {
+        key: '1638937721358',
+        count2: 3,
+        count3: 6,
+      },
+      {
+        key: '2021-12-08 00:05:00',
+        count3: 6,
+      },
+    ],
+  };
+
+  datasetDateFormatter.applyFormatDates(dataset, X_KEY, dateOptions).then(formatted => {
+    expect(formatted).toEqual({
+      dataset: [
+        {
+          key: '1638937721358',
+          count1: 2,
+          count2: 10,
+          count3: 12,
+          buckets: [
+            {
+              key: '2021_12_07',
+              count1: 2,
+              count2: 4,
+            },
+            {
+              key: '2021_12_08',
+              count1: 3,
+              count2: 5,
+            },
+          ],
+        },
+        {
+          key: '2021-12-08 00:05:00',
+          count3: 6,
+        },
+      ],
+      metadata: {
+        seriesTitles: ['count'],
+      },
+      type: 'aggregate',
+    });
+    done();
+  });
+});
