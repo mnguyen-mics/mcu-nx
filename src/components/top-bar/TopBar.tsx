@@ -67,17 +67,19 @@ class TopBar extends React.Component<Props> {
     const isFromMics =
       connectedUser.workspaces.filter(workspace => workspace.organisation_id === '1').length > 0;
 
+    const MCS_CONSTANTS = (window as any).MCS_CONSTANTS;
+
     const menuSections: AppsMenuSections = {
       userLinks: [
         {
           name: 'Computing Console',
           icon: <CodeSandboxCircleFilled className='mcs-app_icon mcs-app_developerConsoleIcon' />,
-          url: `https://computing-console.mediarithmics.com/#/o/${organisationId}/home`,
+          url: `${MCS_CONSTANTS.COMPUTING_CONSOLE_URL}/#/o/${organisationId}/home`,
         },
         {
           name: 'Navigator',
           icon: <CompassFilled className='mcs-app_icon mcs-app_navigatorIcon' />,
-          url: `https://navigator.mediarithmics.com/#/v2/o/${organisationId}/campaigns/display`,
+          url: `${MCS_CONSTANTS.NAVIGATOR_URL}/#/v2/o/${organisationId}/campaigns/display`,
         },
       ],
       adminLinks: [],
