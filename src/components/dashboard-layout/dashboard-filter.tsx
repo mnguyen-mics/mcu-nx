@@ -8,7 +8,7 @@ import { DashboardAvailableFilters } from '../../models/customDashboards/customD
 const { Option } = Select;
 interface DashboardFilterProps {
   filter: DashboardAvailableFilters;
-  datamart_id: string;
+  datamartId: string;
   onFilterChange?: (filterTechnicalName: string, filterValues: string[]) => void;
 }
 
@@ -31,10 +31,10 @@ class DashboardFilter extends React.Component<DashboardFilterProps, DashboardFil
     this.fetchFilterOption();
   }
   fetchFilterOption() {
-    const { datamart_id, filter } = this.props;
+    const { datamartId, filter } = this.props;
 
     return this.queryService
-      .runOTQLQuery(datamart_id, filter.values_query, {
+      .runOTQLQuery(datamartId, filter.values_query, {
         precision: 'FULL_PRECISION',
         use_cache: true,
       })

@@ -34,11 +34,14 @@
   padding-right: 40px;
 }
 
-.mcs-hoverableIcon {
-  visibility: hidden;
+.mcs-chartIcon {
   margin-left: 10px;
   height: 26px;
   width: 26px;
+}
+
+.mcs-hoverableIcon {
+  visibility: hidden;
 }
 
 .mcs-chart_header_title:hover > .mcs-hoverableIcon {
@@ -123,5 +126,43 @@
     font-family: 'LLCircularWeb-Medium';
     font-size: 12px;
     font-weight: 400;
+  }
+}
+
+.mcs-chartEdition-shellIcon {
+  font-size: 12px;
+  color: white;
+  font-weight: bold;
+  margin-left: 15px;
+  background-color: black;
+  padding: 2px;
+}
+
+.mcs-chartEdition-json-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 20px;
+  color: @primary-color;
+}
+
+.mcs-chartEdition_aceEditor {
+  min-width: 100px;
+  font-family: 'LLCircularWeb-Book';
+  font-size: 14px;
+  margin-top: 20px;
+  min-height: 100px;
+  background: #fff;
+  border-radius: 6px;
+
+  .ant-form-item-explain-error div::first-letter {
+    text-transform: uppercase;
+  }
+
+  .ace_editor {
+    margin: 10px 0;
+  }
+
+  .ace-github .ace_gutter {
+    background: #fff;
   }
 }

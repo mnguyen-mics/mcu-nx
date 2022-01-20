@@ -26,6 +26,8 @@ interface ScopedDashboardLayoutProps {
   organisationId: string;
   schema: DashboardContentSchema;
   source?: AudienceSegmentShape | StandardSegmentBuilderQueryDocument;
+  editable: boolean;
+  updateState?: (d: DashboardContentSchema) => void;
 }
 
 type Props = ScopedDashboardLayoutProps & InjectedIntlProps & InjectedDrawerProps;
@@ -128,7 +130,7 @@ class ScopedDashboardLayout extends React.Component<Props, State> {
   }
 
   render() {
-    const { datamartId, organisationId, schema, intl } = this.props;
+    const { datamartId, organisationId, schema, intl, editable, updateState } = this.props;
     const { scope, isLoading, hasError } = this.state;
     return hasError ? (
       <Alert type='error' message={intl.formatMessage(messages.errorLoadingScope)} />
@@ -136,6 +138,8 @@ class ScopedDashboardLayout extends React.Component<Props, State> {
       <Spin size={'small'} />
     ) : (
       <DashboardLayout
+        editable={editable}
+        updateState={updateState}
         datamart_id={datamartId}
         organisationId={organisationId}
         schema={schema}

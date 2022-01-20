@@ -156,6 +156,7 @@ export type ChartOptions = (
   WithOptionalXKey;
 
 export interface ChartConfig {
+  id?: string;
   title: string;
   type: ChartType;
   colors?: string[];

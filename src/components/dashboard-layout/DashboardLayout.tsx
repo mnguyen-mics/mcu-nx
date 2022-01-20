@@ -15,6 +15,7 @@ import {
   DashboardFilterQueryFragments,
 } from '../../models/customDashboards/customDashboards';
 import { InjectedDrawerProps } from '../..';
+import ChartEditionTab from './wysiwig/ChartEditionTab';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 const BASE_FRAMEWORK_HEIGHT = 96;
@@ -24,6 +25,8 @@ export interface DashboardLayoutProps {
   organisationId: string;
   schema: DashboardContentSchema;
   scope?: AbstractScope;
+  editable: boolean;
+  updateState?: (d: DashboardContentSchema) => void;
 }
 
 interface FilterValues {
@@ -45,14 +48,53 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     };
   }
 
+  private findChartNode(nodeId: string, content: DashboardContentSchema): any {
+    let res;
+    content.sections.forEach(section => {
+      section.cards.forEach(card => {
+        card.charts.forEach(chart => {
+          if (chart.id === nodeId) res = chart;
+        });
+      });
+    });
+    return res;
+  }
+
+  private handleEditChart(chart: ChartConfig, content: DashboardContentSchema) {
+    const { updateState, openNextDrawer, closeNextDrawer } = this.props;
+    const contentCopy = JSON.parse(JSON.stringify(content));
+    if (chart.id) {
+      const chartNode = this.findChartNode(chart.id, contentCopy);
+      if (updateState && chartNode) {
+        openNextDrawer(ChartEditionTab, {
+          size: 'small',
+          additionalProps: {
+            closeTab: closeNextDrawer,
+            chartConfig: chartNode,
+            saveChart: (c: ChartConfig) => {
+              const newChartConfig: any = c;
+              const keys = Object.keys(c);
+              keys.forEach(key => {
+                chartNode[key] = newChartConfig[key];
+              });
+              updateState(contentCopy);
+            },
+          },
+        });
+      }
+    }
+  }
+
   renderChart(chart: ChartConfig, cssProperties?: CSSProperties) {
-    const { datamart_id, organisationId, scope } = this.props;
+    const { datamart_id, scope, organisationId, editable, schema } = this.props;
     const { formattedQueryFragment } = this.state;
 
+    const onClickEdit = editable ? () => this.handleEditChart(chart, schema) : undefined;
     return (
       <Chart
         key={cuid()}
         datamartId={datamart_id}
+        onClickEdit={onClickEdit}
         organisationId={organisationId}
         chartConfig={chart}
         chartContainerStyle={cssProperties}
@@ -220,7 +262,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
               <DashboardFilter
                 key={index.toString()}
                 filter={filter}
-                datamart_id={datamart_id}
+                datamartId={datamart_id}
                 onFilterChange={this.handleDashboardFilterChange}
               />
             ))}
