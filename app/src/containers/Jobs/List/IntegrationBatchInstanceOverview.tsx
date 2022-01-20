@@ -190,9 +190,11 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
     this._integrationBatchService
       .createIntegrationBatchInstanceExecution(batchInstanceId, {
         organisation_id: organisationId,
-        external_model_name: 'PUBLIC_INTEGRATION_BATCH',
-        start_date: startDate,
         status: 'PENDING',
+        parameters: {
+          execution_type: 'MANUAL',
+          expected_start_date: startDate ? startDate : moment.now(),
+        },
       })
       .then(res => {
         this.setState({
@@ -208,13 +210,13 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
 
   onDatePickerOk = (date: any) => {
     this.setState({
-      startDate: moment(date).unix(),
+      startDate: moment(date).valueOf(),
     });
   };
 
   onDatePickerChange = (date: any, dateString: string) => {
     this.setState({
-      startDate: moment(date).unix(),
+      startDate: moment(date).valueOf(),
     });
   };
 
