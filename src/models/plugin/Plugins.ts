@@ -1,4 +1,5 @@
 import { PropertyResourceShape } from '.';
+import { BaseExecutionResource } from '../job/jobs';
 import { PluginLayout } from './PluginLayout';
 
 export interface PluginResource {
@@ -271,4 +272,17 @@ export interface IntegrationBatchResource extends PluginInstance {
   execution_container_ram_size: ExecutionContainerResourceSize;
   execution_container_disk_size: ExecutionContainerResourceSize;
   archived: boolean;
+}
+
+export type ExecutionType = 'MANUAL' | 'CRON';
+
+export interface IntegrationBatchJobInputParameter {
+  execution_type?: ExecutionType;
+  expected_start_date?: number;
+}
+
+export interface IntegrationBatchJobResource
+  extends BaseExecutionResource<IntegrationBatchJobInputParameter, any> {
+  job_type: 'INTEGRATION_BATCH';
+  external_model_name: 'PUBLIC_INTEGRATION_BATCH';
 }

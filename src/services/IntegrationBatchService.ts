@@ -1,9 +1,12 @@
 import { injectable } from 'inversify';
-import { CronStatus, IntegrationBatchResource } from '../models/plugin/Plugins';
+import {
+  CronStatus,
+  IntegrationBatchJobResource,
+  IntegrationBatchResource,
+} from '../models/plugin/Plugins';
 import PluginInstanceService from './PluginInstanceService';
 import ApiService, { DataListResponse, DataResponse, StatusCode } from './ApiService';
 import { PaginatedApiParam } from '../utils/ApiHelper';
-import { PublicJobExecutionResource } from '../models/job/jobs';
 import { PluginLayout } from '../models/plugin/PluginLayout';
 
 export interface IntegrationBatchInstanceOptions extends PaginatedApiParam {
@@ -27,15 +30,15 @@ export interface IIntegrationBatchService extends PluginInstanceService<Integrat
   getBatchInstanceExecutions: (
     batchInstanceId: string,
     options: IntegrationBatchInstanceOptions,
-  ) => Promise<DataListResponse<PublicJobExecutionResource>>;
+  ) => Promise<DataListResponse<IntegrationBatchJobResource>>;
   createIntegrationBatchInstanceExecution: (
     instanceId: string,
-    executionResource: Partial<PublicJobExecutionResource>,
-  ) => Promise<DataResponse<PublicJobExecutionResource>>;
+    executionResource: Partial<IntegrationBatchJobResource>,
+  ) => Promise<DataResponse<IntegrationBatchJobResource>>;
   getBatchInstanceExecutionsForOrganisation: (
     organisationId: string,
     options: PaginatedApiParam,
-  ) => Promise<DataListResponse<PublicJobExecutionResource>>;
+  ) => Promise<DataListResponse<IntegrationBatchJobResource>>;
   getLocalizedPluginLayout(pInstanceId: string): Promise<PluginLayout | null>;
 }
 
@@ -73,7 +76,7 @@ export default class IntegrationBatchService
   getBatchInstanceExecutions(
     integrationBatchId: string,
     options: PaginatedApiParam = {},
-  ): Promise<DataListResponse<PublicJobExecutionResource>> {
+  ): Promise<DataListResponse<IntegrationBatchJobResource>> {
     const endpoint = `integration_batch_instances/${integrationBatchId}/executions`;
 
     return ApiService.getRequest(endpoint, options);
@@ -81,8 +84,8 @@ export default class IntegrationBatchService
 
   createIntegrationBatchInstanceExecution(
     instanceId: string,
-    executionResource: Partial<PublicJobExecutionResource>,
-  ): Promise<DataResponse<PublicJobExecutionResource>> {
+    executionResource: Partial<IntegrationBatchJobResource>,
+  ): Promise<DataResponse<IntegrationBatchJobResource>> {
     const endpoint = `integration_batch_instances/${instanceId}/executions`;
 
     return ApiService.postRequest(endpoint, executionResource);
@@ -91,7 +94,7 @@ export default class IntegrationBatchService
   getBatchInstanceExecutionsForOrganisation(
     organisationId: string,
     options: PaginatedApiParam = {},
-  ): Promise<DataListResponse<PublicJobExecutionResource>> {
+  ): Promise<DataListResponse<IntegrationBatchJobResource>> {
     const endpoint = `integration_batch_instances.executions`;
     const params = {
       organisation_id: organisationId,
