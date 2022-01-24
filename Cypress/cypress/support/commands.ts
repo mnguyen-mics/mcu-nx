@@ -9,7 +9,15 @@
 // ***********************************************
 //
 //
+
 import faker from 'faker';
+
+let organisationId: string;
+let datamartId: string;
+let accessToken: string;
+const organisationName = faker.random.words(3);
+const datamartName = faker.random.words(3);
+const apiToken = 'api:W1EcVPjvsJyXFID/N3Qh4s8cJuWn3KT2aaROiHHztOZ5+FTkVRJ/WmlbLYdgoYxE';
 
 before(() => {
   cy.initTestContext();
@@ -24,33 +32,26 @@ Cypress.Commands.add(
     cy.get('#kc-login').click();
     cy.get('#password').type(password);
     cy.get('#kc-login').click();
+    cy.getAccessToken().then(() => {
+      cy.exec(`cat <<EOT > cypress/fixtures/init_infos.json
+                {
+                    "datamartName":"${datamartName}",
+                    "datamartId":${datamartId},
+                    "organisationId":${organisationId},
+                    "organisationName":"${organisationName}",
+                    "apiToken":"${apiToken}",
+                    "accessToken":"${accessToken}"
+                }`);
+    });
   },
 );
 
-Cypress.Commands.add(
-  'getAccessToken',
-  (
-    username = `${Cypress.env('devMail')}`,
-    password = `${Cypress.env('devPwd')}`,
-    root = `${Cypress.env('root')}`,
-    realm = `${Cypress.env('realm')}`,
-    client_id = `${Cypress.env('client_id')}`,
-    redirect_uri = `${Cypress.config().baseUrl}`,
-    path_prefix = 'auth',
-  ) =>
-    cy.request({
-      url: `${root}${
-        path_prefix ? `/${path_prefix}` : ''
-      }/realms/${realm}/protocol/openid-connect/token`,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(
-        password,
-      )}&grant_type=password&client_id=${client_id}`,
-    }),
-);
+Cypress.Commands.add('getAccessToken', () => {
+  cy.intercept('/token').as('getAccessToken');
+  cy.wait('@getAccessToken').then(interception => {
+    accessToken = 'Bearer ' + interception.response?.body.access_token;
+  });
+});
 
 Cypress.Commands.add(
   'logout',
@@ -69,11 +70,6 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add('initTestContext', () => {
-  let organisationId: string;
-  let datamartId: string;
-  const organisationName = faker.random.words(3);
-  const datamartName = faker.random.words(3);
-  const apiToken = 'api:W1EcVPjvsJyXFID/N3Qh4s8cJuWn3KT2aaROiHHztOZ5+FTkVRJ/WmlbLYdgoYxE';
   // organisation creation
   cy.request({
     url: `${Cypress.env('apiDomain')}/v1/organisations`,
@@ -104,13 +100,6 @@ Cypress.Commands.add('initTestContext', () => {
       },
     }).then(datamartResponse => {
       datamartId = datamartResponse.body.data.id;
-      cy.exec(`cat <<EOT > cypress/fixtures/init_infos.json
-            {
-                "datamartName":"${datamartName}",
-                "datamartId":${datamartId},
-                "organisationId":${organisationId},
-                "organisationName":"${organisationName}"
-            }`);
     });
   });
 });
@@ -131,10 +120,79 @@ Cypress.Commands.add('expirePassword', email => {
   );
 });
 
-Cypress.Commands.add('enableDirectAccessGrant', (enable = true) => {
-  cy.exec(
-    `sh cypress/support/enableDirectAccessGrant.sh ${Cypress.env('virtualPlatformName')} ${enable}`,
-  );
+Cypress.Commands.add(
+  'createPlugin',
+  (pluginType: string, organisationId: string, groupId: string, artifactId: string) => {
+    cy.fixture('init_infos').then(data => {
+      cy.request({
+        url: `${Cypress.env('apiDomain')}/v1/plugins`,
+        method: 'POST',
+        headers: { Authorization: data.accessToken },
+        body: {
+          artifact_id: `${artifactId}`,
+          group_id: `${groupId}`,
+          organisation_id: `${organisationId}`,
+          plugin_type: `${pluginType}`,
+        },
+      });
+    });
+  },
+);
+
+Cypress.Commands.add('getPlugins', (type?: string) => {
+  let url = `${Cypress.env('apiDomain')}/v1/plugins`;
+  if (type) {
+    url = `${Cypress.env('apiDomain')}/v1/plugins?plugin_type=${type}`;
+  }
+  cy.fixture('init_infos').then(data => {
+    cy.request({
+      url: `${url}`,
+      headers: { Authorization: data.accessToken },
+      method: 'GET',
+    });
+  });
+});
+
+Cypress.Commands.add('createPluginVersion', (pluginId: string, json: object = {}) => {
+  let json_body: object;
+  const plugin_version = '1.0';
+  if (Object.keys(json).length != 0) {
+    json_body = json;
+  } else {
+    json_body = {
+      version_id: `${plugin_version}`,
+      plugin_properties: [
+        {
+          technical_name: 'provider',
+          value: {
+            value: '',
+          },
+          property_type: 'STRING',
+          origin: 'INSTANCE',
+          writable: false,
+          deletable: true,
+        },
+        {
+          technical_name: 'name',
+          value: {
+            value: 'QA test',
+          },
+          property_type: 'STRING',
+          origin: 'INSTANCE',
+          writable: true,
+          deletable: true,
+        },
+      ],
+    };
+  }
+  cy.fixture('init_infos').then(data => {
+    cy.request({
+      url: `${Cypress.env('apiDomain')}/v1/plugins/${pluginId}/versions`,
+      headers: { Authorization: data.access_token },
+      method: 'POST',
+      body: json_body,
+    });
+  });
 });
 
 // Storing local storage cache between tests

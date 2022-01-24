@@ -154,6 +154,7 @@ class IntegrationBatchInstanceEditPage extends React.Component<Props> {
             {...fieldGridConfig}
           >
             <FormRadioGroupField
+              groupClassName='mcs-cpuSize'
               name={cpuFieldName}
               component={FormRadioGroup}
               elements={radioElements}
@@ -167,6 +168,7 @@ class IntegrationBatchInstanceEditPage extends React.Component<Props> {
             {...fieldGridConfig}
           >
             <FormRadioGroupField
+              groupClassName='mcs-ramSize'
               name={ramFieldName}
               component={FormRadioGroup}
               elements={radioElements}
@@ -180,6 +182,7 @@ class IntegrationBatchInstanceEditPage extends React.Component<Props> {
             {...fieldGridConfig}
           >
             <FormRadioGroupField
+              groupClassName='mcs-diskSize'
               name={diskFieldName}
               component={FormRadioGroup}
               elements={radioElements}

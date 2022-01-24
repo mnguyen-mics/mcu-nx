@@ -171,6 +171,7 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
         </React.Fragment>
       ),
       onOk: this.onModalOk,
+      okButtonProps: { className: 'mcs-modalConfirmDate_okButton' },
     });
   };
 
@@ -333,10 +334,18 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
     ) : undefined;
 
     const breadcrumbPaths = [
-      <Link key='1' to={`/o/${organisationId}/jobs/integration_batch_instances`}>
+      <Link
+        key='1'
+        to={`/o/${organisationId}/jobs/integration_batch_instances`}
+        className='mcs-breadcrumbPath_jobsList'
+      >
         {formatMessage(messages.jobs)}
       </Link>,
-      <Link key='2' to={`/o/${organisationId}/jobs/integration_batch_instances`}>
+      <Link
+        key='2'
+        to={`/o/${organisationId}/jobs/integration_batch_instances`}
+        className='mcs-breadcrumbPath_batchInstancesList'
+      >
         {formatMessage(messages.jobBatchInstances)}
       </Link>,
     ];
@@ -346,13 +355,21 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
         <Actionbar pathItems={breadcrumbPaths}>
           <div className='mcs-actionbar_innerElementsPanel'>
             {this.renderActivePauseButton()}
-            <Button className='mcs-primary' type='primary' onClick={this.openExecutionDrawer}>
+            <Button
+              className='mcs-primary mcs-actionbar_planExecution'
+              type='primary'
+              onClick={this.openExecutionDrawer}
+            >
               <McsIcon type='bolt' /> <FormattedMessage {...messages.planExecutions} />
             </Button>
-            <Button className='mcs-primary' type='primary' onClick={this.showModal}>
+            <Button
+              className='mcs-primary mcs-actionbar_run'
+              type='primary'
+              onClick={this.showModal}
+            >
               <McsIcon type='bolt' /> <FormattedMessage {...messages.run} />
             </Button>
-            <Button className='mcs-primary' onClick={this.openEditionDrawer}>
+            <Button className='mcs-primary mcs-actionbar_editJob' onClick={this.openEditionDrawer}>
               <McsIcon type='pen' /> <FormattedMessage {...messages.edit} />
             </Button>
           </div>

@@ -412,31 +412,43 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
 
     const dataColumnsDefinition: Array<DataColumnDefinition<IntegrationBatchLine>> = [
       {
+        className: 'mcs-integrationBatchInstancesOverviewTab_tableView--jobName',
         title: formatMessage(messages.name),
         key: 'name',
         isHideable: false,
         render: (text: string, record: IntegrationBatchLine) => (
-          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.instance.id}`}>
+          <Link
+            to={`/o/${organisationId}/jobs/integration_batch_instances/${record.instance.id}`}
+            className='mcs-integrationBatchInstancesOverviewTab_tableView--instanceName'
+          >
             {record.instance.name}
           </Link>
         ),
       },
       {
+        className: 'mcs-integrationBatchInstancesOverviewTab_tableView--jobGroupId',
         title: formatMessage(messages.group),
         key: 'group_id',
         isHideable: false,
         render: (text: string, record: IntegrationBatchLine) => (
-          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.instance.id}`}>
+          <Link
+            to={`/o/${organisationId}/jobs/integration_batch_instances/${record.instance.id}`}
+            className='mcs-integrationBatchInstancesOverviewTab_tableView--instanceGroupId'
+          >
             <Tag className='mcs-batchInstanceTable_groupId'>{record.instance.group_id}</Tag>
           </Link>
         ),
       },
       {
+        className: 'mcs-integrationBatchInstancesOverviewTab_tableView--jobArtifactId',
         title: formatMessage(messages.artifactId),
         key: 'artifact_id',
         isHideable: false,
         render: (text: string, record: IntegrationBatchLine) => (
-          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.instance.id}`}>
+          <Link
+            to={`/o/${organisationId}/jobs/integration_batch_instances/${record.instance.id}`}
+            className='mcs-integrationBatchInstancesOverviewTab_tableView--instanceArtifactId'
+          >
             <Tag className='mcs-batchInstanceTable_artifactId' color='blue'>
               {record.instance.artifact_id}
             </Tag>
@@ -444,11 +456,15 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
         ),
       },
       {
+        className: 'mcs-integrationBatchInstancesOverviewTab_tableView--jobVersionId',
         title: formatMessage(messages.currentVersion),
         key: 'version_id',
         isHideable: false,
         render: (text: string, record: IntegrationBatchLine) => (
-          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.instance.id}`}>
+          <Link
+            to={`/o/${organisationId}/jobs/integration_batch_instances/${record.instance.id}`}
+            className='mcs-integrationBatchInstancesOverviewTab_tableView--currentVersion'
+          >
             <Tag className='mcs-batchInstanceTable_currentVersion' color='purple'>
               {record.instance.version_id}
             </Tag>
@@ -456,11 +472,15 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
         ),
       },
       {
+        className: 'mcs-integrationBatchInstancesOverviewTab_tableView--jobLastExecution',
         title: formatMessage(messages.lastExecutions),
         key: 'last_executions',
         isHideable: false,
         render: (text: string, record: IntegrationBatchLine) => (
-          <Link to={`/o/${organisationId}/jobs/integration_batch_instances/${record.instance.id}`}>
+          <Link
+            to={`/o/${organisationId}/jobs/integration_batch_instances/${record.instance.id}`}
+            className='mcs-integrationBatchInstancesOverviewTab_tableView--lastExecution'
+          >
             {this.renderLastExecStatuses(record.execs)}
           </Link>
         ),
@@ -480,6 +500,7 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
       dataColumnsDefinition.slice();
     dataColumnsDefinition2.unshift(
       {
+        className: 'mcs-integrationBatchInstancesOverviewTab_tableView--jobCronStatus',
         title: formatMessage(messages.cronStatus),
         key: 'cron_status',
         isHideable: false,
@@ -487,6 +508,7 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
           getCronStatusIcon(record.instance.cron_status),
       },
       {
+        className: 'mcs-integrationBatchInstancesOverviewTab_tableView--jobCron',
         title: formatMessage(messages.cron),
         key: 'cron',
         isHideable: false,
@@ -544,6 +566,7 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
             <EmptyTableView {...emptyNonPeriodicTable} />
           ) : (
             <TableViewFilters
+              className='mcs-overviewTab_nonPeriodicInstancesTable'
               dataSource={nonPeriodicInstances}
               columns={dataColumnsDefinition}
               loading={isLoadingNonPeriodicInstances}
@@ -558,6 +581,7 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
             <EmptyTableView {...emptyPeriodicTable} />
           ) : (
             <TableViewFilters
+              className='mcs-overviewTab_periodicInstancesTable'
               dataSource={periodicInstances}
               columns={dataColumnsDefinition2}
               loading={isLoadingPeriodicInstances}
