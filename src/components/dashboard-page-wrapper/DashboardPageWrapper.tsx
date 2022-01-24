@@ -2,7 +2,7 @@ import * as React from 'react';
 import { InjectedIntlProps, injectIntl, defineMessages } from 'react-intl';
 import { compose } from 'recompose';
 import { LabeledValue } from 'antd/lib/select';
-import { DashboardPage } from './DashboardPage';
+import DashboardPage from './DashboardPage';
 import { Loading, Error } from '@mediarithmics-private/mcs-components-library';
 import { DataListResponse } from '../../services/ApiService';
 import { InjectedFeaturesProps, injectFeatures } from '../Features';
@@ -18,6 +18,8 @@ import {
 } from '../../models/dashboards/old-dashboards-model';
 import { StandardSegmentBuilderQueryDocument } from '../../models/standardSegmentBuilder/StandardSegmentBuilderResource';
 import { AudienceSegmentShape } from '../../models/audienceSegment/AudienceSegmentResource';
+import { InjectedDrawerProps } from '../..';
+import { injectDrawer } from '../drawer';
 
 export const messages = defineMessages({
   comingSoon: {
@@ -45,7 +47,8 @@ interface DashboardPageWrapperProps {
 type Props = DashboardPageWrapperProps &
   InjectedFeaturesProps &
   InjectedNotificationProps &
-  InjectedIntlProps;
+  InjectedIntlProps &
+  InjectedDrawerProps;
 
 interface State {
   isLoading: boolean;
@@ -189,8 +192,6 @@ class DashboardPageWrapper extends React.Component<Props, State> {
 
       return (
         <DashboardPage
-          intl={intl}
-          hasFeature={hasFeature}
           className={className}
           datamartId={datamartId}
           apiDashboards={apiDashboardsOpt}
@@ -217,4 +218,5 @@ export default compose<Props, DashboardPageWrapperProps>(
   injectFeatures,
   injectIntl,
   injectNotifications,
+  injectDrawer,
 )(DashboardPageWrapper);

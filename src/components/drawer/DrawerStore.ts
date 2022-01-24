@@ -6,11 +6,11 @@ export interface DrawerStore {
   drawableContents: DrawableContent[];
 }
 
-interface CloseDrawer {
+export interface CloseDrawer {
   type: CLOSE_NEXT_DRAWER;
 }
 
-interface OpenDrawer<T> {
+export interface OpenDrawer<T> {
   type: OPEN_NEXT_DRAWER;
   payload: {
     component: React.ComponentClass<T>;
@@ -18,11 +18,11 @@ interface OpenDrawer<T> {
   };
 }
 
-interface DrawerClickOnBackground {
+export interface DrawerClickOnBackground {
   type: DRAWER_CLICK_ON_BACKGROUND;
 }
 
-interface DrawerEscapeKeyDown {
+export interface DrawerEscapeKeyDown {
   type: DRAWER_ESCAPE_KEY_DOWN;
 }
 

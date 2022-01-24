@@ -16,6 +16,7 @@ export { default as LoginReducers } from './redux/Login/reducer';
 export { default as SessionReducers } from './redux/Session/reducer';
 export { default as NotificationsReducers } from './redux/Notifications/reducer';
 export { default as Store } from './redux/store';
+export { default as ChartMetadataInfo } from './components/chart-engine/ChartMetadataInfo';
 export { logIn, logOut } from './redux/Login/actions';
 export { default as AuthenticatedRoute } from './utils/AuthenticatedRoute';
 export { MicsReduxState, createRequestTypes } from './utils/ReduxHelper';

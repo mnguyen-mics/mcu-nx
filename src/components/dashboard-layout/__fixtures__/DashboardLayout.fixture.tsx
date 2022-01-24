@@ -1,5 +1,5 @@
 import React from 'react';
-import DashboardLayout from '../DashboardLayout';
+import DashboardLayout, { DashboardLayoutProps } from '../DashboardLayout';
 import { FetchMock } from '@react-mock/fetch';
 import { LocalStorageMock } from '@react-mock/localstorage';
 import {
@@ -12,9 +12,11 @@ import {
 } from '../../chart-engine/MockedData';
 import { ChartType, MetricChartOptions, SourceType } from '../../../services/ChartDatasetService';
 import { Provider } from 'react-redux';
-import { IocProvider } from '../../..';
+import { InjectedDrawerProps, IocProvider } from '../../..';
 import configureStore from '../../../redux/store';
 import { container } from '../../../inversify/inversify.config';
+import { injectDrawer } from '../../drawer';
+import { compose } from 'recompose';
 
 const propsMetric = {
   datamart_id: '1415',
@@ -766,17 +768,23 @@ const fetchmockOptions = [
   },
 ];
 const store = configureStore();
+
+const WithDrawerDashboardLayout = compose<
+  DashboardLayoutProps & InjectedDrawerProps,
+  DashboardLayoutProps
+>(injectDrawer)(DashboardLayout);
+
 export default {
   component: (
     <Provider store={store}>
       <IocProvider container={container}>
         <LocalStorageMock items={{ access_token: 're4lt0k3n' }}>
           <FetchMock mocks={fetchmockOptions}>
-            <DashboardLayout {...propsMetric} />
-            <DashboardLayout {...props} />
-            <DashboardLayout {...propsAnalytics1} />
-            <DashboardLayout {...propsAnalytics2} />
-            <DashboardLayout {...propsAnalytics3} />
+            <WithDrawerDashboardLayout {...propsMetric} />
+            <WithDrawerDashboardLayout {...props} />
+            <WithDrawerDashboardLayout {...propsAnalytics1} />
+            <WithDrawerDashboardLayout {...propsAnalytics2} />
+            <WithDrawerDashboardLayout {...propsAnalytics3} />
           </FetchMock>
         </LocalStorageMock>
       </IocProvider>

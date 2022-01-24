@@ -41,7 +41,6 @@ import {
 import moment from 'moment';
 import { AbstractScope } from '../models/datamart/graphdb/Scope';
 import { QueryScopeAdapter } from '../utils/QueryScopeAdapter';
-import { QueryLanguage, QueryShape } from '../models/datamart/DatamartResource';
 import {
   CollectionVolumesDimension,
   CollectionVolumesMetric,
@@ -52,12 +51,15 @@ import { formatDate } from '../utils/DateHelper';
 import { QueryFragment } from '../components/chart-engine/Chart';
 import { percentages } from '../utils/transformations/PercentagesTransformation';
 import { indexDataset } from '../utils/transformations/IndexTranformation';
+import { fetchAndFormatQuery } from '../utils/source/OtqlSourceHelper';
 
 export type ChartType = 'pie' | 'bars' | 'radar' | 'metric';
 export type SourceType =
   | 'otql'
   | 'join'
   | 'to-list'
+  | 'index'
+  | 'to-percentages'
   | 'activities_analytics'
   | 'collection_volumes'
   | 'ratio'
@@ -67,7 +69,7 @@ const DEFAULT_Y_KEY = {
   key: 'value',
   message: 'count',
 };
-interface AbstractSource {
+export interface AbstractSource {
   type: SourceType;
   series_title?: string;
 }
@@ -228,37 +230,20 @@ export class ChartDatasetService implements IChartDatasetService {
     },
   ];
 
-  private fetchOtqlQuery(datamartId: string, otqlSource: OTQLSource): Promise<QueryShape> {
-    if (otqlSource.query_text) {
-      const resource = {
-        datamart_id: datamartId,
-        query_text: otqlSource.query_text,
-        query_language: 'OTQL' as QueryLanguage,
-      };
-      return Promise.resolve(resource);
-    } else if (otqlSource.query_id) {
-      return this.queryService.getQuery(datamartId, otqlSource.query_id).then(res => res.data);
-    } else {
-      return Promise.reject('No query defined for otql type source');
-    }
-  }
-
   private executeOtqlQuery(
     datamartId: string,
     otqlSource: OTQLSource,
     scope?: AbstractScope,
     queryFragment?: QueryFragment,
   ): Promise<OTQLResult> {
-    const otqlScope = this.scopeAdapter.buildScopeOtqlQuery(datamartId, scope);
-    return this.fetchOtqlQuery(datamartId, otqlSource)
-      .then(dashboardQueryResource => {
-        return this.scopeAdapter.scopeQueryWithWhereClause(
-          datamartId,
-          queryFragment || {},
-          dashboardQueryResource,
-          otqlScope,
-        );
-      })
+    return fetchAndFormatQuery(
+      this.queryService,
+      this.scopeAdapter,
+      datamartId,
+      otqlSource,
+      scope,
+      queryFragment,
+    )
       .then(adaptedQueryText => {
         return this.queryService.runOTQLQuery(datamartId, adaptedQueryText, {
           precision: otqlSource.precision,

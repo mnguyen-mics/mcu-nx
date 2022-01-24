@@ -8,6 +8,7 @@ import NotificationsReducers from '../Notifications/reducer';
 import AppReducer from '../App/reducer';
 import KeycloakService from '../../services/KeycloakService';
 import keycloakPostLoginReducer from '../KeycloakPostLogin/reducer';
+import { drawerReducer } from '../../components/drawer/DrawerStore';
 
 const allReducers = KeycloakService.isKeycloakEnabled()
   ? {
@@ -17,6 +18,7 @@ const allReducers = KeycloakService.isKeycloakEnabled()
       ...SessionReducers,
       ...NotificationsReducers,
       ...FormReducer,
+      ...drawerReducer,
     }
   : {
       ...AppReducer,
@@ -26,6 +28,7 @@ const allReducers = KeycloakService.isKeycloakEnabled()
       ...SessionReducers,
       ...LabelsReducers,
       ...FormReducer,
+      ...drawerReducer,
     };
 
 export default combineReducers(allReducers);

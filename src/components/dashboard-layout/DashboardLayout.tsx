@@ -14,6 +14,7 @@ import {
   DashboardContentSchema,
   DashboardFilterQueryFragments,
 } from '../../models/customDashboards/customDashboards';
+import { InjectedDrawerProps } from '../..';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 const BASE_FRAMEWORK_HEIGHT = 96;
@@ -32,11 +33,10 @@ export interface DashboardLayoutState {
   formattedQueryFragment: QueryFragment;
 }
 
-export default class DashboardLayout extends React.Component<
-  DashboardLayoutProps,
-  DashboardLayoutState
-> {
-  constructor(props: DashboardLayoutProps) {
+type Props = DashboardLayoutProps & InjectedDrawerProps;
+
+export default class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       dashboardFilterValues: {},
@@ -56,6 +56,8 @@ export default class DashboardLayout extends React.Component<
         chartContainerStyle={cssProperties}
         scope={scope}
         queryFragment={formattedQueryFragment}
+        openNextDrawer={this.props.openNextDrawer}
+        closeNextDrawer={this.props.closeNextDrawer}
       />
     );
   }
