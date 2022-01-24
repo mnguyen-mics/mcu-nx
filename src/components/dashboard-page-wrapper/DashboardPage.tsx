@@ -4,7 +4,7 @@ import { McsTabs } from '@mediarithmics-private/mcs-components-library';
 import { LabeledValue } from 'antd/lib/select';
 
 import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
-import ScopedDashboardLayout from './ScopedDashboardLayout';
+import ScopedDashboardLayout from '../dashboard-page-wrapper/ScopedDashboardLayout';
 import { InjectedFeaturesProps, injectFeatures } from '../Features';
 import {
   DashboardPageContent,
@@ -114,6 +114,7 @@ class DashboardPage extends React.Component<Props> {
                 schema={dashboard.dashboardContent}
                 source={source}
                 organisationId={organisationId}
+                editable={false}
               />
             ) : (
               <div />
@@ -134,6 +135,7 @@ class DashboardPage extends React.Component<Props> {
               organisationId={organisationId}
               schema={apiDashboards[0].dashboardContent}
               source={source}
+              editable={false}
             />
           </div>
         ) : (

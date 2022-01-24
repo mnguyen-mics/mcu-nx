@@ -40,7 +40,7 @@ import ChartMetadataInfo from './ChartMetadataInfo';
 import { fetchAndFormatQuery } from '../../utils/source/OtqlSourceHelper';
 import { IQueryService, QueryService } from '../../services/QueryService';
 import { QueryScopeAdapter } from '../../utils/QueryScopeAdapter';
-import { ArrowsAltOutlined } from '@ant-design/icons';
+import { ArrowsAltOutlined, EditOutlined } from '@ant-design/icons';
 
 interface YKey {
   key: string;
@@ -58,6 +58,7 @@ interface ChartProps {
   chartContainerStyle?: React.CSSProperties;
   scope?: AbstractScope;
   queryFragment?: QueryFragment;
+  onClickEdit?: () => void;
 }
 
 interface ErrorContext {
@@ -300,7 +301,7 @@ class Chart extends React.Component<Props, ChartState> {
 
   render() {
     const { formattedData, loading, errorContext } = this.state;
-    const { chartConfig, chartContainerStyle } = this.props;
+    const { chartConfig, chartContainerStyle, onClickEdit } = this.props;
     if (!!errorContext) {
       return (
         <Alert
@@ -321,14 +322,17 @@ class Chart extends React.Component<Props, ChartState> {
     return (
       <div style={chartContainerStyle} className={'mcs-chart'}>
         <div className={'mcs-chart_header'}>
-          <h2
+          <span
             style={{ cursor: 'pointer' }}
             className={'mcs-chart_header_title'}
             onClick={openDrawer}
           >
             {chartConfig.title}
-            <ArrowsAltOutlined className={'mcs-hoverableIcon'} />
-          </h2>
+            <ArrowsAltOutlined className={'mcs-chartIcon mcs-hoverableIcon'} />
+          </span>
+          {onClickEdit ? (
+            <EditOutlined className={'mcs-chartIcon'} onClick={onClickEdit} />
+          ) : undefined}
           {loading && <Loading className={'mcs-chart_header_loader'} isFullScreen={false} />}
         </div>
         <div className='mcs-chart_content_container'>

@@ -156,9 +156,11 @@ class DrawerManager extends React.Component<DrawerManagerProps, DrawerManagerSta
   }
 }
 
-const mapStatetoProps = (state: DrawerStore) => ({
-  drawableContents: state.drawableContents,
-});
+const mapStatetoProps = (state: DrawerStore) => {
+  return {
+    drawableContents: state.drawableContents,
+  };
+};
 
 export default compose<DrawerManagerProps, {}>(
   connect(mapStatetoProps),
