@@ -73,7 +73,7 @@
     'API_URL': 'https://api.mediarithm',
     'ASSETS_URL': 'https://assets.mediarithmics.local',
     'FEATURES': defaultFeatures,
-    'SITE_NAME': 'mediarithmics | computing console',
+    'SITE_NAME': 'mediarithmics - computing console',
     'PLATFORM_ADMIN_URL': 'http://localhost:3000',
     'DEVELOPER_CONSOLE_URL': 'https://computing-console-mics.francecentral.cloudapp.azure.com/frontprod/login',
     'USE_GTAG': false,
