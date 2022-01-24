@@ -16,6 +16,8 @@ const TYPES = {
   IAudienceSegmentService: Symbol.for('audienceSegmentService'),
   IStandardSegmentBuilderService: Symbol.for('standardSegmentBuilderService'),
   IUsersService: Symbol.for('usersService'),
+  IChannelService: Symbol.for('channelService'),
+  ICompartmentService: Symbol.for('compartmentService'),
 };
 
 export { TYPES };

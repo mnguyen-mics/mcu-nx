@@ -36,6 +36,8 @@ import AudienceSegmentService, {
 import StandardSegmentBuilderService, {
   IStandardSegmentBuilderService,
 } from '../services/StandardSegmentBuilderService';
+import ChannelService, { IChannelService } from '../services/ChannelService';
+import CompartmentService, { ICompartmentService } from '../services/CompartmentService';
 
 export const container = new Container();
 
@@ -73,6 +75,8 @@ container
   .bind<IStandardSegmentBuilderService>(TYPES.IStandardSegmentBuilderService)
   .to(StandardSegmentBuilderService);
 container.bind<IUsersService>(TYPES.IUsersService).to(UsersService);
+container.bind<IChannelService>(TYPES.IChannelService).to(ChannelService);
+container.bind<ICompartmentService>(TYPES.ICompartmentService).to(CompartmentService);
 
 export const { lazyInject } = getDecorators(container, false);
 

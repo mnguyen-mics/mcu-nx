@@ -29,6 +29,7 @@ export const messages = defineMessages({
 });
 interface DashboardPageWrapperProps {
   datamartId: string;
+  organisationId: string;
   fetchDataFileDashboards?: () => Promise<DataListResponse<DataFileDashboardResource>>;
   fetchApiDashboards?: () => Promise<DashboardPageContent[]>;
   isFullScreenLoading?: boolean;
@@ -142,6 +143,7 @@ class DashboardPageWrapper extends React.Component<Props, State> {
     const {
       hasFeature,
       datamartId,
+      organisationId,
       source,
       tabsClassname,
       disableAllUserFilter,
@@ -194,6 +196,7 @@ class DashboardPageWrapper extends React.Component<Props, State> {
         <DashboardPage
           className={className}
           datamartId={datamartId}
+          organisationId={organisationId}
           apiDashboards={apiDashboardsOpt}
           dataFileDashboards={dataFileDashboardsOpt}
           datamartAnalyticsConfig={

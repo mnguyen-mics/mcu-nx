@@ -21,6 +21,7 @@ const BASE_FRAMEWORK_HEIGHT = 96;
 
 export interface DashboardLayoutProps {
   datamart_id: string;
+  organisationId: string;
   schema: DashboardContentSchema;
   scope?: AbstractScope;
 }
@@ -45,13 +46,14 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
   }
 
   renderChart(chart: ChartConfig, cssProperties?: CSSProperties) {
-    const { datamart_id, scope } = this.props;
+    const { datamart_id, organisationId, scope } = this.props;
     const { formattedQueryFragment } = this.state;
 
     return (
       <Chart
         key={cuid()}
         datamartId={datamart_id}
+        organisationId={organisationId}
         chartConfig={chart}
         chartContainerStyle={cssProperties}
         scope={scope}

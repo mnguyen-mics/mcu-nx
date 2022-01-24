@@ -53,6 +53,7 @@ export interface QueryFragment {
 
 interface ChartProps {
   datamartId: string;
+  organisationId: string;
   chartConfig: ChartConfig;
   chartContainerStyle?: React.CSSProperties;
   scope?: AbstractScope;
@@ -90,9 +91,9 @@ class Chart extends React.Component<Props, ChartState> {
   }
 
   componentDidMount() {
-    const { datamartId, chartConfig, scope, queryFragment } = this.props;
+    const { datamartId, organisationId, chartConfig, scope, queryFragment } = this.props;
     this.chartDatasetService()
-      .fetchDataset(datamartId, chartConfig, scope, queryFragment)
+      .fetchDataset(datamartId, organisationId, chartConfig, scope, queryFragment)
       .then(formattedData => {
         this.setState({
           formattedData: formattedData,

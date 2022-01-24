@@ -1,4 +1,4 @@
-import ApiService, { DataListResponse, DataResponse } from './ApiService';
+import ApiService, { DataListResponse } from './ApiService';
 import {
   AudienceSegmentType,
   UserQueryEvaluationMode,
@@ -69,8 +69,6 @@ export interface IAudienceSegmentService {
     organisationId?: string,
     options?: GetSegmentsOption,
   ) => Promise<DataListResponse<AudienceSegmentShape>>;
-
-  getSegment: (segmentId: string) => Promise<DataResponse<AudienceSegmentShape>>;
 }
 
 @injectable()
@@ -85,10 +83,5 @@ export default class AudienceSegmentService implements IAudienceSegmentService {
       ...options,
     };
     return ApiService.getRequest(endpoint, params);
-  };
-
-  getSegment = (segmentId: string): Promise<DataResponse<AudienceSegmentShape>> => {
-    const endpoint = `audience_segments/${segmentId}`;
-    return ApiService.getRequest(endpoint);
   };
 }

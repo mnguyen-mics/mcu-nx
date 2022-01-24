@@ -9,8 +9,15 @@ import {
   MockedAnalytics2,
   MockedAnalyticsMetrics,
   MockedCollectionMetrics,
+  MockedFetchChannels,
+  MockedFetchSessionsByChannels,
 } from '../../chart-engine/MockedData';
-import { ChartType, MetricChartOptions, SourceType } from '../../../services/ChartDatasetService';
+import {
+  ChartType,
+  MetricChartOptions,
+  ModelType,
+  SourceType,
+} from '../../../services/ChartDatasetService';
 import { Provider } from 'react-redux';
 import { InjectedDrawerProps, IocProvider } from '../../..';
 import configureStore from '../../../redux/store';
@@ -727,6 +734,59 @@ const propsAnalytics3 = {
   },
 };
 
+const propsAnalytics4 = {
+  datamart_id: '1418',
+  schema: {
+    sections: [
+      {
+        title: 'Analytics metric with get-decorators transformation',
+        cards: [
+          {
+            x: 0,
+            charts: [
+              {
+                title: 'Site visits per day per channel',
+                type: 'Bars' as ChartType,
+                dataset: {
+                  type: 'get-decorators',
+                  sources: [
+                    {
+                      type: 'activities_analytics',
+                      query_json: {
+                        dimensions: [{ name: 'date_yyyy_mm_dd' }, { name: 'channel_id' }],
+                        dimension_filter_clauses: {
+                          operator: 'OR',
+                          filters: [
+                            {
+                              dimension_name: 'type',
+                              operator: 'EXACT',
+                              expressions: ['SITE_VISIT'],
+                            },
+                          ],
+                        },
+                        metrics: [{ expression: 'sessions' }],
+                      },
+                    },
+                  ],
+                  decorators_options: { buckets: { model_type: 'CHANNELS' } },
+                },
+                options: {
+                  stacking: true,
+                  hide_x_axis: true,
+                },
+              },
+            ],
+            y: 0,
+            h: 2,
+            layout: 'vertical',
+            w: 4,
+          },
+        ],
+      },
+    ],
+  },
+};
+
 const fetchmockOptions = [
   {
     matcher: 'glob:/undefined/v1/datamarts/*/queries/*',
@@ -761,10 +821,17 @@ const fetchmockOptions = [
     matcher: 'glob:/undefined/v1/platform_monitoring/collections*',
     response: MockedCollectionMetrics,
   },
-
   {
     matcher: 'glob:/undefined/v1/datamarts/*/query_executions/otql*',
     response: MockedData,
+  },
+  {
+    matcher: 'glob:/undefined/v1/datamarts/1418/user_activities_analytics*',
+    response: MockedFetchSessionsByChannels,
+  },
+  {
+    matcher: 'glob:/undefined/v1/datamarts/1418/channels',
+    response: MockedFetchChannels,
   },
 ];
 const store = configureStore();
@@ -785,6 +852,7 @@ export default {
             <WithDrawerDashboardLayout {...propsAnalytics1} />
             <WithDrawerDashboardLayout {...propsAnalytics2} />
             <WithDrawerDashboardLayout {...propsAnalytics3} />
+            <WithDrawerDashboardLayout {...propsAnalytics4} />
           </FetchMock>
         </LocalStorageMock>
       </IocProvider>
