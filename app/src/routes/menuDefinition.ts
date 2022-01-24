@@ -1,8 +1,8 @@
 import { generateMissingdefinitionItemFromRoute, NavigatorMenuDefinition } from './domain';
 import { HomePage } from '../containers/Home';
 import { DashboardsPage } from '../containers/Dashboards/List';
-import { pluginsDefinition } from './pluginRoutes';
 import { jobsDefinition } from './jobRoutes';
+import PluginsList from '../containers/Plugins/List/PluginsList';
 
 const homeMenuDefinition: NavigatorMenuDefinition = {
   iconType: 'users',
@@ -18,17 +18,13 @@ const homeMenuDefinition: NavigatorMenuDefinition = {
 const pluginsMenuDefinition: NavigatorMenuDefinition = {
   iconType: 'creative',
   displayName: 'Plugins',
-  type: 'multi',
-  subMenuItems: [
-    {
-      ...generateMissingdefinitionItemFromRoute(pluginsDefinition.pluginsOverview),
-      displayName: 'Overview',
-    },
-    {
-      ...generateMissingdefinitionItemFromRoute(pluginsDefinition.pluginsList),
-      displayName: 'Plugin List',
-    },
-  ],
+  type: 'simple',
+
+  ...generateMissingdefinitionItemFromRoute({
+    path: '/plugins',
+    layout: 'main',
+    contentComponent: PluginsList,
+  }),
 };
 
 const jobsMenuDefinition: NavigatorMenuDefinition = {
