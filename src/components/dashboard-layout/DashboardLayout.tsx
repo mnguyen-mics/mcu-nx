@@ -129,7 +129,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
         (charts.length - metricChartsList.length) * 28) /
       (charts.length - metricChartsList.length);
 
-    const metricChartWidthSize = 20;
+    const metricChartWidthSize = 30;
     const otherThanMetricChartWidth =
       (100 - metricChartsList.length * metricChartWidthSize) /
       (charts.length - metricChartsList.length);
