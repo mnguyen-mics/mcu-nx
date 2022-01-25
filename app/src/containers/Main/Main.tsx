@@ -15,6 +15,7 @@ import {
   AuthenticatedRoute,
   NoAccess,
   errorMessages,
+  DrawerManager,
 } from '@mediarithmics-private/advanced-components';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -131,6 +132,9 @@ class Main extends React.Component<JoinedProps, MainState> {
         return (
           <React.Fragment>
             <Notifications />
+            <div className='drawer-wrapper'>
+              <DrawerManager />
+            </div>
             <LayoutManager routeComponent={<ElementTag />} />
           </React.Fragment>
         );
