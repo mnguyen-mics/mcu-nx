@@ -60,7 +60,7 @@ type JoinedProps = PluginFieldGeneratorProps &
   InjectedDrawerProps &
   InjectedIntlProps;
 
-interface AdditionalInputProps {
+interface AdditionalInputProps extends InputProps {
   buttonText?: string;
   accept?: any; // type
   options?: any; // type
@@ -150,6 +150,11 @@ class PluginFieldGenerator extends React.Component<JoinedProps, State> {
           FormInput,
           `${fieldDefinition.technical_name}.value.value`,
           fieldDefinition,
+          [],
+          [],
+          {
+            className: `mcs-pluginFormField_${fieldDefinition.technical_name}`,
+          },
         );
       case 'URL':
         return this.renderFieldBasedOnConfig(
