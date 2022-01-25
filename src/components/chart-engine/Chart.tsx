@@ -327,7 +327,7 @@ class Chart extends React.Component<Props, ChartState> {
             className={'mcs-chart_header_title'}
             onClick={openDrawer}
           >
-            {chartConfig.title}
+            <span>{chartConfig.title}</span>
             <ArrowsAltOutlined className={'mcs-chartIcon mcs-hoverableIcon'} />
           </span>
           {onClickEdit ? (
