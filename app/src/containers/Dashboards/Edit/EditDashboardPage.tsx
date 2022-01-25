@@ -10,27 +10,36 @@ import messages from './messages';
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';
-import { Loading } from '@mediarithmics-private/mcs-components-library';
+import { EmptyChart, Loading, McsTabs } from '@mediarithmics-private/mcs-components-library';
 import {
   CustomDashboardResource,
   CustomDashboardContentResource,
+  DashboardContentSchema,
 } from '@mediarithmics-private/advanced-components/lib/models/customDashboards/customDashboards';
 import { IAudienceSegmentService } from '@mediarithmics-private/advanced-components/lib/services/AudienceSegmentService';
 import { IStandardSegmentBuilderService } from '@mediarithmics-private/advanced-components/lib/services/StandardSegmentBuilderService';
 import { IDatamartService } from '@mediarithmics-private/advanced-components/lib/services/DatamartService';
 import {
+  EditableDashboardLayout,
   ICustomDashboardService,
+  injectDrawer,
   InjectedWorkspaceProps,
   injectWorkspace,
   IUsersService,
   lazyInject,
   TYPES,
+  withDatamartSelector,
+  WithDatamartSelectorProps,
 } from '@mediarithmics-private/advanced-components';
 import lodash from 'lodash';
 import { FormInstance, RuleObject } from 'antd/lib/form';
 import { dashboardsDefinition } from '../../../routes/dashboardsRoutes';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox/Checkbox';
-import { DataResponse } from '@mediarithmics-private/advanced-components/lib/services/ApiService';
+import {
+  DataListResponse,
+  DataResponse,
+} from '@mediarithmics-private/advanced-components/lib/services/ApiService';
+import UserResource from '@mediarithmics-private/advanced-components/lib/models/directory/UserResource';
 
 const { Content } = Layout;
 
@@ -86,6 +95,7 @@ interface EditDashboardPageState {
   contentErrorMessage?: string;
   validated: boolean;
   form: React.RefObject<FormInstance>;
+  defaultDatamartId?: string;
 }
 
 interface RouterProps {
@@ -107,6 +117,7 @@ interface LabelValueOption {
 type Props = InjectedIntlProps &
   InjectedNotificationProps &
   InjectedWorkspaceProps &
+  WithDatamartSelectorProps &
   RouteComponentProps<RouterProps>;
 
 class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
@@ -147,94 +158,91 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
 
   componentDidMount() {
     const {
+      notifyError,
       match: {
         params: { organisationId, dashboardId },
       },
     } = this.props;
-    this.fetchData(organisationId, dashboardId);
+    this.fetchData(organisationId, dashboardId).catch(e => {
+      this.setState({
+        loading: false,
+      });
+      notifyError(e);
+    });
   }
 
-  fetchData = (organisationId: string, dashboardId: string) => {
-    const { notifyError } = this.props;
-    const fetchPromises: Array<
-      Promise<CustomDashboardResource | CustomDashboardContentResource | LabelValueOption[]>
-    > = [];
+  fetchData = async (organisationId: string, dashboardId: string) => {
+    const { userNamesMap } = this.state;
 
     if (dashboardId) {
-      fetchPromises.push(
-        this.fetchDashboard(organisationId, dashboardId).then(dashboard => {
-          this.fillDashboardElements(dashboard);
-          if (dashboard.last_modified_by) this.fetchUser(dashboard.last_modified_by);
-
-          if (dashboard.dashboard_content_id)
-            return this.fetchContent(organisationId, dashboardId).then(content => {
-              this.fillContentElements(content);
-              this.fetchUser(content.created_by);
-              return content;
-            });
-          else return dashboard;
-        }),
-      );
-    } else this.setState({ contentText: defaultContent, loading: false });
-
-    fetchPromises.push(
-      this.fetchSegments(organisationId, segments => {
-        this.setState({
-          existingSegments: segments,
-        });
-        this.enrichSegmentSelectedValues();
-      }),
-    );
-
-    fetchPromises.push(
-      this.fetchBuilders(organisationId, builders => {
-        this.setState({
-          existingBuilders: builders,
-        });
-        this.enrichBuilderSelectedValues();
-      }),
-    );
-
-    Promise.all(fetchPromises)
-      .then(_ => {
-        this.setState({
-          loading: false,
-        });
-      })
-      .catch(e => {
-        this.setState({
-          loading: false,
-        });
-        notifyError(e);
+      const dashboard = await this.fetchDashboard(organisationId, dashboardId);
+      const lastModifiedBy = await this.fetchUser(dashboard.last_modified_by);
+      const content = await this.fetchContent(organisationId, dashboardId);
+      const createdBy = await this.fetchUser(content.created_by);
+      if (lastModifiedBy) {
+        userNamesMap.set(
+          lastModifiedBy.id,
+          `${lastModifiedBy.first_name} ${lastModifiedBy.last_name}`,
+        );
+      }
+      if (createdBy) {
+        userNamesMap.set(createdBy.id, `${createdBy.first_name} ${createdBy.last_name}`);
+      }
+      const segments = await this.fetchSegments(organisationId);
+      const builders = await this.fetchBuilders(organisationId);
+      const contentText = JSON.stringify(content.content, null, 4);
+      const selectedSegments = this.convertIdsToSelectValues(dashboard.segment_ids);
+      const selectedBuilders = this.convertIdsToSelectValues(dashboard.builder_ids);
+      const enrichedSegmentsValues = this.enrichSelectedValuesByOptions(selectedSegments, segments);
+      const enrichedBuildersValues = this.enrichSelectedValuesByOptions(selectedBuilders, builders);
+      this.setState({
+        dashboard: dashboard,
+        dashboardTitle: dashboard.title,
+        homeCheckboxChecked: dashboard.scopes.includes('home'),
+        segmentCheckboxChecked: dashboard.scopes.includes('segments'),
+        builderCheckboxChecked: dashboard.scopes.includes('builders'),
+        consoleCheckboxChecked: dashboard.scopes.includes('console'),
+        selectedSegments: enrichedSegmentsValues,
+        selectedBuilders: enrichedBuildersValues,
+        contentTextOrig: contentText,
+        contentText: contentText,
+        content: content,
+        loading: false,
+        existingBuilders: builders,
+        existingSegments: segments,
+        userNamesMap: userNamesMap,
       });
+    } else {
+      this.setState({
+        contentText: defaultContent,
+        loading: false,
+      });
+    }
   };
 
-  fetchUser = (userId: string) => {
+  fetchUser = async (userId?: string): Promise<UserResource | undefined> => {
     const { notifyError } = this.props;
     const { userNamesMap } = this.state;
 
-    if (!userNamesMap.has(userId))
-      this._usersService
+    if (userId && !userNamesMap.has(userId)) {
+      const userResponse: DataListResponse<UserResource> = await this._usersService
         .getUsersByKeyword(userId)
-        .then(userResponse => {
-          const user = userResponse.data.find(userResource => userResource.id === userId);
-          if (user) {
-            userNamesMap.set(user.id, `${user.first_name} ${user.last_name}`);
-
-            this.setState({
-              userNamesMap: userNamesMap,
-            });
-          }
-        })
         .catch(e => {
           notifyError(e);
+          return {
+            data: [],
+            count: 0,
+            status: 'error',
+          };
         });
+      const user = userResponse.data.find(userResource => userResource.id === userId);
+
+      return user;
+    }
+    return undefined;
   };
 
-  fetchBuilders = (
-    organisationId: string,
-    processResult: (builders: LabelValueOption[]) => void,
-  ): Promise<LabelValueOption[]> => {
+  fetchBuilders = (organisationId: string): Promise<LabelValueOption[]> => {
     return this._datamartService.getDatamarts(organisationId).then(datamartsResponse => {
       return Promise.all(
         datamartsResponse.data.map(datamart =>
@@ -251,32 +259,22 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
 
             return labelValueOption;
           });
-
-        processResult(result);
-
         return result;
       });
     });
   };
 
-  fetchSegments = (
-    organisationId: string,
-    processResult: (builders: LabelValueOption[]) => void,
-  ): Promise<LabelValueOption[]> => {
-    return this._audienceSegmentService.getSegments(organisationId).then(segmentsResponse => {
-      const result = segmentsResponse.data.map(segment => {
-        const labelValueOption: LabelValueOption = {
-          label: `${segment.id} - ${segment.name}`,
-          value: segment.id,
-        };
+  fetchSegments = async (organisationId: string): Promise<LabelValueOption[]> => {
+    const segmentsResponse = await this._audienceSegmentService.getSegments(organisationId);
+    const result = segmentsResponse.data.map(segment => {
+      const labelValueOption: LabelValueOption = {
+        label: `${segment.id} - ${segment.name}`,
+        value: segment.id,
+      };
 
-        return labelValueOption;
-      });
-
-      processResult(result);
-
-      return result;
+      return labelValueOption;
     });
+    return result;
   };
 
   fetchContent = (
@@ -301,70 +299,20 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       });
   };
 
-  fillDashboardElements = (dashboard: CustomDashboardResource) => {
-    this.setState({
-      dashboard: dashboard,
-      dashboardTitle: dashboard.title,
-      homeCheckboxChecked: dashboard.scopes.includes('home'),
-      segmentCheckboxChecked: dashboard.scopes.includes('segments'),
-      builderCheckboxChecked: dashboard.scopes.includes('builders'),
-      consoleCheckboxChecked: dashboard.scopes.includes('console'),
-      selectedSegments: this.convertIdsToSelectValues(dashboard.segment_ids),
-      selectedBuilders: this.convertIdsToSelectValues(dashboard.builder_ids),
-    });
-    this.enrichSegmentSelectedValues();
-    this.enrichBuilderSelectedValues();
-  };
-
-  fillContentElements = (content: CustomDashboardContentResource) => {
-    const contentText = JSON.stringify(content.content, null, 4);
-
-    this.setState({
-      contentTextOrig: contentText,
-      contentText: contentText,
-      content: content,
-    });
-  };
-
-  enrichSegmentSelectedValues = () => {
-    const { selectedSegments, existingSegments } = this.state;
-
-    this.enrichSelectedValuesByOptions(selectedSegments, existingSegments, enrichedValues => {
-      this.setState({
-        selectedSegments: enrichedValues,
-      });
-    });
-  };
-
-  enrichBuilderSelectedValues = () => {
-    const { selectedBuilders, existingBuilders } = this.state;
-
-    this.enrichSelectedValuesByOptions(selectedBuilders, existingBuilders, enrichedValues => {
-      this.setState({
-        selectedBuilders: enrichedValues,
-      });
-    });
-  };
-
-  enrichSelectedValuesByOptions = (
-    values: SelectValue[],
-    options: LabelValueOption[],
-    processResult: (enrichedValues: SelectValue[]) => void,
-  ) => {
+  enrichSelectedValuesByOptions(values: SelectValue[], options: LabelValueOption[]) {
     if (values.length > 0 && options.length > 0) {
-      processResult(
-        values.map(value => {
-          const findedOption = options.find(option => option.value === value.value);
-          const selectValue: SelectValue = {
-            ...value,
-            label: findedOption ? findedOption.label : value.label,
-          };
+      return values.map(value => {
+        const foundOption = options.find(option => option.value === value.value);
+        const selectValue: SelectValue = {
+          ...value,
+          label: foundOption ? foundOption.label : value.label,
+        };
 
-          return selectValue;
-        }),
-      );
+        return selectValue;
+      });
     }
-  };
+    return values;
+  }
 
   convertIdsToSelectValues = (values: string[]): SelectValue[] => {
     return values.map(segId => {
@@ -518,6 +466,10 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     }
   };
 
+  onCancel = () => {
+    this.openMainListPage();
+  };
+
   onHomeCheckboxChange = (e: CheckboxChangeEvent) => {
     this.setState({
       homeCheckboxChecked: e.target.checked,
@@ -642,11 +594,101 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       form && form.current
         ? lodash.flatMap(form.current.getFieldsError(), field => field.errors)
         : [];
-
     if (formErrors.length > 0 || contentErrorMessage) result = false;
 
     return result;
   };
+
+  renderEditorTab() {
+    const {
+      contentErrorMessage,
+      dashboardTitle,
+      segmentCheckboxChecked,
+      builderCheckboxChecked,
+      consoleCheckboxChecked,
+      contentText,
+      homeCheckboxChecked,
+      selectedSegments,
+      selectedBuilders,
+      dashboard,
+    } = this.state;
+
+    const initialValues = dashboard
+      ? {
+          input_title: dashboardTitle,
+          checkbox_home: homeCheckboxChecked,
+          checkbox_segment: segmentCheckboxChecked,
+          checkbox_builder: builderCheckboxChecked,
+          checkbox_console: consoleCheckboxChecked,
+          select_segments: selectedSegments,
+          select_builders: selectedBuilders,
+          content_editor: contentText.length > 0 ? contentText : '',
+        }
+      : {
+          content_editor: defaultContent,
+        };
+    const contentErrorStatus = contentErrorMessage ? 'error' : 'success';
+    return (
+      <Form.Item
+        className='mcs-dashboardEditor_aceEditor'
+        validateStatus={contentErrorStatus}
+        help={contentErrorMessage}
+      >
+        <AceEditor
+          onChange={this.onContentTextChange}
+          mode='json'
+          theme='github'
+          fontSize={12}
+          showPrintMargin={false}
+          showGutter={true}
+          highlightActiveLine={false}
+          width='100%'
+          defaultValue={initialValues.content_editor}
+          minLines={20}
+          maxLines={1000}
+          height='auto'
+          setOptions={{
+            highlightGutterLine: false,
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true,
+            enableSnippets: false,
+            showLineNumbers: true,
+          }}
+          onValidate={this.onContentValidateInAceEditor}
+        />
+      </Form.Item>
+    );
+  }
+
+  renderChartEdition() {
+    const { selectedDatamartId, intl } = this.props;
+    const { contentText } = this.state;
+    const {
+      match: {
+        params: { organisationId },
+      },
+    } = this.props;
+    let content;
+    try {
+      content = JSON.parse(contentText);
+    } catch (e) {
+      return <EmptyChart title={intl.formatMessage(messages.couldNotBeLoaded)} />;
+    }
+
+    const updateSchema = (newState: DashboardContentSchema) => {
+      this.setState({
+        contentText: JSON.stringify(newState),
+      });
+    };
+    return (
+      <EditableDashboardLayout
+        schema={content}
+        datamart_id={selectedDatamartId}
+        organisationId={organisationId}
+        updateSchema={updateSchema}
+      />
+    );
+  }
 
   render() {
     const { intl } = this.props;
@@ -663,7 +705,6 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       loading,
       existingSegments,
       existingBuilders,
-      contentErrorMessage,
       form,
       userNamesMap,
       content,
@@ -707,13 +748,25 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
         )
       : null;
 
-    const contentErrorStatus = contentErrorMessage ? 'error' : 'success';
+    const wysiwigTab = {
+      title: 'Edit dashboard',
+      display: this.renderChartEdition(),
+    };
+
+    const editorTab = {
+      title: 'Advanced',
+      display: this.renderEditorTab(),
+    };
 
     return loading ? (
       <Loading isFullScreen={true} />
     ) : (
       <div className='ant-layout'>
-        <EditDashboardActionBar lastBreadcrumb={breadcrumb} handleSave={this.onSave} />
+        <EditDashboardActionBar
+          lastBreadcrumb={breadcrumb}
+          handleSave={this.onSave}
+          handleCancel={this.onCancel}
+        />
         <div className='ant-layout'>
           <Content className='mcs-content-container mcs-dashboardEditor'>
             <Form ref={form} initialValues={initialValues}>
@@ -821,35 +874,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
                   {intl.formatMessage(messages.console)}
                 </Checkbox>
               </Form.Item>
-
-              <Form.Item
-                className='mcs-dashboardEditor_aceEditor'
-                validateStatus={contentErrorStatus}
-                help={contentErrorMessage}
-              >
-                <AceEditor
-                  mode='json'
-                  theme='github'
-                  onChange={this.onContentTextChange}
-                  fontSize={12}
-                  showPrintMargin={false}
-                  showGutter={true}
-                  highlightActiveLine={false}
-                  width='100%'
-                  defaultValue={initialValues.content_editor}
-                  minLines={20}
-                  maxLines={1000}
-                  height='auto'
-                  setOptions={{
-                    highlightGutterLine: false,
-                    enableBasicAutocompletion: true,
-                    enableLiveAutocompletion: true,
-                    enableSnippets: false,
-                    showLineNumbers: true,
-                  }}
-                  onValidate={this.onContentValidateInAceEditor}
-                />
-              </Form.Item>
+              <McsTabs items={[wysiwigTab, editorTab]} />
             </Form>
           </Content>
         </div>
@@ -862,5 +887,7 @@ export default compose<Props, {}>(
   withRouter,
   injectIntl,
   injectNotifications,
+  withDatamartSelector,
   injectWorkspace,
+  injectDrawer,
 )(EditDashboardPage);

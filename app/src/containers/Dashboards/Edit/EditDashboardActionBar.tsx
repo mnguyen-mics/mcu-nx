@@ -16,6 +16,7 @@ interface RouterProps {
 interface EditDashboardActionbarProps {
   lastBreadcrumb: string;
   handleSave: () => void;
+  handleCancel: () => void;
 }
 
 interface DashboardCreateActionbarState {
@@ -43,6 +44,7 @@ class DashboardCreateActionbar extends React.Component<Props, DashboardCreateAct
       },
       intl: { formatMessage },
       handleSave,
+      handleCancel,
       lastBreadcrumb,
     } = this.props;
 
@@ -61,7 +63,7 @@ class DashboardCreateActionbar extends React.Component<Props, DashboardCreateAct
           <Button
             className='mcs-dashboardEditorActionBarCancelButton'
             type='primary'
-            onClick={handleSave}
+            onClick={handleCancel}
           >
             <FormattedMessage {...messages.cancel} />
           </Button>

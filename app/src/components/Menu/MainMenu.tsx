@@ -4,7 +4,6 @@ import { Menu } from 'antd';
 import { menuDefinitions } from '../../routes/menuDefinition';
 import { compose } from 'recompose';
 import { RouteComponentProps } from 'react-router';
-import { MenuMode } from 'antd/lib/menu';
 import { NavigatorMenuDefinition, NavigatorSubMenuDefinition } from '../../routes/domain';
 import { McsIcon, MentionTag } from '@mediarithmics-private/mcs-components-library';
 
@@ -16,8 +15,11 @@ export interface MenuInfo {
   key: React.Key;
   keyPath: React.Key[];
   item: React.ReactInstance;
-  domEvent: React.MouseEvent<HTMLElement>;
+  domEvent: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>;
 }
+
+type MenuMode = 'horizontal' | 'vertical' | 'inline';
+
 export interface NavigatorMenuProps {
   mode: MenuMode;
   className?: string;

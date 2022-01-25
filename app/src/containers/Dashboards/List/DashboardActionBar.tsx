@@ -43,7 +43,7 @@ class DashboardsActionbar extends React.Component<Props, DashboardsActionbarStat
     const {
       intl: { formatMessage },
     } = this.props;
-    const isSizeOK = file.size < maxFileSize;
+    const isSizeOK = file.size !== undefined && file.size < maxFileSize;
     if (!isSizeOK) {
       message.error(`${file.name} ${formatMessage(messages.uploadError)}`, 2);
     }
@@ -51,7 +51,7 @@ class DashboardsActionbar extends React.Component<Props, DashboardsActionbarStat
 
   filterFileList = (fileList: UploadFile[]) => {
     return fileList.filter(item => {
-      return item.size < maxFileSize;
+      return item.size !== undefined && item.size < maxFileSize;
     });
   };
 

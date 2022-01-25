@@ -49,4 +49,8 @@ export default defineMessages({
     id: 'dashboards.incorrectJson',
     defaultMessage: 'The content should be a valid JSON value',
   },
+  couldNotBeLoaded: {
+    id: 'dashboards.contentNotLoaded',
+    defaultMessage: 'The dashboard content could not be loaded',
+  },
 });

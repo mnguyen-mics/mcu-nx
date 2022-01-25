@@ -35,13 +35,19 @@ class HomePage extends React.Component<Props> {
   };
 
   render() {
-    const { selectedDatamartId } = this.props;
+    const {
+      selectedDatamartId,
+      match: {
+        params: { organisationId },
+      },
+    } = this.props;
     return (
       <div className='ant-layout'>
         <div className='ant-layout'>
           <Content className='mcs-content-container'>
             <DashboardPageWrapper
               datamartId={selectedDatamartId}
+              organisationId={organisationId}
               fetchApiDashboards={this.fetchApiDashboards}
               isFullScreenLoading={false}
             />
