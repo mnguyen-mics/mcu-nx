@@ -44,7 +44,14 @@ function* keycloakPostLoginHandler() {
         }),
       };
 
-      yield put(setOrgFeature((global as any).window.MCS_CONSTANTS.FEATURES));
+      const additionnalFeatures = (global as any).window.localStorage.getItem('features');
+      let features = (global as any).window.MCS_CONSTANTS.FEATURES;
+      try {
+        features = features.concat(JSON.parse(additionnalFeatures));
+      } catch (e) {
+        log.error(e);
+      }
+      yield put(setOrgFeature(features));
 
       const clientPromise = () =>
         new Promise((resolve, reject) => {
