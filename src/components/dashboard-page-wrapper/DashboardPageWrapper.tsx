@@ -194,7 +194,7 @@ class DashboardPageWrapper extends React.Component<Props, State> {
 
       return (
         <DashboardPage
-          className={className}
+          className={`mcs-dashboardPageContainer ${className}`}
           datamartId={datamartId}
           organisationId={organisationId}
           apiDashboards={apiDashboardsOpt}
