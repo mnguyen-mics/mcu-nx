@@ -28,6 +28,10 @@ module.exports = merge(common, {
       { from: './app/*.html', to: './[name].[ext]' },
       { from: './app/*.txt', to: './[name].[ext]' },
       { from: './app/*.json', to: './[name].[ext]' },
+      {
+        from: 'app/src/assets',
+        to: 'src/assets',
+      },
     ]),
     new HtmlWebpackPlugin({
       inject: true,
