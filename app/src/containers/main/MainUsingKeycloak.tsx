@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { Redirect, Route, RouteComponentProps, Switch, withRouter } from 'react-router-dom';
 import * as React from 'react';
-import { RenderOnAuthenticated } from '@mediarithmics-private/advanced-components';
+import { RenderOnAuthenticated, DrawerManager } from '@mediarithmics-private/advanced-components';
 import { compose } from 'recompose';
 import { NavigatorRoute } from '../../routes/domain';
 import routes from '../../routes/routes';
@@ -31,6 +31,9 @@ class MainUsingKeycloak extends React.Component<JoinedProps> {
             requiredFeatures={route.requiredFeature}
             requireDatamart={route.requireDatamart}
           >
+            <div className='drawer-wrapper'>
+              <DrawerManager />
+            </div>
             <LayoutManager routeComponent={<ElementTag />} />
           </RenderOnAuthenticated>
         );
