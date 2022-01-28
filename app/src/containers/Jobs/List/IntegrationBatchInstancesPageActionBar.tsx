@@ -56,10 +56,18 @@ class IntegrationBatchInstancesPageActionBar extends React.Component<Props, Stat
     const { isDrawerVisible } = this.state;
 
     const breadcrumbPaths = [
-      <Link key='1' to={`/o/${organisationId}/jobs/integration_batch_instances`}>
+      <Link
+        key='1'
+        to={`/o/${organisationId}/jobs/integration_batch_instances`}
+        className='mcs-breadcrumbPath_jobsList'
+      >
         {formatMessage(messages.jobs)}
       </Link>,
-      <Link key='2' to={`/o/${organisationId}/jobs/integration_batch_instances`}>
+      <Link
+        key='2'
+        to={`/o/${organisationId}/jobs/integration_batch_instances`}
+        className='mcs-breadcrumbPath_batchInstancesList'
+      >
         {formatMessage(messages.jobBatchInstances)}
       </Link>,
     ];
@@ -68,7 +76,11 @@ class IntegrationBatchInstancesPageActionBar extends React.Component<Props, Stat
       <Actionbar pathItems={breadcrumbPaths}>
         <div className='mcs-actionbar_innerElementsPanel'>
           {innerElement}
-          <Button className='mcs-primary' type='primary' onClick={this.openDrawer}>
+          <Button
+            className='mcs-primary mcs-actionbar--newBatchInstance'
+            type='primary'
+            onClick={this.openDrawer}
+          >
             <McsIcon type='plus' /> <FormattedMessage {...messages.newBatchInstance} />
           </Button>
         </div>

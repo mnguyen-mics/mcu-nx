@@ -9,14 +9,13 @@ declare namespace Cypress {
      */
     login(email?: string, password?: string): Chainable<any>;
 
-    getAccessToken(
-      email?: string,
-      password?: string,
-      root?: string,
-      realm?: string,
-      client_id?: string,
-      redirect_uri?: string,
-    ): Chainable<any>;
+    /**
+     * Fetch access_token
+     * Use immediatly this function after login
+     * @example
+     * cy.getAccessToken()
+     */
+    getAccessToken(): Chainable<any>;
 
     /**
      * Logout from computing-console
@@ -53,6 +52,36 @@ declare namespace Cypress {
      * cy.expirePasssword('dev@mediarithmics.com')
      */
     expirePassword(email: string): void;
+
+    /**
+     * @param pluginType
+     * @param organisationId
+     * @param groupId
+     * @param artifactId
+     * @example
+     * cy.createPlugin("token","INTEGRATION_BATCH","Yellow Velvet","groupId","artifactId")
+     */
+    createPlugin(
+      pluginType: string,
+      organisationId: string,
+      groupId: string,
+      artifactId: string,
+    ): Chainable<any>;
+
+    /**
+     * Get all the plugins
+     * @param type
+     * @example
+     * cy.getPlugins()
+     */
+    getPlugins(type?: string): Chainable<any>;
+
+    /**
+     * @param json
+     * @example
+     * cy.createPluginVersion("token",{a:'foo'})
+     */
+    createPluginVersion(pluginId: string, json?: object): Chainable<any>;
 
     /**
      * Save local storage between two tests in a single test suite.
