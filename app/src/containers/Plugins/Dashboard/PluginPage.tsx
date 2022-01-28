@@ -98,6 +98,24 @@ class PluginPage extends React.Component<Props, State> {
       });
   }
 
+  componentDidUpdate(prevProps: Props) {
+    const {
+      history,
+      match: {
+        params: { organisationId },
+      },
+    } = this.props;
+    const {
+      match: {
+        params: { organisationId: prevOrganisationId },
+      },
+    } = prevProps;
+
+    if (prevOrganisationId !== organisationId) {
+      history.push(`/o/${organisationId}/plugins`);
+    }
+  }
+
   render() {
     const {
       intl: { formatMessage },

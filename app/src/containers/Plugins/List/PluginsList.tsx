@@ -75,8 +75,26 @@ class PluginsList extends React.Component<Props, State> {
       match: {
         params: { organisationId },
       },
-      notifyError,
     } = this.props;
+    this.getPluginFilterOptions(organisationId);
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    const {
+      match: {
+        params: { organisationId },
+      },
+    } = this.props;
+    const {
+      match: {
+        params: { organisationId: prevOrganisationId },
+      },
+    } = prevProps;
+    if (organisationId !== prevOrganisationId) this.getPluginFilterOptions(organisationId);
+  }
+
+  getPluginFilterOptions = (organisationId: string) => {
+    const { notifyError } = this.props;
     this._pluginService
       .getPlugins(
         {
@@ -114,7 +132,7 @@ class PluginsList extends React.Component<Props, State> {
       .catch(err => {
         notifyError(err);
       });
-  }
+  };
 
   onClear = (filterProperty: 'group_id' | 'artifact_id' | 'plugin_type') => () => {
     const {
