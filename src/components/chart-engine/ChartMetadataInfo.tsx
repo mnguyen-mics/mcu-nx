@@ -73,8 +73,12 @@ class ChartMetadataInfo extends React.Component<Props> {
   }
 
   prepareCsv(dataset: Dataset) {
-    const fields = Object.keys(dataset[0]).filter(k => k !== 'buckets');
-    return parse(dataset, { fields: fields });
+    if (dataset && dataset[0]) {
+      const fields = Object.keys(dataset[0]).filter(k => k !== 'buckets');
+      return parse(dataset, { fields: fields });
+    } else {
+      return '';
+    }
   }
 
   render() {
