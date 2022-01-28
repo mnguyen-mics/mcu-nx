@@ -268,7 +268,8 @@ class Chart extends React.Component<Props, ChartState> {
     let _dataset: Dataset = [];
     if (formattedData && formattedData.type === 'aggregate') {
       const aggregateDataset = formattedData as AggregateDataset;
-      _dataset = aggregateDataset.dataset;
+      if (aggregateDataset.dataset && aggregateDataset.dataset.length)
+        _dataset = aggregateDataset.dataset;
     } else if (formattedData && formattedData.type === 'count') {
       const countDataset = formattedData as CountDataset;
       _dataset = [
