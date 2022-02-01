@@ -40,7 +40,14 @@ import ChartMetadataInfo from './ChartMetadataInfo';
 import { fetchAndFormatQuery } from '../../utils/source/OtqlSourceHelper';
 import { IQueryService, QueryService } from '../../services/QueryService';
 import { QueryScopeAdapter } from '../../utils/QueryScopeAdapter';
-import { ArrowsAltOutlined, EditOutlined } from '@ant-design/icons';
+import {
+  ArrowDownOutlined,
+  ArrowsAltOutlined,
+  ArrowUpOutlined,
+  DeleteOutlined,
+  EditOutlined,
+} from '@ant-design/icons';
+import cuid from 'cuid';
 
 interface YKey {
   key: string;
@@ -59,6 +66,8 @@ interface ChartProps {
   scope?: AbstractScope;
   queryFragment?: QueryFragment;
   onClickEdit?: () => void;
+  onClickMove?: (direction: 'up' | 'down') => void;
+  onClickDelete?: () => void;
 }
 
 interface ErrorContext {
@@ -301,7 +310,8 @@ class Chart extends React.Component<Props, ChartState> {
 
   render() {
     const { formattedData, loading, errorContext } = this.state;
-    const { chartConfig, chartContainerStyle, onClickEdit } = this.props;
+    const { chartConfig, chartContainerStyle, onClickEdit, onClickMove, onClickDelete } =
+      this.props;
     if (!!errorContext) {
       return (
         <Alert
@@ -319,6 +329,9 @@ class Chart extends React.Component<Props, ChartState> {
     );
 
     const openDrawer = () => this.openDrawer(chartConfig.title, formattedData);
+    const onClickMoveUp = onClickMove ? () => onClickMove('up') : undefined;
+    const onClickMoveDown = onClickMove ? () => onClickMove('down') : undefined;
+
     return (
       <div style={chartContainerStyle} className={'mcs-chart'}>
         <div className={'mcs-chart_header'}>
@@ -332,6 +345,23 @@ class Chart extends React.Component<Props, ChartState> {
           </span>
           {onClickEdit ? (
             <EditOutlined className={'mcs-chartIcon'} onClick={onClickEdit} />
+          ) : undefined}
+          {onClickMoveUp && onClickMoveDown
+            ? [
+                <ArrowUpOutlined
+                  key={cuid()}
+                  className={'mcs-chartIcon'}
+                  onClick={onClickMoveUp}
+                />,
+                <ArrowDownOutlined
+                  key={cuid()}
+                  className={'mcs-chartIcon'}
+                  onClick={onClickMoveDown}
+                />,
+              ]
+            : undefined}
+          {onClickDelete ? (
+            <DeleteOutlined className={'mcs-chartIcon'} onClick={onClickDelete} />
           ) : undefined}
           {loading && <Loading className={'mcs-chart_header_loader'} isFullScreen={false} />}
         </div>

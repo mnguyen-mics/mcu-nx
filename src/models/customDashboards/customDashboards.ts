@@ -36,6 +36,7 @@ interface DashboardContentSection {
 }
 
 export interface DashboardContentCard {
+  id?: string;
   x: number;
   y: number;
   w: number;
