@@ -73,19 +73,44 @@ class DashboardPageWrapper extends React.Component<Props, State> {
     this.loadData(datamartId === '1500', fetchDataFileDashboards, fetchApiDashboards);
   }
 
+  componentDidUpdate(prevProps: Props) {
+    const { organisationId } = this.props;
+
+    if (organisationId !== prevProps.organisationId) {
+      const { datamartId, fetchDataFileDashboards, fetchApiDashboards } = this.props;
+      this.setState(
+        {
+          dataFileDashboards: [],
+          isLoading: true,
+          apiDashboards: [],
+        },
+        () => this.loadData(datamartId === '1500', fetchDataFileDashboards, fetchApiDashboards),
+      );
+    }
+  }
+
   shouldComponentUpdate(nextProps: Props, nextState: State) {
     const { dataFileDashboards: currentDataFileDashboards, apiDashboards: currentApiDashboards } =
       this.state;
     const { dataFileDashboards: nextDataFileDashboards, apiDashboards: nextApiDashboards } =
       nextState;
-    const { source: currentSource, defaultSegment: currentDefaultSegment } = this.props;
-    const { source: nextSource, defaultSegment: nextDefaultSegment } = nextProps;
+    const {
+      source: currentSource,
+      defaultSegment: currentDefaultSegment,
+      organisationId: currentOrganisationId,
+    } = this.props;
+    const {
+      source: nextSource,
+      defaultSegment: nextDefaultSegment,
+      organisationId: nextOganisationId,
+    } = nextProps;
 
     const shouldUpdate =
       currentDataFileDashboards !== nextDataFileDashboards ||
       currentApiDashboards !== nextApiDashboards ||
       currentSource !== nextSource ||
-      currentDefaultSegment !== nextDefaultSegment;
+      currentDefaultSegment !== nextDefaultSegment ||
+      currentOrganisationId !== nextOganisationId;
 
     return shouldUpdate;
   }
