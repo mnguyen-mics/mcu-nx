@@ -10,6 +10,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import { CopyOutlined } from '@ant-design/icons';
+import { ExportService } from '../../services/ExportService';
 const { parse } = require('json2csv');
 
 interface OtqlQueryInfo {
@@ -32,13 +33,13 @@ const messages = defineMessages({
     id: 'chart.metadata.dataset.copied',
     defaultMessage: 'Dataset copied',
   },
+  chartMetadataDatasetExport: {
+    id: 'chart.metadata.dataset.export',
+    defaultMessage: 'Export to csv',
+  },
   chartMetadataDatasetCopyToClipboard: {
     id: 'chart.metadata.dataset.copy',
     defaultMessage: 'Copy to clipboard',
-  },
-  chartMetadataDatasetExportToCsv: {
-    id: 'chart.metadata.dataset.export.csv',
-    defaultMessage: 'Export to csv',
   },
 });
 
@@ -84,6 +85,15 @@ class ChartMetadataInfo extends React.Component<Props> {
   render() {
     const { title, query_infos, datainfo, intl, onCloseDrawer } = this.props;
     const handleOnClick = (e: React.ChangeEvent<HTMLInputElement>) => this.handleOnClick(e);
+    const handleExport = () => {
+      if (datainfo.dataset) {
+        const datasetCopy: Dataset = JSON.parse(JSON.stringify(datainfo.dataset));
+        datasetCopy.forEach(d => {
+          delete d.buckets;
+        });
+        new ExportService().exportDatasetToXslx(datasetCopy);
+      }
+    };
     return (
       <div className={'mcs-chartMetaDataInfo_container'}>
         <Row>
@@ -136,9 +146,13 @@ class ChartMetadataInfo extends React.Component<Props> {
               <span>{intl.formatMessage(messages.chartMetadataDatasetCopyToClipboard)}</span>
             </Button>
           </CopyToClipboard>
-          {/* <Button type='ghost' className={'mcs-chartMetaDataInfo_section_button ant-btn-sm'}>
-                    <div>{intl.formatMessage(messages.chartMetadataDatasetExportToCsv)}</div>
-                </Button> */}
+          <Button
+            type='ghost'
+            onClick={handleExport}
+            className={'mcs-chartMetaDataInfo_section_button ant-btn-sm'}
+          >
+            <div>{intl.formatMessage(messages.chartMetadataDatasetExport)}</div>
+          </Button>
         </Row>
         <div className={'mcs-chartMetaDataInfo_data_table'}>
           <TableViewFilters
