@@ -407,10 +407,10 @@ export class ChartDatasetService implements IChartDatasetService {
     xKey: string,
     providedScope?: AbstractScope,
   ) {
-    const childSources4 = indexSource.sources;
-    if (childSources4 && childSources4.length === 2) {
+    const childSources = indexSource.sources;
+    if (childSources && childSources.length === 2) {
       return Promise.all(
-        childSources4.map(s =>
+        childSources.map(s =>
           this.fetchDatasetForSource(datamartId, organisationId, chartType, xKey, s, providedScope),
         ),
       ).then(datasets => {
@@ -422,7 +422,7 @@ export class ChartDatasetService implements IChartDatasetService {
         );
       });
     } else {
-      return this.rejectWrongNumberOfArguments('to-percentages', 2, childSources4.length);
+      return this.rejectWrongNumberOfArguments('to-percentages', 2, childSources.length);
     }
   }
 
@@ -448,179 +448,168 @@ export class ChartDatasetService implements IChartDatasetService {
     const sourceType = source.type.toLowerCase();
     const seriesTitle = source.series_title || DEFAULT_Y_KEY.key;
 
-    switch (sourceType) {
-      case 'otql':
-        const otqlSource = source as OTQLSource;
-        const scope = this.getScope(otqlSource.adapt_to_scope, providedScope);
-        const queryDatamartId = otqlSource.datamart_id || datamartId;
-        return this.executeOtqlQuery(queryDatamartId, otqlSource, scope, queryFragment).then(
-          res => {
-            return formatDatasetForOtql(res, xKey, seriesTitle);
-          },
-        );
-
-      case 'join':
-        const aggregationSource = source as AggregationSource;
-        const childSources = aggregationSource.sources;
-        return Promise.all(
-          childSources.map(s =>
-            this.fetchDatasetForSource(
-              datamartId,
-              organisationId,
-              chartType,
-              xKey,
-              s,
-              providedScope,
-              queryFragment,
-            ),
-          ),
-        ).then(datasets => {
-          return this.aggregateDatasets(xKey, datasets as AggregateDataset[]);
-        });
-
-      case 'to-list':
-        const aggregationSource2 = source as AggregationSource;
-        const childSources2 = aggregationSource2.sources;
-        return Promise.all(
-          childSources2.map(s =>
-            this.fetchDatasetForSource(
-              datamartId,
-              organisationId,
-              chartType,
-              xKey,
-              s,
-              providedScope,
-              queryFragment,
-            ),
-          ),
-        ).then(datasets => {
-          return this.aggregateCountsIntoList(
-            xKey,
-            datasets as CountDataset[],
-            childSources2,
-            source.series_title,
-          );
-        });
-
-      case 'to-percentages':
-        const aggregationSource3 = source as AggregationSource;
-        const childSources3 = aggregationSource3.sources;
-        if (childSources3.length === 1)
-          return this.fetchDatasetForSource(
+    if (sourceType === 'otql') {
+      const otqlSource = source as OTQLSource;
+      const scope = this.getScope(otqlSource.adapt_to_scope, providedScope);
+      const queryDatamartId = otqlSource.datamart_id || datamartId;
+      return this.executeOtqlQuery(queryDatamartId, otqlSource, scope, queryFragment).then(res => {
+        return formatDatasetForOtql(res, xKey, seriesTitle);
+      });
+    } else if (sourceType === 'join') {
+      const aggregationSource = source as AggregationSource;
+      const childSources = aggregationSource.sources;
+      return Promise.all(
+        childSources.map(s =>
+          this.fetchDatasetForSource(
             datamartId,
             organisationId,
             chartType,
             xKey,
-            childSources3[0],
+            s,
             providedScope,
             queryFragment,
-          ).then(dataset => {
-            return percentages(xKey, dataset as AggregateDataset);
-          });
-        else return this.rejectWrongNumberOfArguments('to-percentages', 1, childSources3.length);
-
-      case 'index':
-        const indexSource = source as IndexSource;
-        return this.computeIndex(
-          datamartId,
-          organisationId,
-          indexSource,
-          chartType,
-          xKey,
-          providedScope,
-        );
-
-      case 'activities_analytics':
-        return this.fetchActivitiesAnalytics(
-          datamartId,
-          source as AnalyticsSource<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>,
-          xKey,
-          providedScope,
-          queryFragment,
-        );
-      case 'collection_volumes':
-        return this.fetchCollectionVolumes(
-          datamartId,
-          source as AnalyticsSource<CollectionVolumesMetric, CollectionVolumesDimension>,
-          xKey,
-          providedScope,
-        );
-      case 'ratio':
-        const ratioSource = source as RatioSource;
-        const datasetValue = this.fetchDatasetForSource(
-          datamartId,
-          organisationId,
-          chartType,
-          xKey,
-          ratioSource.sources[0],
-          scope,
-          queryFragment,
-        );
-        const datasetTotal = this.fetchDatasetForSource(
-          datamartId,
-          organisationId,
-          chartType,
-          xKey,
-          ratioSource.sources[1],
-          scope,
-          queryFragment,
-        );
-        return Promise.all([datasetValue, datasetTotal]).then(datasets => {
-          return this.ratioDataset(datasets[0] as CountDataset, datasets[1] as CountDataset);
-        });
-
-      case 'format-dates':
-        const dateFormatSource = source as DateFormatSource;
-        const format = dateFormatSource.date_options;
-        const datasetToBeFormatted = this.fetchDatasetForSource(
-          datamartId,
-          organisationId,
-          chartType,
-          xKey,
-          dateFormatSource.sources[0],
-          scope,
-          queryFragment,
-        );
-        return datasetToBeFormatted.then(result => {
-          if (result) return this.datasetDateFormatter.applyFormatDates(result, xKey, format);
-          else return Promise.resolve(undefined);
-        });
-
-      case 'get-decorators':
-        const getDecoratorsSource = source as GetDecoratorsSource;
-        const getDecoratorsOptions = getDecoratorsSource.decorators_options;
-
-        if (getDecoratorsSource.sources.length === 1) {
-          const datasetToBeDecorated = this.fetchDatasetForSource(
+          ),
+        ),
+      ).then(datasets => {
+        return this.aggregateDatasets(xKey, datasets as AggregateDataset[]);
+      });
+    } else if (sourceType === 'to-list') {
+      const aggregationSource = source as AggregationSource;
+      const childSources = aggregationSource.sources;
+      return Promise.all(
+        childSources.map(s =>
+          this.fetchDatasetForSource(
             datamartId,
             organisationId,
             chartType,
             xKey,
-            getDecoratorsSource.sources[0],
-            scope,
+            s,
+            providedScope,
             queryFragment,
-          );
+          ),
+        ),
+      ).then(datasets => {
+        return this.aggregateCountsIntoList(
+          xKey,
+          datasets as CountDataset[],
+          childSources,
+          source.series_title,
+        );
+      });
+    } else if (sourceType === 'to-percentages') {
+      const aggregationSource = source as AggregationSource;
+      const childSources = aggregationSource.sources;
+      if (childSources.length === 1) {
+        return this.fetchDatasetForSource(
+          datamartId,
+          organisationId,
+          chartType,
+          xKey,
+          childSources[0],
+          providedScope,
+          queryFragment,
+        ).then(dataset => {
+          return percentages(xKey, dataset as AggregateDataset);
+        });
+      } else return this.rejectWrongNumberOfArguments('to-percentages', 1, childSources.length);
+    } else if (sourceType === 'index') {
+      const indexSource = source as IndexSource;
+      return this.computeIndex(
+        datamartId,
+        organisationId,
+        indexSource,
+        chartType,
+        xKey,
+        providedScope,
+      );
+    } else if (sourceType === 'activities_analytics') {
+      return this.fetchActivitiesAnalytics(
+        datamartId,
+        source as AnalyticsSource<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>,
+        xKey,
+        providedScope,
+        queryFragment,
+      );
+    } else if (sourceType === 'collection_volumes') {
+      return this.fetchCollectionVolumes(
+        datamartId,
+        source as AnalyticsSource<CollectionVolumesMetric, CollectionVolumesDimension>,
+        xKey,
+        providedScope,
+      );
+    } else if (sourceType === 'ratio') {
+      const ratioSource = source as RatioSource;
+      const datasetValue = this.fetchDatasetForSource(
+        datamartId,
+        organisationId,
+        chartType,
+        xKey,
+        ratioSource.sources[0],
+        providedScope,
+        queryFragment,
+      );
+      const datasetTotal = this.fetchDatasetForSource(
+        datamartId,
+        organisationId,
+        chartType,
+        xKey,
+        ratioSource.sources[1],
+        providedScope,
+        queryFragment,
+      );
+      return Promise.all([datasetValue, datasetTotal]).then(datasets => {
+        return this.ratioDataset(datasets[0] as CountDataset, datasets[1] as CountDataset);
+      });
+    } else if (sourceType === 'format-dates') {
+      const dateFormatSource = source as DateFormatSource;
+      const format = dateFormatSource.date_options;
+      const datasetToBeFormatted = this.fetchDatasetForSource(
+        datamartId,
+        organisationId,
+        chartType,
+        xKey,
+        dateFormatSource.sources[0],
+        providedScope,
+        queryFragment,
+      );
+      return datasetToBeFormatted.then(result => {
+        if (result) return this.datasetDateFormatter.applyFormatDates(result, xKey, format);
+        else return Promise.resolve(undefined);
+      });
+    } else if (sourceType === 'get-decorators') {
+      const getDecoratorsSource = source as GetDecoratorsSource;
+      const getDecoratorsOptions = getDecoratorsSource.decorators_options;
 
-          return datasetToBeDecorated.then(result => {
-            if (result)
-              return this.decoratorsTransformation.applyGetDecorators(
-                result,
-                xKey,
-                getDecoratorsOptions,
-                datamartId,
-                organisationId,
-              );
-            else return Promise.resolve(undefined);
-          });
-        } else
-          return this.rejectWrongNumberOfArguments(
-            'get-decorators',
-            1,
-            getDecoratorsSource.sources.length,
-          );
+      if (getDecoratorsSource.sources.length === 1) {
+        const datasetToBeDecorated = this.fetchDatasetForSource(
+          datamartId,
+          organisationId,
+          chartType,
+          xKey,
+          getDecoratorsSource.sources[0],
+          providedScope,
+          queryFragment,
+        );
 
-      default:
-        return Promise.reject(`Unknown source type ${sourceType}`);
+        return datasetToBeDecorated.then(result => {
+          if (result)
+            return this.decoratorsTransformation.applyGetDecorators(
+              result,
+              xKey,
+              getDecoratorsOptions,
+              datamartId,
+              organisationId,
+            );
+          else return Promise.resolve(undefined);
+        });
+      } else
+        return this.rejectWrongNumberOfArguments(
+          'get-decorators',
+          1,
+          getDecoratorsSource.sources.length,
+        );
+    } else {
+      return Promise.reject(`Unknown source type ${sourceType} `);
     }
   }
 
