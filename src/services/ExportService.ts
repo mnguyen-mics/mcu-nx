@@ -26,7 +26,7 @@ export class ExportService {
 
     FileSaver.saveAs(
       new Blob([this.s2ab(workBookOout)], { type: 'application/octet-stream' }),
-      'template_import_user_segment.csv',
+      'chart_data_export.csv',
     );
   }
 }
