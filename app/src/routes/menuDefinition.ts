@@ -34,7 +34,7 @@ const jobsMenuDefinition: NavigatorMenuDefinition = {
   subMenuItems: [
     {
       ...generateMissingdefinitionItemFromRoute(jobsDefinition.jobBatchInstanceList),
-      displayName: 'Batch Instances',
+      displayName: 'Batch instances',
     },
   ],
 };

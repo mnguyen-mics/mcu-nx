@@ -141,8 +141,8 @@ class ItemList<T> extends React.Component<Props<T>> {
 
     const filter = parseSearch(search, pageSettings);
     const pagination = {
-      current: filter.currentPage,
-      pageSize: filter.pageSize,
+      current: filter.currentPage || 1,
+      pageSize: filter.pageSize || 10,
       onChange: (page: number, size: number) =>
         this.updateLocationSearch({
           currentPage: page,

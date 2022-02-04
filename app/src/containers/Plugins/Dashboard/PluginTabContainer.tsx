@@ -30,6 +30,7 @@ interface PluginTabContainerProps {
   plugin?: PluginResource;
   pluginVersions: PluginVersionResource[];
   initialPluginVersionId: string;
+  lastPluginVersion?: string;
 }
 
 type Props = PluginTabContainerProps &
@@ -127,13 +128,22 @@ class PluginTabContainer extends React.Component<Props, State> {
   };
 
   getPluginVersionOptions = () => {
-    const { pluginVersions } = this.props;
+    const { pluginVersions, intl, lastPluginVersion } = this.props;
     return pluginVersions
-      .map(version => ({
+      .map((version, i) => ({
         value: version.id,
-        label: version.version_id,
+        comparator: version.version_id,
+
+        label: (
+          <span>
+            {`version ${version.version_id} (${version.id}) `}
+            {version.version_id === lastPluginVersion && (
+              <Tag color='blue'>{intl.formatMessage(messages.current)}</Tag>
+            )}
+          </span>
+        ),
       }))
-      .sort((a, b) => b.label.localeCompare(a.label));
+      .sort((a, b) => b.comparator.localeCompare(a.comparator));
   };
 
   renderContainerActionModal = (
@@ -231,10 +241,19 @@ class PluginTabContainer extends React.Component<Props, State> {
   };
 
   render() {
-    const { initialPluginVersionId, pluginVersions, plugin } = this.props;
+    const { initialPluginVersionId, pluginVersions, plugin, lastPluginVersion, intl } = this.props;
     const { initialPluginVersionContainers, tabKey } = this.state;
 
     const initialVersion = pluginVersions.find(version => version.id === initialPluginVersionId);
+
+    const defaultValue = (
+      <span>
+        {`version ${initialVersion?.version_id} (${initialVersion?.id}) `}
+        {!!initialVersion && initialVersion?.version_id === lastPluginVersion && (
+          <Tag color='blue'>{intl.formatMessage(messages.current)}</Tag>
+        )}
+      </span>
+    ) as any;
 
     const pluginVersionSelector = (
       <React.Fragment>
@@ -252,10 +271,11 @@ class PluginTabContainer extends React.Component<Props, State> {
             </Button>
           ))}
         <Select
-          style={{ paddingLeft: '10px' }}
-          defaultValue={initialVersion?.version_id}
+          style={{ paddingLeft: '10px', width: '240px' }}
+          defaultValue={defaultValue}
           onChange={this.handleVersionChange}
           options={this.getPluginVersionOptions()}
+          dropdownMatchSelectWidth={true}
         />
       </React.Fragment>
     );
