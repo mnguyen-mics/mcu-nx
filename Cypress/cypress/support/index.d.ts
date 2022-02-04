@@ -98,5 +98,16 @@ declare namespace Cypress {
      * cy.restoreLocalStorageCache()
      */
     restoreLocalStorageCache(): void;
+
+    createDashboard(
+      accessToken: string,
+      organisationId: string,
+      dashboardTitle: string,
+      scopes: string[],
+      segmentIds?: number[],
+      builderIds?: number[],
+    ): Chainable<any>;
+
+    createQuery(accessToken: string, datamartId: string, queryText: string): Chainable<any>;
   }
 }
