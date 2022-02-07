@@ -173,6 +173,12 @@ export function buildLegendOptions(legend?: Legend): Highcharts.LegendOptions {
           align: 'right' as Highcharts.AlignValue,
           verticalAlign: 'middle' as Highcharts.VerticalAlignValue,
         }
+      : legend?.position === 'bottom'
+      ? {
+          layout: 'vertical' as Highcharts.OptionsLayoutValue,
+          align: 'middle' as Highcharts.AlignValue,
+          verticalAlign: 'bottom' as Highcharts.VerticalAlignValue,
+        }
       : {};
   return legend?.enabled
     ? {
