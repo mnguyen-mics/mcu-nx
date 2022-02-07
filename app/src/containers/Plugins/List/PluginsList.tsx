@@ -163,6 +163,16 @@ class PluginsList extends React.Component<Props, State> {
     history.push(nextLocation);
   };
 
+  unnullValues(values: Array<string | null>): string[] {
+    const result: string[] = [];
+
+    values.forEach(value => {
+      if (value !== null) result.push(value);
+    });
+
+    return result;
+  }
+
   renderActionBarInnerElements() {
     const { groupIdOptions, artifactIdOptions, pluginTypeOptions } = this.state;
     const {
@@ -172,6 +182,24 @@ class PluginsList extends React.Component<Props, State> {
     const defaultGroupId = queryString.parse(search).group_id || undefined;
     const defaultArtifactId = queryString.parse(search).artifact_id || undefined;
     const defaultPluginType = queryString.parse(search).plugin_type || undefined;
+
+    const defaultGroupIdNN = defaultGroupId
+      ? Array.isArray(defaultGroupId)
+        ? this.unnullValues(defaultGroupId)
+        : defaultGroupId
+      : undefined;
+
+    const defaultArtifactIdNN = defaultArtifactId
+      ? Array.isArray(defaultArtifactId)
+        ? this.unnullValues(defaultArtifactId)
+        : defaultArtifactId
+      : undefined;
+
+    const defaultPluginTypeNN = defaultPluginType
+      ? Array.isArray(defaultPluginType)
+        ? this.unnullValues(defaultPluginType)
+        : defaultPluginType
+      : undefined;
 
     return (
       <div className='mcs-actionBar_filters'>
@@ -184,7 +212,7 @@ class PluginsList extends React.Component<Props, State> {
           options={pluginTypeOptions}
           onSelect={this.onSelect('plugin_type')}
           onClear={this.onClear('plugin_type')}
-          defaultValue={defaultPluginType}
+          defaultValue={defaultPluginTypeNN}
           dropdownMatchSelectWidth={false}
           dropdownClassName={'mcs-pluginList_filterDropdown'}
         />
@@ -197,7 +225,7 @@ class PluginsList extends React.Component<Props, State> {
           options={groupIdOptions}
           onSelect={this.onSelect('group_id')}
           onClear={this.onClear('group_id')}
-          defaultValue={defaultGroupId}
+          defaultValue={defaultGroupIdNN}
           dropdownMatchSelectWidth={false}
           dropdownClassName={'mcs-pluginList_filterDropdown'}
         />
@@ -210,7 +238,7 @@ class PluginsList extends React.Component<Props, State> {
           options={artifactIdOptions}
           onSelect={this.onSelect('artifact_id')}
           onClear={this.onClear('artifact_id')}
-          defaultValue={defaultArtifactId}
+          defaultValue={defaultArtifactIdNN}
           dropdownMatchSelectWidth={false}
           dropdownClassName={'mcs-pluginList_filterDropdown'}
         />
