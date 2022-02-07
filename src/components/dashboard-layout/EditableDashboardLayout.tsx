@@ -29,6 +29,7 @@ class EditableDashboardLayout extends React.Component<Props> {
     const schemaCopy: DashboardContentSchema = JSON.parse(JSON.stringify(initialSchema));
     schemaCopy.sections.forEach(section => {
       section.cards.forEach(card => {
+        card.id = cuid();
         card.charts.forEach(chart => {
           chart.id = cuid();
         });
@@ -38,11 +39,19 @@ class EditableDashboardLayout extends React.Component<Props> {
   }
 
   render() {
-    const { datamart_id, organisationId, openNextDrawer, closeNextDrawer, updateSchema, schema } =
-      this.props;
+    const {
+      intl,
+      datamart_id,
+      organisationId,
+      openNextDrawer,
+      closeNextDrawer,
+      updateSchema,
+      schema,
+    } = this.props;
     const identifiedSchema = this.labelInitialSchemaWithIds(schema);
     return (
       <DashboardLayout
+        intl={intl}
         openNextDrawer={openNextDrawer}
         closeNextDrawer={closeNextDrawer}
         datamart_id={datamart_id}

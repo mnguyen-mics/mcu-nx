@@ -8,7 +8,7 @@ import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 
 interface ChartEditionProps {
-  chartConfig: ChartConfig;
+  chartConfig?: ChartConfig;
   saveChart: (c: ChartConfig) => void;
   closeTab: () => void;
 }
@@ -31,11 +31,31 @@ const messages = defineMessages({
   },
 });
 
+const defaultChartConfigText = {
+  title: 'Number of active user points',
+  type: 'Metric',
+  dataset: {
+    type: 'activities_analytics',
+    query_json: {
+      dimensions: [],
+      metrics: [
+        {
+          expression: 'users',
+        },
+      ],
+    },
+  },
+};
+
 class ChartEditionTab extends React.Component<Props, ChartEditionState> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      chartConfigText: JSON.stringify(props.chartConfig, null, 2),
+      chartConfigText: JSON.stringify(
+        props.chartConfig ? props.chartConfig : defaultChartConfigText,
+        null,
+        2,
+      ),
     };
   }
   private saveChartConfig() {

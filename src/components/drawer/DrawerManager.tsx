@@ -11,6 +11,7 @@ const viewportDrawerRatio = {
   large: 0.85,
   medium: 0.6,
   small: 0.4,
+  extrasmall: 0.2,
 };
 
 export interface DrawerManagerProps extends InjectedDrawerProps {
@@ -128,7 +129,7 @@ class DrawerManager extends React.Component<DrawerManagerProps, DrawerManagerSta
           drawersWithOverlay.push(
             <div className={'drawer-overlay'} onClick={this.handleClickOnBackground} />,
           );
-          const _className = className ? `drawer ${className}` : 'drawer';
+          const _className = className ? `${className} drawer_customizable` : 'drawer';
           drawersWithOverlay.push(
             <div
               ref={div => {

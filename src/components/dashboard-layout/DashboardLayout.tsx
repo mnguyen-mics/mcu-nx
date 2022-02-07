@@ -1,4 +1,5 @@
 import { Card } from '@mediarithmics-private/mcs-components-library';
+import { Modal } from 'antd';
 import React, { CSSProperties } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import Chart from '../chart-engine';
@@ -16,6 +17,10 @@ import {
 } from '../../models/customDashboards/customDashboards';
 import { InjectedDrawerProps } from '../..';
 import ChartEditionTab from './wysiwig/ChartEditionTab';
+import CardEditionTab from './wysiwig/CardEditionTab';
+import { EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { defineMessages, InjectedIntlProps } from 'react-intl';
+
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 const BASE_FRAMEWORK_HEIGHT = 96;
@@ -37,7 +42,26 @@ export interface DashboardLayoutState {
   formattedQueryFragment: QueryFragment;
 }
 
-type Props = DashboardLayoutProps & InjectedDrawerProps;
+type Props = DashboardLayoutProps & InjectedIntlProps & InjectedDrawerProps;
+
+const messages = defineMessages({
+  dashboardLayoutConfirmation: {
+    id: 'dashboard.layout.confirmation',
+    defaultMessage: 'Confirmation',
+  },
+  dashboardLayoutConfirmationText: {
+    id: 'dashboard.layout.confirmationText',
+    defaultMessage: 'Are you sure you want to delete this chart?',
+  },
+  confirm: {
+    id: 'dashboard.layout.confirm',
+    defaultMessage: 'Yes',
+  },
+  decline: {
+    id: 'dashboard.layout.decline',
+    defaultMessage: 'No',
+  },
+});
 
 export default class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
   constructor(props: Props) {
@@ -48,7 +72,20 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     };
   }
 
-  private findChartNode(nodeId: string, content: DashboardContentSchema): any {
+  private findCardNode(
+    nodeId: string,
+    content: DashboardContentSchema,
+  ): DashboardContentCard | undefined {
+    let res;
+    content.sections.forEach(section => {
+      section.cards.forEach(card => {
+        if (card.id === nodeId) res = card;
+      });
+    });
+    return res;
+  }
+
+  private findChartNode(nodeId: string, content: DashboardContentSchema): ChartConfig | undefined {
     let res;
     content.sections.forEach(section => {
       section.cards.forEach(card => {
@@ -60,22 +97,105 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     return res;
   }
 
-  private handleEditChart(chart: ChartConfig, content: DashboardContentSchema) {
+  private swapCharts(chartsList: ChartConfig[], index1: number, index2: number) {
+    const tmp = chartsList[index1];
+    chartsList[index1] = chartsList[index2];
+    chartsList[index2] = tmp;
+  }
+
+  private moveChartNode(
+    direction: 'up' | 'down',
+    chartIndex: number,
+    card: DashboardContentCard,
+  ): boolean {
+    let neighborIndex: number | undefined;
+    if (direction === 'up' && chartIndex > 0) neighborIndex = chartIndex - 1;
+    else if (direction === 'down' && chartIndex < card.charts.length - 1)
+      neighborIndex = chartIndex + 1;
+
+    if (neighborIndex !== undefined) {
+      this.swapCharts(card.charts, chartIndex, neighborIndex);
+      return true;
+    }
+
+    return false;
+  }
+
+  private updateChart(
+    newChartConfig: ChartConfig,
+    chartNode: ChartConfig,
+    contentCopy: DashboardContentSchema,
+  ) {
+    const { updateState } = this.props;
+    const existingChart: any = chartNode;
+    const newChart: any = newChartConfig;
+
+    const keys = Object.keys(newChart);
+    keys.forEach(key => {
+      existingChart[key] = newChart[key];
+    });
+    if (updateState) updateState(contentCopy);
+  }
+
+  private createChart(
+    newChartConfig: ChartConfig,
+    cardNode: DashboardContentCard,
+    contentCopy: DashboardContentSchema,
+    newId: string,
+  ) {
+    const { updateState } = this.props;
+    newChartConfig.id = newId;
+
+    cardNode.charts.push(newChartConfig);
+
+    if (updateState) updateState(contentCopy);
+  }
+
+  private deleteChart(
+    chartIndex: number,
+    card: DashboardContentCard,
+    contentCopy: DashboardContentSchema,
+  ) {
+    const { updateState } = this.props;
+
+    if (updateState) {
+      card.charts.splice(chartIndex, 1);
+      updateState(contentCopy);
+    }
+  }
+
+  private handleMoveChart(
+    direction: 'up' | 'down',
+    chartIndex: number,
+    card: DashboardContentCard,
+    content: DashboardContentSchema,
+  ) {
+    const { updateState } = this.props;
+    if (card.id && updateState) {
+      const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(content));
+      const cardNode = this.findCardNode(card.id, contentCopy);
+
+      if (cardNode && this.moveChartNode(direction, chartIndex, cardNode)) updateState(contentCopy);
+    }
+  }
+
+  private handleEditCard(card: DashboardContentCard, content: DashboardContentSchema) {
     const { updateState, openNextDrawer, closeNextDrawer } = this.props;
     const contentCopy = JSON.parse(JSON.stringify(content));
-    if (chart.id) {
-      const chartNode = this.findChartNode(chart.id, contentCopy);
-      if (updateState && chartNode) {
-        openNextDrawer(ChartEditionTab, {
-          size: 'small',
+    if (card.id) {
+      const cardNode: any = this.findCardNode(card.id, contentCopy);
+      if (updateState && cardNode) {
+        openNextDrawer(CardEditionTab, {
+          size: 'extrasmall',
+          className: 'mcs-drawer-cardEdition',
           additionalProps: {
             closeTab: closeNextDrawer,
-            chartConfig: chartNode,
-            saveChart: (c: ChartConfig) => {
-              const newChartConfig: any = c;
-              const keys = Object.keys(c);
+            card: card,
+            saveCard: (c: DashboardContentCard) => {
+              const newDashboardContentCard: any = c;
+              const keys = Object.keys(newDashboardContentCard);
               keys.forEach(key => {
-                chartNode[key] = newChartConfig[key];
+                cardNode[key] = newDashboardContentCard[key];
               });
               updateState(contentCopy);
             },
@@ -85,16 +205,148 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     }
   }
 
-  renderChart(chart: ChartConfig, cssProperties?: CSSProperties) {
+  private handleEditChart(chart: ChartConfig, content: DashboardContentSchema) {
+    const { updateState, openNextDrawer, closeNextDrawer } = this.props;
+    const contentCopy = JSON.parse(JSON.stringify(content));
+    if (chart.id) {
+      const chartNode = this.findChartNode(chart.id, contentCopy);
+      if (updateState && chartNode) {
+        openNextDrawer(ChartEditionTab, {
+          size: 'small',
+          className: 'mcs-drawer-cardEdition',
+          additionalProps: {
+            closeTab: closeNextDrawer,
+            chartConfig: chartNode,
+            saveChart: (c: ChartConfig) => {
+              this.updateChart(c, chartNode, contentCopy);
+            },
+          },
+        });
+      }
+    }
+  }
+
+  private handleDeleteChart(
+    chartIndex: number,
+    card: DashboardContentCard,
+    content: DashboardContentSchema,
+  ) {
+    const { intl } = this.props;
+    const contentCopy = JSON.parse(JSON.stringify(content));
+
+    if (card.id) {
+      const cardNode = this.findCardNode(card.id, contentCopy);
+      if (cardNode) {
+        const deleteChart = () => {
+          this.deleteChart(chartIndex, cardNode, contentCopy);
+        };
+        Modal.confirm({
+          title: intl.formatMessage(messages.dashboardLayoutConfirmation),
+          content: intl.formatMessage(messages.dashboardLayoutConfirmationText),
+          okText: intl.formatMessage(messages.confirm),
+          cancelText: intl.formatMessage(messages.decline),
+          onOk() {
+            deleteChart();
+          },
+        });
+      }
+    }
+  }
+
+  private handleCreateChart(
+    card: DashboardContentCard,
+    content: DashboardContentSchema,
+    newId: string,
+  ) {
+    const { updateState, openNextDrawer, closeNextDrawer } = this.props;
+    const contentCopy = JSON.parse(JSON.stringify(content));
+    if (card.id) {
+      const cardNode = this.findCardNode(card.id, contentCopy);
+      if (updateState && cardNode) {
+        openNextDrawer(ChartEditionTab, {
+          size: 'small',
+          className: 'mcs-drawer-cardEdition',
+          additionalProps: {
+            closeTab: closeNextDrawer,
+            saveChart: (newChartConfig: ChartConfig) => {
+              const chartNode = this.findChartNode(newId, contentCopy);
+              if (chartNode) {
+                this.updateChart(newChartConfig, chartNode, contentCopy);
+              } else this.createChart(newChartConfig, cardNode, contentCopy, newId);
+            },
+          },
+        });
+      }
+    }
+  }
+
+  renderCard(card: DashboardContentCard, i: number) {
+    const { editable, schema } = this.props;
+
+    const charts = card.charts.map((chart, index) => {
+      return this.renderChart(
+        chart,
+        index,
+        card,
+        this.computeCSSProperties(card.charts, card.layout, chart.type, card.h),
+      );
+    });
+
+    const handleEditCard = () => this.handleEditCard(card, schema);
+    const handleCreateChart = () => this.handleCreateChart(card, schema, cuid());
+
+    const menu =
+      editable && card.id ? (
+        <div className='mcs-card-cardMenu'>
+          <div className='mcs-cardMenu-buttons'>
+            <EditOutlined className='mcs-cardMenu-circleIcon' onClick={handleEditCard} />
+            <div className='mcs-cardMenu-option mcs-cardMenu-option_left' onClick={handleEditCard}>
+              Edit card
+            </div>
+            <PlusOutlined className='mcs-cardMenu-circleIcon' onClick={handleCreateChart} />
+            <div className='mcs-cardMenu-option' onClick={handleCreateChart}>
+              Add chart
+            </div>
+          </div>
+        </div>
+      ) : undefined;
+
+    const cardComponent = (
+      <Card className='mcs-cardFlex'>
+        {menu ? menu : <div />}
+        {charts}
+      </Card>
+    );
+    return (
+      <div key={i.toString()}>
+        <McsLazyLoad key={cuid()} child={cardComponent} />
+      </div>
+    );
+  }
+
+  renderChart(
+    chart: ChartConfig,
+    chartIndex: number,
+    card: DashboardContentCard,
+    cssProperties?: CSSProperties,
+  ) {
     const { datamart_id, scope, organisationId, editable, schema } = this.props;
     const { formattedQueryFragment } = this.state;
 
     const onClickEdit = editable ? () => this.handleEditChart(chart, schema) : undefined;
+    const onClickChartMove = editable
+      ? (direction: 'up' | 'down') => this.handleMoveChart(direction, chartIndex, card, schema)
+      : undefined;
+    const onClickDelete = editable
+      ? () => this.handleDeleteChart(chartIndex, card, schema)
+      : undefined;
     return (
       <Chart
         key={cuid()}
         datamartId={datamart_id}
         onClickEdit={onClickEdit}
+        onClickMove={onClickChartMove}
+        onClickDelete={onClickDelete}
         organisationId={organisationId}
         chartConfig={chart}
         chartContainerStyle={cssProperties}
@@ -268,21 +520,6 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
             ))}
         </div>
         {sections}
-      </div>
-    );
-  }
-
-  renderCard(card: DashboardContentCard, i: number) {
-    const charts = card.charts.map((chart, index) => {
-      return this.renderChart(
-        chart,
-        this.computeCSSProperties(card.charts, card.layout, chart.type, card.h),
-      );
-    });
-    const cardComponent = <Card className='mcs-cardFlex'>{charts}</Card>;
-    return (
-      <div key={i.toString()}>
-        <McsLazyLoad key={cuid()} child={cardComponent} />
       </div>
     );
   }

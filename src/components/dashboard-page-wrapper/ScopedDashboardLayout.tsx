@@ -138,6 +138,7 @@ class ScopedDashboardLayout extends React.Component<Props, State> {
       <Spin size={'small'} />
     ) : (
       <DashboardLayout
+        intl={intl}
         editable={editable}
         updateState={updateState}
         datamart_id={datamartId}
