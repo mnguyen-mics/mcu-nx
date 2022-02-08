@@ -35,14 +35,26 @@ export class TagService implements ITagService {
     }
   };
 
-  setUserProperties = (user: { id: string }): void => {
-    if ((window as any).mics && (window as any).mics.addProperty) {
-      (window as any).mics.addProperty('$set_user_profile_properties', {
-        $user_account_id: user.id,
-      });
+  setUserProperties = (user: {
+    id: string;
+    first_name: string;
+    last_name: string;
+    default_workspace: number;
+    workspaces: Array<{ organisation_id: string; organisation_name: string }>;
+  }): void => {
+    if ((window as any).mics && (window as any).mics.push) {
+      const userProfile = {
+        first_name: user.first_name,
+        last_name: user.last_name,
+        display_name: `${user.first_name} ${user.last_name}`,
+        organisation: {
+          organisation_id: user.workspaces[user.default_workspace].organisation_id,
+          organisation_name: user.workspaces[user.default_workspace].organisation_name,
+        },
+      };
+      (window as any).mics.push('$set_user_profile_properties', userProfile);
     }
   };
-
   /**
    * gtag for Google Analytics
    */
