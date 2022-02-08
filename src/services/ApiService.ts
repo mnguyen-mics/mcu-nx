@@ -181,7 +181,9 @@ function request(
       .then(checkAndParse);
   };
 
-  return isKeycloakEnabled ? KeycloakService.updateToken(requestFunction) : requestFunction();
+  return isKeycloakEnabled && !options.localUrl
+    ? KeycloakService.updateToken(requestFunction)
+    : requestFunction();
 }
 
 function getRequest<T>(
