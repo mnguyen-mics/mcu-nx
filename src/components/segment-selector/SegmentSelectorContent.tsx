@@ -11,6 +11,7 @@ import { debounce } from 'lodash';
 import { compose } from 'recompose';
 import {
   AudienceSegmentShape,
+  AudienceSegmentType,
   UserListSegment,
 } from '../../models/audienceSegment/AudienceSegmentResource';
 import {
@@ -28,6 +29,7 @@ import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-libr
 interface SegmentSelectorContentProps {
   organisationId: string;
   datamartId: string;
+  segmentType?: AudienceSegmentType[];
   onCloseDrawer: () => void;
   onSelectSegment: (segment: AudienceSegmentShape) => void;
 }
@@ -67,9 +69,17 @@ class SegmentSelectorContent extends React.Component<Props, SegmentSelectorConte
   };
 
   componentDidMount() {
+    const { segmentType } = this.props;
     this.fetchSegments('', {
       with_third_parties: true,
-      type: ['USER_QUERY'],
+      type: segmentType || [
+        'USER_LIST',
+        'USER_QUERY',
+        'USER_LOOKALIKE',
+        'USER_ACTIVATION',
+        'USER_PARTITION',
+        'USER_DATA_SUBSCRIPTION',
+      ],
       feed_type: ['SCENARIO', 'FILE_IMPORT', 'TAG'],
       max_results: maxResults,
     });
