@@ -8,10 +8,13 @@ describe('Should test keycloak update password', () => {
   });
 
   it('Should check password rotation', () => {
-    // Launch script to expire the password of sdugelay@mediarithmics.com
-    const email = 'sdugelay@mediarithmics.com';
-    cy.expirePassword(email);
-    cy.login(email);
+    const email = 'mckongkong@mediarithmics.com';
+    cy.visit('/');
+    cy.get('#username').type(email);
+    cy.get('#kc-login').click();
+    cy.get('#password').type(Cypress.env('devPwd'));
+    cy.get('#kc-login').click();
+
     // Should check the password rotation of one year
     cy.get('#kc-content').should(
       'contain',
@@ -55,10 +58,23 @@ describe('Should test keycloak update password', () => {
     cy.get('#kc-form-buttons').click();
     cy.get('#kc-content-wrapper').should('contain', 'Password must contain at least 1 digit');
 
+    // Should not accept the same password
+    // TODO: should have a valid password to reset, right now the vagrant password doesn't respect the password complexity
+    // If I wanna check that we don't allow the new password to be like the old one, I need to change the vagrant password
+    // to a valid one, then reset the password and test if inserting the same password again trigger an error
+    // As of today, we can't reset password in our automated test since it requires an email service
+    // The only way is for this to work is to expire again in the database the user password but that is not a good practice
+    // We just should make sure next time when we update the vagrant password it is a valid one !
+
+    // cy.get('#password-new').type('{selectall}{backspace}' + Cypress.env('devPwd'));
+    // cy.get('#password-confirm').type('{selectall}{backspace}' + Cypress.env('devPwd'));
+    // cy.get('#kc-form-buttons').click();
+    // cy.get('.alert-error-newlines').should('be.visible');
+
     // Insert a valid password
     const password = 'qsdfjdsqN7@kfeu';
-    cy.get('#password-new').type('{selectall}{backspace}qsdfjdsqN7@kfeu');
-    cy.get('#password-confirm').type('{selectall}{backspace}qsdfjdsqN7@kfeu');
+    cy.get('#password-new').type('{selectall}{backspace}' + password);
+    cy.get('#password-confirm').type('{selectall}{backspace}' + password);
     cy.get('#kc-form-buttons').click();
     cy.url().should('eq', Cypress.config().baseUrl + '/#/o/1/home');
 
@@ -66,25 +82,15 @@ describe('Should test keycloak update password', () => {
     cy.logout();
 
     // Login with old password
-    cy.login(email);
-    cy.get('.input-error').should('be.visible').and('contain', 'Invalid username or password');
+    cy.get('#username').type(email);
+    cy.get('#kc-login').click();
+    cy.get('#password').type(Cypress.env('devPwd'));
+    cy.get('#kc-login').click();
+    cy.get('.input-error').should('be.visible').and('contain', 'Invalid password');
 
     // Login with the new password
-    cy.get('#password').type('{selectall}{backspace}qsdfjdsqN7@kfeu');
+    cy.get('#password').type('{selectall}{backspace}' + password);
     cy.get('#kc-login').click();
-    cy.url().should('eq', Cypress.config().baseUrl + '/#/o/1/home');
-
-    // Reset Password
-    cy.logout();
-    cy.expirePassword(email);
-    cy.login(email, password);
-    cy.get('#kc-content').should(
-      'contain',
-      'You need to change your password to activate your account',
-    );
-    cy.get('#password-new').type(`${Cypress.env('devPwd')}`);
-    cy.get('#password-confirm').type(`${Cypress.env('devPwd')}`);
-    cy.get('#kc-form-buttons').click();
     cy.url().should('eq', Cypress.config().baseUrl + '/#/o/1/home');
   });
 });
