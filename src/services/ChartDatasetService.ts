@@ -49,10 +49,9 @@ import {
 import { IAnalyticsService } from './analytics/AnalyticsService';
 import DatasetDateFormatter from '../utils/transformations/FormatDatesTransformation';
 import { formatDate } from '../utils/DateHelper';
-import { QueryFragment } from '../components/chart-engine/Chart';
 import { percentages } from '../utils/transformations/PercentagesTransformation';
 import { indexDataset } from '../utils/transformations/IndexTranformation';
-import { fetchAndFormatQuery } from '../utils/source/OtqlSourceHelper';
+import { fetchAndFormatQuery, QueryFragment } from '../utils/source/OtqlSourceHelper';
 import ChannelService, { IChannelService } from './ChannelService';
 import CompartmentService, { ICompartmentService } from './CompartmentService';
 import AudienceSegmentService, { IAudienceSegmentService } from './AudienceSegmentService';
@@ -271,8 +270,8 @@ export class ChartDatasetService implements IChartDatasetService {
       scope,
       queryFragment,
     )
-      .then(adaptedQueryText => {
-        return this.queryService.runOTQLQuery(datamartId, adaptedQueryText, {
+      .then(adaptedQueryInfo => {
+        return this.queryService.runOTQLQuery(datamartId, adaptedQueryInfo.queryText, {
           precision: otqlSource.precision,
           use_cache: true,
         });

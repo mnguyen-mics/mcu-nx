@@ -1,8 +1,8 @@
-import { QueryFragment } from '../components/chart-engine/Chart';
 import { QueryShape, QueryTranslationRequest } from '../models/datamart/DatamartResource';
 import { AbstractScope, SegmentScope } from '../models/datamart/graphdb/Scope';
 import { DimensionFilter } from '../models/report/ReportRequestBody';
 import { IQueryService } from '../services/QueryService';
+import { QueryFragment } from './source/OtqlSourceHelper';
 
 export class QueryScopeAdapter {
   queryService: IQueryService;

@@ -8,7 +8,6 @@ import { ChartConfig, ChartType } from '../../services/ChartDatasetService';
 import McsLazyLoad from '../lazyload';
 import { AbstractScope } from '../../models/datamart/graphdb/Scope';
 import DashboardFilter from './dashboard-filter';
-import { QueryFragment } from '../chart-engine/Chart';
 import { DimensionFilter } from '../../models/report/ReportRequestBody';
 import {
   DashboardContentCard,
@@ -20,6 +19,7 @@ import ChartEditionTab from './wysiwig/ChartEditionTab';
 import CardEditionTab from './wysiwig/CardEditionTab';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { defineMessages, InjectedIntlProps } from 'react-intl';
+import { QueryFragment } from '../../utils/source/OtqlSourceHelper';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -206,7 +206,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
   }
 
   private handleEditChart(chart: ChartConfig, content: DashboardContentSchema) {
-    const { updateState, openNextDrawer, closeNextDrawer } = this.props;
+    const { datamart_id, updateState, openNextDrawer, closeNextDrawer } = this.props;
     const contentCopy = JSON.parse(JSON.stringify(content));
     if (chart.id) {
       const chartNode = this.findChartNode(chart.id, contentCopy);
@@ -215,6 +215,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
           size: 'small',
           className: 'mcs-drawer-cardEdition',
           additionalProps: {
+            datamartId: datamart_id,
             closeTab: closeNextDrawer,
             chartConfig: chartNode,
             saveChart: (c: ChartConfig) => {
@@ -258,7 +259,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     content: DashboardContentSchema,
     newId: string,
   ) {
-    const { updateState, openNextDrawer, closeNextDrawer } = this.props;
+    const { datamart_id, updateState, openNextDrawer, closeNextDrawer } = this.props;
     const contentCopy = JSON.parse(JSON.stringify(content));
     if (card.id) {
       const cardNode = this.findCardNode(card.id, contentCopy);
@@ -267,6 +268,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
           size: 'small',
           className: 'mcs-drawer-cardEdition',
           additionalProps: {
+            datamartId: datamart_id,
             closeTab: closeNextDrawer,
             saveChart: (newChartConfig: ChartConfig) => {
               const chartNode = this.findChartNode(newId, contentCopy);
