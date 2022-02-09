@@ -345,24 +345,24 @@ class Chart extends React.Component<Props, ChartState> {
             <ArrowsAltOutlined className={'mcs-chartIcon mcs-hoverableIcon'} />
           </span>
           {onClickEdit ? (
-            <EditOutlined className={'mcs-chartIcon'} onClick={onClickEdit} />
+            <EditOutlined className={'mcs-chartIcon mcs-chart_edit'} onClick={onClickEdit} />
           ) : undefined}
           {onClickMoveUp && onClickMoveDown
             ? [
                 <ArrowUpOutlined
                   key={cuid()}
-                  className={'mcs-chartIcon'}
+                  className={'mcs-chartIcon mcs-chart_arrow_up'}
                   onClick={onClickMoveUp}
                 />,
                 <ArrowDownOutlined
                   key={cuid()}
-                  className={'mcs-chartIcon'}
+                  className={'mcs-chartIcon mcs-chart_arrow_down'}
                   onClick={onClickMoveDown}
                 />,
               ]
             : undefined}
           {onClickDelete ? (
-            <DeleteOutlined className={'mcs-chartIcon'} onClick={onClickDelete} />
+            <DeleteOutlined className={'mcs-chartIcon mcs-chart_delete'} onClick={onClickDelete} />
           ) : undefined}
           {loading && <Loading className={'mcs-chart_header_loader'} isFullScreen={false} />}
         </div>

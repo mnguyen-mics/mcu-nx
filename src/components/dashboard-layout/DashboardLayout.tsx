@@ -300,11 +300,17 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
         <div className='mcs-card-cardMenu'>
           <div className='mcs-cardMenu-buttons'>
             <EditOutlined className='mcs-cardMenu-circleIcon' onClick={handleEditCard} />
-            <div className='mcs-cardMenu-option mcs-cardMenu-option_left' onClick={handleEditCard}>
+            <div
+              className='mcs-cardMenu-option mcs-cardMenu-option_left mcs-dashboardLayout_edit_card'
+              onClick={handleEditCard}
+            >
               Edit card
             </div>
             <PlusOutlined className='mcs-cardMenu-circleIcon' onClick={handleCreateChart} />
-            <div className='mcs-cardMenu-option' onClick={handleCreateChart}>
+            <div
+              className='mcs-cardMenu-option mcs-dashboardLayout_add_chart'
+              onClick={handleCreateChart}
+            >
               Add chart
             </div>
           </div>
