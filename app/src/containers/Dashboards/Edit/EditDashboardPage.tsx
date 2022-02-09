@@ -1,3 +1,5 @@
+'use strict';
+
 import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { compose } from 'recompose';
@@ -146,7 +148,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       dashboardTitle: '',
       selectedSegments: [],
       selectedBuilders: [],
-      contentText: '',
+      contentText: defaultContent,
       userNamesMap: new Map(),
       loading: true,
       existingSegments: [],
@@ -568,6 +570,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
   };
 
   onContentValidateInAceEditor = (annotations: Ace.Annotation[]) => {
+    const { contentErrorMessage } = this.state;
     const message =
       annotations.length > 0
         ? annotations
@@ -580,10 +583,11 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
               else return `${previousValue}\n${currentValue}`;
             })
         : undefined;
-
-    this.setState({
-      contentErrorMessage: message,
-    });
+    if (message !== contentErrorMessage) {
+      this.setState({
+        contentErrorMessage: message,
+      });
+    }
   };
 
   validate = (): boolean => {
@@ -600,33 +604,8 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
   };
 
   renderEditorTab() {
-    const {
-      contentErrorMessage,
-      dashboardTitle,
-      segmentCheckboxChecked,
-      builderCheckboxChecked,
-      consoleCheckboxChecked,
-      contentText,
-      homeCheckboxChecked,
-      selectedSegments,
-      selectedBuilders,
-      dashboard,
-    } = this.state;
+    const { contentErrorMessage, contentText } = this.state;
 
-    const initialValues = dashboard
-      ? {
-          input_title: dashboardTitle,
-          checkbox_home: homeCheckboxChecked,
-          checkbox_segment: segmentCheckboxChecked,
-          checkbox_builder: builderCheckboxChecked,
-          checkbox_console: consoleCheckboxChecked,
-          select_segments: selectedSegments,
-          select_builders: selectedBuilders,
-          content_editor: contentText.length > 0 ? contentText : '',
-        }
-      : {
-          content_editor: defaultContent,
-        };
     const contentErrorStatus = contentErrorMessage ? 'error' : 'success';
     return (
       <Form.Item
@@ -643,7 +622,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
           showGutter={true}
           highlightActiveLine={false}
           width='100%'
-          defaultValue={initialValues.content_editor}
+          value={contentText}
           minLines={20}
           maxLines={1000}
           height='auto'
@@ -710,20 +689,16 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       content,
     } = this.state;
 
-    const initialValues = dashboard
-      ? {
-          input_title: dashboardTitle,
-          checkbox_home: homeCheckboxChecked,
-          checkbox_segment: segmentCheckboxChecked,
-          checkbox_builder: builderCheckboxChecked,
-          checkbox_console: consoleCheckboxChecked,
-          select_segments: selectedSegments,
-          select_builders: selectedBuilders,
-          content_editor: contentText.length > 0 ? contentText : '',
-        }
-      : {
-          content_editor: defaultContent,
-        };
+    const initialValues = {
+      input_title: dashboardTitle,
+      checkbox_home: homeCheckboxChecked,
+      checkbox_segment: segmentCheckboxChecked,
+      checkbox_builder: builderCheckboxChecked,
+      checkbox_console: consoleCheckboxChecked,
+      select_segments: selectedSegments,
+      select_builders: selectedBuilders,
+      content_editor: contentText,
+    };
 
     const breadcrumb = dashboard
       ? dashboard.title
@@ -874,7 +849,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
                   {intl.formatMessage(messages.console)}
                 </Checkbox>
               </Form.Item>
-              <McsTabs items={[wysiwigTab, editorTab]} />
+              <McsTabs items={[wysiwigTab, editorTab]} destroyInactiveTabPane={true} />
             </Form>
           </Content>
         </div>
