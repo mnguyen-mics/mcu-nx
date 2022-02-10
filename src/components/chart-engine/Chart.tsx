@@ -18,8 +18,6 @@ import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/compo
 import { isUndefined, omitBy } from 'lodash';
 import { formatMetric } from '../../utils/MetricHelper';
 import {
-  AbstractSource,
-  AggregationSource,
   BarChartOptions,
   ChartApiOptions,
   ChartConfig,
@@ -29,15 +27,12 @@ import {
   IChartDatasetService,
   MetricChartFormat,
   MetricChartOptions,
-  OTQLSource,
   RadarChartOptions,
 } from '../../services/ChartDatasetService';
 import { keysToCamel } from '../../utils/CaseUtils';
 import { AbstractScope } from '../../models/datamart/graphdb/Scope';
-import { DashboardFilterQueryFragments } from '../../models/customDashboards/customDashboards';
 import { InjectedDrawerProps } from '../..';
 import ChartMetadataInfo from './ChartMetadataInfo';
-import { fetchAndFormatQuery } from '../../utils/source/OtqlSourceHelper';
 import { IQueryService, QueryService } from '../../services/QueryService';
 import { QueryScopeAdapter } from '../../utils/QueryScopeAdapter';
 import {
@@ -48,14 +43,11 @@ import {
   EditOutlined,
 } from '@ant-design/icons';
 import cuid from 'cuid';
+import { extractOtqlQueriesHelper, QueryFragment } from '../../utils/source/OtqlSourceHelper';
 
 interface YKey {
   key: string;
   message: string;
-}
-
-export interface QueryFragment {
-  [key: string]: DashboardFilterQueryFragments[];
 }
 
 interface ChartProps {
@@ -228,45 +220,17 @@ class Chart extends React.Component<Props, ChartState> {
   private queryService: IQueryService = new QueryService();
   private scopeAdapter: QueryScopeAdapter = new QueryScopeAdapter(this.queryService);
 
-  private async extractOtqlQueriesHelper(source: AbstractSource): Promise<string[]> {
-    const { datamartId, scope, queryFragment } = this.props;
-    switch (source.type.toLocaleLowerCase()) {
-      case 'ratio':
-      case 'join':
-      case 'to-list':
-      case 'index':
-      case 'format-dates':
-      case 'to-percentages':
-        const joinSource = source as AggregationSource;
-        const childSources = joinSource.sources.map(_source =>
-          this.extractOtqlQueriesHelper.bind(this)(_source),
-        );
-        return Promise.all(childSources).then(results => {
-          return results.reduce((acc: string[], x: string[]) => {
-            return x.concat(acc);
-          }, []);
-        });
-      case 'otql':
-        const otqlSource = source as OTQLSource;
-        const _datamartId = otqlSource.datamart_id || datamartId;
-        const scopedQueryText = await fetchAndFormatQuery(
-          this.queryService,
-          this.scopeAdapter,
-          _datamartId,
-          otqlSource,
-          scope,
-          queryFragment,
-        );
-        return scopedQueryText ? [scopedQueryText] : [];
-      default:
-        return [];
-    }
-  }
-
   async extractOtqlQueriesFromDataset() {
-    const { chartConfig } = this.props;
-    const queries = await this.extractOtqlQueriesHelper(chartConfig.dataset);
-    return queries;
+    const { chartConfig, datamartId, scope, queryFragment } = this.props;
+
+    return extractOtqlQueriesHelper(
+      chartConfig.dataset,
+      datamartId,
+      this.queryService,
+      this.scopeAdapter,
+      scope,
+      queryFragment,
+    );
   }
 
   async closeDrawer() {
@@ -301,7 +265,7 @@ class Chart extends React.Component<Props, ChartState> {
           },
           query_infos: queries.map(x => {
             return {
-              query_text: x,
+              query_text: x.queryText,
             };
           }),
         },
@@ -324,10 +288,7 @@ class Chart extends React.Component<Props, ChartState> {
       );
     }
 
-    const xKey = getXKeyForChart(
-      chartConfig.type,
-      chartConfig.options && (chartConfig.options as ChartApiOptions).xKey,
-    );
+    const xKey = getXKeyForChart(chartConfig.type, chartConfig.options && chartConfig.options.xKey);
 
     const openDrawer = () => this.openDrawer(chartConfig.title, formattedData);
     const onClickMoveUp = onClickMove ? () => onClickMove('up') : undefined;
@@ -339,10 +300,12 @@ class Chart extends React.Component<Props, ChartState> {
           <span
             style={{ cursor: 'pointer' }}
             className={'mcs-chart_header_title'}
-            onClick={openDrawer}
+            onClick={onClickEdit ? onClickEdit : openDrawer}
           >
-            <span>{chartConfig.title}</span>
-            <ArrowsAltOutlined className={'mcs-chartIcon mcs-hoverableIcon'} />
+            <span className='mcs-chart_header_text'>{chartConfig.title}</span>
+            {!onClickEdit ? (
+              <ArrowsAltOutlined className={'mcs-chartIcon mcs-hoverableIcon'} />
+            ) : undefined}
           </span>
           {onClickEdit ? (
             <EditOutlined className={'mcs-chartIcon mcs-chart_edit'} onClick={onClickEdit} />
@@ -364,6 +327,7 @@ class Chart extends React.Component<Props, ChartState> {
           {onClickDelete ? (
             <DeleteOutlined className={'mcs-chartIcon mcs-chart_delete'} onClick={onClickDelete} />
           ) : undefined}
+
           {loading && <Loading className={'mcs-chart_header_loader'} isFullScreen={false} />}
         </div>
         <div className='mcs-chart_content_container'>
