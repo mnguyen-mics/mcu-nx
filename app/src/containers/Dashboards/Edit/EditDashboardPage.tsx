@@ -78,6 +78,17 @@ const defaultContent = `{
     }
 ]}`;
 
+interface FormInitialValues {
+  input_title: string;
+  checkbox_home: boolean;
+  checkbox_segment: boolean;
+  checkbox_builder: boolean;
+  checkbox_console: boolean;
+  select_segments: SelectValue[];
+  select_builders: SelectValue[];
+  content_editor: string;
+}
+
 interface EditDashboardPageState {
   loading: boolean;
   dashboard?: CustomDashboardResource;
@@ -98,6 +109,7 @@ interface EditDashboardPageState {
   validated: boolean;
   form: React.RefObject<FormInstance>;
   defaultDatamartId?: string;
+  formInitialValues?: FormInitialValues;
 }
 
 interface RouterProps {
@@ -173,6 +185,10 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     });
   }
 
+  formatContent = (content?: CustomDashboardContentResource) => {
+    return content ? JSON.stringify(content.content, null, 4) : '';
+  };
+
   fetchData = async (organisationId: string, dashboardId: string) => {
     const { userNamesMap } = this.state;
 
@@ -192,11 +208,23 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       }
       const segments = await this.fetchSegments(organisationId);
       const builders = await this.fetchBuilders(organisationId);
-      const contentText = JSON.stringify(content.content, null, 4);
+      const contentText = this.formatContent(content);
       const selectedSegments = this.convertIdsToSelectValues(dashboard.segment_ids);
       const selectedBuilders = this.convertIdsToSelectValues(dashboard.builder_ids);
       const enrichedSegmentsValues = this.enrichSelectedValuesByOptions(selectedSegments, segments);
       const enrichedBuildersValues = this.enrichSelectedValuesByOptions(selectedBuilders, builders);
+
+      const initialValues: FormInitialValues = {
+        input_title: dashboard.title,
+        checkbox_home: dashboard.scopes.includes('home'),
+        checkbox_segment: dashboard.scopes.includes('segments'),
+        checkbox_builder: dashboard.scopes.includes('builders'),
+        checkbox_console: dashboard.scopes.includes('console'),
+        select_segments: selectedSegments,
+        select_builders: selectedBuilders,
+        content_editor: contentText,
+      };
+
       this.setState({
         dashboard: dashboard,
         dashboardTitle: dashboard.title,
@@ -213,11 +241,22 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
         existingBuilders: builders,
         existingSegments: segments,
         userNamesMap: userNamesMap,
+        formInitialValues: initialValues,
       });
     } else {
       this.setState({
         contentText: defaultContent,
         loading: false,
+        formInitialValues: {
+          input_title: '',
+          checkbox_home: false,
+          checkbox_segment: false,
+          checkbox_builder: false,
+          checkbox_console: false,
+          select_segments: [],
+          select_builders: [],
+          content_editor: defaultContent,
+        },
       });
     }
   };
@@ -338,6 +377,25 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     history.push(`/o/${organisationId}${dashboardsDefinition.dashboards.path}`);
   };
 
+  notifySuccessAndRefresh = (
+    dashboard: CustomDashboardResource,
+    content?: CustomDashboardContentResource,
+  ) => {
+    const { notifySuccess, intl } = this.props;
+
+    notifySuccess({
+      message: intl.formatMessage(messages.successfullySaved),
+      description: '',
+    });
+
+    this.setState({
+      dashboard: dashboard,
+      content: content,
+      contentTextOrig: this.formatContent(content),
+      contentText: this.formatContent(content),
+    });
+  };
+
   createNewDashboard = (organisationId: string, communityId: string) => {
     const { contentText } = this.state;
 
@@ -350,7 +408,9 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
         if (contentText.length > 0)
           this._dashboardService
             .createContent(responseDashboard.data.id, JSON.parse(contentText))
-            .then(_ => this.openMainListPage())
+            .then(responseContent => {
+              this.notifySuccessAndRefresh(responseDashboard.data, responseContent.data);
+            })
             .catch(e => {
               this.props.notifyError(e);
               this.setState({
@@ -358,26 +418,37 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
                 dashboard: responseDashboard.data,
               });
             });
-        else this.openMainListPage();
+        else {
+          this.notifySuccessAndRefresh(responseDashboard.data);
+        }
       })
       .catch(e => this.props.notifyError(e));
   };
 
   modifyExistingDashboard = (dashboardId: string, organisationId: string, communityId: string) => {
-    const { dashboard, contentTextOrig, contentText } = this.state;
+    const { dashboard, contentTextOrig, contentText, content } = this.state;
 
     const promises: Array<
       Promise<DataResponse<CustomDashboardResource | CustomDashboardContentResource>>
     > = [];
 
+    let storedDashboard: CustomDashboardResource | undefined;
+    let storedContent: CustomDashboardContentResource | undefined;
+
     promises.push(
-      this._dashboardService.updateDashboard(
-        dashboardId,
-        organisationId,
-        this.applyChangesOnDashboard(organisationId, communityId, {
-          ...dashboard,
+      this._dashboardService
+        .updateDashboard(
+          dashboardId,
+          organisationId,
+          this.applyChangesOnDashboard(organisationId, communityId, {
+            ...dashboard,
+          }),
+        )
+        .then(response => {
+          storedDashboard = response.data;
+
+          return response;
         }),
-      ),
     );
 
     if (
@@ -385,16 +456,25 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       (contentTextOrig && contentText !== contentTextOrig)
     )
       promises.push(
-        this._dashboardService.createContent(dashboardId, JSON.parse(contentText)).catch(e => {
-          this.setState({
-            contentErrorMessage: this.formatContentCreationErrorMessage(e),
-          });
-          return Promise.reject(e);
-        }),
+        this._dashboardService
+          .createContent(dashboardId, JSON.parse(contentText))
+          .then(response => {
+            storedContent = response.data;
+            return response;
+          })
+          .catch(e => {
+            this.setState({
+              contentErrorMessage: this.formatContentCreationErrorMessage(e),
+            });
+            return Promise.reject(e);
+          }),
       );
+    else if (content) storedContent = content;
 
     Promise.all(promises)
-      .then(_ => this.openMainListPage())
+      .then(_ => {
+        if (storedDashboard) this.notifySuccessAndRefresh(storedDashboard, storedContent);
+      })
       .catch(e => this.props.notifyError(e));
   };
 
@@ -603,6 +683,44 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     return result;
   };
 
+  shouldComponentUpdate(nextProps: Props, nextState: EditDashboardPageState): boolean {
+    // Here we compare the state fields used in the render function
+    // and we authorize rendering only if one of them is changed.
+    // Like this we want to reduce the number of renderings
+    // as each rendering provoke charts to visually reload and to send API calls.
+
+    const {
+      contentErrorMessage,
+      contentText,
+      segmentCheckboxChecked,
+      builderCheckboxChecked,
+      dashboard,
+      loading,
+      existingSegments,
+      existingBuilders,
+      form,
+      userNamesMap,
+      content,
+      formInitialValues,
+    } = this.state;
+
+    return (
+      this.props !== nextProps ||
+      contentErrorMessage !== nextState.contentErrorMessage ||
+      contentText !== nextState.contentText ||
+      segmentCheckboxChecked !== nextState.segmentCheckboxChecked ||
+      builderCheckboxChecked !== nextState.builderCheckboxChecked ||
+      dashboard !== nextState.dashboard ||
+      loading !== nextState.loading ||
+      existingSegments !== nextState.existingSegments ||
+      existingBuilders !== nextState.existingBuilders ||
+      form !== nextState.form ||
+      userNamesMap !== nextState.userNamesMap ||
+      content !== nextState.content ||
+      formInitialValues !== nextState.formInitialValues
+    );
+  }
+
   renderEditorTab() {
     const { contentErrorMessage, contentText } = this.state;
 
@@ -672,14 +790,8 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
   render() {
     const { intl } = this.props;
     const {
-      dashboardTitle,
       segmentCheckboxChecked,
       builderCheckboxChecked,
-      consoleCheckboxChecked,
-      contentText,
-      homeCheckboxChecked,
-      selectedSegments,
-      selectedBuilders,
       dashboard,
       loading,
       existingSegments,
@@ -687,18 +799,8 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       form,
       userNamesMap,
       content,
+      formInitialValues,
     } = this.state;
-
-    const initialValues = {
-      input_title: dashboardTitle,
-      checkbox_home: homeCheckboxChecked,
-      checkbox_segment: segmentCheckboxChecked,
-      checkbox_builder: builderCheckboxChecked,
-      checkbox_console: consoleCheckboxChecked,
-      select_segments: selectedSegments,
-      select_builders: selectedBuilders,
-      content_editor: contentText,
-    };
 
     const breadcrumb = dashboard
       ? dashboard.title
@@ -744,7 +846,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
         />
         <div className='ant-layout'>
           <Content className='mcs-content-container mcs-dashboardEditor'>
-            <Form ref={form} initialValues={initialValues}>
+            <Form ref={form} initialValues={formInitialValues}>
               <Row className='mcs-dashboardEditor_row'>
                 <Row className='mcs-dashboardEditor_row_column'>
                   {dashboard && <span className='mcs-dashboardEditor_index'>#{dashboard.id}</span>}

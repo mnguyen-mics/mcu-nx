@@ -53,4 +53,8 @@ export default defineMessages({
     id: 'dashboards.contentNotLoaded',
     defaultMessage: 'The dashboard content could not be loaded',
   },
+  successfullySaved: {
+    id: 'dashboards.successfullySaved',
+    defaultMessage: 'The dashboard is saved',
+  },
 });
