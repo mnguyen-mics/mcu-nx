@@ -35,7 +35,11 @@ class SegmentSelector extends React.Component<Props> {
     });
   };
   render() {
-    return <Button onClick={this.openDrawer}>Open from existing segment</Button>;
+    return (
+      <Button onClick={this.openDrawer} className='mcs-segmentSelector_button'>
+        Open from existing segment
+      </Button>
+    );
   }
 }
 
