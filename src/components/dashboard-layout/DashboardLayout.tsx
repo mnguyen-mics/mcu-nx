@@ -449,43 +449,45 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     let newFormattedQueryFragment = JSON.parse(JSON.stringify(formattedQueryFragment));
 
     for (const filterName in dashboardFilterValues) {
-      const availableFilter =
-        schema.available_filters &&
-        schema.available_filters.find(
-          f => f.technical_name.toLowerCase() === filterName.toLocaleLowerCase(),
+      if (dashboardFilterValues.hasOwnProperty(filterName)) {
+        const availableFilter =
+          schema.available_filters &&
+          schema.available_filters.find(
+            f => f.technical_name.toLowerCase() === filterName.toLocaleLowerCase(),
+          );
+        const currentFormattedQueryFragment = availableFilter?.query_fragments.map(
+          (q: DashboardFilterQueryFragments) => {
+            let formattedFrament;
+            switch (q.type.toLowerCase()) {
+              case 'otql':
+                formattedFrament = (q.fragment as string).replace(
+                  '$values',
+                  JSON.stringify(dashboardFilterValues[filterName]),
+                );
+                break;
+              case 'activities_analytics':
+                formattedFrament = (q.fragment as DimensionFilter[]).map((f: DimensionFilter) => {
+                  return { ...f, expressions: dashboardFilterValues[filterName] };
+                });
+                break;
+            }
+
+            return {
+              ...q,
+              fragment: formattedFrament,
+            };
+          },
         );
-      const currentFormattedQueryFragment = availableFilter?.query_fragments.map(
-        (q: DashboardFilterQueryFragments) => {
-          let formattedFrament;
-          switch (q.type.toLowerCase()) {
-            case 'otql':
-              formattedFrament = (q.fragment as string).replace(
-                '$values',
-                JSON.stringify(dashboardFilterValues[filterName]),
-              );
-              break;
-            case 'activities_analytics':
-              formattedFrament = (q.fragment as DimensionFilter[]).map((f: DimensionFilter) => {
-                return { ...f, expressions: dashboardFilterValues[filterName] };
-              });
-              break;
-          }
 
-          return {
-            ...q,
-            fragment: formattedFrament,
+        if (newFormattedQueryFragment[filterName]) {
+          newFormattedQueryFragment[filterName] =
+            dashboardFilterValues[filterName].length > 0 ? currentFormattedQueryFragment : {};
+        } else {
+          newFormattedQueryFragment = {
+            ...newFormattedQueryFragment,
+            [filterName]: currentFormattedQueryFragment,
           };
-        },
-      );
-
-      if (newFormattedQueryFragment[filterName]) {
-        newFormattedQueryFragment[filterName] =
-          dashboardFilterValues[filterName].length > 0 ? currentFormattedQueryFragment : {};
-      } else {
-        newFormattedQueryFragment = {
-          ...newFormattedQueryFragment,
-          [filterName]: currentFormattedQueryFragment,
-        };
+        }
       }
     }
 
@@ -495,7 +497,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
   };
 
   generateDOM(): React.ReactElement {
-    const { schema, datamart_id } = this.props;
+    const { schema, datamart_id, organisationId } = this.props;
     const sections = schema.sections.map((section, i) => {
       const cards = section.cards.map((card, index) => {
         return this.renderCard(card, index);
@@ -537,6 +539,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
                 key={index.toString()}
                 filter={filter}
                 datamartId={datamart_id}
+                organisationId={organisationId}
                 onFilterChange={this.handleDashboardFilterChange}
               />
             ))}
