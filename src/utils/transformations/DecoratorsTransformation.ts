@@ -20,11 +20,12 @@ export class DecoratorsTransformation {
   constructor(
     channelService: IChannelService,
     compartmentService: ICompartmentService,
-    audienceSegmentService: IAudienceSegmentService,
+    audienceSegmentService?: IAudienceSegmentService,
   ) {
     this.channelService = channelService;
     this.compartmentService = compartmentService;
-    this.audienceSegmentService = audienceSegmentService;
+
+    if (audienceSegmentService) this.audienceSegmentService = audienceSegmentService;
   }
 
   fetchChannelsMap(datamartId: string, organisationId: string): Promise<Map<string, string>> {

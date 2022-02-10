@@ -1,5 +1,5 @@
 import { Card } from '@mediarithmics-private/mcs-components-library';
-import { Modal } from 'antd';
+import { Button, Modal } from 'antd';
 import React, { CSSProperties } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import Chart from '../chart-engine';
@@ -70,6 +70,11 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       dashboardFilterValues: {},
       formattedQueryFragment: {},
     };
+  }
+
+  shouldComponentUpdate(nextProps: Props, nextState: DashboardLayoutState) {
+    const { dashboardFilterValues } = this.state;
+    return dashboardFilterValues === nextState.dashboardFilterValues;
   }
 
   private findCardNode(
@@ -419,41 +424,10 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
   };
 
   handleDashboardFilterChange = (filterTechnicalName: string, filterValues: string[]) => {
-    const { dashboardFilterValues, formattedQueryFragment } = this.state;
-    const { schema } = this.props;
+    const { dashboardFilterValues } = this.state;
 
     // deep copy array
     let newDashboardFilterValues = JSON.parse(JSON.stringify(dashboardFilterValues));
-    let newFormattedQueryFragment = JSON.parse(JSON.stringify(formattedQueryFragment));
-
-    const availableFilter =
-      schema.available_filters &&
-      schema.available_filters.find(
-        f => f.technical_name.toLowerCase() === filterTechnicalName.toLocaleLowerCase(),
-      );
-    const currentFormattedQueryFragment = availableFilter?.query_fragments.map(
-      (q: DashboardFilterQueryFragments) => {
-        let formattedFrament;
-        switch (q.type.toLowerCase()) {
-          case 'otql':
-            formattedFrament = (q.fragment as string).replace(
-              '$values',
-              JSON.stringify(filterValues),
-            );
-            break;
-          case 'activities_analytics':
-            formattedFrament = (q.fragment as DimensionFilter[]).map((f: DimensionFilter) => {
-              return { ...f, expressions: filterValues };
-            });
-            break;
-        }
-
-        return {
-          ...q,
-          fragment: formattedFrament,
-        };
-      },
-    );
 
     if (newDashboardFilterValues[filterTechnicalName]) {
       newDashboardFilterValues[filterTechnicalName] = filterValues.length > 0 ? filterValues : {};
@@ -464,24 +438,68 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       };
     }
 
-    if (newFormattedQueryFragment[filterTechnicalName]) {
-      newFormattedQueryFragment[filterTechnicalName] =
-        filterValues.length > 0 ? currentFormattedQueryFragment : {};
-    } else {
-      newFormattedQueryFragment = {
-        ...newFormattedQueryFragment,
-        [filterTechnicalName]: currentFormattedQueryFragment,
-      };
+    this.setState({
+      dashboardFilterValues: newDashboardFilterValues,
+    });
+  };
+
+  applyFilter = () => {
+    const { dashboardFilterValues, formattedQueryFragment } = this.state;
+    const { schema } = this.props;
+
+    // deep copy array
+    let newFormattedQueryFragment = JSON.parse(JSON.stringify(formattedQueryFragment));
+
+    for (const filterName in dashboardFilterValues) {
+      if (dashboardFilterValues.hasOwnProperty(filterName)) {
+        const availableFilter =
+          schema.available_filters &&
+          schema.available_filters.find(
+            f => f.technical_name.toLowerCase() === filterName.toLocaleLowerCase(),
+          );
+        const currentFormattedQueryFragment = availableFilter?.query_fragments.map(
+          (q: DashboardFilterQueryFragments) => {
+            let formattedFrament;
+            switch (q.type.toLowerCase()) {
+              case 'otql':
+                formattedFrament = (q.fragment as string).replace(
+                  '$values',
+                  JSON.stringify(dashboardFilterValues[filterName]),
+                );
+                break;
+              case 'activities_analytics':
+                formattedFrament = (q.fragment as DimensionFilter[]).map((f: DimensionFilter) => {
+                  return { ...f, expressions: dashboardFilterValues[filterName] };
+                });
+                break;
+            }
+
+            return {
+              ...q,
+              fragment: formattedFrament,
+            };
+          },
+        );
+
+        if (newFormattedQueryFragment[filterName]) {
+          newFormattedQueryFragment[filterName] =
+            dashboardFilterValues[filterName].length > 0 ? currentFormattedQueryFragment : {};
+        } else {
+          newFormattedQueryFragment = {
+            ...newFormattedQueryFragment,
+            [filterName]: currentFormattedQueryFragment,
+          };
+        }
+      }
     }
 
     this.setState({
-      dashboardFilterValues: newDashboardFilterValues,
       formattedQueryFragment: newFormattedQueryFragment,
     });
   };
 
   generateDOM(): React.ReactElement {
-    const { schema, datamart_id } = this.props;
+    const { schema, datamart_id, organisationId } = this.props;
     const sections = schema.sections.map((section, i) => {
       const cards = section.cards.map((card, index) => {
         return this.renderCard(card, index);
@@ -516,17 +534,26 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     });
     return (
       <div className={'mcs-dashboardLayout'}>
-        <div className={'mcs-dashboardLayout_filters'}>
-          {schema.available_filters &&
-            schema.available_filters.map((filter, index) => (
+        {schema.available_filters && (
+          <div className={'mcs-dashboardLayout_filters'}>
+            {schema.available_filters.map((filter, index) => (
               <DashboardFilter
                 key={index.toString()}
                 filter={filter}
                 datamartId={datamart_id}
+                organisationId={organisationId}
                 onFilterChange={this.handleDashboardFilterChange}
               />
             ))}
-        </div>
+            <Button
+              onClick={this.applyFilter}
+              type='primary'
+              className='mcs-primary mcs-dashboardLayout_filters_applyBtn'
+            >
+              Apply
+            </Button>
+          </div>
+        )}
         {sections}
       </div>
     );

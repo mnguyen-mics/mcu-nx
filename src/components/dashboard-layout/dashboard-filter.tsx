@@ -1,24 +1,42 @@
 import * as React from 'react';
-import { isAggregateResult, OTQLResult } from '../../models/datamart/graphdb/OTQLResult';
+import { isAggregateResult } from '../../models/datamart/graphdb/OTQLResult';
 import { IQueryService, QueryService } from '../../services/QueryService';
 import { Select } from 'antd';
 import cuid from 'cuid';
 import { DashboardAvailableFilters } from '../../models/customDashboards/customDashboards';
+import { DecoratorsTransformation } from '../../utils/transformations/DecoratorsTransformation';
+import ChannelService, { IChannelService } from '../../services/ChannelService';
+import CompartmentService, { ICompartmentService } from '../../services/CompartmentService';
+import { ModelType } from '../../services/ChartDatasetService';
 
 const { Option } = Select;
 interface DashboardFilterProps {
   filter: DashboardAvailableFilters;
   datamartId: string;
+  organisationId: string;
   onFilterChange?: (filterTechnicalName: string, filterValues: string[]) => void;
 }
 
+interface EnhancedOptions {
+  label: string;
+  key: string;
+}
+
 interface DashboardFilterState {
-  filterOptionsResult?: OTQLResult;
+  filterOptionsResult?: EnhancedOptions[];
   appliedFilters: any;
 }
 
 class DashboardFilter extends React.Component<DashboardFilterProps, DashboardFilterState> {
   private queryService: IQueryService = new QueryService();
+  private channelService: IChannelService = new ChannelService();
+  private compartmentService: ICompartmentService = new CompartmentService();
+
+  private decoratorsTransformation: DecoratorsTransformation = new DecoratorsTransformation(
+    this.channelService,
+    this.compartmentService,
+  );
+
   constructor(props: DashboardFilterProps) {
     super(props);
     this.state = {
@@ -31,7 +49,7 @@ class DashboardFilter extends React.Component<DashboardFilterProps, DashboardFil
     this.fetchFilterOption();
   }
   fetchFilterOption() {
-    const { datamartId, filter } = this.props;
+    const { organisationId, datamartId, filter } = this.props;
 
     return this.queryService
       .runOTQLQuery(datamartId, filter.values_query, {
@@ -41,10 +59,28 @@ class DashboardFilter extends React.Component<DashboardFilterProps, DashboardFil
       .then(res => {
         return res.data;
       })
-      .then(queryResult => {
-        this.setState({
-          filterOptionsResult: queryResult,
-        });
+      .then(async queryResult => {
+        if (queryResult && isAggregateResult(queryResult.rows)) {
+          const buckets = queryResult.rows[0]?.aggregations?.buckets[0]?.buckets || [];
+          const enhancedBuckets = await Promise.all(
+            buckets.map(async bucket => {
+              const itemLabel = await this.decoratorsTransformation.decorateKey(
+                bucket.key,
+                datamartId,
+                organisationId,
+                filter.technical_name.toUpperCase() as ModelType,
+              );
+              return {
+                key: bucket.key,
+                label: itemLabel,
+              };
+            }),
+          );
+
+          this.setState({
+            filterOptionsResult: enhancedBuckets,
+          });
+        }
       });
   }
 
@@ -66,11 +102,10 @@ class DashboardFilter extends React.Component<DashboardFilterProps, DashboardFil
   renderFilter() {
     const { filter } = this.props;
     const { filterOptionsResult, appliedFilters } = this.state;
-    if (filterOptionsResult && isAggregateResult(filterOptionsResult.rows)) {
-      const buckets = filterOptionsResult.rows[0]?.aggregations?.buckets[0]?.buckets || [];
-      const filterOptions = buckets.map(buck => (
+    if (filterOptionsResult) {
+      const filterOptions = filterOptionsResult.map(buck => (
         <Option key={cuid()} value={buck.key}>
-          {buck.key}
+          {buck.label}
         </Option>
       ));
       return (
