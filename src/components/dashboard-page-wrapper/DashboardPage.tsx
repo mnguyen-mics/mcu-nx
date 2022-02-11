@@ -31,6 +31,7 @@ export interface DashboardPageProps {
   segmentDashboardTechnicalInformation?: React.ReactNode;
   DatamartUsersAnalyticsWrapper?: React.ComponentClass<DatamartUsersAnalyticsWrapperProps>;
   DashboardWrapper?: React.ComponentClass<DashboardWrapperProps>;
+  contextualTargetingTab?: React.ReactNode;
 }
 const messagesDashboardPage = defineMessages({
   technicalInformationTab: {
@@ -62,6 +63,7 @@ class DashboardPage extends React.Component<Props> {
       intl: { formatMessage },
       DashboardWrapper,
       DatamartUsersAnalyticsWrapper,
+      contextualTargetingTab,
     } = this.props;
     const defaultContent = (
       <div>
@@ -155,6 +157,12 @@ class DashboardPage extends React.Component<Props> {
           title: dataFileDashboards?.length === 0 ? 'Activities analytics' : 'Old OTQL dashboard',
           display: defaultContent,
         });
+      if (contextualTargetingTab) {
+        dashboardTabs.push({
+          title: 'Contextual Targeting',
+          display: <div>{contextualTargetingTab}</div>,
+        });
+      }
 
       return dashboardTabs.length === 1 ? (
         <div>
@@ -175,6 +183,13 @@ class DashboardPage extends React.Component<Props> {
         title: 'Technical information',
         display: <div>{segmentDashboardTechnicalInformation}</div>,
       });
+      if (contextualTargetingTab) {
+        dashboardTabs.push({
+          title: 'Contextual Targeting',
+          display: <div>{contextualTargetingTab}</div>,
+        });
+      }
+
       if (
         (dataFileDashboards && dataFileDashboards.length > 0) ||
         (datamartAnalyticsConfig && datamartAnalyticsConfig.length > 0)
@@ -183,6 +198,11 @@ class DashboardPage extends React.Component<Props> {
           title: dataFileDashboards?.length === 0 ? 'Activities analytics' : 'Old OTQL dashboard',
           display: defaultContent,
         });
+
+        // Move Contextual tab at the end of array
+        // (Contextual tab has index #1)
+        dashboardTabs.push(dashboardTabs.splice(1, 1)[0]);
+
         return (
           <McsTabs
             destroyInactiveTabPane={true}

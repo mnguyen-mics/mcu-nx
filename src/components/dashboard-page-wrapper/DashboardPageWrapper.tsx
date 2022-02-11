@@ -43,6 +43,7 @@ interface DashboardPageWrapperProps {
   defaultDashboardContent?: DashboardContentSections;
   DatamartUsersAnalyticsWrapper?: React.ComponentClass<DatamartUsersAnalyticsWrapperProps>;
   DashboardWrapper?: React.ComponentClass<DashboardWrapperProps>;
+  contextualTargetingTab?: React.ReactNode;
 }
 
 type Props = DashboardPageWrapperProps &
@@ -180,6 +181,7 @@ class DashboardPageWrapper extends React.Component<Props, State> {
       segmentDashboardTechnicalInformation,
       DatamartUsersAnalyticsWrapper,
       DashboardWrapper,
+      contextualTargetingTab,
     } = this.props;
 
     const { isLoading, dataFileDashboards, apiDashboards } = this.state;
@@ -236,6 +238,7 @@ class DashboardPageWrapper extends React.Component<Props, State> {
           segmentDashboardTechnicalInformation={segmentDashboardTechnicalInformation}
           DashboardWrapper={DashboardWrapper}
           DatamartUsersAnalyticsWrapper={DatamartUsersAnalyticsWrapper}
+          contextualTargetingTab={contextualTargetingTab}
         />
       );
     }
