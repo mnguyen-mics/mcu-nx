@@ -323,10 +323,10 @@ export const DATAMART_SEARCH_SETTINGS: SearchSetting[] = [
 
 export const SORT_SEARCH_SETTINGS: SearchSetting[] = [
   {
-    paramName: 'orderBy',
+    paramName: 'order_by',
     defaultValue: '',
     deserialize: query => {
-      return query.orderBy;
+      return query.order_by;
     },
     serialize: (value: any) => value,
     isValid: () => true,
