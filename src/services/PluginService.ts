@@ -10,7 +10,7 @@ import {
   PluginManagerResource,
   PluginActionResource,
 } from '../models/plugin/Plugins';
-import { PaginatedApiParam } from './../utils/ApiHelper';
+import { PaginatedApiParam, OrderByParam } from './../utils/ApiHelper';
 import ApiService, { DataListResponse, DataResponse } from './ApiService';
 import { PropertyResourceShape } from '../models/plugin';
 import { IDataFileService } from './DataFileService';
@@ -23,7 +23,7 @@ import { IAssetFileService } from './AssetFileService';
 
 // TODO Pagination is disabled for now waiting for an api param
 // to allow filtering of plugin without version and/or with current version not archived
-interface GetPluginOptions extends Omit<PaginatedApiParam, 'first_result'> {
+export interface GetPluginOptions extends Omit<PaginatedApiParam, 'first_result'>, OrderByParam {
   plugin_type?: PluginType;
   artifact_id?: string;
   group_id?: string;
