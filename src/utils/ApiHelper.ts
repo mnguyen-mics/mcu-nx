@@ -3,6 +3,10 @@ export interface PaginatedApiParam {
   max_results?: number;
 }
 
+export interface OrderByParam {
+  order_by?: string;
+}
+
 export function getPaginatedApiParam(
   page: number = 1,
   pageSize: number = 500,

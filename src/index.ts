@@ -83,7 +83,7 @@ export { IAuthService, AuthService } from './services/AuthService';
 export { default as ApiService } from './services/ApiService';
 export { default as PluginInstanceService } from './services/PluginInstanceService';
 export { default as PluginService } from './services/PluginService';
-export { IPluginService } from './services/PluginService';
+export { IPluginService, GetPluginOptions } from './services/PluginService';
 export { default as AssetFileService } from './services/AssetFileService';
 export { IAssetFileService } from './services/AssetFileService';
 export { IDataFileService } from './services/DataFileService';
