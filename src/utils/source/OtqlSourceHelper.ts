@@ -1,9 +1,11 @@
-import { QueryLanguage, QueryShape } from '../../models/datamart/DatamartResource';
+import { QueryLanguage, QueryResource, QueryShape } from '../../models/datamart/DatamartResource';
 import { AbstractScope } from '../../models/datamart/graphdb/Scope';
 import { AbstractSource, AggregationSource, OTQLSource } from '../../services/ChartDatasetService';
 import { QueryService, IQueryService } from '../../services/QueryService';
 import { QueryScopeAdapter } from '../QueryScopeAdapter';
 import { DashboardFilterQueryFragments } from '../../models/customDashboards/customDashboards';
+
+const mapOtqlQueries: Map<string, QueryResource> = new Map();
 
 export function fetchOtqlQuery(
   queryService: QueryService,
@@ -18,7 +20,13 @@ export function fetchOtqlQuery(
     };
     return Promise.resolve(resource);
   } else if (otqlSource.query_id) {
-    return queryService.getQuery(datamartId, otqlSource.query_id).then(res => res.data);
+    const cachedOtqlQuery = mapOtqlQueries.get(otqlSource.query_id);
+    if (cachedOtqlQuery) return Promise.resolve(cachedOtqlQuery);
+    else
+      return queryService.getQuery(datamartId, otqlSource.query_id).then(res => {
+        if (otqlSource.query_id) mapOtqlQueries.set(otqlSource.query_id, res.data);
+        return res.data;
+      });
   } else {
     return Promise.reject('No query defined for otql type source');
   }
@@ -29,8 +37,6 @@ export interface OtqlQueryInfo {
   queryText: string;
 }
 
-const mapQtqlQueries: Map<string, OtqlQueryInfo> = new Map();
-
 export function fetchAndFormatQuery(
   queryService: QueryService,
   queryScopeAdapter: QueryScopeAdapter,
@@ -39,23 +45,15 @@ export function fetchAndFormatQuery(
   scope?: AbstractScope,
   queryFragment?: QueryFragment,
 ): Promise<OtqlQueryInfo> {
-  if (otqlSource.query_id) {
-    const cachedOtqlInfo = mapQtqlQueries.get(otqlSource.query_id);
-    if (cachedOtqlInfo) return Promise.resolve(cachedOtqlInfo);
-  }
-
   const otqlScope = queryScopeAdapter.buildScopeOtqlQuery(datamartId, scope);
   return fetchOtqlQuery(queryService, datamartId, otqlSource).then(dashboardQueryResource => {
     return queryScopeAdapter
       .scopeQueryWithWhereClause(datamartId, queryFragment || {}, dashboardQueryResource, otqlScope)
       .then(adaptedQueryText => {
-        const resultOtqlInfo = {
+        return {
           queryId: otqlSource.query_id ? otqlSource.query_id : '0',
           queryText: adaptedQueryText,
         };
-        mapQtqlQueries.set(resultOtqlInfo.queryId, resultOtqlInfo);
-
-        return resultOtqlInfo;
       });
   });
 }
