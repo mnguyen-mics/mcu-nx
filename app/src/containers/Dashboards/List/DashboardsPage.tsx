@@ -2,8 +2,7 @@ import * as React from 'react';
 import lodash from 'lodash';
 import { compose } from 'recompose';
 import { withRouter, RouteComponentProps } from 'react-router';
-import { Layout, Tag, Select } from 'antd';
-import { FilterOutlined } from '@ant-design/icons';
+import { Layout, Tag } from 'antd';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 import ItemList, { Filters } from '../../../components/ItemList';
 import { PAGINATION_SEARCH_SETTINGS } from '../../../utils/LocationSearchHelper';
@@ -42,27 +41,11 @@ const initialState = {
   organisationsMap: new Map(),
 };
 
-const optionsScope = [
-  {
-    value: 'Segments',
-  },
-  {
-    value: 'Builders',
-  },
-  {
-    value: 'Home',
-  },
-  {
-    value: 'Console',
-  },
-];
-
 interface DashboardListContentState {
   loading: boolean;
   data: CustomDashboardResource[];
   total: number;
   filters: Filters;
-  optionsOrg: Array<{ value: string }>;
   organisationsMap: Map<string, string>;
 }
 
@@ -101,7 +84,6 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
           if (resultOrganisations) {
             organisationsMap.set(resultOrganisations.data.id, resultOrganisations.data.name);
             this.setState({
-              optionsOrg: [{ value: resultOrganisations.data.name }],
               organisationsMap: organisationsMap,
             });
           }
@@ -195,18 +177,6 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
     });
   };
 
-  clearScopeFilterAndRefreshTable = () => {
-    this.setState({
-      filters: { scope: '' },
-    });
-  };
-
-  onSelectScope = (data: string) => {
-    this.setState({
-      filters: { scope: data },
-    });
-  };
-
   onClickDashboard = (dashboard: CustomDashboardResource) => {
     const {
       history,
@@ -221,42 +191,6 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
       )}`,
     );
   };
-
-  renderInputPlaceholder(value: string) {
-    return (
-      <div>
-        <span className='mcs-actionBar_placeholderFilter'>{value}</span>
-        <FilterOutlined className='mcs-actionBar_iconFilter' />
-      </div>
-    );
-  }
-
-  renderActionBarInnerElements() {
-    const { optionsOrg } = this.state;
-
-    return (
-      <div className='mcs-actionBar_filters'>
-        <Select
-          showSearch={true}
-          allowClear={true}
-          showArrow={false}
-          options={optionsScope}
-          onSelect={this.onSelectScope}
-          onClear={this.clearScopeFilterAndRefreshTable}
-          placeholder={this.renderInputPlaceholder('Scope')}
-          className='mcs-actionBar_filterInput'
-        />
-        <Select
-          showSearch={true}
-          allowClear={true}
-          showArrow={false}
-          options={optionsOrg}
-          placeholder={this.renderInputPlaceholder('Organisation')}
-          className='mcs-actionBar_filterInput'
-        />
-      </div>
-    );
-  }
 
   render() {
     const {
@@ -327,7 +261,7 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
 
     return (
       <div className='ant-layout'>
-        <DashboardActionBar innerElement={this.renderActionBarInnerElements()} />
+        <DashboardActionBar />
         <div className='ant-layout'>
           <Content className='mcs-content-container'>
             <Card>
