@@ -82,6 +82,7 @@ Cypress.Commands.add('initTestContext', () => {
         Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10)
       }`,
       market_id: '1',
+      type: 'TEST_SANDBOX',
     },
   }).then(orgResponse => {
     organisationId = orgResponse.body.data.id;
@@ -104,9 +105,48 @@ Cypress.Commands.add('initTestContext', () => {
   });
 });
 
+Cypress.Commands.add('createQuery', (accessToken, datamartId, queryText) => {
+  return cy.request({
+    url: `${Cypress.env('apiDomain')}/v1/datamarts/${datamartId}/queries`,
+    method: 'POST',
+    headers: { Authorization: accessToken },
+    body: {
+      query_text: queryText,
+      datamart_id: `${datamartId}`,
+      query_language: 'OTQL',
+    },
+  });
+});
+
+Cypress.Commands.add(
+  'createDashboard',
+  (
+    accessToken: string,
+    organisationId: string,
+    dashboardTitle: string,
+    scopes: string[],
+    segmentIds?: number[],
+    builderIds?: number[],
+  ) => {
+    return cy.request({
+      url: `${Cypress.env('apiDomain')}/v1/dashboards`,
+      method: 'POST',
+      headers: { Authorization: accessToken },
+      body: {
+        organisation_id: `${organisationId}`,
+        community_id: `${organisationId}`,
+        title: `${dashboardTitle}`,
+        scopes: scopes,
+        segment_ids: segmentIds,
+        builder_ids: builderIds,
+      },
+    });
+  },
+);
+
 Cypress.Commands.add('switchOrg', organisationName => {
   cy.get('.mcs-organisationListSwitcher_component').click();
-  cy.get('.mcs-organisationListSwitcher_search').type(organisationName);
+  cy.get('.mcs-organisationListSwitcher_searchInput').eq(0).find('input').type(organisationName);
   cy.get('.mcs-organisationListSwitcher_orgId_searchView').click({ force: true });
 });
 
