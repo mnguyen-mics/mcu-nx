@@ -157,3 +157,56 @@ export const wisywigCardContent = () => {
     ],
   };
 };
+
+export const editAdjustmentsDashboardContent = (queryId: string) => {
+  return {
+    sections: [
+      {
+        title: 'First Section',
+        cards: [
+          {
+            x: 0,
+            y: 0,
+            w: 12,
+            h: 3,
+            layout: 'horizontal',
+            charts: [
+              {
+                title: 'Index',
+                type: 'bars',
+                dataset: {
+                  type: 'index',
+                  sources: [
+                    {
+                      type: 'otql',
+                      series_title: 'datamart',
+                      query_id: `${queryId}`,
+                    },
+                    {
+                      type: 'otql',
+                      series_title: 'segment',
+                      query_id: `${queryId}`,
+                    },
+                  ],
+                  options: {
+                    minimum_percentage: 0,
+                  },
+                },
+                options: {
+                  format: 'index',
+                  legend: {
+                    position: 'bottom',
+                    enabled: true,
+                  },
+                  bigBars: true,
+                  stacking: false,
+                  plotLineValue: 100,
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+};

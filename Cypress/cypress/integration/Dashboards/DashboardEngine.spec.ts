@@ -1,4 +1,8 @@
-import { dashboardContent, wisywigCardContent } from './DashboardsContent';
+import {
+  dashboardContent,
+  editAdjustmentsDashboardContent,
+  wisywigCardContent,
+} from './DashboardsContent';
 
 describe('Test the creation of a job instance', () => {
   beforeEach(() => {
@@ -99,6 +103,53 @@ describe('Test the creation of a job instance', () => {
                 .should('contain', 'Number of active user points');
               cy.get('.mcs-chart_header_title').should('have.length', 2);
             });
+        });
+      });
+    });
+  });
+
+  it('Should test that we can see the queries of the chart on edit', () => {
+    cy.readFile('cypress/fixtures/init_infos.json').then(data => {
+      cy.createQuery(
+        data.accessToken,
+        data.datamartId,
+        'SELECT {nature @map} FROM ActivityEvent',
+      ).then(queryResponse => {
+        cy.createDashboard(
+          data.accessToken,
+          data.organisationId,
+          'Edit Adjustments Dashboard',
+          ['home'],
+          [],
+          [],
+        ).then(dashboardResponse => {
+          cy.request({
+            url: `${Cypress.env('apiDomain')}/v1/dashboards/${
+              dashboardResponse.body.data.id
+            }/content`,
+            method: 'PUT',
+            headers: { Authorization: data.accessToken },
+            body: editAdjustmentsDashboardContent(queryResponse.body.data.id),
+          }).then(() => {
+            cy.get('.mcs-sideBar-menuItem_Dashboards').eq(0).click();
+            cy.contains('Edit Adjustments Dashboard').click();
+            cy.get('.mcs-chart_edit').click();
+            cy.get('.mcs-chartMetaDataInfo_query_item_input')
+              .should('have.length', 2)
+              .eq(0)
+              .invoke('val')
+              .then(value => {
+                expect(value).to.contain('SELECT {nature @map} FROM ActivityEvent');
+              });
+            cy.get('.mcs-chartMetaDataInfo_query_item_input')
+              .should('have.length', 2)
+              .eq(1)
+              .invoke('val')
+              .then(value => {
+                expect(value).to.contain('SELECT {nature @map} FROM ActivityEvent');
+              });
+            cy.get('.mcs-chartEdition-content').should('contain', queryResponse.body.data.id);
+          });
         });
       });
     });
