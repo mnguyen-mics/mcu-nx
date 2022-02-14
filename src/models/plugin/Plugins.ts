@@ -266,8 +266,8 @@ export interface IntegrationBatchResource extends PluginInstance {
   last_modified_ts?: number;
   created_by: string;
   last_modified_by?: string;
-  cron?: string;
-  cron_status?: CronStatus;
+  cron?: string | null;
+  cron_status?: CronStatus | null;
   execution_container_cpu_size: ExecutionContainerResourceSize;
   execution_container_ram_size: ExecutionContainerResourceSize;
   execution_container_disk_size: ExecutionContainerResourceSize;
