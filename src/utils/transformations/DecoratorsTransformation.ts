@@ -39,13 +39,15 @@ export class DecoratorsTransformation {
   }
 
   fetchSegmentsMap(organisationId: string): Promise<Map<string, string>> {
-    return this.audienceSegmentService.getSegments(organisationId).then(segments => {
-      const map = new Map<string, string>();
-      segments.data.forEach(segment => {
-        map.set(segment.id, segment.name);
+    if (this.audienceSegmentService)
+      return this.audienceSegmentService.getSegments(organisationId).then(segments => {
+        const map = new Map<string, string>();
+        segments.data.forEach(segment => {
+          map.set(segment.id, segment.name);
+        });
+        return map;
       });
-      return map;
-    });
+    else return Promise.resolve(new Map());
   }
 
   fetchCompartmentsMap(organisationId: string): Promise<Map<string, string>> {

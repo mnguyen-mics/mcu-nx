@@ -8,6 +8,9 @@ import { DecoratorsTransformation } from '../../utils/transformations/Decorators
 import ChannelService, { IChannelService } from '../../services/ChannelService';
 import CompartmentService, { ICompartmentService } from '../../services/CompartmentService';
 import { ModelType } from '../../services/ChartDatasetService';
+import AudienceSegmentService, {
+  IAudienceSegmentService,
+} from '../../services/AudienceSegmentService';
 
 const { Option } = Select;
 interface DashboardFilterProps {
@@ -31,10 +34,12 @@ class DashboardFilter extends React.Component<DashboardFilterProps, DashboardFil
   private queryService: IQueryService = new QueryService();
   private channelService: IChannelService = new ChannelService();
   private compartmentService: ICompartmentService = new CompartmentService();
+  private audienceSegmentService: IAudienceSegmentService = new AudienceSegmentService();
 
   private decoratorsTransformation: DecoratorsTransformation = new DecoratorsTransformation(
     this.channelService,
     this.compartmentService,
+    this.audienceSegmentService,
   );
 
   constructor(props: DashboardFilterProps) {
