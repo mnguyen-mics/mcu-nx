@@ -2,7 +2,7 @@ import * as React from 'react';
 import _ from 'lodash';
 import queryString from 'query-string';
 import { FilterOutlined } from '@ant-design/icons';
-import { Layout, Select, Tag, Drawer } from 'antd';
+import { Layout, Select, Tag, Drawer, TablePaginationConfig } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import messages from '../messages';
@@ -12,10 +12,13 @@ import {
   lazyInject,
   TYPES,
   IPluginService,
+  GetPluginOptions,
 } from '@mediarithmics-private/advanced-components';
 import {
   PAGINATION_SEARCH_SETTINGS,
+  parseSearch,
   PLUGIN_SEARCH_SETTINGS,
+  SORT_SEARCH_SETTINGS,
   updateSearch,
 } from '../../../utils/LocationSearchHelper';
 import PluginsListActionBar from './PluginsListActionBar';
@@ -30,12 +33,14 @@ import { Link } from 'react-router-dom';
 import { Card } from '@mediarithmics-private/mcs-components-library';
 import { PluginType } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
 import { getPaginatedApiParam } from '../../../utils/ApiHelper';
+import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 
 const { Content } = Layout;
 
 export const PLUGIN_PAGE_SEARCH_SETTINGS = [
   ...PAGINATION_SEARCH_SETTINGS,
   ...PLUGIN_SEARCH_SETTINGS,
+  ...SORT_SEARCH_SETTINGS,
 ];
 interface RouteProps {
   organisationId: string;
@@ -51,6 +56,8 @@ interface State {
   groupIdOptions: Array<{ value: string }>;
   artifactIdOptions: Array<{ value: string }>;
   isVisibleDrawer: boolean;
+  sortField?: string;
+  isSortAsc?: boolean;
 }
 
 class PluginsList extends React.Component<Props, State> {
@@ -59,6 +66,15 @@ class PluginsList extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
+    const {
+      location: { search },
+    } = props;
+
+    const param: GetPluginOptions = parseSearch<GetPluginOptions>(
+      search,
+      PLUGIN_PAGE_SEARCH_SETTINGS,
+    );
+
     this.state = {
       loading: false,
       data: [],
@@ -67,6 +83,13 @@ class PluginsList extends React.Component<Props, State> {
       groupIdOptions: [],
       artifactIdOptions: [],
       isVisibleDrawer: false,
+      sortField:
+        param.order_by && param.order_by.length > 0
+          ? param.order_by[0] === '-'
+            ? param.order_by.substring(1)
+            : param.order_by
+          : undefined,
+      isSortAsc: param.order_by ? (param.order_by[0] === '-' ? false : true) : undefined,
     };
   }
 
@@ -156,6 +179,25 @@ class PluginsList extends React.Component<Props, State> {
     } = this.props;
     const params: any = {};
     params[`${filterProperty}`] = value;
+    const nextLocation = {
+      pathname,
+      search: updateSearch(currentSearch, params, PLUGIN_PAGE_SEARCH_SETTINGS),
+    };
+    history.push(nextLocation);
+  };
+
+  onOrderBy = (sortField?: string, isAsc?: boolean) => {
+    const {
+      history,
+      location: { search: currentSearch, pathname },
+    } = this.props;
+    const value =
+      sortField !== undefined && isAsc !== undefined
+        ? isAsc
+          ? sortField
+          : '-' + sortField
+        : undefined;
+    const params: any = { order_by: value };
     const nextLocation = {
       pathname,
       search: updateSearch(currentSearch, params, PLUGIN_PAGE_SEARCH_SETTINGS),
@@ -321,6 +363,32 @@ class PluginsList extends React.Component<Props, State> {
       });
   };
 
+  getOrderByForColumn = (key: string, sortField?: string, isSortAsc?: boolean) => {
+    if (sortField !== key || isSortAsc === undefined) {
+      return undefined;
+    } else {
+      if (isSortAsc) {
+        return 'ascend';
+      } else {
+        return 'descend';
+      }
+    }
+  };
+
+  onTableChange = (
+    pagination: TablePaginationConfig,
+    filters: Record<string, FilterValue | null>,
+    sorter: SorterResult<PluginResource>,
+  ) => {
+    const isSortAsc = sorter.order ? (sorter.order === 'ascend' ? true : false) : undefined;
+    const sortField = sorter.columnKey && sorter.order ? sorter.columnKey.toString() : undefined;
+    this.setState({
+      isSortAsc: isSortAsc,
+      sortField: sortField,
+    });
+    this.onOrderBy(sortField, isSortAsc);
+  };
+
   render() {
     const {
       intl: { formatMessage },
@@ -328,8 +396,7 @@ class PluginsList extends React.Component<Props, State> {
         params: { organisationId },
       },
     } = this.props;
-    const { data, loading, total, isVisibleDrawer } = this.state;
-
+    const { data, loading, total, isVisibleDrawer, sortField, isSortAsc } = this.state;
     const dataColumnsDefinition: Array<DataColumnDefinition<PluginResource>> = [
       {
         title: formatMessage(messages.pluginId),
@@ -348,6 +415,8 @@ class PluginsList extends React.Component<Props, State> {
         title: formatMessage(messages.pluginType),
         key: 'plugin_type',
         isHideable: false,
+        sorter: true,
+        sortOrder: this.getOrderByForColumn('plugin_type', sortField, isSortAsc),
         render: (text: string, record: PluginResource) => (
           <Link
             className='mcs-pluginTable_pluginType'
@@ -361,6 +430,8 @@ class PluginsList extends React.Component<Props, State> {
         title: formatMessage(messages.organisation),
         key: 'organisation_id',
         isHideable: false,
+        sorter: true,
+        sortOrder: this.getOrderByForColumn('organisation_id', sortField, isSortAsc),
         render: (text: string, record: PluginResource) => (
           <Link
             className='mcs-pluginTable_organisation'
@@ -374,6 +445,8 @@ class PluginsList extends React.Component<Props, State> {
         title: formatMessage(messages.group),
         key: 'group_id',
         isHideable: false,
+        sorter: true,
+        sortOrder: this.getOrderByForColumn('group_id', sortField, isSortAsc),
         render: (text: string, record: PluginResource) => (
           <Link
             className='mcs-pluginTable_GroupId'
@@ -387,6 +460,8 @@ class PluginsList extends React.Component<Props, State> {
         title: formatMessage(messages.artifactId),
         key: 'artifact_id',
         isHideable: false,
+        sorter: true,
+        sortOrder: this.getOrderByForColumn('artifact_id', sortField, isSortAsc),
         render: (text: string, record: PluginResource) => (
           <Link
             className='mcs-pluginTable_artifactId'
@@ -398,8 +473,10 @@ class PluginsList extends React.Component<Props, State> {
       },
       {
         title: formatMessage(messages.currentVersion),
-        key: 'current_version',
+        key: 'current_version_id',
         isHideable: false,
+        sorter: true,
+        sortOrder: this.getOrderByForColumn('current_version_id', sortField, isSortAsc),
         render: (text: string, record: PluginResource) => (
           <Link to={`/o/${organisationId}/plugins/${record.id}`}>
             <Tag className='mcs-pluginTable_currentVersion' color='purple'>
@@ -442,6 +519,7 @@ class PluginsList extends React.Component<Props, State> {
                 pageSettings={PLUGIN_PAGE_SEARCH_SETTINGS}
                 emptyTable={emptyTable}
                 additionnalComponent={totalTag}
+                onChange={this.onTableChange}
               />
             </Card>
           </Content>
