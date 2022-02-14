@@ -50,7 +50,7 @@ class PluginDeploymentContainer extends React.Component<Props, State> {
     this.state = {
       isLoading: false,
       pluginVersionContainers: [],
-      pluginVersionContainersTotal: props.initialPluginVersionContainerTotal,
+      pluginVersionContainersTotal: props.initialPluginVersionContainerTotal || 0,
     };
   }
 
@@ -96,6 +96,7 @@ class PluginDeploymentContainer extends React.Component<Props, State> {
         this.setState({
           isLoading: false,
           pluginVersionContainers: this.formatToRunningContainer(res.data),
+          pluginVersionContainersTotal: res.total || res.count,
         });
       })
       .catch(err => {

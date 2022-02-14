@@ -487,7 +487,7 @@ class IntegrationBatchInstancesOverviewTab extends React.Component<Props, State>
       },
     ];
 
-    const getCronStatusIcon = (cronStatus?: CronStatus) => {
+    const getCronStatusIcon = (cronStatus?: CronStatus | null) => {
       if (!cronStatus) return 'No status';
       if (cronStatus === ('ACTIVE' as CronStatus)) {
         return <PlayCircleFilled className='mcs-batchInstanceTable_playIcon' />;

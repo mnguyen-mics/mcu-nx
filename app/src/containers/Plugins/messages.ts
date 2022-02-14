@@ -53,6 +53,14 @@ export default defineMessages({
     id: 'plugins.list.column.currentVersion',
     defaultMessage: 'Current Version',
   },
+  lastVersion: {
+    id: 'plugins.list.column.lastVersion',
+    defaultMessage: 'Last Version',
+  },
+  current: {
+    id: 'plugins.list.column.current',
+    defaultMessage: 'Current',
+  },
   emptyTableMessage: {
     id: 'plugins.list.emptyTable',
     defaultMessage: 'No plugin found.',
@@ -148,5 +156,9 @@ export default defineMessages({
   properties: {
     id: 'plugins.tab.properies.title',
     defaultMessage: 'Properties',
+  },
+  pluginPageTitle: {
+    id: 'plugins.title.sentence',
+    defaultMessage: 'New instances are created on version ',
   },
 });

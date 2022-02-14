@@ -149,12 +149,21 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
       notifyError,
     } = this.props;
     const { integrationBatchInstance } = this.state;
+    const updates: Partial<IntegrationBatchResource> =
+      cronValue === '* * * * *'
+        ? {
+            cron: null,
+            cron_status: null,
+          }
+        : {
+            cron: cronValue,
+            cron_status: 'ACTIVE' as CronStatus,
+          };
     if (integrationBatchInstance)
       this._integrationBatchService
         .updateIntegrationBatchInstance(batchInstanceId, {
           ...integrationBatchInstance,
-          cron: cronValue,
-          cron_status: 'ACTIVE' as CronStatus,
+          ...updates,
         })
         .then(res => {
           this.setState({

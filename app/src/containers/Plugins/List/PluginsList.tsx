@@ -472,7 +472,7 @@ class PluginsList extends React.Component<Props, State> {
         ),
       },
       {
-        title: formatMessage(messages.currentVersion),
+        title: formatMessage(messages.lastVersion),
         key: 'current_version_id',
         isHideable: false,
         sorter: true,

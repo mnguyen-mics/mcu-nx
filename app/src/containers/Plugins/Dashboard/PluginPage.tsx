@@ -136,9 +136,8 @@ class PluginPage extends React.Component<Props, State> {
 
     const subtitle = (
       <React.Fragment>
-        <Tag color='blue'>{lastPluginVersion}</Tag>
-        {formatMessage(messages.for)}
-        {` ${plugin?.organisation_id} `}
+        {formatMessage(messages.pluginPageTitle)} <Tag color='blue'>{lastPluginVersion}</Tag> (
+        {plugin?.current_version_id}) {formatMessage(messages.for)} {` ${plugin?.organisation_id} `}
         <OrganisationName organisationId={plugin?.organisation_id} />
       </React.Fragment>
     );
@@ -157,6 +156,7 @@ class PluginPage extends React.Component<Props, State> {
                   plugin={plugin}
                   pluginVersions={pluginVersions}
                   initialPluginVersionId={initialPluginVersionId}
+                  lastPluginVersion={lastPluginVersion}
                 />
               ) : (
                 <EmptyTableView
