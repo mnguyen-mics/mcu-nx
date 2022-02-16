@@ -5,13 +5,8 @@ import {
   CountDataset,
   getXKeyForChart,
 } from '../../utils/ChartDataFormater';
-import {
-  Loading,
-  PieChart,
-  BarChart,
-  RadarChart,
-} from '@mediarithmics-private/mcs-components-library';
-import { Alert } from 'antd';
+import { PieChart, BarChart, RadarChart } from '@mediarithmics-private/mcs-components-library';
+import { Alert, Spin } from 'antd';
 import { lazyInject } from '../../inversify/inversify.config';
 import { TYPES } from '../../constants/types';
 import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
@@ -44,6 +39,16 @@ import {
 } from '@ant-design/icons';
 import cuid from 'cuid';
 import { extractOtqlQueriesHelper, QueryFragment } from '../../utils/source/OtqlSourceHelper';
+import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
+import { compose } from 'recompose';
+import { injectDrawer } from '../drawer';
+
+const messages = defineMessages({
+  stillLoading: {
+    id: 'chart.stillLoading',
+    defaultMessage: 'Still loading...',
+  },
+});
 
 interface YKey {
   key: string;
@@ -69,10 +74,12 @@ interface ErrorContext {
 interface ChartState {
   formattedData?: AbstractDataset;
   loading: boolean;
+  stillLoading: boolean;
   errorContext?: ErrorContext;
 }
 
-type Props = ChartProps & InjectedDrawerProps;
+type Props = InjectedDrawerProps & InjectedIntlProps & ChartProps;
+
 class Chart extends React.Component<Props, ChartState> {
   @lazyInject(TYPES.IChartDatasetService)
   private _chartDatasetService: IChartDatasetService;
@@ -88,6 +95,7 @@ class Chart extends React.Component<Props, ChartState> {
 
     this.state = {
       loading: true,
+      stillLoading: false,
       errorContext: undefined,
     };
   }
@@ -100,6 +108,7 @@ class Chart extends React.Component<Props, ChartState> {
         this.setState({
           formattedData: formattedData,
           loading: false,
+          stillLoading: false,
         });
       })
       .catch(e => {
@@ -108,8 +117,21 @@ class Chart extends React.Component<Props, ChartState> {
             description: e,
           },
           loading: false,
+          stillLoading: false,
         });
       });
+
+    this.checkIfStillLoading();
+  }
+
+  checkIfStillLoading() {
+    setTimeout(() => {
+      this.setState(state => {
+        return {
+          stillLoading: state.loading,
+        };
+      });
+    }, 6000);
   }
 
   pieChartAdaptValueKey(yKey: string, dataset: Dataset) {
@@ -274,8 +296,8 @@ class Chart extends React.Component<Props, ChartState> {
   }
 
   render() {
-    const { formattedData, loading, errorContext } = this.state;
-    const { chartConfig, chartContainerStyle, onClickEdit, onClickMove, onClickDelete } =
+    const { formattedData, loading, stillLoading, errorContext } = this.state;
+    const { chartConfig, chartContainerStyle, intl, onClickEdit, onClickMove, onClickDelete } =
       this.props;
     if (!!errorContext) {
       return (
@@ -327,10 +349,14 @@ class Chart extends React.Component<Props, ChartState> {
           {onClickDelete ? (
             <DeleteOutlined className={'mcs-chartIcon mcs-chart_delete'} onClick={onClickDelete} />
           ) : undefined}
-
-          {loading && <Loading className={'mcs-chart_header_loader'} isFullScreen={false} />}
         </div>
         <div className='mcs-chart_content_container'>
+          {loading && (
+            <Spin
+              className={'mcs-loading mcs-chart_header_loader'}
+              tip={stillLoading ? intl.formatMessage(messages.stillLoading) : undefined}
+            />
+          )}
           {formattedData && this.renderChart(xKey, formattedData)}
         </div>
       </div>
@@ -338,4 +364,4 @@ class Chart extends React.Component<Props, ChartState> {
   }
 }
 
-export default Chart;
+export default compose<Props, ChartProps>(injectIntl, injectDrawer)(Chart);
