@@ -365,8 +365,6 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
         chartContainerStyle={cssProperties}
         scope={scope}
         queryFragment={formattedQueryFragment}
-        openNextDrawer={this.props.openNextDrawer}
-        closeNextDrawer={this.props.closeNextDrawer}
       />
     );
   }

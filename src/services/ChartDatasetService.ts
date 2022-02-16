@@ -56,6 +56,8 @@ import ChannelService, { IChannelService } from './ChannelService';
 import CompartmentService, { ICompartmentService } from './CompartmentService';
 import AudienceSegmentService, { IAudienceSegmentService } from './AudienceSegmentService';
 
+import promiseRetry from 'promise-retry';
+
 export type ChartType = 'pie' | 'bars' | 'radar' | 'metric';
 export type SourceType =
   | 'otql'
@@ -271,10 +273,23 @@ export class ChartDatasetService implements IChartDatasetService {
       queryFragment,
     )
       .then(adaptedQueryInfo => {
-        return this.queryService.runOTQLQuery(datamartId, adaptedQueryInfo.queryText, {
-          precision: otqlSource.precision,
-          use_cache: true,
-        });
+        return promiseRetry(
+          retry => {
+            return this.queryService
+              .runOTQLQuery(datamartId, adaptedQueryInfo.queryText, {
+                precision: otqlSource.precision,
+                use_cache: true,
+              })
+              .catch(err => {
+                if (err.error_code === 'SERVICE_UNAVAILABLE') {
+                  retry(err);
+                }
+
+                throw err;
+              });
+          },
+          { retries: 50 },
+        );
       })
       .then(res => {
         return res.data;
