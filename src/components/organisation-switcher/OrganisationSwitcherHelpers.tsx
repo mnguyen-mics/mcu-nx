@@ -13,7 +13,7 @@ export const isAChild = (
   return workspaces.find(w => w.organisation_id === org.administrator_id) !== undefined;
 };
 
-export const switchWorkspace = (organisationId: string, history: History<any>, match: any) => {
+export const switchWorkspace = (organisationId: string, history: History, match: any) => {
   const toPath = pathToRegexp.compile(match.path);
   const fullUrl = toPath({
     ...match.params,

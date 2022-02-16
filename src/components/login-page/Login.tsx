@@ -13,7 +13,7 @@ import { UserProfileResource } from '../../models/directory/UserProfileResource'
 import { MicsReduxState } from '../../utils/ReduxHelper';
 import LocalStorage from '../../services/LocalStorage';
 import { StaticContext } from 'react-router';
-import { LocationDescriptorObject } from 'history';
+import { To } from 'history';
 
 const FormItem = Form.Item;
 
@@ -103,7 +103,7 @@ const Login = (props: Props) => {
   }, []);
 
   const handleSubmit = (e: any) => {
-    const defaultRedirect: LocationDescriptorObject = { pathname: '/' };
+    const defaultRedirect: To = { pathname: '/' };
     const from = (props.location.state && props.location.state.from) || defaultRedirect;
     const { match } = props;
     const redirect = () => {
