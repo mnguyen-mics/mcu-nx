@@ -6,11 +6,11 @@ import { compose } from 'recompose';
 import { getLogo } from '../../redux/Session/actions';
 import { MenuMode } from 'antd/lib/menu';
 import { MicsReduxState } from '../../utils/ReduxHelper';
-import { LocationDescriptor } from 'history';
+import { To } from 'history';
 
 export interface LogoProps {
   mode: MenuMode;
-  linkPath: LocationDescriptor<unknown>;
+  linkPath: To;
 }
 
 interface LogoStoreProps {

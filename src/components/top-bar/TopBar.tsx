@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons';
 import { AppsMenu, McsHeader } from '@mediarithmics-private/mcs-components-library';
 import { AppsMenuSections } from '@mediarithmics-private/mcs-components-library/lib/components/apps-navigation/apps-menu/AppsMenu';
-import { LocationDescriptor } from 'history';
+import { To } from 'history';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -28,7 +28,7 @@ interface TopBarMapStateToProps {
 
 interface TopBarProps {
   organisationId: string;
-  linkPath: LocationDescriptor<unknown>;
+  linkPath: To;
   prodEnv: boolean;
   userAccount?: React.ReactNode[];
   headerSettings?: React.ReactNode;
