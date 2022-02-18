@@ -51,7 +51,7 @@ import DatasetDateFormatter from '../utils/transformations/FormatDatesTransforma
 import { formatDate } from '../utils/DateHelper';
 import { percentages } from '../utils/transformations/PercentagesTransformation';
 import { indexDataset } from '../utils/transformations/IndexTranformation';
-import { fetchAndFormatQuery, QueryFragment } from '../utils/source/OtqlSourceHelper';
+import { fetchAndFormatQuery, QueryFragment } from '../utils/source/DataSourceHelper';
 import ChannelService, { IChannelService } from './ChannelService';
 import CompartmentService, { ICompartmentService } from './CompartmentService';
 import AudienceSegmentService, { IAudienceSegmentService } from './AudienceSegmentService';

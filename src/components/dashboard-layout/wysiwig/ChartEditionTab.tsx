@@ -9,9 +9,9 @@ import { compose } from 'recompose';
 import { AbstractScope } from '../../../models/datamart/graphdb/Scope';
 import {
   QueryFragment,
-  extractOtqlQueriesHelper,
-  OtqlQueryInfo,
-} from '../../../utils/source/OtqlSourceHelper';
+  extractQueriesHelper,
+  QueryInfo,
+} from '../../../utils/source/DataSourceHelper';
 import { IQueryService, QueryService } from '../../../services/QueryService';
 import { QueryScopeAdapter } from '../../../utils/QueryScopeAdapter';
 
@@ -29,7 +29,7 @@ type Props = InjectedIntlProps & ChartEditionProps;
 interface ChartEditionState {
   chartConfigText: string;
   contentErrorMessage?: string;
-  queryInfos: OtqlQueryInfo[];
+  queryInfos: QueryInfo[];
 }
 
 const messages = defineMessages({
@@ -94,13 +94,13 @@ class ChartEditionTab extends React.Component<Props, ChartEditionState> {
   private queryService: IQueryService = new QueryService();
   private scopeAdapter: QueryScopeAdapter = new QueryScopeAdapter(this.queryService);
 
-  extractOtqlQueriesFromDataset(chartConfigText: string): Promise<OtqlQueryInfo[]> {
+  extractOtqlQueriesFromDataset(chartConfigText: string): Promise<QueryInfo[]> {
     const { datamartId, scope, queryFragment } = this.props;
 
     const chartConfig = JSON.parse(chartConfigText);
 
     if (chartConfig) {
-      return extractOtqlQueriesHelper(
+      return extractQueriesHelper(
         chartConfig.dataset,
         datamartId,
         this.queryService,

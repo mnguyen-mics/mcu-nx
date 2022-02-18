@@ -11,15 +11,14 @@ import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import { CopyOutlined } from '@ant-design/icons';
 import { ExportService } from '../../services/ExportService';
+import { QueryInfo } from '../../utils/source/DataSourceHelper';
 const { parse } = require('json2csv');
 
-interface OtqlQueryInfo {
-  query_text: string;
-}
+const { TextArea } = Input;
 
 interface ChartMetadataInfoProps {
   title: string;
-  query_infos: OtqlQueryInfo[];
+  queryInfos: QueryInfo[];
   datainfo: DataInfo;
   onCloseDrawer: () => void;
 }
@@ -83,7 +82,7 @@ class ChartMetadataInfo extends React.Component<Props> {
   }
 
   render() {
-    const { title, query_infos, datainfo, intl, onCloseDrawer } = this.props;
+    const { title, queryInfos, datainfo, intl, onCloseDrawer } = this.props;
     const handleOnClick = (e: React.ChangeEvent<HTMLInputElement>) => this.handleOnClick(e);
     const handleExport = () => {
       if (datainfo.dataset) {
@@ -113,19 +112,30 @@ class ChartMetadataInfo extends React.Component<Props> {
           Queries
         </div>
         <div className={'mcs-chartMetaDataInfo_query_list'}>
-          {query_infos.map((q, index) => {
+          {queryInfos.map((q, index) => {
             return (
-              <div className={'mcs-chartMetaDataInfo_query_item'} key={q.query_text}>
+              <div className={'mcs-chartMetaDataInfo_query_item'} key={q.queryText}>
                 <label className={'mcs-chartMetaDataInfo_query_item_label'}>
-                  Value {index + 1}: OTQL
+                  Value {index + 1}: {q.queryType}
                 </label>
-                <Input
-                  className={'mcs-chartMetaDataInfo_query_item_input'}
-                  readOnly={true}
-                  name={q.query_text}
-                  key={q.query_text}
-                  value={q.query_text}
-                />
+                {['activities_analytics', 'collection_volumes'].includes(q.queryType) ? (
+                  <TextArea
+                    className={'mcs-chartMetaDataInfo_query_item_input'}
+                    readOnly={true}
+                    name={q.queryText}
+                    key={q.queryText}
+                    value={q.queryText}
+                    rows={q.queryText.split(/\r\n|\r|\n/).length} // get string number of lines
+                  />
+                ) : (
+                  <Input
+                    className={'mcs-chartMetaDataInfo_query_item_input'}
+                    readOnly={true}
+                    name={q.queryText}
+                    key={q.queryText}
+                    value={q.queryText}
+                  />
+                )}
               </div>
             );
           })}
