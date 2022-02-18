@@ -2,7 +2,7 @@ import { QueryShape, QueryTranslationRequest } from '../models/datamart/Datamart
 import { AbstractScope, SegmentScope } from '../models/datamart/graphdb/Scope';
 import { DimensionFilter } from '../models/report/ReportRequestBody';
 import { IQueryService } from '../services/QueryService';
-import { QueryFragment } from './source/OtqlSourceHelper';
+import { QueryFragment } from './source/DataSourceHelper';
 
 export class QueryScopeAdapter {
   queryService: IQueryService;

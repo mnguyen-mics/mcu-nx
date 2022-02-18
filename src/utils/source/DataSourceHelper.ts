@@ -1,9 +1,19 @@
 import { QueryLanguage, QueryResource, QueryShape } from '../../models/datamart/DatamartResource';
 import { AbstractScope } from '../../models/datamart/graphdb/Scope';
-import { AbstractSource, AggregationSource, OTQLSource } from '../../services/ChartDatasetService';
+import {
+  AbstractSource,
+  AggregationSource,
+  AnalyticsSource,
+  OTQLSource,
+  SourceType,
+} from '../../services/ChartDatasetService';
 import { QueryService, IQueryService } from '../../services/QueryService';
 import { QueryScopeAdapter } from '../QueryScopeAdapter';
 import { DashboardFilterQueryFragments } from '../../models/customDashboards/customDashboards';
+import {
+  ActivitiesAnalyticsDimension,
+  ActivitiesAnalyticsMetric,
+} from '../analytics/ActivitiesAnalyticsReportHelper';
 
 const mapOtqlQueries: Map<string, QueryResource> = new Map();
 
@@ -31,9 +41,9 @@ export function fetchOtqlQuery(
     return Promise.reject('No query defined for otql type source');
   }
 }
-
-export interface OtqlQueryInfo {
-  queryId: string;
+export interface QueryInfo {
+  queryId?: string;
+  queryType: SourceType;
   queryText: string;
 }
 
@@ -44,7 +54,7 @@ export function fetchAndFormatQuery(
   otqlSource: OTQLSource,
   scope?: AbstractScope,
   queryFragment?: QueryFragment,
-): Promise<OtqlQueryInfo> {
+): Promise<QueryInfo> {
   const otqlScope = queryScopeAdapter.buildScopeOtqlQuery(datamartId, scope);
   return fetchOtqlQuery(queryService, datamartId, otqlSource).then(dashboardQueryResource => {
     return queryScopeAdapter
@@ -53,6 +63,7 @@ export function fetchAndFormatQuery(
         return {
           queryId: otqlSource.query_id ? otqlSource.query_id : '0',
           queryText: adaptedQueryText,
+          queryType: otqlSource.type,
         };
       });
   });
@@ -62,14 +73,14 @@ export interface QueryFragment {
   [key: string]: DashboardFilterQueryFragments[];
 }
 
-export async function extractOtqlQueriesHelper(
+export async function extractQueriesHelper(
   source: AbstractSource,
   datamartId: string,
   queryService: IQueryService,
   scopeAdapter: QueryScopeAdapter,
   scope?: AbstractScope,
   queryFragment?: QueryFragment,
-): Promise<OtqlQueryInfo[]> {
+): Promise<QueryInfo[]> {
   switch (source.type.toLocaleLowerCase()) {
     case 'ratio':
     case 'join':
@@ -79,17 +90,10 @@ export async function extractOtqlQueriesHelper(
     case 'to-percentages':
       const joinSource = source as AggregationSource;
       const childSources = joinSource.sources.map(_source =>
-        extractOtqlQueriesHelper(
-          _source,
-          datamartId,
-          queryService,
-          scopeAdapter,
-          scope,
-          queryFragment,
-        ),
+        extractQueriesHelper(_source, datamartId, queryService, scopeAdapter, scope, queryFragment),
       );
       return Promise.all(childSources).then(results => {
-        return results.reduce((acc: OtqlQueryInfo[], x: OtqlQueryInfo[]) => {
+        return results.reduce((acc: QueryInfo[], x: QueryInfo[]) => {
           return x.concat(acc);
         }, []);
       });
@@ -105,6 +109,19 @@ export async function extractOtqlQueriesHelper(
         queryFragment,
       );
       return scopedQueryInfo ? [scopedQueryInfo] : [];
+    case 'activities_analytics':
+    case 'collection_volumes':
+      const analyticsSource = source as AnalyticsSource<
+        ActivitiesAnalyticsMetric,
+        ActivitiesAnalyticsDimension
+      >;
+      const queryJson = analyticsSource.query_json;
+      return [
+        {
+          queryText: JSON.stringify(queryJson, null, 2),
+          queryType: analyticsSource.type,
+        },
+      ];
     default:
       return [];
   }

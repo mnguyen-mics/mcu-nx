@@ -38,7 +38,7 @@ import {
   EditOutlined,
 } from '@ant-design/icons';
 import cuid from 'cuid';
-import { extractOtqlQueriesHelper, QueryFragment } from '../../utils/source/OtqlSourceHelper';
+import { extractQueriesHelper, QueryFragment } from '../../utils/source/DataSourceHelper';
 import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import { injectDrawer } from '../drawer';
@@ -245,7 +245,7 @@ class Chart extends React.Component<Props, ChartState> {
   async extractOtqlQueriesFromDataset() {
     const { chartConfig, datamartId, scope, queryFragment } = this.props;
 
-    return extractOtqlQueriesHelper(
+    return extractQueriesHelper(
       chartConfig.dataset,
       datamartId,
       this.queryService,
@@ -285,9 +285,10 @@ class Chart extends React.Component<Props, ChartState> {
           datainfo: {
             dataset: _dataset,
           },
-          query_infos: queries.map(x => {
+          queryInfos: queries.map(x => {
             return {
-              query_text: x.queryText,
+              queryText: x.queryText,
+              queryType: x.queryType,
             };
           }),
         },
