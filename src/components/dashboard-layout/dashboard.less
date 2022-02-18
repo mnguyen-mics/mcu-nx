@@ -72,6 +72,12 @@
   margin-top: 30px;
 }
 
+.mcs-subtitleEdit {
+  display: flex;
+  width: 50%;
+  min-width: 100px;
+}
+
 .mcs-dashboardMetric {
   margin-top: 8px;
   font-family: 'LLCircularWeb-Book';
@@ -227,4 +233,37 @@
 
 .mcs-cardMenu-buttons {
   display: flex;
+}
+.mcs-section {
+  .react-grid-item {
+    .react-resizable-handle-se {
+      bottom: 0;
+      right: 0;
+      cursor: se-resize;
+    }
+
+    .react-resizable-handle {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.mcs-subtitleEdit_button {
+  width: 46px;
+  margin-left: 10px;
+}
+
+.mcs-section_addCardButton {
+  width: 100%;
+  min-width: 50px;
+  height: 40px;
+  font-family: 'LLCircularWeb-Book';
+  font-size: 12px;
+  font-weight: 500;
+  background: #f0f3f5;
+  border-radius: 3px;
+  color: #00a1df;
+  margin-top: 10px;
 }

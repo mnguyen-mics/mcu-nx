@@ -28,6 +28,7 @@ class EditableDashboardLayout extends React.Component<Props> {
   private labelInitialSchemaWithIds(initialSchema: DashboardContentSchema) {
     const schemaCopy: DashboardContentSchema = JSON.parse(JSON.stringify(initialSchema));
     schemaCopy.sections.forEach(section => {
+      section.id = cuid();
       section.cards.forEach(card => {
         card.id = cuid();
         card.charts.forEach(chart => {

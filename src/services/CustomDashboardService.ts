@@ -165,7 +165,7 @@ export default class CustomDashboardService implements ICustomDashboardService {
     filterScope?: DashoboardScope,
     filterScopedId?: string,
   ): boolean {
-    const result = dashboard.scopes.some(
+    return dashboard.scopes.some(
       scope =>
         !filterScope ||
         (scope === filterScope && !filterScopedId) ||
@@ -180,8 +180,6 @@ export default class CustomDashboardService implements ICustomDashboardService {
             ? dashboard.builder_ids.some(id => id === filterScopedId)
             : true)),
     );
-
-    return result;
   }
 
   getDashboardsPageContents(
