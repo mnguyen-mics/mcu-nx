@@ -8,7 +8,7 @@ import { FormInstance, Rule } from 'antd/lib/form';
 import lodash from 'lodash';
 
 interface CardEditionProps {
-  card: DashboardContentCard;
+  card?: DashboardContentCard;
   saveCard: (c: DashboardContentCard) => void;
   closeTab: () => void;
 }
@@ -81,14 +81,25 @@ class CardEditionTab extends React.Component<Props, CardEditionState> {
 
     const { card } = this.props;
 
-    this.state = {
-      x: card.x,
-      y: card.y,
-      w: card.w,
-      h: card.h,
-      layout: card.layout,
-      form: React.createRef<FormInstance>(),
-    };
+    if (card) {
+      this.state = {
+        x: card.x,
+        y: card.y,
+        w: card.w,
+        h: card.h,
+        layout: card.layout,
+        form: React.createRef<FormInstance>(),
+      };
+    } else {
+      this.state = {
+        x: 0,
+        y: 0,
+        w: 0,
+        h: 0,
+        layout: '',
+        form: React.createRef<FormInstance>(),
+      };
+    }
   }
 
   private saveCard() {
@@ -104,13 +115,17 @@ class CardEditionTab extends React.Component<Props, CardEditionState> {
         typeof h === 'number' &&
         layout
       ) {
+        const cardToSave: DashboardContentCard = {
+          x: x,
+          y: y,
+          w: w,
+          h: h,
+          layout: layout,
+          charts: card ? card.charts : [],
+        };
+
         try {
-          card.x = x;
-          card.y = y;
-          card.w = w;
-          card.h = h;
-          card.layout = layout;
-          saveCard(card);
+          saveCard(cardToSave);
         } catch (e) {
           return;
         }

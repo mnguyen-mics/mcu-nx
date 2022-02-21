@@ -30,7 +30,8 @@ export interface DashboardContentSchema {
   available_filters?: DashboardAvailableFilters[];
 }
 
-interface DashboardContentSection {
+export interface DashboardContentSection {
+  id?: string;
   title: string;
   cards: DashboardContentCard[];
 }

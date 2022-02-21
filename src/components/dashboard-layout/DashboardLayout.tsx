@@ -1,7 +1,7 @@
 import { Card } from '@mediarithmics-private/mcs-components-library';
 import { Button, Modal } from 'antd';
 import React, { CSSProperties } from 'react';
-import { Responsive, WidthProvider } from 'react-grid-layout';
+import { Layout, Responsive, WidthProvider } from 'react-grid-layout';
 import Chart from '../chart-engine';
 import cuid from 'cuid';
 import { ChartConfig, ChartType } from '../../services/ChartDatasetService';
@@ -12,6 +12,7 @@ import { DimensionFilter } from '../../models/report/ReportRequestBody';
 import {
   DashboardContentCard,
   DashboardContentSchema,
+  DashboardContentSection,
   DashboardFilterQueryFragments,
 } from '../../models/customDashboards/customDashboards';
 import { InjectedDrawerProps } from '../..';
@@ -20,6 +21,7 @@ import CardEditionTab from './wysiwig/CardEditionTab';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { defineMessages, InjectedIntlProps } from 'react-intl';
 import { QueryFragment } from '../../utils/source/DataSourceHelper';
+import SectionTitleEditionPanel from './wysiwig/SectionTitleEditionPanel';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -61,6 +63,10 @@ const messages = defineMessages({
     id: 'dashboard.layout.decline',
     defaultMessage: 'No',
   },
+  addCard: {
+    id: 'dashboard.layout.addCard',
+    defaultMessage: 'Add a card',
+  },
 });
 
 export default class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
@@ -75,6 +81,13 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
   shouldComponentUpdate(nextProps: Props, nextState: DashboardLayoutState) {
     const { dashboardFilterValues } = this.state;
     return dashboardFilterValues === nextState.dashboardFilterValues;
+  }
+
+  private findSectionNode(
+    nodeId: string,
+    content: DashboardContentSchema,
+  ): DashboardContentSection | undefined {
+    return content.sections.find(section => section.id === nodeId);
   }
 
   private findCardNode(
@@ -287,7 +300,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     }
   }
 
-  renderCard(card: DashboardContentCard, i: number) {
+  renderCard(card: DashboardContentCard, i: string) {
     const { editable, schema } = this.props;
 
     const charts = card.charts.map((chart, index) => {
@@ -331,7 +344,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       </Card>
     );
     return (
-      <div key={i.toString()}>
+      <div key={i}>
         <McsLazyLoad key={cuid()} child={cardComponent} />
       </div>
     );
@@ -496,40 +509,127 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     });
   };
 
+  onLayoutChange(currentLayout: Layout[], sectionId: string) {
+    const { schema, updateState } = this.props;
+    if (updateState) {
+      const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(schema));
+      const sectionNode = this.findSectionNode(sectionId, contentCopy);
+      if (sectionNode) {
+        currentLayout.forEach(layout => {
+          const card = sectionNode.cards.find(c => c.id === layout.i);
+
+          if (card) {
+            card.h = layout.h;
+            card.w = layout.w;
+            card.x = layout.x;
+            card.y = layout.y;
+          }
+        });
+
+        updateState(contentCopy);
+      }
+    }
+  }
+
+  handleAddCardToSection(sectionId: string) {
+    const { schema, updateState, openNextDrawer, closeNextDrawer } = this.props;
+
+    if (updateState) {
+      const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(schema));
+      const sectionNode = this.findSectionNode(sectionId, contentCopy);
+      if (sectionNode) {
+        openNextDrawer(CardEditionTab, {
+          size: 'extrasmall',
+          className: 'mcs-drawer-cardEdition',
+          additionalProps: {
+            closeTab: closeNextDrawer,
+            saveCard: (c: DashboardContentCard) => {
+              sectionNode.cards.push(c);
+              updateState(contentCopy);
+              closeNextDrawer();
+            },
+          },
+        });
+      }
+    }
+  }
+
+  handleSaveSection(sectionId: string, title: string) {
+    const { schema, updateState } = this.props;
+
+    if (updateState) {
+      const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(schema));
+      const sectionNode = this.findSectionNode(sectionId, contentCopy);
+      if (sectionNode) {
+        sectionNode.title = title;
+        updateState(contentCopy);
+      }
+    }
+  }
+
+  getRandomInt(max: number) {
+    return Math.floor(Math.random() * max);
+  }
+
+  renderSection(section: DashboardContentSection) {
+    const { editable, intl } = this.props;
+
+    const cards = section.cards.map(card => {
+      return card.id ? this.renderCard(card, card.id) : undefined;
+    });
+    const layouts: Layout[] = section.cards.map(card => {
+      return {
+        i: card.id ? card.id : '',
+        x: card.x,
+        y: card.y,
+        w: card.w,
+        h: card.h,
+      };
+    });
+
+    const onLayoutChange = (currentLayout: Layout[]) => {
+      if (section.id) this.onLayoutChange(currentLayout, section.id);
+    };
+
+    const addCardToSection = () => {
+      if (section.id) this.handleAddCardToSection(section.id);
+    };
+
+    const handleSaveSection = (s: DashboardContentSection) => {
+      if (s.id) this.handleSaveSection(s.id, s.title);
+    };
+
+    return (
+      <div key={cuid()} className={'mcs-section'}>
+        {editable ? (
+          <SectionTitleEditionPanel section={section} onSaveSection={handleSaveSection} />
+        ) : (
+          section.title && <div className={'mcs-subtitle2'}>{section.title}</div>
+        )}
+        <ResponsiveReactGridLayout
+          cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
+          layouts={{ lg: layouts }}
+          isDraggable={editable}
+          isResizable={editable}
+          measureBeforeMount={false}
+          compactType={'vertical'}
+          preventCollision={false}
+          rowHeight={BASE_FRAMEWORK_HEIGHT}
+          onLayoutChange={editable ? onLayoutChange : undefined}
+          resizeHandles={editable ? ['se'] : undefined}
+        >
+          {cards}
+        </ResponsiveReactGridLayout>
+        <Button className='mcs-section_addCardButton' onClick={addCardToSection}>
+          {intl.formatMessage(messages.addCard)}
+        </Button>
+      </div>
+    );
+  }
+
   generateDOM(): React.ReactElement {
     const { schema, datamart_id, organisationId } = this.props;
-    const sections = schema.sections.map((section, i) => {
-      const cards = section.cards.map((card, index) => {
-        return this.renderCard(card, index);
-      });
-      const layouts = section.cards.map((card, index) => {
-        return {
-          i: index.toString(),
-          x: card.x,
-          y: card.y,
-          w: card.w,
-          h: card.h,
-        };
-      });
-      return (
-        <div key={cuid()} className={'mcs-section'}>
-          {section.title && <div className={'mcs-subtitle2'}>{section.title}</div>}
-          <ResponsiveReactGridLayout
-            cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
-            layouts={{ lg: layouts }}
-            isDraggable={false}
-            isResizable={false}
-            measureBeforeMount={false}
-            compactType={'vertical'}
-            preventCollision={true}
-            // Disable dragging & resizabling
-            rowHeight={BASE_FRAMEWORK_HEIGHT}
-          >
-            {cards}
-          </ResponsiveReactGridLayout>
-        </div>
-      );
-    });
+    const sections = schema.sections.map((section, i) => this.renderSection(section));
     return (
       <div className={'mcs-dashboardLayout'}>
         {schema.available_filters && (
