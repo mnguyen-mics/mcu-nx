@@ -366,6 +366,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     const onClickDelete = editable
       ? () => this.handleDeleteChart(chartIndex, card, schema)
       : undefined;
+
     return (
       <Chart
         key={cuid()}
@@ -378,6 +379,11 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
         chartContainerStyle={cssProperties}
         scope={scope}
         queryFragment={formattedQueryFragment}
+        showButtonUp={chartIndex > 0}
+        showButtonDown={chartIndex === card.charts.length - 1}
+        layout={
+          card.layout === 'vertical' || card.layout === 'horizontal' ? card.layout : undefined
+        }
       />
     );
   }
@@ -574,12 +580,12 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
   renderSection(section: DashboardContentSection) {
     const { editable, intl } = this.props;
 
-    const cards = section.cards.map(card => {
-      return card.id ? this.renderCard(card, card.id) : undefined;
+    const cards = section.cards.map((card, index) => {
+      return this.renderCard(card, editable && card.id ? card.id : index.toString());
     });
-    const layouts: Layout[] = section.cards.map(card => {
+    const layouts: Layout[] = section.cards.map((card, index) => {
       return {
-        i: card.id ? card.id : '',
+        i: editable && card.id ? card.id : index.toString(),
         x: card.x,
         y: card.y,
         w: card.w,
@@ -620,9 +626,11 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
         >
           {cards}
         </ResponsiveReactGridLayout>
-        <Button className='mcs-section_addCardButton' onClick={addCardToSection}>
-          {intl.formatMessage(messages.addCard)}
-        </Button>
+        {editable && (
+          <Button className='mcs-section_addCardButton' onClick={addCardToSection}>
+            {intl.formatMessage(messages.addCard)}
+          </Button>
+        )}
       </div>
     );
   }

@@ -34,6 +34,8 @@ import {
   ArrowDownOutlined,
   ArrowsAltOutlined,
   ArrowUpOutlined,
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
   DeleteOutlined,
   EditOutlined,
 } from '@ant-design/icons';
@@ -55,10 +57,15 @@ interface YKey {
   message: string;
 }
 
+type Layout = 'vertical' | 'horizontal';
+
 interface ChartProps {
   datamartId: string;
   organisationId: string;
   chartConfig: ChartConfig;
+  showButtonUp?: boolean;
+  showButtonDown?: boolean;
+  layout?: Layout;
   chartContainerStyle?: React.CSSProperties;
   scope?: AbstractScope;
   queryFragment?: QueryFragment;
@@ -296,10 +303,63 @@ class Chart extends React.Component<Props, ChartState> {
     }
   }
 
+  renderUpIcon(
+    onClickMoveUp: () => void,
+    layout?: 'vertical' | 'horizontal',
+    showButton?: boolean,
+  ) {
+    if (!showButton) return undefined;
+    else
+      return layout && layout === 'horizontal' ? (
+        <ArrowLeftOutlined
+          key={cuid()}
+          className={'mcs-chartIcon mcs-chart_arrow_up'}
+          onClick={onClickMoveUp}
+        />
+      ) : (
+        <ArrowUpOutlined
+          key={cuid()}
+          className={'mcs-chartIcon mcs-chart_arrow_up'}
+          onClick={onClickMoveUp}
+        />
+      );
+  }
+
+  renderDownIcon(
+    onClickMoveDown: () => void,
+    layout?: 'vertical' | 'horizontal',
+    showButton?: boolean,
+  ) {
+    if (!showButton) return undefined;
+    else
+      return layout && layout === 'horizontal' ? (
+        <ArrowRightOutlined
+          key={cuid()}
+          className={'mcs-chartIcon mcs-chart_arrow_down'}
+          onClick={onClickMoveDown}
+        />
+      ) : (
+        <ArrowDownOutlined
+          key={cuid()}
+          className={'mcs-chartIcon mcs-chart_arrow_down'}
+          onClick={onClickMoveDown}
+        />
+      );
+  }
+
   render() {
     const { formattedData, loading, stillLoading, errorContext } = this.state;
-    const { chartConfig, chartContainerStyle, intl, onClickEdit, onClickMove, onClickDelete } =
-      this.props;
+    const {
+      chartConfig,
+      chartContainerStyle,
+      intl,
+      onClickEdit,
+      onClickMove,
+      onClickDelete,
+      showButtonDown,
+      showButtonUp,
+      layout,
+    } = this.props;
     if (!!errorContext) {
       return (
         <Alert
@@ -335,16 +395,8 @@ class Chart extends React.Component<Props, ChartState> {
           ) : undefined}
           {onClickMoveUp && onClickMoveDown
             ? [
-                <ArrowUpOutlined
-                  key={cuid()}
-                  className={'mcs-chartIcon mcs-chart_arrow_up'}
-                  onClick={onClickMoveUp}
-                />,
-                <ArrowDownOutlined
-                  key={cuid()}
-                  className={'mcs-chartIcon mcs-chart_arrow_down'}
-                  onClick={onClickMoveDown}
-                />,
+                this.renderUpIcon(onClickMoveUp, layout, showButtonUp),
+                this.renderDownIcon(onClickMoveDown, layout, showButtonDown),
               ]
             : undefined}
           {onClickDelete ? (
