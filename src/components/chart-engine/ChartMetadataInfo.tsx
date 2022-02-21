@@ -118,24 +118,14 @@ class ChartMetadataInfo extends React.Component<Props> {
                 <label className={'mcs-chartMetaDataInfo_query_item_label'}>
                   Value {index + 1}: {q.queryType}
                 </label>
-                {['activities_analytics', 'collection_volumes'].includes(q.queryType) ? (
-                  <TextArea
-                    className={'mcs-chartMetaDataInfo_query_item_input'}
-                    readOnly={true}
-                    name={q.queryText}
-                    key={q.queryText}
-                    value={q.queryText}
-                    rows={q.queryText.split(/\r\n|\r|\n/).length} // get string number of lines
-                  />
-                ) : (
-                  <Input
-                    className={'mcs-chartMetaDataInfo_query_item_input'}
-                    readOnly={true}
-                    name={q.queryText}
-                    key={q.queryText}
-                    value={q.queryText}
-                  />
-                )}
+                <TextArea
+                  className={'mcs-chartMetaDataInfo_query_item_input'}
+                  autoSize={true}
+                  readOnly={true}
+                  name={q.queryText}
+                  key={q.queryText}
+                  value={q.queryText}
+                />
               </div>
             );
           })}
