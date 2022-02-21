@@ -55,8 +55,9 @@ import { fetchAndFormatQuery, QueryFragment } from '../utils/source/DataSourceHe
 import ChannelService, { IChannelService } from './ChannelService';
 import CompartmentService, { ICompartmentService } from './CompartmentService';
 import AudienceSegmentService, { IAudienceSegmentService } from './AudienceSegmentService';
-
 import promiseRetry from 'promise-retry';
+import DataFileService, { IDataFileService } from './DataFileService';
+import jsonpath from 'jsonpath';
 
 export type ChartType = 'pie' | 'bars' | 'radar' | 'metric';
 export type SourceType =
@@ -68,7 +69,8 @@ export type SourceType =
   | 'activities_analytics'
   | 'collection_volumes'
   | 'ratio'
-  | 'format-dates';
+  | 'format-dates'
+  | 'data_file';
 
 const DEFAULT_Y_KEY = {
   key: 'value',
@@ -139,6 +141,11 @@ export interface DecoratorsOptions {
 export interface GetDecoratorsSource extends AbstractSource {
   decorators_options: DecoratorsOptions;
   sources: AbstractSource[];
+}
+
+export interface DataFileSource extends AbstractSource {
+  uri: string;
+  JSON_path: string;
 }
 
 export type PieChartOptions = Omit<PieChartProps, 'dataset' | 'colors'>;
@@ -230,6 +237,8 @@ export class ChartDatasetService implements IChartDatasetService {
   private channelService: IChannelService = new ChannelService();
   private compartmentService: ICompartmentService = new CompartmentService();
   private audienceSegmentService: IAudienceSegmentService = new AudienceSegmentService();
+
+  private dataFileService: IDataFileService = new DataFileService();
 
   private datasetDateFormatter: DatasetDateFormatter = new DatasetDateFormatter((date, format) =>
     formatDate(date, format),
@@ -622,10 +631,51 @@ export class ChartDatasetService implements IChartDatasetService {
           1,
           getDecoratorsSource.sources.length,
         );
+    } else if (sourceType === 'data_file') {
+      const dataFileSource = source as DataFileSource;
+
+      return this.dataFileService
+        .getDatafileData(dataFileSource.uri)
+        .then(res => {
+          return this.readFileContent(res).then((fileContent: string) => {
+            const fileContentJson = JSON.parse(fileContent);
+            const datasetFromDataFile = jsonpath.query(fileContentJson, dataFileSource.JSON_path);
+            if (!datasetFromDataFile) return undefined;
+            if (chartType.toLowerCase() === 'metric') {
+              return {
+                value: datasetFromDataFile[0],
+                type: 'count',
+              } as CountDataset;
+            }
+            return {
+              metadata: {
+                seriesTitles: [seriesTitle],
+              },
+              dataset: datasetFromDataFile[0],
+              type: 'aggregate',
+            } as AggregateDataset;
+          });
+        })
+        .catch(() => {
+          Promise.reject(`Cannot retrieve datafile: ${dataFileSource.uri}`);
+          return undefined;
+        });
     } else {
       return Promise.reject(`Unknown source type ${sourceType} `);
     }
   }
+
+  readFileContent = (file: any) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.onload = (fileLoadedEvent: any) => {
+        const textFromFileLoaded = fileLoadedEvent.target.result;
+        return resolve(textFromFileLoaded);
+      };
+
+      fileReader.readAsText(file, 'UTF-8');
+    });
+  };
 
   fetchDataset(
     datamartId: string,

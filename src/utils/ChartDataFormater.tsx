@@ -10,7 +10,7 @@ import { ReportView } from '../models/report/ReportView';
 import { bucketizeReportView, normalizeReportView } from './MetricHelper';
 import { omit } from 'lodash';
 
-type DatasetType = 'aggregate' | 'count';
+export type DatasetType = 'aggregate' | 'count';
 
 export abstract class AbstractDataset {
   type: DatasetType;
