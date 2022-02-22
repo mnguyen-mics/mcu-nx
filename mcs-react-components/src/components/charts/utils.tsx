@@ -166,7 +166,7 @@ export interface Legend {
 }
 
 export function buildLegendOptions(legend?: Legend): Highcharts.LegendOptions {
-  const alignRight =
+  const align =
     legend?.position === 'right'
       ? {
           layout: 'vertical' as Highcharts.OptionsLayoutValue,
@@ -176,13 +176,13 @@ export function buildLegendOptions(legend?: Legend): Highcharts.LegendOptions {
       : legend?.position === 'bottom'
       ? {
           layout: 'vertical' as Highcharts.OptionsLayoutValue,
-          align: 'middle' as Highcharts.AlignValue,
+          align: 'center' as Highcharts.AlignValue,
           verticalAlign: 'bottom' as Highcharts.VerticalAlignValue,
         }
       : {};
   return legend?.enabled
     ? {
-        ...alignRight,
+        ...align,
         enabled: true,
       }
     : { enabled: false };
