@@ -13,7 +13,7 @@ interface SegmentSelectorProps {
   datamartId: string;
   organisationId: string;
   segmentType?: AudienceSegmentType[];
-  withFilter: boolean;
+  withFilter?: boolean;
   onSelectSegment: (segment: AudienceSegmentShape) => void;
 }
 
