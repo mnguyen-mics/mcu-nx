@@ -471,20 +471,6 @@ class PluginsList extends React.Component<Props, State> {
           </Link>
         ),
       },
-      {
-        title: formatMessage(messages.lastVersion),
-        key: 'current_version_id',
-        isHideable: false,
-        sorter: true,
-        sortOrder: this.getOrderByForColumn('current_version_id', sortField, isSortAsc),
-        render: (text: string, record: PluginResource) => (
-          <Link to={`/o/${organisationId}/plugins/${record.id}`}>
-            <Tag className='mcs-pluginTable_currentVersion' color='purple'>
-              {record.current_version_id}
-            </Tag>
-          </Link>
-        ),
-      },
     ];
 
     const emptyTable: {
