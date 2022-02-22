@@ -8,6 +8,7 @@ import { PaginatedApiParam } from '../utils/ApiHelper';
 
 import { BaseExecutionResource } from '../models/job/jobs';
 import { injectable } from 'inversify';
+import { QueryLanguage } from '../models/datamart/DatamartResource';
 
 export interface SegmentImportResult {
   total_user_segment_imported: number;
@@ -62,6 +63,8 @@ export interface GetSegmentsOption extends PaginatedApiParam {
   datamart_id?: string;
   keywords?: string;
   feed_type?: UserListFeedType;
+  query_language?: QueryLanguage;
+  order_by?: string;
 }
 
 export interface IAudienceSegmentService {

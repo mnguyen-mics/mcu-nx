@@ -13,6 +13,7 @@ interface SegmentSelectorProps {
   datamartId: string;
   organisationId: string;
   segmentType?: AudienceSegmentType[];
+  withFilter: boolean;
   onSelectSegment: (segment: AudienceSegmentShape) => void;
 }
 
@@ -20,14 +21,21 @@ type Props = SegmentSelectorProps & InjectedDrawerProps;
 
 class SegmentSelector extends React.Component<Props> {
   openDrawer = () => {
-    const { closeNextDrawer, organisationId, datamartId, onSelectSegment, segmentType } =
-      this.props;
+    const {
+      closeNextDrawer,
+      organisationId,
+      datamartId,
+      onSelectSegment,
+      segmentType,
+      withFilter,
+    } = this.props;
     this.props.openNextDrawer(SegmentSelectorContent, {
       className: 'mcs-segmentSelector_drawer',
       additionalProps: {
         organisationId: organisationId,
         datamartId: datamartId,
         segmentType: segmentType,
+        withFilter: withFilter,
         onCloseDrawer: closeNextDrawer,
         onSelectSegment,
       },

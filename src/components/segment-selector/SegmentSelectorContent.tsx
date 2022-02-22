@@ -30,6 +30,7 @@ import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-libr
 interface SegmentSelectorContentProps {
   organisationId: string;
   datamartId: string;
+  withFilter: boolean;
   segmentType?: AudienceSegmentType[];
   searchSegmentName?: string;
   onCloseDrawer: () => void;
@@ -46,7 +47,8 @@ interface SegmentSelectorContentState {
 type Props = SegmentSelectorContentProps & InjectedNotificationProps;
 
 const maxResults = 50;
-
+const queryLanguage = 'JSON_OTQL';
+const orderBy = '-last_modified_ts';
 const Option = Select.Option;
 
 const segmentTypeList: AudienceSegmentType[] = [
@@ -89,6 +91,8 @@ class SegmentSelectorContent extends React.Component<Props, SegmentSelectorConte
       type: segmentType || segmentTypeList,
       feed_type: ['SCENARIO', 'FILE_IMPORT', 'TAG'],
       max_results: maxResults,
+      query_language: queryLanguage,
+      order_by: orderBy,
     });
   }
 
@@ -125,7 +129,13 @@ class SegmentSelectorContent extends React.Component<Props, SegmentSelectorConte
   }
 
   handleSearch = (keyword: string) => {
-    this.fetchSegments(keyword);
+    const { segmentType } = this.props;
+    this.fetchSegments(keyword, {
+      keywords: keyword,
+      query_language: queryLanguage,
+      type: segmentType,
+      order_by: keyword.length > 0 ? undefined : orderBy,
+    });
   };
 
   handleSegmentTypeChange = (segmentType: AudienceSegmentType[]) => {
@@ -133,6 +143,7 @@ class SegmentSelectorContent extends React.Component<Props, SegmentSelectorConte
     this.fetchSegments(fetchedKeyword || '', {
       keywords: fetchedKeyword,
       type: segmentType.length > 0 ? segmentType : segmentTypeList,
+      query_language: queryLanguage,
     });
   };
 
@@ -144,7 +155,7 @@ class SegmentSelectorContent extends React.Component<Props, SegmentSelectorConte
     };
   };
   render() {
-    const { onCloseDrawer } = this.props;
+    const { onCloseDrawer, withFilter } = this.props;
     const { searchedSegmentsList, fetchingSegment } = this.state;
     const getPopupContainer = () => document.getElementById('mcs-segmentSelector_anchor')!;
     const getPopupContainerForType = () =>
@@ -245,24 +256,26 @@ class SegmentSelectorContent extends React.Component<Props, SegmentSelectorConte
               <Input.Search placeholder='Search by name or id' />
             </AutoComplete>
           </div>
-          <div id='mcs-segmentSelector_anchor_forType'>
-            <Select
-              mode={'multiple'}
-              allowClear={true}
-              placeholder={'Filter by type'}
-              className='mcs-segmentSelector_filterType'
-              showArrow={true}
-              onChange={this.handleSegmentTypeChange}
-              suffixIcon={<FilterOutlined />}
-              getPopupContainer={getPopupContainerForType}
-            >
-              {segmentTypeList.map(type => (
-                <Option key={type} value={type}>
-                  {type}
-                </Option>
-              ))}
-            </Select>
-          </div>
+          {withFilter && (
+            <div id='mcs-segmentSelector_anchor_forType'>
+              <Select
+                mode={'multiple'}
+                allowClear={true}
+                placeholder={'Filter by type'}
+                className='mcs-segmentSelector_filterType'
+                showArrow={true}
+                onChange={this.handleSegmentTypeChange}
+                suffixIcon={<FilterOutlined />}
+                getPopupContainer={getPopupContainerForType}
+              >
+                {segmentTypeList.map(type => (
+                  <Option key={type} value={type}>
+                    {type}
+                  </Option>
+                ))}
+              </Select>
+            </div>
+          )}
 
           <TableViewFilters
             onRow={this.handleOnclick}
