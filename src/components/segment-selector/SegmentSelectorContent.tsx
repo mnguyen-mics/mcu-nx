@@ -30,7 +30,7 @@ import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-libr
 interface SegmentSelectorContentProps {
   organisationId: string;
   datamartId: string;
-  withFilter: boolean;
+  withFilter?: boolean;
   segmentType?: AudienceSegmentType[];
   searchSegmentName?: string;
   onCloseDrawer: () => void;
