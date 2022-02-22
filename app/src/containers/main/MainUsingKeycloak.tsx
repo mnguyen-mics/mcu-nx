@@ -7,6 +7,7 @@ import { NavigatorRoute } from '../../routes/domain';
 import routes from '../../routes/routes';
 import { LayoutManager } from '../../components/layoutManager';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { Notifications } from '../Notifications';
 
 type JoinedProps = InjectedIntlProps & RouteComponentProps<{ organisationId: string }>;
 
@@ -31,6 +32,7 @@ class MainUsingKeycloak extends React.Component<JoinedProps> {
             requiredFeatures={route.requiredFeature}
             requireDatamart={route.requireDatamart}
           >
+            <Notifications />
             <div className='drawer-wrapper'>
               <DrawerManager />
             </div>
