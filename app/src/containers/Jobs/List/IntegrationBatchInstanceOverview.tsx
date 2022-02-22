@@ -152,8 +152,8 @@ class IntegrationBatchInstanceOverview extends React.Component<Props, State> {
     const updates: Partial<IntegrationBatchResource> =
       cronValue === '* * * * *'
         ? {
-            cron: undefined,
-            cron_status: undefined,
+            cron: null,
+            cron_status: null,
           }
         : {
             cron: cronValue,
