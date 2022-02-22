@@ -55,6 +55,6 @@ export default defineMessages({
   },
   successfullySaved: {
     id: 'dashboards.successfullySaved',
-    defaultMessage: 'The dashboard is saved',
+    defaultMessage: 'Your dashboard has been saved',
   },
 });
