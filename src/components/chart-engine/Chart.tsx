@@ -303,11 +303,7 @@ class Chart extends React.Component<Props, ChartState> {
     }
   }
 
-  renderUpIcon(
-    onClickMoveUp: () => void,
-    layout?: 'vertical' | 'horizontal',
-    showButton?: boolean,
-  ) {
+  renderUpIcon(onClickMoveUp: () => void, layout?: Layout, showButton?: boolean) {
     if (!showButton) return undefined;
     else
       return layout && layout === 'horizontal' ? (
@@ -325,11 +321,7 @@ class Chart extends React.Component<Props, ChartState> {
       );
   }
 
-  renderDownIcon(
-    onClickMoveDown: () => void,
-    layout?: 'vertical' | 'horizontal',
-    showButton?: boolean,
-  ) {
+  renderDownIcon(onClickMoveDown: () => void, layout?: Layout, showButton?: boolean) {
     if (!showButton) return undefined;
     else
       return layout && layout === 'horizontal' ? (
