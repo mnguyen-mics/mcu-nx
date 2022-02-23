@@ -380,9 +380,9 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
         scope={scope}
         queryFragment={formattedQueryFragment}
         showButtonUp={chartIndex > 0}
-        showButtonDown={chartIndex === card.charts.length - 1}
+        showButtonDown={chartIndex < card.charts.length - 1}
         layout={
-          card.layout === 'vertical' || card.layout === 'horizontal' ? card.layout : undefined
+          card.layout === 'vertical' || card.layout === 'horizontal' ? card.layout : 'horizontal'
         }
       />
     );
