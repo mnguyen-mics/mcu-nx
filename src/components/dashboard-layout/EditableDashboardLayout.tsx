@@ -28,11 +28,11 @@ class EditableDashboardLayout extends React.Component<Props> {
   private labelInitialSchemaWithIds(initialSchema: DashboardContentSchema) {
     const schemaCopy: DashboardContentSchema = JSON.parse(JSON.stringify(initialSchema));
     schemaCopy.sections.forEach(section => {
-      section.id = cuid();
+      if (section.id === undefined) section.id = cuid();
       section.cards.forEach(card => {
-        card.id = cuid();
+        if (card.id === undefined) card.id = cuid();
         card.charts.forEach(chart => {
-          chart.id = cuid();
+          if (chart.id === undefined) chart.id = cuid();
         });
       });
     });
