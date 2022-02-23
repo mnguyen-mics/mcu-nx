@@ -86,7 +86,7 @@ interface ChartState {
 }
 
 type Props = InjectedDrawerProps & InjectedIntlProps & ChartProps;
-
+let loadingTimeout: number;
 class Chart extends React.Component<Props, ChartState> {
   @lazyInject(TYPES.IChartDatasetService)
   private _chartDatasetService: IChartDatasetService;
@@ -112,6 +112,7 @@ class Chart extends React.Component<Props, ChartState> {
     this.chartDatasetService()
       .fetchDataset(datamartId, organisationId, chartConfig, scope, queryFragment)
       .then(formattedData => {
+        clearTimeout(loadingTimeout);
         this.setState({
           formattedData: formattedData,
           loading: false,
@@ -119,6 +120,7 @@ class Chart extends React.Component<Props, ChartState> {
         });
       })
       .catch(e => {
+        clearTimeout(loadingTimeout);
         this.setState({
           errorContext: {
             description: e,
@@ -132,12 +134,14 @@ class Chart extends React.Component<Props, ChartState> {
   }
 
   checkIfStillLoading() {
-    setTimeout(() => {
-      this.setState(state => {
-        return {
-          stillLoading: state.loading,
-        };
-      });
+    loadingTimeout = window.setTimeout(() => {
+      if (this.state.loading !== this.state.stillLoading) {
+        this.setState(state => {
+          return {
+            stillLoading: state.loading,
+          };
+        });
+      }
     }, 6000);
   }
 
