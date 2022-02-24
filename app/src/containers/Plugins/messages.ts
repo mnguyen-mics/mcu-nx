@@ -25,6 +25,10 @@ export default defineMessages({
     id: 'plugins.list.name',
     defaultMessage: 'Name',
   },
+  type: {
+    id: 'plugins.list.type',
+    defaultMessage: 'Type',
+  },
   edit: {
     id: 'plugins.list.edit',
     defaultMessage: 'Edit',
@@ -176,5 +180,17 @@ export default defineMessages({
   addFileButton: {
     id: 'plugins.tab.addFileButton',
     defaultMessage: 'Add a configuration file',
+  },
+  addLayoutButton: {
+    id: 'plugins.tab.addLayoutFileButton',
+    defaultMessage: 'Add a property file layout',
+  },
+  layout: {
+    id: 'plugins.tab.layout.title',
+    defaultMessage: 'Layout',
+  },
+  layoutEmptyTable: {
+    id: 'plugins.tab.layout.emptyTable',
+    defaultMessage: "You don't have any properties layout yet",
   },
 });
