@@ -132,7 +132,7 @@ class PluginTabContainer extends React.Component<Props, State> {
   };
 
   buildPluginTabsItems = () => {
-    const { intl } = this.props;
+    const { intl, plugin } = this.props;
     const {
       currentPluginVersionId,
       initialPluginVersionContainers,

@@ -29,6 +29,10 @@ export default defineMessages({
     id: 'plugins.list.type',
     defaultMessage: 'Type',
   },
+  technicalName: {
+    id: 'plugins.list.technicalName',
+    defaultMessage: 'Technical Name',
+  },
   edit: {
     id: 'plugins.list.edit',
     defaultMessage: 'Edit',
@@ -192,5 +196,17 @@ export default defineMessages({
   layoutEmptyTable: {
     id: 'plugins.tab.layout.emptyTable',
     defaultMessage: "You don't have any properties layout yet",
+  },
+  save: {
+    id: 'plugins.tab.configurationFile.save',
+    defaultMessage: 'Save',
+  },
+  saveSuccess: {
+    id: 'plugins.tab.configurationFile.save.success',
+    defaultMessage: 'Your configuration file has been successfully saved',
+  },
+  configurationFileEmptyTable: {
+    id: 'plugins.tab.configurationFile.empty',
+    defaultMessage: "You don't have any configuration file yet",
   },
 });

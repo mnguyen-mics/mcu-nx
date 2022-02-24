@@ -13,7 +13,7 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
 import { PAGINATION_SEARCH_SETTINGS } from '../../../utils/LocationSearchHelper';
 import ItemList, { Filters } from '../../../components/ItemList';
-import { Button } from 'antd';
+import { Button, Drawer, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { ConfigurationFileListingEntryResource } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
 import { IPluginService, lazyInject, TYPES } from '@mediarithmics-private/advanced-components';
@@ -28,7 +28,19 @@ interface RouteProps {
   pluginId: string;
 }
 
-type Props = ConfigurationFilesContainerProps &
+export interface ConfigurationFileFormData {
+  technicalName?: string;
+  file?: string;
+}
+
+interface State {
+  isDrawerVisible: boolean;
+  formData: ConfigurationFileFormData;
+  editionMode: boolean;
+  isLoading: boolean;
+}
+
+type Props = ConfigurationFileContainerProps &
   InjectedIntlProps &
   InjectedNotificationProps &
   RouteComponentProps<RouteProps>;
@@ -48,11 +60,77 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
       loading: false,
       pluginConfigurationFiles: [],
       pluginConfigurationFileTotal: 0,
+      isDrawerVisible: false,
+      formData: {},
+      editionMode: true,
+      isLoading: false,
     };
   }
 
-  editPluginConfigurationFile = () => {
-    //
+  saveConfigurationFile = (formData: ConfigurationFileFormData) => {
+    const {
+      match: {
+        params: { pluginId },
+      },
+      intl,
+      pluginVersionId,
+    } = this.props;
+    const { editionMode } = this.state;
+    this.setState({
+      isLoading: true,
+    });
+    const file = new Blob([formData.file || '']);
+    const promise = editionMode
+      ? this._pluginService.putPluginConfigurationFile(
+          pluginId,
+          pluginVersionId,
+          formData.technicalName || '',
+          file,
+        )
+      : this._pluginService.createPluginConfigurationFile(
+          pluginId,
+          pluginVersionId,
+          formData.technicalName || '',
+          file,
+        );
+    return promise
+      .then(res => {
+        this.setState({
+          isLoading: false,
+          isDrawerVisible: false,
+        });
+        message.success(intl.formatMessage(messages.saveSuccess), 3);
+      })
+      .catch(err => {
+        this.setState({
+          isDrawerVisible: false,
+          isLoading: false,
+        });
+      });
+  };
+
+  editPluginConfigurationFile = (pluginConfigurationFile: PluginConfigurationFile) => {
+    this.setState({
+      isDrawerVisible: true,
+      editionMode: true,
+      formData: {
+        technicalName: pluginConfigurationFile.technical_name,
+        file: '', // TODO
+      },
+    });
+  };
+
+  openDrawer = () => {
+    this.setState({
+      isDrawerVisible: true,
+      editionMode: false,
+    });
+  };
+
+  closeDrawer = () => {
+    this.setState({
+      isDrawerVisible: false,
+    });
   };
 
   fetchPluginConfigurationFiles = (pluginVersionId: string, filters: Filters) => {
@@ -89,13 +167,15 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
   render() {
     const {
       intl: { formatMessage },
+      pluginConfigurationFiles,
+      plugin,
     } = this.props;
 
-    const { pluginConfigurationFiles } = this.state;
+    const drawerTitle = `Plugins > ${plugin?.group_id}/${plugin?.artifact_id} > Add a configuration file`;
 
-    const dataColumnsDefinition: Array<
-      DataColumnDefinition<ConfigurationFileListingEntryResource>
-    > = [
+    const { isDrawerVisible, formData, isLoading } = this.state;
+
+    const dataColumnsDefinition: Array<DataColumnDefinition<PluginConfigurationFile>> = [
       {
         title: formatMessage(messages.name),
         key: 'technical_name',
@@ -122,7 +202,7 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
       message: string;
     } = {
       iconType: 'library',
-      message: formatMessage(messages.deploymentEmptyTable),
+      message: formatMessage(messages.configurationFileEmptyTable),
     };
 
     return (
@@ -137,9 +217,28 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
           pageSettings={PAGINATION_SEARCH_SETTINGS}
           emptyTable={emptyTable}
         />
-        <Button className='mcs-pluginConfigurationFileTable_addFileButton'>
+        <Button
+          className='mcs-pluginConfigurationFileTable_addFileButton'
+          onClick={this.openDrawer}
+        >
           <PlusOutlined /> <FormattedMessage {...messages.addFileButton} />
         </Button>
+        <Drawer
+          className='mcs-pluginEdit-drawer'
+          title={drawerTitle}
+          bodyStyle={{ padding: '0' }}
+          closable={true}
+          onClose={this.closeDrawer}
+          visible={isDrawerVisible}
+          width='800'
+          destroyOnClose={true}
+        >
+          <ConfigurationFileForm
+            onSave={this.saveConfigurationFile}
+            formData={formData}
+            isLoading={isLoading}
+          />
+        </Drawer>
       </React.Fragment>
     );
   }
