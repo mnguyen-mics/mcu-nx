@@ -1,3 +1,4 @@
+import { PluginConfigurationFile } from './../models/plugin/Plugins';
 import {
   Adlayout,
   AdLayoutVersionResource,
@@ -28,6 +29,12 @@ export interface GetPluginOptions extends Omit<PaginatedApiParam, 'first_result'
   artifact_id?: string;
   group_id?: string;
   organisation_id?: string;
+}
+
+type PluginLayoutFileType = 'PROPERTIES' | 'LOCALE';
+interface LayoutFileListingEntryResource {
+  fileType: PluginLayoutFileType;
+  locale?: string;
 }
 
 interface GetPluginVersionContainersOptions extends PaginatedApiParam {
@@ -89,6 +96,12 @@ export interface IPluginService {
     pluginVersionId: string,
     locale?: string,
   ) => Promise<PluginLayout | null>;
+  putPropertiesLayout: (pluginId: string, pluginVersionId: string, fileData: Blob) => Promise<any>; // returns OK
+  getLocalizedPluginLayoutFile: (
+    pluginId: string,
+    pluginVersionId: string,
+    locale: string,
+  ) => Promise<Blob>;
   getPluginPresets: (
     options: GetPluginPresetOptions,
   ) => Promise<DataListResponse<PluginPresetResource>>;
@@ -121,7 +134,32 @@ export interface IPluginService {
     pluginId: string,
     pluginVersionId: string,
     action: PluginActionResource,
-  ) => Promise<DataResponse<any>>;
+  ) => Promise<DataResponse<PluginConfigurationFile>>;
+  getPluginConfigurationFile: (
+    pluginId: string,
+    pluginVersionId: string,
+    technicalName?: string,
+  ) => Promise<Blob>;
+  listPluginConfigurationFiles: (
+    pluginId: string,
+    pluginVersionId: string,
+  ) => Promise<DataListResponse<LayoutFileListingEntryResource>>;
+  putPluginConfigurationFile: (
+    pluginId: string,
+    pluginVersionId: string,
+    technicalName: string,
+    fileData: Blob,
+  ) => Promise<any>; // returns OK
+  putLocalizationFile: (
+    pluginId: string,
+    pluginVersionId: string,
+    locale: string,
+    fileData: Blob,
+  ) => Promise<any>; // returns OK
+  listPluginLayouts: (
+    pluginId: string,
+    pluginVersionId: string,
+  ) => Promise<DataListResponse<LayoutFileListingEntryResource>>;
 }
 
 @injectable()
@@ -410,6 +448,38 @@ export class PluginService implements IPluginService {
       });
   }
 
+  putPropertiesLayout(pluginId: string, pluginVersionId: string, fileData: Blob): Promise<any> {
+    const endpoint = `plugins/${pluginId}/versions/${pluginVersionId}/properties_layout`;
+    return ApiService.putRequest(endpoint, fileData);
+  }
+
+  getLocalizedPluginLayoutFile(
+    pluginId: string,
+    pluginVersionId: string,
+    locale: string = 'en-US',
+  ): Promise<Blob> {
+    const endpoint = `plugins/${pluginId}/versions/${pluginVersionId}/properties_layout/localizations/locale=${locale}`;
+    return ApiService.getRequest(endpoint);
+  }
+
+  putLocalizationFile(
+    pluginId: string,
+    pluginVersionId: string,
+    locale: string,
+    fileData: Blob,
+  ): Promise<any> {
+    const endpoint = `plugins/${pluginId}/versions/${pluginVersionId}/properties_layout/localizations/locale=${locale}`;
+    return ApiService.putRequest(endpoint, fileData);
+  }
+
+  listPluginLayouts(
+    pluginId: string,
+    pluginVersionId: string,
+  ): Promise<DataListResponse<LayoutFileListingEntryResource>> {
+    const endpoint = `plugins/${pluginId}/versions/${pluginVersionId}/properties_layout.listing`;
+    return ApiService.getRequest(endpoint);
+  }
+
   getLocalizedPluginLayoutFromVersionId(
     pluginVersionId: string,
   ): Promise<{ plugin: PluginResource; layout?: PluginLayout }> {
@@ -442,6 +512,33 @@ export class PluginService implements IPluginService {
   ): Promise<DataResponse<any>> {
     const endpoint = `plugins/${pluginId}/versions/${pluginVersionId}/containers/action`;
     return ApiService.postRequest(endpoint, action);
+  }
+
+  getPluginConfigurationFile(
+    pluginId: string,
+    pluginVersionId: string,
+    technicalName: string,
+  ): Promise<Blob> {
+    const endpoint = `plugins/${pluginId}/versions/${pluginVersionId}/configuration_file/technical_name=${technicalName}`;
+    return ApiService.getRequest(endpoint);
+  }
+
+  listPluginConfigurationFiles(
+    pluginId: string,
+    pluginVersionId: string,
+  ): Promise<DataListResponse<LayoutFileListingEntryResource>> {
+    const endpoint = `plugins/${pluginId}/versions/${pluginVersionId}/configuration_file.listing`;
+    return ApiService.getRequest(endpoint);
+  }
+
+  putPluginConfigurationFile(
+    pluginId: string,
+    pluginVersionId: string,
+    technicalName: string,
+    fileData: Blob,
+  ): Promise<any> {
+    const endpoint = `plugins/${pluginId}/versions/${pluginVersionId}/configuration_file/technical_name=${technicalName}`;
+    return ApiService.putRequest(endpoint, fileData);
   }
 }
 
