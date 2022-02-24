@@ -287,6 +287,6 @@ export interface IntegrationBatchJobResource
   external_model_name: 'PUBLIC_INTEGRATION_BATCH';
 }
 
-export interface PluginConfigurationFile {
+export interface ConfigurationFileListingEntryResource {
   technical_name: string;
 }

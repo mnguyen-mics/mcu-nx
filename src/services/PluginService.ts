@@ -1,4 +1,4 @@
-import { PluginConfigurationFile } from './../models/plugin/Plugins';
+import { ConfigurationFileListingEntryResource } from './../models/plugin/Plugins';
 import {
   Adlayout,
   AdLayoutVersionResource,
@@ -134,7 +134,7 @@ export interface IPluginService {
     pluginId: string,
     pluginVersionId: string,
     action: PluginActionResource,
-  ) => Promise<DataResponse<PluginConfigurationFile>>;
+  ) => Promise<DataResponse<any>>;
   getPluginConfigurationFile: (
     pluginId: string,
     pluginVersionId: string,
@@ -143,7 +143,7 @@ export interface IPluginService {
   listPluginConfigurationFiles: (
     pluginId: string,
     pluginVersionId: string,
-  ) => Promise<DataListResponse<LayoutFileListingEntryResource>>;
+  ) => Promise<DataListResponse<ConfigurationFileListingEntryResource>>;
   putPluginConfigurationFile: (
     pluginId: string,
     pluginVersionId: string,
@@ -526,7 +526,7 @@ export class PluginService implements IPluginService {
   listPluginConfigurationFiles(
     pluginId: string,
     pluginVersionId: string,
-  ): Promise<DataListResponse<LayoutFileListingEntryResource>> {
+  ): Promise<DataListResponse<ConfigurationFileListingEntryResource>> {
     const endpoint = `plugins/${pluginId}/versions/${pluginVersionId}/configuration_file.listing`;
     return ApiService.getRequest(endpoint);
   }
