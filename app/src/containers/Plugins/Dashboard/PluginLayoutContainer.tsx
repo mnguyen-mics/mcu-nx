@@ -13,19 +13,25 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
 import { PAGINATION_SEARCH_SETTINGS } from '../../../utils/LocationSearchHelper';
 import ItemList from '../../../components/ItemList';
-import { Button } from 'antd';
+import { Button, Drawer, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { IPluginService, lazyInject, TYPES } from '@mediarithmics-private/advanced-components';
+import {
+  IPluginService,
+  lazyInject,
+  PluginResource,
+  TYPES,
+} from '@mediarithmics-private/advanced-components';
+import PluginLayoutForm from './PluginLayoutForm';
+import { LayoutFileListingEntryResource } from '@mediarithmics-private/advanced-components/lib/services/PluginService';
 
-// TODO: to get from ADV
-type PluginLayoutFileType = 'PROPERTIES' | 'LOCALE';
-interface LayoutFileListingEntryResource {
-  fileType: PluginLayoutFileType;
+export interface PluginLayoutFileFormData {
   locale?: string;
+  file?: string;
 }
 
 interface PluginLayoutContainerProps {
   pluginVersionId: string;
+  plugin?: PluginResource;
 }
 
 interface RouteProps {
@@ -41,6 +47,8 @@ type Props = PluginLayoutContainerProps &
 interface State {
   loading: boolean;
   pluginPropertyLayouts: LayoutFileListingEntryResource[];
+  isDrawerVisible: boolean;
+  formData: PluginLayoutFileFormData;
 }
 
 class PluginLayoutContainer extends React.Component<Props, State> {
@@ -51,6 +59,8 @@ class PluginLayoutContainer extends React.Component<Props, State> {
     this.state = {
       loading: false,
       pluginPropertyLayouts: [],
+      isDrawerVisible: false,
+      formData: {},
     };
   }
 
@@ -59,8 +69,28 @@ class PluginLayoutContainer extends React.Component<Props, State> {
     this.getPluginPropertyLayouts(pluginVersionId);
   }
 
-  editPluginPropertyLayout = () => {
-    //
+  editPluginLayoutFile = (pluginLayoutFile: LayoutFileListingEntryResource) => {
+    const {
+      match: {
+        params: { pluginId },
+      },
+      pluginVersionId,
+      notifyError,
+    } = this.props;
+    this._pluginService
+      .getLocalizedPluginLayout(pluginId, pluginVersionId, pluginLayoutFile.locale)
+      .then(res => {
+        this.setState({
+          isDrawerVisible: true,
+          formData: {
+            locale: pluginLayoutFile.locale,
+            file: JSON.stringify(res),
+          },
+        });
+      })
+      .catch(err => {
+        notifyError(err);
+      });
   };
 
   getPluginPropertyLayouts = (pluginVersionId: string) => {
@@ -87,6 +117,42 @@ class PluginLayoutContainer extends React.Component<Props, State> {
       });
   };
 
+  openDrawer = () => {
+    this.setState({
+      isDrawerVisible: true,
+    });
+  };
+
+  savePluginLayoutFile = (formData: PluginLayoutFileFormData) => {
+    const {
+      match: {
+        params: { pluginId },
+      },
+      intl,
+      pluginVersionId,
+    } = this.props;
+    const file = new Blob([formData.file || '']);
+    return this._pluginService
+      .putPropertiesLayout(pluginId, pluginVersionId, file)
+      .then(res => {
+        this.setState({
+          isDrawerVisible: false,
+        });
+        message.success(intl.formatMessage(messages.saveLayoutSuccess), 3);
+      })
+      .catch(err => {
+        this.setState({
+          isDrawerVisible: false,
+        });
+      });
+  };
+
+  closeDrawer = () => {
+    this.setState({
+      isDrawerVisible: false,
+    });
+  };
+
   fetchPluginPropertyLayouts = (pluginVersionId: string) => {
     return Promise.resolve();
   };
@@ -94,9 +160,12 @@ class PluginLayoutContainer extends React.Component<Props, State> {
   render() {
     const {
       intl: { formatMessage },
+      plugin,
     } = this.props;
 
-    const { pluginPropertyLayouts } = this.state;
+    const { pluginPropertyLayouts, isDrawerVisible, formData } = this.state;
+
+    const drawerTitle = `Plugins > ${plugin?.group_id}/${plugin?.artifact_id} > Add a locale file`;
 
     const dataColumnsDefinition: Array<DataColumnDefinition<LayoutFileListingEntryResource>> = [
       {
@@ -113,7 +182,7 @@ class PluginLayoutContainer extends React.Component<Props, State> {
         actions: () => [
           {
             message: formatMessage(messages.edit),
-            callback: this.editPluginPropertyLayout,
+            callback: this.editPluginLayoutFile,
             className: 'mcs-pluginConfigurationFileTable_dropDownMenu--edit',
           },
         ],
@@ -140,9 +209,24 @@ class PluginLayoutContainer extends React.Component<Props, State> {
           pageSettings={PAGINATION_SEARCH_SETTINGS}
           emptyTable={emptyTable}
         />
-        <Button className='mcs-pluginConfigurationFileTable_addFileButton'>
+        <Button
+          className='mcs-pluginConfigurationFileTable_addFileButton'
+          onClick={this.openDrawer}
+        >
           <PlusOutlined /> <FormattedMessage {...messages.addLayoutButton} />
         </Button>
+        <Drawer
+          className='mcs-pluginEdit-drawer'
+          title={drawerTitle}
+          bodyStyle={{ padding: '0' }}
+          closable={true}
+          onClose={this.closeDrawer}
+          visible={isDrawerVisible}
+          width='800'
+          destroyOnClose={true}
+        >
+          <PluginLayoutForm onSave={this.savePluginLayoutFile} formData={formData} />
+        </Drawer>
       </React.Fragment>
     );
   }

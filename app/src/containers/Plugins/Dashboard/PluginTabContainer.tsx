@@ -162,7 +162,7 @@ class PluginTabContainer extends React.Component<Props, State> {
       // {
       //   key: 'layout',
       //   title: intl.formatMessage(messages.layout),
-      //   display: <PluginLayoutsContainer pluginVersionId={currentPluginVersionId} />,
+      //   display: <PluginLayoutsContainer pluginVersionId={currentPluginVersionId} plugin={plugin} />,
       // },
     ];
   };
