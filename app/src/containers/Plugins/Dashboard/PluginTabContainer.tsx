@@ -7,7 +7,7 @@ import {
   PluginManagerResource,
   PluginResource,
 } from '@mediarithmics-private/advanced-components';
-import { PluginConfigurationFile } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
+import { ConfigurationFileListingEntryResource } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
 import { McsTabs } from '@mediarithmics-private/mcs-components-library';
 import { Modal, Select, Button, Spin, message, Tag, Input } from 'antd';
 import * as React from 'react';
@@ -46,7 +46,7 @@ interface State {
   currentPluginVersionId: string;
   initialPluginVersionContainers: PluginManagerResource[];
   pluginVersionContainerTotal: number;
-  pluginConfigurationFiles: PluginConfigurationFile[];
+  pluginConfigurationFiles: ConfigurationFileListingEntryResource[];
   pluginConfigurationFilesLoading: boolean;
   isModalLoading: boolean;
   targetBuildTag?: string;
@@ -116,7 +116,7 @@ class PluginTabContainer extends React.Component<Props, State> {
     } = this.props;
 
     this._pluginService
-      .getPluginConfigurationFiles(pluginId, pluginVersionId)
+      .listPluginConfigurationFiles(pluginId, pluginVersionId)
       .then(res => {
         this.setState({
           pluginConfigurationFiles: res.data,
@@ -133,13 +133,8 @@ class PluginTabContainer extends React.Component<Props, State> {
 
   buildPluginTabsItems = () => {
     const { intl, plugin } = this.props;
-    const {
-      currentPluginVersionId,
-      initialPluginVersionContainers,
-      pluginVersionContainerTotal,
-      pluginConfigurationFiles,
-      pluginConfigurationFilesLoading,
-    } = this.state;
+    const { currentPluginVersionId, initialPluginVersionContainers, pluginVersionContainerTotal } =
+      this.state;
     return [
       {
         key: 'properties',
@@ -160,7 +155,9 @@ class PluginTabContainer extends React.Component<Props, State> {
       // {
       //   key: 'configuration_file',
       //   title: intl.formatMessage(messages.configurationFile),
-      //   display: <ConfigurationFilesContainer pluginVersionId={currentPluginVersionId} />,
+      //   display: (
+      //     <ConfigurationFileContainer pluginVersionId={currentPluginVersionId} plugin={plugin} />
+      //   ),
       // },
       // {
       //   key: 'layout',

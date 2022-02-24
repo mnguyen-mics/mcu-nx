@@ -16,11 +16,18 @@ import ItemList, { Filters } from '../../../components/ItemList';
 import { Button, Drawer, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { ConfigurationFileListingEntryResource } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
-import { IPluginService, lazyInject, TYPES } from '@mediarithmics-private/advanced-components';
 import { getPaginatedApiParam } from '../../../utils/ApiHelper';
+import {
+  IPluginService,
+  lazyInject,
+  TYPES,
+  PluginResource,
+} from '@mediarithmics-private/advanced-components';
+import ConfigurationFileForm from './ConfigurationFileForm';
 
 interface ConfigurationFilesContainerProps {
   pluginVersionId: string;
+  plugin?: PluginResource;
 }
 
 interface RouteProps {
@@ -29,18 +36,18 @@ interface RouteProps {
 }
 
 export interface ConfigurationFileFormData {
-  technicalName?: string;
+  technical_name?: string;
   file?: string;
 }
 
 interface State {
   isDrawerVisible: boolean;
   formData: ConfigurationFileFormData;
-  editionMode: boolean;
-  isLoading: boolean;
+  loading: boolean;
+  pluginConfigurationFiles: ConfigurationFileListingEntryResource[];
 }
 
-type Props = ConfigurationFileContainerProps &
+type Props = ConfigurationFilesContainerProps &
   InjectedIntlProps &
   InjectedNotificationProps &
   RouteComponentProps<RouteProps>;
@@ -57,13 +64,11 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      loading: false,
+      loading: true,
       pluginConfigurationFiles: [],
       pluginConfigurationFileTotal: 0,
       isDrawerVisible: false,
       formData: {},
-      editionMode: true,
-      isLoading: false,
     };
   }
 
@@ -75,28 +80,12 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
       intl,
       pluginVersionId,
     } = this.props;
-    const { editionMode } = this.state;
-    this.setState({
-      isLoading: true,
-    });
     const file = new Blob([formData.file || '']);
-    const promise = editionMode
-      ? this._pluginService.putPluginConfigurationFile(
-          pluginId,
-          pluginVersionId,
-          formData.technicalName || '',
-          file,
-        )
-      : this._pluginService.createPluginConfigurationFile(
-          pluginId,
-          pluginVersionId,
-          formData.technicalName || '',
-          file,
-        );
-    return promise
+    return this._pluginService
+      .putPluginConfigurationFile(pluginId, pluginVersionId, formData.technical_name || '', file)
+
       .then(res => {
         this.setState({
-          isLoading: false,
           isDrawerVisible: false,
         });
         message.success(intl.formatMessage(messages.saveSuccess), 3);
@@ -104,26 +93,37 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
       .catch(err => {
         this.setState({
           isDrawerVisible: false,
-          isLoading: false,
         });
       });
   };
 
-  editPluginConfigurationFile = (pluginConfigurationFile: PluginConfigurationFile) => {
-    this.setState({
-      isDrawerVisible: true,
-      editionMode: true,
-      formData: {
-        technicalName: pluginConfigurationFile.technical_name,
-        file: '', // TODO
+  editPluginConfigurationFile = (
+    pluginConfigurationFile: ConfigurationFileListingEntryResource,
+  ) => {
+    const {
+      match: {
+        params: { pluginId },
       },
-    });
+      pluginVersionId,
+    } = this.props;
+    this._pluginService
+      .getPluginConfigurationFile(pluginId, pluginVersionId, pluginConfigurationFile.technical_name)
+      .then(res => {
+        return res.text().then(file => {
+          this.setState({
+            isDrawerVisible: true,
+            formData: {
+              technical_name: pluginConfigurationFile.technical_name,
+              file: file,
+            },
+          });
+        });
+      });
   };
 
   openDrawer = () => {
     this.setState({
       isDrawerVisible: true,
-      editionMode: false,
     });
   };
 
@@ -167,15 +167,18 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
   render() {
     const {
       intl: { formatMessage },
-      pluginConfigurationFiles,
       plugin,
     } = this.props;
 
+    const { pluginConfigurationFiles, loading } = this.state;
+
     const drawerTitle = `Plugins > ${plugin?.group_id}/${plugin?.artifact_id} > Add a configuration file`;
 
-    const { isDrawerVisible, formData, isLoading } = this.state;
+    const { isDrawerVisible, formData, pluginConfigurationFileTotal } = this.state;
 
-    const dataColumnsDefinition: Array<DataColumnDefinition<PluginConfigurationFile>> = [
+    const dataColumnsDefinition: Array<
+      DataColumnDefinition<ConfigurationFileListingEntryResource>
+    > = [
       {
         title: formatMessage(messages.name),
         key: 'technical_name',
@@ -211,8 +214,8 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
           fetchList={this.fetchPluginConfigurationFiles}
           dataSource={pluginConfigurationFiles}
           actionsColumnsDefinition={actionColumns}
-          loading={false}
-          total={pluginConfigurationFiles.length}
+          loading={loading}
+          total={pluginConfigurationFileTotal}
           columns={dataColumnsDefinition}
           pageSettings={PAGINATION_SEARCH_SETTINGS}
           emptyTable={emptyTable}
@@ -233,11 +236,7 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
           width='800'
           destroyOnClose={true}
         >
-          <ConfigurationFileForm
-            onSave={this.saveConfigurationFile}
-            formData={formData}
-            isLoading={isLoading}
-          />
+          <ConfigurationFileForm onSave={this.saveConfigurationFile} formData={formData} />
         </Drawer>
       </React.Fragment>
     );

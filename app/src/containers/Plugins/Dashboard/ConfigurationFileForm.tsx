@@ -10,7 +10,6 @@ import { ConfigurationFileFormData } from './ConfigurationFileContainer';
 export interface ConfigurationFileFormProps {
   onSave: (formData: ConfigurationFileFormData) => void;
   formData: ConfigurationFileFormData;
-  isLoading: boolean;
 }
 
 type Props = ConfigurationFileFormProps & InjectedIntlProps;
@@ -24,7 +23,7 @@ class ConfigurationFileForm extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      inputValue: props.formData.technicalName || '',
+      inputValue: props.formData.technical_name || '',
       jsonValue: props.formData.file || '',
     };
   }
@@ -33,7 +32,7 @@ class ConfigurationFileForm extends React.Component<Props, State> {
     const { onSave } = this.props;
     const { inputValue, jsonValue } = this.state;
     return onSave({
-      technicalName: inputValue,
+      technical_name: inputValue,
       file: jsonValue,
     });
   };
