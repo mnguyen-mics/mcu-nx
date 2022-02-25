@@ -18,7 +18,7 @@ import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';
 import messages from '../messages';
-// import ConfigurationFileContainer from './ConfigurationFileContainer';
+// import ConfigurationFilesContainer from './ConfigurationFilesContainer';
 import PluginDeploymentContainer from './PluginDeploymentContainer';
 import PluginPropertiesContainer from './PluginPropertiesContainer';
 
@@ -124,7 +124,7 @@ class PluginTabContainer extends React.Component<Props, State> {
       // {
       //   key: 'configuration_file',
       //   title: intl.formatMessage(messages.configurationFile),
-      //   display: <ConfigurationFileContainer pluginVersionId={currentPluginVersionId} />,
+      //   display: <ConfigurationFilesContainer pluginVersionId={currentPluginVersionId} />,
       // },
     ];
   };

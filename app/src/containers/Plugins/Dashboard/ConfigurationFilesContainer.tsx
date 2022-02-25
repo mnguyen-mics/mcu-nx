@@ -18,7 +18,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { ConfigurationFileListingEntryResource } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
 import { IPluginService, lazyInject, TYPES } from '@mediarithmics-private/advanced-components';
 
-interface ConfigurationFileContainerProps {
+interface ConfigurationFilesContainerProps {
   pluginVersionId: string;
 }
 
@@ -27,7 +27,7 @@ interface RouteProps {
   pluginId: string;
 }
 
-type Props = ConfigurationFileContainerProps &
+type Props = ConfigurationFilesContainerProps &
   InjectedIntlProps &
   InjectedNotificationProps &
   RouteComponentProps<RouteProps>;
@@ -37,7 +37,7 @@ interface State {
   pluginConfigurationFiles: ConfigurationFileListingEntryResource[];
 }
 
-class ConfigurationFileContainer extends React.Component<Props, State> {
+class ConfigurationFilesContainer extends React.Component<Props, State> {
   @lazyInject(TYPES.IPluginService)
   private _pluginService: IPluginService;
   constructor(props: Props) {
@@ -145,8 +145,8 @@ class ConfigurationFileContainer extends React.Component<Props, State> {
   }
 }
 
-export default compose<Props, ConfigurationFileContainerProps>(
+export default compose<Props, ConfigurationFilesContainerProps>(
   injectIntl,
   injectNotifications,
   withRouter,
-)(ConfigurationFileContainer);
+)(ConfigurationFilesContainer);
