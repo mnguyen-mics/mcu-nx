@@ -5,7 +5,7 @@ import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import messages from '../messages';
-import { ConfigurationFileFormData } from './ConfigurationFileContainer';
+import { ConfigurationFileFormData } from './ConfigurationFilesContainer';
 
 export interface ConfigurationFileFormProps {
   onSave: (formData: ConfigurationFileFormData) => void;
