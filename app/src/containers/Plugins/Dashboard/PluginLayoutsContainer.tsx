@@ -15,11 +15,11 @@ import { PAGINATION_SEARCH_SETTINGS } from '../../../utils/LocationSearchHelper'
 import ItemList, { Filters } from '../../../components/ItemList';
 import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { ConfigurationFileListingEntryResource } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
 import { IPluginService, lazyInject, TYPES } from '@mediarithmics-private/advanced-components';
+import { LayoutFileListingEntryResource } from '@mediarithmics-private/advanced-components/lib/services/PluginService';
 import { getPaginatedApiParam } from '../../../utils/ApiHelper';
 
-interface ConfigurationFilesContainerProps {
+interface PluginLayoutsContainerProps {
   pluginVersionId: string;
 }
 
@@ -28,34 +28,34 @@ interface RouteProps {
   pluginId: string;
 }
 
-type Props = ConfigurationFilesContainerProps &
+type Props = PluginLayoutsContainerProps &
   InjectedIntlProps &
   InjectedNotificationProps &
   RouteComponentProps<RouteProps>;
 
 interface State {
   loading: boolean;
-  pluginConfigurationFiles: ConfigurationFileListingEntryResource[];
-  pluginConfigurationFileTotal: number;
+  pluginPropertyLayouts: LayoutFileListingEntryResource[];
+  pluginPropertyLayoutTotal: number;
 }
 
-class ConfigurationFilesContainer extends React.Component<Props, State> {
+class PluginLayoutsContainer extends React.Component<Props, State> {
   @lazyInject(TYPES.IPluginService)
   private _pluginService: IPluginService;
   constructor(props: Props) {
     super(props);
     this.state = {
       loading: false,
-      pluginConfigurationFiles: [],
-      pluginConfigurationFileTotal: 0,
+      pluginPropertyLayouts: [],
+      pluginPropertyLayoutTotal: 0,
     };
   }
 
-  editPluginConfigurationFile = () => {
+  editPluginPropertyLayout = () => {
     //
   };
 
-  fetchPluginConfigurationFiles = (pluginVersionId: string, filters: Filters) => {
+  fetchPluginPropertyLayouts = (pluginVersionId: string, filters: Filters) => {
     const {
       match: {
         params: { pluginId, organisationId },
@@ -70,12 +70,12 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
       ...getPaginatedApiParam(filters.currentPage, filters.pageSize),
     };
     this._pluginService
-      .listPluginConfigurationFiles(pluginId, pluginVersionId, options)
+      .listPluginLayouts(pluginId, pluginVersionId, options)
       .then(res => {
         this.setState({
-          pluginConfigurationFiles: res.data,
+          pluginPropertyLayouts: res.data,
           loading: false,
-          pluginConfigurationFileTotal: res.total || res.count,
+          pluginPropertyLayoutTotal: res.total || res.count,
         });
       })
       .catch(err => {
@@ -91,26 +91,31 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
       intl: { formatMessage },
     } = this.props;
 
-    const { pluginConfigurationFiles } = this.state;
+    const { pluginPropertyLayouts, pluginPropertyLayoutTotal } = this.state;
 
-    const dataColumnsDefinition: Array<
-      DataColumnDefinition<ConfigurationFileListingEntryResource>
-    > = [
+    const dataColumnsDefinition: Array<DataColumnDefinition<LayoutFileListingEntryResource>> = [
       {
         title: formatMessage(messages.name),
-        key: 'technical_name',
+        key: 'locale',
         isHideable: false,
-        render: (text: string, record: ConfigurationFileListingEntryResource) => text,
+        render: (text: string, record: LayoutFileListingEntryResource) =>
+          record.file_type === 'PROPERTIES' ? 'layout' : text,
+      },
+      {
+        title: formatMessage(messages.type),
+        key: 'file_type',
+        isHideable: false,
+        render: (text: string, record: LayoutFileListingEntryResource) => text,
       },
     ];
 
-    const actionColumns: Array<ActionsColumnDefinition<ConfigurationFileListingEntryResource>> = [
+    const actionColumns: Array<ActionsColumnDefinition<LayoutFileListingEntryResource>> = [
       {
         key: 'action',
         actions: () => [
           {
             message: formatMessage(messages.edit),
-            callback: this.editPluginConfigurationFile,
+            callback: this.editPluginPropertyLayout,
             className: 'mcs-pluginConfigurationFileTable_dropDownMenu--edit',
           },
         ],
@@ -122,31 +127,31 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
       message: string;
     } = {
       iconType: 'library',
-      message: formatMessage(messages.deploymentEmptyTable),
+      message: formatMessage(messages.layoutEmptyTable),
     };
 
     return (
       <React.Fragment>
         <ItemList
-          fetchList={this.fetchPluginConfigurationFiles}
-          dataSource={pluginConfigurationFiles}
+          fetchList={this.fetchPluginPropertyLayouts}
+          dataSource={pluginPropertyLayouts}
           actionsColumnsDefinition={actionColumns}
           loading={false}
-          total={pluginConfigurationFiles.length}
+          total={pluginPropertyLayoutTotal}
           columns={dataColumnsDefinition}
           pageSettings={PAGINATION_SEARCH_SETTINGS}
           emptyTable={emptyTable}
         />
         <Button className='mcs-pluginConfigurationFileTable_addFileButton'>
-          <PlusOutlined /> <FormattedMessage {...messages.addFileButton} />
+          <PlusOutlined /> <FormattedMessage {...messages.addLayoutButton} />
         </Button>
       </React.Fragment>
     );
   }
 }
 
-export default compose<Props, ConfigurationFilesContainerProps>(
+export default compose<Props, PluginLayoutsContainerProps>(
   injectIntl,
   injectNotifications,
   withRouter,
-)(ConfigurationFilesContainer);
+)(PluginLayoutsContainer);

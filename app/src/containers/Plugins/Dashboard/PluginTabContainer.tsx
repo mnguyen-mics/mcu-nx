@@ -20,6 +20,7 @@ import injectNotifications, {
 import messages from '../messages';
 // import ConfigurationFilesContainer from './ConfigurationFilesContainer';
 import PluginDeploymentContainer from './PluginDeploymentContainer';
+// import PluginLayoutsContainer from './PluginLayoutsContainer';
 import PluginPropertiesContainer from './PluginPropertiesContainer';
 
 interface RouteProps {
@@ -125,6 +126,11 @@ class PluginTabContainer extends React.Component<Props, State> {
       //   key: 'configuration_file',
       //   title: intl.formatMessage(messages.configurationFile),
       //   display: <ConfigurationFilesContainer pluginVersionId={currentPluginVersionId} />,
+      // },
+      // {
+      //   key: 'layout',
+      //   title: intl.formatMessage(messages.layout),
+      //   display: <PluginLayoutsContainer pluginVersionId={currentPluginVersionId} />,
       // },
     ];
   };
