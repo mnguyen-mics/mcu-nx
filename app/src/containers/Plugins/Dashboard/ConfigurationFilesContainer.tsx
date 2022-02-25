@@ -12,11 +12,12 @@ import {
 import { RouteComponentProps, withRouter } from 'react-router';
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
 import { PAGINATION_SEARCH_SETTINGS } from '../../../utils/LocationSearchHelper';
-import ItemList from '../../../components/ItemList';
+import ItemList, { Filters } from '../../../components/ItemList';
 import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { ConfigurationFileListingEntryResource } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
 import { IPluginService, lazyInject, TYPES } from '@mediarithmics-private/advanced-components';
+import { getPaginatedApiParam } from '../../../utils/ApiHelper';
 
 interface ConfigurationFilesContainerProps {
   pluginVersionId: string;
@@ -35,6 +36,7 @@ type Props = ConfigurationFilesContainerProps &
 interface State {
   loading: boolean;
   pluginConfigurationFiles: ConfigurationFileListingEntryResource[];
+  pluginConfigurationFileTotal: number;
 }
 
 class ConfigurationFilesContainer extends React.Component<Props, State> {
@@ -45,32 +47,35 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
     this.state = {
       loading: false,
       pluginConfigurationFiles: [],
+      pluginConfigurationFileTotal: 0,
     };
-  }
-
-  componentDidMount() {
-    const { pluginVersionId } = this.props;
-    this.getPluginConfigurationFiles(pluginVersionId);
   }
 
   editPluginConfigurationFile = () => {
     //
   };
 
-  getPluginConfigurationFiles = (pluginVersionId: string) => {
+  fetchPluginConfigurationFiles = (pluginVersionId: string, filters: Filters) => {
     const {
       match: {
-        params: { pluginId },
+        params: { pluginId, organisationId },
       },
       notifyError,
     } = this.props;
-
+    this.setState({
+      loading: true,
+    });
+    const options = {
+      organisation_id: organisationId,
+      ...getPaginatedApiParam(filters.currentPage, filters.pageSize),
+    };
     this._pluginService
-      .listPluginConfigurationFiles(pluginId, pluginVersionId)
+      .listPluginConfigurationFiles(pluginId, pluginVersionId, options)
       .then(res => {
         this.setState({
           pluginConfigurationFiles: res.data,
           loading: false,
+          pluginConfigurationFileTotal: res.total || res.count,
         });
       })
       .catch(err => {
@@ -79,11 +84,6 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
           loading: false,
         });
       });
-  };
-
-  fetchPluginConfigurationFiles = (pluginVersionId: string) => {
-    // Route to fetch datafile is not paginated
-    return Promise.resolve();
   };
 
   render() {

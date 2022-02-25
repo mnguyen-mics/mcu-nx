@@ -12,13 +12,14 @@ import {
 import { RouteComponentProps, withRouter } from 'react-router';
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
 import { PAGINATION_SEARCH_SETTINGS } from '../../../utils/LocationSearchHelper';
-import ItemList from '../../../components/ItemList';
+import ItemList, { Filters } from '../../../components/ItemList';
 import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { IPluginService, lazyInject, TYPES } from '@mediarithmics-private/advanced-components';
 import { LayoutFileListingEntryResource } from '@mediarithmics-private/advanced-components/lib/services/PluginService';
+import { getPaginatedApiParam } from '../../../utils/ApiHelper';
 
-interface PluginLayoutContainerProps {
+interface PluginLayoutsContainerProps {
   pluginVersionId: string;
 }
 
@@ -27,7 +28,7 @@ interface RouteProps {
   pluginId: string;
 }
 
-type Props = PluginLayoutContainerProps &
+type Props = PluginLayoutsContainerProps &
   InjectedIntlProps &
   InjectedNotificationProps &
   RouteComponentProps<RouteProps>;
@@ -35,9 +36,10 @@ type Props = PluginLayoutContainerProps &
 interface State {
   loading: boolean;
   pluginPropertyLayouts: LayoutFileListingEntryResource[];
+  pluginPropertyLayoutTotal: number;
 }
 
-class PluginLayoutContainer extends React.Component<Props, State> {
+class PluginLayoutsContainer extends React.Component<Props, State> {
   @lazyInject(TYPES.IPluginService)
   private _pluginService: IPluginService;
   constructor(props: Props) {
@@ -45,32 +47,35 @@ class PluginLayoutContainer extends React.Component<Props, State> {
     this.state = {
       loading: false,
       pluginPropertyLayouts: [],
+      pluginPropertyLayoutTotal: 0,
     };
-  }
-
-  componentDidMount() {
-    const { pluginVersionId } = this.props;
-    this.getPluginPropertyLayouts(pluginVersionId);
   }
 
   editPluginPropertyLayout = () => {
     //
   };
 
-  getPluginPropertyLayouts = (pluginVersionId: string) => {
+  fetchPluginPropertyLayouts = (pluginVersionId: string, filters: Filters) => {
     const {
       match: {
-        params: { pluginId },
+        params: { pluginId, organisationId },
       },
       notifyError,
     } = this.props;
-
+    this.setState({
+      loading: true,
+    });
+    const options = {
+      organisation_id: organisationId,
+      ...getPaginatedApiParam(filters.currentPage, filters.pageSize),
+    };
     this._pluginService
-      .listPluginLayouts(pluginId, pluginVersionId)
+      .listPluginLayouts(pluginId, pluginVersionId, options)
       .then(res => {
         this.setState({
           pluginPropertyLayouts: res.data,
           loading: false,
+          pluginPropertyLayoutTotal: res.total || res.count,
         });
       })
       .catch(err => {
@@ -81,23 +86,20 @@ class PluginLayoutContainer extends React.Component<Props, State> {
       });
   };
 
-  fetchPluginPropertyLayouts = (pluginVersionId: string) => {
-    return Promise.resolve();
-  };
-
   render() {
     const {
       intl: { formatMessage },
     } = this.props;
 
-    const { pluginPropertyLayouts } = this.state;
+    const { pluginPropertyLayouts, pluginPropertyLayoutTotal } = this.state;
 
     const dataColumnsDefinition: Array<DataColumnDefinition<LayoutFileListingEntryResource>> = [
       {
         title: formatMessage(messages.name),
         key: 'locale',
         isHideable: false,
-        render: (text: string, record: LayoutFileListingEntryResource) => text,
+        render: (text: string, record: LayoutFileListingEntryResource) =>
+          record.file_type === 'PROPERTIES' ? 'layout' : text,
       },
       {
         title: formatMessage(messages.type),
@@ -135,7 +137,7 @@ class PluginLayoutContainer extends React.Component<Props, State> {
           dataSource={pluginPropertyLayouts}
           actionsColumnsDefinition={actionColumns}
           loading={false}
-          total={pluginPropertyLayouts.length}
+          total={pluginPropertyLayoutTotal}
           columns={dataColumnsDefinition}
           pageSettings={PAGINATION_SEARCH_SETTINGS}
           emptyTable={emptyTable}
@@ -148,8 +150,8 @@ class PluginLayoutContainer extends React.Component<Props, State> {
   }
 }
 
-export default compose<Props, PluginLayoutContainerProps>(
+export default compose<Props, PluginLayoutsContainerProps>(
   injectIntl,
   injectNotifications,
   withRouter,
-)(PluginLayoutContainer);
+)(PluginLayoutsContainer);
