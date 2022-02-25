@@ -32,8 +32,8 @@ export interface GetPluginOptions extends Omit<PaginatedApiParam, 'first_result'
 }
 
 type PluginLayoutFileType = 'PROPERTIES' | 'LOCALE';
-interface LayoutFileListingEntryResource {
-  fileType: PluginLayoutFileType;
+export interface LayoutFileListingEntryResource {
+  file_type: PluginLayoutFileType;
   locale?: string;
 }
 
