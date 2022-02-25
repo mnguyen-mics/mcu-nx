@@ -21,6 +21,14 @@ export default defineMessages({
     id: 'plugins.list.pluginId',
     defaultMessage: 'Id',
   },
+  name: {
+    id: 'plugins.list.name',
+    defaultMessage: 'Name',
+  },
+  edit: {
+    id: 'plugins.list.edit',
+    defaultMessage: 'Edit',
+  },
   pluginType: {
     id: 'plugins.list.pluginType',
     defaultMessage: 'Plugin Type',
@@ -160,5 +168,13 @@ export default defineMessages({
   pluginPageTitle: {
     id: 'plugins.title.sentence',
     defaultMessage: 'New instances are created on version ',
+  },
+  configurationFile: {
+    id: 'plugins.tab.configurationFile',
+    defaultMessage: 'Configuration File',
+  },
+  addFileButton: {
+    id: 'plugins.tab.addFileButton',
+    defaultMessage: 'Add a configuration file',
   },
 });

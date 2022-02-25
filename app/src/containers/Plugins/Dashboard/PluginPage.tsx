@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { Card, Layout, Tag } from 'antd';
+import { Layout, Tag } from 'antd';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import {
@@ -148,23 +148,21 @@ class PluginPage extends React.Component<Props, State> {
         <div className='ant-layout'>
           <Content className='mcs-content-container'>
             <DashboardHeader title={title} subtitle={subtitle} isLoading={isLoadingPlugin} />
-            <Card>
-              {isLoadingPlugin || isLoadingPluginVersions ? (
-                <i className='mcs-table-cell-loading-large' />
-              ) : initialPluginVersionId ? (
-                <PluginTabContainer
-                  plugin={plugin}
-                  pluginVersions={pluginVersions}
-                  initialPluginVersionId={initialPluginVersionId}
-                  lastPluginVersion={lastPluginVersion}
-                />
-              ) : (
-                <EmptyTableView
-                  message={formatMessage(messages.emptyVersionMessage)}
-                  iconType={'library'}
-                />
-              )}
-            </Card>
+            {isLoadingPlugin || isLoadingPluginVersions ? (
+              <i className='mcs-table-cell-loading-large' />
+            ) : initialPluginVersionId ? (
+              <PluginTabContainer
+                plugin={plugin}
+                pluginVersions={pluginVersions}
+                initialPluginVersionId={initialPluginVersionId}
+                lastPluginVersion={lastPluginVersion}
+              />
+            ) : (
+              <EmptyTableView
+                message={formatMessage(messages.emptyVersionMessage)}
+                iconType={'library'}
+              />
+            )}
           </Content>
         </div>
       </div>
