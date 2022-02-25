@@ -143,6 +143,7 @@ export interface IPluginService {
   listPluginConfigurationFiles: (
     pluginId: string,
     pluginVersionId: string,
+    options?: GetPluginVersionContainersOptions,
   ) => Promise<DataListResponse<ConfigurationFileListingEntryResource>>;
   putPluginConfigurationFile: (
     pluginId: string,
@@ -159,6 +160,7 @@ export interface IPluginService {
   listPluginLayouts: (
     pluginId: string,
     pluginVersionId: string,
+    options?: GetPluginVersionContainersOptions,
   ) => Promise<DataListResponse<LayoutFileListingEntryResource>>;
 }
 
@@ -475,9 +477,10 @@ export class PluginService implements IPluginService {
   listPluginLayouts(
     pluginId: string,
     pluginVersionId: string,
+    options?: GetPluginVersionContainersOptions,
   ): Promise<DataListResponse<LayoutFileListingEntryResource>> {
     const endpoint = `plugins/${pluginId}/versions/${pluginVersionId}/properties_layout.listing`;
-    return ApiService.getRequest(endpoint);
+    return ApiService.getRequest(endpoint, options);
   }
 
   getLocalizedPluginLayoutFromVersionId(
@@ -526,9 +529,10 @@ export class PluginService implements IPluginService {
   listPluginConfigurationFiles(
     pluginId: string,
     pluginVersionId: string,
+    options?: GetPluginVersionContainersOptions,
   ): Promise<DataListResponse<ConfigurationFileListingEntryResource>> {
     const endpoint = `plugins/${pluginId}/versions/${pluginVersionId}/configuration_file.listing`;
-    return ApiService.getRequest(endpoint);
+    return ApiService.getRequest(endpoint, options);
   }
 
   putPluginConfigurationFile(
