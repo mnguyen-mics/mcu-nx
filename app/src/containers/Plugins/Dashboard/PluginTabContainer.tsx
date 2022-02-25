@@ -7,6 +7,7 @@ import {
   PluginManagerResource,
   PluginResource,
 } from '@mediarithmics-private/advanced-components';
+import { ConfigurationFileListingEntryResource } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
 import { McsTabs } from '@mediarithmics-private/mcs-components-library';
 import { Modal, Select, Button, Spin, message, Tag, Input } from 'antd';
 import * as React from 'react';
@@ -45,6 +46,8 @@ interface State {
   currentPluginVersionId: string;
   initialPluginVersionContainers: PluginManagerResource[];
   pluginVersionContainerTotal: number;
+  pluginConfigurationFiles: ConfigurationFileListingEntryResource[];
+  pluginConfigurationFilesLoading: boolean;
   isModalLoading: boolean;
   targetBuildTag?: string;
 }
@@ -60,13 +63,16 @@ class PluginTabContainer extends React.Component<Props, State> {
       currentPluginVersionId: props.initialPluginVersionId,
       initialPluginVersionContainers: [],
       pluginVersionContainerTotal: 0,
+      pluginConfigurationFiles: [],
       isModalLoading: false,
+      pluginConfigurationFilesLoading: true,
     };
   }
 
   componentDidMount() {
     const { currentPluginVersionId } = this.state;
     this.getInitialPluginVersionContainers(currentPluginVersionId);
+    this.getPluginConfigurationFiles(currentPluginVersionId);
   }
 
   componentDidUpdate(prevProps: Props, prevState: State) {
@@ -101,6 +107,30 @@ class PluginTabContainer extends React.Component<Props, State> {
       });
   };
 
+  getPluginConfigurationFiles = (pluginVersionId: string) => {
+    const {
+      match: {
+        params: { pluginId },
+      },
+      notifyError,
+    } = this.props;
+
+    this._pluginService
+      .listPluginConfigurationFiles(pluginId, pluginVersionId)
+      .then(res => {
+        this.setState({
+          pluginConfigurationFiles: res.data,
+          pluginConfigurationFilesLoading: false,
+        });
+      })
+      .catch(err => {
+        notifyError(err);
+        this.setState({
+          pluginConfigurationFilesLoading: false,
+        });
+      });
+  };
+
   buildPluginTabsItems = () => {
     const { intl } = this.props;
     const { currentPluginVersionId, initialPluginVersionContainers, pluginVersionContainerTotal } =
@@ -125,7 +155,9 @@ class PluginTabContainer extends React.Component<Props, State> {
       // {
       //   key: 'configuration_file',
       //   title: intl.formatMessage(messages.configurationFile),
-      //   display: <ConfigurationFilesContainer pluginVersionId={currentPluginVersionId} />,
+      //   display: (
+      //     <ConfigurationFileContainer pluginVersionId={currentPluginVersionId} plugin={plugin} />
+      //   ),
       // },
       // {
       //   key: 'layout',
