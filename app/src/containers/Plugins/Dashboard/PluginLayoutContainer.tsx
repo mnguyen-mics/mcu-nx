@@ -16,13 +16,7 @@ import ItemList from '../../../components/ItemList';
 import { Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { IPluginService, lazyInject, TYPES } from '@mediarithmics-private/advanced-components';
-
-// TODO: to get from ADV
-type PluginLayoutFileType = 'PROPERTIES' | 'LOCALE';
-interface LayoutFileListingEntryResource {
-  fileType: PluginLayoutFileType;
-  locale?: string;
-}
+import { LayoutFileListingEntryResource } from '@mediarithmics-private/advanced-components/lib/services/PluginService';
 
 interface PluginLayoutContainerProps {
   pluginVersionId: string;
