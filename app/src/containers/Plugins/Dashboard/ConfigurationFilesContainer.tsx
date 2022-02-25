@@ -72,6 +72,14 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
     };
   }
 
+  componentDidUpdate(prevProps: Props) {
+    const { pluginVersionId } = this.props;
+    const { pluginVersionId: prevPluginVersionId } = prevProps;
+    if (prevPluginVersionId !== pluginVersionId) {
+      this.fetchPluginConfigurationFiles(pluginVersionId, { currentPage: 1, pageSize: 10 });
+    }
+  }
+
   saveConfigurationFile = (formData: ConfigurationFileFormData) => {
     const {
       match: {
@@ -88,6 +96,8 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
         this.setState({
           isDrawerVisible: false,
         });
+        // Refresh the table
+        this.fetchPluginConfigurationFiles(pluginVersionId, { currentPage: 1, pageSize: 10 });
         message.success(intl.formatMessage(messages.saveSuccess), 3);
       })
       .catch(err => {
@@ -133,12 +143,13 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
     });
   };
 
-  fetchPluginConfigurationFiles = (pluginVersionId: string, filters: Filters) => {
+  fetchPluginConfigurationFiles = (organisationId: string, filters: Filters) => {
     const {
       match: {
-        params: { pluginId, organisationId },
+        params: { pluginId },
       },
       notifyError,
+      pluginVersionId,
     } = this.props;
     this.setState({
       loading: true,

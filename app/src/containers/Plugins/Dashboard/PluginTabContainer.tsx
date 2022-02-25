@@ -19,9 +19,9 @@ import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';
 import messages from '../messages';
-// import ConfigurationFilesContainer from './ConfigurationFilesContainer';
+import ConfigurationFilesContainer from './ConfigurationFilesContainer';
 import PluginDeploymentContainer from './PluginDeploymentContainer';
-// import PluginLayoutsContainer from './PluginLayoutsContainer';
+import PluginLayoutsContainer from './PluginLayoutsContainer';
 import PluginPropertiesContainer from './PluginPropertiesContainer';
 
 interface RouteProps {
@@ -72,7 +72,6 @@ class PluginTabContainer extends React.Component<Props, State> {
   componentDidMount() {
     const { currentPluginVersionId } = this.state;
     this.getInitialPluginVersionContainers(currentPluginVersionId);
-    this.getPluginConfigurationFiles(currentPluginVersionId);
   }
 
   componentDidUpdate(prevProps: Props, prevState: State) {
@@ -107,32 +106,8 @@ class PluginTabContainer extends React.Component<Props, State> {
       });
   };
 
-  getPluginConfigurationFiles = (pluginVersionId: string) => {
-    const {
-      match: {
-        params: { pluginId },
-      },
-      notifyError,
-    } = this.props;
-
-    this._pluginService
-      .listPluginConfigurationFiles(pluginId, pluginVersionId)
-      .then(res => {
-        this.setState({
-          pluginConfigurationFiles: res.data,
-          pluginConfigurationFilesLoading: false,
-        });
-      })
-      .catch(err => {
-        notifyError(err);
-        this.setState({
-          pluginConfigurationFilesLoading: false,
-        });
-      });
-  };
-
   buildPluginTabsItems = () => {
-    const { intl } = this.props;
+    const { intl, plugin } = this.props;
     const { currentPluginVersionId, initialPluginVersionContainers, pluginVersionContainerTotal } =
       this.state;
     return [
@@ -152,18 +127,20 @@ class PluginTabContainer extends React.Component<Props, State> {
           />
         ),
       },
-      // {
-      //   key: 'configuration_file',
-      //   title: intl.formatMessage(messages.configurationFile),
-      //   display: (
-      //     <ConfigurationFileContainer pluginVersionId={currentPluginVersionId} plugin={plugin} />
-      //   ),
-      // },
-      // {
-      //   key: 'layout',
-      //   title: intl.formatMessage(messages.layout),
-      //   display: <PluginLayoutsContainer pluginVersionId={currentPluginVersionId} plugin={plugin} />,
-      // },
+      {
+        key: 'configuration_file',
+        title: intl.formatMessage(messages.configurationFile),
+        display: (
+          <ConfigurationFilesContainer pluginVersionId={currentPluginVersionId} plugin={plugin} />
+        ),
+      },
+      {
+        key: 'layout',
+        title: intl.formatMessage(messages.layout),
+        display: (
+          <PluginLayoutsContainer pluginVersionId={currentPluginVersionId} plugin={plugin} />
+        ),
+      },
     ];
   };
 

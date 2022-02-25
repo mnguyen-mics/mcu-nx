@@ -5,7 +5,7 @@ import * as React from 'react';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import messages from '../messages';
-import { PluginLayoutFileFormData } from './PluginLayoutContainer';
+import { PluginLayoutFileFormData } from './PluginLayoutsContainer';
 
 export interface PluginLayoutFormProps {
   onSave: (formData: PluginLayoutFileFormData) => void;
