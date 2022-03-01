@@ -538,25 +538,28 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
   }
 
   handleAddCardToSection(sectionId: string) {
-    const { schema, updateState, openNextDrawer, closeNextDrawer } = this.props;
+    const { schema, updateState } = this.props;
 
-    if (updateState) {
-      const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(schema));
-      const sectionNode = this.findSectionNode(sectionId, contentCopy);
-      if (sectionNode) {
-        openNextDrawer(CardEditionTab, {
-          size: 'extrasmall',
-          className: 'mcs-drawer-cardEdition',
-          additionalProps: {
-            closeTab: closeNextDrawer,
-            saveCard: (c: DashboardContentCard) => {
-              sectionNode.cards.push(c);
-              updateState(contentCopy);
-              closeNextDrawer();
-            },
-          },
-        });
-      }
+    const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(schema));
+    const sectionNode = this.findSectionNode(sectionId, contentCopy);
+
+    if (updateState && sectionNode) {
+      let maxY = 0;
+      sectionNode.cards.forEach(card => {
+        if (card.y + card.h > maxY) maxY = card.y + card.h;
+      });
+
+      const newCard: DashboardContentCard = {
+        id: cuid(),
+        x: 0,
+        y: maxY,
+        w: 12,
+        h: 3,
+        layout: 'horizontal',
+        charts: [],
+      };
+      sectionNode.cards.push(newCard);
+      updateState(contentCopy);
     }
   }
 
