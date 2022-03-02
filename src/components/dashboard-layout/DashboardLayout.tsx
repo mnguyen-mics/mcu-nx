@@ -319,18 +319,18 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       editable && card.id ? (
         <div className='mcs-card-cardMenu'>
           <div className='mcs-cardMenu-buttons'>
-            <EditOutlined className='mcs-cardMenu-circleIcon' onClick={handleEditCard} />
             <div
               className='mcs-cardMenu-option mcs-cardMenu-option_left mcs-dashboardLayout_edit_card'
               onClick={handleEditCard}
             >
+              <EditOutlined className='mcs-cardMenu-circleIcon' />
               Edit card
             </div>
-            <PlusOutlined className='mcs-cardMenu-circleIcon' onClick={handleCreateChart} />
             <div
               className='mcs-cardMenu-option mcs-dashboardLayout_add_chart'
               onClick={handleCreateChart}
             >
+              <PlusOutlined className='mcs-cardMenu-circleIcon' />
               Add chart
             </div>
           </div>
@@ -338,7 +338,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       ) : undefined;
 
     const cardComponent = (
-      <Card className='mcs-cardFlex'>
+      <Card className='mcs-cardFlex mcs-dashboardLayout_card'>
         {menu ? menu : <div />}
         {charts}
       </Card>
@@ -626,6 +626,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
           rowHeight={BASE_FRAMEWORK_HEIGHT}
           onLayoutChange={editable ? onLayoutChange : undefined}
           resizeHandles={editable ? ['se'] : undefined}
+          className={editable ? 'mcs-section_editable' : undefined}
         >
           {cards}
         </ResponsiveReactGridLayout>
