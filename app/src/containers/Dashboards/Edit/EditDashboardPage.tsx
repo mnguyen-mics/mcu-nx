@@ -185,6 +185,18 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     });
   }
 
+  componentDidUpdate(previousProps: Props) {
+    const {
+      match: {
+        params: { organisationId },
+      },
+    } = this.props;
+
+    if (organisationId !== previousProps.match.params.organisationId) {
+      this.openMainListPage();
+    }
+  }
+
   formatContent = (content?: CustomDashboardContentResource) => {
     return content ? JSON.stringify(content.content, null, 4) : '';
   };
