@@ -209,4 +209,16 @@ export default defineMessages({
     id: 'plugins.tab.configurationFile.empty',
     defaultMessage: "You don't have any configuration file yet",
   },
+  saveLayoutSuccess: {
+    id: 'plugins.tab.propertiesLayout.saveSuccess',
+    defaultMessage: 'Your property layout file has been successfully saved',
+  },
+  locale: {
+    id: 'plugins.tab.propertiesLayout.locale',
+    defaultMessage: 'Locale',
+  },
+  saveLayout: {
+    id: 'plugins.tab.propertiesLayout.saveLayout',
+    defaultMessage: 'Save',
+  },
 });
