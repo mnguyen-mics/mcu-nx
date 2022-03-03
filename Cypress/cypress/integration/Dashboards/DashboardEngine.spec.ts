@@ -58,6 +58,8 @@ describe('Test the creation of a job instance', () => {
         }).then(() => {
           cy.get('.mcs-sideBar-menuItem_Dashboards').eq(0).click();
           cy.contains('WISYWIG Dashboard').click();
+          cy.get('.mcs-chart_arrow_down').should('have.length', 3);
+          cy.get('.mcs-chart_arrow_up').should('have.length', 3);
           cy.get('.mcs-card')
             .eq(0)
             .within(() => {
@@ -84,7 +86,7 @@ describe('Test the creation of a job instance', () => {
           cy.contains('Save').click();
           cy.get('.mcs-chartEdition-header-close').click();
           cy.get('.mcs-dashboardEditorActionBarSaveButton').click();
-          cy.wait(20000);
+          cy.get('.mcs-notifications').should('contain', 'Your dashboard has been saved');
           cy.contains('WISYWIG Dashboard').click();
           cy.get('.mcs-card')
             .eq(0)

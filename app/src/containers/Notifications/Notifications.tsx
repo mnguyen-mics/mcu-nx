@@ -118,6 +118,7 @@ class Notifications extends React.Component<Props> {
 
     const notifcationConfig: any = {
       ...notification,
+      className: 'mcs-notifications',
       onClose: () => {
         // remove notification from redux store
         // call onClose callback is defined by caller
