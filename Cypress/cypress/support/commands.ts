@@ -19,7 +19,6 @@ let accessToken: string;
 let schemaId: number;
 const organisationName = faker.random.words(3);
 const datamartName = faker.random.words(3);
-const apiToken = 'api:W1EcVPjvsJyXFID/N3Qh4s8cJuWn3KT2aaROiHHztOZ5+FTkVRJ/WmlbLYdgoYxE';
 
 before(() => {
   cy.initTestContext();
@@ -41,7 +40,7 @@ Cypress.Commands.add(
                     "datamartId":${datamartId},
                     "organisationId":${organisationId},
                     "organisationName":"${organisationName}",
-                    "apiToken":"${apiToken}",
+                    "apiToken":"${Cypress.env('apiToken')}",
                     "accessToken":"${accessToken}"
                 }`);
     });
@@ -76,7 +75,7 @@ Cypress.Commands.add('initTestContext', () => {
   cy.request({
     url: `${Cypress.env('apiDomain')}/v1/organisations`,
     method: 'POST',
-    headers: { Authorization: apiToken },
+    headers: { Authorization: Cypress.env('apiToken') },
     body: {
       name: `${organisationName}`,
       // Using faker here isn't such a good idea because of the constraints on the technical name
@@ -92,7 +91,7 @@ Cypress.Commands.add('initTestContext', () => {
     cy.request({
       url: `${Cypress.env('apiDomain')}/v1/datamarts`,
       method: 'POST',
-      headers: { Authorization: apiToken },
+      headers: { Authorization: Cypress.env('apiToken') },
       body: {
         name: `${datamartName}`,
         region: 'EUROPE',
@@ -108,7 +107,7 @@ Cypress.Commands.add('initTestContext', () => {
       cy.request({
         url: `${Cypress.env('apiDomain')}/v1/datamarts/${datamartId}/graphdb_runtime_schemas`,
         method: 'GET',
-        headers: { Authorization: apiToken },
+        headers: { Authorization: Cypress.env('apiToken') },
       }).then(schemaResponse => {
         schemaId = schemaResponse.body.data[0].id;
         cy.request({
@@ -116,7 +115,7 @@ Cypress.Commands.add('initTestContext', () => {
             'apiDomain',
           )}/v1/datamarts/${datamartId}/graphdb_runtime_schemas/${schemaId}/text`,
           method: 'GET',
-          headers: { Authorization: apiToken },
+          headers: { Authorization: Cypress.env('apiToken') },
         }).then(() => {
           cy.request({
             url: `${Cypress.env(
@@ -124,7 +123,7 @@ Cypress.Commands.add('initTestContext', () => {
             )}/v1/datamarts/${datamartId}/graphdb_runtime_schemas/${schemaId}/text`,
             method: 'PUT',
             headers: {
-              Authorization: apiToken,
+              Authorization: Cypress.env('apiToken'),
               'Content-type': 'text/plain',
             },
             body:
@@ -231,11 +230,13 @@ Cypress.Commands.add('initTestContext', () => {
                 'apiDomain',
               )}/v1/datamarts/${datamartId}/graphdb_runtime_schemas/${schemaId}/validation?organisationId=${organisationId}&allow_administrator=true`,
               method: 'POST',
-              headers: { Authorization: apiToken },
+              headers: { Authorization: Cypress.env('apiToken') },
             }).then(() => {
               if (Cypress.env('apiDomain') === 'https://api.mediarithmics.local') {
                 cy.exec(
-                  `curl -k -H "Authorization: ${apiToken}" -H Content-Type: application/json -X POST ${Cypress.env(
+                  `curl -k -H "Authorization: ${Cypress.env(
+                    'apiToken',
+                  )}" -H Content-Type: application/json -X POST ${Cypress.env(
                     'apiDomain',
                   )}:8493/v1/datamarts/${datamartId}/graphdb_runtime_schemas/${schemaId}/publication -H "Host: admin-api.mediarithmics.local:8493"`,
                 )
@@ -257,7 +258,9 @@ Cypress.Commands.add('initTestContext', () => {
                 cy.exec(
                   `ssh -o StrictHostKeyChecking=no -l ${Cypress.env('userName')} ${Cypress.env(
                     'virtualPlatformName',
-                  )}.mics-sandbox.com 'curl -k -H "Authorization: ${apiToken}" -H "Content-Type: application/json" -X POST https://10.0.1.3:8493/v1/datamarts/${datamartId}/graphdb_runtime_schemas/${schemaId}/publication -H "Host: admin-api.mediarithmics.local:8493"'`,
+                  )}.mics-sandbox.com 'curl -k -H "Authorization: ${Cypress.env(
+                    'apiToken',
+                  )}" -H "Content-Type: application/json" -X POST https://10.0.1.3:8493/v1/datamarts/${datamartId}/graphdb_runtime_schemas/${schemaId}/publication -H "Host: admin-api.mediarithmics.local:8493"'`,
                 )
                   .its('stdout')
                   .should('contain', '"status":"ok"')
@@ -277,7 +280,9 @@ Cypress.Commands.add('initTestContext', () => {
                 cy.exec(
                   `ssh -o StrictHostKeyChecking=no ${Cypress.env(
                     'virtualPlatformName',
-                  )}.mics-sandbox.com 'curl -k -H "Authorization: ${apiToken}" -H "Content-Type: application/json" -X POST https://10.0.1.3:8493/v1/datamarts/${datamartId}/graphdb_runtime_schemas/${schemaId}/publication -H "Host: admin-api.mediarithmics.local:8493"'`,
+                  )}.mics-sandbox.com 'curl -k -H "Authorization: ${Cypress.env(
+                    'apiToken',
+                  )}" -H "Content-Type: application/json" -X POST https://10.0.1.3:8493/v1/datamarts/${datamartId}/graphdb_runtime_schemas/${schemaId}/publication -H "Host: admin-api.mediarithmics.local:8493"'`,
                 )
                   .its('stdout')
                   .should('contain', '"status":"ok"')

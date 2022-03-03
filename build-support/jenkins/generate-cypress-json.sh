@@ -44,6 +44,7 @@ fi
 
 DEV_MAIL="dev@mediarithmics.com"
 DEV_PWD='AH9zk3ekLzYse6MhCLQSpzoD64aqQdGPsBCLfDxy'
+API_TOKEN='api:W1EcVPjvsJym4LP+joqPEs2uukoPV6XxpEcF35mTf7ymSdJNKL+gURzY04DrooM4';
 
 set -u
 cat << EOF
@@ -59,6 +60,7 @@ cat << EOF
     "apiDomain": "${API_URL}",
     "devMail": "${DEV_MAIL}",
     "devPwd": "${DEV_PWD}",
+    "apiToken": "${API_TOKEN}",
     "virtualPlatformName":"${VIRTUAL_PLATFORM_NAME}",
     "userName":"${USER_NAME}",
     "root": "${ROOT}",
