@@ -21,7 +21,7 @@ import CardEditionTab from './wysiwig/CardEditionTab';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { defineMessages, InjectedIntlProps } from 'react-intl';
 import { QueryFragment } from '../../utils/source/DataSourceHelper';
-import SectionTitleEditionPanel from './wysiwig/SectionTitleEditionPanel';
+import SectionTitleEditionPanel, { VerticalDirection } from './wysiwig/SectionTitleEditionPanel';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -54,6 +54,10 @@ const messages = defineMessages({
   dashboardLayoutConfirmationText: {
     id: 'dashboard.layout.confirmationText',
     defaultMessage: 'Are you sure you want to delete this chart?',
+  },
+  dashboardLayoutConfirmationSectionText: {
+    id: 'dashboard.layout.confirmationSectionText',
+    defaultMessage: 'Are you sure you want to delete this section?',
   },
   confirm: {
     id: 'dashboard.layout.confirm',
@@ -121,8 +125,14 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     chartsList[index2] = tmp;
   }
 
+  private swapSections(sectionsList: DashboardContentSection[], index1: number, index2: number) {
+    const tmp = sectionsList[index1];
+    sectionsList[index1] = sectionsList[index2];
+    sectionsList[index2] = tmp;
+  }
+
   private moveChartNode(
-    direction: 'up' | 'down',
+    direction: VerticalDirection,
     chartIndex: number,
     card: DashboardContentCard,
   ): boolean {
@@ -182,8 +192,36 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     }
   }
 
+  private deleteSection = (sectionId: string, contentCopy: DashboardContentSchema) => {
+    const { updateState } = this.props;
+
+    if (updateState) {
+      const sectionIndex = contentCopy.sections.findIndex(s => s.id === sectionId);
+      contentCopy.sections.splice(sectionIndex, 1);
+      updateState(contentCopy);
+    }
+  };
+
+  private moveSectionNode(
+    direction: VerticalDirection,
+    sectionIndex: number,
+    schema: DashboardContentSchema,
+  ): boolean {
+    let neighborIndex: number | undefined;
+    if (direction === 'up' && sectionIndex > 0) neighborIndex = sectionIndex - 1;
+    else if (direction === 'down' && sectionIndex < schema.sections.length - 1)
+      neighborIndex = sectionIndex + 1;
+
+    if (neighborIndex !== undefined) {
+      this.swapSections(schema.sections, sectionIndex, neighborIndex);
+      return true;
+    }
+
+    return false;
+  }
+
   private handleMoveChart(
-    direction: 'up' | 'down',
+    direction: VerticalDirection,
     chartIndex: number,
     card: DashboardContentCard,
     content: DashboardContentSchema,
@@ -299,6 +337,41 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       }
     }
   }
+
+  handleCreateSection = (index: number) => {
+    const { schema, updateState } = this.props;
+
+    if (updateState) {
+      const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(schema));
+
+      const newSection: DashboardContentSection = {
+        id: cuid(),
+        title: '',
+        cards: [],
+      };
+
+      contentCopy.sections.splice(index + 1, 0, newSection);
+      updateState(contentCopy);
+    }
+  };
+
+  renderCreateSectionIcon = (index: number) => {
+    const handleCreateSection = () => {
+      this.handleCreateSection(index);
+    };
+
+    return (
+      <div className='mcs-section_buttons'>
+        <PlusOutlined className='mcs-section_circleIcon' onClick={handleCreateSection} />
+        <div
+          className='mcs-cardMenu-option mcs-cardMenu-option_left mcs-dashboardLayout_edit_card'
+          onClick={handleCreateSection}
+        >
+          Create new section
+        </div>
+      </div>
+    );
+  };
 
   renderCard(card: DashboardContentCard, i: string) {
     const { editable, schema } = this.props;
@@ -576,12 +649,42 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     }
   }
 
+  handleDeleteSection = (sectionId: string, content: DashboardContentSchema) => {
+    const { intl } = this.props;
+    const contentCopy = JSON.parse(JSON.stringify(content));
+
+    const deleteSection = () => {
+      this.deleteSection(sectionId, contentCopy);
+    };
+    Modal.confirm({
+      title: intl.formatMessage(messages.dashboardLayoutConfirmation),
+      content: intl.formatMessage(messages.dashboardLayoutConfirmationSectionText),
+      okText: intl.formatMessage(messages.confirm),
+      cancelText: intl.formatMessage(messages.decline),
+      onOk() {
+        deleteSection();
+      },
+    });
+  };
+
+  handleMoveSection = (sectionId: string, direction: VerticalDirection) => {
+    const { schema, updateState } = this.props;
+
+    if (updateState) {
+      const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(schema));
+      const sectionNode = this.findSectionNode(sectionId, contentCopy);
+      const sectionIndex = schema.sections.findIndex(s => s.id === sectionId);
+      if (sectionNode && this.moveSectionNode(direction, sectionIndex, contentCopy))
+        updateState(contentCopy);
+    }
+  };
+
   getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
   }
 
-  renderSection(section: DashboardContentSection) {
-    const { editable, intl } = this.props;
+  renderSection(section: DashboardContentSection, sectionIndex: number) {
+    const { editable, intl, schema } = this.props;
 
     const cards = section.cards.map((card, index) => {
       return this.renderCard(card, editable && card.id ? card.id : index.toString());
@@ -608,10 +711,25 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       if (s.id) this.handleSaveSection(s.id, s.title);
     };
 
+    const handleClickDelete = () => {
+      if (section.id) this.handleDeleteSection(section.id, schema);
+    };
+
+    const handleClickMove = (direction: VerticalDirection) => {
+      if (section.id) this.handleMoveSection(section.id, direction);
+    };
+
     return (
       <div key={cuid()} className={'mcs-section'}>
         {editable ? (
-          <SectionTitleEditionPanel section={section} onSaveSection={handleSaveSection} />
+          <SectionTitleEditionPanel
+            section={section}
+            onSaveSection={handleSaveSection}
+            showButtonUp={sectionIndex > 0}
+            showButtonDown={sectionIndex < schema.sections.length - 1}
+            onClickDelete={handleClickDelete}
+            onClickMove={handleClickMove}
+          />
         ) : (
           section.title && <div className={'mcs-subtitle2'}>{section.title}</div>
         )}
@@ -631,9 +749,12 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
           {cards}
         </ResponsiveReactGridLayout>
         {editable && (
-          <Button className='mcs-section_addCardButton' onClick={addCardToSection}>
-            {intl.formatMessage(messages.addCard)}
-          </Button>
+          <div>
+            <Button className='mcs-section_addCardButton' onClick={addCardToSection}>
+              {intl.formatMessage(messages.addCard)}
+            </Button>
+            {this.renderCreateSectionIcon(sectionIndex)}
+          </div>
         )}
       </div>
     );
@@ -641,7 +762,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
 
   generateDOM(): React.ReactElement {
     const { schema, datamart_id, organisationId } = this.props;
-    const sections = schema.sections.map((section, i) => this.renderSection(section));
+    const sections = schema.sections.map((section, i) => this.renderSection(section, i));
     return (
       <div className={'mcs-dashboardLayout'}>
         {schema.available_filters && (
