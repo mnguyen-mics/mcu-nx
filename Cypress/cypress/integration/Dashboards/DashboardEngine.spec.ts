@@ -38,6 +38,24 @@ describe('Test the creation of a job instance', () => {
     });
   });
 
+  it('Should test chaging org when on a dashboard', () => {
+    cy.readFile('cypress/fixtures/init_infos.json').then(data => {
+      cy.createDashboard(
+        data.accessToken,
+        data.organisationId,
+        'Change Org Dashboard',
+        ['home'],
+        [],
+        [],
+      ).then(() => {
+        cy.get('.mcs-sideBar-menuItem_Dashboards').eq(0).click();
+        cy.contains('Change Org Dashboard').click();
+        cy.switchOrg('dogfooding');
+        cy.url().should('contain', 'dashboards?');
+      });
+    });
+  });
+
   it('Should test that WISYWIG card changes on dashboards', () => {
     cy.readFile('cypress/fixtures/init_infos.json').then(data => {
       cy.createDashboard(
@@ -81,7 +99,7 @@ describe('Test the creation of a job instance', () => {
           cy.get('.mcs-card')
             .eq(1)
             .within(() => {
-              cy.get('.mcs-cardMenu-option').eq(1).click();
+              cy.get('.mcs-cardMenu-option').eq(1).click({ force: true });
             });
           cy.contains('Save').click();
           cy.get('.mcs-chartEdition-header-close').click();
