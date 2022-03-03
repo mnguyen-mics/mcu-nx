@@ -1,4 +1,11 @@
-import { CheckOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons';
+import {
+  CheckOutlined,
+  CloseOutlined,
+  EditOutlined,
+  ArrowDownOutlined,
+  ArrowUpOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
 import { Button, Input } from 'antd';
 import React, { ChangeEvent } from 'react';
 import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
@@ -12,9 +19,15 @@ const messages = defineMessages({
   },
 });
 
+export type VerticalDirection = 'up' | 'down';
+
 interface SectionTitleEditionPanelProps {
   section?: DashboardContentSection;
   onSaveSection: (c: DashboardContentSection) => void;
+  showButtonDown?: boolean;
+  showButtonUp?: boolean;
+  onClickMove?: (direction: VerticalDirection) => void;
+  onClickDelete?: () => void;
 }
 
 type Props = InjectedIntlProps & SectionTitleEditionPanelProps;
@@ -36,13 +49,13 @@ class SectionTitleEditionPanel extends React.Component<Props, SectionTitleEditio
     };
   }
 
-  handleEditClick() {
+  handleEditClick = () => {
     this.setState({
       editMode: true,
     });
-  }
+  };
 
-  handleSaveClick() {
+  handleSaveClick = () => {
     const { section, onSaveSection } = this.props;
     const { title } = this.state;
 
@@ -55,30 +68,28 @@ class SectionTitleEditionPanel extends React.Component<Props, SectionTitleEditio
         section: sectionCopy,
       });
     }
-  }
+  };
 
-  handleCancelClick() {
+  handleCancelClick = () => {
     const { section } = this.props;
 
     this.setState({
       editMode: false,
       title: section ? section.title : '',
     });
-  }
+  };
 
-  handleInputChange(e: ChangeEvent<HTMLInputElement>) {
+  handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({
       title: e.target.value,
     });
-  }
+  };
 
   renderTitleWithEditButton(title: string) {
-    const handleEditClick = this.handleEditClick.bind(this);
-
     return (
       <div className='mcs-subtitle2'>
         {title}
-        <EditOutlined className='mcs-chartIcon' onClick={handleEditClick} />
+        <EditOutlined className='mcs-chartIcon' onClick={this.handleEditClick} />
       </div>
     );
   }
@@ -98,35 +109,49 @@ class SectionTitleEditionPanel extends React.Component<Props, SectionTitleEditio
   }
 
   renderTitleEditor(title: string) {
-    const handleInputChange = this.handleInputChange.bind(this);
-    const handleSaveClick = this.handleSaveClick.bind(this);
-    const handleCancelClick = this.handleCancelClick.bind(this);
-
     return (
       <div className='mcs-subtitle2 mcs-subtitleEdit'>
-        <Input value={title} onChange={handleInputChange} />
+        <Input value={title} onChange={this.handleInputChange} />
         <Button
           className='mcs-subtitleEdit_button'
           icon={<CheckOutlined />}
-          onClick={handleSaveClick}
+          onClick={this.handleSaveClick}
         />
         <Button
           className='mcs-subtitleEdit_button'
           icon={<CloseOutlined />}
-          onClick={handleCancelClick}
+          onClick={this.handleCancelClick}
         />
       </div>
     );
   }
-
   render() {
+    const { showButtonDown, showButtonUp, onClickMove, onClickDelete } = this.props;
     const { title, editMode, section } = this.state;
+    const hasTitle = section && section.title.length > 0;
 
-    if (editMode) return this.renderTitleEditor(title);
-    else
-      return section && section.title.length > 0
-        ? this.renderTitleWithEditButton(title)
-        : this.renderButtonCreateTitle();
+    const onClickMoveUp = onClickMove ? () => onClickMove('up') : undefined;
+    const onClickMoveDown = onClickMove ? () => onClickMove('down') : undefined;
+
+    return (
+      <div className='mcs-sectionTitleEditionPanel'>
+        {editMode && this.renderTitleEditor(title)}
+        {!editMode && hasTitle && this.renderTitleWithEditButton(title)}
+        {!editMode && !hasTitle && this.renderButtonCreateTitle()}
+
+        {(onClickMove || onClickDelete) && (
+          <div className='mcs-subtitleEditPanel'>
+            {showButtonDown && onClickMove && (
+              <ArrowDownOutlined className='mcs-chartIcon' onClick={onClickMoveDown} />
+            )}
+            {showButtonUp && onClickMove && (
+              <ArrowUpOutlined className='mcs-chartIcon' onClick={onClickMoveUp} />
+            )}
+            {onClickDelete && <DeleteOutlined className='mcs-chartIcon' onClick={onClickDelete} />}
+          </div>
+        )}
+      </div>
+    );
   }
 }
 
