@@ -58,7 +58,7 @@ class ScopedDashboardLayout extends React.Component<Props, State> {
     if (!source) return Promise.resolve(undefined);
 
     if (isAudienceSegmentShape(source)) {
-      if (isUserQuerySegment(source)) {
+      if (isUserQuerySegment(source) && !source.persisted) {
         const userQuerySegment = source as UserQuerySegment;
         return this._queryService
           .getQuery(userQuerySegment.datamart_id, userQuerySegment.query_id as string)
