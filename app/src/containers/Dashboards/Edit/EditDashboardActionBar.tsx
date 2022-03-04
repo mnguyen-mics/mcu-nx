@@ -3,18 +3,16 @@ import { Button } from 'antd';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import { compose } from 'recompose';
-import { Actionbar } from '@mediarithmics-private/mcs-components-library';
 import messages from './messages';
 import { UploadFile } from 'antd/lib/upload/interface';
 import { Link } from 'react-router-dom';
-import { dashboardsDefinition } from '../../../routes/dashboardsRoutes';
+import { RollbackOutlined } from '@ant-design/icons';
 
 interface RouterProps {
   organisationId: string;
 }
 
 interface EditDashboardActionbarProps {
-  lastBreadcrumb: string;
   handleSave: () => void;
   handleCancel: () => void;
 }
@@ -42,40 +40,30 @@ class DashboardCreateActionbar extends React.Component<Props, DashboardCreateAct
       match: {
         params: { organisationId },
       },
-      intl: { formatMessage },
       handleSave,
       handleCancel,
-      lastBreadcrumb,
     } = this.props;
 
-    const breadcrumbPaths = [
-      <Link key={1} to={`/o/${organisationId}${dashboardsDefinition.dashboards.path}`}>
-        {formatMessage(messages.dashboards)}
-      </Link>,
-      <span key={2} className='mcs-dashboardEditorActionBarBreadcrumb'>
-        {lastBreadcrumb}
-      </span>,
-    ];
-
     return (
-      <Actionbar pathItems={breadcrumbPaths}>
-        <Link to={`/o/${organisationId}/dashboards`}>
+      <div className='mcs-editDashboard_actionBar'>
+        <div>
+          <Link to={`/o/${organisationId}/dashboards`}>
+            <Button
+              className='mcs-primary mcs-dashboardEditorActionBarCancelButton'
+              onClick={handleCancel}
+            >
+              <RollbackOutlined /> <FormattedMessage {...messages.cancel} />
+            </Button>
+          </Link>
           <Button
-            className='mcs-dashboardEditorActionBarCancelButton'
+            className='mcs-primary mcs-dashboardEditorActionBarSaveButton'
             type='primary'
-            onClick={handleCancel}
+            onClick={handleSave}
           >
-            <FormattedMessage {...messages.cancel} />
+            <FormattedMessage {...messages.save} />
           </Button>
-        </Link>
-        <Button
-          className='mcs-primary mcs-dashboardEditorActionBarSaveButton'
-          type='primary'
-          onClick={handleSave}
-        >
-          <FormattedMessage {...messages.save} />
-        </Button>
-      </Actionbar>
+        </div>
+      </div>
     );
   }
 }
