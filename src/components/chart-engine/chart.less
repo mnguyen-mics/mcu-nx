@@ -1,5 +1,11 @@
 .mcs-chart {
   margin-bottom: 20px;
+
+  &:hover {
+    .mcs-chart_header_editBtns {
+      display: block;
+    }
+  }
 }
 
 .mcs-chart_header {
@@ -187,4 +193,8 @@
   .ace-github .ace_gutter {
     background: #fff;
   }
+}
+
+.mcs-chart_header_editBtns {
+  display: none;
 }
