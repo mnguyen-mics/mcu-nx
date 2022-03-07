@@ -1,5 +1,6 @@
 import {
   dashboardContent,
+  dragAndDropContent,
   editAdjustmentsDashboardContent,
   wisywigCardContent,
 } from './DashboardsContent';
@@ -56,7 +57,7 @@ describe('Test the creation of a job instance', () => {
     });
   });
 
-  it('Should test that WISYWIG card changes on dashboards', () => {
+  it('Should test the WISYWIG card changes on dashboards', () => {
     cy.readFile('cypress/fixtures/init_infos.json').then(data => {
       cy.createDashboard(
         data.accessToken,
@@ -86,7 +87,7 @@ describe('Test the creation of a job instance', () => {
               cy.get('.mcs-chart_header_title').eq(2).should('contain', 'Metric 3');
             });
           cy.get('.mcs-chart_arrow_down').eq(0).click();
-          cy.get('.mcs-chart_arrow_down').eq(1).click();
+          cy.get('.mcs-chart_arrow_down').eq(1).click({ force: true });
           cy.get('.mcs-card')
             .eq(0)
             .within(() => {
@@ -169,6 +170,46 @@ describe('Test the creation of a job instance', () => {
                 expect(value).to.contain('SELECT {nature @map} FROM ActivityEvent');
               });
             cy.get('.mcs-chartEdition-content').should('contain', queryResponse.body.data.id);
+          });
+        });
+      });
+    });
+  });
+
+  it('should test the drag and drop on cards', () => {
+    cy.readFile('cypress/fixtures/init_infos.json').then(data => {
+      cy.createDashboard(
+        data.accessToken,
+        data.organisationId,
+        'Drag And Drop',
+        ['home'],
+        [],
+        [],
+      ).then(dashboardResponse => {
+        cy.request({
+          url: `${Cypress.env('apiDomain')}/v1/dashboards/${
+            dashboardResponse.body.data.id
+          }/content`,
+          method: 'PUT',
+          headers: { Authorization: data.accessToken },
+          body: dragAndDropContent(),
+        }).then(() => {
+          cy.get('.mcs-sideBar-menuItem_Dashboards').eq(0).click();
+          cy.contains('Drag And Drop').click();
+          cy.get('.mcs-chart')
+            .trigger('mousedown', { which: 1 })
+            .trigger('mousemove', { clientX: 1100, clientY: 400 })
+            .trigger('mouseup', { force: true });
+          cy.get('.mcs-dashboardEditorActionBarSaveButton').click();
+          cy.get('.mcs-notifications').should('contain', 'Your dashboard has been saved');
+          cy.request({
+            url: `${Cypress.env('apiDomain')}/v1/dashboards/${
+              dashboardResponse.body.data.id
+            }/content?organisation_id=${data.organisationId}`,
+            method: 'GET',
+            headers: { Authorization: data.accessToken },
+          }).then(contentRespone => {
+            expect(contentRespone.body.data.content.sections[0].cards[0].x).to.be.gt(0);
           });
         });
       });
