@@ -28,6 +28,7 @@ interface ScopedDashboardLayoutProps {
   source?: AudienceSegmentShape | StandardSegmentBuilderQueryDocument;
   editable: boolean;
   updateState?: (d: DashboardContentSchema) => void;
+  onShowDashboard?: () => void;
 }
 
 type Props = ScopedDashboardLayoutProps & InjectedIntlProps & InjectedDrawerProps;
@@ -130,8 +131,14 @@ class ScopedDashboardLayout extends React.Component<Props, State> {
   }
 
   render() {
-    const { datamartId, organisationId, schema, intl, editable, updateState } = this.props;
+    const { datamartId, organisationId, schema, intl, editable, updateState, onShowDashboard } =
+      this.props;
     const { scope, isLoading, hasError } = this.state;
+
+    const handleOnShowDashboard = () => {
+      if (onShowDashboard) onShowDashboard();
+    };
+
     return hasError ? (
       <Alert type='error' message={intl.formatMessage(messages.errorLoadingScope)} />
     ) : isLoading ? (
@@ -147,6 +154,7 @@ class ScopedDashboardLayout extends React.Component<Props, State> {
         scope={scope}
         openNextDrawer={this.props.openNextDrawer}
         closeNextDrawer={this.props.closeNextDrawer}
+        onShowDashboard={handleOnShowDashboard}
       />
     );
   }

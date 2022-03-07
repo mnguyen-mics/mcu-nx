@@ -34,6 +34,7 @@ export interface DashboardLayoutProps {
   scope?: AbstractScope;
   editable: boolean;
   updateState?: (d: DashboardContentSchema) => void;
+  onShowDashboard?: () => void;
 }
 
 interface FilterValues {
@@ -85,6 +86,14 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
   shouldComponentUpdate(nextProps: Props, nextState: DashboardLayoutState) {
     const { dashboardFilterValues } = this.state;
     return dashboardFilterValues === nextState.dashboardFilterValues;
+  }
+
+  componentDidMount() {
+    const { onShowDashboard } = this.props;
+
+    if (onShowDashboard) {
+      onShowDashboard();
+    }
   }
 
   private findSectionNode(

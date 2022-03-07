@@ -12,7 +12,7 @@ import {
   DashboardPageContent,
   DashboardResource,
   DashboardsOptions,
-  DashoboardScope,
+  DashboardScope,
 } from '../models/dashboards/old-dashboards-model';
 
 export interface GetCustomDashboardsOption extends PaginatedApiParam {
@@ -62,7 +62,7 @@ export interface ICustomDashboardService {
   getDashboardsPageContents: (
     organisationId: string,
     options?: DashboardsOptions,
-    filterScope?: DashoboardScope,
+    filterScope?: DashboardScope,
     filterScopedId?: string,
   ) => Promise<DashboardPageContent[]>;
 }
@@ -162,7 +162,7 @@ export default class CustomDashboardService implements ICustomDashboardService {
 
   private isDashboardMatchScope(
     dashboard: DashboardResource,
-    filterScope?: DashoboardScope,
+    filterScope?: DashboardScope,
     filterScopedId?: string,
   ): boolean {
     return dashboard.scopes.some(
@@ -185,7 +185,7 @@ export default class CustomDashboardService implements ICustomDashboardService {
   getDashboardsPageContents(
     organisationId: string,
     options?: DashboardsOptions,
-    filterScope?: DashoboardScope,
+    filterScope?: DashboardScope,
     filterScopedId?: string,
   ): Promise<DashboardPageContent[]> {
     return this.getDashboards(organisationId, options).then(res => {
@@ -203,11 +203,15 @@ export default class CustomDashboardService implements ICustomDashboardService {
             .map((content, i) => {
               if (!!content) {
                 return {
+                  dashboardRegistrationId: apiDashboards[i].id,
+                  scopes: apiDashboards[i].scopes,
                   title: apiDashboards[i].title,
                   dashboardContent: content.data.content,
                 };
               } else {
                 const undefinedContent: DashboardPageContent = {
+                  dashboardRegistrationId: apiDashboards[i].id,
+                  scopes: apiDashboards[i].scopes,
                   title: apiDashboards[i].title,
                   dashboardContent: undefined,
                 };

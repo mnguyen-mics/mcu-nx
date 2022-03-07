@@ -18,7 +18,7 @@ import {
   ActivitiesAnalyticsMetric,
 } from '../../utils/analytics/ActivitiesAnalyticsReportHelper';
 
-export type DashoboardScope = 'home' | 'segments' | 'builders' | 'console';
+export type DashboardScope = 'home' | 'segments' | 'builders' | 'console';
 export type DashboardType = 'HOME' | 'SEGMENT' | 'AUDIENCE_BUILDER' | 'CONSOLE';
 export type ChartDatasetType = 'otql';
 export type DashboardContentChartType = 'PIE' | 'BARS' | 'RADAR' | 'METRIC';
@@ -40,7 +40,7 @@ export type ComponentType =
 export interface DashboardResource {
   id: string;
   title: string;
-  scopes: DashoboardScope[];
+  scopes: DashboardScope[];
   segment_ids: string[];
   builder_ids: string[];
   archived: boolean;
@@ -73,6 +73,8 @@ export interface DashboardContentSections {
 }
 
 export interface DashboardPageContent {
+  dashboardRegistrationId?: string;
+  scopes: DashboardScope[];
   title: string;
   dashboardContent?: DashboardContentSections;
 }
