@@ -386,18 +386,23 @@ class Chart extends React.Component<Props, ChartState> {
               <ArrowsAltOutlined className={'mcs-chartIcon mcs-hoverableIcon'} />
             ) : undefined}
           </span>
-          {onClickEdit ? (
-            <EditOutlined className={'mcs-chartIcon mcs-chart_edit'} onClick={onClickEdit} />
-          ) : undefined}
-          {onClickMoveUp && onClickMoveDown
-            ? [
-                this.renderUpIcon(onClickMoveUp, layout, showButtonUp),
-                this.renderDownIcon(onClickMoveDown, layout, showButtonDown),
-              ]
-            : undefined}
-          {onClickDelete ? (
-            <DeleteOutlined className={'mcs-chartIcon mcs-chart_delete'} onClick={onClickDelete} />
-          ) : undefined}
+          <span className='mcs-chart_header_editBtns'>
+            {onClickEdit ? (
+              <EditOutlined className={'mcs-chartIcon mcs-chart_edit'} onClick={onClickEdit} />
+            ) : undefined}
+            {onClickMoveUp && onClickMoveDown
+              ? [
+                  this.renderUpIcon(onClickMoveUp, layout, showButtonUp),
+                  this.renderDownIcon(onClickMoveDown, layout, showButtonDown),
+                ]
+              : undefined}
+            {onClickDelete ? (
+              <DeleteOutlined
+                className={'mcs-chartIcon mcs-chart_delete'}
+                onClick={onClickDelete}
+              />
+            ) : undefined}
+          </span>
         </div>
         <div className='mcs-chart_content_container'>
           {loading && (
