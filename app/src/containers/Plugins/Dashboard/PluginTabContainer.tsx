@@ -129,7 +129,7 @@ class PluginTabContainer extends React.Component<Props, State> {
       },
       {
         key: 'configuration_file',
-        title: intl.formatMessage(messages.configurationFile),
+        title: intl.formatMessage(messages.technicalConfiguration),
         display: (
           <ConfigurationFilesContainer pluginVersionId={currentPluginVersionId} plugin={plugin} />
         ),

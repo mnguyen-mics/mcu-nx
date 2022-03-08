@@ -81,6 +81,7 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
       match: {
         params: { pluginId },
       },
+      notifyError,
       intl,
       pluginVersionId,
     } = this.props;
@@ -97,9 +98,7 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
         message.success(intl.formatMessage(messages.saveSuccess), 3);
       })
       .catch(err => {
-        this.setState({
-          isDrawerVisible: false,
-        });
+        notifyError(err);
       });
   };
 
@@ -180,11 +179,13 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
       plugin,
     } = this.props;
 
-    const { pluginConfigurationFiles, loading } = this.state;
+    const { pluginConfigurationFiles, loading, isDrawerEditing } = this.state;
 
-    const drawerTitle = `Plugins > ${plugin?.group_id}/${plugin?.artifact_id} > Add a configuration file`;
+    const drawerTitle = `Plugins > ${plugin?.group_id}/${plugin?.artifact_id} > ${
+      isDrawerEditing ? 'Edit' : 'Add'
+    } a technical configuration`;
 
-    const { isDrawerVisible, isDrawerEditing, formData, pluginConfigurationFileTotal } = this.state;
+    const { isDrawerVisible, formData, pluginConfigurationFileTotal } = this.state;
 
     const dataColumnsDefinition: Array<
       DataColumnDefinition<ConfigurationFileListingEntryResource>
@@ -215,12 +216,13 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
       message: string;
     } = {
       iconType: 'library',
-      message: formatMessage(messages.configurationFileEmptyTable),
+      message: formatMessage(messages.technicalConfigurationEmptyTable),
     };
 
     return (
       <React.Fragment>
         <ItemList
+          className='mcs-pluginTab-list'
           fetchList={this.fetchPluginConfigurationFiles}
           dataSource={pluginConfigurationFiles}
           actionsColumnsDefinition={actionColumns}

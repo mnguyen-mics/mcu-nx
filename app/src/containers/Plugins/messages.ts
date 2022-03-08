@@ -177,17 +177,17 @@ export default defineMessages({
     id: 'plugins.title.sentence',
     defaultMessage: 'New instances are created on version ',
   },
-  configurationFile: {
-    id: 'plugins.tab.configurationFile',
-    defaultMessage: 'Configuration File',
+  technicalConfiguration: {
+    id: 'plugins.tab.technicalConfiguration',
+    defaultMessage: 'Technical configuration',
   },
   addFileButton: {
     id: 'plugins.tab.addFileButton',
-    defaultMessage: 'Add a configuration file',
+    defaultMessage: 'Add a technical configuration',
   },
   addLayoutButton: {
     id: 'plugins.tab.addLayoutFileButton',
-    defaultMessage: 'Add a property file layout',
+    defaultMessage: 'Add a properties layout',
   },
   layout: {
     id: 'plugins.tab.layout.title',
@@ -198,15 +198,15 @@ export default defineMessages({
     defaultMessage: "You don't have any properties layout yet",
   },
   save: {
-    id: 'plugins.tab.configurationFile.save',
+    id: 'plugins.tab.technicalConfiguration.save',
     defaultMessage: 'Save',
   },
   saveSuccess: {
-    id: 'plugins.tab.configurationFile.save.success',
+    id: 'plugins.tab.technicalConfiguration.save.success',
     defaultMessage: 'Your configuration file has been successfully saved',
   },
-  configurationFileEmptyTable: {
-    id: 'plugins.tab.configurationFile.empty',
+  technicalConfigurationEmptyTable: {
+    id: 'plugins.tab.technicalConfiguration.empty',
     defaultMessage: "You don't have any configuration file yet",
   },
   saveLayoutSuccess: {

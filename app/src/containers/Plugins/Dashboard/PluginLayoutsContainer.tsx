@@ -146,6 +146,7 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
       match: {
         params: { pluginId },
       },
+      notifyError,
       intl,
       pluginVersionId,
     } = this.props;
@@ -161,9 +162,7 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
         message.success(intl.formatMessage(messages.saveLayoutSuccess), 3);
       })
       .catch(err => {
-        this.setState({
-          isDrawerVisible: false,
-        });
+        notifyError(err);
       });
   };
 
@@ -188,7 +187,9 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
       loading,
     } = this.state;
 
-    const drawerTitle = `Plugins > ${plugin?.group_id}/${plugin?.artifact_id} > Add a locale file`;
+    const drawerTitle = `Plugins > ${plugin?.group_id}/${plugin?.artifact_id} > ${
+      isDrawerEditing ? 'Edit' : 'Add'
+    } a locale`;
 
     const dataColumnsDefinition: Array<DataColumnDefinition<LayoutFileListingEntryResource>> = [
       {
@@ -230,6 +231,7 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
     return (
       <React.Fragment>
         <ItemList
+          className='mcs-pluginTab-list'
           fetchList={this.fetchPluginPropertyLayouts}
           dataSource={pluginPropertyLayouts}
           actionsColumnsDefinition={actionColumns}
