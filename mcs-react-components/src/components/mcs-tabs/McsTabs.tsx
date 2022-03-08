@@ -22,7 +22,11 @@ class McsTabs extends React.Component<McTabsProps> {
 
     return items.map((item, index) => (
       <Tabs.TabPane
-        tab={<div className={classNames('mcs-tabs_tab', item.className)}>{item.title}</div>}
+        tab={
+          <div className={classNames(`mcs-tabs_tab mcs-tabs_${item.key}`, item.className)}>
+            {item.title}
+          </div>
+        }
         key={item.key || index}
         forceRender={item.forceRender ? item.forceRender : false}
       >
