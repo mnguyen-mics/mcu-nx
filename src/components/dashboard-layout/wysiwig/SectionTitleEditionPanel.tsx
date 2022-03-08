@@ -142,12 +142,23 @@ class SectionTitleEditionPanel extends React.Component<Props, SectionTitleEditio
         {(onClickMove || onClickDelete) && (
           <div className='mcs-subtitleEditPanel'>
             {showButtonDown && onClickMove && (
-              <ArrowDownOutlined className='mcs-chartIcon' onClick={onClickMoveDown} />
+              <ArrowDownOutlined
+                className='mcs-chartIcon mcs-sectionTitleEditionPanel_arrow_down'
+                onClick={onClickMoveDown}
+              />
             )}
             {showButtonUp && onClickMove && (
-              <ArrowUpOutlined className='mcs-chartIcon' onClick={onClickMoveUp} />
+              <ArrowUpOutlined
+                className='mcs-chartIcon mcs-sectionTitleEditionPanel_arrow_up'
+                onClick={onClickMoveUp}
+              />
             )}
-            {onClickDelete && <DeleteOutlined className='mcs-chartIcon' onClick={onClickDelete} />}
+            {onClickDelete && (
+              <DeleteOutlined
+                className='mcs-chartIcon mcs-sectionTitleEditionPanel_delete'
+                onClick={onClickDelete}
+              />
+            )}
           </div>
         )}
       </div>

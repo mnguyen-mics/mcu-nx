@@ -364,7 +364,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       <div className='mcs-section_buttons'>
         <PlusOutlined className='mcs-section_circleIcon' onClick={handleCreateSection} />
         <div
-          className='mcs-cardMenu-option mcs-cardMenu-option_left mcs-dashboardLayout_edit_card'
+          className='mcs-cardMenu-option mcs-cardMenu-option_left mcs-dashboardLayout_add_section'
           onClick={handleCreateSection}
         >
           Create new section
