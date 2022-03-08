@@ -122,7 +122,7 @@ export class DecoratorsTransformation {
         case 'COMPARTMENTS':
           return this.decorateKeyCompartment(id, organisationId);
         default:
-          return Promise.resolve(`${modelType}${id}`);
+          return Promise.resolve(`${id}`);
       }
     } else return Promise.resolve(id);
   }
