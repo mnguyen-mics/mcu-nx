@@ -50,6 +50,7 @@ interface State {
   pluginPropertyLayouts: LayoutFileListingEntryResource[];
   pluginPropertyLayoutTotal: number;
   isDrawerVisible: boolean;
+  isDrawerEditing?: boolean;
   formData: PluginLayoutFileFormData;
 }
 
@@ -88,6 +89,7 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
       .then(res => {
         this.setState({
           isDrawerVisible: true,
+          isDrawerEditing: true,
           formData: {
             locale: pluginLayoutFile.locale,
             file: JSON.stringify(res),
@@ -133,7 +135,9 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
 
   openDrawer = () => {
     this.setState({
+      isDrawerEditing: false,
       isDrawerVisible: true,
+      formData: {},
     });
   };
 
@@ -175,8 +179,14 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
       plugin,
     } = this.props;
 
-    const { pluginPropertyLayouts, isDrawerVisible, formData, pluginPropertyLayoutTotal, loading } =
-      this.state;
+    const {
+      pluginPropertyLayouts,
+      isDrawerVisible,
+      isDrawerEditing,
+      formData,
+      pluginPropertyLayoutTotal,
+      loading,
+    } = this.state;
 
     const drawerTitle = `Plugins > ${plugin?.group_id}/${plugin?.artifact_id} > Add a locale file`;
 
@@ -245,7 +255,11 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
           width='800'
           destroyOnClose={true}
         >
-          <PluginLayoutForm onSave={this.savePluginLayoutFile} formData={formData} />
+          <PluginLayoutForm
+            onSave={this.savePluginLayoutFile}
+            formData={formData}
+            isEditing={isDrawerEditing}
+          />
         </Drawer>
       </React.Fragment>
     );

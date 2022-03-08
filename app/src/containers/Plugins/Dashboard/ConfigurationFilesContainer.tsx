@@ -42,21 +42,17 @@ export interface ConfigurationFileFormData {
 
 interface State {
   isDrawerVisible: boolean;
+  isDrawerEditing?: boolean;
   formData: ConfigurationFileFormData;
   loading: boolean;
   pluginConfigurationFiles: ConfigurationFileListingEntryResource[];
+  pluginConfigurationFileTotal: number;
 }
 
 type Props = ConfigurationFilesContainerProps &
   InjectedIntlProps &
   InjectedNotificationProps &
   RouteComponentProps<RouteProps>;
-
-interface State {
-  loading: boolean;
-  pluginConfigurationFiles: ConfigurationFileListingEntryResource[];
-  pluginConfigurationFileTotal: number;
-}
 
 class ConfigurationFilesContainer extends React.Component<Props, State> {
   @lazyInject(TYPES.IPluginService)
@@ -122,6 +118,7 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
         return res.text().then(file => {
           this.setState({
             isDrawerVisible: true,
+            isDrawerEditing: true,
             formData: {
               technical_name: pluginConfigurationFile.technical_name,
               file: file,
@@ -131,9 +128,11 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
       });
   };
 
-  openDrawer = () => {
+  openConfigCreationDrawer = () => {
     this.setState({
       isDrawerVisible: true,
+      isDrawerEditing: false,
+      formData: {},
     });
   };
 
@@ -185,7 +184,7 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
 
     const drawerTitle = `Plugins > ${plugin?.group_id}/${plugin?.artifact_id} > Add a configuration file`;
 
-    const { isDrawerVisible, formData, pluginConfigurationFileTotal } = this.state;
+    const { isDrawerVisible, isDrawerEditing, formData, pluginConfigurationFileTotal } = this.state;
 
     const dataColumnsDefinition: Array<
       DataColumnDefinition<ConfigurationFileListingEntryResource>
@@ -233,7 +232,7 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
         />
         <Button
           className='mcs-pluginConfigurationFileTable_addFileButton'
-          onClick={this.openDrawer}
+          onClick={this.openConfigCreationDrawer}
         >
           <PlusOutlined /> <FormattedMessage {...messages.addFileButton} />
         </Button>
@@ -247,7 +246,11 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
           width='800'
           destroyOnClose={true}
         >
-          <ConfigurationFileForm onSave={this.saveConfigurationFile} formData={formData} />
+          <ConfigurationFileForm
+            onSave={this.saveConfigurationFile}
+            formData={formData}
+            isEditing={isDrawerEditing}
+          />
         </Drawer>
       </React.Fragment>
     );

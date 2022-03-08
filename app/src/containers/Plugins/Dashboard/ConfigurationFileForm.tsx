@@ -10,6 +10,7 @@ import { ConfigurationFileFormData } from './ConfigurationFilesContainer';
 export interface ConfigurationFileFormProps {
   onSave: (formData: ConfigurationFileFormData) => void;
   formData: ConfigurationFileFormData;
+  isEditing?: boolean;
 }
 
 type Props = ConfigurationFileFormProps & InjectedIntlProps;
@@ -52,6 +53,7 @@ class ConfigurationFileForm extends React.Component<Props, State> {
   render() {
     const {
       intl: { formatMessage },
+      isEditing,
     } = this.props;
 
     const { inputValue, jsonValue } = this.state;
@@ -72,6 +74,7 @@ class ConfigurationFileForm extends React.Component<Props, State> {
               placeholder='your-technical-name'
               value={inputValue}
               onChange={this.onInputChange}
+              disabled={isEditing}
             />
           </Form.Item>
           <AceEditor
