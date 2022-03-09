@@ -51,9 +51,13 @@ const messages = defineMessages({
     id: 'dashboard.layout.confirmation',
     defaultMessage: 'Confirmation',
   },
-  dashboardLayoutConfirmationText: {
-    id: 'dashboard.layout.confirmationText',
+  dashboardLayoutChartDeleteConfirmationText: {
+    id: 'dashboard.layout.chartDeleteConfirmationText',
     defaultMessage: 'Are you sure you want to delete this chart?',
+  },
+  dashboardLayoutCardDeleteConfirmationText: {
+    id: 'dashboard.layout.cardDeleteConfirmationText',
+    defaultMessage: 'Are you sure you want to delete this card?',
   },
   dashboardLayoutConfirmationSectionText: {
     id: 'dashboard.layout.confirmationSectionText',
@@ -236,8 +240,8 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
   }
 
   private handleEditCard(card: DashboardContentCard, content: DashboardContentSchema) {
-    const { updateState, openNextDrawer, closeNextDrawer } = this.props;
-    const contentCopy = JSON.parse(JSON.stringify(content));
+    const { updateState, openNextDrawer, closeNextDrawer, intl } = this.props;
+    const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(content));
     if (card.id) {
       const cardNode: any = this.findCardNode(card.id, contentCopy);
       if (updateState && cardNode) {
@@ -247,6 +251,22 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
           additionalProps: {
             closeTab: closeNextDrawer,
             card: card,
+            deleteCard: () => {
+              const onOk = () => {
+                contentCopy.sections.forEach(section => {
+                  section.cards = section.cards.filter(x => x.id !== card.id);
+                });
+                updateState(contentCopy);
+                closeNextDrawer();
+              };
+              Modal.confirm({
+                title: intl.formatMessage(messages.dashboardLayoutConfirmation),
+                content: intl.formatMessage(messages.dashboardLayoutCardDeleteConfirmationText),
+                okText: intl.formatMessage(messages.confirm),
+                cancelText: intl.formatMessage(messages.decline),
+                onOk,
+              });
+            },
             saveCard: (c: DashboardContentCard) => {
               const newDashboardContentCard: any = c;
               const keys = Object.keys(newDashboardContentCard);
@@ -262,8 +282,8 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
   }
 
   private handleEditChart(chart: ChartConfig, content: DashboardContentSchema) {
-    const { datamart_id, updateState, openNextDrawer, closeNextDrawer } = this.props;
-    const contentCopy = JSON.parse(JSON.stringify(content));
+    const { datamart_id, updateState, openNextDrawer, closeNextDrawer, intl } = this.props;
+    const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(content));
     if (chart.id) {
       const chartNode = this.findChartNode(chart.id, contentCopy);
       if (updateState && chartNode) {
@@ -276,6 +296,24 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
             chartConfig: chartNode,
             saveChart: (c: ChartConfig) => {
               this.updateChart(c, chartNode, contentCopy);
+            },
+            deleteChart: () => {
+              const onOk = () => {
+                contentCopy.sections.forEach(section => {
+                  section.cards.forEach(card => {
+                    card.charts = card.charts.filter(ch => ch.id !== chart.id);
+                  });
+                });
+                updateState(contentCopy);
+                closeNextDrawer();
+              };
+              Modal.confirm({
+                title: intl.formatMessage(messages.dashboardLayoutConfirmation),
+                content: intl.formatMessage(messages.dashboardLayoutChartDeleteConfirmationText),
+                okText: intl.formatMessage(messages.confirm),
+                cancelText: intl.formatMessage(messages.decline),
+                onOk,
+              });
             },
           },
         });
@@ -299,7 +337,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
         };
         Modal.confirm({
           title: intl.formatMessage(messages.dashboardLayoutConfirmation),
-          content: intl.formatMessage(messages.dashboardLayoutConfirmationText),
+          content: intl.formatMessage(messages.dashboardLayoutChartDeleteConfirmationText),
           okText: intl.formatMessage(messages.confirm),
           cancelText: intl.formatMessage(messages.decline),
           onOk() {

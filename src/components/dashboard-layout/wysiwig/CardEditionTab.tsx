@@ -10,6 +10,7 @@ import lodash from 'lodash';
 interface CardEditionProps {
   card?: DashboardContentCard;
   saveCard: (c: DashboardContentCard) => void;
+  deleteCard: () => void;
   closeTab: () => void;
 }
 
@@ -44,6 +45,10 @@ const messages = defineMessages({
   cardEditionSave: {
     id: 'card.edition.save',
     defaultMessage: 'Save',
+  },
+  cardEditionDelete: {
+    id: 'card.edition.delete',
+    defaultMessage: 'Delete card',
   },
   cardEditionSelectLayout: {
     id: 'card.edition.selectLayout',
@@ -147,7 +152,7 @@ class CardEditionTab extends React.Component<Props, CardEditionState> {
   };
 
   render() {
-    const { card, closeTab, intl } = this.props;
+    const { card, closeTab, intl, deleteCard } = this.props;
     const { x, y, w, h, layout, form } = this.state;
 
     const onChangeX = (value: string | number) => {
@@ -299,6 +304,13 @@ class CardEditionTab extends React.Component<Props, CardEditionState> {
             onClick={saveCard}
           >
             {intl.formatMessage(messages.cardEditionSave)}
+          </Button>
+          <Button
+            className={'mcs-primary mcs-cardEdition-delete-button'}
+            type='link'
+            onClick={deleteCard}
+          >
+            {intl.formatMessage(messages.cardEditionDelete)}
           </Button>
         </div>
       </div>
