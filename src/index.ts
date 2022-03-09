@@ -73,6 +73,7 @@ export {
 export { default as FormFieldWrapper } from './components/form/FormFieldWrapper';
 export { FormRadioGroupField } from './components/form';
 export { FormRadioGroup } from './components/form';
+export { FormSection } from './components/form';
 
 // Services
 
