@@ -6,7 +6,7 @@ import { compose } from 'recompose';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 import AceEditor from 'react-ace';
 import { Ace } from 'ace-builds';
-import { Layout, Select, Checkbox, Form, Input, Row } from 'antd';
+import { Layout, Select, Checkbox, Form, Input, Button } from 'antd';
 import EditDashboardActionBar from './EditDashboardActionBar';
 import messages from './messages';
 import injectNotifications, {
@@ -42,6 +42,7 @@ import {
   DataResponse,
 } from '@mediarithmics-private/advanced-components/lib/services/ApiService';
 import UserResource from '@mediarithmics-private/advanced-components/lib/models/directory/UserResource';
+import omitDeep from 'omit-deep-lodash';
 
 const { Content } = Layout;
 
@@ -110,6 +111,8 @@ interface EditDashboardPageState {
   form: React.RefObject<FormInstance>;
   defaultDatamartId?: string;
   formInitialValues?: FormInitialValues;
+  displaySegmentInput?: boolean;
+  displayBuilderInput?: boolean;
 }
 
 interface RouterProps {
@@ -157,7 +160,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       segmentCheckboxChecked: false,
       builderCheckboxChecked: false,
       consoleCheckboxChecked: false,
-      dashboardTitle: '',
+      dashboardTitle: props.intl.formatMessage(messages.dashboardDefaultTitle),
       selectedSegments: [],
       selectedBuilders: [],
       contentText: defaultContent,
@@ -197,8 +200,9 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     }
   }
 
-  formatContent = (content?: CustomDashboardContentResource) => {
-    return content ? JSON.stringify(content.content, null, 4) : '';
+  formatContent = (content?: DashboardContentSchema) => {
+    const purifiedContent = content ? omitDeep(content, 'id') : undefined;
+    return content ? JSON.stringify(purifiedContent, null, 4) : '';
   };
 
   fetchData = async (organisationId: string, dashboardId: string) => {
@@ -220,7 +224,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       }
       const segments = await this.fetchSegments(organisationId);
       const builders = await this.fetchBuilders(organisationId);
-      const contentText = this.formatContent(content);
+      const contentText = this.formatContent(content.content);
       const selectedSegments = this.convertIdsToSelectValues(dashboard.segment_ids);
       const selectedBuilders = this.convertIdsToSelectValues(dashboard.builder_ids);
       const enrichedSegmentsValues = this.enrichSelectedValuesByOptions(selectedSegments, segments);
@@ -254,13 +258,15 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
         existingSegments: segments,
         userNamesMap: userNamesMap,
         formInitialValues: initialValues,
+        displaySegmentInput: selectedSegments.length > 0,
+        displayBuilderInput: selectedBuilders.length > 0,
       });
     } else {
       this.setState({
         contentText: defaultContent,
         loading: false,
         formInitialValues: {
-          input_title: '',
+          input_title: 'Untitled dashboard',
           checkbox_home: false,
           checkbox_segment: false,
           checkbox_builder: false,
@@ -403,8 +409,8 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     this.setState({
       dashboard: dashboard,
       content: content,
-      contentTextOrig: this.formatContent(content),
-      contentText: this.formatContent(content),
+      contentTextOrig: this.formatContent(content?.content),
+      contentText: this.formatContent(content?.content),
     });
   };
 
@@ -571,14 +577,18 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
   };
 
   onSegmentsCheckboxChange = (e: CheckboxChangeEvent) => {
+    const { displaySegmentInput } = this.state;
     this.setState({
       segmentCheckboxChecked: e.target.checked,
+      displaySegmentInput: displaySegmentInput && e.target.checked,
     });
   };
 
   onSegmentBuildersCheckboxChange = (e: CheckboxChangeEvent) => {
+    const { displaySegmentInput } = this.state;
     this.setState({
       builderCheckboxChecked: e.target.checked,
+      displayBuilderInput: displaySegmentInput && e.target.checked,
     });
   };
 
@@ -706,6 +716,8 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       contentText,
       segmentCheckboxChecked,
       builderCheckboxChecked,
+      displaySegmentInput,
+      displayBuilderInput,
       dashboard,
       loading,
       existingSegments,
@@ -722,6 +734,8 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       contentText !== nextState.contentText ||
       segmentCheckboxChecked !== nextState.segmentCheckboxChecked ||
       builderCheckboxChecked !== nextState.builderCheckboxChecked ||
+      displaySegmentInput !== nextState.displaySegmentInput ||
+      displayBuilderInput !== nextState.displayBuilderInput ||
       dashboard !== nextState.dashboard ||
       loading !== nextState.loading ||
       existingSegments !== nextState.existingSegments ||
@@ -768,7 +782,11 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       </Form.Item>
     );
   }
-
+  updateSchema = (newState: DashboardContentSchema) => {
+    this.setState({
+      contentText: this.formatContent(newState),
+    });
+  };
   renderChartEdition() {
     const { selectedDatamartId, intl } = this.props;
     const { contentText } = this.state;
@@ -784,25 +802,35 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       return <EmptyChart title={intl.formatMessage(messages.couldNotBeLoaded)} />;
     }
 
-    const updateSchema = (newState: DashboardContentSchema) => {
-      this.setState({
-        contentText: JSON.stringify(newState),
-      });
-    };
     return (
       <EditableDashboardLayout
         schema={content}
         datamart_id={selectedDatamartId}
         organisationId={organisationId}
-        updateSchema={updateSchema}
+        updateSchema={this.updateSchema}
       />
     );
   }
 
+  displaySegmentSelector = () => {
+    this.setState({
+      displaySegmentInput: true,
+      segmentCheckboxChecked: true,
+    });
+  };
+
+  displayBuilderSelector = () => {
+    this.setState({
+      displayBuilderInput: true,
+      builderCheckboxChecked: true,
+    });
+  };
+
   render() {
     const { intl } = this.props;
     const {
-      segmentCheckboxChecked,
+      displaySegmentInput,
+      displayBuilderInput,
       builderCheckboxChecked,
       dashboard,
       loading,
@@ -812,11 +840,8 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       userNamesMap,
       content,
       formInitialValues,
+      segmentCheckboxChecked,
     } = this.state;
-
-    const breadcrumb = dashboard
-      ? dashboard.title
-      : intl.formatMessage(messages.createNewDashboard);
 
     const editedBy =
       dashboard && dashboard.last_modified_by && dashboard.last_modified_ts
@@ -851,35 +876,32 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       <Loading isFullScreen={true} />
     ) : (
       <div className='ant-layout'>
-        <EditDashboardActionBar
-          lastBreadcrumb={breadcrumb}
-          handleSave={this.onSave}
-          handleCancel={this.onCancel}
-        />
         <div className='ant-layout'>
           <Content className='mcs-content-container mcs-dashboardEditor'>
             <Form ref={form} initialValues={formInitialValues}>
-              <Row className='mcs-dashboardEditor_row'>
-                <Row className='mcs-dashboardEditor_row_column'>
-                  {dashboard && <span className='mcs-dashboardEditor_index'>#{dashboard.id}</span>}
-                  <Form.Item
-                    name='input_title'
-                    className='mcs-dashboardEditor_column_input'
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Please enter the title',
-                      },
-                    ]}
-                  >
-                    <Input onChange={this.onDashboardTitleChange} />
-                  </Form.Item>
-                </Row>
-                <div className='mcs-dashboardEditor_row_column mcs-dashboardEditor_row_editedBy'>
-                  {editedBy && <span>{editedBy}</span>}
-                  {editedByForContent && <span>{editedByForContent}</span>}
-                </div>
-              </Row>
+              <div className='mcs-dashboardEditor_header'>
+                <Form.Item
+                  name='input_title'
+                  className='mcs-dashboardEditor_column_input mcs-dashboardEditor_title'
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please enter the title',
+                    },
+                  ]}
+                >
+                  <Input onChange={this.onDashboardTitleChange} />
+                </Form.Item>
+                <EditDashboardActionBar handleSave={this.onSave} handleCancel={this.onCancel} />
+              </div>
+              <div className='mcs-dashboardEditor_row_column mcs-dashboardEditor_row_editedBy'>
+                {editedBy && <span>{editedBy}</span>}
+                <br />
+                {editedByForContent && <span>{editedByForContent}</span>}
+              </div>
+              <div className='mcs-editDashboard_scopesDescription'>
+                {intl.formatMessage(messages.displayOn)}
+              </div>
               <Form.Item
                 name='checkbox_home'
                 valuePropName='checked'
@@ -895,11 +917,16 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
                 valuePropName='checked'
                 className='mcs-dashboardEditor_checkbox'
               >
-                <Checkbox onChange={this.onSegmentsCheckboxChange}>
-                  {intl.formatMessage(messages.segments)}
+                <Checkbox onChange={this.onSegmentsCheckboxChange} checked={segmentCheckboxChecked}>
+                  {intl.formatMessage(messages.segments)}{' '}
                 </Checkbox>
+                {!displaySegmentInput && (
+                  <Button onClick={this.displaySegmentSelector} type='dashed'>
+                    Only display on specific segments...
+                  </Button>
+                )}
               </Form.Item>
-              {segmentCheckboxChecked && (
+              {displaySegmentInput && (
                 <Form.Item
                   name='select_segments'
                   className='mcs-dashboardEditor_selector'
@@ -927,11 +954,19 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
                 valuePropName='checked'
                 className='mcs-dashboardEditor_checkbox'
               >
-                <Checkbox onChange={this.onSegmentBuildersCheckboxChange}>
+                <Checkbox
+                  onChange={this.onSegmentBuildersCheckboxChange}
+                  checked={builderCheckboxChecked}
+                >
                   {intl.formatMessage(messages.builders)}
                 </Checkbox>
+                {!displayBuilderInput && (
+                  <Button onClick={this.displayBuilderSelector} type='dashed'>
+                    Only display on specific builders...
+                  </Button>
+                )}
               </Form.Item>
-              {builderCheckboxChecked && (
+              {displayBuilderInput && (
                 <Form.Item
                   name='select_builders'
                   className='mcs-dashboardEditor_selector'
@@ -963,7 +998,13 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
                   {intl.formatMessage(messages.console)}
                 </Checkbox>
               </Form.Item>
-              <McsTabs items={[wysiwigTab, editorTab]} destroyInactiveTabPane={true} />
+              <McsTabs
+                items={[wysiwigTab, editorTab]}
+                isCard={true}
+                animated={false}
+                className='mcs-editDashboard_tabs'
+                destroyInactiveTabPane={true}
+              />
             </Form>
           </Content>
         </div>

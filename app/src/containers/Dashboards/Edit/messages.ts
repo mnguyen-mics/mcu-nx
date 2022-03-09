@@ -11,23 +11,31 @@ export default defineMessages({
   },
   cancel: {
     id: 'dashboards.cancel',
-    defaultMessage: 'Cancel',
+    defaultMessage: 'Back to dashboards',
+  },
+  displayOn: {
+    id: 'dashboards.displayOn',
+    defaultMessage: 'Display this dashboard on',
+  },
+  dashboardDefaultTitle: {
+    id: 'dashboards.dashboardDefaultTitle',
+    defaultMessage: 'Untitled dashboard',
   },
   home: {
     id: 'dashboards.home',
-    defaultMessage: 'Home',
+    defaultMessage: 'Navigator > Audience > Home',
   },
   segments: {
     id: 'dashboards.segments',
-    defaultMessage: 'Segments',
+    defaultMessage: 'Navigator > Audience > Segments > Segment',
   },
   builders: {
     id: 'dashboards.builders',
-    defaultMessage: 'Builders',
+    defaultMessage: 'Navigator > Audience > Builders > Standard segment builder',
   },
   console: {
     id: 'dashboards.console',
-    defaultMessage: 'Console',
+    defaultMessage: 'Navigator > Computing console > Home',
   },
   builderIds: {
     id: 'dashboards.builderIds',

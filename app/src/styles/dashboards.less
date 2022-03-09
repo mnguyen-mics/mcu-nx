@@ -67,7 +67,7 @@
 
 .mcs-dashboardEditor_homeCheckbox {
   .mcs-dashboardEditor_checkbox;
-  margin-top: 30px;
+  margin-top: 13px;
 }
 
 .mcs-dashboardEditor_aceEditor {
@@ -95,6 +95,9 @@
 .mcs-dashboardEditor {
   display: flex;
   flex-direction: column;
+  padding: 0 40px 60px;
+  height: inherit;
+  overflow-y: scroll;
 
   .ant-checkbox-wrapper {
     margin-left: 0px;
@@ -114,11 +117,11 @@
 
 .mcs-dashboardEditor_column_input {
   width: 226px;
+  margin: 0;
 }
 
 .mcs-dashboardEditor_row {
   width: 100%;
-  margin-top: 15px;
 
   .ant-form-item {
     margin-bottom: 0px;
@@ -136,14 +139,15 @@
 
 .mcs-dashboardEditorActionBarCancelButton {
   height: 32px;
-  width: 69px;
+  width: 162px;
   background: white;
   border-color: #e0e1e1;
   color: #000000;
 }
 
 .mcs-dashboardEditorActionBarSaveButton {
-  width: 96px;
+  width: 57px;
+  margin-left: 10px;
   .mcs-icon {
     padding-right: 10px;
     vertical-align: middle;
@@ -151,9 +155,36 @@
 }
 
 .mcs-dashboardEditor_row_editedBy {
+  margin-top: 5px;
   font-family: 'LLCircularWeb-Book';
   font-size: 10px;
-  text-align: right;
+}
+
+.mcs-editDashboard_actionBar {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background: #f0f3f5;
+  height: 32px;
+}
+
+.mcs-editDashboard_scopesDescription {
+  margin-top: 20px;
+}
+
+.mcs-editDashboard_tabs {
+  margin-top: 50px;
+}
+
+.mcs-dashboardEditor_title input {
+  font-family: 'LLCircularWeb-Book';
+  font-size: 16px;
+  font-weight: bold;
+  background: #f0f3f5;
+}
+
+.mcs-dashboardEditor_header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
 }
