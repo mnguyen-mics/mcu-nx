@@ -1,25 +1,28 @@
 import * as React from 'react';
-import { Button } from 'antd';
+import { Button, Drawer } from 'antd';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import { compose } from 'recompose';
-import { Actionbar } from '@mediarithmics-private/mcs-components-library';
+import { Actionbar, McsIcon } from '@mediarithmics-private/mcs-components-library';
 import messages from '../messages';
 import { Link } from 'react-router-dom';
-import { PluginResource } from '@mediarithmics-private/advanced-components';
+import { PluginResource, PluginVersionResource } from '@mediarithmics-private/advanced-components';
 import { RollbackOutlined } from '@ant-design/icons';
+import PluginVersionForm from './PluginVersion/PluginVersionForm';
 
-interface RouterProps {
+export interface RouterProps {
   organisationId: string;
 }
 
 interface PluginPageActionbarProps {
   plugin?: PluginResource;
   innerElement?: React.ReactNode;
+  lastPluginVersion?: PluginVersionResource;
+  fetchPlugin: () => void;
 }
 
 interface State {
-  isLoading: boolean;
+  isDrawerVisible: boolean;
 }
 
 type Props = RouteComponentProps<RouterProps> & InjectedIntlProps & PluginPageActionbarProps;
@@ -28,7 +31,7 @@ class PluginPageActionbar extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isLoading: false,
+      isDrawerVisible: false,
     };
   }
 
@@ -42,6 +45,18 @@ class PluginPageActionbar extends React.Component<Props, State> {
     history.push(`/o/${organisationId}/plugins`);
   };
 
+  openDrawer = () => {
+    this.setState({
+      isDrawerVisible: true,
+    });
+  };
+
+  closeDrawer = () => {
+    this.setState({
+      isDrawerVisible: false,
+    });
+  };
+
   render() {
     const {
       plugin,
@@ -50,7 +65,13 @@ class PluginPageActionbar extends React.Component<Props, State> {
       },
       intl: { formatMessage },
       innerElement,
+      fetchPlugin,
+      lastPluginVersion,
     } = this.props;
+
+    const { isDrawerVisible } = this.state;
+
+    const drawerTitle = `Plugins > ${plugin?.group_id}/${plugin?.artifact_id} > New version`;
 
     const breadcrumbPaths = [
       <Link key='1' to={`/o/${organisationId}/plugins`}>
@@ -66,10 +87,27 @@ class PluginPageActionbar extends React.Component<Props, State> {
           <Button className='mcs-primary mcs-actionbar_backToPlugins' onClick={this.redirect}>
             <RollbackOutlined /> <FormattedMessage {...messages.backToPlugins} />
           </Button>
-          {/* <Button className='mcs-primary' type='primary'>
+          <Button className='mcs-primary' type='primary' onClick={this.openDrawer}>
             <McsIcon type='plus' /> <FormattedMessage {...messages.newVersion} />
-          </Button> */}
+          </Button>
         </div>
+        <Drawer
+          className='mcs-pluginEdit-drawer'
+          title={drawerTitle}
+          bodyStyle={{ padding: '0' }}
+          closable={true}
+          onClose={this.closeDrawer}
+          visible={isDrawerVisible}
+          width='1000'
+          destroyOnClose={true}
+        >
+          <PluginVersionForm
+            plugin={plugin}
+            lastPluginVersion={lastPluginVersion}
+            fetchPlugin={fetchPlugin}
+            closeDrawer={this.closeDrawer}
+          />
+        </Drawer>
       </Actionbar>
     );
   }

@@ -62,6 +62,10 @@ class PluginPage extends React.Component<Props, State> {
   }
 
   componentDidMount() {
+    this.fetchPlugin();
+  }
+
+  fetchPlugin = () => {
     const {
       match: {
         params: { pluginId },
@@ -96,7 +100,7 @@ class PluginPage extends React.Component<Props, State> {
         });
         notifyError(err);
       });
-  }
+  };
 
   componentDidUpdate(prevProps: Props) {
     const {
@@ -116,6 +120,11 @@ class PluginPage extends React.Component<Props, State> {
     }
   }
 
+  fetchLastPluginVersion = () => {
+    const { plugin, pluginVersions } = this.state;
+    return pluginVersions.find(version => version.id === plugin?.current_version_id);
+  };
+
   render() {
     const {
       intl: { formatMessage },
@@ -128,9 +137,7 @@ class PluginPage extends React.Component<Props, State> {
       pluginVersions,
     } = this.state;
 
-    const lastPluginVersion = pluginVersions.find(
-      version => version.id === plugin?.current_version_id,
-    )?.version_id;
+    const lastPluginVersion = this.fetchLastPluginVersion()?.version_id;
 
     const title = `${plugin?.group_id} ${plugin?.artifact_id}`;
 
@@ -144,7 +151,11 @@ class PluginPage extends React.Component<Props, State> {
 
     return (
       <div className='ant-layout'>
-        <PluginPageActionbar plugin={plugin} />
+        <PluginPageActionbar
+          plugin={plugin}
+          lastPluginVersion={this.fetchLastPluginVersion()}
+          fetchPlugin={this.fetchPlugin}
+        />
         <div className='ant-layout'>
           <Content className='mcs-content-container'>
             <DashboardHeader title={title} subtitle={subtitle} isLoading={isLoadingPlugin} />

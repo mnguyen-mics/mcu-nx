@@ -25,6 +25,14 @@ export default defineMessages({
     id: 'plugins.list.name',
     defaultMessage: 'Name',
   },
+  value: {
+    id: 'plugins.list.value',
+    defaultMessage: 'Value',
+  },
+  defaultValue: {
+    id: 'plugins.list.defaultValue',
+    defaultMessage: 'Default Value',
+  },
   type: {
     id: 'plugins.list.type',
     defaultMessage: 'Type',
@@ -228,5 +236,45 @@ export default defineMessages({
   saveLayout: {
     id: 'plugins.tab.propertiesLayout.saveLayout',
     defaultMessage: 'Save',
+  },
+  generalInformation: {
+    id: 'plugins.pluginVersionForm.generalInformation.title',
+    defaultMessage: 'General Information',
+  },
+  generalInformationSubtitle: {
+    id: 'plugins.pluginVersionForm.generalInformation.subtitle',
+    defaultMessage: 'Those properties are shared across all instances of your plugin',
+  },
+  propertiesSection: {
+    id: 'plugins.pluginVersionForm.propertiesSection.title',
+    defaultMessage: 'Plugin specific properties',
+  },
+  propertiesSectionSubtitle: {
+    id: 'plugins.pluginVersionForm.propertiesSection.subtitle',
+    defaultMessage: 'Define the properties that all instances of your plugin should use',
+  },
+  version: {
+    id: 'plugins.pluginVersionForm.generalInformationSection.version',
+    defaultMessage: 'Version',
+  },
+  provider: {
+    id: 'plugins.pluginVersionForm.generalInformationSection.provider',
+    defaultMessage: 'Provider',
+  },
+  overrideCheckboxText: {
+    id: 'plugins.pluginVersionForm.generalInformationSection.overrideCheckboxText',
+    defaultMessage: 'Let users override this value in plugin instances',
+  },
+  addNewProperty: {
+    id: 'plugins.pluginVersionForm.addNewProperty',
+    defaultMessage: 'Add new property',
+  },
+  pluginVersionSaveSuccess: {
+    id: 'plugins.pluginVersionForm.pluginVersionSaveSuccess',
+    defaultMessage: 'Your plugin version has been successfully saved',
+  },
+  missingField: {
+    id: 'plugins.pluginVersionForm.missingField',
+    defaultMessage: 'Missing fields. Version, provider and name are mandatory',
   },
 });
