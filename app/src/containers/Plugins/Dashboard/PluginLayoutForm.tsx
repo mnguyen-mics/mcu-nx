@@ -11,6 +11,7 @@ export interface PluginLayoutFormProps {
   onSave: (formData: PluginLayoutFileFormData) => void;
   formData: PluginLayoutFileFormData;
   isEditing?: boolean;
+  isLayout?: boolean;
 }
 
 type Props = PluginLayoutFormProps & InjectedIntlProps;
@@ -54,6 +55,7 @@ class PluginLayoutForm extends React.Component<Props, State> {
     const {
       intl: { formatMessage },
       isEditing,
+      isLayout,
     } = this.props;
 
     const { inputValue, jsonValue } = this.state;
@@ -61,30 +63,43 @@ class PluginLayoutForm extends React.Component<Props, State> {
     return (
       <Form layout='vertical' className='mcs-pluginEdit-drawer-form'>
         <Content className='mcs-content-container mcs-pluginEdit-drawer-container'>
+          {!isLayout && (
+            <Form.Item
+              label={
+                <div className='mcs-pluginEdit-drawer-form-label'>
+                  {formatMessage(messages.locale)}
+                </div>
+              }
+              className='mcs-pluginEdit-drawer-form-item'
+            >
+              <Input
+                className='mcs-pluginEdit-drawer-form-input mcs-pluginEdit-drawer-form-input-technicalName'
+                placeholder='your-technical-name'
+                value={inputValue}
+                onChange={this.onInputChange}
+                disabled={isEditing}
+              />
+            </Form.Item>
+          )}
           <Form.Item
             label={
               <div className='mcs-pluginEdit-drawer-form-label'>
-                {formatMessage(messages.locale)}
+                {formatMessage(messages.content)}
               </div>
             }
             className='mcs-pluginEdit-drawer-form-item'
           >
-            <Input
-              className='mcs-pluginEdit-drawer-form-input mcs-pluginEdit-drawer-form-input-technicalName'
-              placeholder='your-technical-name'
-              value={inputValue}
-              onChange={this.onInputChange}
-              disabled={isEditing}
+            <AceEditor
+              className='mcs-pluginEdit-drawer-form-input'
+              mode={isLayout ? 'json' : undefined}
+              value={jsonValue}
+              theme='github'
+              name={'Content'}
+              width={'100%'}
+              showPrintMargin={false}
+              onChange={this.onJsonChange}
             />
           </Form.Item>
-          <AceEditor
-            value={jsonValue}
-            theme='github'
-            name={'Content'}
-            width={'100%'}
-            showPrintMargin={false}
-            onChange={this.onJsonChange}
-          />
           <Button
             onClick={this.handleSubmit}
             className='mcs-primary mcs-pluginEdit-drawer-saveButton'

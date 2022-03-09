@@ -76,7 +76,13 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
     }
   }
 
-  editPluginLayoutFile = (pluginLayoutFile: LayoutFileListingEntryResource) => {
+  editFile = (pluginLayoutFile: LayoutFileListingEntryResource) => {
+    pluginLayoutFile.locale
+      ? this.editLocaleFile(pluginLayoutFile)
+      : this.editPluginLayoutFile(pluginLayoutFile);
+  };
+
+  editPluginLayoutFile(pluginLayoutFile: LayoutFileListingEntryResource) {
     const {
       match: {
         params: { pluginId },
@@ -85,13 +91,38 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
       notifyError,
     } = this.props;
     this._pluginService
-      .getLocalizedPluginLayout(pluginId, pluginVersionId, pluginLayoutFile.locale)
+      .getLocalizedPluginLayout(pluginId, pluginVersionId)
       .then(res => {
         this.setState({
           isDrawerVisible: true,
           isDrawerEditing: true,
           formData: {
             locale: pluginLayoutFile.locale,
+            file: JSON.stringify(res, null, 2),
+          },
+        });
+      })
+      .catch(err => {
+        notifyError(err);
+      });
+  }
+
+  editLocaleFile(localFile: LayoutFileListingEntryResource) {
+    const {
+      match: {
+        params: { pluginId },
+      },
+      pluginVersionId,
+      notifyError,
+    } = this.props;
+    this._pluginService
+      .getLocalizedPluginLayoutFile(pluginId, pluginVersionId, localFile.locale!)
+      .then(res => {
+        this.setState({
+          isDrawerVisible: true,
+          isDrawerEditing: true,
+          formData: {
+            locale: localFile.locale,
             file: JSON.stringify(res),
           },
         });
@@ -99,7 +130,7 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
       .catch(err => {
         notifyError(err);
       });
-  };
+  }
 
   fetchPluginPropertyLayouts = (organisationId: string, filters: Filters) => {
     const {
@@ -151,8 +182,10 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
       pluginVersionId,
     } = this.props;
     const file = new Blob([formData.file || '']);
-    return this._pluginService
-      .putPropertiesLayout(pluginId, pluginVersionId, file)
+    const response = formData.locale
+      ? this._pluginService.putLocalizationFile(pluginId, pluginVersionId, formData.locale, file)
+      : this._pluginService.putPropertiesLayout(pluginId, pluginVersionId, file);
+    return response
       .then(res => {
         this.setState({
           isDrawerVisible: false,
@@ -187,9 +220,13 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
       loading,
     } = this.state;
 
+    const isButtonLayout = pluginPropertyLayouts.length === 0;
+
+    const isDrawerLayout = isButtonLayout || (isDrawerEditing && !formData.locale);
+
     const drawerTitle = `Plugins > ${plugin?.group_id}/${plugin?.artifact_id} > ${
       isDrawerEditing ? 'Edit' : 'Add'
-    } a locale`;
+    } a ${isDrawerLayout ? 'properties layout' : 'locale'}`;
 
     const dataColumnsDefinition: Array<DataColumnDefinition<LayoutFileListingEntryResource>> = [
       {
@@ -213,7 +250,7 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
         actions: () => [
           {
             message: formatMessage(messages.edit),
-            callback: this.editPluginLayoutFile,
+            callback: this.editFile,
             className: 'mcs-pluginConfigurationFileTable_dropDownMenu--edit',
           },
         ],
@@ -245,7 +282,10 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
           className='mcs-pluginConfigurationFileTable_addFileButton'
           onClick={this.openDrawer}
         >
-          <PlusOutlined /> <FormattedMessage {...messages.addLayoutButton} />
+          <PlusOutlined />{' '}
+          <FormattedMessage
+            {...(isButtonLayout ? messages.addLayoutButton : messages.addLocaleButton)}
+          />
         </Button>
         <Drawer
           className='mcs-pluginEdit-drawer'
@@ -261,6 +301,7 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
             onSave={this.savePluginLayoutFile}
             formData={formData}
             isEditing={isDrawerEditing}
+            isLayout={isDrawerLayout}
           />
         </Drawer>
       </React.Fragment>
