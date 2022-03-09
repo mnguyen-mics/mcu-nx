@@ -50,6 +50,7 @@ interface State {
   pluginPropertyLayouts: LayoutFileListingEntryResource[];
   pluginPropertyLayoutTotal: number;
   isDrawerVisible: boolean;
+  isDrawerEditing?: boolean;
   formData: PluginLayoutFileFormData;
 }
 
@@ -88,6 +89,7 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
       .then(res => {
         this.setState({
           isDrawerVisible: true,
+          isDrawerEditing: true,
           formData: {
             locale: pluginLayoutFile.locale,
             file: JSON.stringify(res),
@@ -133,7 +135,9 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
 
   openDrawer = () => {
     this.setState({
+      isDrawerEditing: false,
       isDrawerVisible: true,
+      formData: {},
     });
   };
 
@@ -142,6 +146,7 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
       match: {
         params: { pluginId },
       },
+      notifyError,
       intl,
       pluginVersionId,
     } = this.props;
@@ -157,9 +162,7 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
         message.success(intl.formatMessage(messages.saveLayoutSuccess), 3);
       })
       .catch(err => {
-        this.setState({
-          isDrawerVisible: false,
-        });
+        notifyError(err);
       });
   };
 
@@ -175,10 +178,18 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
       plugin,
     } = this.props;
 
-    const { pluginPropertyLayouts, isDrawerVisible, formData, pluginPropertyLayoutTotal, loading } =
-      this.state;
+    const {
+      pluginPropertyLayouts,
+      isDrawerVisible,
+      isDrawerEditing,
+      formData,
+      pluginPropertyLayoutTotal,
+      loading,
+    } = this.state;
 
-    const drawerTitle = `Plugins > ${plugin?.group_id}/${plugin?.artifact_id} > Add a locale file`;
+    const drawerTitle = `Plugins > ${plugin?.group_id}/${plugin?.artifact_id} > ${
+      isDrawerEditing ? 'Edit' : 'Add'
+    } a locale`;
 
     const dataColumnsDefinition: Array<DataColumnDefinition<LayoutFileListingEntryResource>> = [
       {
@@ -220,6 +231,7 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
     return (
       <React.Fragment>
         <ItemList
+          className='mcs-pluginTab-list'
           fetchList={this.fetchPluginPropertyLayouts}
           dataSource={pluginPropertyLayouts}
           actionsColumnsDefinition={actionColumns}
@@ -245,7 +257,11 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
           width='800'
           destroyOnClose={true}
         >
-          <PluginLayoutForm onSave={this.savePluginLayoutFile} formData={formData} />
+          <PluginLayoutForm
+            onSave={this.savePluginLayoutFile}
+            formData={formData}
+            isEditing={isDrawerEditing}
+          />
         </Drawer>
       </React.Fragment>
     );

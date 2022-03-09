@@ -10,6 +10,7 @@ import { PluginLayoutFileFormData } from './PluginLayoutsContainer';
 export interface PluginLayoutFormProps {
   onSave: (formData: PluginLayoutFileFormData) => void;
   formData: PluginLayoutFileFormData;
+  isEditing?: boolean;
 }
 
 type Props = PluginLayoutFormProps & InjectedIntlProps;
@@ -52,6 +53,7 @@ class PluginLayoutForm extends React.Component<Props, State> {
   render() {
     const {
       intl: { formatMessage },
+      isEditing,
     } = this.props;
 
     const { inputValue, jsonValue } = this.state;
@@ -72,6 +74,7 @@ class PluginLayoutForm extends React.Component<Props, State> {
               placeholder='your-technical-name'
               value={inputValue}
               onChange={this.onInputChange}
+              disabled={isEditing}
             />
           </Form.Item>
           <AceEditor
