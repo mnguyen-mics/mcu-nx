@@ -18,6 +18,7 @@ import { QueryScopeAdapter } from '../../../utils/QueryScopeAdapter';
 interface ChartEditionProps {
   chartConfig?: ChartConfig;
   saveChart: (c: ChartConfig) => void;
+  deleteChart?: () => void;
   closeTab: () => void;
   datamartId: string;
   scope?: AbstractScope;
@@ -40,6 +41,10 @@ const messages = defineMessages({
   chartEditionSave: {
     id: 'chart.edition.save',
     defaultMessage: 'Save',
+  },
+  chartEditionDelete: {
+    id: 'chart.edition.delete',
+    defaultMessage: 'Delete chart',
   },
 });
 
@@ -182,7 +187,7 @@ class ChartEditionTab extends React.Component<Props, ChartEditionState> {
   }
 
   render() {
-    const { closeTab, intl } = this.props;
+    const { closeTab, intl, deleteChart } = this.props;
     const { chartConfigText, contentErrorMessage } = this.state;
     const contentErrorStatus = contentErrorMessage ? 'error' : 'success';
 
@@ -241,6 +246,13 @@ class ChartEditionTab extends React.Component<Props, ChartEditionState> {
             onClick={saveChartConfig}
           >
             {intl.formatMessage(messages.chartEditionSave)}
+          </Button>
+          <Button
+            className='mcs-primary mcs-cardEdition-delete-button'
+            type='link'
+            onClick={deleteChart}
+          >
+            {intl.formatMessage(messages.chartEditionDelete)}
           </Button>
         </div>
       </div>
