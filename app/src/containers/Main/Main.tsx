@@ -26,6 +26,7 @@ import log from 'loglevel';
 import { Loading, Error } from '@mediarithmics-private/mcs-components-library';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import Notifications from '../Notifications/Notifications';
+import Datalayer from './Datalayer';
 
 const basePath = '/o/:organisationId(\\d+)';
 interface MapStateToProps {
@@ -128,14 +129,17 @@ class Main extends React.Component<JoinedProps, MainState> {
           : route.layout === 'edit'
           ? route.editComponent
           : route.contentComponent;
+      const datalayer = route.datalayer;
       const authenticatedRouteRender = (props: any) => {
         return (
           <React.Fragment>
-            <Notifications />
-            <div className='drawer-wrapper'>
-              <DrawerManager />
-            </div>
-            <LayoutManager routeComponent={<ElementTag />} />
+            <Datalayer datalayer={datalayer}>
+              <Notifications />
+              <div className='drawer-wrapper'>
+                <DrawerManager />
+              </div>
+              <LayoutManager routeComponent={<ElementTag />} />
+            </Datalayer>
           </React.Fragment>
         );
       };
