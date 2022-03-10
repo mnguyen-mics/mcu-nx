@@ -108,7 +108,7 @@ class TableView<
       })
       .map(dataColumn => {
         return {
-          title: dataColumn.title || dataColumn.title,
+          title: dataColumn.title,
           dataIndex: dataColumn.key,
           key: dataColumn.key,
           render: dataColumn.render ? dataColumn.render : (text: any) => text,
