@@ -32,6 +32,7 @@ export interface DashboardPageProps {
   DatamartUsersAnalyticsWrapper?: React.ComponentClass<DatamartUsersAnalyticsWrapperProps>;
   DashboardWrapper?: React.ComponentClass<DashboardWrapperProps>;
   contextualTargetingTab?: React.ReactNode;
+  onShowDashboard?: (dpc: DashboardPageContent) => void;
 }
 const messagesDashboardPage = defineMessages({
   technicalInformationTab: {
@@ -64,6 +65,7 @@ class DashboardPage extends React.Component<Props> {
       DashboardWrapper,
       DatamartUsersAnalyticsWrapper,
       contextualTargetingTab,
+      onShowDashboard,
     } = this.props;
     const defaultContent = (
       <div>
@@ -108,6 +110,12 @@ class DashboardPage extends React.Component<Props> {
         .sort((a, b) => a.title.localeCompare(b.title))
         .filter(dashboard => !!dashboard.dashboardContent)
         .map(dashboard => {
+          const handleShowDashboard = () => {
+            if (onShowDashboard) {
+              onShowDashboard(dashboard);
+            }
+          };
+
           return {
             title: dashboard.title,
             display: dashboard.dashboardContent ? (
@@ -117,6 +125,7 @@ class DashboardPage extends React.Component<Props> {
                 source={source}
                 organisationId={organisationId}
                 editable={false}
+                onShowDashboard={handleShowDashboard}
               />
             ) : (
               <div />
@@ -129,7 +138,11 @@ class DashboardPage extends React.Component<Props> {
         dataFileDashboards?.length === 0 &&
         datamartAnalyticsConfig?.length === 0 &&
         !segmentDashboardTechnicalInformation
-      )
+      ) {
+        const handleShowDashboard = () => {
+          if (onShowDashboard) onShowDashboard(apiDashboards[0]);
+        };
+
         return apiDashboards[0].dashboardContent ? (
           <div className='m-t-40'>
             <ScopedDashboardLayout
@@ -138,11 +151,13 @@ class DashboardPage extends React.Component<Props> {
               schema={apiDashboards[0].dashboardContent}
               source={source}
               editable={false}
+              onShowDashboard={handleShowDashboard}
             />
           </div>
         ) : (
           <div />
         );
+      }
       if (segmentDashboardTechnicalInformation) {
         dashboardTabs.unshift({
           title: formatMessage(messagesDashboardPage.technicalInformationTab),

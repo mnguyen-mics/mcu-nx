@@ -1,4 +1,5 @@
 import { injectable } from 'inversify';
+import { DashboardScope } from '../models/dashboards/old-dashboards-model';
 
 export interface DataLayerDefinition {
   [key: string]: any;
@@ -15,6 +16,16 @@ export interface MicsWindow extends Window {
 
 export interface ITagService {
   pushPageView: (datalayer?: DataLayerDefinition) => void;
+  pushDashboardView: (
+    scope: DashboardScope,
+    id: string,
+    title: string,
+    numberCharts: number,
+    otqlQueries: number,
+    activitiesAnalyticsQueries: number,
+    collectionVolumesQueries: number,
+    datafileQueries: number,
+  ) => void;
   addUserAccountProperty: (userAccountId: string) => void;
   setUserProperties: (user: { id: string }) => void;
   googleAnalyticsTrack: (pathname: string) => void;
@@ -26,6 +37,30 @@ export class TagService implements ITagService {
   pushPageView = (datalayer?: DataLayerDefinition): void => {
     if ((window as any).mics && (window as any).mics.push) {
       (window as any).mics.push('PageView', datalayer ? datalayer : {});
+    }
+  };
+
+  pushDashboardView = (
+    scope: DashboardScope,
+    id: string,
+    title: string,
+    numberCharts: number,
+    otqlQueries: number,
+    activitiesAnalyticsQueries: number,
+    collectionVolumesQueries: number,
+    datafileQueries: number,
+  ): void => {
+    if ((window as any).mics && (window as any).mics.push) {
+      (window as any).mics.push('DashboardView', {
+        scope: scope,
+        id: id,
+        title: title,
+        number_charts: numberCharts,
+        otql_queries: otqlQueries,
+        activities_analytics_queries: activitiesAnalyticsQueries,
+        collection_volumes_queries: collectionVolumesQueries,
+        datafile_queries: datafileQueries,
+      });
     }
   };
 

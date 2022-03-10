@@ -80,6 +80,9 @@ export interface AbstractSource {
   type: SourceType;
   series_title?: string;
 }
+export interface AbstractParentSource extends AbstractSource {
+  sources: AbstractSource[];
+}
 export interface AnalyticsSource<M, D> extends AbstractSource {
   query_json: ReportRequestBody<M, D>;
   adapt_to_scope?: boolean;
@@ -100,9 +103,7 @@ export interface MetricChartProps {
   format?: MetricChartFormat;
 }
 
-export interface AggregationSource extends AbstractSource {
-  sources: AbstractSource[];
-}
+export interface AggregationSource extends AbstractParentSource {}
 
 export type Order = `descending` | `ascending`;
 
@@ -112,23 +113,19 @@ export interface IndexOptions {
   limit?: number;
 }
 
-export interface IndexSource extends AbstractSource {
-  sources: AbstractSource[];
+export interface IndexSource extends AbstractParentSource {
   options: IndexOptions;
 }
 
-export interface RatioSource extends AbstractSource {
-  sources: AbstractSource[];
-}
+export interface RatioSource extends AbstractParentSource {}
 
 export interface DateOptions {
   format?: string;
   buckets?: DateOptions;
 }
 
-export interface DateFormatSource extends AbstractSource {
+export interface DateFormatSource extends AbstractParentSource {
   date_options: DateOptions;
-  sources: AbstractSource[];
 }
 
 export declare type ModelType = 'CHANNELS' | 'SEGMENTS' | 'COMPARTMENTS';
@@ -138,9 +135,8 @@ export interface DecoratorsOptions {
   buckets?: DecoratorsOptions;
 }
 
-export interface GetDecoratorsSource extends AbstractSource {
+export interface GetDecoratorsSource extends AbstractParentSource {
   decorators_options: DecoratorsOptions;
-  sources: AbstractSource[];
 }
 
 export interface DataFileSource extends AbstractSource {

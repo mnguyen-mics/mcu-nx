@@ -44,6 +44,7 @@ interface DashboardPageWrapperProps {
   DatamartUsersAnalyticsWrapper?: React.ComponentClass<DatamartUsersAnalyticsWrapperProps>;
   DashboardWrapper?: React.ComponentClass<DashboardWrapperProps>;
   contextualTargetingTab?: React.ReactNode;
+  onShowDashboard?: (dpc: DashboardPageContent) => void;
 }
 
 type Props = DashboardPageWrapperProps &
@@ -136,6 +137,8 @@ class DashboardPageWrapper extends React.Component<Props, State> {
           ? (res[res.length > 1 ? 1 : 0] as DashboardPageContent[]).map(dpc => {
               if (!dpc.dashboardContent && defaultContentForApiDashboards) {
                 const defaultContent: DashboardPageContent = {
+                  dashboardRegistrationId: dpc.dashboardRegistrationId,
+                  scopes: dpc.scopes,
                   title: dpc.title,
                   dashboardContent: defaultDashboardContent,
                 };
@@ -182,6 +185,7 @@ class DashboardPageWrapper extends React.Component<Props, State> {
       DatamartUsersAnalyticsWrapper,
       DashboardWrapper,
       contextualTargetingTab,
+      onShowDashboard,
     } = this.props;
 
     const { isLoading, dataFileDashboards, apiDashboards } = this.state;
@@ -219,6 +223,10 @@ class DashboardPageWrapper extends React.Component<Props, State> {
         apiDashboardsOpt = apiDashboards;
       }
 
+      const handleOnShowDashboard = (d: DashboardPageContent) => {
+        if (onShowDashboard) onShowDashboard(d);
+      };
+
       return (
         <DashboardPage
           className={`mcs-dashboardPageContainer ${className}`}
@@ -239,6 +247,7 @@ class DashboardPageWrapper extends React.Component<Props, State> {
           DashboardWrapper={DashboardWrapper}
           DatamartUsersAnalyticsWrapper={DatamartUsersAnalyticsWrapper}
           contextualTargetingTab={contextualTargetingTab}
+          onShowDashboard={handleOnShowDashboard}
         />
       );
     }
