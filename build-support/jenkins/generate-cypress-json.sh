@@ -43,7 +43,7 @@ else
 fi
 
 DEV_MAIL="dev@mediarithmics.com"
-DEV_PWD='AH9zk3ekLzYse6MhCLQSpzoD64aqQdGPsBCLfDxy'
+DEV_PWD='kpkQrULCeVVGKtKL4gYFUExcX5mxzAdscTdv7Qu4'
 API_TOKEN='api:W1EcVPjvsJym4LP+joqPEs2uukoPV6XxpEcF35mTf7ymSdJNKL+gURzY04DrooM4';
 
 set -u

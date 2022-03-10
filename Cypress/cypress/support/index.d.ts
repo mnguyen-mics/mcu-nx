@@ -84,6 +84,15 @@ declare namespace Cypress {
     createPluginVersion(pluginId: string, json?: object): Chainable<any>;
 
     /**
+     *
+     * @param organisationId
+     * @param accessToken
+     * @example
+     * cy.createAsset('504','accessToken')
+     */
+    createAsset(organisationId: string, accessToken: string): Chainable<any>;
+
+    /**
      * Save local storage between two tests in a single test suite.
      * Use this in afterEach method !
      * @example
