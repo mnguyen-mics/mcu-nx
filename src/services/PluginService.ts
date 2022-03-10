@@ -54,6 +54,13 @@ interface PostPluginPresetResource {
   properties: PluginPresetProperty[];
 }
 
+interface PluginVersionCreateRequest {
+  version_id: string;
+  maintainer_id?: string;
+  max_qps?: number;
+  plugin_properties: PropertyResourceShape[];
+}
+
 export interface IPluginService {
   getPlugins: (
     options: GetPluginOptions,
@@ -68,6 +75,10 @@ export interface IPluginService {
   getPluginVersion: (
     pluginId: string,
     versionId: string,
+  ) => Promise<DataResponse<PluginVersionResource>>;
+  createPluginVersion: (
+    pluginId: string,
+    options: PluginVersionCreateRequest,
   ) => Promise<DataResponse<PluginVersionResource>>;
   getPluginVersionProperties: (
     pluginId: string,
@@ -234,6 +245,13 @@ export class PluginService implements IPluginService {
   ): Promise<DataResponse<PluginVersionResource>> {
     const endpoint = `plugins/${pluginId}/versions/${versionId}`;
     return ApiService.getRequest(endpoint);
+  }
+  createPluginVersion(
+    pluginId: string,
+    options: PluginVersionCreateRequest,
+  ): Promise<DataResponse<PluginVersionResource>> {
+    const endpoint = `plugins/${pluginId}/versions`;
+    return ApiService.postRequest(endpoint, options);
   }
   getPluginVersionProperties(
     pluginId: string,
