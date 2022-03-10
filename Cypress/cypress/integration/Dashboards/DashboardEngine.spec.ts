@@ -86,7 +86,7 @@ describe('Test the creation of a job instance', () => {
               cy.get('.mcs-chart_header_title').eq(1).should('contain', 'Metric 2');
               cy.get('.mcs-chart_header_title').eq(2).should('contain', 'Metric 3');
             });
-          cy.get('.mcs-chart_arrow_down').eq(0).click();
+          cy.get('.mcs-chart_arrow_down').eq(0).click({ force: true });
           cy.get('.mcs-chart_arrow_down').eq(1).click({ force: true });
           cy.get('.mcs-card')
             .eq(0)
@@ -95,7 +95,7 @@ describe('Test the creation of a job instance', () => {
               cy.get('.mcs-chart_header_title').eq(1).should('contain', 'Metric 3');
               cy.get('.mcs-chart_header_title').eq(2).should('contain', 'Metric 1');
             });
-          cy.get('.mcs-chart_delete').eq(3).click();
+          cy.get('.mcs-chart_delete').eq(3).click({ force: true });
           cy.contains('Yes').click();
           cy.get('.mcs-card')
             .eq(1)
@@ -106,7 +106,6 @@ describe('Test the creation of a job instance', () => {
           cy.get('.mcs-chartEdition-header-close').click();
           cy.get('.mcs-dashboardEditorActionBarSaveButton').click();
           cy.get('.mcs-notifications').should('contain', 'Your dashboard has been saved');
-          cy.contains('WISYWIG Dashboard').click();
           cy.get('.mcs-card')
             .eq(0)
             .within(() => {
@@ -154,7 +153,7 @@ describe('Test the creation of a job instance', () => {
           }).then(() => {
             cy.get('.mcs-sideBar-menuItem_Dashboards').eq(0).click();
             cy.contains('Edit Adjustments Dashboard').click();
-            cy.get('.mcs-chart_edit').click();
+            cy.get('.mcs-chart_edit').click({ force: true });
             cy.get('.mcs-chartMetaDataInfo_query_item_input')
               .should('have.length', 2)
               .eq(0)
@@ -211,6 +210,49 @@ describe('Test the creation of a job instance', () => {
           }).then(contentRespone => {
             expect(contentRespone.body.data.content.sections[0].cards[0].x).to.be.gt(0);
           });
+        });
+      });
+    });
+  });
+
+  it('should test card and section adding', () => {
+    cy.readFile('cypress/fixtures/init_infos.json').then(data => {
+      cy.createDashboard(
+        data.accessToken,
+        data.organisationId,
+        'Add Card And Section',
+        ['home'],
+        [],
+        [],
+      ).then(dashboardResponse => {
+        cy.request({
+          url: `${Cypress.env('apiDomain')}/v1/dashboards/${
+            dashboardResponse.body.data.id
+          }/content`,
+          method: 'PUT',
+          headers: { Authorization: data.accessToken },
+          body: dragAndDropContent(),
+        }).then(() => {
+          cy.get('.mcs-sideBar-menuItem_Dashboards').eq(0).click();
+          cy.contains('Add Card And Section').click();
+          cy.get('.mcs-section_addCardButton').click();
+          cy.get('.mcs-dashboardLayout_add_section').click();
+          cy.get('.mcs-section_addCardButton').eq(1).click({ force: true });
+          cy.get('.mcs-dashboardEditorActionBarSaveButton').click();
+          cy.reload();
+          cy.get('.mcs-dashboardLayout_card').eq(1).scrollIntoView();
+          cy.get('.mcs-dashboardLayout_card').should('have.length', 3);
+          cy.get('.mcs-section').should('have.length', 2);
+          cy.get('.mcs-sectionTitleEditionPanel_arrow_down').click();
+          cy.get('.mcs-dashboardEditorActionBarSaveButton').click();
+          cy.reload();
+          cy.get('.mcs-section').first().should('not.contain', 'Metrics');
+          cy.get('.mcs-sectionTitleEditionPanel_delete').first().click();
+          cy.contains('Yes').click();
+          cy.get('.mcs-dashboardEditorActionBarSaveButton').click();
+          cy.reload();
+          cy.get('.mcs-section').should('have.length', 1);
+          cy.get('.mcs-dashboardLayout_card').should('have.length', 2);
         });
       });
     });
