@@ -210,3 +210,39 @@ export const editAdjustmentsDashboardContent = (queryId: string) => {
     ],
   };
 };
+
+export const dragAndDropContent = () => {
+  return {
+    sections: [
+      {
+        title: 'First Section',
+        cards: [
+          {
+            x: 0,
+            y: 0,
+            w: 3,
+            h: 3,
+            layout: 'horizontal',
+            charts: [
+              {
+                title: 'Metrics',
+                type: 'Metric',
+                dataset: {
+                  type: 'activities_analytics',
+                  query_json: {
+                    dimensions: [],
+                    metrics: [
+                      {
+                        expression: 'users',
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+};
