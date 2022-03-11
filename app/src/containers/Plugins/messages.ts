@@ -189,6 +189,10 @@ export default defineMessages({
     id: 'plugins.tab.addLayoutFileButton',
     defaultMessage: 'Add a properties layout',
   },
+  addLocaleButton: {
+    id: 'plugins.tab.addLayoutFileButton',
+    defaultMessage: 'Add a locale',
+  },
   layout: {
     id: 'plugins.tab.layout.title',
     defaultMessage: 'Layout',
@@ -216,6 +220,10 @@ export default defineMessages({
   locale: {
     id: 'plugins.tab.propertiesLayout.locale',
     defaultMessage: 'Locale',
+  },
+  content: {
+    id: 'plugins.tab.propertiesLayout.content',
+    defaultMessage: 'Content',
   },
   saveLayout: {
     id: 'plugins.tab.propertiesLayout.saveLayout',
