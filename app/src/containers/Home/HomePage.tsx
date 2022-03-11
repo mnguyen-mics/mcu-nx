@@ -7,6 +7,7 @@ import {
   DashboardPageWrapper,
   ICustomDashboardService,
   IPluginService,
+  ITagService,
   lazyInject,
   TYPES,
   withDatamartSelector,
@@ -19,6 +20,7 @@ import injectNotifications, {
   InjectedNotificationProps,
 } from '../Notifications/injectNotifications';
 import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
+import { DashboardPageContent } from '@mediarithmics-private/advanced-components/lib/models/dashboards/old-dashboards-model';
 
 const messages = defineMessages({
   pluginsPerType: {
@@ -46,6 +48,8 @@ class HomePage extends React.Component<Props, State> {
   private _dashboardService: ICustomDashboardService;
   @lazyInject(TYPES.IPluginService)
   private _pluginService: IPluginService;
+  @lazyInject(TYPES.ITagService)
+  private _tagService: ITagService;
 
   constructor(props: Props) {
     super(props);
@@ -122,6 +126,22 @@ class HomePage extends React.Component<Props, State> {
   };
 
   render() {
+    const handleOnShowDashboard = (dashboard: DashboardPageContent) => {
+      if (dashboard.dashboardRegistrationId) {
+        const stats = this._dashboardService.countDashboardsStats(dashboard);
+        this._tagService.pushDashboardView(
+          'console',
+          dashboard.dashboardRegistrationId,
+          dashboard.title,
+          stats.numberCharts,
+          stats.otqlQueries,
+          stats.activitiesAnalyticsQueries,
+          stats.collectionVolumesQueries,
+          stats.datafileQueries,
+        );
+      }
+    };
+
     const {
       selectedDatamartId,
       match: {
@@ -139,6 +159,7 @@ class HomePage extends React.Component<Props, State> {
               datamartId={selectedDatamartId}
               fetchApiDashboards={this.fetchApiDashboards}
               isFullScreenLoading={false}
+              onShowDashboard={handleOnShowDashboard}
             />
             {!isLoading && (
               <Card

@@ -8,6 +8,7 @@ import routes from '../../routes/routes';
 import { LayoutManager } from '../../components/layoutManager';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { Notifications } from '../Notifications';
+import Datalayer from '../Main/Datalayer';
 
 type JoinedProps = InjectedIntlProps & RouteComponentProps<{ organisationId: string }>;
 
@@ -27,16 +28,21 @@ class MainUsingKeycloak extends React.Component<JoinedProps> {
             : route.layout === 'edit'
             ? route.editComponent
             : route.contentComponent;
+
+        const datalayer = route.datalayer;
+
         return (
           <RenderOnAuthenticated
             requiredFeatures={route.requiredFeature}
             requireDatamart={route.requireDatamart}
           >
-            <Notifications />
-            <div className='drawer-wrapper'>
-              <DrawerManager />
-            </div>
-            <LayoutManager routeComponent={<ElementTag />} />
+            <Datalayer datalayer={datalayer}>
+              <Notifications />
+              <div className='drawer-wrapper'>
+                <DrawerManager />
+              </div>
+              <LayoutManager routeComponent={<ElementTag />} />
+            </Datalayer>
           </RenderOnAuthenticated>
         );
       };
