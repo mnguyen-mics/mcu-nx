@@ -374,3 +374,11 @@ export interface DashboardContentStats {
   collectionVolumesQueries: number; // Total number of collection volumes queries in the dashboard
   datafileQueries: number; // Total number of datafile data sources in the dashboard
 }
+
+export interface DataFileDashboardResource {
+  id: string;
+  type: DashboardType;
+  datamart_id: string;
+  name: string;
+  components: ComponentLayout[];
+}
