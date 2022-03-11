@@ -15,8 +15,7 @@ describe('Test the creation of a new plugin', () => {
 
   it('Should create a plugin', () => {
     cy.readFile('cypress/fixtures/init_infos.json').then(data => {
-      cy.get('.mcs-sideBar-subMenu_Plugins').click();
-      cy.get('.mcs-sideBar-subMenuItem_Plugin').click();
+      cy.get('.mcs-sideBar-menuItem_Plugins').click();
 
       // Create first plugin
       cy.get('.mcs-pluginsListActionBar_createPluginButton').click();
@@ -105,9 +104,23 @@ describe('Test the creation of a new plugin', () => {
     });
   });
 
-  it('Should go to the overview page', () => {
-    cy.get('.mcs-sideBar-subMenu_Plugins').click();
-    cy.get('.mcs-sideBar-subMenuItem_Overview').click();
-    cy.get('.mcs-breadcrumb').should('contain', 'Overview');
+  it('Should have an error when missing plugin type during plugin creation', () => {
+    cy.fixture('init_infos').then(data => {
+      cy.get('.mcs-sideBar-menuItem_Plugins').click();
+      cy.get('.mcs-pluginsListActionBar_createPluginButton').click();
+      cy.get('.mcs-pluginEdit-drawer-form-input-organisationChoice').click();
+      cy.get('.mcs-pluginEdit-drawer-form-input-organisationChoice').type(
+        data.organisationName + '{enter}',
+      );
+      const groupId = faker.random.word().toLowerCase().replace(/\s/g, '');
+      cy.get('.mcs-pluginEdit-drawer-form-input-groupId').type(groupId);
+      const artifactId = faker.random.word().toLowerCase().replace(/\s/g, '');
+      cy.get('.mcs-pluginEdit-drawer-form-input-artifactId').type(artifactId);
+      cy.get('.mcs-pluginEdit-drawer-saveButton').click({ force: true });
+      cy.get('.mcs-notifications_errorDescription').should(
+        'contain',
+        'plugin_type must be defined',
+      );
+    });
   });
 });
