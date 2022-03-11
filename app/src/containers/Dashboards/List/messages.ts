@@ -65,4 +65,40 @@ export default defineMessages({
     id: 'dashboards.table.modifyAction',
     defaultMessage: 'Edit',
   },
+  archiveDashboard: {
+    id: 'dashboards.table.archiveAction',
+    defaultMessage: 'Archive',
+  },
+  deleteDashboard: {
+    id: 'dashboards.table.deleteAction',
+    defaultMessage: 'Delete',
+  },
+  dashboardDeleteConfirmationText: {
+    id: 'dashboard.table.dashboardDeleteConfirmationText',
+    defaultMessage: 'Are you sure you want to delete this dashboard?',
+  },
+  dashboardArchiveConfirmationText: {
+    id: 'dashboard.table.dashboardArchiveConfirmationText',
+    defaultMessage: 'Are you sure you want to archive this dashboard?',
+  },
+  confirm: {
+    id: 'dashboard.table.confirm',
+    defaultMessage: 'Yes',
+  },
+  decline: {
+    id: 'dashboard.table.decline',
+    defaultMessage: 'No',
+  },
+  dashboardTableConfirmation: {
+    id: 'dashboard.table.confirmation',
+    defaultMessage: 'Confirmation',
+  },
+  dashboardDeleteSuccess: {
+    id: 'dashboard.table.dashboardDeleteSuccess',
+    defaultMessage: 'Dashboard successfully deleted',
+  },
+  dashboardArchiveSuccess: {
+    id: 'dashboard.table.dashboardArchiveSuccess',
+    defaultMessage: 'Dashboard successfully archived',
+  },
 });

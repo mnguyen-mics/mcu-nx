@@ -2,7 +2,7 @@ import * as React from 'react';
 import lodash from 'lodash';
 import { compose } from 'recompose';
 import { withRouter, RouteComponentProps } from 'react-router';
-import { Layout, Tag } from 'antd';
+import { Layout, Modal, Tag } from 'antd';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 import ItemList, { Filters } from '../../../components/ItemList';
 import { PAGINATION_SEARCH_SETTINGS } from '../../../utils/LocationSearchHelper';
@@ -192,6 +192,65 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
     );
   };
 
+  onDeleteActionDashboard = (dashboard: CustomDashboardResource) => {
+    const {
+      match: {
+        params: { organisationId },
+      },
+      intl,
+    } = this.props;
+    const { filters } = this.state;
+
+    const onOk = () => {
+      this._dashboardService.deleteDashboard(dashboard.id, organisationId).then(v => {
+        this.props.notifySuccess({
+          message: intl.formatMessage(messages.dashboardDeleteSuccess),
+          description: '',
+        });
+        this.fetchDashboardList(organisationId, filters);
+      });
+    };
+    Modal.confirm({
+      title: intl.formatMessage(messages.dashboardTableConfirmation),
+      content: intl.formatMessage(messages.dashboardDeleteConfirmationText),
+      okText: intl.formatMessage(messages.confirm),
+      cancelText: intl.formatMessage(messages.decline),
+      onOk,
+    });
+  };
+
+  onArchiveActionDashboard = (dashboard: CustomDashboardResource) => {
+    const {
+      match: {
+        params: { organisationId },
+      },
+      intl,
+    } = this.props;
+    const { filters } = this.state;
+
+    const dashboardCopy: CustomDashboardResource = JSON.parse(JSON.stringify(dashboard));
+    dashboardCopy.archived = true;
+
+    const onOk = () => {
+      this._dashboardService
+        .updateDashboard(dashboard.id, organisationId, dashboardCopy)
+        .then(v => {
+          this.props.notifySuccess({
+            message: intl.formatMessage(messages.dashboardArchiveSuccess),
+            description: '',
+          });
+          this.fetchDashboardList(organisationId, filters);
+        });
+    };
+    Modal.confirm({
+      title: intl.formatMessage(messages.dashboardTableConfirmation),
+      content: intl.formatMessage(messages.dashboardArchiveConfirmationText),
+      okText: intl.formatMessage(messages.confirm),
+      cancelText: intl.formatMessage(messages.decline),
+      onOk,
+    });
+  };
+
   render() {
     const {
       intl: { formatMessage },
@@ -206,6 +265,15 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
           {
             message: formatMessage(messages.modifyDashboard),
             callback: this.onClickDashboard,
+          },
+          {
+            message: formatMessage(messages.archiveDashboard),
+            callback: this.onArchiveActionDashboard,
+          },
+          {
+            className: 'mcs-dashboardTable_deleteAction',
+            message: formatMessage(messages.deleteDashboard),
+            callback: this.onDeleteActionDashboard,
           },
         ],
       },
