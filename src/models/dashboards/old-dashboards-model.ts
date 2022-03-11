@@ -366,3 +366,11 @@ export type DimensionsWithLabel = { label: string; value: string };
 export interface DimensionsList {
   dimensions: DimensionsWithLabel[];
 }
+
+export interface DashboardContentStats {
+  numberCharts: number; // Total number of charts in the dashboard
+  otqlQueries: number; // Total number of OTQL queries in the dashboard
+  activitiesAnalyticsQueries: number; // Total number of activities analytics queries in the dashboard
+  collectionVolumesQueries: number; // Total number of collection volumes queries in the dashboard
+  datafileQueries: number; // Total number of datafile data sources in the dashboard
+}
