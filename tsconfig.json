@@ -8,7 +8,7 @@
     "checkJs": false,
     "jsx": "react",
     "target": "es6",
-    "lib": ["dom", "es7"],
+    "lib": ["dom", "es7", "ES2019"],
     "noEmitOnError": true,
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
