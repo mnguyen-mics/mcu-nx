@@ -117,7 +117,7 @@ class DashboardsActionbar extends React.Component<Props, DashboardsActionbarStat
         <div className='mcs-actionbar_innerElementsPanel'>
           {innerElement}
           <Link to={`/o/${organisationId}${dashboardsDefinition.dashboardCreate.path}`}>
-            <Button className='mcs-primary' type='primary'>
+            <Button className='mcs-primary mcs-dashboardActionBar_new_button' type='primary'>
               <FormattedMessage {...messages.newDashboard} />
             </Button>
           </Link>

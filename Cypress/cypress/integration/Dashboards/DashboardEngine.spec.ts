@@ -257,4 +257,16 @@ describe('Test the creation of a job instance', () => {
       });
     });
   });
+
+  it('should test the ui improvements on dashboards', () => {
+    cy.readFile('cypress/fixtures/init_infos.json').then(data => {
+      cy.get('.mcs-sideBar-menuItem_Dashboards').eq(0).click();
+      cy.get('.mcs-dashboardActionBar_new_button').click();
+      cy.get('.mcs-dashboardEditor_title').find('input').clear();
+      cy.get('.mcs-dashboardEditorActionBarSaveButton').click();
+      cy.url().should('contain', '/create');
+      cy.get('.mcs-dashboardEditorActionBarCancelButton').click();
+      cy.url().should('contain', `o/${data.organisationId}/dashboards?`);
+    });
+  });
 });
