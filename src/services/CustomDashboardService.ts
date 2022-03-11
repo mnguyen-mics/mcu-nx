@@ -65,10 +65,21 @@ export interface ICustomDashboardService {
     filterScope?: DashboardScope,
     filterScopedId?: string,
   ) => Promise<DashboardPageContent[]>;
+
+  deleteDashboard: (dashboardId: string, organisationId: string) => Promise<void>;
 }
 
 @injectable()
 export default class CustomDashboardService implements ICustomDashboardService {
+  async deleteDashboard(dashboardId: string, organisationId: string): Promise<void> {
+    const endpoint = `dashboards/${dashboardId}`;
+    const options = {
+      searching_organisation_id: organisationId,
+      organisation_id: organisationId,
+    };
+    return ApiService.deleteRequest<void>(endpoint, options);
+  }
+
   getDashboards(
     organisationId: string,
     filters: object = {},
