@@ -106,7 +106,8 @@
     "url-loader": "4.1.1",
     "web-vitals": "^1.1.1",
     "whatwg-fetch": "^3.5.0",
-    "xlsx": "^0.18.0"
+    "xlsx": "^0.18.0",
+    "yup": "^0.29.1"
   },
   "scripts": {
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}' && prettier -c .",
@@ -149,6 +150,7 @@
     "@types/recompose": "^0.24.7",
     "@types/redux-actions": "^2.6.1",
     "@types/redux-form": "^8.3.3",
+    "@types/yup": "^0.29.7",
     "antd": "4.16.13",
     "babel-loader": "^8.2.2",
     "copy-webpack-plugin": "^6.0.1",

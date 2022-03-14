@@ -1,6 +1,8 @@
 /* eslint-disable import/extensions */
+import * as yup from 'yup';
+import log from '../utils/Logger';
 import { PaginatedApiParam } from './../utils/ApiHelper';
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import {
   CustomDashboardResource,
   CustomDashboardContentResource,
@@ -14,15 +16,80 @@ import {
   DashboardsOptions,
   DashboardScope,
   DashboardContentStats,
+  DataFileDashboardResource,
 } from '../models/dashboards/old-dashboards-model';
 import { AbstractParentSource, AbstractSource } from './ChartDatasetService';
+import { DashboardType } from '../models/dashboards/dashboards';
+import { myDashboards } from '../utils/DefaultDashboards';
+import { TYPES } from '../constants/types';
+import { IDataFileService } from './DataFileService';
 
-export interface GetCustomDashboardsOption extends PaginatedApiParam {
+export interface GetDashboardsOptions extends PaginatedApiParam {
+  organisation_id?: string;
   datamartId?: string;
-  archived?: boolean;
-  firstResult?: number;
-  maxResults?: number;
+  type?: DashboardType;
+  keywords?: string;
+  status?: string[];
+  order_by?: string[];
 }
+
+const readFile = (b: Blob): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      return resolve(reader.result as string);
+    };
+    reader.onerror = r => {
+      return reject(r);
+    };
+    reader.readAsText(b);
+  });
+
+const dashboardsSchema = yup.array().of(
+  yup.object().shape({
+    id: yup.string().required(),
+    type: yup.string().required(),
+    datamart_id: yup.string().required(),
+    name: yup.string().required(),
+    components: yup.array(
+      yup.object().shape({
+        layout: yup.object().shape({
+          i: yup.string(),
+          x: yup.number().required(),
+          y: yup.number().required(),
+          w: yup.number().required(),
+          h: yup.number().required(),
+        }),
+        component: yup
+          .object()
+          .required()
+          .shape({
+            id: yup.string().required(),
+            component_type: yup
+              .string()
+              .required()
+              .oneOf([
+                'MAP_BAR_CHART',
+                'MAP_PIE_CHART',
+                'DATE_AGGREGATION_CHART',
+                'COUNT',
+                'PERCENTAGE',
+                'GAUGE_PIE_CHART',
+                'MAP_STACKED_BAR_CHART',
+                'MAP_INDEX_CHART',
+                'WORLD_MAP_CHART',
+                'COUNT_BAR_CHART',
+                'COUNT_PIE_CHART',
+                'TOP_INFO_COMPONENT',
+                'MAP_RADAR_CHART',
+              ]),
+            title: yup.string().required(),
+            description: yup.string(),
+          }),
+      }),
+    ),
+  }),
+);
 
 export interface ICustomDashboardService {
   getDashboards: (
@@ -71,10 +138,36 @@ export interface ICustomDashboardService {
   deleteDashboard: (dashboardId: string, organisationId: string) => Promise<void>;
 
   countDashboardsStats(dashboard: DashboardPageContent): DashboardContentStats;
+
+  getDataFileDashboards: (
+    organisationId: string,
+    datamartId: string,
+    type: 'HOME' | 'SEGMENT',
+    options?: GetDashboardsOptions,
+  ) => Promise<DataListResponse<DataFileDashboardResource>>;
+
+  getDataFileSegmentDashboards: (
+    organisationId: string,
+    datamartId: string,
+    segmentId: string,
+    options?: GetDashboardsOptions,
+  ) => Promise<DataListResponse<DataFileDashboardResource>>;
+
+  getDataFileStandardSegmentBuilderDashboards: (
+    organisationId: string,
+    datamartId: string,
+    standardSegmentBuilderId: string,
+    options?: GetDashboardsOptions,
+  ) => Promise<DataListResponse<DataFileDashboardResource>>;
+
+  getDefaultDashboard: (dashboardId: string) => Promise<DataResponse<DataFileDashboardResource>>;
 }
 
 @injectable()
 export default class CustomDashboardService implements ICustomDashboardService {
+  @inject(TYPES.IDataFileService)
+  private _datafileService!: IDataFileService;
+
   async deleteDashboard(dashboardId: string, organisationId: string): Promise<void> {
     const endpoint = `dashboards/${dashboardId}`;
     const options = {
@@ -322,5 +415,173 @@ export default class CustomDashboardService implements ICustomDashboardService {
         numberCharts: chartsList.length,
       };
     } else return initialStats;
+  }
+
+  getDataFileDashboards(
+    organisationId: string,
+    datamartId: string,
+    type: 'HOME' | 'SEGMENT' | 'AUDIENCE_BUILDER',
+    options: GetDashboardsOptions = {},
+  ): Promise<DataListResponse<DataFileDashboardResource>> {
+    const hardcodedDashboards = myDashboards.filter(
+      d => d.datamart_id === datamartId && d.type === type,
+    );
+
+    return new Promise((resolve, reject) => {
+      return this._datafileService
+        .getDatafileData(
+          `mics://data_file/tenants/${organisationId}/dashboards/${datamartId}/${type}.json`,
+        )
+        .then((b: Blob) => {
+          return readFile(b);
+        })
+        .then(s => {
+          // validate with yup
+          return JSON.parse(s);
+        })
+        .then((s: object) => {
+          return dashboardsSchema.validate(s).then(v => {
+            if ((v as any).name === 'ValidationError') {
+              throw new Error((v as any).message);
+            }
+            return v as any;
+          });
+        })
+        .then(s => {
+          return resolve({
+            status: 'ok' as any,
+            data: s as DataFileDashboardResource[],
+            count: hardcodedDashboards.filter(d => d.datamart_id === datamartId).length,
+          });
+        })
+        .catch(e => {
+          log.debug(e);
+          return resolve({
+            status: 'ok' as any,
+            data: hardcodedDashboards as DataFileDashboardResource[],
+            count: hardcodedDashboards.filter(d => d.datamart_id === datamartId).length,
+          });
+        });
+    });
+  }
+
+  getDataFileSegmentDashboards(
+    organisationId: string,
+    datamartId: string,
+    segmentId: string,
+    options: GetDashboardsOptions = {},
+  ): Promise<DataListResponse<DataFileDashboardResource>> {
+    const hardcodedDashboards = myDashboards.filter(
+      d => d.datamart_id === datamartId && d.type === 'SEGMENT',
+    );
+
+    return new Promise((resolve, reject) => {
+      return this._datafileService
+        .getDatafileData(
+          `mics://data_file/tenants/${organisationId}/dashboards/${datamartId}/SEGMENT-${segmentId}.json`,
+        )
+        .then(
+          d => d,
+          () =>
+            this._datafileService.getDatafileData(
+              `mics://data_file/tenants/${organisationId}/dashboards/${datamartId}/SEGMENT.json`,
+            ),
+        )
+        .then((b: Blob) => {
+          return readFile(b);
+        })
+        .then(s => {
+          // validate with yup
+          return JSON.parse(s);
+        })
+        .then((s: object) => {
+          return dashboardsSchema.validate(s).then(v => {
+            if ((v as any).name === 'ValidationError') {
+              throw new Error((v as any).message);
+            }
+            return v as any;
+          });
+        })
+        .then(s => {
+          return resolve({
+            status: 'ok' as any,
+            data: s as DataFileDashboardResource[],
+            count: hardcodedDashboards.filter(d => d.datamart_id === datamartId).length,
+          });
+        })
+        .catch(e => {
+          log.debug(e);
+          return resolve({
+            status: 'ok' as any,
+            data: hardcodedDashboards as DataFileDashboardResource[],
+            count: hardcodedDashboards.filter(d => d.datamart_id === datamartId).length,
+          });
+        });
+    });
+  }
+
+  getDataFileStandardSegmentBuilderDashboards(
+    organisationId: string,
+    datamartId: string,
+    standardSegmentBuilderId: string,
+    options: GetDashboardsOptions = {},
+  ): Promise<DataListResponse<DataFileDashboardResource>> {
+    const hardcodedDashboards = myDashboards.filter(
+      d => d.datamart_id === datamartId && d.type === 'AUDIENCE_BUILDER',
+    );
+
+    return new Promise((resolve, reject) => {
+      return this._datafileService
+        .getDatafileData(
+          `mics://data_file/tenants/${organisationId}/dashboards/${datamartId}/AUDIENCE_BUILDER-${standardSegmentBuilderId}.json`,
+        )
+        .then(
+          d => d,
+          () =>
+            this._datafileService.getDatafileData(
+              `mics://data_file/tenants/${organisationId}/dashboards/${datamartId}/AUDIENCE_BUILDER.json`,
+            ),
+        )
+        .then((b: Blob) => {
+          return readFile(b);
+        })
+        .then(s => {
+          // validate with yup
+          return JSON.parse(s);
+        })
+        .then((s: object) => {
+          return dashboardsSchema.validate(s).then(v => {
+            if ((v as any).name === 'ValidationError') {
+              throw new Error((v as any).message);
+            }
+            return v as any;
+          });
+        })
+        .then(s => {
+          return resolve({
+            status: 'ok' as any,
+            data: s as DataFileDashboardResource[],
+            count: hardcodedDashboards.filter(d => d.datamart_id === datamartId).length,
+          });
+        })
+        .catch(e => {
+          log.debug(e);
+          return resolve({
+            status: 'ok' as any,
+            data: hardcodedDashboards as DataFileDashboardResource[],
+            count: hardcodedDashboards.filter(d => d.datamart_id === datamartId).length,
+          });
+        });
+    });
+  }
+
+  getDefaultDashboard(dashboardId: string): Promise<DataResponse<DataFileDashboardResource>> {
+    // const endpoint = `dashboards/${dashboardId}`;
+    // return ApiService.getRequest(endpoint);
+    const foundDashboard = myDashboards.find(d => d.id === dashboardId);
+    if (foundDashboard) {
+      return Promise.resolve({ status: 'ok' as any, data: foundDashboard });
+    }
+    return Promise.reject({ status: 'error' as any, message: 'NOT_FOUND' });
   }
 }
