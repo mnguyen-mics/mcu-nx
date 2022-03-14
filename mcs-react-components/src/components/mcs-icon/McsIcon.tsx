@@ -1,3 +1,4 @@
+import { HomeOutlined } from '@ant-design/icons';
 import * as React from 'react';
 
 export type McsIconType =
@@ -30,6 +31,7 @@ export type McsIconType =
   | 'gears'
   | 'goals-rounded'
   | 'goals'
+  | 'home'
   | 'image'
   | 'info'
   | 'laptop'
@@ -60,6 +62,8 @@ export type McsIconType =
   | 'video'
   | 'warning';
 
+const antdIcons: McsIconType[] = ['home'];
+
 export interface McsIconProps {
   type: McsIconType;
   styleIcon?: React.CSSProperties;
@@ -70,11 +74,16 @@ class McsIcon extends React.Component<
 > {
   render() {
     const { type, styleIcon, className, ...rest } = this.props;
-    return (
-      <span className={`mcs-icon ${className ? className : ''}`} {...rest}>
-        <i className={`mcs-${type}`} style={styleIcon ? styleIcon : {}} />
-      </span>
-    );
+
+    if (antdIcons.includes(type)) {
+      if (type === 'home') return <HomeOutlined className={'mcs-icon'} style={rest.style} />;
+      else return <span />;
+    } else
+      return (
+        <span className={`mcs-icon ${className ? className : ''}`} {...rest}>
+          <i className={`mcs-${type}`} style={styleIcon ? styleIcon : {}} />
+        </span>
+      );
   }
 }
 
