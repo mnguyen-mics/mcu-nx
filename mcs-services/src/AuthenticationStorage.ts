@@ -1,16 +1,15 @@
 //import * as lodash from 'lodash';
-import * as moment from 'moment';
+import * as moment from "moment";
 
-import LocalStorage from './LocalStorage';
-import log from './Log';
+import LocalStorage from "./LocalStorage";
+import log from "./Log";
 
+const ACCESS_TOKEN = "access_token";
+const ACCESS_TOKEN_EXPIRATION_DATE = "access_token_expiration_date";
+const REFRESH_TOKEN = "refresh_token";
 
-const ACCESS_TOKEN = 'access_token';
-const ACCESS_TOKEN_EXPIRATION_DATE = 'access_token_expiration_date';
-const REFRESH_TOKEN = 'refresh_token';
-
-const getAccessToken = () : string => {
-  log.trace('fetching access token');
+const getAccessToken = (): string => {
+  log.trace("fetching access token");
   const token = LocalStorage.getItem(ACCESS_TOKEN);
   log.trace(`found ${token}`);
   return token;
@@ -18,7 +17,7 @@ const getAccessToken = () : string => {
 
 const getAccessTokenExpirationDate = () => {
   const timestamp = LocalStorage.getItem(ACCESS_TOKEN_EXPIRATION_DATE);
-  if (timestamp) return moment(timestamp, 'x');
+  if (timestamp) return moment(timestamp, "x");
   return moment(0);
 };
 
@@ -28,10 +27,10 @@ const isAuthenticated = () => {
   const isAccessTokenNull = accessToken == null;
   const isAccessTokenExpired = moment().isAfter(expirationDate);
   if (isAccessTokenNull) {
-    log.debug('Access token not found');
+    log.debug("Access token not found");
     return false;
   } else if (isAccessTokenExpired) {
-    log.debug('Access token expired');
+    log.debug("Access token expired");
     return false;
   }
   return true;
@@ -48,10 +47,10 @@ const setAccessToken = (token: string) => {
 };
 
 const setAccessTokenExpirationDate = (expireIn: any) => {
-  let expirationDate = moment().add(1, 'hours');
-  if (expireIn) expirationDate = moment().add(expireIn, 'seconds');
+  let expirationDate = moment().add(1, "hours");
+  if (expireIn) expirationDate = moment().add(expireIn, "seconds");
   LocalStorage.setItem({
-    [ACCESS_TOKEN_EXPIRATION_DATE]: expirationDate.format('x'),
+    [ACCESS_TOKEN_EXPIRATION_DATE]: expirationDate.format("x"),
   });
 };
 

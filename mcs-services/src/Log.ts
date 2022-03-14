@@ -1,4 +1,4 @@
-import * as log from 'loglevel';
+import * as log from "loglevel";
 
 // const IS_PROD = process.env.NODE_ENV === 'production';
 //
@@ -6,6 +6,6 @@ import * as log from 'loglevel';
 //   log.setLevel('DEBUG');
 //}
 
-log.setLevel('trace');
+log.setLevel("trace");
 
 export default log;
