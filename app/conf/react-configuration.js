@@ -70,7 +70,7 @@
   ]
 
   var MCS_CONSTANTS = {
-    'API_URL': 'https://api.mediarithm',
+    'API_URL': 'https://api.mediarithmics.local',
     'ASSETS_URL': 'https://assets.mediarithmics.local',
     'FEATURES': defaultFeatures,
     'SITE_NAME': 'mediarithmics - computing console',
@@ -78,7 +78,7 @@
     'DEVELOPER_CONSOLE_URL': 'https://computing-console-mics.francecentral.cloudapp.azure.com/frontprod/login',
     'USE_GTAG': false,
     'GTAG_ID': 'G-123',
-    'ENABLE_KEYCLOAK': false,
+    'ENABLE_KEYCLOAK': true,
   };
 
   window.MCS_CONSTANTS = MCS_CONSTANTS;
