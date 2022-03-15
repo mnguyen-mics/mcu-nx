@@ -31,6 +31,7 @@ const typeList: McsIconType[] = [
   'gears',
   'goals-rounded',
   'goals',
+  'home',
   'image',
   'info',
   'laptop',
