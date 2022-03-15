@@ -90,7 +90,7 @@ class PluginLayoutForm extends React.Component<Props, State> {
             className='mcs-pluginEdit-drawer-form-item'
           >
             <AceEditor
-              className='mcs-pluginEdit-drawer-form-input'
+              className='mcs-pluginEdit-drawer-form-input mcs-pluginEdit-drawer-form-aceEditor'
               mode={isLayout ? 'json' : undefined}
               value={jsonValue}
               theme='github'
