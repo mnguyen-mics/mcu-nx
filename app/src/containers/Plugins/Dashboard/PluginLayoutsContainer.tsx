@@ -278,10 +278,7 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
           pageSettings={PAGINATION_SEARCH_SETTINGS}
           emptyTable={emptyTable}
         />
-        <Button
-          className='mcs-pluginConfigurationFileTable_addFileButton'
-          onClick={this.openDrawer}
-        >
+        <Button className='mcs-pluginList_actionButton' onClick={this.openDrawer}>
           <PlusOutlined />{' '}
           <FormattedMessage
             {...(isButtonLayout ? messages.addLayoutButton : messages.addLocaleButton)}

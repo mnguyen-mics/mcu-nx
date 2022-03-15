@@ -28,10 +28,28 @@
     font-weight: 400;
     .mcs-pluginEdit-drawer-container {
       position: relative;
-      overflow: hidden;
+      overflow: scroll;
+      .section-header {
+        margin-bottom: 15px;
+        margin-top: 30px;
+      }
+      .mcs-pluginConfigurationFileTable_addNewProperty {
+        // Negative value because of gutter property from Row component
+        // It adds negative margin values to HTLM element
+        margin-left: -8px;
+        height: 40px;
+      }
       .mcs-pluginEdit-drawer-form-label {
-        font-weight: 500;
+        font-weight: bold;
         font-size: 14px;
+      }
+      .mcs-pluginEdit-drawer-form-uploadButton {
+        .ant-btn {
+          height: 40px;
+          margin-top: 10px;
+          width: 170px;
+          text-align: left;
+        }
       }
       .mcs-pluginEdit-drawer-form-description {
         font-size: 10px;
@@ -62,6 +80,19 @@
       }
     }
   }
+  .mcs-pluginEdit-saveButtonContainer {
+    position: absolute;
+    bottom: 0;
+    height: 65px;
+    width: 100%;
+    padding-top: 15px;
+    background-color: @layout-content-background;
+    .mcs-pluginVersionDrawer-saveButton {
+      position: absolute;
+      right: 37px;
+      height: 40px;
+    }
+  }
 }
 
 .mcs-pluginList_filterDropdown {
@@ -73,8 +104,10 @@
     background-color: #ffffff;
     padding: 10px;
     margin-bottom: 10px;
+    border-radius: 4px;
     .mcs-pluginEdit-drawer-delete {
-      margin-top: 35px;
+      margin-top: 49px;
+      font-size: 16px;
     }
   }
 }
@@ -85,4 +118,14 @@
       padding-top: 16px !important;
     }
   }
+}
+
+.mcs-pluginList_actionButton {
+  height: 40px;
+}
+
+.mcs-pluginTabContainer_pluginVersionSelector {
+  padding-left: 10px;
+  width: 240px;
+  margin: 1px 0px 0px 0px;
 }

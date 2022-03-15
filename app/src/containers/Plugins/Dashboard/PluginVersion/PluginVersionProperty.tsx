@@ -151,7 +151,11 @@ class PluginVersionProperty extends React.Component<Props, State> {
             label={<div className='mcs-pluginEdit-drawer-form-label'>{label}</div>}
             className='mcs-pluginEdit-drawer-form-item'
           >
-            <Upload fileList={file ? [file] : []} {...props}>
+            <Upload
+              className='mcs-pluginEdit-drawer-form-uploadButton'
+              fileList={file ? [file] : []}
+              {...props}
+            >
               <Button icon={<UploadOutlined />}>Upload</Button>
             </Upload>
           </Form.Item>

@@ -232,10 +232,7 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
           pageSettings={PAGINATION_SEARCH_SETTINGS}
           emptyTable={emptyTable}
         />
-        <Button
-          className='mcs-pluginConfigurationFileTable_addFileButton'
-          onClick={this.openConfigCreationDrawer}
-        >
+        <Button className='mcs-pluginList_actionButton' onClick={this.openConfigCreationDrawer}>
           <PlusOutlined /> <FormattedMessage {...messages.addFileButton} />
         </Button>
         <Drawer
