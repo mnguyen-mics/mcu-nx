@@ -7,10 +7,10 @@ import { DashboardAvailableFilters } from '../../models/customDashboards/customD
 import { DecoratorsTransformation } from '../../utils/transformations/DecoratorsTransformation';
 import ChannelService, { IChannelService } from '../../services/ChannelService';
 import CompartmentService, { ICompartmentService } from '../../services/CompartmentService';
-import { ModelType } from '../../services/ChartDatasetService';
 import AudienceSegmentService, {
   IAudienceSegmentService,
 } from '../../services/AudienceSegmentService';
+import { ModelType } from '../../models/dashboards/dataset/common';
 
 const { Option } = Select;
 interface DashboardFilterProps {

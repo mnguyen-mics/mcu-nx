@@ -35,15 +35,15 @@ export function formatDate(str: string, format?: string, toUtc?: boolean) {
       const STRICT = true;
       formatted = moment.utc(str, 'x', STRICT).format(format);
       if (formatted === 'Invalid date') {
-        return Promise.reject(`Date ${str} is not formatted correctly`);
+        throw Error(`Date ${str} is not formatted correctly`);
       } else {
-        return Promise.resolve(formatted);
+        return formatted;
       }
     } else {
-      return Promise.resolve(formatted);
+      return formatted;
     }
   } else {
-    return Promise.resolve(str);
+    return str;
   }
 }
 

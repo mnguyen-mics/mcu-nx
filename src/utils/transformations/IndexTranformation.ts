@@ -1,5 +1,5 @@
-import { IndexOptions } from '../../services/ChartDatasetService';
-import { AbstractDataset, AggregateDataset } from '../ChartDataFormater';
+import { IndexOptions } from '../../models/dashboards/dataset/common';
+import { AbstractDataset, AggregateDataset } from '../../models/dashboards/dataset/dataset_tree';
 import { percentages } from './PercentagesTransformation';
 
 export function indexDataset(

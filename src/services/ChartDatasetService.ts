@@ -1,8 +1,4 @@
-import { DecoratorsTransformation } from './../utils/transformations/DecoratorsTransformation';
 import {
-  AbstractDataset,
-  AggregateDataset,
-  CountDataset,
   formatDatasetForOtql,
   formatDatasetForReportView,
   getXKeyForChart,
@@ -17,24 +13,18 @@ import {
 import { RadarChartProps } from '@mediarithmics-private/mcs-components-library/lib/components/charts/radar-chart';
 import { BarChartProps } from '@mediarithmics-private/mcs-components-library/lib/components/charts/bar-chart/BarChart';
 import {
-  Datapoint,
   Dataset,
   Format,
   Legend,
   PieChartFormat,
   Tooltip,
 } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
-import { OTQLResult, QueryPrecisionMode } from '../models/datamart/graphdb/OTQLResult';
+import { OTQLResult } from '../models/datamart/graphdb/OTQLResult';
 import { ActivitiesAnalyticsService } from './analytics/ActivitiesAnalyticsService';
 
 import { CollectionVolumesService } from './analytics/CollectionVolumesService';
 
-import {
-  BooleanOperator,
-  DateRange,
-  DimensionFilter,
-  ReportRequestBody,
-} from '../models/report/ReportRequestBody';
+import { BooleanOperator, DateRange, DimensionFilter } from '../models/report/ReportRequestBody';
 import {
   ActivitiesAnalyticsDimension,
   ActivitiesAnalyticsMetric,
@@ -47,56 +37,33 @@ import {
   CollectionVolumesMetric,
 } from '../utils/analytics/CollectionVolumesReportHelper';
 import { IAnalyticsService } from './analytics/AnalyticsService';
-import DatasetDateFormatter from '../utils/transformations/FormatDatesTransformation';
-import { formatDate } from '../utils/DateHelper';
-import { percentages } from '../utils/transformations/PercentagesTransformation';
-import { indexDataset } from '../utils/transformations/IndexTranformation';
 import { fetchAndFormatQuery, QueryFragment } from '../utils/source/DataSourceHelper';
-import ChannelService, { IChannelService } from './ChannelService';
-import CompartmentService, { ICompartmentService } from './CompartmentService';
-import AudienceSegmentService, { IAudienceSegmentService } from './AudienceSegmentService';
 import promiseRetry from 'promise-retry';
 import DataFileService, { IDataFileService } from './DataFileService';
 import jsonpath from 'jsonpath';
 import { AreaChartProps } from '@mediarithmics-private/mcs-components-library/lib/components/charts/area-chart';
+import {
+  AbstractSource,
+  AggregationSource,
+  AnalyticsSource,
+  DataFileSource,
+  DataSource,
+  OTQLSource,
+} from '../models/dashboards/dataset/datasource_tree';
+import {
+  AbstractDataset,
+  AbstractDatasetTree,
+  AggregateDataset,
+  AnalyticsDataset,
+  CountDataset,
+  OTQLDataset,
+} from '../models/dashboards/dataset/dataset_tree';
+import {
+  DEFAULT_Y_KEY,
+  TransformationProcessor,
+} from '../utils/transformations/TransformationProcessor';
 
 export type ChartType = 'pie' | 'bars' | 'radar' | 'metric' | 'area' | 'line';
-export type SourceType =
-  | 'otql'
-  | 'join'
-  | 'to-list'
-  | 'index'
-  | 'to-percentages'
-  | 'activities_analytics'
-  | 'collection_volumes'
-  | 'ratio'
-  | 'format-dates'
-  | 'data_file';
-
-const DEFAULT_Y_KEY = {
-  key: 'value',
-  message: 'count',
-};
-
-export interface AbstractSource {
-  type: SourceType;
-  series_title?: string;
-}
-export interface AbstractParentSource extends AbstractSource {
-  sources: AbstractSource[];
-}
-export interface AnalyticsSource<M, D> extends AbstractSource {
-  query_json: ReportRequestBody<M, D>;
-  adapt_to_scope?: boolean;
-  datamart_id?: string;
-}
-export interface OTQLSource extends AbstractSource {
-  query_text?: string;
-  query_id?: string;
-  precision?: QueryPrecisionMode;
-  adapt_to_scope?: boolean;
-  datamart_id?: string;
-}
 
 export declare type MetricChartFormat = 'percentage' | 'count' | 'float';
 
@@ -105,72 +72,15 @@ export interface MetricChartProps {
   format?: MetricChartFormat;
 }
 
-export interface AggregationSource extends AbstractParentSource {}
-
-export type Order = `descending` | `ascending`;
-
-export interface IndexOptions {
-  minimum_percentage?: number;
-  sort?: Order;
-  limit?: number;
-}
-
-export interface IndexSource extends AbstractParentSource {
-  options: IndexOptions;
-}
-
-export interface RatioSource extends AbstractParentSource {}
-
-export interface DateOptions {
-  format?: string;
-  buckets?: DateOptions;
-}
-
-export interface DateFormatSource extends AbstractParentSource {
-  date_options: DateOptions;
-}
-
-export declare type ModelType = 'CHANNELS' | 'SEGMENTS' | 'COMPARTMENTS';
-
-export interface DecoratorsOptions {
-  model_type?: ModelType;
-  buckets?: DecoratorsOptions;
-}
-
-export interface GetDecoratorsSource extends AbstractParentSource {
-  decorators_options: DecoratorsOptions;
-}
-
-export interface DataFileSource extends AbstractSource {
-  uri: string;
-  JSON_path: string;
-}
-
-export type PieChartOptions = Omit<PieChartProps, 'dataset' | 'colors'>;
-export type RadarChartOptions = Omit<RadarChartProps, 'dataset' | 'colors'>;
-export type BarChartOptions = Omit<BarChartProps, 'dataset' | 'colors'>;
-export type MetricChartOptions = Omit<MetricChartProps, 'dataset' | 'colors'>;
-export type AreaChartOptions = Omit<AreaChartProps, 'dataset' | 'colors'>;
-interface WithOptionalXKey {
-  xKey?: string;
-}
-export type ChartOptions = (
-  | PieChartOptions
-  | RadarChartOptions
-  | BarChartOptions
-  | MetricChartOptions
-  | AreaChartOptions
-) &
-  WithOptionalXKey;
-
-export interface ChartConfig {
+export interface ManagedChartConfig {
   id?: string;
   title: string;
   type: ChartType;
   colors?: string[];
-  dataset: AbstractSource;
   options?: ChartApiOptions;
 }
+
+export type ChartConfig = ManagedChartConfig & DataSource;
 
 interface PieChartApiProps {
   height?: number;
@@ -231,6 +141,23 @@ export type ChartApiOptions = (
 ) &
   WithOptionalXKey;
 
+export type PieChartOptions = Omit<PieChartProps, 'dataset' | 'colors'>;
+export type RadarChartOptions = Omit<RadarChartProps, 'dataset' | 'colors'>;
+export type BarChartOptions = Omit<BarChartProps, 'dataset' | 'colors'>;
+export type MetricChartOptions = Omit<MetricChartProps, 'dataset' | 'colors'>;
+export type AreaChartOptions = Omit<AreaChartProps, 'dataset' | 'colors'>;
+interface WithOptionalXKey {
+  xKey?: string;
+}
+export type ChartOptions = (
+  | PieChartOptions
+  | RadarChartOptions
+  | BarChartOptions
+  | MetricChartOptions
+  | AreaChartOptions
+) &
+  WithOptionalXKey;
+
 export interface IChartDatasetService {
   fetchDataset(
     datamartId: string,
@@ -248,21 +175,9 @@ export class ChartDatasetService implements IChartDatasetService {
   // TODO: Put back injection for this service
   private queryService: IQueryService = new QueryService();
   private scopeAdapter: QueryScopeAdapter = new QueryScopeAdapter(this.queryService);
-  private channelService: IChannelService = new ChannelService();
-  private compartmentService: ICompartmentService = new CompartmentService();
-  private audienceSegmentService: IAudienceSegmentService = new AudienceSegmentService();
+  private transformationProcessor: TransformationProcessor = new TransformationProcessor();
 
   private dataFileService: IDataFileService = new DataFileService();
-
-  private datasetDateFormatter: DatasetDateFormatter = new DatasetDateFormatter((date, format) =>
-    formatDate(date, format),
-  );
-
-  private decoratorsTransformation: DecoratorsTransformation = new DecoratorsTransformation(
-    this.channelService,
-    this.compartmentService,
-    this.audienceSegmentService,
-  );
 
   private activitiesAnalyticsService: IAnalyticsService<
     ActivitiesAnalyticsMetric,
@@ -436,44 +351,11 @@ export class ChartDatasetService implements IChartDatasetService {
     );
   }
 
-  private computeIndex(
-    datamartId: string,
-    organisationId: string,
-    indexSource: IndexSource,
-    chartType: ChartType,
-    xKey: string,
-    providedScope?: AbstractScope,
-  ) {
-    const childSources = indexSource.sources;
-    if (childSources && childSources.length === 2) {
-      return Promise.all(
-        childSources.map(s =>
-          this.fetchDatasetForSource(datamartId, organisationId, chartType, xKey, s, providedScope),
-        ),
-      ).then(datasets => {
-        return indexDataset(
-          datasets[0] as AggregateDataset,
-          datasets[1] as AggregateDataset,
-          xKey,
-          indexSource.options,
-        );
-      });
-    } else {
-      return this.rejectWrongNumberOfArguments('to-percentages', 2, childSources.length);
-    }
-  }
-
-  private rejectWrongNumberOfArguments(
-    transformationName: string,
-    expected: number,
-    provided: number,
-  ) {
-    return Promise.reject(
-      `Wrong number of arguments for ${transformationName} transformation, ${expected} expected ${provided} provided`,
-    );
-  }
-
-  private fetchDatasetForSource(
+  /**
+   * Process to intermediary ast which has the same structure as the abstract source
+   * but with all datasets hydrated
+   */
+  private async hydrateDatasets(
     datamartId: string,
     organisationId: string,
     chartType: ChartType,
@@ -481,7 +363,7 @@ export class ChartDatasetService implements IChartDatasetService {
     source: AbstractSource,
     providedScope?: AbstractScope,
     queryFragment?: QueryFragment,
-  ): Promise<AbstractDataset | undefined> {
+  ): Promise<AbstractDatasetTree | undefined> {
     const sourceType = source.type.toLowerCase();
     const seriesTitle = source.series_title || DEFAULT_Y_KEY.key;
 
@@ -489,171 +371,49 @@ export class ChartDatasetService implements IChartDatasetService {
       const otqlSource = source as OTQLSource;
       const scope = this.getScope(otqlSource.adapt_to_scope, providedScope);
       const queryDatamartId = otqlSource.datamart_id || datamartId;
-      return this.executeOtqlQuery(queryDatamartId, otqlSource, scope, queryFragment).then(res => {
+      const dataset = await this.executeOtqlQuery(
+        queryDatamartId,
+        otqlSource,
+        scope,
+        queryFragment,
+      ).then(res => {
         return formatDatasetForOtql(res, xKey, seriesTitle);
       });
-    } else if (sourceType === 'join') {
-      const aggregationSource = source as AggregationSource;
-      const childSources = aggregationSource.sources;
-      return Promise.all(
-        childSources.map(s =>
-          this.fetchDatasetForSource(
-            datamartId,
-            organisationId,
-            chartType,
-            xKey,
-            s,
-            providedScope,
-            queryFragment,
-          ),
-        ),
-      ).then(datasets => {
-        return this.aggregateDatasets(xKey, datasets as AggregateDataset[]);
-      });
-    } else if (sourceType === 'to-list') {
-      const aggregationSource = source as AggregationSource;
-      const childSources = aggregationSource.sources;
-      return Promise.all(
-        childSources.map(s =>
-          this.fetchDatasetForSource(
-            datamartId,
-            organisationId,
-            chartType,
-            xKey,
-            s,
-            providedScope,
-            queryFragment,
-          ),
-        ),
-      ).then(datasets => {
-        return this.aggregateCountsIntoList(
-          xKey,
-          datasets as CountDataset[],
-          childSources,
-          source.series_title,
-        );
-      });
-    } else if (sourceType === 'to-percentages') {
-      const aggregationSource = source as AggregationSource;
-      const childSources = aggregationSource.sources;
-      if (childSources.length === 1) {
-        return this.fetchDatasetForSource(
-          datamartId,
-          organisationId,
-          chartType,
-          xKey,
-          childSources[0],
-          providedScope,
-          queryFragment,
-        ).then(dataset => {
-          return percentages(xKey, dataset as AggregateDataset);
-        });
-      } else return this.rejectWrongNumberOfArguments('to-percentages', 1, childSources.length);
-    } else if (sourceType === 'index') {
-      const indexSource = source as IndexSource;
-      return this.computeIndex(
-        datamartId,
-        organisationId,
-        indexSource,
-        chartType,
-        xKey,
-        providedScope,
-      );
+      return {
+        type: 'otql',
+        dataset: dataset,
+      } as OTQLDataset;
     } else if (sourceType === 'activities_analytics') {
-      return this.fetchActivitiesAnalytics(
+      const analyticsDataset: AbstractDataset = await this.fetchActivitiesAnalytics(
         datamartId,
         source as AnalyticsSource<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>,
         xKey,
         providedScope,
         queryFragment,
       );
+      return {
+        type: 'activities_analytics',
+        dataset: analyticsDataset,
+      } as AnalyticsDataset;
     } else if (sourceType === 'collection_volumes') {
-      return this.fetchCollectionVolumes(
+      const volumesDataset = await this.fetchCollectionVolumes(
         datamartId,
         source as AnalyticsSource<CollectionVolumesMetric, CollectionVolumesDimension>,
         xKey,
         providedScope,
       );
-    } else if (sourceType === 'ratio') {
-      const ratioSource = source as RatioSource;
-      const datasetValue = this.fetchDatasetForSource(
-        datamartId,
-        organisationId,
-        chartType,
-        xKey,
-        ratioSource.sources[0],
-        providedScope,
-        queryFragment,
-      );
-      const datasetTotal = this.fetchDatasetForSource(
-        datamartId,
-        organisationId,
-        chartType,
-        xKey,
-        ratioSource.sources[1],
-        providedScope,
-        queryFragment,
-      );
-      return Promise.all([datasetValue, datasetTotal]).then(datasets => {
-        return this.ratioDataset(datasets[0] as CountDataset, datasets[1] as CountDataset);
-      });
-    } else if (sourceType === 'format-dates') {
-      const dateFormatSource = source as DateFormatSource;
-      const format = dateFormatSource.date_options;
-      const datasetToBeFormatted = this.fetchDatasetForSource(
-        datamartId,
-        organisationId,
-        chartType,
-        xKey,
-        dateFormatSource.sources[0],
-        providedScope,
-        queryFragment,
-      );
-      return datasetToBeFormatted.then(result => {
-        if (result) return this.datasetDateFormatter.applyFormatDates(result, xKey, format);
-        else return Promise.resolve(undefined);
-      });
-    } else if (sourceType === 'get-decorators') {
-      const getDecoratorsSource = source as GetDecoratorsSource;
-      const getDecoratorsOptions = getDecoratorsSource.decorators_options;
-
-      if (getDecoratorsSource.sources.length === 1) {
-        const datasetToBeDecorated = this.fetchDatasetForSource(
-          datamartId,
-          organisationId,
-          chartType,
-          xKey,
-          getDecoratorsSource.sources[0],
-          providedScope,
-          queryFragment,
-        );
-
-        return datasetToBeDecorated.then(result => {
-          if (result)
-            return this.decoratorsTransformation.applyGetDecorators(
-              result,
-              xKey,
-              getDecoratorsOptions,
-              datamartId,
-              organisationId,
-            );
-          else return Promise.resolve(undefined);
-        });
-      } else
-        return this.rejectWrongNumberOfArguments(
-          'get-decorators',
-          1,
-          getDecoratorsSource.sources.length,
-        );
+      return {
+        type: 'collection_volumes',
+        dataset: volumesDataset,
+      } as AnalyticsDataset;
     } else if (sourceType === 'data_file') {
-      const dataFileSource = source as DataFileSource;
-
+      const datafileSource = source as DataFileSource;
       return this.dataFileService
-        .getDatafileData(dataFileSource.uri)
+        .getDatafileData(datafileSource.uri)
         .then(res => {
           return this.readFileContent(res).then((fileContent: string) => {
             const fileContentJson = JSON.parse(fileContent);
-            const datasetFromDataFile = jsonpath.query(fileContentJson, dataFileSource.JSON_path);
+            const datasetFromDataFile = jsonpath.query(fileContentJson, datafileSource.JSON_path);
             if (!datasetFromDataFile) return undefined;
             if (chartType.toLowerCase() === 'metric') {
               return {
@@ -671,11 +431,38 @@ export class ChartDatasetService implements IChartDatasetService {
           });
         })
         .catch(() => {
-          Promise.reject(`Cannot retrieve datafile: ${dataFileSource.uri}`);
+          Promise.reject(`Cannot retrieve datafile: ${datafileSource.uri}`);
           return undefined;
+        })
+        .then(d => {
+          return {
+            type: 'data_file',
+            dataset: d,
+          };
         });
     } else {
-      return Promise.reject(`Unknown source type ${sourceType} `);
+      const aggregationSource = source as AggregationSource;
+      const childSources = aggregationSource.sources;
+      const childDatasets = await Promise.all(
+        childSources.map(s =>
+          this.hydrateDatasets(
+            datamartId,
+            organisationId,
+            chartType,
+            xKey,
+            s,
+            providedScope,
+            queryFragment,
+          ),
+        ),
+      );
+      const definedChildren: AbstractDatasetTree[] = childDatasets
+        .filter(x => !!x)
+        .map(x => x as AbstractDatasetTree);
+      return {
+        ...source,
+        children: definedChildren,
+      } as AbstractDatasetTree;
     }
   }
 
@@ -691,7 +478,7 @@ export class ChartDatasetService implements IChartDatasetService {
     });
   };
 
-  fetchDataset(
+  async fetchDataset(
     datamartId: string,
     organisationId: string,
     chartConfig: ChartConfig,
@@ -704,7 +491,7 @@ export class ChartDatasetService implements IChartDatasetService {
       chartType,
       chartConfig.options && (chartConfig.options as ChartOptions).xKey,
     );
-    return this.fetchDatasetForSource(
+    const hydratedTree = await this.hydrateDatasets(
       datamartId,
       organisationId,
       chartType,
@@ -713,83 +500,16 @@ export class ChartDatasetService implements IChartDatasetService {
       providedScope,
       queryFragment,
     );
-  }
-
-  private ratioDataset(
-    datasetValue: CountDataset | undefined,
-    datasetTotal: CountDataset | undefined,
-  ): CountDataset | undefined {
-    if (
-      !datasetValue ||
-      datasetValue.type !== 'count' ||
-      !datasetTotal ||
-      datasetTotal.type !== 'count' ||
-      datasetTotal.value === 0
-    )
-      return undefined;
-    else {
-      return {
-        value: datasetValue.value / datasetTotal.value,
-        type: 'count',
-      };
+    if (!hydratedTree) {
+      return Promise.reject('Could not retrieve data for the chart');
+    } else {
+      return this.transformationProcessor.applyTransformations(
+        datamartId,
+        organisationId,
+        chartType,
+        xKey,
+        hydratedTree,
+      );
     }
-  }
-
-  private aggregateCountsIntoList(
-    xKey: string,
-    datasets: Array<CountDataset | undefined>,
-    sources: AbstractSource[],
-    listSeriesTitle?: string,
-  ): AggregateDataset | undefined {
-    const dataset = datasets.map((d: CountDataset, index: number) => {
-      return {
-        [xKey]: sources[index].series_title,
-        [listSeriesTitle || DEFAULT_Y_KEY.key]: d.value,
-      };
-    });
-
-    return {
-      dataset: dataset,
-      metadata: {
-        seriesTitles: [listSeriesTitle || DEFAULT_Y_KEY.key],
-      },
-      type: 'aggregate',
-    };
-  }
-
-  private aggregateDatasets(
-    xKey: string,
-    datasets: Array<AggregateDataset | undefined>,
-  ): AggregateDataset | undefined {
-    type DatasetAcc = { [key: string]: Datapoint };
-    const datasetAcc: DatasetAcc = {};
-
-    const seriesTitles = datasets.map(d => d?.metadata.seriesTitles[0]);
-    datasets.forEach(dataset => {
-      if (!!dataset) {
-        dataset.dataset.forEach(datapoint => {
-          const categoryKey = datapoint[xKey] as string;
-          const current = datasetAcc[categoryKey];
-          datasetAcc[categoryKey] = {
-            ...current,
-            ...datapoint,
-          };
-        });
-      }
-    });
-
-    const newDataset: Datapoint[] = [];
-    Object.entries(datasetAcc).forEach(field => {
-      const fieldValue = field[1];
-      newDataset.push(fieldValue as Datapoint);
-    });
-
-    return {
-      metadata: {
-        seriesTitles: seriesTitles,
-      },
-      type: 'aggregate',
-      dataset: newDataset,
-    } as AggregateDataset;
   }
 }

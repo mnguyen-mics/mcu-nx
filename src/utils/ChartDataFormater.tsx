@@ -9,25 +9,11 @@ import { ChartType } from '../services/ChartDatasetService';
 import { ReportView } from '../models/report/ReportView';
 import { bucketizeReportView, normalizeReportView } from './MetricHelper';
 import { omit } from 'lodash';
-
-export type DatasetType = 'aggregate' | 'count';
-
-export abstract class AbstractDataset {
-  type: DatasetType;
-}
-
-interface DatasetMetadata {
-  seriesTitles: string[];
-}
-
-export interface AggregateDataset extends AbstractDataset {
-  metadata: DatasetMetadata;
-  dataset: Dataset;
-}
-
-export interface CountDataset extends AbstractDataset {
-  value: number;
-}
+import {
+  AbstractDataset,
+  AggregateDataset,
+  CountDataset,
+} from '../models/dashboards/dataset/dataset_tree';
 
 export function formatDatasetAsKeyValueForOtql(
   buckets: OTQLBucket[],
@@ -128,7 +114,7 @@ export function formatDatasetForReportView(
   metricNames: string[],
   dimensionNames: string[],
   seriesTitle?: string,
-): AbstractDataset | undefined {
+): AbstractDataset {
   if (dimensionNames.length > 0) {
     const dataset = formatDatasetAsKeyValueForReportView(
       xKey,

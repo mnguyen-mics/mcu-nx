@@ -1,4 +1,4 @@
-import { AggregateDataset } from '../ChartDataFormater';
+import { AggregateDataset } from '../../models/dashboards/dataset/dataset_tree';
 
 export function percentages(xKey: string, dataset: AggregateDataset): AggregateDataset {
   const datasetTitle = dataset.metadata.seriesTitles[0];

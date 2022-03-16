@@ -1,4 +1,5 @@
-import { ChartConfig, SourceType } from '../../services/ChartDatasetService';
+import { ChartConfig } from '../../services/ChartDatasetService';
+import { SourceType } from '../dashboards/dataset/common';
 import { DimensionFilter } from '../report/ReportRequestBody';
 
 export interface CustomDashboardResource {
