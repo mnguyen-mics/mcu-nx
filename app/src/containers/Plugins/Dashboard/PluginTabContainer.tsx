@@ -9,9 +9,9 @@ import {
 } from '@mediarithmics-private/advanced-components';
 import { ConfigurationFileListingEntryResource } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
 import { McsTabs } from '@mediarithmics-private/mcs-components-library';
-import { Modal, Select, Button, Spin, message, Tag, Input } from 'antd';
+import { Modal, Select, Spin, message, Tag, Input } from 'antd';
 import * as React from 'react';
-import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
+import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { compose } from 'recompose';
 import { getPaginatedApiParam } from '../../../utils/ApiHelper';
@@ -121,8 +121,11 @@ class PluginTabContainer extends React.Component<Props, State> {
         title: intl.formatMessage(messages.deployment),
         display: (
           <PluginDeploymentContainer
+            plugin={plugin}
             pluginVersionId={currentPluginVersionId}
-            initialPluginVersionContainer={initialPluginVersionContainers}
+            upgradeContainers={this.upgradeContainers}
+            deployVersion={this.deployVersion}
+            initialPluginVersionContainers={initialPluginVersionContainers}
             initialPluginVersionContainerTotal={pluginVersionContainerTotal}
           />
         ),
@@ -262,8 +265,8 @@ class PluginTabContainer extends React.Component<Props, State> {
   };
 
   render() {
-    const { initialPluginVersionId, pluginVersions, plugin, lastPluginVersion, intl } = this.props;
-    const { initialPluginVersionContainers, tabKey } = this.state;
+    const { initialPluginVersionId, pluginVersions, lastPluginVersion, intl } = this.props;
+    const { tabKey } = this.state;
 
     const initialVersion = pluginVersions.find(version => version.id === initialPluginVersionId);
 
@@ -277,28 +280,13 @@ class PluginTabContainer extends React.Component<Props, State> {
     ) as any;
 
     const pluginVersionSelector = (
-      <React.Fragment>
-        {tabKey === 'deployment' &&
-          plugin &&
-          plugin.current_version_id &&
-          plugin.plugin_type !== 'INTEGRATION_BATCH' &&
-          (initialPluginVersionContainers.length > 0 ? (
-            <Button onClick={this.upgradeContainers}>
-              <FormattedMessage {...messages.deploymentUpgradeModalButton} />
-            </Button>
-          ) : (
-            <Button onClick={this.deployVersion}>
-              <FormattedMessage {...messages.deploymentDeployModalButton} />
-            </Button>
-          ))}
-        <Select
-          style={{ paddingLeft: '10px', width: '240px' }}
-          defaultValue={defaultValue}
-          onChange={this.handleVersionChange}
-          options={this.getPluginVersionOptions()}
-          dropdownMatchSelectWidth={true}
-        />
-      </React.Fragment>
+      <Select
+        className='mcs-pluginTabContainer_pluginVersionSelector'
+        defaultValue={defaultValue}
+        onChange={this.handleVersionChange}
+        options={this.getPluginVersionOptions()}
+        dropdownMatchSelectWidth={true}
+      />
     );
 
     return (

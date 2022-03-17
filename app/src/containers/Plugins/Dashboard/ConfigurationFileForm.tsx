@@ -77,14 +77,25 @@ class ConfigurationFileForm extends React.Component<Props, State> {
               disabled={isEditing}
             />
           </Form.Item>
-          <AceEditor
-            value={jsonValue}
-            theme='github'
-            name={'Content'}
-            width={'100%'}
-            showPrintMargin={false}
-            onChange={this.onJsonChange}
-          />
+          <Form.Item
+            label={
+              <div className='mcs-pluginEdit-drawer-form-label'>
+                {formatMessage(messages.content)}
+              </div>
+            }
+            className='mcs-pluginEdit-drawer-form-item'
+          >
+            <AceEditor
+              className='mcs-pluginEdit-drawer-form-input'
+              value={jsonValue}
+              theme='github'
+              name={'Content'}
+              width={'100%'}
+              showPrintMargin={false}
+              onChange={this.onJsonChange}
+            />
+          </Form.Item>
+
           <Button
             onClick={this.handleSubmit}
             className='mcs-primary mcs-pluginEdit-drawer-saveButton'

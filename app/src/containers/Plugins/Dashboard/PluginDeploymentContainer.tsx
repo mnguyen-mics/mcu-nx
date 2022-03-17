@@ -1,6 +1,7 @@
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { Button } from 'antd';
+import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import messages from '../messages';
 import { PAGINATION_SEARCH_SETTINGS } from '../../../utils/LocationSearchHelper';
@@ -11,7 +12,10 @@ import injectNotifications, {
 } from '../../Notifications/injectNotifications';
 import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { PluginManagerResource } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
+import {
+  PluginManagerResource,
+  PluginResource,
+} from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
 import { getPaginatedApiParam } from '../../../utils/ApiHelper';
 
 interface RunningContainer {
@@ -21,7 +25,10 @@ interface RunningContainer {
 
 interface PluginDeploymentContainerProps {
   pluginVersionId: string;
-  initialPluginVersionContainer: PluginManagerResource[];
+  plugin?: PluginResource;
+  upgradeContainers: () => void;
+  deployVersion: () => void;
+  initialPluginVersionContainers: PluginManagerResource[];
   initialPluginVersionContainerTotal: number;
 }
 
@@ -55,10 +62,10 @@ class PluginDeploymentContainer extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    const { initialPluginVersionContainer } = this.props;
+    const { initialPluginVersionContainers } = this.props;
     this.setState({
       isLoading: false,
-      pluginVersionContainers: this.formatToRunningContainer(initialPluginVersionContainer),
+      pluginVersionContainers: this.formatToRunningContainer(initialPluginVersionContainers),
     });
   }
 
@@ -125,6 +132,10 @@ class PluginDeploymentContainer extends React.Component<Props, State> {
   render() {
     const {
       intl: { formatMessage },
+      plugin,
+      initialPluginVersionContainers,
+      upgradeContainers,
+      deployVersion,
     } = this.props;
     const { isLoading, pluginVersionContainers, pluginVersionContainersTotal } = this.state;
 
@@ -155,16 +166,35 @@ class PluginDeploymentContainer extends React.Component<Props, State> {
       message: formatMessage(messages.deploymentEmptyTable),
     };
 
+    const getDeploymentButton = () => {
+      return plugin &&
+        plugin.current_version_id &&
+        plugin.plugin_type !== 'INTEGRATION_BATCH' &&
+        initialPluginVersionContainers.length > 0 ? (
+        <Button className='mcs-pluginList_actionButton' onClick={upgradeContainers}>
+          <FormattedMessage {...messages.deploymentUpgradeModalButton} />
+        </Button>
+      ) : (
+        <Button className='mcs-pluginList_actionButton' onClick={deployVersion}>
+          <FormattedMessage {...messages.deploymentDeployModalButton} />
+        </Button>
+      );
+    };
+
     return (
-      <ItemList
-        fetchList={this.fetchPluginVersionContainers}
-        dataSource={pluginVersionContainers}
-        loading={isLoading}
-        total={pluginVersionContainersTotal}
-        columns={dataColumnsDefinition}
-        pageSettings={PAGINATION_SEARCH_SETTINGS}
-        emptyTable={emptyTable}
-      />
+      <React.Fragment>
+        <ItemList
+          className='mcs-pluginTab-list'
+          fetchList={this.fetchPluginVersionContainers}
+          dataSource={pluginVersionContainers}
+          loading={isLoading}
+          total={pluginVersionContainersTotal}
+          columns={dataColumnsDefinition}
+          pageSettings={PAGINATION_SEARCH_SETTINGS}
+          emptyTable={emptyTable}
+        />
+        {getDeploymentButton()}
+      </React.Fragment>
     );
   }
 }

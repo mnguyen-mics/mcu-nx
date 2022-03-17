@@ -162,9 +162,10 @@ class PluginVersionForm extends React.Component<Props, State> {
     const pluginVersionId = formData.pluginVersionId;
     const currentPluginVersionId = plugin?.current_version_id;
     const pluginId = plugin?.id;
+
     if (!providerProperty || !nameProperty || !pluginVersionId) {
       return message.error(formatMessage(messages.missingField), 3);
-    } else if (pluginId && currentPluginVersionId) {
+    } else if (pluginId) {
       const properties = formData.properties.map(p => p.property);
       this.setState({
         isLoading: true,
@@ -198,7 +199,7 @@ class PluginVersionForm extends React.Component<Props, State> {
               .createDatafile(
                 organisationId,
                 `plugins/${pluginId}/versions`,
-                currentPluginVersionId,
+                currentPluginVersionId ? currentPluginVersionId : '1', // value is used for file uri
                 pluginProperty.value.fileName,
                 blob,
               )
@@ -239,6 +240,77 @@ class PluginVersionForm extends React.Component<Props, State> {
         .createPluginVersion(pluginId, {
           version_id: formData.pluginVersionId,
           plugin_properties: newProperties,
+        })
+        .then(newPluginVersionResponse => {
+          // Then we copy all configuration files
+          // and layout files for this new version
+          if (currentPluginVersionId) {
+            // Configuration files part
+            this._pluginService
+              .listPluginConfigurationFiles(pluginId, currentPluginVersionId)
+              .then(configurationFileListingResponse => {
+                configurationFileListingResponse.data.forEach(configurationFileListingEntity => {
+                  const technicalName = configurationFileListingEntity.technical_name;
+                  this._pluginService
+                    .getPluginConfigurationFile(pluginId, currentPluginVersionId, technicalName)
+                    .then(configurationFileResponse => {
+                      this._pluginService.putPluginConfigurationFile(
+                        pluginId,
+                        newPluginVersionResponse.data.id,
+                        technicalName,
+                        configurationFileResponse,
+                      );
+                    })
+                    .catch(err => {
+                      notifyError(err);
+                    });
+                });
+              })
+              .catch(err => {
+                notifyError(err);
+              });
+            // Layout file part
+            this._pluginService
+              .listPluginLayouts(pluginId, currentPluginVersionId)
+              .then(layoutFileListingResponse => {
+                layoutFileListingResponse.data.forEach(layoutFileListingEntity => {
+                  if (layoutFileListingEntity.locale) {
+                    const locale = layoutFileListingEntity.locale;
+                    this._pluginService
+                      .getLocalizedPluginLayoutFile(pluginId, currentPluginVersionId, locale)
+                      .then(layoutFileResponse => {
+                        this._pluginService
+                          .putLocalizationFile(
+                            pluginId,
+                            newPluginVersionResponse.data.id,
+                            locale,
+                            layoutFileResponse,
+                          )
+                          .catch(err => {
+                            notifyError(err);
+                          });
+                      })
+                      .catch(err => {
+                        notifyError(err);
+                      });
+                  } else {
+                    this._pluginService
+                      .getLocalizedPluginLayout(pluginId, currentPluginVersionId)
+                      .then(layoutResponse => {
+                        const blob = new Blob([JSON.stringify(layoutResponse) || '']);
+                        this._pluginService
+                          .putPropertiesLayout(pluginId, newPluginVersionResponse.data.id, blob)
+                          .catch(err => {
+                            notifyError(err);
+                          });
+                      });
+                  }
+                });
+              })
+              .catch(err => {
+                notifyError(err);
+              });
+          }
         })
         .then(res => {
           fetchPlugin();
@@ -503,16 +575,18 @@ class PluginVersionForm extends React.Component<Props, State> {
               >
                 <PlusOutlined /> <FormattedMessage {...messages.addNewProperty} />
               </Button>
-              <Button
-                onClick={this.handleSubmit}
-                className='mcs-primary mcs-pluginEdit-drawer-saveButton'
-                type='primary'
-              >
-                {formatMessage(messages.save)}
-              </Button>
             </React.Fragment>
           )}
         </Content>
+        <div className='mcs-pluginEdit-saveButtonContainer'>
+          <Button
+            onClick={this.handleSubmit}
+            className='mcs-primary mcs-pluginVersionDrawer-saveButton'
+            type='primary'
+          >
+            {formatMessage(messages.save)}
+          </Button>
+        </div>
       </Form>
     );
   }

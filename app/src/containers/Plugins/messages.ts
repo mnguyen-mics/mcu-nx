@@ -31,7 +31,7 @@ export default defineMessages({
   },
   defaultValue: {
     id: 'plugins.list.defaultValue',
-    defaultMessage: 'Default Value',
+    defaultMessage: 'Default value',
   },
   type: {
     id: 'plugins.list.type',
@@ -267,7 +267,7 @@ export default defineMessages({
   },
   addNewProperty: {
     id: 'plugins.pluginVersionForm.addNewProperty',
-    defaultMessage: 'Add new property',
+    defaultMessage: 'Add a property',
   },
   pluginVersionSaveSuccess: {
     id: 'plugins.pluginVersionForm.pluginVersionSaveSuccess',
