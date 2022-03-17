@@ -137,6 +137,7 @@ class PieChart extends React.Component<Props, {}> {
 
     const options: Highcharts.Options = {
       chart: {
+        backgroundColor: 'none',
         plotBackgroundColor: undefined,
         plotBorderWidth: undefined,
         plotShadow: false,
