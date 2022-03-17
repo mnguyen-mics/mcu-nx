@@ -45,6 +45,7 @@ interface DashboardPageWrapperProps {
   DashboardWrapper?: React.ComponentClass<DashboardWrapperProps>;
   contextualTargetingTab?: React.ReactNode;
   onShowDashboard?: (dpc: DashboardPageContent) => void;
+  onFinishLoading?: (hasDashboards: boolean) => void;
 }
 
 type Props = DashboardPageWrapperProps &
@@ -55,6 +56,7 @@ type Props = DashboardPageWrapperProps &
 
 interface State {
   isLoading: boolean;
+  shouldDisplayComingSoon: boolean;
   dataFileDashboards: DataFileDashboardResource[];
   apiDashboards: DashboardPageContent[];
 }
@@ -66,6 +68,7 @@ class DashboardPageWrapper extends React.Component<Props, State> {
     this.state = {
       dataFileDashboards: [],
       isLoading: true,
+      shouldDisplayComingSoon: true,
       apiDashboards: [],
     };
   }
@@ -122,7 +125,7 @@ class DashboardPageWrapper extends React.Component<Props, State> {
     fetchDataFileDashboardsFunc?: () => Promise<DataListResponse<DataFileDashboardResource>>,
     fetchApiDashboardsFunc?: () => Promise<DashboardPageContent[]>,
   ) => {
-    const { hasFeature, defaultDashboardContent } = this.props;
+    const { hasFeature, defaultDashboardContent, onFinishLoading } = this.props;
 
     const promises: Array<
       Promise<DataListResponse<DataFileDashboardResource> | DashboardPageContent[]>
@@ -147,16 +150,34 @@ class DashboardPageWrapper extends React.Component<Props, State> {
             })
           : [];
 
-        if (filteredApiDashboards && filteredApiDashboards.length === 0)
+        if (filteredApiDashboards && filteredApiDashboards.length === 0) {
+          const shouldDisplayComingSoon = this.shouldDisplayComingSoon(
+            false,
+            (res[0] as DataListResponse<DataFileDashboardResource>).data,
+            [],
+          );
+
+          if (onFinishLoading) onFinishLoading(!shouldDisplayComingSoon);
+
           this.setState({
             isLoading: false,
             dataFileDashboards: (res[0] as DataListResponse<DataFileDashboardResource>).data,
+            shouldDisplayComingSoon: shouldDisplayComingSoon,
           });
-        else {
+        } else {
+          const shouldDisplayComingSoon = this.shouldDisplayComingSoon(
+            false,
+            (res[0] as DataListResponse<DataFileDashboardResource>).data,
+            filteredApiDashboards,
+          );
+
+          if (onFinishLoading) onFinishLoading(!shouldDisplayComingSoon);
+
           this.setState({
             dataFileDashboards: (res[0] as DataListResponse<DataFileDashboardResource>).data,
             apiDashboards: filteredApiDashboards,
             isLoading: false,
+            shouldDisplayComingSoon: shouldDisplayComingSoon,
           });
         }
       })
@@ -164,8 +185,29 @@ class DashboardPageWrapper extends React.Component<Props, State> {
         this.props.notifyError(err);
         this.setState({
           isLoading: false,
+          shouldDisplayComingSoon: false,
         });
       });
+  };
+
+  shouldDisplayComingSoon = (
+    isLoading: boolean,
+    dataFileDashboards: DataFileDashboardResource[],
+    apiDashboards: DashboardPageContent[],
+  ): boolean => {
+    const { hasFeature } = this.props;
+
+    const shouldDisplayAnalyticsFeature = hasFeature(
+      'audience-dashboards-datamart_users_analytics',
+    );
+
+    return (
+      !isLoading &&
+      dataFileDashboards &&
+      dataFileDashboards.length === 0 &&
+      !shouldDisplayAnalyticsFeature &&
+      (apiDashboards && apiDashboards.length) === 0
+    );
   };
 
   render() {
@@ -188,20 +230,11 @@ class DashboardPageWrapper extends React.Component<Props, State> {
       onShowDashboard,
     } = this.props;
 
-    const { isLoading, dataFileDashboards, apiDashboards } = this.state;
+    const { isLoading, dataFileDashboards, apiDashboards, shouldDisplayComingSoon } = this.state;
 
-    const shouldDisplayAnalyticsFeature = hasFeature(
-      'audience-dashboards-datamart_users_analytics',
-    );
-
-    if (
-      !isLoading &&
-      dataFileDashboards &&
-      dataFileDashboards.length === 0 &&
-      !shouldDisplayAnalyticsFeature &&
-      (apiDashboards && apiDashboards.length) === 0
-    ) {
+    if (shouldDisplayComingSoon) {
       if (segmentDashboardTechnicalInformation) return segmentDashboardTechnicalInformation;
+
       return <Error message={intl.formatMessage(messages.comingSoon)} />;
     }
 
