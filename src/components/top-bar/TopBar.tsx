@@ -72,14 +72,14 @@ class TopBar extends React.Component<Props> {
     const menuSections: AppsMenuSections = {
       userLinks: [
         {
-          name: 'Computing Console',
-          icon: <CodeSandboxCircleFilled className='mcs-app_icon mcs-app_developerConsoleIcon' />,
-          url: `${MCS_CONSTANTS.COMPUTING_CONSOLE_URL}/#/o/${organisationId}/home`,
-        },
-        {
           name: 'Navigator',
           icon: <CompassFilled className='mcs-app_icon mcs-app_navigatorIcon' />,
           url: `${MCS_CONSTANTS.NAVIGATOR_URL}/#/v2/o/${organisationId}/campaigns/display`,
+        },
+        {
+          name: 'Computing Console',
+          icon: <CodeSandboxCircleFilled className='mcs-app_icon mcs-app_developerConsoleIcon' />,
+          url: `${MCS_CONSTANTS.COMPUTING_CONSOLE_URL}/#/o/${organisationId}/home`,
         },
       ],
       adminLinks: [],
