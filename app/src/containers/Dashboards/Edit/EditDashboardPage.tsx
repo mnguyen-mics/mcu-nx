@@ -211,8 +211,13 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     if (dashboardId) {
       const dashboard = await this.fetchDashboard(organisationId, dashboardId);
       const lastModifiedBy = await this.fetchUser(dashboard.last_modified_by);
-      const content = await this.fetchContent(organisationId, dashboardId);
-      const createdBy = await this.fetchUser(content.created_by);
+      const content: CustomDashboardContentResource | undefined = await this.fetchContent(
+        organisationId,
+        dashboardId,
+      ).catch(() => {
+        return undefined;
+      });
+      const createdBy = content ? await this.fetchUser(content.created_by) : undefined;
       if (lastModifiedBy) {
         userNamesMap.set(
           lastModifiedBy.id,
@@ -224,7 +229,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       }
       const segments = await this.fetchSegments(organisationId);
       const builders = await this.fetchBuilders(organisationId);
-      const contentText = this.formatContent(content.content);
+      const contentText = content ? this.formatContent(content.content) : '';
       const selectedSegments = this.convertIdsToSelectValues(dashboard.segment_ids);
       const selectedBuilders = this.convertIdsToSelectValues(dashboard.builder_ids);
       const enrichedSegmentsValues = this.enrichSelectedValuesByOptions(selectedSegments, segments);
@@ -251,7 +256,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
         selectedSegments: enrichedSegmentsValues,
         selectedBuilders: enrichedBuildersValues,
         contentTextOrig: contentText,
-        contentText: contentText,
+        contentText: contentText.length > 0 ? contentText : defaultContent,
         content: content,
         loading: false,
         existingBuilders: builders,
