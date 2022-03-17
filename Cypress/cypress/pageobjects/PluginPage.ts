@@ -97,11 +97,11 @@ class PluginPage extends Page {
     return cy.get('.mcs-pluginEdit-drawer-form-input-technicalName');
   }
 
-  get aceEditorPropertyLayout() {
-    return cy.get('.mcs-pluginEdit-drawer-form-input');
+  get aceEditor() {
+    return cy.get('.mcs-pluginEdit-drawer-form-aceEditor');
   }
 
-  get savePropertyLayoutButton() {
+  get saveButton() {
     return cy.get('.mcs-pluginEdit-drawer-saveButton');
   }
 
@@ -147,8 +147,8 @@ class PluginPage extends Page {
     this.inputOrganisationChoicePluginEditDrawer.click();
   }
 
-  clickOnSavePropertyLayoutButton() {
-    this.savePropertyLayoutButton.click();
+  clickOnSaveButton() {
+    this.saveButton.click();
   }
 
   selectOrganisationPluginEditDrawer(organisationName: string) {
@@ -189,11 +189,11 @@ class PluginPage extends Page {
     this.inputTechnicalNamePluginEditDrawer.clear().type(technicalName);
   }
 
-  typePropertyLayout(propertyLayout: string) {
-    this.aceEditorPropertyLayout
+  typePropertyForFile(propertyForFile: string) {
+    this.aceEditor
       .find('textarea')
       .type('{selectall}{backspace}', { force: true })
-      .type(propertyLayout, { force: true, parseSpecialCharSequences: false });
+      .type(propertyForFile, { force: true, parseSpecialCharSequences: false });
   }
 
   createPlugin(pluginType: string, organisationName: string, groupId: string, artifactId: string) {
