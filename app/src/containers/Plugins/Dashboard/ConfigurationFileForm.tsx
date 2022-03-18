@@ -86,7 +86,7 @@ class ConfigurationFileForm extends React.Component<Props, State> {
             className='mcs-pluginEdit-drawer-form-item'
           >
             <AceEditor
-              className='mcs-pluginEdit-drawer-form-input'
+              className='mcs-pluginEdit-drawer-form-input mcs-pluginEdit-drawer-form-aceEditor'
               value={jsonValue}
               theme='github'
               name={'Content'}
