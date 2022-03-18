@@ -22,10 +22,8 @@ describe('Test the creation of a job instance', () => {
     cy.get('.mcs-PluginEditForm_name_field').type(name);
     cy.get('.mcs-cpuSize').contains('Medium').click();
     cy.get('.mcs-ramSize').contains('Large').click();
-    const oneMoreProperty = faker.random.word();
-    const oneLastProperty = faker.random.word();
-    cy.get('.mcs-pluginFormField_one_more_property').type(oneMoreProperty);
-    cy.get('.mcs-pluginFormField_one_last_property').type(oneLastProperty);
+    const oneProperty = faker.random.word();
+    cy.get('.mcs-pluginFormField_abc').type(oneProperty);
     cy.get('.mcs-form_saveButton_pluginForm').click();
     cy.get('.mcs-dashboardHeader_title').should('be.visible').and('contain', name);
     cy.get('.mcs-breadcrumbPath_jobsList').click();
@@ -34,7 +32,6 @@ describe('Test the creation of a job instance', () => {
       .should('contain', name);
     cy.get('.mcs-integrationBatchInstancesOverviewTab_tableView--instanceName').click();
     cy.get('.mcs-actionbar_planExecution').click();
-    cy.get('.mcs-pluginEdit-drawer-container').type('{selectall}{backspace}30 * * * *');
     cy.get('.mcs-pluginEdit-drawer-saveButton').click();
     cy.get('.mcs-actionbar_run').click();
     cy.get('.mcs-modalConfirmDate_okButton').click();
@@ -43,5 +40,14 @@ describe('Test the creation of a job instance', () => {
     cy.get('.mcs-overviewTab_periodicInstancesTable')
       .find('.mcs-integrationBatchInstancesOverviewTab_tableView--instanceName')
       .should('contain', name);
+    cy.get('.mcs-integrationBatchInstancesOverviewTab_tableView--instanceName').click();
+    cy.get('.mcs-actionbar_planExecution').click();
+    cy.get('.mcs-pluginEdit_drawer_form_cronInput').should('have.value', '30 5 * * 1,6');
+    cy.get('.mcs-pluginEdit_drawer_form_cron--clearButton').click();
+    cy.get('.mcs-pluginEdit_drawer_form_cronInput').should('have.value', '* * * * *');
+    cy.get('.mcs-pluginEdit_drawer_form_cronInput').clear().type('30 * * * *');
+    cy.get('.mcs-pluginEdit-drawer-saveButton').click();
+    cy.get('.mcs-actionbar_planExecution').click();
+    cy.get('.mcs-pluginEdit_drawer_form_cronInput').should('have.value', '30 * * * *');
   });
 });
