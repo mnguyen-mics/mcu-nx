@@ -46,11 +46,21 @@ const IntegrationBatchInstanceExecutionEditPage = (props: Props) => {
   return (
     <Form layout='vertical' className='mcs-pluginEdit-drawer-form'>
       <Content className='mcs-content-container mcs-pluginEdit-drawer-container'>
-        <Input ref={inputRef} onBlur={onBlur} onPressEnter={onPressEnter} />
+        <Input
+          className='mcs-pluginEdit_drawer_form_cronInput'
+          ref={inputRef}
+          onBlur={onBlur}
+          onPressEnter={onPressEnter}
+        />
 
         <Divider>{props.intl.formatMessage(messages.or)}</Divider>
 
-        <Cron value={value} setValue={customSetValue} onError={onError} />
+        <Cron
+          clearButtonProps={{ className: 'mcs-pluginEdit_drawer_form_cron--clearButton' }}
+          value={value}
+          setValue={customSetValue}
+          onError={onError}
+        />
 
         <div>
           <InfoCircleOutlined style={{ marginRight: 5 }} />
