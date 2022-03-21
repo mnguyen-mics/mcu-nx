@@ -489,7 +489,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
 
     return (
       <Chart
-        key={cuid()}
+        key={chart.id ? chart.id : cuid()}
         datamartId={datamart_id}
         onClickEdit={onClickEdit}
         onClickMove={onClickChartMove}
@@ -766,8 +766,10 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       if (section.id) this.handleMoveSection(section.id, direction);
     };
 
+    const sectionKey = section.id ? section.id : cuid();
+
     return (
-      <div key={cuid()} className={'mcs-section'}>
+      <div key={sectionKey} className={'mcs-section'}>
         {editable ? (
           <SectionTitleEditionPanel
             section={section}
