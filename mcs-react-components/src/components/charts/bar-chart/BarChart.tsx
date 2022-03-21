@@ -200,6 +200,7 @@ class BarChart extends React.Component<Props, {}> {
       chart: {
         type: type || 'column',
         height: height,
+        backgroundColor: 'none',
       },
       title: {
         text: '',

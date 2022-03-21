@@ -122,6 +122,7 @@ class StackedAreaChart extends React.Component<Props, {}> {
     const options: Highcharts.Options = {
       chart: {
         height: BASE_CHART_HEIGHT,
+        backgroundColor: 'none',
       },
       title: {
         text: '',

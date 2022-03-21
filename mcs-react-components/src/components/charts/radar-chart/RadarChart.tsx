@@ -75,6 +75,7 @@ class RadarChart extends React.Component<Props> {
       chart: {
         polar: true,
         height: height,
+        backgroundColor: 'none',
       },
       colors: colors || defaultColors,
       title: {
