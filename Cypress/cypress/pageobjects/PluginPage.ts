@@ -206,4 +206,4 @@ class PluginPage extends Page {
   }
 }
 
-export default new PluginPage();
+export default PluginPage;
