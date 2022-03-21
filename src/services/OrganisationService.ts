@@ -48,7 +48,7 @@ export default class OrganisationService implements IOrganisationService {
     return ApiService.getRequest(endpoint, {}, {}, { withCredentials: true });
   }
   getStandardLogo(): Promise<Blob> {
-    const endpoint = 'react/src/assets/images/logo.png';
+    const endpoint = 'src/assets/images/logo.png';
 
     const headers = { Accept: 'image/png' };
     const options = {
