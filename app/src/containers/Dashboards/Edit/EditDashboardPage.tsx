@@ -103,6 +103,7 @@ interface EditDashboardPageState {
   selectedSegments: SelectValue[];
   selectedBuilders: SelectValue[];
   contentText: string;
+  contentHasIds: boolean;
   userNamesMap: Map<string, string>;
   existingSegments: LabelValueOption[];
   existingBuilders: LabelValueOption[];
@@ -164,6 +165,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       selectedSegments: [],
       selectedBuilders: [],
       contentText: defaultContent,
+      contentHasIds: false,
       userNamesMap: new Map(),
       loading: true,
       existingSegments: [],
@@ -200,8 +202,11 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     }
   }
 
-  formatContent = (content?: DashboardContentSchema) => {
-    const purifiedContent = content ? omitDeep(content, 'id') : undefined;
+  formatContent = (content?: DashboardContentSchema, removeIds?: boolean) => {
+    let purifiedContent;
+    if (removeIds === undefined || removeIds)
+      purifiedContent = content ? omitDeep(content, 'id') : undefined;
+    else purifiedContent = content;
     return content ? JSON.stringify(purifiedContent, null, 4) : '';
   };
 
@@ -257,6 +262,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
         selectedBuilders: enrichedBuildersValues,
         contentTextOrig: contentText,
         contentText: contentText.length > 0 ? contentText : defaultContent,
+        contentHasIds: false,
         content: content,
         loading: false,
         existingBuilders: builders,
@@ -269,6 +275,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     } else {
       this.setState({
         contentText: defaultContent,
+        contentHasIds: false,
         loading: false,
         formInitialValues: {
           input_title: 'Untitled dashboard',
@@ -416,6 +423,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       content: content,
       contentTextOrig: this.formatContent(content?.content),
       contentText: this.formatContent(content?.content),
+      contentHasIds: false,
     });
   };
 
@@ -429,8 +437,11 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       )
       .then(responseDashboard => {
         if (contentText.length > 0)
-          this._dashboardService
-            .createContent(responseDashboard.data.id, JSON.parse(contentText))
+          return this._dashboardService
+            .createContent(
+              responseDashboard.data.id,
+              omitDeep(JSON.parse(contentText), 'id') as DashboardContentSchema,
+            )
             .then(responseContent => {
               this.notifySuccessAndRefresh(responseDashboard.data, responseContent.data);
             })
@@ -443,9 +454,19 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
             });
         else {
           this.notifySuccessAndRefresh(responseDashboard.data);
+          return null;
         }
       })
       .catch(e => this.props.notifyError(e));
+  };
+
+  parseSchema = (content: string): Promise<DashboardContentSchema> => {
+    try {
+      const result = omitDeep(JSON.parse(content), 'id') as DashboardContentSchema;
+      return Promise.resolve(result);
+    } catch (err) {
+      return Promise.reject(err);
+    }
   };
 
   modifyExistingDashboard = (dashboardId: string, organisationId: string, communityId: string) => {
@@ -479,8 +500,10 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       (contentTextOrig && contentText !== contentTextOrig)
     )
       promises.push(
-        this._dashboardService
-          .createContent(dashboardId, JSON.parse(contentText))
+        this.parseSchema(contentText)
+          .then(newSchema => {
+            return this._dashboardService.createContent(dashboardId, newSchema);
+          })
           .then(response => {
             storedContent = response.data;
             return response;
@@ -550,6 +573,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
   onContentTextChange = (e: string) => {
     this.setState({
       contentText: e,
+      contentHasIds: false,
     });
   };
 
@@ -753,7 +777,16 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
   }
 
   renderEditorTab() {
-    const { contentErrorMessage, contentText } = this.state;
+    const { contentErrorMessage, contentText, contentHasIds } = this.state;
+
+    let contentTextWithoutIds;
+    if (contentHasIds) {
+      try {
+        contentTextWithoutIds = this.formatContent(JSON.parse(contentText));
+      } catch (err) {
+        contentTextWithoutIds = contentText;
+      }
+    } else contentTextWithoutIds = contentText;
 
     const contentErrorStatus = contentErrorMessage ? 'error' : 'success';
     return (
@@ -771,7 +804,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
           showGutter={true}
           highlightActiveLine={false}
           width='100%'
-          value={contentText}
+          value={contentTextWithoutIds}
           minLines={20}
           maxLines={1000}
           height='auto'
@@ -789,9 +822,11 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
   }
   updateSchema = (newState: DashboardContentSchema) => {
     this.setState({
-      contentText: this.formatContent(newState),
+      contentText: this.formatContent(newState, false),
+      contentHasIds: true,
     });
   };
+
   renderChartEdition() {
     const { selectedDatamartId, intl } = this.props;
     const { contentText } = this.state;
