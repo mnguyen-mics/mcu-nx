@@ -110,7 +110,7 @@ class TopBar extends React.Component<Props> {
   }
 
   render() {
-    const { userEmail, linkPath, prodEnv, userAccount, headerSettings } = this.props;
+    const { userEmail, linkPath, prodEnv, userAccount, headerSettings, color } = this.props;
     const appMenuSections: AppsMenuSections = this.getAppMenuSections();
     const ProductionApiEnvironment = (
       <Alert
@@ -137,6 +137,7 @@ class TopBar extends React.Component<Props> {
         headerSettings={headerSettings}
         menu={appMenu}
         devAlert={prodEnv ? ProductionApiEnvironment : undefined}
+        color={color}
       />
     );
   }
