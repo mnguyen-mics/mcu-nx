@@ -1,7 +1,7 @@
 import * as React from 'react';
-import StackedAreaChart, { StackedAreaChartProps } from '../StackedAreaChart';
+import AreaChart, { AreaChartProps } from '../AreaChart';
 
-const propsForDayMode: StackedAreaChartProps = {
+const propsForDayMode: AreaChartProps = {
   dataset: [
     { day: '2020-02-27', data_1: 120, data_2: 20 },
     { day: '2020-02-28', data_1: 3451, data_2: 561 },
@@ -9,22 +9,27 @@ const propsForDayMode: StackedAreaChartProps = {
     { day: '2020-03-01', data_1: 2132, data_2: 261 },
     { day: '2020-03-02', data_1: 889, data_2: 53 },
   ],
-  options: {
-    yKeys: [
-      {
-        key: 'data_1',
-        message: 'Data 1',
-      },
-      {
-        key: 'data_2',
-        message: 'Data 2',
-      },
-    ],
-    xKey: { key: 'day', mode: 'DAY' },
+  format: 'count',
+  type: 'area',
+  legend: {
+    enabled: true,
+    position: 'bottom',
+    layout: 'horizontal',
   },
+  yKeys: [
+    {
+      key: 'data_1',
+      message: 'Data 1',
+    },
+    {
+      key: 'data_2',
+      message: 'Data 2',
+    },
+  ],
+  xKey: { key: 'day', mode: 'DAY' },
 };
 
-const propsForHourMode: StackedAreaChartProps = {
+const propsForHourLineMode: AreaChartProps = {
   dataset: [
     {
       day: '2021-04-29 00:00:00',
@@ -123,18 +128,22 @@ const propsForHourMode: StackedAreaChartProps = {
       user_points_count: 529,
     },
   ],
-  options: {
-    yKeys: [
-      {
-        key: 'user_points_count',
-        message: 'Users',
-      },
-    ],
-    xKey: { key: 'day', mode: 'HOUR' },
+  type: 'line',
+  legend: {
+    enabled: true,
+    position: 'right',
   },
+  yKeys: [
+    {
+      key: 'user_points_count',
+      message: 'Users',
+    },
+  ],
+  xKey: { key: 'day', mode: 'HOUR' },
+  format: 'count',
 };
 
-const propsForDefaultMode: StackedAreaChartProps = {
+const propsForDefaultMode: AreaChartProps = {
   dataset: [
     { category: 'a', y: 1 },
     { category: 'b', y: 2 },
@@ -163,19 +172,18 @@ const propsForDefaultMode: StackedAreaChartProps = {
     { category: 'y', y: 5 },
     { category: 'z', y: 6 },
   ],
-  options: {
-    yKeys: [
-      {
-        key: 'y',
-        message: 'Data',
-      },
-    ],
-    xKey: { key: 'category', mode: 'DEFAULT' },
-  },
+  format: 'count',
+  yKeys: [
+    {
+      key: 'y',
+      message: 'Data',
+    },
+  ],
+  xKey: { key: 'category', mode: 'DEFAULT' },
 };
 
 export default {
-  'Day mode': <StackedAreaChart {...propsForDayMode} />,
-  'Hour mode': <StackedAreaChart {...propsForHourMode} />,
-  'Default mode': <StackedAreaChart {...propsForDefaultMode} />,
+  'Day mode': <AreaChart {...propsForDayMode} />,
+  'Hour Line mode': <AreaChart {...propsForHourLineMode} />,
+  'Default mode': <AreaChart {...propsForDefaultMode} />,
 };

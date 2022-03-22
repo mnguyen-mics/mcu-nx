@@ -11,39 +11,39 @@ import {
   BASE_CHART_HEIGHT,
   OnDragEnd,
   defaultColors,
+  Format,
+  Legend,
+  Tooltip,
+  Dataset,
+  buildLegendOptions,
 } from '../utils';
+import { cloneDeep, omitBy, isUndefined } from 'lodash';
 
-export interface StackedAreaChartProps {
+type YKey = { key: string; message: string };
+type XKeyMode = 'DAY' | 'HOUR' | 'DEFAULT';
+type Type = 'area' | 'line';
+
+export interface AreaChartProps {
+  height?: number;
   dataset: Dataset;
-  options: ChartOptions;
+  format: Format;
+  legend?: Legend;
+  colors?: string[];
+  yKeys: YKey[];
+  xKey: { key: string; mode: XKeyMode };
+  hideXAxis?: boolean;
+  hideYAxis?: boolean;
+  type?: Type;
+  plotLineValue?: number;
+  tooltip?: Tooltip;
+  isDraggable?: boolean;
+  onDragEnd?: OnDragEnd;
   style?: React.CSSProperties;
 }
 
-type Dataset = Array<{ [key: string]: string | number | Date | undefined }>;
+type Props = AreaChartProps;
 
-interface ChartOptions {
-  yKeys: YKey[];
-  xKey: XKey;
-  colors?: string[];
-  isDraggable?: boolean;
-  onDragEnd?: OnDragEnd;
-}
-
-type YKey = {
-  key: string;
-  message: string;
-};
-
-type XKey = {
-  key: string;
-  mode: XKeyMode;
-};
-
-type XKeyMode = 'DAY' | 'HOUR' | 'DEFAULT';
-
-type Props = StackedAreaChartProps;
-
-class StackedAreaChart extends React.Component<Props, {}> {
+class AreaChart extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {};
@@ -54,10 +54,11 @@ class StackedAreaChart extends React.Component<Props, {}> {
     xKey: string,
     yKeys: YKey[],
     colors: string[] = defaultColors,
+    type: Type = 'area',
   ): Highcharts.SeriesOptionsType[] => {
     return yKeys.map((y, i) => {
       return {
-        type: 'area' as any,
+        type: type as any,
         data: dataset.map(data => {
           const yValue = data[y.key];
           return [
@@ -68,32 +69,31 @@ class StackedAreaChart extends React.Component<Props, {}> {
         name: y.message,
         color: colors[i],
         fillOpacity: 0.5,
-        fillColor: {
-          linearGradient: {
-            x1: 0,
-            y1: 0,
-            x2: 0,
-            y2: 1,
-          },
-          stops: [
-            [0, (Highcharts as any).Color(colors[i]).setOpacity(AREA_OPACITY).get('rgba')],
-            [1, (Highcharts as any).Color(colors[i]).setOpacity(0).get('rgba')],
-          ],
-        },
+        fillColor:
+          type === 'area'
+            ? {
+                linearGradient: {
+                  x1: 0,
+                  y1: 0,
+                  x2: 0,
+                  y2: 1,
+                },
+                stops: [
+                  [0, (Highcharts as any).Color(colors[i]).setOpacity(AREA_OPACITY).get('rgba')],
+                  [1, (Highcharts as any).Color(colors[i]).setOpacity(0).get('rgba')],
+                ],
+              }
+            : undefined,
       };
     });
   };
 
   formatDateToTs = (date: string) => {
-    const {
-      options: {
-        xKey: { mode },
-      },
-    } = this.props;
+    const { xKey } = this.props;
 
-    if (mode === 'DAY') {
+    if (xKey.mode === 'DAY') {
       return moment(date).utc().seconds(0).hours(24).milliseconds(0).minutes(0).valueOf();
-    } else if (mode === 'HOUR') {
+    } else if (xKey.mode === 'HOUR') {
       return moment(date).utc().valueOf();
     } else return date;
   };
@@ -101,7 +101,18 @@ class StackedAreaChart extends React.Component<Props, {}> {
   render() {
     const {
       dataset,
-      options: { xKey, yKeys, colors },
+      xKey,
+      yKeys,
+      colors,
+      style,
+      height,
+      format,
+      tooltip,
+      legend,
+      hideXAxis,
+      hideYAxis,
+      type,
+      plotLineValue,
     } = this.props;
 
     const xAxisDateTimeLabelFormatsOptions:
@@ -119,10 +130,21 @@ class StackedAreaChart extends React.Component<Props, {}> {
           }
         : undefined;
 
+    const plotLines = plotLineValue
+      ? [
+          {
+            color: '#3c3c3c',
+            width: 2,
+            value: plotLineValue,
+          },
+        ]
+      : [];
+
     const options: Highcharts.Options = {
       chart: {
-        height: BASE_CHART_HEIGHT,
+        height: height || BASE_CHART_HEIGHT,
         backgroundColor: 'none',
+        type: type,
       },
       title: {
         text: '',
@@ -156,23 +178,53 @@ class StackedAreaChart extends React.Component<Props, {}> {
         useUTC: xKey.mode === 'DAY',
       },
       yAxis: {
+        plotLines: plotLines,
         title: {
           text: null,
         },
         ...generateYAxisGridLine(),
       },
-      series: this.formatSeries(dataset, xKey.key, yKeys, colors),
+      series: this.formatSeries(dataset, xKey.key, yKeys, colors, type),
       credits: {
         enabled: false,
       },
       tooltip: {
         shared: true,
-        ...generateTooltip(),
+        ...generateTooltip(true, format, tooltip?.format),
       },
+      legend: buildLegendOptions(legend),
     };
 
-    return <HighchartsReact highcharts={Highcharts} options={options} style={{ width: '100%' }} />;
+    // Introducing XAxis and YAxis hidden visibility property broke
+    // the classic display even if the hidden visibility
+    // is falsy. So we need to create a specific options in this case.
+    const optionsWithoutAxis = cloneDeep(options);
+
+    if (hideYAxis) {
+      optionsWithoutAxis.yAxis = {
+        visible: false,
+      };
+    }
+
+    if (hideXAxis) {
+      optionsWithoutAxis.xAxis = {
+        visible: false,
+      };
+    }
+
+    const sanitizedOptions = omitBy(
+      hideXAxis || hideYAxis ? optionsWithoutAxis : options,
+      isUndefined,
+    );
+
+    return (
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={sanitizedOptions}
+        style={{ width: '100%', ...style }}
+      />
+    );
   }
 }
 
-export default compose<Props, StackedAreaChartProps>()(StackedAreaChart);
+export default compose<Props, AreaChartProps>()(AreaChart);

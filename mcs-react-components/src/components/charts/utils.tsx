@@ -162,6 +162,7 @@ export const defaultColors = [
 type LegendPosition = 'bottom' | 'right';
 export interface Legend {
   position?: LegendPosition;
+  layout?: Highcharts.OptionsLayoutValue;
   enabled: boolean;
 }
 
@@ -175,7 +176,7 @@ export function buildLegendOptions(legend?: Legend): Highcharts.LegendOptions {
         }
       : legend?.position === 'bottom'
       ? {
-          layout: 'vertical' as Highcharts.OptionsLayoutValue,
+          layout: legend.layout || ('vertical' as Highcharts.OptionsLayoutValue),
           align: 'center' as Highcharts.AlignValue,
           verticalAlign: 'bottom' as Highcharts.VerticalAlignValue,
         }
