@@ -29,20 +29,37 @@ const propsForDayMode: AreaChartProps = {
   xKey: { key: 'day', mode: 'DAY' },
 };
 
+const propsForDayModeDoubleYAxis: AreaChartProps = {
+  dataset: [
+    { day: '2020-02-27', data_1: 120, data_2: 20 },
+    { day: '2020-02-28', data_1: 3451, data_2: 561 },
+    { day: '2020-02-29', data_1: 3000, data_2: 651 },
+    { day: '2020-03-01', data_1: 2132, data_2: 261 },
+    { day: '2020-03-02', data_1: 889, data_2: 53 },
+  ],
+  format: 'count',
+  type: 'area',
+  doubleYaxis: true,
+  legend: {
+    enabled: true,
+    position: 'bottom',
+    layout: 'horizontal',
+  },
+  yKeys: [
+    {
+      key: 'data_1',
+      message: 'Data 1',
+    },
+    {
+      key: 'data_2',
+      message: 'Data 2',
+    },
+  ],
+  xKey: 'day',
+};
+
 const propsForHourLineMode: AreaChartProps = {
   dataset: [
-    {
-      day: '2021-04-29 00:00:00',
-      user_points_count: 0,
-    },
-    {
-      day: '2021-04-29 01:00:00',
-      user_points_count: 1,
-    },
-    {
-      day: '2021-04-29 02:00:00',
-      user_points_count: 4,
-    },
     {
       day: '2021-04-29 03:00:00',
       user_points_count: 9,
@@ -127,6 +144,18 @@ const propsForHourLineMode: AreaChartProps = {
       day: '2021-04-29 23:00:00',
       user_points_count: 529,
     },
+    {
+      day: '2021-04-30 00:00:00',
+      user_points_count: 441,
+    },
+    {
+      day: '2021-04-30 01:00:00',
+      user_points_count: 484,
+    },
+    {
+      day: '2021-04-29 23:00:00',
+      user_points_count: 529,
+    },
   ],
   type: 'line',
   legend: {
@@ -184,6 +213,7 @@ const propsForDefaultMode: AreaChartProps = {
 
 export default {
   'Day mode': <AreaChart {...propsForDayMode} />,
+  'Day mode Double Y axis': <AreaChart {...propsForDayModeDoubleYAxis} />,
   'Hour Line mode': <AreaChart {...propsForHourLineMode} />,
   'Default mode': <AreaChart {...propsForDefaultMode} />,
 };

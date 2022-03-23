@@ -16,12 +16,18 @@ import {
   Tooltip,
   Dataset,
   buildLegendOptions,
+  generateDraggable,
 } from '../utils';
 import { cloneDeep, omitBy, isUndefined } from 'lodash';
 
 type YKey = { key: string; message: string };
 type XKeyMode = 'DAY' | 'HOUR' | 'DEFAULT';
 type Type = 'area' | 'line';
+type XKey = { key: string; mode: XKeyMode };
+
+function isTypeofXKey(xkey: XKey | string): xkey is XKey {
+  return (xkey as XKey).key !== undefined;
+}
 
 export interface AreaChartProps {
   height?: number;
@@ -30,7 +36,7 @@ export interface AreaChartProps {
   legend?: Legend;
   colors?: string[];
   yKeys: YKey[];
-  xKey: { key: string; mode: XKeyMode };
+  xKey: XKey | string;
   hideXAxis?: boolean;
   hideYAxis?: boolean;
   type?: Type;
@@ -38,6 +44,7 @@ export interface AreaChartProps {
   tooltip?: Tooltip;
   isDraggable?: boolean;
   onDragEnd?: OnDragEnd;
+  doubleYaxis?: boolean;
   style?: React.CSSProperties;
 }
 
@@ -51,7 +58,7 @@ class AreaChart extends React.Component<Props, {}> {
 
   formatSeries = (
     dataset: Dataset,
-    xKey: string,
+    xKey: XKey | string,
     yKeys: YKey[],
     colors: string[] = defaultColors,
     type: Type = 'area',
@@ -62,12 +69,22 @@ class AreaChart extends React.Component<Props, {}> {
         data: dataset.map(data => {
           const yValue = data[y.key];
           return [
-            this.formatDateToTs(data[xKey] as string),
+            !isTypeofXKey(xKey)
+              ? this.formatDateToTsForXKeyType(
+                  data[xKey] as string,
+                  data.hour_of_day
+                    ? (data.hour_of_day as number)
+                    : data.hour
+                    ? (data.hour as number)
+                    : undefined,
+                )
+              : this.formatDateToTs(data[xKey.key] as string, xKey),
             yValue && typeof yValue === 'string' ? parseFloat(yValue) : yValue,
           ];
         }),
         name: y.message,
         color: colors[i],
+        yAxis: i,
         fillOpacity: 0.5,
         fillColor:
           type === 'area'
@@ -88,14 +105,22 @@ class AreaChart extends React.Component<Props, {}> {
     });
   };
 
-  formatDateToTs = (date: string) => {
-    const { xKey } = this.props;
-
+  formatDateToTs = (date: string, xKey: XKey) => {
     if (xKey.mode === 'DAY') {
       return moment(date).utc().seconds(0).hours(24).milliseconds(0).minutes(0).valueOf();
     } else if (xKey.mode === 'HOUR') {
       return moment(date).utc().valueOf();
     } else return date;
+  };
+
+  formatDateToTsForXKeyType = (date: string, hour?: number) => {
+    return moment(date)
+      .utc()
+      .seconds(0)
+      .hours((hour ? hour : 0) + 24)
+      .milliseconds(0)
+      .minutes(0)
+      .valueOf();
   };
 
   render() {
@@ -113,12 +138,15 @@ class AreaChart extends React.Component<Props, {}> {
       hideYAxis,
       type,
       plotLineValue,
+      isDraggable,
+      onDragEnd,
+      doubleYaxis,
     } = this.props;
 
     const xAxisDateTimeLabelFormatsOptions:
       | Highcharts.XAxisDateTimeLabelFormatsOptions
-      | undefined =
-      xKey.mode === 'DAY'
+      | undefined = isTypeofXKey(xKey)
+      ? xKey.mode === 'DAY'
         ? {
             month: { main: '%e. %b' },
             year: { main: '%b' },
@@ -128,8 +156,8 @@ class AreaChart extends React.Component<Props, {}> {
             minute: '%H:%M',
             hour: '%H:%M',
           }
-        : undefined;
-
+        : undefined
+      : undefined;
     const plotLines = plotLineValue
       ? [
           {
@@ -145,6 +173,7 @@ class AreaChart extends React.Component<Props, {}> {
         height: height || BASE_CHART_HEIGHT,
         backgroundColor: 'none',
         type: type,
+        ...(isDraggable ? generateDraggable(onDragEnd) : {}),
       },
       title: {
         text: '',
@@ -169,22 +198,40 @@ class AreaChart extends React.Component<Props, {}> {
           threshold: 0,
         },
       },
-      xAxis: {
-        type: xKey.mode === 'DAY' || xKey.mode === 'HOUR' ? 'datetime' : 'category',
-        dateTimeLabelFormats: xAxisDateTimeLabelFormatsOptions,
-        ...generateXAxisGridLine(),
-      },
+      xAxis: !isTypeofXKey(xKey)
+        ? {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+              month: { main: '%e. %b' },
+              year: { main: '%b' },
+            },
+            ...generateXAxisGridLine(),
+          }
+        : {
+            type: xKey.mode === 'DAY' || xKey.mode === 'HOUR' ? 'datetime' : 'category',
+            dateTimeLabelFormats: xAxisDateTimeLabelFormatsOptions,
+            ...generateXAxisGridLine(),
+          },
       time: {
-        useUTC: xKey.mode === 'DAY',
+        useUTC: !isTypeofXKey(xKey) ? true : xKey.mode === 'DAY',
       },
-      yAxis: {
-        plotLines: plotLines,
-        title: {
-          text: null,
+      yAxis: [
+        {
+          plotLines: plotLines,
+          title: {
+            text: yKeys[0].message,
+          },
+          ...generateYAxisGridLine(),
         },
-        ...generateYAxisGridLine(),
-      },
-      series: this.formatSeries(dataset, xKey.key, yKeys, colors, type),
+        {
+          title: {
+            text: yKeys[1]?.message,
+          },
+          opposite: true,
+          visible: !!doubleYaxis,
+        },
+      ],
+      series: this.formatSeries(dataset, xKey, yKeys, colors, type),
       credits: {
         enabled: false,
       },
