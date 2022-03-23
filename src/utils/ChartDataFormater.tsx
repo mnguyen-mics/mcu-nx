@@ -35,9 +35,10 @@ export function formatDatasetAsKeyValueForOtql(
   yKey: string,
 ): Dataset {
   const dataset: any = buckets.map(buck => {
+    const value = buck.aggregations?.metrics[0] ? buck.aggregations.metrics[0].value : buck.count;
     return {
       [xKey]: buck.key as string,
-      [yKey]: buck.count as number,
+      [yKey]: value as number,
       buckets: formatDatasetAsKeyValueForOtql(
         buck.aggregations?.buckets[0]?.buckets || [],
         xKey,
