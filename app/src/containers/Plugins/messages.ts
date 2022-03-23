@@ -277,4 +277,8 @@ export default defineMessages({
     id: 'plugins.pluginVersionForm.missingField',
     defaultMessage: 'Missing fields. Version, provider and name are mandatory',
   },
+  pluginsPerType: {
+    id: 'home.pluginsPerType',
+    defaultMessage: 'Plugins per type',
+  },
 });

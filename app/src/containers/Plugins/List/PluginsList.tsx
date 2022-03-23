@@ -23,17 +23,18 @@ import {
 } from '../../../utils/LocationSearchHelper';
 import PluginsListActionBar from './PluginsListActionBar';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
-import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';
 import PluginEditDrawer from '../Edit/PluginEditDrawer';
 import { Link } from 'react-router-dom';
-import { Card } from '@mediarithmics-private/mcs-components-library';
+import { Card, PieChart } from '@mediarithmics-private/mcs-components-library';
 import { PluginType } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
 import { getPaginatedApiParam } from '../../../utils/ApiHelper';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
+import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
+import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
 
 const { Content } = Layout;
 
@@ -58,6 +59,8 @@ interface State {
   isVisibleDrawer: boolean;
   sortField?: string;
   isSortAsc?: boolean;
+  isLoadingPluginPieChart: boolean;
+  pluginPieChartDataset: Dataset;
 }
 
 class PluginsList extends React.Component<Props, State> {
@@ -90,6 +93,8 @@ class PluginsList extends React.Component<Props, State> {
             : param.order_by
           : undefined,
       isSortAsc: param.order_by ? (param.order_by[0] === '-' ? false : true) : undefined,
+      isLoadingPluginPieChart: false,
+      pluginPieChartDataset: [],
     };
   }
 
@@ -100,6 +105,7 @@ class PluginsList extends React.Component<Props, State> {
       },
     } = this.props;
     this.getPluginFilterOptions(organisationId);
+    this.fetchPluginsChart(organisationId);
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -113,7 +119,10 @@ class PluginsList extends React.Component<Props, State> {
         params: { organisationId: prevOrganisationId },
       },
     } = prevProps;
-    if (organisationId !== prevOrganisationId) this.getPluginFilterOptions(organisationId);
+    if (organisationId !== prevOrganisationId) {
+      this.getPluginFilterOptions(organisationId);
+      this.fetchPluginsChart(organisationId);
+    }
   }
 
   getPluginFilterOptions = (organisationId: string) => {
@@ -154,6 +163,33 @@ class PluginsList extends React.Component<Props, State> {
       })
       .catch(err => {
         notifyError(err);
+      });
+  };
+
+  fetchPluginsChart = (organisationId: string) => {
+    this.setState({
+      isLoadingPluginPieChart: true,
+    });
+    this._pluginService
+      .getPlugins({ organisation_id: organisationId })
+      .then(res => {
+        const pluginsByType = _.groupBy(res.data, 'plugin_type');
+
+        this.setState({
+          isLoadingPluginPieChart: false,
+          pluginPieChartDataset: Object.keys(pluginsByType).map(pluginType => {
+            return {
+              key: pluginType,
+              value: pluginsByType[pluginType].length,
+            };
+          }),
+        });
+      })
+      .catch(err => {
+        this.setState({
+          isLoadingPluginPieChart: false,
+        });
+        this.props.notifyError(err);
       });
   };
 
@@ -244,7 +280,7 @@ class PluginsList extends React.Component<Props, State> {
       : undefined;
 
     return (
-      <div className='mcs-actionBar_filters'>
+      <div className='mcs-pluginList-filters'>
         <Select
           className='mcs-actionBar_filterInput mcs-actionBar_filterInput--pluginType'
           placeholder={this.renderInputPlaceholder('Plugin Type')}
@@ -396,7 +432,16 @@ class PluginsList extends React.Component<Props, State> {
         params: { organisationId },
       },
     } = this.props;
-    const { data, loading, total, isVisibleDrawer, sortField, isSortAsc } = this.state;
+    const {
+      data,
+      loading,
+      total,
+      isVisibleDrawer,
+      sortField,
+      isSortAsc,
+      isLoadingPluginPieChart,
+      pluginPieChartDataset,
+    } = this.state;
     const dataColumnsDefinition: Array<DataColumnDefinition<PluginResource>> = [
       {
         title: formatMessage(messages.pluginId),
@@ -408,51 +453,6 @@ class PluginsList extends React.Component<Props, State> {
             to={`/o/${organisationId}/plugins/${record.id}`}
           >
             {record.id}
-          </Link>
-        ),
-      },
-      {
-        title: formatMessage(messages.pluginType),
-        key: 'plugin_type',
-        isHideable: false,
-        sorter: true,
-        sortOrder: this.getOrderByForColumn('plugin_type', sortField, isSortAsc),
-        render: (text: string, record: PluginResource) => (
-          <Link
-            className='mcs-pluginTable_pluginType'
-            to={`/o/${organisationId}/plugins/${record.id}`}
-          >
-            {record.plugin_type}
-          </Link>
-        ),
-      },
-      {
-        title: formatMessage(messages.organisation),
-        key: 'organisation_id',
-        isHideable: false,
-        sorter: true,
-        sortOrder: this.getOrderByForColumn('organisation_id', sortField, isSortAsc),
-        render: (text: string, record: PluginResource) => (
-          <Link
-            className='mcs-pluginTable_organisation'
-            to={`/o/${organisationId}/plugins/${record.id}`}
-          >
-            {record.organisation_id}
-          </Link>
-        ),
-      },
-      {
-        title: formatMessage(messages.group),
-        key: 'group_id',
-        isHideable: false,
-        sorter: true,
-        sortOrder: this.getOrderByForColumn('group_id', sortField, isSortAsc),
-        render: (text: string, record: PluginResource) => (
-          <Link
-            className='mcs-pluginTable_GroupId'
-            to={`/o/${organisationId}/plugins/${record.id}`}
-          >
-            {record.group_id}
           </Link>
         ),
       },
@@ -471,6 +471,36 @@ class PluginsList extends React.Component<Props, State> {
           </Link>
         ),
       },
+      {
+        title: formatMessage(messages.pluginType),
+        key: 'plugin_type',
+        isHideable: false,
+        sorter: true,
+        sortOrder: this.getOrderByForColumn('plugin_type', sortField, isSortAsc),
+        render: (text: string, record: PluginResource) => (
+          <span className='mcs-pluginTable_pluginType'>{text}</span>
+        ),
+      },
+      {
+        title: formatMessage(messages.organisation),
+        key: 'organisation_id',
+        isHideable: false,
+        sorter: true,
+        sortOrder: this.getOrderByForColumn('organisation_id', sortField, isSortAsc),
+        render: (text: string, record: PluginResource) => (
+          <span className='mcs-pluginTable_organisation'>{text}</span>
+        ),
+      },
+      {
+        title: formatMessage(messages.group),
+        key: 'group_id',
+        isHideable: false,
+        sorter: true,
+        sortOrder: this.getOrderByForColumn('group_id', sortField, isSortAsc),
+        render: (text: string, record: PluginResource) => (
+          <span className='mcs-pluginTable_groupId'>{text}</span>
+        ),
+      },
     ];
 
     const emptyTable: {
@@ -481,20 +511,31 @@ class PluginsList extends React.Component<Props, State> {
       message: formatMessage(messages.emptyTableMessage),
     };
 
-    const totalTag = (
-      <div className='mcs-pluginVersions_totalTag'>
-        <Tag color='blue'>{`${total} plugins`}</Tag>
+    const additionnalComponent = (
+      <div className='mcs-pluginList-filterContainer'>
+        <div className='mcs-pluginVersions_totalTag'>
+          <Tag color='blue'>{`${total} plugins`}</Tag>
+        </div>
+        {this.renderActionBarInnerElements()}
       </div>
     );
-
     return (
       <div className='ant-layout'>
-        <PluginsListActionBar
-          innerElement={this.renderActionBarInnerElements()}
-          openDrawer={this.openDrawer}
-        />
+        <PluginsListActionBar openDrawer={this.openDrawer} />
         <div className='ant-layout'>
           <Content className='mcs-content-container'>
+            {!isLoadingPluginPieChart && (
+              <div style={{ width: '450px' }}>
+                <h3 className='mcs-pluginList_chartTitle'>
+                  {formatMessage(messages.pluginsPerType)}
+                </h3>
+                <PieChart
+                  dataset={pluginPieChartDataset}
+                  innerRadius={false}
+                  legend={{ enabled: true, position: 'right' }}
+                />
+              </div>
+            )}
             <Card>
               <ItemList
                 fetchList={this.fetchPlugins}
@@ -504,7 +545,7 @@ class PluginsList extends React.Component<Props, State> {
                 columns={dataColumnsDefinition}
                 pageSettings={PLUGIN_PAGE_SEARCH_SETTINGS}
                 emptyTable={emptyTable}
-                additionnalComponent={totalTag}
+                additionnalComponent={additionnalComponent}
                 onChange={this.onTableChange}
               />
             </Card>
