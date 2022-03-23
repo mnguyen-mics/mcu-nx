@@ -482,7 +482,7 @@ class PluginVersionForm extends React.Component<Props, State> {
 
     return (
       <Form layout='vertical' className='mcs-pluginEdit-drawer-form'>
-        <Content className='mcs-content-container mcs-pluginEdit-drawer-container'>
+        <Content className='mcs-content-container mcs-pluginEdit-drawer-container mcs-pluginVersion-form'>
           {isLoading ? (
             <Loading isFullScreen={true} />
           ) : (

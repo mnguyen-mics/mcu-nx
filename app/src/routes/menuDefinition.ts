@@ -5,7 +5,7 @@ import { jobsDefinition } from './jobRoutes';
 import PluginsList from '../containers/Plugins/List/PluginsList';
 
 const homeMenuDefinition: NavigatorMenuDefinition = {
-  iconType: 'users',
+  iconType: 'home',
   displayName: 'Home',
   type: 'simple',
   ...generateMissingdefinitionItemFromRoute({
