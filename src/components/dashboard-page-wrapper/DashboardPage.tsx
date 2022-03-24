@@ -2,7 +2,6 @@ import * as React from 'react';
 import { compose } from 'recompose';
 import { McsTabs } from '@mediarithmics-private/mcs-components-library';
 import { LabeledValue } from 'antd/lib/select';
-
 import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
 import ScopedDashboardLayout from '../dashboard-page-wrapper/ScopedDashboardLayout';
 import { InjectedFeaturesProps, injectFeatures } from '../Features';

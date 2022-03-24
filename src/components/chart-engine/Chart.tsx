@@ -5,7 +5,12 @@ import {
   CountDataset,
   getXKeyForChart,
 } from '../../utils/ChartDataFormater';
-import { PieChart, BarChart, RadarChart } from '@mediarithmics-private/mcs-components-library';
+import {
+  PieChart,
+  BarChart,
+  RadarChart,
+  AreaChart,
+} from '@mediarithmics-private/mcs-components-library';
 import { Alert, Spin } from 'antd';
 import { lazyInject } from '../../inversify/inversify.config';
 import { TYPES } from '../../constants/types';
@@ -13,6 +18,7 @@ import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/compo
 import { isUndefined, omitBy } from 'lodash';
 import { formatMetric } from '../../utils/MetricHelper';
 import {
+  AreaChartOptions,
   BarChartOptions,
   ChartApiOptions,
   ChartConfig,
@@ -175,6 +181,8 @@ class Chart extends React.Component<Props, ChartState> {
         );
       case 'bars':
         return <BarChart dataset={dataset as any} {...(sanitizedwithKeys as BarChartOptions)} />;
+      case 'area':
+        return <AreaChart dataset={dataset as any} {...(sanitizedwithKeys as AreaChartOptions)} />;
       default:
         return (
           <Alert

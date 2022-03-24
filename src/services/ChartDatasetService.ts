@@ -58,8 +58,9 @@ import AudienceSegmentService, { IAudienceSegmentService } from './AudienceSegme
 import promiseRetry from 'promise-retry';
 import DataFileService, { IDataFileService } from './DataFileService';
 import jsonpath from 'jsonpath';
+import { AreaChartProps } from '@mediarithmics-private/mcs-components-library/lib/components/charts/area-chart';
 
-export type ChartType = 'pie' | 'bars' | 'radar' | 'metric';
+export type ChartType = 'pie' | 'bars' | 'radar' | 'metric' | 'area';
 export type SourceType =
   | 'otql'
   | 'join'
@@ -76,6 +77,7 @@ const DEFAULT_Y_KEY = {
   key: 'value',
   message: 'count',
 };
+
 export interface AbstractSource {
   type: SourceType;
   series_title?: string;
@@ -148,6 +150,7 @@ export type PieChartOptions = Omit<PieChartProps, 'dataset' | 'colors'>;
 export type RadarChartOptions = Omit<RadarChartProps, 'dataset' | 'colors'>;
 export type BarChartOptions = Omit<BarChartProps, 'dataset' | 'colors'>;
 export type MetricChartOptions = Omit<MetricChartProps, 'dataset' | 'colors'>;
+export type AreaChartOptions = Omit<AreaChartProps, 'dataset' | 'colors'>;
 interface WithOptionalXKey {
   xKey?: string;
 }
@@ -156,6 +159,7 @@ export type ChartOptions = (
   | RadarChartOptions
   | BarChartOptions
   | MetricChartOptions
+  | AreaChartOptions
 ) &
   WithOptionalXKey;
 
@@ -201,6 +205,18 @@ interface BarChartApiProps {
   hide_y_axis?: boolean;
 }
 
+interface AreaChartApiProps {
+  height?: number;
+  stacking?: boolean;
+  plot_line_value?: number;
+  legend?: Legend;
+  type?: string;
+  tooltip?: Tooltip;
+  format: Format;
+  hide_x_axis?: boolean;
+  hide_y_axis?: boolean;
+}
+
 interface MetricChartApiProps {
   format?: MetricChartFormat;
 }
@@ -210,6 +226,7 @@ export type ChartApiOptions = (
   | RadarChartApiProps
   | BarChartApiProps
   | MetricChartApiProps
+  | AreaChartApiProps
 ) &
   WithOptionalXKey;
 
