@@ -215,22 +215,31 @@ class AreaChart extends React.Component<Props, {}> {
       time: {
         useUTC: !isTypeofXKey(xKey) ? true : xKey.mode === 'DAY',
       },
-      yAxis: [
-        {
-          plotLines: plotLines,
+      yAxis: yKeys.map((yKey, i) => {
+        const yAxisResource: Highcharts.YAxisOptions = {
           title: {
-            text: yKeys[0].message,
+            text: yKeys[i].message,
           },
-          ...generateYAxisGridLine(),
-        },
-        {
-          title: {
-            text: yKeys[1]?.message,
-          },
-          opposite: true,
-          visible: !!doubleYaxis,
-        },
-      ],
+        };
+        if (i === 0) {
+          return {
+            ...yAxisResource,
+            plotLines: plotLines,
+            ...generateYAxisGridLine(),
+          };
+        } else if (i === 1) {
+          return {
+            ...yAxisResource,
+            opposite: true,
+            visible: !!doubleYaxis,
+          };
+        } else {
+          return {
+            ...yAxisResource,
+            visible: false,
+          };
+        }
+      }),
       series: this.formatSeries(dataset, xKey, yKeys, colors, type),
       credits: {
         enabled: false,

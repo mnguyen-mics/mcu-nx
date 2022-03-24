@@ -31,11 +31,11 @@ const propsForDayMode: AreaChartProps = {
 
 const propsForDayModeDoubleYAxis: AreaChartProps = {
   dataset: [
-    { day: '2020-02-27', data_1: 120, data_2: 20 },
-    { day: '2020-02-28', data_1: 3451, data_2: 561 },
-    { day: '2020-02-29', data_1: 3000, data_2: 651 },
-    { day: '2020-03-01', data_1: 2132, data_2: 261 },
-    { day: '2020-03-02', data_1: 889, data_2: 53 },
+    { day: '2020-02-27', data_1: 120, data_2: 20, data_3: 44 },
+    { day: '2020-02-28', data_1: 3451, data_2: 561, data_3: 40 },
+    { day: '2020-02-29', data_1: 3000, data_2: 651, data_3: 44 },
+    { day: '2020-03-01', data_1: 2132, data_2: 261, data_3: 43 },
+    { day: '2020-03-02', data_1: 889, data_2: 53, data_3: 41 },
   ],
   format: 'count',
   type: 'area',
@@ -54,8 +54,12 @@ const propsForDayModeDoubleYAxis: AreaChartProps = {
       key: 'data_2',
       message: 'Data 2',
     },
+    {
+      key: 'data_3',
+      message: 'Data 3',
+    },
   ],
-  xKey: 'day',
+  xKey: { key: 'day', mode: 'DAY' },
 };
 
 const propsForHourLineMode: AreaChartProps = {
