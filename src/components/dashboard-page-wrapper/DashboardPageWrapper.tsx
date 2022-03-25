@@ -46,6 +46,7 @@ interface DashboardPageWrapperProps {
   contextualTargetingTab?: React.ReactNode;
   onShowDashboard?: (dpc: DashboardPageContent) => void;
   onFinishLoading?: (hasDashboards: boolean) => void;
+  defaultDashboard?: DashboardPageContent;
 }
 
 type Props = DashboardPageWrapperProps &
@@ -228,6 +229,7 @@ class DashboardPageWrapper extends React.Component<Props, State> {
       DashboardWrapper,
       contextualTargetingTab,
       onShowDashboard,
+      defaultDashboard,
     } = this.props;
 
     const { isLoading, dataFileDashboards, apiDashboards, shouldDisplayComingSoon } = this.state;
@@ -281,6 +283,7 @@ class DashboardPageWrapper extends React.Component<Props, State> {
           DatamartUsersAnalyticsWrapper={DatamartUsersAnalyticsWrapper}
           contextualTargetingTab={contextualTargetingTab}
           onShowDashboard={handleOnShowDashboard}
+          defaultDashboard={defaultDashboard}
         />
       );
     }

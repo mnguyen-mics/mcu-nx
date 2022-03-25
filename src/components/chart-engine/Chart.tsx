@@ -182,6 +182,7 @@ class Chart extends React.Component<Props, ChartState> {
       case 'bars':
         return <BarChart dataset={dataset as any} {...(sanitizedwithKeys as BarChartOptions)} />;
       case 'area':
+      case 'line':
         return <AreaChart dataset={dataset as any} {...(sanitizedwithKeys as AreaChartOptions)} />;
       default:
         return (
@@ -228,7 +229,13 @@ class Chart extends React.Component<Props, ChartState> {
     const datasetType = dataset.type.toLowerCase();
     if (
       datasetType === 'aggregate' &&
-      !(chartType === 'bars' || chartType === 'radar' || chartType === 'pie')
+      !(
+        chartType === 'bars' ||
+        chartType === 'radar' ||
+        chartType === 'pie' ||
+        chartType === 'area' ||
+        chartType === 'line'
+      )
     ) {
       return this.renderAlert(
         `Dataset of type aggregation result doesn't match ${chartConfig.type.toLowerCase()} chart type`,

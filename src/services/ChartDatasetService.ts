@@ -60,7 +60,7 @@ import DataFileService, { IDataFileService } from './DataFileService';
 import jsonpath from 'jsonpath';
 import { AreaChartProps } from '@mediarithmics-private/mcs-components-library/lib/components/charts/area-chart';
 
-export type ChartType = 'pie' | 'bars' | 'radar' | 'metric' | 'area';
+export type ChartType = 'pie' | 'bars' | 'radar' | 'metric' | 'area' | 'line';
 export type SourceType =
   | 'otql'
   | 'join'
