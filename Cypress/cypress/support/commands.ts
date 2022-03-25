@@ -439,7 +439,7 @@ Cypress.Commands.add('createPluginVersion', (pluginId: string, json: object = {}
 });
 
 Cypress.Commands.add('createAsset', (organisationId: string, accessToken: string) => {
-  cy.exec(`curl -X POST ${Cypress.env('apiDomain')}/v1/assets?organisation_id=${organisationId}\
+  cy.exec(`curl -k -X POST ${Cypress.env('apiDomain')}/v1/assets?organisation_id=${organisationId}\
               -H "authorization: ${accessToken}" \
               -H "content-type: multipart/form-data" \
               -F "file=@./cypress/integration/Plugins/mediarithmics_icons.png"`);

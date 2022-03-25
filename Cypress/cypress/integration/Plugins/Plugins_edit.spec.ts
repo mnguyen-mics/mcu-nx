@@ -17,11 +17,12 @@ describe('Test the addition and edition of configs on plugins', () => {
     cy.clearLocalStorage();
   });
 
-  it('Should be able to add and edit properties layout', () => {
+  it('Should be able to add and edit properties layout and local file', () => {
     cy.fixture('init_infos').then(async data => {
       const pluginType = 'DISPLAY_CAMPAIGN_USER_SCENARIO';
       const groupId = faker.random.word().toLowerCase().replace(/\s/g, '');
       const artifactId = faker.random.word().toLowerCase().replace(/\s/g, '');
+      const technicalName = faker.random.word();
 
       cy.createAsset(data.organisationId, data.accessToken).then(async () => {
         const assets = await plugins.getAssetsByApi(data.organisationId, data.accessToken);
@@ -71,6 +72,39 @@ describe('Test the addition and edition of configs on plugins', () => {
         pluginPage.clickOnLayoutTab();
 
         cy.get('.mcs-table-view').should('not.contain', "You don't have any properties layout yet");
+        pluginPage.pluginTabList.should('contain', 'PROPERTIES');
+
+        pluginPage.clickOnAddFileButton();
+        pluginPage.typeTechnicalNamePluginEditDrawer(technicalName);
+        pluginPage.typePropertyForFile('Hello');
+        pluginPage.clickOnSaveButton();
+
+        cy.wait(5000);
+        cy.reload(true);
+
+        pluginPage.clickOnSideBarMenuPlugins();
+        cy.wait(2000);
+        pluginPage.pluginTablePluginIds.first().click();
+        cy.wait(2000);
+        pluginPage.clickOnLayoutTab();
+
+        cy.wait(5000);
+
+        pluginPage.clickOnSideBarMenuPlugins();
+        cy.wait(2000);
+        pluginPage.pluginTablePluginIds.first().click();
+        cy.wait(2000);
+        pluginPage.clickOnLayoutTab();
+
+        cy.wait(5000);
+
+        pluginPage.clickOnSideBarMenuPlugins();
+        cy.wait(2000);
+        pluginPage.pluginTablePluginIds.first().click();
+        cy.wait(2000);
+        pluginPage.clickOnLayoutTab();
+
+        pluginPage.pluginTabList.should('contain', 'PROPERTIES').and('contain', 'LOCALE');
       });
     });
   });

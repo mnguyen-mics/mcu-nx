@@ -90,7 +90,7 @@ class PluginPage extends Page {
   }
 
   get addFileButton() {
-    return cy.get('.mcs-pluginConfigurationFileTable_addFileButton');
+    return cy.get('.mcs-pluginList_actionButton');
   }
 
   get inputTechnicalNamePluginEditDrawer() {
@@ -103,6 +103,10 @@ class PluginPage extends Page {
 
   get saveButton() {
     return cy.get('.mcs-pluginEdit-drawer-saveButton');
+  }
+
+  get pluginTabList() {
+    return cy.get('.mcs-pluginTab-list');
   }
 
   visit() {
