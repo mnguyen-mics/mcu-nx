@@ -2,7 +2,6 @@ import * as React from 'react';
 import { compose } from 'recompose';
 import { McsTabs } from '@mediarithmics-private/mcs-components-library';
 import { LabeledValue } from 'antd/lib/select';
-
 import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
 import ScopedDashboardLayout from '../dashboard-page-wrapper/ScopedDashboardLayout';
 import { InjectedFeaturesProps, injectFeatures } from '../Features';
@@ -33,6 +32,7 @@ export interface DashboardPageProps {
   DashboardWrapper?: React.ComponentClass<DashboardWrapperProps>;
   contextualTargetingTab?: React.ReactNode;
   onShowDashboard?: (dpc: DashboardPageContent) => void;
+  defaultDashboard?: DashboardPageContent;
 }
 const messagesDashboardPage = defineMessages({
   technicalInformationTab: {
@@ -66,6 +66,7 @@ class DashboardPage extends React.Component<Props> {
       DatamartUsersAnalyticsWrapper,
       contextualTargetingTab,
       onShowDashboard,
+      defaultDashboard,
     } = this.props;
     const defaultContent = (
       <div>
@@ -105,9 +106,17 @@ class DashboardPage extends React.Component<Props> {
       </div>
     );
 
+    if (apiDashboards) {
+      apiDashboards.sort((a, b) => a.title.localeCompare(b.title));
+    }
+    // We want to place defaultDashboard in first position if it is defined
+    // So sorting has to be done before
+    if (defaultDashboard) {
+      apiDashboards = apiDashboards ? [defaultDashboard].concat(apiDashboards) : [defaultDashboard];
+    }
+
     if (apiDashboards && apiDashboards.length > 0) {
       const dashboardTabs = apiDashboards
-        .sort((a, b) => a.title.localeCompare(b.title))
         .filter(dashboard => !!dashboard.dashboardContent)
         .map(dashboard => {
           const handleShowDashboard = () => {
@@ -140,7 +149,7 @@ class DashboardPage extends React.Component<Props> {
         !segmentDashboardTechnicalInformation
       ) {
         const handleShowDashboard = () => {
-          if (onShowDashboard) onShowDashboard(apiDashboards[0]);
+          if (onShowDashboard && apiDashboards) onShowDashboard(apiDashboards[0]);
         };
 
         return apiDashboards[0].dashboardContent ? (

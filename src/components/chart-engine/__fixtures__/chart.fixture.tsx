@@ -7,6 +7,7 @@ import config from '../../../react-configuration';
 import { ChartConfig } from '../../../services/ChartDatasetService';
 import { Provider } from 'react-redux';
 import configureStore from '../../../redux/store';
+import { IntlProvider } from 'react-intl';
 
 (global as any).window.MCS_CONSTANTS = config;
 const chartConfigPie: ChartConfig = {
@@ -81,11 +82,13 @@ const chartConfigMetric: ChartConfig = {
 const store = configureStore();
 export default (
   <Provider store={store}>
-    <IocProvider container={container}>
-      <Chart chartConfig={chartConfigPie} datamartId={'1414'} />
-      <Chart chartConfig={chartConfigRadar} datamartId={'1414'} />
-      <Chart chartConfig={chartConfigBars} datamartId={'1414'} />
-      <Chart chartConfig={chartConfigMetric} datamartId={'1414'} />
-    </IocProvider>
+    <IntlProvider>
+      <IocProvider container={container}>
+        <Chart chartConfig={chartConfigPie} datamartId={'1414'} />
+        <Chart chartConfig={chartConfigRadar} datamartId={'1414'} />
+        <Chart chartConfig={chartConfigBars} datamartId={'1414'} />
+        <Chart chartConfig={chartConfigMetric} datamartId={'1414'} />
+      </IocProvider>
+    </IntlProvider>
   </Provider>
 );
