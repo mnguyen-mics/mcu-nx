@@ -18,6 +18,7 @@ import injectNotifications, {
 } from '../Notifications/injectNotifications';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { DashboardPageContent } from '@mediarithmics-private/advanced-components/lib/models/dashboards/old-dashboards-model';
+import getDefaultSections from './defaultDashboard';
 
 interface RouteProps {
   organisationId: string;
@@ -53,6 +54,13 @@ class HomePage extends React.Component<Props> {
   };
 
   render() {
+    const {
+      selectedDatamartId,
+      match: {
+        params: { organisationId },
+      },
+    } = this.props;
+
     const handleOnShowDashboard = (dashboard: DashboardPageContent) => {
       if (dashboard.dashboardRegistrationId) {
         const stats = this._dashboardService.countDashboardsStats(dashboard);
@@ -69,12 +77,14 @@ class HomePage extends React.Component<Props> {
       }
     };
 
-    const {
-      selectedDatamartId,
-      match: {
-        params: { organisationId },
+    const defaultDashboard: DashboardPageContent = {
+      title: 'Standard Dashboard',
+      scopes: ['console'],
+      dashboardContent: {
+        sections: getDefaultSections(selectedDatamartId).sections,
       },
-    } = this.props;
+    };
+
     return (
       <div className='ant-layout'>
         <div className='ant-layout'>
@@ -85,6 +95,7 @@ class HomePage extends React.Component<Props> {
               fetchApiDashboards={this.fetchApiDashboards}
               isFullScreenLoading={false}
               onShowDashboard={handleOnShowDashboard}
+              defaultDashboard={defaultDashboard}
             />
           </Content>
         </div>
