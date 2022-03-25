@@ -1,9 +1,11 @@
-import pluginPage from '../../pageobjects/PluginPage';
 import faker from 'faker';
 import plugins from '../../utils/Plugins';
 import { propertyLayout } from './PropertyLayoutContent';
+import PluginPage from '../../pageobjects/PluginPage';
 
 describe('Test the addition and edition of configs on plugins', () => {
+  const pluginPage = new PluginPage();
+
   beforeEach(() => {
     cy.logout();
     cy.login();
