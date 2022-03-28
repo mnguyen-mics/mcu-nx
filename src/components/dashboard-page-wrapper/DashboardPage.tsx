@@ -109,10 +109,10 @@ class DashboardPage extends React.Component<Props> {
     if (apiDashboards) {
       apiDashboards.sort((a, b) => a.title.localeCompare(b.title));
     }
-    // We want to place defaultDashboard in first position if it is defined
+    // We want to place defaultDashboard in last position if it is defined
     // So sorting has to be done before
     if (defaultDashboard) {
-      apiDashboards = apiDashboards ? [defaultDashboard].concat(apiDashboards) : [defaultDashboard];
+      apiDashboards = apiDashboards ? apiDashboards.concat(defaultDashboard) : [defaultDashboard];
     }
 
     if (apiDashboards && apiDashboards.length > 0) {
