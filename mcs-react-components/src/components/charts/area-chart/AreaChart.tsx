@@ -44,7 +44,6 @@ export interface AreaChartProps {
   isDraggable?: boolean;
   onDragEnd?: OnDragEnd;
   doubleYaxis?: boolean;
-  style?: React.CSSProperties;
 }
 
 type Props = AreaChartProps;
@@ -129,7 +128,6 @@ class AreaChart extends React.Component<Props, {}> {
       xKey,
       yKeys,
       colors,
-      style,
       height,
       format,
       tooltip,
@@ -269,7 +267,7 @@ class AreaChart extends React.Component<Props, {}> {
       <HighchartsReact
         highcharts={Highcharts}
         options={sanitizedOptions}
-        style={{ width: '100%', ...style }}
+        containerProps={{ style: { height: '100%' } }}
       />
     );
   }
