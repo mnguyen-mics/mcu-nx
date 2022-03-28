@@ -4,7 +4,6 @@ const getDefaultSections = (datamartId: string) => {
   return {
     sections: [
       {
-        title: 'User information',
         cards: [
           {
             x: 0,
@@ -186,7 +185,7 @@ const getDefaultSections = (datamartId: string) => {
                     format: 'YYYY-MM-DD',
                   },
                 },
-                title: 'Evolution of User information',
+                title: 'User point, user identifiers & user profiles',
                 type: 'line',
               },
             ],
@@ -198,7 +197,6 @@ const getDefaultSections = (datamartId: string) => {
         ],
       },
       {
-        title: 'Activity information',
         cards: [
           {
             x: 0,
@@ -287,7 +285,7 @@ const getDefaultSections = (datamartId: string) => {
                     format: 'YYYY-MM-DD',
                   },
                 },
-                title: 'Evolution of Activity',
+                title: 'User activities & user events',
                 type: 'line',
               },
             ],

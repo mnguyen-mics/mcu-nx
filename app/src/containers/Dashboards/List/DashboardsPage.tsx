@@ -281,13 +281,15 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
 
     const dataColumnsDefinition: Array<DataColumnDefinition<CustomDashboardResource>> = [
       {
-        title: formatMessage(messages.organisation),
-        key: 'path',
+        title: formatMessage(messages.id),
+        key: 'id',
         isHideable: false,
         render: (text: string, record: CustomDashboardResource) => (
-          <span className='mcs-dashboardsTable_OrgColumn'>
-            {record.organisation_id ? organisationsMap.get(record.organisation_id) : '-'}
+          <Link to={`/o/${record.organisation_id}/dashboards/edit/${text}`}>
+            <span className='mcs-dashboardsTable_IdColumn'>
+            {record.id}
           </span>
+          </Link>
         ),
       },
       {
@@ -303,6 +305,16 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
           >
             <span className='mcs-dashboardsTable_TitleColumn'>{record.title}</span>
           </Link>
+        ),
+      },
+      {
+        title: formatMessage(messages.organisation),
+        key: 'path',
+        isHideable: false,
+        render: (text: string, record: CustomDashboardResource) => (
+          <span className='mcs-dashboardsTable_OrgColumn'>
+            {record.organisation_id ? organisationsMap.get(record.organisation_id) : '-'}
+          </span>
         ),
       },
       {

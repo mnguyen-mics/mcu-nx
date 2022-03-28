@@ -524,7 +524,7 @@ class PluginsList extends React.Component<Props, State> {
         <PluginsListActionBar openDrawer={this.openDrawer} />
         <div className='ant-layout'>
           <Content className='mcs-content-container'>
-            {!isLoadingPluginPieChart && (
+            {!isLoadingPluginPieChart && pluginPieChartDataset.length > 0 && (
               <div style={{ width: '450px' }}>
                 <h3 className='mcs-pluginList_chartTitle'>
                   {formatMessage(messages.pluginsPerType)}
@@ -533,6 +533,7 @@ class PluginsList extends React.Component<Props, State> {
                   dataset={pluginPieChartDataset}
                   innerRadius={false}
                   legend={{ enabled: true, position: 'right' }}
+                  
                 />
               </div>
             )}
