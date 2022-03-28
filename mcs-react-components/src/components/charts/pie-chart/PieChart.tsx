@@ -179,6 +179,7 @@ class PieChart extends React.Component<Props, {}> {
           endAngle: isHalf ? 90 : 0,
           selected: true,
           showInLegend: !!legend?.enabled,
+          size: 100,
         },
       },
       legend: {
