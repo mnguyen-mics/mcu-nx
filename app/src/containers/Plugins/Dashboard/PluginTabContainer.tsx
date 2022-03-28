@@ -157,9 +157,8 @@ class PluginTabContainer extends React.Component<Props, State> {
       .map((version, i) => ({
         value: version.id,
         comparator: version.version_id,
-
         label: (
-          <span>
+          <span className={`mcs-pluginTabContainer_pluginVersion_${version.version_id}`}>
             {`version ${version.version_id} (${version.id}) `}
             {version.version_id === lastPluginVersion && (
               <Tag color='blue'>{intl.formatMessage(messages.current)}</Tag>
@@ -282,6 +281,7 @@ class PluginTabContainer extends React.Component<Props, State> {
     const pluginVersionSelector = (
       <Select
         className='mcs-pluginTabContainer_pluginVersionSelector'
+        dropdownClassName='mcs-pluginTabContainer_pluginVersionSelector_dropdown'
         defaultValue={defaultValue}
         onChange={this.handleVersionChange}
         options={this.getPluginVersionOptions()}

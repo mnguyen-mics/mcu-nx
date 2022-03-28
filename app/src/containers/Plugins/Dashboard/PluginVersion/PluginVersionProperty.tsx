@@ -209,30 +209,37 @@ class PluginVersionProperty extends React.Component<Props, State> {
             <Select
               className='mcs-pluginEdit-drawer-form-input mcs-pluginEdit-drawer-form-input-type'
               placeholder='Type'
+              dropdownClassName='mcs-pluginEdit-drawer-form-input-type_dropdown'
               options={[
                 {
                   key: 'DOUBLE',
                   value: 'DOUBLE',
+                  className: 'mcs-pluginEdit-drawer-form-input-type_double',
                 },
                 {
                   key: 'INT',
                   value: 'INT',
+                  className: 'mcs-pluginEdit-drawer-form-input-type_int',
                 },
                 {
                   key: 'URL',
                   value: 'URL',
+                  className: 'mcs-pluginEdit-drawer-form-input-type_url',
                 },
                 {
                   key: 'STRING',
                   value: 'STRING',
+                  className: 'mcs-pluginEdit-drawer-form-input-type_string',
                 },
                 {
                   key: 'DATA_FILE',
                   value: 'DATA_FILE',
+                  className: 'mcs-pluginEdit-drawer-form-input-type_dataFile',
                 },
                 {
                   key: 'BOOLEAN',
                   value: 'BOOLEAN',
+                  className: 'mcs-pluginEdit-drawer-form-input-type_boolean',
                 },
               ]}
               defaultValue={'STRING'}
