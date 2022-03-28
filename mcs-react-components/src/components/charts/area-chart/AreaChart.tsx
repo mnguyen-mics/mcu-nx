@@ -62,6 +62,7 @@ class AreaChart extends React.Component<Props, {}> {
     colors: string[] = defaultColors,
     type: Type = 'area',
   ): Highcharts.SeriesOptionsType[] => {
+    const { doubleYaxis } = this.props;
     return yKeys.map((y, i) => {
       return {
         type: type as any,
@@ -83,7 +84,7 @@ class AreaChart extends React.Component<Props, {}> {
         }),
         name: y.message,
         color: colors[i],
-        yAxis: i,
+        yAxis: doubleYaxis ? i : undefined,
         fillOpacity: 0.5,
         fillColor:
           type === 'area'
