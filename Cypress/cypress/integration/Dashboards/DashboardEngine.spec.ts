@@ -269,4 +269,31 @@ describe('Test the creation of a job instance', () => {
       cy.url().should('contain', `o/${data.organisationId}/dashboards?`);
     });
   });
+
+  it('should test that we can create a dashboards content', () => {
+    cy.readFile('cypress/fixtures/init_infos.json').then(data => {
+      cy.createDashboard(
+        data.accessToken,
+        data.organisationId,
+        'Content Dashboard',
+        ['home'],
+        [],
+        [],
+      ).then(dashboardResponse => {
+        cy.get('.mcs-sideBar-menuItem_Dashboards').eq(0).click();
+        cy.contains('Content Dashboard').click();
+        cy.get('.mcs-dashboardEditorActionBarSaveButton').click();
+        cy.get('.mcs-notifications').should('contain', 'Your dashboard has been saved');
+        cy.request({
+          url: `${Cypress.env('apiDomain')}/v1/dashboards/${
+            dashboardResponse.body.data.id
+          }/content?organisation_id=${data.organisationId}`,
+          method: 'GET',
+          headers: { Authorization: data.accessToken },
+        }).then(contentResponse => {
+          expect(contentResponse).to.not.be.null;
+        });
+      });
+    });
+  });
 });
