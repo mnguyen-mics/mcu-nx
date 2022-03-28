@@ -224,13 +224,14 @@ class AreaChart extends React.Component<Props, {}> {
           return {
             ...yAxisResource,
             plotLines: plotLines,
+            visible: !hideYAxis,
             ...generateYAxisGridLine(),
           };
         } else if (i === 1) {
           return {
             ...yAxisResource,
             opposite: true,
-            visible: !!doubleYaxis,
+            visible: !!doubleYaxis && !hideYAxis,
           };
         } else {
           return {
@@ -255,22 +256,13 @@ class AreaChart extends React.Component<Props, {}> {
     // is falsy. So we need to create a specific options in this case.
     const optionsWithoutAxis = cloneDeep(options);
 
-    if (hideYAxis) {
-      optionsWithoutAxis.yAxis = {
-        visible: false,
-      };
-    }
-
     if (hideXAxis) {
       optionsWithoutAxis.xAxis = {
         visible: false,
       };
     }
 
-    const sanitizedOptions = omitBy(
-      hideXAxis || hideYAxis ? optionsWithoutAxis : options,
-      isUndefined,
-    );
+    const sanitizedOptions = omitBy(hideXAxis ? optionsWithoutAxis : options, isUndefined);
 
     return (
       <HighchartsReact
