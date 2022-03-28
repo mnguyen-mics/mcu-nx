@@ -8,7 +8,6 @@ import {
   generateXAxisGridLine,
   generateYAxisGridLine,
   generateTooltip,
-  BASE_CHART_HEIGHT,
   OnDragEnd,
   defaultColors,
   Format,
@@ -170,7 +169,7 @@ class AreaChart extends React.Component<Props, {}> {
 
     const options: Highcharts.Options = {
       chart: {
-        height: height || BASE_CHART_HEIGHT,
+        height: height,
         backgroundColor: 'none',
         type: type,
         ...(isDraggable ? generateDraggable(onDragEnd) : {}),
@@ -218,7 +217,7 @@ class AreaChart extends React.Component<Props, {}> {
       yAxis: yKeys.map((yKey, i) => {
         const yAxisResource: Highcharts.YAxisOptions = {
           title: {
-            text: yKeys[i].message,
+            text: '',
           },
         };
         if (i === 0) {
