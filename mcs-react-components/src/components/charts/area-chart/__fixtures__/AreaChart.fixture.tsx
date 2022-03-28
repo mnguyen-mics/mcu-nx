@@ -31,16 +31,17 @@ const propsForDayMode: AreaChartProps = {
 
 const propsForDayModeDoubleYAxis: AreaChartProps = {
   dataset: [
-    { day: '2020-02-27', data_1: 120, data_2: 20, data_3: 44 },
-    { day: '2020-02-28', data_1: 3451, data_2: 561, data_3: 40 },
-    { day: '2020-02-29', data_1: 3000, data_2: 651, data_3: 44 },
-    { day: '2020-03-01', data_1: 2132, data_2: 261, data_3: 43 },
-    { day: '2020-03-02', data_1: 889, data_2: 53, data_3: 41 },
+    { day: '2020-02-27', data_1: 1, data_2: 20, data_3: 344, data_4: 2456 },
+    { day: '2020-02-28', data_1: 3, data_2: 56, data_3: 641, data_4: 4456 },
+    { day: '2020-02-29', data_1: 8, data_2: 65, data_3: 842, data_4: 6456 },
+    { day: '2020-03-01', data_1: 6, data_2: 26, data_3: 145, data_4: 6956 },
+    { day: '2020-03-02', data_1: 3, data_2: 53, data_3: 241, data_4: 3456 },
   ],
   format: 'count',
   type: 'area',
   doubleYaxis: true,
-  hideYAxis: true,
+  plotLineValue: 100,
+  hideYAxis: false,
   legend: {
     enabled: true,
     position: 'bottom',
@@ -58,6 +59,10 @@ const propsForDayModeDoubleYAxis: AreaChartProps = {
     {
       key: 'data_3',
       message: 'Data 3',
+    },
+    {
+      key: 'data_4',
+      message: 'Data 4',
     },
   ],
   xKey: { key: 'day', mode: 'DAY' },
