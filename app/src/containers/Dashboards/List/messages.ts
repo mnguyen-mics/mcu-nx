@@ -17,6 +17,10 @@ export default defineMessages({
     id: 'dashboards.table.column.title',
     defaultMessage: 'Title',
   },
+  id: {
+    id: 'dashboards.table.column.id',
+    defaultMessage: 'ID',
+  },
   scopes: {
     id: 'dashboards.table.column.scopes',
     defaultMessage: 'Scopes',
