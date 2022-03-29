@@ -87,13 +87,13 @@ class TopBar extends React.Component<Props> {
         {
           name: 'Developer Documentation',
           icon: <BookFilled className='mcs-app_icon mcs-app_documentationIcon ' />,
-          url: 'https://developer.mediarithmics.com',
+          url: 'https://developer.mediarithmics.io',
         },
 
         {
           name: 'User Guide',
           icon: <ReadOutlined className='mcs-app_icon mcs-app_documentationIcon' />,
-          url: 'https://userguides.mediarithmics.com',
+          url: 'https://userguides.mediarithmics.io',
         },
       ],
     };
