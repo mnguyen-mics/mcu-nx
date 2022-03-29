@@ -36,6 +36,7 @@ export interface PieChartProps {
   dataLabels?: PieDataLabels;
   tooltip?: Tooltip;
   format?: PieChartFormat;
+  size?: number | string | null;
 }
 
 interface Tooltip {
@@ -108,7 +109,7 @@ class PieChart extends React.Component<Props, {}> {
   };
 
   render() {
-    const { dataset, height, legend, colors, drilldown, innerRadius, isHalf, dataLabels } =
+    const { dataset, height, legend, colors, drilldown, innerRadius, isHalf, dataLabels, size } =
       this.props;
     const xKey = 'key';
     const yKey = 'value';
@@ -179,7 +180,7 @@ class PieChart extends React.Component<Props, {}> {
           endAngle: isHalf ? 90 : 0,
           selected: true,
           showInLegend: !!legend?.enabled,
-          size: 100,
+          size: size,
         },
       },
       legend: {
