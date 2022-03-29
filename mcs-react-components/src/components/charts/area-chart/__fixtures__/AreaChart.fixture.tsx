@@ -39,7 +39,7 @@ const propsForDayModeDoubleYAxis: AreaChartProps = {
   ],
   format: 'count',
   type: 'area',
-  doubleYaxis: true,
+  doubleYAxis: true,
   plotLineValue: 100,
   hideYAxis: false,
   legend: {

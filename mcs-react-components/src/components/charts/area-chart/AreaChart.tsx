@@ -43,7 +43,7 @@ export interface AreaChartProps {
   tooltip?: Tooltip;
   isDraggable?: boolean;
   onDragEnd?: OnDragEnd;
-  doubleYaxis?: boolean;
+  doubleYAxis?: boolean;
 }
 
 type Props = AreaChartProps;
@@ -61,7 +61,7 @@ class AreaChart extends React.Component<Props, {}> {
     colors: string[] = defaultColors,
     type: Type = 'area',
   ): Highcharts.SeriesOptionsType[] => {
-    const { doubleYaxis } = this.props;
+    const { doubleYAxis } = this.props;
     return yKeys.map((y, i) => {
       return {
         type: type as any,
@@ -83,7 +83,7 @@ class AreaChart extends React.Component<Props, {}> {
         }),
         name: y.message,
         color: colors[i],
-        yAxis: doubleYaxis ? i : undefined,
+        yAxis: doubleYAxis ? i : undefined,
         fillOpacity: 0.5,
         fillColor:
           type === 'area'
@@ -138,7 +138,7 @@ class AreaChart extends React.Component<Props, {}> {
       plotLineValue,
       isDraggable,
       onDragEnd,
-      doubleYaxis,
+      doubleYAxis,
     } = this.props;
 
     const xAxisDateTimeLabelFormatsOptions:
@@ -230,7 +230,7 @@ class AreaChart extends React.Component<Props, {}> {
           return {
             ...yAxisResource,
             opposite: true,
-            visible: !!doubleYaxis && !hideYAxis,
+            visible: !!doubleYAxis && !hideYAxis,
           };
         } else {
           return {
