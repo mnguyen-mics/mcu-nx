@@ -215,6 +215,7 @@ interface AreaChartApiProps {
   format: Format;
   hide_x_axis?: boolean;
   hide_y_axis?: boolean;
+  double_y_axis?: boolean;
 }
 
 interface MetricChartApiProps {
