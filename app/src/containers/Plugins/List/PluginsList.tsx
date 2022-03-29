@@ -525,7 +525,7 @@ class PluginsList extends React.Component<Props, State> {
         <div className='ant-layout'>
           <Content className='mcs-content-container'>
             {!isLoadingPluginPieChart && pluginPieChartDataset.length > 0 && (
-              <div style={{ width: '450px' }}>
+              <div style={{ width: '600px' }}>
                 <h3 className='mcs-pluginList_chartTitle'>
                   {formatMessage(messages.pluginsPerType)}
                 </h3>
@@ -533,11 +533,17 @@ class PluginsList extends React.Component<Props, State> {
                   dataset={pluginPieChartDataset}
                   innerRadius={false}
                   legend={{ enabled: true, position: 'right' }}
-                  
+                  size={'60%'}
                 />
               </div>
             )}
-            <Card>
+            <Card
+              className={
+                !isLoadingPluginPieChart && pluginPieChartDataset.length > 0
+                  ? 'mcs-pluginList_table'
+                  : ''
+              }
+            >
               <ItemList
                 fetchList={this.fetchPlugins}
                 dataSource={data}

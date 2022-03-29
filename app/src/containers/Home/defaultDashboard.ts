@@ -185,7 +185,7 @@ const getDefaultSections = (datamartId: string) => {
                     format: 'YYYY-MM-DD',
                   },
                 },
-                title: 'User point, user identifiers & user profiles',
+                title: 'User points, user identifiers & user profiles',
                 type: 'line',
               },
             ],

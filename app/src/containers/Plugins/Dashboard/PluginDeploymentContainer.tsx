@@ -136,7 +136,7 @@ class PluginDeploymentContainer extends React.Component<Props, State> {
       initialPluginVersionContainers,
       upgradeContainers,
       deployVersion,
-      pluginVersionId
+      pluginVersionId,
     } = this.props;
     const { isLoading, pluginVersionContainers, pluginVersionContainersTotal } = this.state;
 
@@ -168,11 +168,7 @@ class PluginDeploymentContainer extends React.Component<Props, State> {
     };
 
     const getDeploymentButton = () => {
-      console.log(`pluginVersionId: ${pluginVersionId}`);
-      console.log(`plugin?.current_version_id: ${plugin?.current_version_id}`);
-      
-      
-      if(pluginVersionId === plugin?.current_version_id) {
+      if (pluginVersionId !== plugin?.current_version_id) {
         return;
       }
       return plugin &&

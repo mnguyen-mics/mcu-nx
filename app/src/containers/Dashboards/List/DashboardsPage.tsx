@@ -286,9 +286,7 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
         isHideable: false,
         render: (text: string, record: CustomDashboardResource) => (
           <Link to={`/o/${record.organisation_id}/dashboards/edit/${text}`}>
-            <span className='mcs-dashboardsTable_IdColumn'>
-            {record.id}
-          </span>
+            <span className='mcs-dashboardsTable_IdColumn'>{record.id}</span>
           </Link>
         ),
       },
