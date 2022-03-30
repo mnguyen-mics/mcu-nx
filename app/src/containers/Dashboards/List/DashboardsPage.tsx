@@ -311,7 +311,9 @@ class DashboardListContent extends React.Component<Props, DashboardListContentSt
         isHideable: false,
         render: (text: string, record: CustomDashboardResource) => (
           <span className='mcs-dashboardsTable_OrgColumn'>
-            {record.organisation_id ? organisationsMap.get(record.organisation_id) : '-'}
+            {record.organisation_id
+              ? `${organisationsMap.get(record.organisation_id)} (${record.organisation_id})`
+              : '-'}
           </span>
         ),
       },
