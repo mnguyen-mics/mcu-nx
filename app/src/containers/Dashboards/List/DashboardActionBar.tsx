@@ -106,7 +106,7 @@ class DashboardsActionbar extends React.Component<Props, DashboardsActionbarStat
     } = this.props;
 
     const breadcrumbPaths = [
-      <Link key='1' to={`/v2/o/${organisationId}${dashboardsDefinition.dashboards.path}`}>
+      <Link key='1' to={`/o/${organisationId}${dashboardsDefinition.dashboards.path}`}>
         {formatMessage(messages.dashboards)}
       </Link>,
     ];

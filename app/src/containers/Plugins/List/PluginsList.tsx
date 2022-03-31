@@ -35,6 +35,7 @@ import { getPaginatedApiParam } from '../../../utils/ApiHelper';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
+import OrganisationName from '../../../components/Common/OrganisationName';
 
 const { Content } = Layout;
 
@@ -488,7 +489,10 @@ class PluginsList extends React.Component<Props, State> {
         sorter: true,
         sortOrder: this.getOrderByForColumn('organisation_id', sortField, isSortAsc),
         render: (text: string, record: PluginResource) => (
-          <span className='mcs-pluginTable_organisation'>{text}</span>
+          <span className='mcs-pluginTable_organisation'>
+            <OrganisationName organisationId={text} />
+            {` (${text})`}
+          </span>
         ),
       },
       {
@@ -525,7 +529,7 @@ class PluginsList extends React.Component<Props, State> {
         <div className='ant-layout'>
           <Content className='mcs-content-container'>
             {!isLoadingPluginPieChart && pluginPieChartDataset.length > 0 && (
-              <div style={{ width: '600px' }}>
+              <div style={{ width: '700px' }}>
                 <h3 className='mcs-pluginList_chartTitle'>
                   {formatMessage(messages.pluginsPerType)}
                 </h3>
