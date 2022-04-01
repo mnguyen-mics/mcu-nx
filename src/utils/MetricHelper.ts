@@ -57,11 +57,14 @@ export function sumMetrics(datapoints: Datapoint[], dimensions: string[]): Datap
     let nextAcc = acc;
     Object.keys(datapoint).forEach((fieldKey: string) => {
       if (dimensions.indexOf(fieldKey) === -1) {
-        const currentValue = (acc[fieldKey] as number) || 0;
-        const toAdd = (datapoint[fieldKey] as number) || 0;
+        const currentValue = (acc[fieldKey] as number) || undefined;
+        const toAdd = (datapoint[fieldKey] as number) || undefined;
         nextAcc = {
           ...nextAcc,
-          [fieldKey]: currentValue + toAdd,
+          [fieldKey]:
+            currentValue === undefined && toAdd === undefined
+              ? undefined
+              : (currentValue || 0) + (toAdd || 0),
         };
       }
     });

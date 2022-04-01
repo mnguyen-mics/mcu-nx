@@ -6,6 +6,20 @@
     "lib"
   ],
   "types": "lib/index.d.ts",
+  "scripts": {
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}' && prettier -c .",
+    "lint:fix": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}' && prettier -w .",
+    "prettier-check": "prettier -c .",
+    "prettier-fix": "prettier -w .",
+    "build": "webpack --config webpack.prod.js",
+    "prepublishOnly": "rimraf lib && webpack --config webpack.prod.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:updateSnapshot": "jest --updateSnapshot",
+    "cosmos": "cosmos",
+    "cosmos:export": "cosmos-export",
+    "dev:watch": "webpack --watch --info-verbosity verbose --config webpack.dev.js"
+  },
   "dependencies": {
     "@ant-design/compatible": "^1.0.8",
     "@babel/core": "^7.13.16",
@@ -13,7 +27,7 @@
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
-    "@mediarithmics-private/mcs-components-library": "7.6.4",
+    "@mediarithmics-private/mcs-components-library": "7.6.5",
     "@react-mock/fetch": "^0.3.0",
     "@react-mock/localstorage": "^0.1.2",
     "@splitsoftware/splitio": "^10.17.3",
@@ -108,20 +122,6 @@
     "whatwg-fetch": "^3.5.0",
     "xlsx": "^0.18.0",
     "yup": "^0.29.1"
-  },
-  "scripts": {
-    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}' && prettier -c .",
-    "lint:fix": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}' && prettier -w .",
-    "prettier-check": "prettier -c .",
-    "prettier-fix": "prettier -w .",
-    "build": "webpack --config webpack.prod.js",
-    "prepublishOnly": "rimraf lib && webpack --config webpack.prod.js",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:updateSnapshot": "jest --updateSnapshot",
-    "cosmos": "cosmos",
-    "cosmos:export": "cosmos-export",
-    "dev:watch": "webpack --watch --info-verbosity verbose --config webpack.dev.js"
   },
   "devDependencies": {
     "@babel/core": "^7.13.16",
