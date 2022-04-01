@@ -1,10 +1,22 @@
 {
   "name": "new-computing-console",
   "version": "1.2.0",
+  "scripts": {
+    "test:tslint": "tslint -c tslint.json 'app/src/**/*.{ts,tsx}'",
+    "test:lint": "eslint --cache --max-warnings 0 app/src",
+    "tslint-check": "tslint-config-prettier-check ./tslint.json",
+    "start": "npm run start:local",
+    "prettier-check": "prettier -c .",
+    "prettier-fix": "prettier -w .",
+    "start:local": "cross-env NODE_ENV=local API_ENV=local BABEL_ENV=dev NODE_OPTIONS=--max_old_space_size=8000 webpack-dev-server --config webpack.dev.js",
+    "start:prod": "cross-env NODE_ENV=local API_ENV=prod BABEL_ENV=dev NODE_OPTIONS=--max_old_space_size=8000 webpack-dev-server --config webpack.dev.js",
+    "build": "cross-env NODE_ENV=production BABEL_ENV=production NODE_OPTIONS=--max_old_space_size=8000 webpack --config webpack.prod.js && cd dist && zip -r mediarithmics-computing-console.zip . && mv mediarithmics-computing-console.zip ./.. && cd ..",
+    "translation-file": "npm run build && node scripts/translate.js"
+  },
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
     "@mediarithmics-private/mcs-components-library": "7.6.4",
-    "@mediarithmics-private/advanced-components": "^9.15.4",
+    "@mediarithmics-private/advanced-components": "^9.15.5",
     "ace-builds": "^1.4.13",
     "antd": "4.17.0",
     "cronstrue": "^1.122.0",
@@ -37,18 +49,6 @@
     "reselect": "^4.0.0",
     "web-vitals": "^1.1.1",
     "whatwg-fetch": "^3.6.2"
-  },
-  "scripts": {
-    "test:tslint": "tslint -c tslint.json 'app/src/**/*.{ts,tsx}'",
-    "test:lint": "eslint --cache --max-warnings 0 app/src",
-    "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "start": "npm run start:local",
-    "prettier-check": "prettier -c .",
-    "prettier-fix": "prettier -w .",
-    "start:local": "cross-env NODE_ENV=local API_ENV=local BABEL_ENV=dev NODE_OPTIONS=--max_old_space_size=8000 webpack-dev-server --config webpack.dev.js",
-    "start:prod": "cross-env NODE_ENV=local API_ENV=prod BABEL_ENV=dev NODE_OPTIONS=--max_old_space_size=8000 webpack-dev-server --config webpack.dev.js",
-    "build": "cross-env NODE_ENV=production BABEL_ENV=production NODE_OPTIONS=--max_old_space_size=8000 webpack --config webpack.prod.js && cd dist && zip -r mediarithmics-computing-console.zip . && mv mediarithmics-computing-console.zip ./.. && cd ..",
-    "translation-file": "npm run build && node scripts/translate.js"
   },
   "devDependencies": {
     "@babel/core": "^7.13.16",
