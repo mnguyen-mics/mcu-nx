@@ -65,6 +65,7 @@ class AreaChart extends React.Component<Props, {}> {
     return yKeys.map((y, i) => {
       return {
         type: type as any,
+        connectNulls: true,
         data: dataset.map(data => {
           const yValue = data[y.key];
           return [
