@@ -87,7 +87,11 @@ class PluginPageActionbar extends React.Component<Props, State> {
           <Button className='mcs-primary mcs-actionbar_backToPlugins' onClick={this.redirect}>
             <RollbackOutlined /> <FormattedMessage {...messages.backToPlugins} />
           </Button>
-          <Button className='mcs-primary' type='primary' onClick={this.openDrawer}>
+          <Button
+            className='mcs-primary mcs-actionbar_newVersion'
+            type='primary'
+            onClick={this.openDrawer}
+          >
             <McsIcon type='plus' /> <FormattedMessage {...messages.newVersion} />
           </Button>
         </div>

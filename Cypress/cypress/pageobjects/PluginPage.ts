@@ -5,6 +5,10 @@ class PluginPage extends Page {
     return cy.get('.mcs-pluginsListActionBar_createPluginButton');
   }
 
+  get newVersionButton() {
+    return cy.get('.mcs-actionbar_newVersion');
+  }
+
   get inputPluginTypePluginEditDrawer() {
     return cy.get('.mcs-pluginEdit-drawer-form-input-pluginType');
   }
@@ -27,6 +31,10 @@ class PluginPage extends Page {
 
   get saveButtonPluginEditDrawer() {
     return cy.get('.mcs-pluginEdit-drawer-saveButton');
+  }
+
+  get saveVersionPluginEditDrawer() {
+    return cy.get('.mcs-pluginVersionDrawer-saveButton');
   }
 
   get dashboardHeaderTitle() {
@@ -97,16 +105,80 @@ class PluginPage extends Page {
     return cy.get('.mcs-pluginEdit-drawer-form-input-technicalName');
   }
 
+  get generalInformationSectionPluginEditDrawer() {
+    return cy.get('.mcs-pluginEdit-drawerForm-generalInformationSection');
+  }
+
+  get specificPropertiesSectionPluginEditDrawer() {
+    return cy.get('.mcs-pluginEdit-drawerForm-propertySection');
+  }
+
+  get inputVersionPluginEditDrawer() {
+    return this.generalInformationSectionPluginEditDrawer.find(
+      '.mcs-pluginEdit-drawer-form-input-version',
+    );
+  }
+
+  get inputProviderPluginEditDrawer() {
+    return this.generalInformationSectionPluginEditDrawer.find(
+      '.mcs-pluginEdit-drawer-form-input-provider',
+    );
+  }
+
+  get inputNamePluginEditDrawer() {
+    return this.generalInformationSectionPluginEditDrawer.find(
+      '.mcs-pluginEdit-drawer-form-input-name',
+    );
+  }
+
+  get inputNameSpecificPropertiesPluginEditDrawer() {
+    return this.specificPropertiesSectionPluginEditDrawer.find(
+      '.mcs-pluginEdit-drawer-form-input-name',
+    );
+  }
+
+  get selectTypeSpecificPropertiesPluginEditDrawer() {
+    return this.specificPropertiesSectionPluginEditDrawer.find(
+      '.mcs-pluginEdit-drawer-form-input-type',
+    );
+  }
+
+  get selectTypeDropdownSpecificPropertiesPluginEditDrawer() {
+    return cy.get('.mcs-pluginEdit-drawer-form-input-type_dropdown');
+  }
+
+  get inputValueSpecificPropertiesPluginEditDrawer() {
+    return this.specificPropertiesSectionPluginEditDrawer.find(
+      '.mcs-pluginEdit-drawer-form-input-value',
+    );
+  }
+
+  get addPropertyButton() {
+    return cy.get('.mcs-pluginConfigurationFileTable_addNewProperty');
+  }
+
+  get deletePropertyButton() {
+    return cy.get('.mcs-pluginEdit-drawer-delete').children().first();
+  }
+
   get aceEditor() {
     return cy.get('.mcs-pluginEdit-drawer-form-aceEditor');
   }
 
-  get saveButton() {
-    return cy.get('.mcs-pluginEdit-drawer-saveButton');
-  }
-
   get pluginTabList() {
     return cy.get('.mcs-pluginTab-list');
+  }
+
+  get pluginPropertiesContainer() {
+    return cy.get('.mcs-pluginPropertiesContainer_jsonProperties');
+  }
+
+  get pluginVersionSelector() {
+    return cy.get('.mcs-pluginTabContainer_pluginVersionSelector');
+  }
+
+  get pluginVersionSelectorDropdown() {
+    return cy.get('.mcs-pluginTabContainer_pluginVersionSelector_dropdown');
   }
 
   visit() {
@@ -152,7 +224,27 @@ class PluginPage extends Page {
   }
 
   clickOnSaveButton() {
-    this.saveButton.click();
+    this.saveButtonPluginEditDrawer.click();
+  }
+
+  clickOnNewVersionButton() {
+    this.newVersionButton.click();
+  }
+
+  clickOnSaveVersionButton() {
+    this.saveVersionPluginEditDrawer.click();
+  }
+
+  clickOnPluginVersionSelector() {
+    this.pluginVersionSelector.click();
+  }
+
+  clickOnAddProperty() {
+    this.addPropertyButton.click();
+  }
+
+  clickOnDeleteProperty() {
+    this.deletePropertyButton.click();
   }
 
   selectOrganisationPluginEditDrawer(organisationName: string) {

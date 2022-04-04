@@ -99,7 +99,11 @@ class PluginPropertiesContainer extends React.Component<Props, State> {
     return isLoading ? (
       <Spin />
     ) : properties ? (
-      <SyntaxHighlighter language='json' style={docco}>
+      <SyntaxHighlighter
+        className='mcs-pluginPropertiesContainer_jsonProperties'
+        language='json'
+        style={docco}
+      >
         {JSON.stringify(properties, undefined, 4)}
       </SyntaxHighlighter>
     ) : (

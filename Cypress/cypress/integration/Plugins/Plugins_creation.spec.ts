@@ -64,7 +64,6 @@ describe('Test the creation of a new plugin', () => {
       cy.get('.mcs-pluginTable_artifactId').should('contain', artifactId2);
 
       // Sort column
-
       cy.get('.mcs-table-body').contains('Plugin Type').click();
       cy.wait(500);
       cy.get('.mcs-pluginTable_pluginType').eq(0).should('contain', pluginType2);
