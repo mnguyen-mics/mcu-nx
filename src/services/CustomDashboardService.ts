@@ -18,11 +18,11 @@ import {
   DashboardContentStats,
   DataFileDashboardResource,
 } from '../models/dashboards/old-dashboards-model';
-import { AbstractParentSource, AbstractSource } from './ChartDatasetService';
 import { DashboardType } from '../models/dashboards/dashboards';
 import { myDashboards } from '../utils/DefaultDashboards';
 import { TYPES } from '../constants/types';
 import { IDataFileService } from './DataFileService';
+import { AbstractParentSource, AbstractSource } from '../models/dashboards/dataset/datasource_tree';
 
 export interface GetDashboardsOptions extends PaginatedApiParam {
   organisation_id?: string;

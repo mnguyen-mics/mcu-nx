@@ -1,4 +1,4 @@
-import { AggregateDataset } from '../ChartDataFormater';
+import { AggregateDataset } from '../../models/dashboards/dataset/dataset_tree';
 import { indexDataset } from '../transformations/IndexTranformation';
 
 const aggregate: AggregateDataset = {

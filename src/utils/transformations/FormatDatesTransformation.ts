@@ -2,14 +2,14 @@ import {
   Datapoint,
   Dataset,
 } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
-import { DateOptions } from '../../services/ChartDatasetService';
-import { AbstractDataset, AggregateDataset } from '../ChartDataFormater';
+import { DateOptions } from '../../models/dashboards/dataset/common';
+import { AbstractDataset, AggregateDataset } from '../../models/dashboards/dataset/dataset_tree';
 import { formatDate } from '../DateHelper';
 
 class DatasetDateFormatter {
-  formatDate: (date: string, format: string) => Promise<string>;
+  formatDate: (date: string, format: string) => string;
 
-  constructor(_formatDate: (date: string, format: string) => Promise<string>) {
+  constructor(_formatDate: (date: string, format: string) => string) {
     this.formatDate = _formatDate;
   }
 
@@ -43,50 +43,36 @@ class DatasetDateFormatter {
     return aggregatedDataset;
   }
 
-  applyFormatDatesHelper(
-    dataset: Dataset,
-    xKey: string,
-    dateOptions: DateOptions,
-  ): Promise<Dataset> {
-    const formattedDatesPromises = dataset.map(datapoint => {
-      const formattedBucketsPromise: Promise<Dataset | undefined> =
+  applyFormatDatesHelper(dataset: Dataset, xKey: string, dateOptions: DateOptions): Dataset {
+    const formattedDates = dataset.map(datapoint => {
+      const formattedBuckets: Dataset | undefined =
         !!datapoint.buckets && !!dateOptions.buckets
           ? this.applyFormatDatesHelper(datapoint.buckets, xKey, dateOptions.buckets)
-          : Promise.resolve(undefined);
-      return formattedBucketsPromise.then((formattedBuckets: Dataset | undefined) => {
-        return formatDate(datapoint[xKey] as string, dateOptions.format).then(formattedDate => {
-          const newDatapoint: Datapoint = {
-            ...datapoint,
-            [xKey]: formattedDate,
-          };
-          if (!!formattedBuckets) newDatapoint.buckets = formattedBuckets;
-          return newDatapoint;
-        });
-      });
+          : undefined;
+      const newDatapoint: Datapoint = {
+        ...datapoint,
+        [xKey]: formatDate(datapoint[xKey] as string, dateOptions.format),
+      };
+      if (!!formattedBuckets) newDatapoint.buckets = formattedBuckets;
+      return newDatapoint;
     });
-    return Promise.all(formattedDatesPromises).then(formattedDatesDataset => {
-      return this.reaggregateByKey(formattedDatesDataset, xKey);
-    });
+    return this.reaggregateByKey(formattedDates, xKey);
   }
 
   applyFormatDates(
     dataset: AbstractDataset,
     xKey: string,
     dateOptions: DateOptions,
-  ): Promise<AbstractDataset> {
+  ): AbstractDataset {
     if (dataset.type === 'aggregate') {
       const aggregateDataset = dataset as AggregateDataset;
-      return this.applyFormatDatesHelper(aggregateDataset.dataset, xKey, dateOptions).then(
-        formattedDataset => {
-          return {
-            metadata: aggregateDataset.metadata,
-            type: aggregateDataset.type,
-            dataset: formattedDataset,
-          };
-        },
-      );
+      return {
+        metadata: aggregateDataset.metadata,
+        type: aggregateDataset.type,
+        dataset: this.applyFormatDatesHelper(aggregateDataset.dataset, xKey, dateOptions),
+      } as AggregateDataset;
     } else {
-      return Promise.reject(
+      throw Error(
         `Dataset type ${dataset.type} is not compatible with format-dates transformation`,
       );
     }

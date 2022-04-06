@@ -1,12 +1,5 @@
 import { QueryLanguage, QueryResource, QueryShape } from '../../models/datamart/DatamartResource';
 import { AbstractScope } from '../../models/datamart/graphdb/Scope';
-import {
-  AbstractSource,
-  AggregationSource,
-  AnalyticsSource,
-  OTQLSource,
-  SourceType,
-} from '../../services/ChartDatasetService';
 import { QueryService, IQueryService } from '../../services/QueryService';
 import { QueryScopeAdapter } from '../QueryScopeAdapter';
 import { DashboardFilterQueryFragments } from '../../models/customDashboards/customDashboards';
@@ -14,6 +7,13 @@ import {
   ActivitiesAnalyticsDimension,
   ActivitiesAnalyticsMetric,
 } from '../analytics/ActivitiesAnalyticsReportHelper';
+import {
+  AbstractSource,
+  AggregationSource,
+  AnalyticsSource,
+  OTQLSource,
+} from '../../models/dashboards/dataset/datasource_tree';
+import { SourceType } from '../../models/dashboards/dataset/common';
 
 const mapOtqlQueries: Map<string, QueryResource> = new Map();
 

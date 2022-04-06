@@ -18,6 +18,8 @@ export { default as SessionReducers } from './redux/Session/reducer';
 export { default as NotificationsReducers } from './redux/Notifications/reducer';
 export { default as Store } from './redux/store';
 export { default as ChartMetadataInfo } from './components/chart-engine/ChartMetadataInfo';
+export { default as Chart } from './components/chart-engine';
+export { default as ManagedChart } from './components/chart-engine/ManagedChart';
 export { logIn, logOut } from './redux/Login/actions';
 export { default as AuthenticatedRoute } from './utils/AuthenticatedRoute';
 export { MicsReduxState, createRequestTypes } from './utils/ReduxHelper';
@@ -32,6 +34,8 @@ export { PluginContentOuterProps } from './components/plugin-form/Edit/GenericPl
 export { InjectedDrawerProps } from './components/drawer/injectDrawer';
 export { injectDrawer } from './components/drawer';
 export { default as DrawerManager } from './components/drawer/DrawerManager';
+export { default as DatasetDateFormatter } from './utils/transformations/FormatDatesTransformation';
+export { percentages } from './utils/transformations/PercentagesTransformation';
 export {
   default as PluginCardModalContent,
   PluginCardModalTab,
@@ -88,6 +92,7 @@ export { IPluginService, GetPluginOptions } from './services/PluginService';
 export { default as AssetFileService } from './services/AssetFileService';
 export { IAssetFileService } from './services/AssetFileService';
 export { IDataFileService } from './services/DataFileService';
+export { TransformationProcessor } from './utils/transformations/TransformationProcessor';
 export { default as DataFileService } from './services/DataFileService';
 export { default as CustomDashboardService } from './services/CustomDashboardService';
 export { ICustomDashboardService } from './services/CustomDashboardService';

@@ -2,11 +2,11 @@ import {
   Datapoint,
   Dataset,
 } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
-import { AbstractDataset, AggregateDataset } from '../ChartDataFormater';
-import { DecoratorsOptions, ModelType } from '../../services/ChartDatasetService';
 import { IChannelService } from '../../services/ChannelService';
 import { IAudienceSegmentService } from '../../services/AudienceSegmentService';
 import { ICompartmentService } from '../../services/CompartmentService';
+import { AbstractDataset, AggregateDataset } from '../../models/dashboards/dataset/dataset_tree';
+import { DecoratorsOptions, ModelType } from '../../models/dashboards/dataset/common';
 
 type ModelTypeKey = string;
 

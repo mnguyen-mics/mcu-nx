@@ -1,4 +1,5 @@
-import { ChartType, MetricChartOptions, SourceType } from '../../../services/ChartDatasetService';
+import { SourceType } from '../../../models/dashboards/dataset/common';
+import { ChartType, MetricChartOptions } from '../../../services/ChartDatasetService';
 
 export const propsMetric = {
   datamart_id: '1415',
