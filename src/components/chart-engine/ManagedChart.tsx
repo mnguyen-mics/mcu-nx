@@ -5,8 +5,9 @@ import {
   BarChart,
   RadarChart,
   AreaChart,
+  McsIcon,
 } from '@mediarithmics-private/mcs-components-library';
-import { Alert, Spin } from 'antd';
+import { Alert, Spin, Table } from 'antd';
 import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 import { isUndefined, omitBy } from 'lodash';
 import { formatMetric } from '../../utils/MetricHelper';
@@ -20,6 +21,7 @@ import {
   MetricChartFormat,
   MetricChartOptions,
   RadarChartOptions,
+  TableChartOptions,
 } from '../../services/ChartDatasetService';
 import { keysToCamel } from '../../utils/CaseUtils';
 import { InjectedDrawerProps } from '../..';
@@ -110,6 +112,53 @@ class ManagedChart extends React.Component<Props> {
       yKeys: yKeys,
       xKey: xKey,
     };
+
+    const renderTableChart = (tableChartOptions: TableChartOptions) => {
+      return (
+        <Table
+          columns={[
+            {
+              title: 'Key',
+              dataIndex: 'key',
+              sorter: (a, b) =>
+                typeof a.key === 'string' &&
+                typeof b.key === 'string' &&
+                !isNaN(Date.parse(a.key)) &&
+                !isNaN(Date.parse(b.key))
+                  ? Date.parse(a.key) - Date.parse(b.key)
+                  : a.key.length - b.key.length,
+            },
+            {
+              title: 'Count',
+              dataIndex: 'count',
+              sorter: (a, b) => a.count - b.count,
+            },
+            {
+              render: (text, record) => {
+                if (tableChartOptions.bucketHasData(record)) {
+                  return (
+                    <div className='float-right'>
+                      <McsIcon type='chevron-right' />
+                    </div>
+                  );
+                }
+                return null;
+              },
+            },
+          ]}
+          className='mcs-aggregationRendered_table'
+          onRow={tableChartOptions.handleOnRow}
+          rowClassName={tableChartOptions.getRowClassName}
+          dataSource={dataset as any}
+          pagination={{
+            size: 'small',
+            showSizeChanger: true,
+            hideOnSinglePage: true,
+          }}
+        />
+      );
+    };
+
     const sanitizedwithKeys = omitBy(withKeys, isUndefined);
     switch (chartConfig.type.toLowerCase()) {
       case 'pie':
@@ -123,6 +172,9 @@ class ManagedChart extends React.Component<Props> {
         );
       case 'bars':
         return <BarChart dataset={dataset as any} {...(sanitizedwithKeys as BarChartOptions)} />;
+      case 'table':
+        const tableChartOptions = formattedOptions as TableChartOptions;
+        return renderTableChart(tableChartOptions);
       case 'area':
       case 'line':
         return <AreaChart dataset={dataset as any} {...(sanitizedwithKeys as AreaChartOptions)} />;
@@ -176,7 +228,8 @@ class ManagedChart extends React.Component<Props> {
         chartType === 'radar' ||
         chartType === 'pie' ||
         chartType === 'area' ||
-        chartType === 'line'
+        chartType === 'line' ||
+        chartType === 'table'
       )
     ) {
       return this.renderAlert(

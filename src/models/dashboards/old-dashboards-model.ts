@@ -293,7 +293,8 @@ type ChartType =
   | 'COUNT'
   | 'TABS'
   | 'SINGLE_STAT'
-  | 'COLUMN';
+  | 'COLUMN'
+  | 'TABLE';
 
 export type Dataset = { [key: string]: string | number | undefined };
 

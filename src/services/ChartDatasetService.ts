@@ -19,7 +19,7 @@ import {
   PieChartFormat,
   Tooltip,
 } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
-import { OTQLResult } from '../models/datamart/graphdb/OTQLResult';
+import { OTQLBucket, OTQLResult } from '../models/datamart/graphdb/OTQLResult';
 import { ActivitiesAnalyticsService } from './analytics/ActivitiesAnalyticsService';
 
 import { CollectionVolumesService } from './analytics/CollectionVolumesService';
@@ -63,7 +63,7 @@ import {
   TransformationProcessor,
 } from '../utils/transformations/TransformationProcessor';
 
-export type ChartType = 'pie' | 'bars' | 'radar' | 'metric' | 'area' | 'line';
+export type ChartType = 'pie' | 'bars' | 'radar' | 'metric' | 'area' | 'line' | 'table';
 
 export declare type MetricChartFormat = 'percentage' | 'count' | 'float';
 
@@ -128,6 +128,18 @@ interface AreaChartApiProps {
   double_y_axis?: boolean;
 }
 
+interface TableChartApiOptions {
+  handle_on_row: (record: OTQLBucket) => { onClick: React.MouseEventHandler<any> };
+  bucket_has_data: (record: OTQLBucket) => boolean;
+  get_row_className: (record: OTQLBucket) => string;
+}
+
+export interface TableChartProps {
+  handleOnRow: (record: OTQLBucket) => { onClick: React.MouseEventHandler<any> };
+  bucketHasData: (record: OTQLBucket) => boolean;
+  getRowClassName: (record: OTQLBucket) => string;
+}
+
 interface MetricChartApiProps {
   format?: MetricChartFormat;
 }
@@ -138,6 +150,7 @@ export type ChartApiOptions = (
   | BarChartApiProps
   | MetricChartApiProps
   | AreaChartApiProps
+  | TableChartApiOptions
 ) &
   WithOptionalXKey;
 
@@ -146,6 +159,7 @@ export type RadarChartOptions = Omit<RadarChartProps, 'dataset' | 'colors'>;
 export type BarChartOptions = Omit<BarChartProps, 'dataset' | 'colors'>;
 export type MetricChartOptions = Omit<MetricChartProps, 'dataset' | 'colors'>;
 export type AreaChartOptions = Omit<AreaChartProps, 'dataset' | 'colors'>;
+export type TableChartOptions = Omit<TableChartProps, 'dataset' | 'colors'>;
 interface WithOptionalXKey {
   xKey?: string;
 }
@@ -155,6 +169,7 @@ export type ChartOptions = (
   | BarChartOptions
   | MetricChartOptions
   | AreaChartOptions
+  | TableChartOptions
 ) &
   WithOptionalXKey;
 
