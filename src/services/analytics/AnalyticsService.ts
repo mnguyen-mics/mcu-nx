@@ -4,6 +4,7 @@ import {
   Metric,
   Dimension,
   DateRange,
+  OrderBy,
 } from '../../models/report/ReportRequestBody';
 
 export interface IAnalyticsService<M, D> {
@@ -14,5 +15,6 @@ export interface IAnalyticsService<M, D> {
     dimensions?: Array<Dimension<D>>,
     dimensionFilterClauses?: DimensionFilterClause,
     sampling?: number,
+    orderBy?: OrderBy,
   ) => Promise<ReportViewResponse>;
 }
