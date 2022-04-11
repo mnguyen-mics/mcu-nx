@@ -3,6 +3,7 @@ import {
   Dimension,
   Metric,
   DimensionFilterClause,
+  OrderBy,
 } from '../../models/report/ReportRequestBody';
 import { buildAnalyticsRequestBody } from './Common';
 
@@ -37,6 +38,7 @@ export function buildActivitiesAnalyticsRequestBody(
   dimensions?: Array<Dimension<ActivitiesAnalyticsDimension>>,
   dimensionFilterClauses?: DimensionFilterClause,
   sampling?: number,
+  orderBy?: OrderBy,
 ) {
   return buildAnalyticsRequestBody<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>(
     metrics,
@@ -44,5 +46,6 @@ export function buildActivitiesAnalyticsRequestBody(
     dimensions,
     dimensionFilterClauses,
     sampling,
+    orderBy,
   );
 }

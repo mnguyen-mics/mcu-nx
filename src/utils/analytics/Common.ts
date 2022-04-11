@@ -4,6 +4,7 @@ import {
   Dimension,
   Metric,
   DimensionFilterClause,
+  OrderBy,
 } from '../../models/report/ReportRequestBody';
 import McsMoment, { isNowFormat } from '../McsMoment';
 
@@ -13,6 +14,7 @@ export function buildAnalyticsRequestBody<M, D>(
   dimensions?: Array<Dimension<D>>,
   dimensionFilterClauses?: DimensionFilterClause,
   sampling?: number,
+  orderBy?: OrderBy,
 ): ReportRequestBody<M, D> {
   const UTC = !(isNowFormat(dateRanges[0].start_date) && isNowFormat(dateRanges[0].end_date));
 
@@ -39,6 +41,7 @@ export function buildAnalyticsRequestBody<M, D>(
     formatedDateRange,
     dimensionFilterClauses,
     sampling,
+    orderBy,
   );
 }
 
@@ -48,6 +51,7 @@ function buildReport<M, D>(
   dateRanges: DateRange[],
   dimensionFilterClauses?: DimensionFilterClause,
   sampling?: number,
+  orderBy?: OrderBy,
 ): ReportRequestBody<M, D> {
   const report: ReportRequestBody<M, D> = {
     date_ranges: dateRanges,
@@ -55,6 +59,7 @@ function buildReport<M, D>(
     dimension_filter_clauses: dimensionFilterClauses,
     metrics: metrics,
     sample_factor: sampling || 1,
+    order_by: orderBy,
   };
   return report;
 }

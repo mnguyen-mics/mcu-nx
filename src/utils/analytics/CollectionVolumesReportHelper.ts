@@ -3,6 +3,7 @@ import {
   Dimension,
   Metric,
   DimensionFilterClause,
+  OrderBy,
 } from '../../models/report/ReportRequestBody';
 import { buildAnalyticsRequestBody } from './Common';
 
@@ -20,6 +21,7 @@ export function buildCollectionVolumesRequestBody(
   dimensions?: Array<Dimension<CollectionVolumesDimension>>,
   dimensionFilterClauses?: DimensionFilterClause,
   sampling?: number,
+  orderBy?: OrderBy,
 ) {
   return buildAnalyticsRequestBody<CollectionVolumesMetric, CollectionVolumesDimension>(
     metrics,
@@ -27,5 +29,6 @@ export function buildCollectionVolumesRequestBody(
     dimensions,
     dimensionFilterClauses,
     sampling,
+    orderBy,
   );
 }

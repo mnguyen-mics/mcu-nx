@@ -7,6 +7,7 @@ import {
   Metric,
   Dimension,
   DateRange,
+  OrderBy,
 } from '../../models/report/ReportRequestBody';
 import {
   buildCollectionVolumesRequestBody,
@@ -26,6 +27,7 @@ export class CollectionVolumesService
     dimensions?: Array<Dimension<CollectionVolumesDimension>>,
     dimensionFilterClauses?: DimensionFilterClause,
     sampling?: number,
+    orderBy?: OrderBy,
   ): Promise<ReportViewResponse> {
     const report: ReportRequestBody<CollectionVolumesMetric, CollectionVolumesDimension> =
       buildCollectionVolumesRequestBody(
@@ -34,6 +36,7 @@ export class CollectionVolumesService
         dimensions,
         dimensionFilterClauses,
         sampling,
+        orderBy,
       );
     const endpoint = `platform_monitoring/collections`;
     return ApiService.postRequest(endpoint, report);

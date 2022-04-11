@@ -354,6 +354,8 @@ export class ChartDatasetService implements IChartDatasetService {
       dateRanges,
       analyticsSourceJson.dimensions,
       scopedDimensionFilterClauses,
+      undefined,
+      analyticsSourceJson.order_by,
     );
     const metricNames = analyticsSourceJson.metrics.map(m => m.expression.toLocaleLowerCase());
     const dimensionNames = analyticsSourceJson.dimensions.map(d => d.name.toLocaleLowerCase());

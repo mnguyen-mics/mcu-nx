@@ -7,6 +7,7 @@ import {
   Metric,
   Dimension,
   DateRange,
+  OrderBy,
 } from '../../models/report/ReportRequestBody';
 import {
   buildActivitiesAnalyticsRequestBody,
@@ -26,6 +27,7 @@ export class ActivitiesAnalyticsService
     dimensions?: Array<Dimension<ActivitiesAnalyticsDimension>>,
     dimensionFilterClauses?: DimensionFilterClause,
     sampling?: number,
+    orderBy?: OrderBy,
   ): Promise<ReportViewResponse> {
     const report: ReportRequestBody<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension> =
       buildActivitiesAnalyticsRequestBody(
@@ -34,6 +36,7 @@ export class ActivitiesAnalyticsService
         dimensions,
         dimensionFilterClauses,
         sampling,
+        orderBy,
       );
 
     const endpoint = `datamarts/${datamartId}/user_activities_analytics`;
