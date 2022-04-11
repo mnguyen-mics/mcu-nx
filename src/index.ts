@@ -105,6 +105,7 @@ export {
 } from './services/IntegrationBatchService';
 export { default as UsersService } from './services/UsersService';
 export { IUsersService } from './services/UsersService';
+export { ChartDatasetService, IChartDatasetService } from './services/ChartDatasetService';
 
 // Models
 
