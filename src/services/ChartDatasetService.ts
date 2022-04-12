@@ -397,7 +397,7 @@ export class ChartDatasetService implements IChartDatasetService {
         return formatDatasetForOtql(res, xKey, seriesTitle);
       });
       return {
-        type: 'otql',
+        ...source,
         dataset: dataset,
       } as OTQLDataset;
     } else if (sourceType === 'activities_analytics') {
@@ -409,7 +409,7 @@ export class ChartDatasetService implements IChartDatasetService {
         queryFragment,
       );
       return {
-        type: 'activities_analytics',
+        ...source,
         dataset: analyticsDataset,
       } as AnalyticsDataset;
     } else if (sourceType === 'collection_volumes') {
@@ -420,7 +420,7 @@ export class ChartDatasetService implements IChartDatasetService {
         providedScope,
       );
       return {
-        type: 'collection_volumes',
+        ...source,
         dataset: volumesDataset,
       } as AnalyticsDataset;
     } else if (sourceType === 'data_file') {
@@ -439,6 +439,7 @@ export class ChartDatasetService implements IChartDatasetService {
               } as CountDataset;
             }
             return {
+              ...source,
               metadata: {
                 seriesTitles: [seriesTitle],
               },
