@@ -95,11 +95,13 @@ class ManagedChart extends React.Component<Props> {
     };
   }
 
-  pieChartAdaptValueKey(yKey: string, dataset: Dataset) {
+  pieChartAdaptValueKey(xKey: string, yKey: string, dataset: Dataset) {
     dataset.forEach(datapoint => {
       const value = datapoint[yKey];
+      datapoint.key = datapoint[xKey];
       datapoint.value = value;
       if (yKey !== 'value') delete datapoint[yKey];
+      if (xKey !== 'key') delete datapoint[xKey];
     });
   }
 
@@ -164,7 +166,7 @@ class ManagedChart extends React.Component<Props> {
       case 'pie':
         // Pie charts do not allow yKey parameter for some reason, and want y value
         // to be passed explicitely as 'value'
-        this.pieChartAdaptValueKey(yKeys[0].key, dataset);
+        this.pieChartAdaptValueKey(xKey, yKeys[0].key, dataset);
         return <PieChart innerRadius={false} dataset={dataset} {...sanitizedwithKeys} />;
       case 'radar':
         return (
