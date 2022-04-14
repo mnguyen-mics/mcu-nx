@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Highcharts, { DataLabelsFilterOptionsObject, SeriesAreaOptions } from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { defaultColors, generateTooltip, Tooltip } from '../utils';
+import { Dataset, defaultColors, generateTooltip, Tooltip } from '../utils';
 
 require('highcharts/highcharts-more')(Highcharts);
 
@@ -18,8 +18,6 @@ export interface RadarChartProps {
 }
 
 type Format = 'count' | 'percentage';
-
-type Dataset = Array<{ [key: string]: string | number | Date | undefined }>;
 
 type Legend = {
   enabled?: boolean;
