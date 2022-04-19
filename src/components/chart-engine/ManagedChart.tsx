@@ -8,7 +8,6 @@ import {
   McsIcon,
 } from '@mediarithmics-private/mcs-components-library';
 import { Alert, Spin, Table } from 'antd';
-import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 import { isUndefined, omitBy } from 'lodash';
 import { formatMetric } from '../../utils/MetricHelper';
 import {
@@ -43,6 +42,7 @@ import {
   AggregateDataset,
   CountDataset,
 } from '../../models/dashboards/dataset/dataset_tree';
+import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 
 const messages = defineMessages({
   stillLoading: {
@@ -95,14 +95,15 @@ class ManagedChart extends React.Component<Props> {
     };
   }
 
-  pieChartAdaptValueKey(xKey: string, yKey: string, dataset: Dataset) {
-    dataset.forEach(datapoint => {
-      const value = datapoint[yKey];
+  adaptDatasetForPieChart(xKey: string, yKeys: YKey[], dataset: Dataset) {
+    const newDataset: Dataset = JSON.parse(JSON.stringify(dataset));
+    newDataset.forEach(datapoint => {
+      const value = yKeys?.find(yKey => Object.keys(datapoint).includes(yKey.key))?.key;
       datapoint.key = datapoint[xKey];
-      datapoint.value = value;
-      if (yKey !== 'value') delete datapoint[yKey];
+      datapoint.value = value ? datapoint[`${value}`] : undefined;
       if (xKey !== 'key') delete datapoint[xKey];
     });
+    return newDataset;
   }
 
   renderAggregateChart(xKey: string, yKeys: YKey[], dataset: Dataset) {
@@ -115,39 +116,56 @@ class ManagedChart extends React.Component<Props> {
       xKey: xKey,
     };
 
+    const getSorter = (key: string) => {
+      const sorter = (a: any, b: any) => {
+        if (key === 'key') {
+          return typeof a.key === 'string' &&
+            typeof b.key === 'string' &&
+            !isNaN(Date.parse(a.key)) &&
+            !isNaN(Date.parse(b.key))
+            ? Date.parse(a.key) - Date.parse(b.key)
+            : a.key.length - b.key.length;
+        } else {
+          return a.count - b.count;
+        }
+      };
+      return sorter;
+    };
+
     const renderTableChart = (tableChartOptions: TableChartOptions) => {
+      const getColumns = () => {
+        const columns = yKeys
+          .map(yKey => {
+            return {
+              title: yKey.message,
+              dataIndex: yKey.key,
+              key: yKey.key,
+              sorter: getSorter(yKey.key),
+            };
+          })
+          .concat({
+            render: (text: string, record: any) => {
+              if (tableChartOptions.bucketHasData(record)) {
+                return (
+                  <div className='float-right'>
+                    <McsIcon type='chevron-right' />
+                  </div>
+                );
+              }
+              return null;
+            },
+          } as any);
+        columns.unshift({
+          title: 'Key',
+          dataIndex: 'key',
+          key: 'key',
+          sorter: getSorter('key'),
+        });
+        return columns;
+      };
       return (
         <Table
-          columns={[
-            {
-              title: 'Key',
-              dataIndex: 'key',
-              sorter: (a, b) =>
-                typeof a.key === 'string' &&
-                typeof b.key === 'string' &&
-                !isNaN(Date.parse(a.key)) &&
-                !isNaN(Date.parse(b.key))
-                  ? Date.parse(a.key) - Date.parse(b.key)
-                  : a.key.length - b.key.length,
-            },
-            {
-              title: 'Count',
-              dataIndex: 'count',
-              sorter: (a, b) => a.count - b.count,
-            },
-            {
-              render: (text, record) => {
-                if (tableChartOptions.bucketHasData(record)) {
-                  return (
-                    <div className='float-right'>
-                      <McsIcon type='chevron-right' />
-                    </div>
-                  );
-                }
-                return null;
-              },
-            },
-          ]}
+          columns={getColumns()}
           className='mcs-aggregationRendered_table'
           onRow={tableChartOptions.handleOnRow}
           rowClassName={tableChartOptions.getRowClassName}
@@ -166,12 +184,16 @@ class ManagedChart extends React.Component<Props> {
       case 'pie':
         // Pie charts do not allow yKey parameter for some reason, and want y value
         // to be passed explicitely as 'value'
-        this.pieChartAdaptValueKey(xKey, yKeys[0].key, dataset);
-        return <PieChart innerRadius={false} dataset={dataset} {...sanitizedwithKeys} />;
-      case 'radar':
+
         return (
-          <RadarChart dataset={dataset as any} {...(sanitizedwithKeys as RadarChartOptions)} />
+          <PieChart
+            innerRadius={false}
+            dataset={this.adaptDatasetForPieChart(xKey, yKeys, dataset)}
+            {...sanitizedwithKeys}
+          />
         );
+      case 'radar':
+        return <RadarChart dataset={dataset} {...(sanitizedwithKeys as RadarChartOptions)} />;
       case 'bars':
         return <BarChart dataset={dataset as any} {...(sanitizedwithKeys as BarChartOptions)} />;
       case 'table':
