@@ -50,8 +50,8 @@ export class DecoratorsTransformation {
     else return Promise.resolve(new Map());
   }
 
-  fetchCompartmentsMap(organisationId: string): Promise<Map<string, string>> {
-    return this.compartmentService.getCompartments(organisationId).then(compartments => {
+  fetchCompartmentsMap(datamartId: string): Promise<Map<string, string>> {
+    return this.compartmentService.getCompartments(datamartId).then(compartments => {
       const map = new Map<string, string>();
       compartments.data.forEach(compartment => {
         map.set(compartment.id, compartment.name);
@@ -98,11 +98,11 @@ export class DecoratorsTransformation {
     return this.decorateFromMap(key, id);
   }
 
-  decorateKeyCompartment(id: string, organisationId: string): Promise<string> {
-    const key: ModelTypeKey = this.createKey('COMPARTMENTS', organisationId);
+  decorateKeyCompartment(id: string, datamartId: string): Promise<string> {
+    const key: ModelTypeKey = this.createKey('COMPARTMENTS', datamartId);
 
     if (!DecoratorsTransformation.namesMaps.has(key))
-      DecoratorsTransformation.namesMaps.set(key, this.fetchCompartmentsMap(organisationId));
+      DecoratorsTransformation.namesMaps.set(key, this.fetchCompartmentsMap(datamartId));
 
     return this.decorateFromMap(key, id);
   }
@@ -120,7 +120,7 @@ export class DecoratorsTransformation {
         case 'SEGMENTS':
           return this.decorateKeySegment(id, organisationId);
         case 'COMPARTMENTS':
-          return this.decorateKeyCompartment(id, organisationId);
+          return this.decorateKeyCompartment(id, datamartId);
         default:
           return Promise.resolve(`${id}`);
       }

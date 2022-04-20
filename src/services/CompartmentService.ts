@@ -4,15 +4,15 @@ import ApiService, { DataListResponse } from './ApiService';
 
 export interface ICompartmentService {
   getCompartments: (
-    organisationId?: string,
+    datamartId?: string,
   ) => Promise<DataListResponse<UserAccountCompartmentResource>>;
 }
 
 @injectable()
 export default class CompartmentService implements ICompartmentService {
-  getCompartments(
-    organisationId: string,
-  ): Promise<DataListResponse<UserAccountCompartmentResource>> {
-    return ApiService.getRequest(`user_account_compartments/?organisation_id=${organisationId}`);
+  getCompartments(datamartId: string): Promise<DataListResponse<UserAccountCompartmentResource>> {
+    return ApiService.getRequest(`datamarts/${datamartId}/user_account_compartments/`, {
+      with_source_datamarts: true,
+    });
   }
 }
