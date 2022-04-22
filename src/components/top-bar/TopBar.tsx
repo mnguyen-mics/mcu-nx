@@ -26,13 +26,20 @@ interface TopBarMapStateToProps {
   userEmail: string;
 }
 
+interface AppLauncherMenuItem {
+  name: string;
+  icon: string;
+  url: string;
+  link_type: string;
+}
+
 interface TopBarProps {
   organisationId: string;
   linkPath: To;
   prodEnv: boolean;
   userAccount?: React.ReactNode[];
   headerSettings?: React.ReactNode;
-  color?: string;
+  className?: string;
 }
 
 type RouteProps = RouteComponentProps<{ organisation_id: string }>;
@@ -61,41 +68,59 @@ export const buildAccountsMenu = () => {
 };
 
 class TopBar extends React.Component<Props> {
+  getIcon = (icon: string) => {
+    switch (icon) {
+      case 'compass-filled':
+        return <CompassFilled className='mcs-app_icon mcs-app_navigatorIcon' />;
+      case 'code-sandbox-circle-filled':
+        return <CodeSandboxCircleFilled className='mcs-app_icon mcs-app_developerConsoleIcon' />;
+      case 'book-filled':
+        return <BookFilled className='mcs-app_icon mcs-app_documentationIcon ' />;
+      case 'read-out-lined':
+        return <ReadOutlined className='mcs-app_icon mcs-app_documentationIcon' />;
+      default:
+        return;
+    }
+  };
+
+  getUserLinksUrl = (url: string) => {
+    const { organisationId } = this.props;
+    if (url.includes('navigator')) {
+      return `${url}/#/v2/o/${organisationId}/campaigns/display`;
+    } else if (url.includes('computing-console')) {
+      return `${url}/#/o/${organisationId}/home`;
+    }
+    return url;
+  };
+
   getAppMenuSections(): AppsMenuSections {
-    const { connectedUser, organisationId } = this.props;
+    const { connectedUser } = this.props;
 
     const isFromMics =
       connectedUser.workspaces.filter(workspace => workspace.organisation_id === '1').length > 0;
 
-    const MCS_CONSTANTS = (window as any).MCS_CONSTANTS;
+    const APP_LAUNCHER_MENU = (window as any).APP_LAUNCHER_MENU;
 
     const menuSections: AppsMenuSections = {
-      userLinks: [
-        {
-          name: 'Navigator',
-          icon: <CompassFilled className='mcs-app_icon mcs-app_navigatorIcon' />,
-          url: `${MCS_CONSTANTS.NAVIGATOR_URL}/#/v2/o/${organisationId}/campaigns/display`,
-        },
-        {
-          name: 'Computing Console',
-          icon: <CodeSandboxCircleFilled className='mcs-app_icon mcs-app_developerConsoleIcon' />,
-          url: `${MCS_CONSTANTS.COMPUTING_CONSOLE_URL}/#/o/${organisationId}/home`,
-        },
-      ],
+      userLinks: APP_LAUNCHER_MENU.filter(
+        (menuItem: AppLauncherMenuItem) => menuItem.link_type === 'user',
+      ).map((menuItem: AppLauncherMenuItem) => {
+        return {
+          name: menuItem.name,
+          icon: this.getIcon(menuItem.icon),
+          url: this.getUserLinksUrl(menuItem.url),
+        };
+      }),
       adminLinks: [],
-      resourceLinks: [
-        {
-          name: 'Developer Documentation',
-          icon: <BookFilled className='mcs-app_icon mcs-app_documentationIcon ' />,
-          url: 'https://developer.mediarithmics.io',
-        },
-
-        {
-          name: 'User Guide',
-          icon: <ReadOutlined className='mcs-app_icon mcs-app_documentationIcon' />,
-          url: 'https://userguides.mediarithmics.io',
-        },
-      ],
+      resourceLinks: APP_LAUNCHER_MENU.filter(
+        (menuItem: AppLauncherMenuItem) => menuItem.link_type === 'resource',
+      ).map((menuItem: AppLauncherMenuItem) => {
+        return {
+          name: menuItem.name,
+          icon: this.getIcon(menuItem.icon),
+          url: menuItem.url,
+        };
+      }),
     };
 
     if (isFromMics) {
@@ -110,7 +135,7 @@ class TopBar extends React.Component<Props> {
   }
 
   render() {
-    const { userEmail, linkPath, prodEnv, userAccount, headerSettings, color } = this.props;
+    const { userEmail, linkPath, prodEnv, userAccount, headerSettings, className } = this.props;
     const appMenuSections: AppsMenuSections = this.getAppMenuSections();
     const ProductionApiEnvironment = (
       <Alert
@@ -137,7 +162,7 @@ class TopBar extends React.Component<Props> {
         headerSettings={headerSettings}
         menu={appMenu}
         devAlert={prodEnv ? ProductionApiEnvironment : undefined}
-        color={color}
+        className={className}
       />
     );
   }
