@@ -3,11 +3,6 @@
 exports[`renders the Error component 1`] = `
 <header
   className="ant-layout-header mcs-header "
-  style={
-    Object {
-      "backgroundColor": "#00a1df",
-    }
-  }
 >
   <div
     className="mcs-header_wrapper"

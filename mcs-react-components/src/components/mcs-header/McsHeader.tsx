@@ -4,7 +4,6 @@ import { Layout, Menu, Dropdown } from 'antd';
 import McsIcon from '../mcs-icon';
 
 const { Header } = Layout;
-const defaultBackgroundColor = '#00a1df';
 export interface McsHeaderProps {
   menu?: React.ReactElement;
   menuIcon?: React.ReactElement;
@@ -14,7 +13,6 @@ export interface McsHeaderProps {
   devAlert?: React.ReactNode;
   className?: string;
   organisationSwitcher?: React.ReactNode;
-  color?: string;
 }
 
 class McsHeader extends React.Component<McsHeaderProps> {
@@ -28,7 +26,6 @@ class McsHeader extends React.Component<McsHeaderProps> {
       menuIcon,
       className,
       organisationSwitcher,
-      color,
     } = this.props;
 
     const accountMenu = (
@@ -44,10 +41,7 @@ class McsHeader extends React.Component<McsHeaderProps> {
     );
 
     return (
-      <Header
-        className={`mcs-header ${className ? className : ''}`}
-        style={{ backgroundColor: color || defaultBackgroundColor }}
-      >
+      <Header className={`mcs-header ${className ? className : ''}`}>
         <div className='mcs-header_wrapper'>
           <span className='mcs-header_leftComponent'>{organisationSwitcher}</span>
           {devAlert}
