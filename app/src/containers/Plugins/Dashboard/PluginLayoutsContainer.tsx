@@ -79,10 +79,10 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
   editFile = (pluginLayoutFile: LayoutFileListingEntryResource) => {
     pluginLayoutFile.locale
       ? this.editLocaleFile(pluginLayoutFile)
-      : this.editPluginLayoutFile(pluginLayoutFile);
+      : this.editPluginLayoutPropertyFile(pluginLayoutFile);
   };
 
-  editPluginLayoutFile(pluginLayoutFile: LayoutFileListingEntryResource) {
+  editPluginLayoutPropertyFile(pluginLayoutFile: LayoutFileListingEntryResource) {
     const {
       match: {
         params: { pluginId },
@@ -91,15 +91,17 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
       notifyError,
     } = this.props;
     this._pluginService
-      .getLocalizedPluginLayout(pluginId, pluginVersionId)
+      .getPluginLayoutFile(pluginId, pluginVersionId)
       .then(res => {
-        this.setState({
-          isDrawerVisible: true,
-          isDrawerEditing: true,
-          formData: {
-            locale: pluginLayoutFile.locale,
-            file: JSON.stringify(res, null, 2),
-          },
+        return res.text().then(file => {
+          this.setState({
+            isDrawerVisible: true,
+            isDrawerEditing: true,
+            formData: {
+              locale: pluginLayoutFile.locale,
+              file: file,
+            },
+          });
         });
       })
       .catch(err => {
@@ -118,13 +120,15 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
     this._pluginService
       .getLocalizedPluginLayoutFile(pluginId, pluginVersionId, localFile.locale!)
       .then(res => {
-        this.setState({
-          isDrawerVisible: true,
-          isDrawerEditing: true,
-          formData: {
-            locale: localFile.locale,
-            file: JSON.stringify(res),
-          },
+        return res.text().then(file => {
+          this.setState({
+            isDrawerVisible: true,
+            isDrawerEditing: true,
+            formData: {
+              locale: localFile.locale,
+              file: file,
+            },
+          });
         });
       })
       .catch(err => {

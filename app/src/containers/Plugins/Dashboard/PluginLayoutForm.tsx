@@ -74,7 +74,7 @@ class PluginLayoutForm extends React.Component<Props, State> {
             >
               <Input
                 className='mcs-pluginEdit-drawer-form-input mcs-pluginEdit-drawer-form-input-technicalName'
-                placeholder='en_US'
+                placeholder='en-US'
                 value={inputValue}
                 onChange={this.onInputChange}
                 disabled={isEditing}
