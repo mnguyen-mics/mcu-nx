@@ -107,6 +107,7 @@ export interface IPluginService {
     pluginVersionId: string,
     locale?: string,
   ) => Promise<PluginLayout | null>;
+  getPluginLayoutFile: (pluginId: string, pluginVersionId: string) => Promise<Blob>;
   putPropertiesLayout: (pluginId: string, pluginVersionId: string, fileData: Blob) => Promise<any>; // returns OK
   getLocalizedPluginLayoutFile: (
     pluginId: string,
@@ -479,6 +480,11 @@ export class PluginService implements IPluginService {
     locale: string = 'en-US',
   ): Promise<Blob> {
     const endpoint = `plugins/${pluginId}/versions/${pluginVersionId}/properties_layout/localizations/locale=${locale}`;
+    return ApiService.getRequest(endpoint);
+  }
+
+  getPluginLayoutFile(pluginId: string, pluginVersionId: string): Promise<Blob> {
+    const endpoint = `plugins/${pluginId}/versions/${pluginVersionId}/properties_layout`;
     return ApiService.getRequest(endpoint);
   }
 
