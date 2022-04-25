@@ -63,6 +63,8 @@ const MCS_CONSTANTS = {
     'https://computing-console-mics.francecentral.cloudapp.azure.com/frontprod/login',
   USE_GTAG: false,
   GTAG_ID: 'G-123',
+  COMPUTING_CONSOLE_URL: 'https://computing-console.mediarithmics.com',
+  NAVIGATOR_URL: 'https://navigator.mediarithmics.com',
 };
 
 export default MCS_CONSTANTS;
