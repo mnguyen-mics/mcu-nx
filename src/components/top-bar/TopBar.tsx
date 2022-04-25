@@ -20,6 +20,7 @@ import Logo from './Logo';
 import messages from './messages';
 import { Alert } from 'antd';
 import KeycloakService from '../../services/KeycloakService';
+import MCS_CONSTANTS from '../../react-configuration';
 
 interface TopBarMapStateToProps {
   connectedUser: UserProfileResource;
@@ -94,34 +95,65 @@ class TopBar extends React.Component<Props> {
   };
 
   getAppMenuSections(): AppsMenuSections {
-    const { connectedUser } = this.props;
+    const { connectedUser, organisationId } = this.props;
 
     const isFromMics =
       connectedUser.workspaces.filter(workspace => workspace.organisation_id === '1').length > 0;
 
     const APP_LAUNCHER_MENU = (window as any).APP_LAUNCHER_MENU;
 
-    const menuSections: AppsMenuSections = {
-      userLinks: APP_LAUNCHER_MENU.filter(
-        (menuItem: AppLauncherMenuItem) => menuItem.link_type === 'user',
-      ).map((menuItem: AppLauncherMenuItem) => {
-        return {
-          name: menuItem.name,
-          icon: this.getIcon(menuItem.icon),
-          url: this.getUserLinksUrl(menuItem.url),
-        };
-      }),
+    const defaultMenuSections: AppsMenuSections = {
+      userLinks: [
+        {
+          name: 'Navigator',
+          icon: <CompassFilled className='mcs-app_icon mcs-app_navigatorIcon' />,
+          url: `${MCS_CONSTANTS.NAVIGATOR_URL}/#/v2/o/${organisationId}/campaigns/display`,
+        },
+        {
+          name: 'Computing Console',
+          icon: <CodeSandboxCircleFilled className='mcs-app_icon mcs-app_developerConsoleIcon' />,
+          url: `${MCS_CONSTANTS.COMPUTING_CONSOLE_URL}/#/o/${organisationId}/home`,
+        },
+      ],
       adminLinks: [],
-      resourceLinks: APP_LAUNCHER_MENU.filter(
-        (menuItem: AppLauncherMenuItem) => menuItem.link_type === 'resource',
-      ).map((menuItem: AppLauncherMenuItem) => {
-        return {
-          name: menuItem.name,
-          icon: this.getIcon(menuItem.icon),
-          url: menuItem.url,
-        };
-      }),
+      resourceLinks: [
+        {
+          name: 'Developer Documentation',
+          icon: <BookFilled className='mcs-app_icon mcs-app_documentationIcon ' />,
+          url: 'https://developer.mediarithmics.io',
+        },
+
+        {
+          name: 'User Guide',
+          icon: <ReadOutlined className='mcs-app_icon mcs-app_documentationIcon' />,
+          url: 'https://userguides.mediarithmics.io',
+        },
+      ],
     };
+
+    const menuSections: AppsMenuSections = APP_LAUNCHER_MENU
+      ? {
+          userLinks: APP_LAUNCHER_MENU.filter(
+            (menuItem: AppLauncherMenuItem) => menuItem.link_type === 'user',
+          ).map((menuItem: AppLauncherMenuItem) => {
+            return {
+              name: menuItem.name,
+              icon: this.getIcon(menuItem.icon),
+              url: this.getUserLinksUrl(menuItem.url),
+            };
+          }),
+          adminLinks: [],
+          resourceLinks: APP_LAUNCHER_MENU.filter(
+            (menuItem: AppLauncherMenuItem) => menuItem.link_type === 'resource',
+          ).map((menuItem: AppLauncherMenuItem) => {
+            return {
+              name: menuItem.name,
+              icon: this.getIcon(menuItem.icon),
+              url: menuItem.url,
+            };
+          }),
+        }
+      : defaultMenuSections;
 
     if (isFromMics) {
       menuSections.adminLinks = [
