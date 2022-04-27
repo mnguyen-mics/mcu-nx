@@ -43,6 +43,7 @@ import {
   CountDataset,
 } from '../../models/dashboards/dataset/dataset_tree';
 import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
+import { ColumnsType } from 'antd/lib/table';
 
 const messages = defineMessages({
   stillLoading: {
@@ -106,6 +107,11 @@ class ManagedChart extends React.Component<Props> {
     return newDataset;
   }
 
+  renderMetricData = (value: string | number, numeralFormat: string, currency: string = '') => {
+    const unlocalizedMoneyPrefix = currency === 'EUR' ? '€ ' : '';
+    return formatMetric(value, numeralFormat, unlocalizedMoneyPrefix);
+  };
+
   renderAggregateChart(xKey: string, yKeys: YKey[], dataset: Dataset) {
     const { chartConfig } = this.props;
     const options: ChartApiOptions = chartConfig.options || {};
@@ -134,13 +140,14 @@ class ManagedChart extends React.Component<Props> {
 
     const renderTableChart = (tableChartOptions: TableChartOptions) => {
       const getColumns = () => {
-        const columns = yKeys
+        const columns: ColumnsType<object> = yKeys
           .map(yKey => {
             return {
               title: yKey.message,
               dataIndex: yKey.key,
               key: yKey.key,
               sorter: getSorter(yKey.key),
+              render: (text: string) => <span>{this.renderMetricData(text, '0,0')}</span>,
             };
           })
           .concat({
