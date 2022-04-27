@@ -145,7 +145,7 @@ class ManagedChart extends React.Component<Props> {
           })
           .concat({
             render: (text: string, record: any) => {
-              if (tableChartOptions.bucketHasData(record)) {
+              if (tableChartOptions?.bucketHasData(record)) {
                 return (
                   <div className='float-right'>
                     <McsIcon type='chevron-right' />
