@@ -36,6 +36,7 @@ class LayoutManager extends React.Component<Props> {
             organisationId={organisationId}
             linkPath={logoLinkPath}
             prodEnv={process.env.API_ENV === 'prod'}
+            className='mcs-themed-header'
           />
           <Layout>
             <Sider className='new-mcs-sider'>
