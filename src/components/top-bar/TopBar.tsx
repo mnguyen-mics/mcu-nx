@@ -100,7 +100,7 @@ class TopBar extends React.Component<Props> {
     const isFromMics =
       connectedUser.workspaces.filter(workspace => workspace.organisation_id === '1').length > 0;
 
-    const APP_LAUNCHER_MENU = (window as any).APP_LAUNCHER_MENU;
+    const APP_LAUNCHER_MENU = (window as any)?.MCS_CONSTANTS?.APP_LAUNCHER_MENU;
 
     const defaultMenuSections: AppsMenuSections = {
       userLinks: [
