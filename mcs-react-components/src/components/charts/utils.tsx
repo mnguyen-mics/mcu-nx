@@ -1,6 +1,7 @@
 import * as Highcharts from 'highcharts';
 import { uniqueId } from 'lodash';
 import moment from 'moment';
+import { formatMetric } from '../../utils/MetricHelper';
 
 export const GRAY_COLOR = '#8ca0b3';
 
@@ -83,14 +84,17 @@ export type Tooltip = {
   format?: string;
 };
 
-function formatTooltip(format: Format) {
+function formatTooltip(format: Format, point: Highcharts.Point) {
+  const pointData: any = point;
+  const formattedY = formatMetric(point.y, '0,0');
+  const formattedCount = formatMetric(pointData.count, '0,0');
   switch (format) {
     case 'count':
-      return '{point.y}';
+      return `${formattedY}`;
     case 'percentage':
-      return '{point.y}% ({point.count})';
+      return `${point.y}% (${formattedCount})`;
     case 'index':
-      return '{point.y} ({point.percentage}% - {point.count})';
+      return `${point.y} (${pointData.percentage}% - ${formattedCount})`;
   }
 }
 
@@ -99,21 +103,27 @@ export const generateTooltip = (
   format: Format = 'count',
   customFormat?: string,
 ): Partial<Highcharts.TooltipOptions> => {
-  const printedPoint = customFormat ? customFormat : formatTooltip(format);
-  return showTooltip
-    ? {
-        useHTML: false,
-        borderRadius: 2,
-        borderWidth: 1,
-        borderColor: '#e8e8e8',
-        padding: 15,
-        outside: false,
-        shadow: false,
-        hideDelay: 0,
-        headerFormat: `<span style="font-size: 12px; font-weight: bold; margin-bottom: 13px;">{point.key}</span><br/><br/>`,
-        pointFormat: `<span style="color:{point.color}; font-size: 20px; margin-right: 20px;">\u25CF</span> {series.name}: <b>${printedPoint}</b><br/>`,
-      }
-    : { enabled: false };
+  const pointFormatter = function () {
+    // @ts-ignore
+    // tslint:disable-next-line
+    const point: any = this;
+    const printedPoint = customFormat ? customFormat : formatTooltip(format, point);
+    return `<span style="color:${point.color}; font-size: 20px; margin-right: 20px;">\u25CF</span> ${point.series.name}: <b>${printedPoint}</b><br/>`;
+  };
+
+  const tooltipOptions: Partial<Highcharts.TooltipOptions> = {
+    useHTML: false,
+    borderRadius: 2,
+    borderWidth: 1,
+    borderColor: '#e8e8e8',
+    padding: 15,
+    outside: false,
+    shadow: false,
+    hideDelay: 0,
+    headerFormat: `<span style="font-size: 12px; font-weight: bold; margin-bottom: 13px;">{point.key}</span><br/><br/>`,
+    pointFormatter: pointFormatter,
+  };
+  return showTooltip ? tooltipOptions : { enabled: false };
 };
 
 export type Datapoint = {
