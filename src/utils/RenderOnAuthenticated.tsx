@@ -17,6 +17,7 @@ export interface RenderOnAuthenticatedProps {
   requireDatamart?: boolean;
   renderOnError?: JSX.Element;
   getRedirectUriFunction?: () => string | undefined;
+  homePage?: string;
 }
 
 interface MapStateToProps {
@@ -59,6 +60,7 @@ class RenderOnAuthenticated extends React.Component<Props> {
       requiredFeatures,
       requireDatamart,
       renderOnError,
+      homePage,
       intl: { formatMessage },
       getRedirectUriFunction,
     } = this.props;
@@ -92,6 +94,7 @@ class RenderOnAuthenticated extends React.Component<Props> {
         requiredFeatures={requiredFeatures}
         requireDatamart={requireDatamart}
         renderOnError={renderOnError}
+        homePage={homePage}
       >
         {children}
       </RenderWhenHasAccess>

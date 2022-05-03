@@ -15,6 +15,7 @@ export interface RenderWhenHasAccessProps {
   requiredFeatures?: string | string[];
   requireDatamart?: boolean;
   renderOnError?: React.ReactNode;
+  homePage?: string;
 }
 
 export interface MapStateToProps {
@@ -54,6 +55,8 @@ class RenderWhenHasAccess extends React.Component<Props> {
         params: { organisationId },
       },
       getWorkspaceRequest,
+      history,
+      homePage,
     } = this.props;
 
     const {
@@ -64,6 +67,7 @@ class RenderWhenHasAccess extends React.Component<Props> {
 
     if (previousOrganisationId !== organisationId) {
       getWorkspaceRequest(organisationId);
+      if (!this.checkIfHasFeatures()) history.push(homePage ? homePage : '/');
     }
   }
 
@@ -109,7 +113,7 @@ class RenderWhenHasAccess extends React.Component<Props> {
 
     return accessGrantedToOrganisation(organisationId) && this.checkIfHasFeatures()
       ? children
-      : { errorRendered };
+      : errorRendered;
   }
 }
 
