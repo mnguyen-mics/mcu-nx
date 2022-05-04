@@ -15,6 +15,10 @@ import { StandardSegmentBuilderQueryDocument } from '../../models/standardSegmen
 import { AudienceSegmentShape } from '../../models/audienceSegment/AudienceSegmentResource';
 import { injectDrawer } from '../drawer';
 import { InjectedDrawerProps } from '../..';
+import {
+  QueryExecutionSource,
+  QueryExecutionSubSource,
+} from '../../models/platformMetrics/QueryExecutionSource';
 
 export interface DashboardPageProps {
   dataFileDashboards?: DataFileDashboardResource[];
@@ -35,6 +39,8 @@ export interface DashboardPageProps {
   onShowDashboard?: (dpc: DashboardPageContent) => void;
   defaultDashboard?: DashboardPageContent;
   uid?: string;
+  queryExecutionSource: QueryExecutionSource;
+  queryExecutionSubSource: QueryExecutionSubSource;
 }
 const messagesDashboardPage = defineMessages({
   technicalInformationTab: {
@@ -74,6 +80,8 @@ class DashboardPage extends React.Component<Props> {
       contextualTargetingTab,
       onShowDashboard,
       defaultDashboard,
+      queryExecutionSource,
+      queryExecutionSubSource,
     } = this.props;
     const defaultContent = (
       <div>
@@ -88,6 +96,8 @@ class DashboardPage extends React.Component<Props> {
               datamartId={d.datamart_id}
               organisationId={organisationId}
               source={source}
+              queryExecutionSource={queryExecutionSource}
+              queryExecutionSubSource={queryExecutionSubSource}
             />
           ))}
         {DatamartUsersAnalyticsWrapper &&
@@ -142,6 +152,8 @@ class DashboardPage extends React.Component<Props> {
                 organisationId={organisationId}
                 editable={false}
                 onShowDashboard={handleShowDashboard}
+                queryExecutionSource={queryExecutionSource}
+                queryExecutionSubSource={queryExecutionSubSource}
               />
             ) : (
               <div />
@@ -168,6 +180,8 @@ class DashboardPage extends React.Component<Props> {
               source={source}
               editable={false}
               onShowDashboard={handleShowDashboard}
+              queryExecutionSource={queryExecutionSource}
+              queryExecutionSubSource={queryExecutionSubSource}
             />
           </div>
         ) : (

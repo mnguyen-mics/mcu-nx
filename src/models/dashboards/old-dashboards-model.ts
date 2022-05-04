@@ -17,6 +17,10 @@ import {
   ActivitiesAnalyticsDimension,
   ActivitiesAnalyticsMetric,
 } from '../../utils/analytics/ActivitiesAnalyticsReportHelper';
+import {
+  QueryExecutionSource,
+  QueryExecutionSubSource,
+} from '../platformMetrics/QueryExecutionSource';
 
 export type DashboardScope = 'home' | 'segments' | 'builders' | 'console';
 export type DashboardType = 'HOME' | 'SEGMENT' | 'AUDIENCE_BUILDER' | 'CONSOLE';
@@ -252,6 +256,8 @@ export interface DashboardWrapperProps {
   source?: AudienceSegmentShape | StandardSegmentBuilderQueryDocument;
   datamartId: string;
   organisationId: string;
+  queryExecutionSource: QueryExecutionSource;
+  queryExecutionSubSource: QueryExecutionSubSource;
 }
 
 export interface DatamartUsersAnalyticsWrapperProps {

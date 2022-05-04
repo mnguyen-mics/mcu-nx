@@ -21,6 +21,10 @@ import { AudienceSegmentShape } from '../../models/audienceSegment/AudienceSegme
 import { InjectedDrawerProps } from '../..';
 import { injectDrawer } from '../drawer';
 import cuid from 'cuid';
+import {
+  QueryExecutionSource,
+  QueryExecutionSubSource,
+} from '../../models/platformMetrics/QueryExecutionSource';
 
 export const messages = defineMessages({
   comingSoon: {
@@ -38,6 +42,8 @@ interface DashboardPageWrapperProps {
   disableAllUserFilter?: boolean;
   defaultSegment?: LabeledValue;
   source?: AudienceSegmentShape | StandardSegmentBuilderQueryDocument;
+  queryExecutionSource: QueryExecutionSource;
+  queryExecutionSubSource: QueryExecutionSubSource;
   tabsClassname?: string;
   className?: string;
   segmentDashboardTechnicalInformation?: React.ReactNode;
@@ -233,6 +239,8 @@ class DashboardPageWrapper extends React.Component<Props, State> {
       contextualTargetingTab,
       onShowDashboard,
       defaultDashboard,
+      queryExecutionSource,
+      queryExecutionSubSource,
     } = this.props;
 
     const { isLoading, dataFileDashboards, apiDashboards, shouldDisplayComingSoon } = this.state;
@@ -279,6 +287,8 @@ class DashboardPageWrapper extends React.Component<Props, State> {
               : []
           }
           source={source}
+          queryExecutionSource={queryExecutionSource}
+          queryExecutionSubSource={queryExecutionSubSource}
           tabsClassname={tabsClassname}
           disableAllUserFilter={disableAllUserFilter}
           defaultSegment={defaultSegment}

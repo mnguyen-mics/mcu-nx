@@ -9,6 +9,10 @@ import cuid from 'cuid';
 import { injectDrawer } from '../drawer';
 import DashboardLayout from '.';
 import { InjectedDrawerProps } from '../..';
+import {
+  QueryExecutionSource,
+  QueryExecutionSubSource,
+} from '../../models/platformMetrics/QueryExecutionSource';
 
 interface EditableDashboardLayoutProps {
   datamart_id: string;
@@ -16,6 +20,8 @@ interface EditableDashboardLayoutProps {
   updateSchema: (d: DashboardContentSchema) => void;
   schema: DashboardContentSchema;
   source?: AudienceSegmentShape | StandardSegmentBuilderQueryDocument;
+  queryExecutionSource: QueryExecutionSource;
+  queryExecutionSubSource: QueryExecutionSubSource;
 }
 
 type Props = EditableDashboardLayoutProps & InjectedIntlProps & InjectedDrawerProps;
@@ -48,6 +54,8 @@ class EditableDashboardLayout extends React.Component<Props> {
       closeNextDrawer,
       updateSchema,
       schema,
+      queryExecutionSource,
+      queryExecutionSubSource,
     } = this.props;
     const identifiedSchema = this.labelInitialSchemaWithIds(schema);
     return (
@@ -60,6 +68,8 @@ class EditableDashboardLayout extends React.Component<Props> {
         editable={true}
         updateState={updateSchema}
         organisationId={organisationId}
+        queryExecutionSource={queryExecutionSource}
+        queryExecutionSubSource={queryExecutionSubSource}
       />
     );
   }

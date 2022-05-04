@@ -135,3 +135,11 @@ export { UserWorkspaceResource, UserProfileResource } from './models/directory/U
 export { ITagService, TagService } from './services/TagService';
 export { injectWorkspace, InjectedWorkspaceProps } from './components/datamart';
 export { default as SegmentSelector } from './components/segment-selector';
+export {
+  QueryExecutionSource,
+  QueryExecutionSubSource,
+  QueryExecutionDashboardSubSource,
+  QueryExecutionDataStudioSubSource,
+  QueryExecutionAutomationSubSource,
+} from './models/platformMetrics/QueryExecutionSource';
+export { getOTQLSourceHeader } from './services/OTQLQuerySourceHeaderHelper';

@@ -6,6 +6,11 @@ import {
   QueryTranslationRequest,
   QueryTranslationResource,
 } from '../models/datamart/DatamartResource';
+import {
+  QueryExecutionSource,
+  QueryExecutionSubSource,
+} from '../models/platformMetrics/QueryExecutionSource';
+import { getOTQLSourceHeader } from './OTQLQuerySourceHeaderHelper';
 
 export interface IQueryService {
   getQuery: (datamartId: string, queryId: string) => Promise<DataResponse<QueryResource>>;
@@ -13,6 +18,8 @@ export interface IQueryService {
   runOTQLQuery: (
     datamartId: string,
     query: string,
+    source: QueryExecutionSource,
+    subSource: QueryExecutionSubSource,
     options?: {
       index_name?: string;
       query_id?: string;
@@ -45,9 +52,12 @@ export class QueryService implements IQueryService {
     const endpoint = `datamarts/${datamartId}/queries/${queryId}`;
     return ApiService.getRequest(endpoint);
   }
+
   runOTQLQuery(
     datamartId: string,
     query: string,
+    source: QueryExecutionSource,
+    subSource: QueryExecutionSubSource,
     options: {
       index_name?: string;
       query_id?: string;
@@ -65,6 +75,7 @@ export class QueryService implements IQueryService {
       'Content-Type': `${
         options.content_type ? options.content_type : 'text/plain; charset=utf-8'
       }`,
+      'X-MICS-OTQL-SOURCE': getOTQLSourceHeader(source, subSource),
     }; // to finish
     return ApiService.postRequest(endpoint, query, options, headers);
   }

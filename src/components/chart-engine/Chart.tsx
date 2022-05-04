@@ -31,6 +31,10 @@ import {
   AggregateDataset,
   CountDataset,
 } from '../../models/dashboards/dataset/dataset_tree';
+import {
+  QueryExecutionSource,
+  QueryExecutionSubSource,
+} from '../../models/platformMetrics/QueryExecutionSource';
 
 type Layout = 'vertical' | 'horizontal';
 
@@ -47,6 +51,8 @@ interface ChartProps {
   onClickEdit?: () => void;
   onClickMove?: (direction: 'up' | 'down') => void;
   onClickDelete?: () => void;
+  queryExecutionSource: QueryExecutionSource;
+  queryExecutionSubSource: QueryExecutionSubSource;
 }
 
 interface ErrorContext {
@@ -83,9 +89,25 @@ class Chart extends React.Component<Props, ChartState> {
   }
 
   componentDidMount() {
-    const { datamartId, organisationId, chartConfig, scope, queryFragment } = this.props;
+    const {
+      datamartId,
+      organisationId,
+      chartConfig,
+      scope,
+      queryFragment,
+      queryExecutionSource,
+      queryExecutionSubSource,
+    } = this.props;
     this.chartDatasetService()
-      .fetchDataset(datamartId, organisationId, chartConfig, scope, queryFragment)
+      .fetchDataset(
+        datamartId,
+        organisationId,
+        chartConfig,
+        queryExecutionSource,
+        queryExecutionSubSource,
+        scope,
+        queryFragment,
+      )
       .then(formattedData => {
         clearTimeout(loadingTimeout);
         this.setState({

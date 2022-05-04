@@ -1,4 +1,8 @@
 import {
+  QueryExecutionSource,
+  QueryExecutionSubSource,
+} from './../models/platformMetrics/QueryExecutionSource';
+import {
   formatDatasetForOtql,
   formatDatasetForReportView,
   getXKeyForChart,
@@ -178,6 +182,8 @@ export interface IChartDatasetService {
     datamartId: string,
     organisationId: string,
     chartConfig: ChartConfig,
+    queryExecutionSource: QueryExecutionSource,
+    queryExecutionSubSource: QueryExecutionSubSource,
     scope?: AbstractScope,
     queryFragment?: QueryFragment,
   ): Promise<AbstractDataset | undefined>;
@@ -214,6 +220,8 @@ export class ChartDatasetService implements IChartDatasetService {
   private executeOtqlQuery(
     datamartId: string,
     otqlSource: OTQLSource,
+    queryExecutionSource: QueryExecutionSource,
+    queryExecutionSubSource: QueryExecutionSubSource,
     scope?: AbstractScope,
     queryFragment?: QueryFragment,
   ): Promise<OTQLResult> {
@@ -229,10 +237,16 @@ export class ChartDatasetService implements IChartDatasetService {
         return promiseRetry(
           retry => {
             return this.queryService
-              .runOTQLQuery(datamartId, adaptedQueryInfo.queryText, {
-                precision: otqlSource.precision,
-                use_cache: true,
-              })
+              .runOTQLQuery(
+                datamartId,
+                adaptedQueryInfo.queryText,
+                queryExecutionSource,
+                queryExecutionSubSource,
+                {
+                  precision: otqlSource.precision,
+                  use_cache: true,
+                },
+              )
               .catch(err => {
                 if (err.error_code === 'SERVICE_UNAVAILABLE') {
                   retry(err);
@@ -378,6 +392,8 @@ export class ChartDatasetService implements IChartDatasetService {
     chartType: ChartType,
     xKey: string,
     source: AbstractSource,
+    queryExecutionSource: QueryExecutionSource,
+    queryExecutionSubSource: QueryExecutionSubSource,
     providedScope?: AbstractScope,
     queryFragment?: QueryFragment,
   ): Promise<AbstractDatasetTree | undefined> {
@@ -391,6 +407,8 @@ export class ChartDatasetService implements IChartDatasetService {
       const dataset = await this.executeOtqlQuery(
         queryDatamartId,
         otqlSource,
+        queryExecutionSource,
+        queryExecutionSubSource,
         scope,
         queryFragment,
       ).then(res => {
@@ -475,6 +493,8 @@ export class ChartDatasetService implements IChartDatasetService {
             chartType,
             xKey,
             s,
+            queryExecutionSource,
+            queryExecutionSubSource,
             providedScope,
             queryFragment,
           ),
@@ -506,6 +526,8 @@ export class ChartDatasetService implements IChartDatasetService {
     datamartId: string,
     organisationId: string,
     chartConfig: ChartConfig,
+    queryExecutionSource: QueryExecutionSource,
+    queryExecutionSubSource: QueryExecutionSubSource,
     providedScope?: AbstractScope,
     queryFragment?: QueryFragment,
   ): Promise<AbstractDataset | undefined> {
@@ -521,6 +543,8 @@ export class ChartDatasetService implements IChartDatasetService {
       chartType,
       xKey,
       source,
+      queryExecutionSource,
+      queryExecutionSubSource,
       providedScope,
       queryFragment,
     );
