@@ -20,6 +20,10 @@ class MainUsingKeycloak extends React.Component<JoinedProps> {
       return <Redirect to={{ pathname: redirectToUrl, state: this.props.location.state }} />;
     };
 
+    const buildHomeUrl = (organisationId: string) => {
+      return `/o/${organisationId}/home`;
+    };
+
     const routeMapping = routes.map((route: NavigatorRoute) => {
       const renderRoute = () => {
         const ElementTag =
@@ -35,6 +39,7 @@ class MainUsingKeycloak extends React.Component<JoinedProps> {
           <RenderOnAuthenticated
             requiredFeatures={route.requiredFeature}
             requireDatamart={route.requireDatamart}
+            homePage={buildHomeUrl}
           >
             <Datalayer datalayer={datalayer}>
               <Notifications />
