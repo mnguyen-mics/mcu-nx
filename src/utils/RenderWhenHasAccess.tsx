@@ -15,7 +15,7 @@ export interface RenderWhenHasAccessProps {
   requiredFeatures?: string | string[];
   requireDatamart?: boolean;
   renderOnError?: React.ReactNode;
-  homePage?: string;
+  homePage?: (organisationId: string) => string;
 }
 
 export interface MapStateToProps {
@@ -67,7 +67,7 @@ class RenderWhenHasAccess extends React.Component<Props> {
 
     if (previousOrganisationId !== organisationId) {
       getWorkspaceRequest(organisationId);
-      if (!this.checkIfHasFeatures()) history.push(homePage ? homePage : '/');
+      if (!this.checkIfHasFeatures()) history.push(homePage ? homePage(organisationId) : '/');
     }
   }
 

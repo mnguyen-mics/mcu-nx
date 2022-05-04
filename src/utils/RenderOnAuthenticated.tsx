@@ -17,7 +17,7 @@ export interface RenderOnAuthenticatedProps {
   requireDatamart?: boolean;
   renderOnError?: JSX.Element;
   getRedirectUriFunction?: () => string | undefined;
-  homePage?: string;
+  homePage?: (organisationId: string) => string;
 }
 
 interface MapStateToProps {
