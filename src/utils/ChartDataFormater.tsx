@@ -82,7 +82,17 @@ export function formatDatasetForOtql(
   seriesTitle: string,
 ): AbstractDataset | undefined {
   if (dataResult && isAggregateResult(dataResult.rows) && !isCountResult(dataResult.rows)) {
-    const buckets = dataResult.rows[0]?.aggregations?.buckets[0]?.buckets || [];
+    let buckets = dataResult.rows[0]?.aggregations?.buckets[0]?.buckets || [];
+
+    if (dataResult.rows[0]?.aggregations?.metrics[0]?.type === 'cardinality') {
+      buckets = [
+        {
+          key: 'cardinality_id',
+          count: dataResult.rows[0]?.aggregations?.metrics[0]?.value,
+          aggregations: null,
+        },
+      ];
+    }
 
     const yKey = {
       key: seriesTitle,
