@@ -14,11 +14,11 @@ exports[`renders the FoldableCardHierarchy 1`] = `
       className="ant-layout-content"
     >
       <div
-        className="ant-collapse ant-collapse-icon-position-left ant-collapse-ghost mics-foldable-card "
+        className="ant-collapse ant-collapse-icon-position-left ant-collapse-ghost mcs-foldable-card "
         role={null}
       >
         <div
-          className="ant-collapse-item mics-foldable-card"
+          className="ant-collapse-item mcs-foldable-card"
         >
           <div
             aria-expanded={false}
@@ -56,10 +56,10 @@ exports[`renders the FoldableCardHierarchy 1`] = `
       </div>
     </main>
     <div
-      className="mics-foldable-card-children-container-first"
+      className="mcs-foldable-card-children-container-first"
     >
       <li
-        className="ant-timeline-item mics-foldable-card-timeline"
+        className="ant-timeline-item mcs-foldable-card-timeline"
       >
         <div
           className="ant-timeline-item-tail"
@@ -73,10 +73,10 @@ exports[`renders the FoldableCardHierarchy 1`] = `
           }
         >
           <div
-            className="mics-foldable-card-timeline-dash-container"
+            className="mcs-foldable-card-timeline-dash-container"
           >
             <hr
-              className="mics-foldable-card-timeline-dash"
+              className="mcs-foldable-card-timeline-dash"
             />
           </div>
         </div>
@@ -84,18 +84,18 @@ exports[`renders the FoldableCardHierarchy 1`] = `
           className="ant-timeline-item-content"
         >
           <div
-            className="mics-foldable-card-children-container"
+            className="mcs-foldable-card-children-container"
           >
             <div>
               <main
                 className="ant-layout-content"
               >
                 <div
-                  className="ant-collapse ant-collapse-icon-position-left ant-collapse-ghost mics-foldable-card "
+                  className="ant-collapse ant-collapse-icon-position-left ant-collapse-ghost mcs-foldable-card "
                   role={null}
                 >
                   <div
-                    className="ant-collapse-item ant-collapse-item-active mics-foldable-card"
+                    className="ant-collapse-item ant-collapse-item-active mcs-foldable-card"
                   >
                     <div
                       aria-expanded={true}
@@ -150,10 +150,10 @@ exports[`renders the FoldableCardHierarchy 1`] = `
                 </div>
               </main>
               <div
-                className="mics-foldable-card-children-container-first"
+                className="mcs-foldable-card-children-container-first"
               >
                 <li
-                  className="ant-timeline-item mics-foldable-card-timeline mics-foldable-card-timeline-last"
+                  className="ant-timeline-item mcs-foldable-card-timeline mcs-foldable-card-timeline-last"
                 >
                   <div
                     className="ant-timeline-item-tail"
@@ -167,10 +167,10 @@ exports[`renders the FoldableCardHierarchy 1`] = `
                     }
                   >
                     <div
-                      className="mics-foldable-card-timeline-dash-container"
+                      className="mcs-foldable-card-timeline-dash-container"
                     >
                       <hr
-                        className="mics-foldable-card-timeline-dash"
+                        className="mcs-foldable-card-timeline-dash"
                       />
                     </div>
                   </div>
@@ -178,18 +178,18 @@ exports[`renders the FoldableCardHierarchy 1`] = `
                     className="ant-timeline-item-content"
                   >
                     <div
-                      className="mics-foldable-card-children-container"
+                      className="mcs-foldable-card-children-container"
                     >
                       <div>
                         <main
                           className="ant-layout-content"
                         >
                           <div
-                            className="ant-collapse ant-collapse-icon-position-left ant-collapse-ghost mics-foldable-card "
+                            className="ant-collapse ant-collapse-icon-position-left ant-collapse-ghost mcs-foldable-card "
                             role={null}
                           >
                             <div
-                              className="ant-collapse-item mics-foldable-card"
+                              className="ant-collapse-item mcs-foldable-card"
                             >
                               <div
                                 aria-expanded={false}
@@ -227,7 +227,7 @@ exports[`renders the FoldableCardHierarchy 1`] = `
                           </div>
                         </main>
                         <div
-                          className="mics-foldable-card-children-container-first"
+                          className="mcs-foldable-card-children-container-first"
                         />
                       </div>
                     </div>
@@ -239,7 +239,7 @@ exports[`renders the FoldableCardHierarchy 1`] = `
         </div>
       </li>
       <li
-        className="ant-timeline-item mics-foldable-card-timeline mics-foldable-card-timeline-last"
+        className="ant-timeline-item mcs-foldable-card-timeline mcs-foldable-card-timeline-last"
       >
         <div
           className="ant-timeline-item-tail"
@@ -253,10 +253,10 @@ exports[`renders the FoldableCardHierarchy 1`] = `
           }
         >
           <div
-            className="mics-foldable-card-timeline-dash-container"
+            className="mcs-foldable-card-timeline-dash-container"
           >
             <hr
-              className="mics-foldable-card-timeline-dash"
+              className="mcs-foldable-card-timeline-dash"
             />
           </div>
         </div>
@@ -264,18 +264,18 @@ exports[`renders the FoldableCardHierarchy 1`] = `
           className="ant-timeline-item-content"
         >
           <div
-            className="mics-foldable-card-children-container"
+            className="mcs-foldable-card-children-container"
           >
             <div>
               <main
                 className="ant-layout-content"
               >
                 <div
-                  className="ant-collapse ant-collapse-icon-position-left ant-collapse-ghost mics-foldable-card "
+                  className="ant-collapse ant-collapse-icon-position-left ant-collapse-ghost mcs-foldable-card "
                   role={null}
                 >
                   <div
-                    className="ant-collapse-item mics-foldable-card"
+                    className="ant-collapse-item mcs-foldable-card"
                   >
                     <div
                       aria-expanded={false}
@@ -313,7 +313,7 @@ exports[`renders the FoldableCardHierarchy 1`] = `
                 </div>
               </main>
               <div
-                className="mics-foldable-card-children-container-first"
+                className="mcs-foldable-card-children-container-first"
               />
             </div>
           </div>

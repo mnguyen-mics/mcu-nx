@@ -25,16 +25,16 @@ export default class FoldableCardHierarchy extends React.Component<FoldableCardH
         childrenNodes.push(
           <Timeline.Item
             className={
-              'mics-foldable-card-timeline' +
-              (index === currentNode.children.length - 1 ? ' mics-foldable-card-timeline-last' : '')
+              'mcs-foldable-card-timeline' +
+              (index === currentNode.children.length - 1 ? ' mcs-foldable-card-timeline-last' : '')
             }
             dot={
-              <div className='mics-foldable-card-timeline-dash-container'>
-                <hr className='mics-foldable-card-timeline-dash' />
+              <div className='mcs-foldable-card-timeline-dash-container'>
+                <hr className='mcs-foldable-card-timeline-dash' />
               </div>
             }
           >
-            <div className='mics-foldable-card-children-container'>
+            <div className='mcs-foldable-card-children-container'>
               {recusiveBuildFoldableCardHierachy(currentNode.children[index])}
             </div>
           </Timeline.Item>,
@@ -45,7 +45,7 @@ export default class FoldableCardHierarchy extends React.Component<FoldableCardH
         <React.Fragment>
           <div>
             <FoldableCard {...currentNode.foldableCard} />
-            <div className='mics-foldable-card-children-container-first'>{childrenNodes}</div>
+            <div className='mcs-foldable-card-children-container-first'>{childrenNodes}</div>
           </div>
         </React.Fragment>
       );

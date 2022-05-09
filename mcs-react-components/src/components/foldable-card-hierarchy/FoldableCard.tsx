@@ -25,9 +25,9 @@ export default class FoldableCard extends React.Component<FoldableCardProps> {
           ghost={true}
           defaultActiveKey={isDefaultActive ? '1' : []}
           expandIcon={expendIcon}
-          className={`mics-foldable-card ${className ? className : ''}`}
+          className={`mcs-foldable-card ${className ? className : ''}`}
         >
-          <Panel className='mics-foldable-card' header={header} key='1'>
+          <Panel className='mcs-foldable-card' header={header} key='1'>
             {body}
           </Panel>
         </Collapse>
