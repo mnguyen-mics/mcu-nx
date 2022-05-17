@@ -179,7 +179,8 @@ class TopBar extends React.Component<Props> {
     );
     const appMenu =
       appMenuSections.userLinks.length > 0 ||
-      (appMenuSections.adminLinks && appMenuSections.adminLinks.length > 0) ? (
+      (appMenuSections.adminLinks && appMenuSections.adminLinks.length > 0) ||
+      (appMenuSections.resourceLinks && appMenuSections.resourceLinks.length > 0) ? (
         <AppsMenu
           className='mcs-app-menu-main-layout'
           sections={appMenuSections}
