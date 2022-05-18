@@ -425,13 +425,11 @@ export class ChartDatasetService implements IChartDatasetService {
       } as AnalyticsDataset;
     } else if (sourceType === 'data_file') {
       const datafileSource = source as DataFileSource;
-      if (providedScope && 
-        providedScope.type === 'SEGMENT')
-        {
-          const segmentToken = "{SEGMENT_ID}";
-          const segmentId = (providedScope as SegmentScope).segmentId;
-          datafileSource.uri = datafileSource.uri.replace(segmentToken,segmentId);
-          datafileSource.JSON_path = datafileSource.JSON_path.replace(segmentToken,segmentId);
+      if (providedScope && providedScope.type === 'SEGMENT') {
+        const segmentToken = '{SEGMENT_ID}';
+        const segmentId = (providedScope as SegmentScope).segmentId;
+        datafileSource.uri = datafileSource.uri.replace(segmentToken, segmentId);
+        datafileSource.JSON_path = datafileSource.JSON_path.replace(segmentToken, segmentId);
       }
       return this.dataFileService
         .getDatafileData(datafileSource.uri)
