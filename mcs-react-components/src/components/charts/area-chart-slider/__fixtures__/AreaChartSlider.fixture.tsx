@@ -1,3 +1,4 @@
+import * as React from 'react';
 import AreaChartSlider, { AreaChartSliderProps, DataPoint } from '../AreaChartSlider';
 
 function generateData(i: number, accu: DataPoint[] = []): DataPoint[] {
@@ -32,4 +33,4 @@ const props: AreaChartSliderProps = {
   initialValue: 100,
 };
 
-export default () => AreaChartSlider(props);
+export default <AreaChartSlider {...props} />;
