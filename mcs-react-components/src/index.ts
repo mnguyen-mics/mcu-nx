@@ -56,3 +56,4 @@ export { default as EmptyRecords } from './components/empty-records';
 export { default as RelatedRecords } from './components/related-records';
 export { default as PopupContainer } from './components/popup-container';
 export { default as FoldableCardHierarchy } from './components/foldable-card-hierarchy';
+export { default as AreaChartSlider } from './components/charts/area-chart-slider';
