@@ -3,7 +3,7 @@ import McsIcon from '../../mcs-icon';
 import classNames from 'classnames';
 
 export interface MenuListProps {
-  title: string;
+  title: React.ReactChild;
   icon_path?: string;
   subtitles?: string[];
   select: React.FormEventHandler<any>;
