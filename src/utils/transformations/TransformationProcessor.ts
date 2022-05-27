@@ -12,6 +12,7 @@ import {
   IndexDataset,
   OTQLDataset,
   RatioDataset,
+  ReduceDataset,
 } from '../../models/dashboards/dataset/dataset_tree';
 import { AbstractSource } from '../../models/dashboards/dataset/datasource_tree';
 import AudienceSegmentService, {
@@ -25,6 +26,7 @@ import { DecoratorsTransformation } from './DecoratorsTransformation';
 import DatasetDateFormatter from './FormatDatesTransformation';
 import { indexDataset } from './IndexTranformation';
 import { percentages } from './PercentagesTransformation';
+import { reduceDataset } from './ReduceTransformation';
 
 export const DEFAULT_Y_KEY = {
   key: 'value',
@@ -139,6 +141,19 @@ export class TransformationProcessor {
       );
       return datasetToBeFormatted.then(result => {
         if (result) return this.datasetDateFormatter.applyFormatDates(result, xKey, format);
+        else return Promise.resolve(undefined);
+      });
+    } else if (sourceType === 'reduce') {
+      const datasetToReduce = dataset as ReduceDataset;
+      const childDataset = this.applyTransformations(
+        datamartId,
+        organisationId,
+        chartType,
+        xKey,
+        datasetToReduce.children[0],
+      );
+      return childDataset.then(result => {
+        if (result) return reduceDataset(xKey, result, datasetToReduce.reduce_options.type);
         else return Promise.resolve(undefined);
       });
     } else if (sourceType === 'get-decorators') {

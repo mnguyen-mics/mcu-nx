@@ -8,7 +8,8 @@ export type SourceType =
   | 'collection_volumes'
   | 'ratio'
   | 'format-dates'
-  | 'data_file';
+  | 'data_file'
+  | 'reduce';
 
 export type Order = `descending` | `ascending`;
 
@@ -29,3 +30,8 @@ export interface DecoratorsOptions {
 }
 
 export declare type ModelType = 'CHANNELS' | 'SEGMENTS' | 'COMPARTMENTS';
+
+export declare type ReduceType = 'max' | 'min' | 'sum' | 'avg' | 'count' | 'first' | 'last';
+export interface ReduceOptions {
+  type: ReduceType;
+}
