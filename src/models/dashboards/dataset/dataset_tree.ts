@@ -1,5 +1,5 @@
 import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
-import { DateOptions, DecoratorsOptions, IndexOptions, SourceType } from './common';
+import { DateOptions, DecoratorsOptions, IndexOptions, ReduceOptions, SourceType } from './common';
 
 export interface AbstractDatasetTree {
   type: SourceType;
@@ -24,6 +24,10 @@ export interface IndexDataset extends AbstractParentDataset {
 }
 
 export interface RatioDataset extends AbstractParentDataset {}
+
+export interface ReduceDataset extends AbstractParentDataset {
+  reduce_options: ReduceOptions;
+}
 
 export interface DateFormatDataset extends AbstractParentDataset {
   date_options: DateOptions;

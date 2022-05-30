@@ -1,6 +1,6 @@
 import { QueryPrecisionMode } from '../../datamart/graphdb/OTQLResult';
 import { ReportRequestBody } from '../../report/ReportRequestBody';
-import { DateOptions, DecoratorsOptions, IndexOptions, SourceType } from './common';
+import { DateOptions, DecoratorsOptions, IndexOptions, ReduceOptions, SourceType } from './common';
 
 export interface AbstractSource {
   type: SourceType;
@@ -43,6 +43,10 @@ export interface GetDecoratorsSource extends AbstractParentSource {
 export interface DataFileSource extends AbstractSource {
   uri: string;
   JSON_path: string;
+}
+
+export interface ReduceSource extends AbstractParentSource {
+  reduce_options: ReduceOptions;
 }
 
 export interface DataSource {

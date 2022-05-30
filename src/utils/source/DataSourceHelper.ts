@@ -88,6 +88,7 @@ export async function extractQueriesHelper(
     case 'index':
     case 'format-dates':
     case 'to-percentages':
+    case 'reduce':
       const joinSource = source as AggregationSource;
       const childSources = joinSource.sources.map(_source =>
         extractQueriesHelper(_source, datamartId, queryService, scopeAdapter, scope, queryFragment),

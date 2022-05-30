@@ -379,6 +379,7 @@ export default class CustomDashboardService implements ICustomDashboardService {
         'ratio',
         'format-dates',
         'get-decorators',
+        'reduce',
       ].includes(sourceType)
     ) {
       const parentSource = source as AbstractParentSource;
