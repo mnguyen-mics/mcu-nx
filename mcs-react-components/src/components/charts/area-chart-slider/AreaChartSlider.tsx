@@ -32,6 +32,7 @@ export interface AreaChartSliderProps {
     labelFormat?: string;
     title?: string;
     subtitle?: string;
+    reversed?: boolean;
   };
   yAxis: {
     key: string;
@@ -41,26 +42,31 @@ export interface AreaChartSliderProps {
   };
   color: string;
   onChange?: (selected: DataPoint) => any;
+  tipFormatter?: (selected: DataPoint, index?: number) => React.ReactChild;
 }
 
 export default function AreaChartSlider(props: AreaChartSliderProps) {
-  const { data, xAxis, yAxis, color, initialValue, onChange } = props;
+  const { data, xAxis, yAxis, color, initialValue, onChange, tipFormatter } = props;
   const chartRef = React.useRef<HighchartsReact>(null);
 
   const [sliderValue, setSliderValue] = React.useState(initialValue);
   const [sliderWidth, setSliderWidth] = React.useState(0);
   const [sliderOffsetX, setSliderOffsetX] = React.useState(0);
 
+  React.useEffect(() => {
+    onSliderChange(props.initialValue);
+  }, [props.initialValue]);
+
   function onChartRender(this: Highcharts.Chart, event: Event) {
-    setSliderWidth(this.plotWidth - 12);
-    setSliderOffsetX(this.plotLeft + 6);
+    setSliderWidth(this.plotWidth - 16);
+    setSliderOffsetX(this.plotLeft + 8);
   }
 
   const formatedSerie = formatSerie(data, xAxis.key, yAxis.key);
   const formatedSerieWithNull: Highcharts.SeriesAreaOptions = {
     type: 'area',
     color: color,
-    fillOpacity: 0.2,
+    fillOpacity: 0.25,
     lineWidth: 0,
     data: data.slice(0, sliderValue).map((point: DataPoint) => {
       return [point[xAxis.key], point[yAxis.key]];
@@ -88,6 +94,14 @@ export default function AreaChartSlider(props: AreaChartSliderProps) {
     }
   };
 
+  const modifiedTipFormatter = (i?: number) => {
+    if (i && i < data.length && tipFormatter) {
+      const value = data[i - 1];
+      return tipFormatter(value);
+    }
+    return null;
+  };
+
   const options: Highcharts.Options = {
     colors: ['#00a1df'],
     chart: {
@@ -102,8 +116,7 @@ export default function AreaChartSlider(props: AreaChartSliderProps) {
         fillOpacity: 0.2,
         animation: false,
         marker: {
-          radius: 4,
-          symbol: 'circle',
+          enabled: false,
         },
         lineWidth: 1.5,
         states: {
@@ -128,6 +141,7 @@ export default function AreaChartSlider(props: AreaChartSliderProps) {
       labels: {
         format: xAxis.labelFormat,
       },
+      reversed: xAxis.reversed,
     },
     yAxis: {
       gridLineWidth: 1,
@@ -171,6 +185,8 @@ export default function AreaChartSlider(props: AreaChartSliderProps) {
         max={data.length}
         value={sliderValue}
         style={{ width: sliderWidth, marginLeft: sliderOffsetX }}
+        tipFormatter={tipFormatter ? modifiedTipFormatter : undefined}
+        tooltipPlacement='bottom'
       />
       {xAxis.title && (
         <div className='mcs_areaChartSlider_abscissa'>

@@ -30,7 +30,7 @@
     "highcharts": "^7.2.2",
     "highcharts-react-official": "^2.2.2",
     "lodash": "^4.17.20",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "moment-duration-format": "^2.3.2",
     "numeral": "^2.0.6",
     "query-string": "^6.13.1",
