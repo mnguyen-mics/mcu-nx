@@ -32,13 +32,18 @@ export type AudienceSegmentType =
   | 'USER_PARTITION'
   | 'USER_PIXEL'
   | 'USER_LOOKALIKE'
+  | 'USER_LOOKALIKE_BY_COHORTS'
   | 'EDGE';
 
 export type UserQueryEvaluationMode = 'REAL_TIME' | 'AUTOMATIC' | 'ON_DEMAND';
 
 export type FeedType = 'FILE_IMPORT' | 'TAG' | 'SCENARIO' | 'SCENARIO_FEED';
 
-export type LookAlikeAlgorithm = 'CLUSTER_OVERLAP' | 'FIELD_SCORE' | 'MULTI_VARIATE_DISTANCE';
+export type LookAlikeAlgorithm =
+  | 'CLUSTER_OVERLAP'
+  | 'FIELD_SCORE'
+  | 'MULTI_VARIATE_DISTANCE'
+  | 'COHORT_OVERLAP';
 
 export type AudienceLookalikeStatus = 'DRAFT' | 'CALIBRATING' | 'CALIBRATION_ERROR' | 'CALIBRATED';
 
@@ -67,6 +72,17 @@ export interface UserLookalikeSegment extends AudienceSegmentResource {
   status: AudienceLookalikeStatus;
 }
 
+export interface UserLookalikeByCohortsSegment extends AudienceSegmentResource {
+  type: 'USER_LOOKALIKE_BY_COHORTS';
+  lookalike_algorithm: LookAlikeAlgorithm;
+  source_segment_id: string;
+  query_id: string;
+  status: AudienceLookalikeStatus;
+  include_seed_segment: boolean;
+  user_points_target?: number;
+  min_overlap?: number;
+}
+
 export interface UserPartitionSegment extends AudienceSegmentResource {
   part_number: number;
   audience_partition_id: string;
@@ -83,6 +99,7 @@ export type AudienceSegmentShape =
   | UserListSegment
   | UserQuerySegment
   | UserLookalikeSegment
+  | UserLookalikeByCohortsSegment
   | UserPartitionSegment
   | UserActivationSegment;
 

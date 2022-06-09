@@ -40,6 +40,7 @@ interface DashboardPageWrapperProps {
   tabsClassname?: string;
   className?: string;
   segmentDashboardTechnicalInformation?: React.ReactNode;
+  cohortLookalikeCalibration?: React.ReactNode;
   defaultDashboardContent?: DashboardContentSections;
   DatamartUsersAnalyticsWrapper?: React.ComponentClass<DatamartUsersAnalyticsWrapperProps>;
   DashboardWrapper?: React.ComponentClass<DashboardWrapperProps>;
@@ -225,6 +226,7 @@ class DashboardPageWrapper extends React.Component<Props, State> {
       datamartAnalyticsConfig,
       intl,
       segmentDashboardTechnicalInformation,
+      cohortLookalikeCalibration,
       DatamartUsersAnalyticsWrapper,
       DashboardWrapper,
       contextualTargetingTab,
@@ -279,6 +281,7 @@ class DashboardPageWrapper extends React.Component<Props, State> {
           disableAllUserFilter={disableAllUserFilter}
           defaultSegment={defaultSegment}
           segmentDashboardTechnicalInformation={segmentDashboardTechnicalInformation}
+          cohortLookalikeCalibration={cohortLookalikeCalibration}
           DashboardWrapper={DashboardWrapper}
           DatamartUsersAnalyticsWrapper={DatamartUsersAnalyticsWrapper}
           contextualTargetingTab={contextualTargetingTab}

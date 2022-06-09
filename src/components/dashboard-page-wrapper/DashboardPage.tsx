@@ -28,6 +28,7 @@ export interface DashboardPageProps {
   tabsClassname?: string;
   className?: string;
   segmentDashboardTechnicalInformation?: React.ReactNode;
+  cohortLookalikeCalibration?: React.ReactNode;
   DatamartUsersAnalyticsWrapper?: React.ComponentClass<DatamartUsersAnalyticsWrapperProps>;
   DashboardWrapper?: React.ComponentClass<DashboardWrapperProps>;
   contextualTargetingTab?: React.ReactNode;
@@ -38,6 +39,10 @@ const messagesDashboardPage = defineMessages({
   technicalInformationTab: {
     id: 'dashboard.page.technical.information.tab',
     defaultMessage: 'Technical information',
+  },
+  cohortLookalikeCalibrationTab: {
+    id: 'dashboard.page.cohort.calibration.tab',
+    defaultMessage: 'Lookalike calibration',
   },
 });
 
@@ -59,6 +64,7 @@ class DashboardPage extends React.Component<Props> {
     tabsClassname?: string,
     source?: AudienceSegmentShape | StandardSegmentBuilderQueryDocument,
     segmentDashboardTechnicalInformation?: React.ReactNode,
+    cohortLookalikeCalibration?: React.ReactNode,
   ) => {
     const {
       intl: { formatMessage },
@@ -167,6 +173,12 @@ class DashboardPage extends React.Component<Props> {
           <div />
         );
       }
+      if (cohortLookalikeCalibration) {
+        dashboardTabs.unshift({
+          title: formatMessage(messagesDashboardPage.cohortLookalikeCalibrationTab),
+          display: <div>{cohortLookalikeCalibration}</div>,
+        });
+      }
       if (segmentDashboardTechnicalInformation) {
         dashboardTabs.unshift({
           title: formatMessage(messagesDashboardPage.technicalInformationTab),
@@ -207,6 +219,12 @@ class DashboardPage extends React.Component<Props> {
         title: 'Technical information',
         display: <div>{segmentDashboardTechnicalInformation}</div>,
       });
+      if (cohortLookalikeCalibration) {
+        dashboardTabs.push({
+          title: formatMessage(messagesDashboardPage.cohortLookalikeCalibrationTab),
+          display: <div>{cohortLookalikeCalibration}</div>,
+        });
+      }
       if (contextualTargetingTab) {
         dashboardTabs.push({
           title: 'Contextual Targeting',
@@ -235,7 +253,17 @@ class DashboardPage extends React.Component<Props> {
             animated={false}
           />
         );
-      } else return <div>{segmentDashboardTechnicalInformation}</div>;
+      } else
+        return dashboardTabs.length === 1 ? (
+          <div>{segmentDashboardTechnicalInformation}</div>
+        ) : (
+          <McsTabs
+            destroyInactiveTabPane={true}
+            items={dashboardTabs}
+            className={tabsClassname}
+            animated={false}
+          />
+        );
     } else return defaultContent;
   };
 
@@ -252,6 +280,7 @@ class DashboardPage extends React.Component<Props> {
       source,
       className,
       segmentDashboardTechnicalInformation,
+      cohortLookalikeCalibration,
     } = this.props;
 
     return (
@@ -267,6 +296,7 @@ class DashboardPage extends React.Component<Props> {
           tabsClassname,
           source,
           segmentDashboardTechnicalInformation,
+          cohortLookalikeCalibration,
         )}
       </div>
     );
