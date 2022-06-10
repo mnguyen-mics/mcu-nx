@@ -31,6 +31,7 @@ const props: AreaChartSliderProps = {
   },
   color: '#00a1df',
   initialValue: 100,
+  disabled: false,
 };
 
 export default <AreaChartSlider {...props} />;
