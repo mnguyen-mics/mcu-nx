@@ -41,12 +41,13 @@ export interface AreaChartSliderProps {
     subtitle?: string;
   };
   color: string;
+  disabled?: boolean;
   onChange?: (selected: DataPoint) => any;
   tipFormatter?: (selected: DataPoint, index?: number) => React.ReactChild;
 }
 
 export default function AreaChartSlider(props: AreaChartSliderProps) {
-  const { data, xAxis, yAxis, color, initialValue, onChange, tipFormatter } = props;
+  const { data, xAxis, yAxis, color, initialValue, disabled, onChange, tipFormatter } = props;
   const chartRef = React.useRef<HighchartsReact>(null);
 
   const [sliderValue, setSliderValue] = React.useState(initialValue);
@@ -95,7 +96,7 @@ export default function AreaChartSlider(props: AreaChartSliderProps) {
   };
 
   const modifiedTipFormatter = (i?: number) => {
-    if (i && i < data.length && tipFormatter) {
+    if (i && i <= data.length && tipFormatter) {
       const value = data[i - 1];
       return tipFormatter(value);
     }
@@ -105,6 +106,7 @@ export default function AreaChartSlider(props: AreaChartSliderProps) {
   const options: Highcharts.Options = {
     colors: ['#00a1df'],
     chart: {
+      backgroundColor: 'transparent',
       type: 'area',
       animation: false,
       events: {
@@ -187,6 +189,7 @@ export default function AreaChartSlider(props: AreaChartSliderProps) {
         style={{ width: sliderWidth, marginLeft: sliderOffsetX }}
         tipFormatter={tipFormatter ? modifiedTipFormatter : undefined}
         tooltipPlacement='bottom'
+        disabled={disabled}
       />
       {xAxis.title && (
         <div className='mcs_areaChartSlider_abscissa'>
