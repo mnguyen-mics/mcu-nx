@@ -374,7 +374,7 @@ class ManagedChart extends React.Component<Props> {
             onClick={onClickEdit ? onClickEdit : this.props.openDrawer}
           >
             <span className='mcs-chart_header_text'>{chartConfig.title}</span>
-            {!onClickEdit ? (
+            {!onClickEdit && !!chartConfig.title ? (
               <ArrowsAltOutlined className={'mcs-chartIcon mcs-hoverableIcon'} />
             ) : undefined}
           </span>
