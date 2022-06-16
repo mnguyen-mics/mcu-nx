@@ -267,6 +267,10 @@ class DashboardPage extends React.Component<Props> {
     } else return defaultContent;
   };
 
+  shouldComponentUpdate(nextProps: Props) {
+    return JSON.stringify(this.props) !== JSON.stringify(nextProps);
+  }
+
   render() {
     const {
       dataFileDashboards,
