@@ -84,7 +84,7 @@ export function formatDatasetForOtql(
   if (dataResult && isAggregateResult(dataResult.rows) && !isCountResult(dataResult.rows)) {
     let buckets = dataResult.rows[0]?.aggregations?.buckets[0]?.buckets || [];
 
-    if (dataResult.rows[0]?.aggregations?.metrics[0]?.type === 'cardinality') {
+    if (dataResult.rows[0]?.aggregations?.metrics[0]?.metric_type === 'cardinality') {
       buckets = [
         {
           key: 'cardinality_id',
