@@ -144,3 +144,9 @@ export {
 } from './models/platformMetrics/QueryExecutionSource';
 export { getOTQLSourceHeader } from './services/OTQLQuerySourceHeaderHelper';
 export { ChartType } from './services/ChartDatasetService';
+export { IdentityProviderResource } from './models/identityProvider/IdentityProviderResource';
+export {
+  IdentityProviderService,
+  IIdentityProviderService,
+} from './services/IdentityProviderService';
+export { OrganisationService, IOrganisationService } from './services/OrganisationService';
