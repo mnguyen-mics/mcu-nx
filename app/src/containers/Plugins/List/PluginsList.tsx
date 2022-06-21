@@ -35,7 +35,8 @@ import { getPaginatedApiParam } from '../../../utils/ApiHelper';
 import { FilterValue, SorterResult } from 'antd/lib/table/interface';
 import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
-import OrganisationName from '../../../components/Common/OrganisationName';
+import { IOrganisationService } from '@mediarithmics-private/advanced-components/lib/services/OrganisationService';
+import { OrganisationResource } from '@mediarithmics-private/advanced-components/lib/models/organisation/organisation';
 
 const { Content } = Layout;
 
@@ -62,11 +63,15 @@ interface State {
   isSortAsc?: boolean;
   isLoadingPluginPieChart: boolean;
   pluginPieChartDataset: Dataset;
+  organisations: OrganisationResource[];
 }
 
 class PluginsList extends React.Component<Props, State> {
   @lazyInject(TYPES.IPluginService)
   private _pluginService: IPluginService;
+
+  @lazyInject(TYPES.IOrganisationService)
+  private _organisationService: IOrganisationService;
 
   constructor(props: Props) {
     super(props);
@@ -96,6 +101,7 @@ class PluginsList extends React.Component<Props, State> {
       isSortAsc: param.order_by ? (param.order_by[0] === '-' ? false : true) : undefined,
       isLoadingPluginPieChart: false,
       pluginPieChartDataset: [],
+      organisations: [],
     };
   }
 
@@ -348,6 +354,20 @@ class PluginsList extends React.Component<Props, State> {
           total: res.total || res.count,
           loading: false,
         });
+        return res.data;
+      })
+      .then(plugins => {
+        const orgIds = [...new Set(plugins.map(p => p.organisation_id))];
+        const promises = orgIds.map(id => {
+          return this._organisationService.getOrganisation(id);
+        });
+        return Promise.all(promises)
+          .then(res => {
+            this.setState({
+              organisations: res.map(r => r.data),
+            });
+          })
+          .catch(e => notifyError(e));
       })
       .catch(err => {
         notifyError(err);
@@ -416,14 +436,26 @@ class PluginsList extends React.Component<Props, State> {
     pagination: TablePaginationConfig,
     filters: Record<string, FilterValue | null>,
     sorter: SorterResult<PluginResource>,
+    extra: { currentDataSource: []; action: 'paginate' | 'sort' | 'filter' },
   ) => {
-    const isSortAsc = sorter.order ? (sorter.order === 'ascend' ? true : false) : undefined;
-    const sortField = sorter.columnKey && sorter.order ? sorter.columnKey.toString() : undefined;
-    this.setState({
-      isSortAsc: isSortAsc,
-      sortField: sortField,
-    });
-    this.onOrderBy(sortField, isSortAsc);
+    if (extra.action === 'sort') {
+      const isSortAsc = sorter.order ? (sorter.order === 'ascend' ? true : false) : undefined;
+      const sortField = sorter.columnKey && sorter.order ? sorter.columnKey.toString() : undefined;
+      this.setState({
+        isSortAsc: isSortAsc,
+        sortField: sortField,
+      });
+      this.onOrderBy(sortField, isSortAsc);
+    }
+  };
+
+  getOrganisationName = (organisationId: string) => {
+    const { organisations } = this.state;
+    const foundOrganisation = organisations.find(o => o.id === organisationId);
+    if (foundOrganisation) {
+      return foundOrganisation.name;
+    }
+    return '';
   };
 
   render() {
@@ -490,7 +522,7 @@ class PluginsList extends React.Component<Props, State> {
         sortOrder: this.getOrderByForColumn('organisation_id', sortField, isSortAsc),
         render: (text: string, record: PluginResource) => (
           <span className='mcs-pluginTable_organisation'>
-            <OrganisationName organisationId={text} />
+            {this.getOrganisationName(text)}
             {` (${text})`}
           </span>
         ),

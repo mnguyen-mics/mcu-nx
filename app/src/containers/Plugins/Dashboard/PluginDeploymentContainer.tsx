@@ -204,7 +204,7 @@ class PluginDeploymentContainer extends React.Component<Props, State> {
 }
 
 export default compose<Props, PluginDeploymentContainerProps>(
+  withRouter,
   injectIntl,
   injectNotifications,
-  withRouter,
 )(PluginDeploymentContainer);

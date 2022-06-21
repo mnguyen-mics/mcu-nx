@@ -257,7 +257,7 @@ class ConfigurationFilesContainer extends React.Component<Props, State> {
 }
 
 export default compose<Props, ConfigurationFilesContainerProps>(
+  withRouter,
   injectIntl,
   injectNotifications,
-  withRouter,
 )(ConfigurationFilesContainer);
