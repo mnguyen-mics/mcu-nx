@@ -30,10 +30,13 @@ interface State {
 class PluginVersionProperty extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+    const { propertyModel } = this.props;
+
     this.state = {
-      propertyType: 'STRING',
+      propertyType: propertyModel.property.property_type,
     };
   }
+
   onSelectType = (key: string) => (propertyType: PluginPropertyType) => {
     const { onChange } = this.props;
     this.setState(
@@ -242,7 +245,7 @@ class PluginVersionProperty extends React.Component<Props, State> {
                   className: 'mcs-pluginEdit-drawer-form-input-type_boolean',
                 },
               ]}
-              defaultValue={'STRING'}
+              defaultValue={propertyType}
               onChange={this.onSelectType(propertyModel.key)}
             />
           </Form.Item>
