@@ -593,7 +593,7 @@ class PluginVersionForm extends React.Component<Props, State> {
 }
 
 export default compose<Props, PluginVersionFormProps>(
+  withRouter,
   injectIntl,
   injectNotifications,
-  withRouter,
 )(PluginVersionForm);

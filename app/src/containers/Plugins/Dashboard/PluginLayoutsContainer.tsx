@@ -311,7 +311,7 @@ class PluginLayoutsContainer extends React.Component<Props, State> {
 }
 
 export default compose<Props, PluginLayoutsContainerProps>(
+  withRouter,
   injectIntl,
   injectNotifications,
-  withRouter,
 )(PluginLayoutsContainer);

@@ -113,7 +113,7 @@ class PluginPropertiesContainer extends React.Component<Props, State> {
 }
 
 export default compose<Props, PluginPropertiesContainerProps>(
+  withRouter,
   injectIntl,
   injectNotifications,
-  withRouter,
 )(PluginPropertiesContainer);

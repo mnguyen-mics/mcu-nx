@@ -301,7 +301,7 @@ class PluginTabContainer extends React.Component<Props, State> {
 }
 
 export default compose<Props, PluginTabContainerProps>(
+  withRouter,
   injectIntl,
   injectNotifications,
-  withRouter,
 )(PluginTabContainer);
