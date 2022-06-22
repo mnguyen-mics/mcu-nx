@@ -86,7 +86,7 @@ class PluginPage extends React.Component<Props, State> {
         });
       })
       .then(() => {
-        this._pluginService.getPluginVersions(pluginId).then(res => {
+        this._pluginService.getPluginVersions(pluginId, { archived: false }).then(res => {
           this.setState({
             pluginVersions: res.data,
             isLoadingPluginVersions: false,
