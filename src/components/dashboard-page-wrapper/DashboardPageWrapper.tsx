@@ -20,6 +20,7 @@ import { StandardSegmentBuilderQueryDocument } from '../../models/standardSegmen
 import { AudienceSegmentShape } from '../../models/audienceSegment/AudienceSegmentResource';
 import { InjectedDrawerProps } from '../..';
 import { injectDrawer } from '../drawer';
+import cuid from 'cuid';
 
 export const messages = defineMessages({
   comingSoon: {
@@ -266,6 +267,7 @@ class DashboardPageWrapper extends React.Component<Props, State> {
 
       return (
         <DashboardPage
+          uid={cuid()}
           className={`mcs-dashboardPageContainer ${className}`}
           datamartId={datamartId}
           organisationId={organisationId}

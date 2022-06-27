@@ -34,6 +34,7 @@ export interface DashboardPageProps {
   contextualTargetingTab?: React.ReactNode;
   onShowDashboard?: (dpc: DashboardPageContent) => void;
   defaultDashboard?: DashboardPageContent;
+  uid?: string;
 }
 const messagesDashboardPage = defineMessages({
   technicalInformationTab: {
@@ -266,6 +267,12 @@ class DashboardPage extends React.Component<Props> {
         );
     } else return defaultContent;
   };
+
+  shouldComponentUpdate(nextProps: Props) {
+    const { uid } = this.props;
+
+    return uid === undefined || uid !== nextProps.uid;
+  }
 
   render() {
     const {
