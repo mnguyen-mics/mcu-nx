@@ -208,13 +208,7 @@ class ManagedChart extends React.Component<Props> {
         return renderTableChart(tableChartOptions);
       case 'area':
       case 'line':
-        return (
-          <AreaChart
-            dataset={dataset as any}
-            {...(sanitizedwithKeys as AreaChartOptions)}
-            transformDate={false}
-          />
-        );
+        return <AreaChart dataset={dataset as any} {...(sanitizedwithKeys as AreaChartOptions)} />;
       default:
         return (
           <Alert
