@@ -152,7 +152,7 @@ export const defaultDashboardContent: DashboardContentSections = {
                 query_id: '50169',
               } as any,
               options: {
-                type: 'bar',
+                type: 'bars',
                 xKey: 'key',
                 format: 'count',
               },
@@ -225,6 +225,7 @@ export default (
             <FetchMock mocks={fetchmockOptions}>
               <DashboardPageWrapper
                 datamartId={'555'}
+                organisationId='504'
                 defaultDashboardContent={defaultDashboardContent}
                 fetchApiDashboards={fetchApiDashboards}
               />

@@ -229,7 +229,7 @@ export const props = {
                   query_id: '50169',
                 },
                 options: {
-                  type: 'bar' as ChartType,
+                  type: 'bars' as ChartType,
                   big_bars: false,
                   plot_line_value: 25000000,
                   xKey: 'key',
