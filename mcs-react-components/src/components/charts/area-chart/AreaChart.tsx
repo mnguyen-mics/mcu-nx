@@ -16,7 +16,6 @@ import {
   Dataset,
   buildLegendOptions,
   generateDraggable,
-  Datapoint,
 } from '../utils';
 import { cloneDeep, omitBy, isUndefined } from 'lodash';
 
@@ -60,7 +59,6 @@ class AreaChart extends React.Component<Props, {}> {
     dataset: Dataset,
     xKey: XKey | string,
     yKeys: YKey[],
-    shouldTransformDate: boolean,
     colors: string[] = defaultColors,
     type: Type = 'area',
   ): Highcharts.SeriesOptionsType[] => {
@@ -69,27 +67,21 @@ class AreaChart extends React.Component<Props, {}> {
       return {
         type: type as any,
         connectNulls: true,
-        data: dataset.map((data: Datapoint) => {
+        data: dataset.map(data => {
           const yValue = data[y.key];
-          if (shouldTransformDate)
-            return [
-              !isTypeofXKey(xKey)
-                ? this.formatDateToTsForXKeyType(
-                    data[xKey] as string,
-                    data.hour_of_day
-                      ? (data.hour_of_day as number)
-                      : data.hour
-                      ? (data.hour as number)
-                      : undefined,
-                  )
-                : this.formatDateToTs(data[xKey.key] as string, xKey),
-              yValue && typeof yValue === 'string' ? parseFloat(yValue) : yValue,
-            ];
-          else
-            return [
-              !isTypeofXKey(xKey) ? (data[xKey] as string) : (data[xKey.key] as string),
-              yValue && typeof yValue === 'string' ? parseFloat(yValue) : yValue,
-            ];
+          return [
+            !isTypeofXKey(xKey)
+              ? this.formatDateToTsForXKeyType(
+                  data[xKey] as string,
+                  data.hour_of_day
+                    ? (data.hour_of_day as number)
+                    : data.hour
+                    ? (data.hour as number)
+                    : undefined,
+                )
+              : this.formatDateToTs(data[xKey.key] as string, xKey),
+            yValue && typeof yValue === 'string' ? parseFloat(yValue) : yValue,
+          ];
         }),
         name: y.message,
         color: colors[i],
@@ -149,10 +141,7 @@ class AreaChart extends React.Component<Props, {}> {
       isDraggable,
       onDragEnd,
       doubleYAxis,
-      transformDate,
     } = this.props;
-
-    const shouldTransformDate = transformDate !== undefined ? transformDate : true;
 
     const xAxisDateTimeLabelFormatsOptions:
       | Highcharts.XAxisDateTimeLabelFormatsOptions
@@ -252,7 +241,7 @@ class AreaChart extends React.Component<Props, {}> {
           };
         }
       }),
-      series: this.formatSeries(dataset, xKey, yKeys, shouldTransformDate, colors, type),
+      series: this.formatSeries(dataset, xKey, yKeys, colors, type),
       credits: {
         enabled: false,
       },
