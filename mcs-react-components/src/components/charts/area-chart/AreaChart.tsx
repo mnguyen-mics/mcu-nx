@@ -44,7 +44,6 @@ export interface AreaChartProps {
   isDraggable?: boolean;
   onDragEnd?: OnDragEnd;
   doubleYAxis?: boolean;
-  transformDate?: boolean;
 }
 
 type Props = AreaChartProps;
