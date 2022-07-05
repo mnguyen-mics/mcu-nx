@@ -514,19 +514,28 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     chartType: ChartType,
     cardHeight: number,
   ) => {
-    const horizontalCssProperties = {
-      float: 'left' as any,
-      height: '100%',
-    };
+    const { editable } = this.props;
 
     const isMetricChartType = chartType.toLowerCase() === 'metric';
     const metricChartsList = charts.filter(chart => chart.type.toLowerCase() === 'metric');
-    const gridColumnHeight = 96;
+    const gridColumnHeight = BASE_FRAMEWORK_HEIGHT + 16;
     const cardHeightInPixel = cardHeight * gridColumnHeight;
     const metricHeigthInPx = 63;
+    const chartTitleHeight = 45;
+    const cardPadding = 15;
+    const cardEditMenuHeight = 18;
+
+    const horizontalChartHeight = cardHeightInPixel - chartTitleHeight - cardPadding * 2 + 5;
+
+    const horizontalCssProperties = {
+      float: 'left' as any,
+      height: editable
+        ? `${horizontalChartHeight - cardEditMenuHeight}px`
+        : `${horizontalChartHeight}px`,
+    };
 
     const otherThanMetricChartHeigth =
-      (cardHeightInPixel -
+      (cardHeight * BASE_FRAMEWORK_HEIGHT -
         metricChartsList.length * metricHeigthInPx -
         (charts.length - metricChartsList.length) * 28) /
       (charts.length - metricChartsList.length);
