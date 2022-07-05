@@ -46,6 +46,13 @@ class BarChart extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {};
+
+    Highcharts.setOptions({
+      lang: {
+        decimalPoint: '.',
+        thousandsSep: ',',
+      },
+    });
   }
 
   formatSerieData = (dataset: Dataset, y: YKey, xKey: string, drilldown: boolean) => {
