@@ -25,7 +25,7 @@ export interface OTQLMetric {
   name: string;
   fieldName: string;
   path: string | null;
-  type: string;
+  metric_type: string;
   value: any;
 }
 
@@ -33,7 +33,7 @@ export interface OTQLBuckets {
   name: string;
   field_name: string;
   path: string | null;
-  type: string;
+  bucket_type: string;
   buckets: OTQLBucket[];
 }
 
