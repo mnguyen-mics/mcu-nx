@@ -49,6 +49,13 @@ class PieChart extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {};
+
+    Highcharts.setOptions({
+      lang: {
+        decimalPoint: '.',
+        thousandsSep: ',',
+      },
+    });
   }
 
   initDrilldownIds = (dataset: Highcharts.SeriesPieDataOptions[]): Dataset => {

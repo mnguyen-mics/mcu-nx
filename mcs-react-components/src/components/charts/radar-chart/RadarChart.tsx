@@ -38,6 +38,16 @@ type DataLabels = {
 type Props = RadarChartProps;
 
 class RadarChart extends React.Component<Props> {
+  constructor(props: Props) {
+    super(props);
+    Highcharts.setOptions({
+      lang: {
+        decimalPoint: '.',
+        thousandsSep: ',',
+      },
+    });
+  }
+
   formatDataset = (dataset: Dataset, yKeys: YKeys[], xKey: string, format: Format = 'count') => {
     if (format === 'count')
       return yKeys.map(yKey => {

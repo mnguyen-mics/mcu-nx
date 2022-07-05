@@ -52,6 +52,13 @@ class AreaChart extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.state = {};
+
+    Highcharts.setOptions({
+      lang: {
+        decimalPoint: '.',
+        thousandsSep: ',',
+      },
+    });
   }
 
   formatSeries = (
