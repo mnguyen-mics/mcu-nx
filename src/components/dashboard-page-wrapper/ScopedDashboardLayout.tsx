@@ -20,6 +20,10 @@ import { isAudienceSegmentShape, isUserQuerySegment } from '../../models/Segment
 import messages from './messages';
 import { InjectedDrawerProps } from '../..';
 import { injectDrawer } from '../drawer';
+import {
+  QueryExecutionSource,
+  QueryExecutionSubSource,
+} from '../../models/platformMetrics/QueryExecutionSource';
 
 interface ScopedDashboardLayoutProps {
   datamartId: string;
@@ -29,6 +33,8 @@ interface ScopedDashboardLayoutProps {
   editable: boolean;
   updateState?: (d: DashboardContentSchema) => void;
   onShowDashboard?: () => void;
+  queryExecutionSource: QueryExecutionSource;
+  queryExecutionSubSource: QueryExecutionSubSource;
 }
 
 type Props = ScopedDashboardLayoutProps & InjectedIntlProps & InjectedDrawerProps;
@@ -131,8 +137,17 @@ class ScopedDashboardLayout extends React.Component<Props, State> {
   }
 
   render() {
-    const { datamartId, organisationId, schema, intl, editable, updateState, onShowDashboard } =
-      this.props;
+    const {
+      datamartId,
+      organisationId,
+      schema,
+      intl,
+      editable,
+      updateState,
+      onShowDashboard,
+      queryExecutionSource,
+      queryExecutionSubSource,
+    } = this.props;
     const { scope, isLoading, hasError } = this.state;
 
     const handleOnShowDashboard = () => {
@@ -155,6 +170,8 @@ class ScopedDashboardLayout extends React.Component<Props, State> {
         openNextDrawer={this.props.openNextDrawer}
         closeNextDrawer={this.props.closeNextDrawer}
         onShowDashboard={handleOnShowDashboard}
+        queryExecutionSource={queryExecutionSource}
+        queryExecutionSubSource={queryExecutionSubSource}
       />
     );
   }

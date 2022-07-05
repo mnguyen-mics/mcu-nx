@@ -11,6 +11,10 @@ import AudienceSegmentService, {
   IAudienceSegmentService,
 } from '../../services/AudienceSegmentService';
 import { ModelType } from '../../models/dashboards/dataset/common';
+import {
+  QueryExecutionSource,
+  QueryExecutionSubSource,
+} from '../../models/platformMetrics/QueryExecutionSource';
 
 const { Option } = Select;
 interface DashboardFilterProps {
@@ -18,6 +22,8 @@ interface DashboardFilterProps {
   datamartId: string;
   organisationId: string;
   onFilterChange?: (filterTechnicalName: string, filterValues: string[]) => void;
+  queryExecutionSource: QueryExecutionSource;
+  queryExecutionSubSource: QueryExecutionSubSource;
 }
 
 interface EnhancedOptions {
@@ -54,13 +60,20 @@ class DashboardFilter extends React.Component<DashboardFilterProps, DashboardFil
     this.fetchFilterOption();
   }
   fetchFilterOption() {
-    const { organisationId, datamartId, filter } = this.props;
+    const { organisationId, datamartId, filter, queryExecutionSource, queryExecutionSubSource } =
+      this.props;
 
     return this.queryService
-      .runOTQLQuery(datamartId, filter.values_query, {
-        precision: 'FULL_PRECISION',
-        use_cache: true,
-      })
+      .runOTQLQuery(
+        datamartId,
+        filter.values_query,
+        queryExecutionSource,
+        queryExecutionSubSource,
+        {
+          precision: 'FULL_PRECISION',
+          use_cache: true,
+        },
+      )
       .then(res => {
         return res.data;
       })

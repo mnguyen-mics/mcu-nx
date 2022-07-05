@@ -22,6 +22,10 @@ import { EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { defineMessages, InjectedIntlProps } from 'react-intl';
 import { QueryFragment } from '../../utils/source/DataSourceHelper';
 import SectionTitleEditionPanel, { VerticalDirection } from './wysiwig/SectionTitleEditionPanel';
+import {
+  QueryExecutionSource,
+  QueryExecutionSubSource,
+} from '../../models/platformMetrics/QueryExecutionSource';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -35,6 +39,8 @@ export interface DashboardLayoutProps {
   editable: boolean;
   updateState?: (d: DashboardContentSchema) => void;
   onShowDashboard?: () => void;
+  queryExecutionSource: QueryExecutionSource;
+  queryExecutionSubSource: QueryExecutionSubSource;
 }
 
 interface FilterValues {
@@ -476,7 +482,15 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     card: DashboardContentCard,
     cssProperties?: CSSProperties,
   ) {
-    const { datamart_id, scope, organisationId, editable, schema } = this.props;
+    const {
+      datamart_id,
+      scope,
+      organisationId,
+      editable,
+      schema,
+      queryExecutionSource,
+      queryExecutionSubSource,
+    } = this.props;
     const { formattedQueryFragment } = this.state;
 
     const onClickEdit = editable ? () => this.handleEditChart(chart, schema) : undefined;
@@ -504,6 +518,8 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
         layout={
           card.layout === 'vertical' || card.layout === 'horizontal' ? card.layout : 'horizontal'
         }
+        queryExecutionSource={queryExecutionSource}
+        queryExecutionSubSource={queryExecutionSubSource}
       />
     );
   }
@@ -810,7 +826,8 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
   }
 
   generateDOM(): React.ReactElement {
-    const { schema, datamart_id, organisationId } = this.props;
+    const { schema, datamart_id, organisationId, queryExecutionSource, queryExecutionSubSource } =
+      this.props;
     const sections = schema.sections.map((section, i) => this.renderSection(section, i));
     return (
       <div className={'mcs-dashboardLayout'}>
@@ -823,6 +840,8 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
                 datamartId={datamart_id}
                 organisationId={organisationId}
                 onFilterChange={this.handleDashboardFilterChange}
+                queryExecutionSource={queryExecutionSource}
+                queryExecutionSubSource={queryExecutionSubSource}
               />
             ))}
             <Button
