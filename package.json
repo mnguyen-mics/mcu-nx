@@ -27,7 +27,7 @@
     "@babel/preset-env": "^7.13.15",
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
-    "@mediarithmics-private/mcs-components-library": "7.11.3",
+    "@mediarithmics-private/mcs-components-library": "7.12.0",
     "@react-mock/fetch": "^0.3.0",
     "@react-mock/localstorage": "^0.1.2",
     "@splitsoftware/splitio": "^10.17.3",

@@ -264,10 +264,10 @@ export class TransformationProcessor {
     type DatasetAcc = { [key: string]: Datapoint };
     const datasetAcc: DatasetAcc = {};
 
-    const seriesTitles = datasets.map(d => d?.metadata.seriesTitles[0]);
+    const seriesTitles = datasets.map(d => d?.metadata?.seriesTitles[0]);
     datasets.forEach(dataset => {
       if (!!dataset) {
-        dataset.dataset.forEach(datapoint => {
+        dataset.dataset?.forEach(datapoint => {
           const categoryKey = datapoint[xKey] as string;
           const current = datasetAcc[categoryKey];
           datasetAcc[categoryKey] = {
