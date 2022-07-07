@@ -2,7 +2,7 @@ import { BarChartProps } from '../BarChart';
 import { defaultColors } from '../../utils';
 
 const props: BarChartProps = {
-  type: 'bar',
+  type: 'bars',
   dataset: [
     { day: '2020-02-27', data_1: 4, 'data_1-count': 46, 'data_1-percentage': 12 },
     { day: '2020-02-28', data_1: 31, 'data_1-count': 351, 'data_1-percentage': 30 },
