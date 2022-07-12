@@ -92,6 +92,14 @@ export function formatDatasetForOtql(
           aggregations: null,
         },
       ];
+    } else if (dataResult.rows[0]?.aggregations?.metrics[0]?.metric_type === 'sum') {
+      buckets = [
+        {
+          key: 'sum_price',
+          count: dataResult.rows[0]?.aggregations?.metrics[0]?.value,
+          aggregations: null,
+        },
+      ];
     }
 
     const yKey = {

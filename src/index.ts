@@ -143,3 +143,4 @@ export {
   QueryExecutionAutomationSubSource,
 } from './models/platformMetrics/QueryExecutionSource';
 export { getOTQLSourceHeader } from './services/OTQLQuerySourceHeaderHelper';
+export { ChartType } from './services/ChartDatasetService';

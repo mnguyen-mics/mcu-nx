@@ -6,6 +6,7 @@ import {
   RadarChart,
   AreaChart,
   McsIcon,
+  MetricChart,
 } from '@mediarithmics-private/mcs-components-library';
 import { Alert, Spin, Table } from 'antd';
 import { isUndefined, omitBy } from 'lodash';
@@ -17,7 +18,6 @@ import {
   ChartOptions,
   ChartType,
   ManagedChartConfig,
-  MetricChartFormat,
   MetricChartOptions,
   RadarChartOptions,
   TableChartOptions,
@@ -44,6 +44,7 @@ import {
 } from '../../models/dashboards/dataset/dataset_tree';
 import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 import { ColumnsType } from 'antd/lib/table';
+import { MetricChartFormat } from '@mediarithmics-private/mcs-components-library/lib/components/charts/metric-chart/MetricChart';
 
 const messages = defineMessages({
   stillLoading: {
@@ -238,9 +239,7 @@ class ManagedChart extends React.Component<Props> {
     const { chartConfig } = this.props;
     const opt = chartConfig.options as MetricChartOptions;
     return (
-      <div className='mcs-dashboardMetric'>
-        {formatMetric(count, opt && this.getFormat(opt.format))}
-      </div>
+      <MetricChart value={parseInt(formatMetric(count, opt && this.getFormat(opt.format)), 10)} />
     );
   }
 
@@ -266,10 +265,13 @@ class ManagedChart extends React.Component<Props> {
       return this.renderAlert(
         `Dataset of type aggregation result doesn't match ${chartConfig.type.toLowerCase()} chart type`,
       );
-    } else if (datasetType === 'count' && chartType !== 'metric') {
-      return this.renderAlert(
-        `Dataset of type count result doesn't match ${chartConfig.type.toLowerCase()} chart type`,
-      );
+    } else if (datasetType === 'count') {
+      const countDataset = dataset as CountDataset;
+      if (chartType !== 'metric') {
+        return this.renderAlert(
+          `Dataset of type count result doesn't match ${chartConfig.type.toLowerCase()} chart type`,
+        );
+      } else return this.renderMetricChart(countDataset.value);
     }
 
     if (dataset.type === 'aggregate') {
@@ -283,9 +285,6 @@ class ManagedChart extends React.Component<Props> {
         };
       });
       return this.renderAggregateChart(xKey, yKeys, aggregateDataset.dataset);
-    } else if (dataset.type === 'count') {
-      const countDataset = dataset as CountDataset;
-      return this.renderMetricChart(countDataset.value);
     } else {
       return undefined;
     }

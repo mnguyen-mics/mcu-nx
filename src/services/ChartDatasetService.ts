@@ -17,7 +17,6 @@ import {
 import { RadarChartProps } from '@mediarithmics-private/mcs-components-library/lib/components/charts/radar-chart';
 import { BarChartProps } from '@mediarithmics-private/mcs-components-library/lib/components/charts/bar-chart/BarChart';
 import {
-  Dataset,
   Format,
   Legend,
   PieChartFormat,
@@ -66,15 +65,12 @@ import {
   DEFAULT_Y_KEY,
   TransformationProcessor,
 } from '../utils/transformations/TransformationProcessor';
+import {
+  MetricChartFormat,
+  MetricChartProps,
+} from '@mediarithmics-private/mcs-components-library/lib/components/charts/metric-chart/MetricChart';
 
 export type ChartType = 'pie' | 'bars' | 'radar' | 'metric' | 'area' | 'line' | 'table';
-
-export declare type MetricChartFormat = 'percentage' | 'count' | 'float';
-
-export interface MetricChartProps {
-  dataset: Dataset;
-  format?: MetricChartFormat;
-}
 
 export interface ManagedChartConfig {
   id?: string;
@@ -145,6 +141,7 @@ export interface TableChartProps {
 }
 
 interface MetricChartApiProps {
+  value: number;
   format?: MetricChartFormat;
 }
 
@@ -256,10 +253,15 @@ export class ChartDatasetService implements IChartDatasetService {
               });
           },
           { retries: 50 },
-        );
+        ).catch(e => {
+          return e;
+        });
       })
       .then(res => {
         return res.data;
+      })
+      .catch(e => {
+        return e;
       });
   }
 
@@ -411,9 +413,13 @@ export class ChartDatasetService implements IChartDatasetService {
         queryExecutionSubSource,
         scope,
         queryFragment,
-      ).then(res => {
-        return formatDatasetForOtql(res, xKey, seriesTitle);
-      });
+      )
+        .then(res => {
+          return formatDatasetForOtql(res, xKey, seriesTitle);
+        })
+        .catch(e => {
+          return e;
+        });
       return {
         ...source,
         dataset: dataset,
@@ -547,7 +553,9 @@ export class ChartDatasetService implements IChartDatasetService {
       queryExecutionSubSource,
       providedScope,
       queryFragment,
-    );
+    ).catch(e => {
+      return e;
+    });
     if (!hydratedTree) {
       return Promise.reject('Could not retrieve data for the chart');
     } else {

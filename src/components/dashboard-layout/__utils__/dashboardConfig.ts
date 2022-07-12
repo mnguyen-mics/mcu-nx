@@ -1,5 +1,5 @@
 import { SourceType } from '../../../models/dashboards/dataset/common';
-import { ChartType, MetricChartOptions } from '../../../services/ChartDatasetService';
+import { ChartType } from '../../../services/ChartDatasetService';
 
 export const propsMetric = {
   datamart_id: '1415',
@@ -24,7 +24,7 @@ export const propsMetric = {
                 },
                 options: {
                   xKey: 'key',
-                } as MetricChartOptions,
+                },
               },
               {
                 title: 'Overall income increase (%)',
@@ -36,7 +36,7 @@ export const propsMetric = {
                 options: {
                   xKey: 'key',
                   format: 'percentage',
-                } as MetricChartOptions,
+                },
               },
               {
                 title: 'Test percentage value (%)',
@@ -57,7 +57,7 @@ export const propsMetric = {
                 options: {
                   xKey: 'key',
                   format: 'percentage',
-                } as MetricChartOptions,
+                },
               },
             ],
           },
@@ -94,7 +94,7 @@ export const propsMetric = {
                 },
                 options: {
                   xKey: 'key',
-                } as MetricChartOptions,
+                },
               },
             ],
           },
@@ -229,7 +229,7 @@ export const props = {
                   query_id: '50169',
                 },
                 options: {
-                  type: 'bar' as ChartType,
+                  type: 'bars' as ChartType,
                   big_bars: false,
                   plot_line_value: 25000000,
                   xKey: 'key',

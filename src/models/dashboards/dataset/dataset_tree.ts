@@ -37,6 +37,17 @@ export interface GetDecoratorsDataset extends AbstractParentDataset {
   decorators_options: DecoratorsOptions;
 }
 
+export type DatasetShape =
+  | OTQLDataset
+  | AnalyticsDataset
+  | DatafileDataset
+  | AggregateDataset
+  | IndexDataset
+  | RatioDataset
+  | DateFormatDataset
+  | ReduceDataset
+  | GetDecoratorsDataset;
+
 export type DatasetType = 'aggregate' | 'count';
 
 export abstract class AbstractDataset {

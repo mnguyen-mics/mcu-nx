@@ -353,7 +353,7 @@ export interface BarDatapoint {
 
 export interface BarSeriesDataOptions {
   data: BarDatapoint[];
-  type: 'bar';
+  type: 'bars';
 }
 
 export interface MapSeriesDataOptions {
