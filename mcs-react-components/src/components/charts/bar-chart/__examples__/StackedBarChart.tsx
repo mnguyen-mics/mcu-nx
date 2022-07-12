@@ -74,7 +74,7 @@ const props: BarChartProps = {
   bigBars: true,
   stacking: true,
   height: 380,
-  type: 'bar',
+  type: 'bars',
 };
 
 export default props;
