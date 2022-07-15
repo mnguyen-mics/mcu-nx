@@ -96,6 +96,8 @@ class HomePage extends React.Component<Props> {
               isFullScreenLoading={false}
               onShowDashboard={handleOnShowDashboard}
               defaultDashboard={defaultDashboard}
+              queryExecutionSource={'DASHBOARD'}
+              queryExecutionSubSource={'HOME_DASHBOARD'}
             />
           </Content>
         </div>

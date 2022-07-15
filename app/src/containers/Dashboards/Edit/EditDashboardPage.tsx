@@ -850,6 +850,8 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
         datamart_id={selectedDatamartId}
         organisationId={organisationId}
         updateSchema={this.updateSchema}
+        queryExecutionSource={'DASHBOARD'}
+        queryExecutionSubSource={'HOME_DASHBOARD'}
       />
     );
   }
