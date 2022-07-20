@@ -86,12 +86,7 @@ export class TransformationProcessor {
           this.applyTransformations(datamartId, organisationId, chartType, xKey, s),
         ),
       ).then(datasets => {
-        return this.aggregateCountsIntoList(
-          xKey,
-          datasets as CountDataset[],
-          childDatasets,
-          dataset.series_title,
-        );
+        return this.aggregateCountsIntoList(xKey, datasets, childDatasets, dataset.series_title);
       });
     } else if (sourceType === 'to-percentages') {
       const aggregationDataset = dataset as AggregationDataset;
@@ -237,15 +232,23 @@ export class TransformationProcessor {
 
   private aggregateCountsIntoList(
     xKey: string,
-    datasets: Array<CountDataset | undefined>,
+    datasets: Array<AbstractDataset | undefined>,
     sources: AbstractSource[],
     listSeriesTitle?: string,
   ): AggregateDataset | undefined {
-    const dataset = datasets.map((d: CountDataset, index: number) => {
-      return {
-        [xKey]: sources[index].series_title,
-        [listSeriesTitle || DEFAULT_Y_KEY.key]: d.value,
-      };
+    const dataset = datasets.map((d: AbstractDataset, index: number) => {
+      if ((d as CountDataset).value !== undefined)
+        return {
+          [xKey]: sources[index].series_title,
+          [listSeriesTitle || DEFAULT_Y_KEY.key]: (d as CountDataset).value,
+        };
+      else if ((d as AggregateDataset).dataset !== undefined) {
+        const key = sources[index].series_title;
+        return {
+          [xKey]: key,
+          [listSeriesTitle || DEFAULT_Y_KEY.key]: (d as AggregateDataset).dataset[0][key!],
+        };
+      } else return {};
     });
 
     return {
