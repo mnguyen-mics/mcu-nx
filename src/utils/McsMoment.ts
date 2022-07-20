@@ -10,7 +10,61 @@ export type McsRange = {
 };
 
 export function isNowFormat(date: McsDate) {
-  return !!(typeof date === 'string' && (/^now-(\d+)d$/g.test(date) || date === 'now'));
+  return !!(
+    typeof date === 'string' &&
+    date.substring(0, 3) === 'now' &&
+    isValidDateMathExpression(date)
+  );
+}
+
+export function isValidDateMathOperation(dateMathOperation: string) {
+  return dateMathOperation.match(/^(\d+)[smhdwMy]{1}$/);
+}
+
+export function isValidDateMathRound(dateMathRound: string) {
+  return dateMathRound.match(/^[smhdwMy]{1}$/);
+}
+
+export function isValidDateMathEnding(dateMathEnding: string) {
+  const parts = dateMathEnding.split('/');
+  return (
+    parts != null &&
+    parts.length === 2 &&
+    isValidDateMathOperation(parts[0]) &&
+    isValidDateMathRound(parts[1])
+  );
+}
+
+export function isValidDateMathExpression(dateMathExpression: string) {
+  if (dateMathExpression === 'now') {
+    return true;
+  } else {
+    const parts = dateMathExpression.split(/[+-]/);
+    const hasMultipleParts = parts !== null && parts.length > 0;
+    if (hasMultipleParts) {
+      if (parts[0] === 'now') {
+        const notValidDateMathEnding = !isValidDateMathEnding(parts[parts.length - 1]);
+
+        for (let i = 1; i < parts.length; i += 1) {
+          const isLastElement = i === parts.length - 1;
+          const notLastElement = !isLastElement;
+          const notValidDateMathOperation = !isValidDateMathOperation(parts[i]);
+
+          if (
+            (notLastElement && notValidDateMathOperation) ||
+            (isLastElement && notValidDateMathOperation && notValidDateMathEnding)
+          ) {
+            return false;
+          }
+        }
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
 }
 
 export function isValidMcsDate(date: McsDate) {

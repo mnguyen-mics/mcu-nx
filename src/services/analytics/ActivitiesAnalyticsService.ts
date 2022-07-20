@@ -29,17 +29,25 @@ export class ActivitiesAnalyticsService
     sampling?: number,
     orderBy?: OrderBy,
   ): Promise<ReportViewResponse> {
-    const report: ReportRequestBody<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension> =
-      buildActivitiesAnalyticsRequestBody(
-        metrics,
-        dateRange,
-        dimensions,
-        dimensionFilterClauses,
-        sampling,
-        orderBy,
-      );
+    try {
+      const report: ReportRequestBody<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension> =
+        buildActivitiesAnalyticsRequestBody(
+          metrics,
+          dateRange,
+          dimensions,
+          dimensionFilterClauses,
+          sampling,
+          orderBy,
+        );
 
-    const endpoint = `datamarts/${datamartId}/user_activities_analytics`;
-    return ApiService.postRequest(endpoint, report);
+      const endpoint = `datamarts/${datamartId}/user_activities_analytics`;
+      return ApiService.postRequest(endpoint, report);
+    } catch (error) {
+      if (error && error.message) {
+        return Promise.reject(error.message);
+      } else {
+        return Promise.reject('error');
+      }
+    }
   }
 }

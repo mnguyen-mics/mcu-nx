@@ -362,26 +362,27 @@ export class ChartDatasetService implements IChartDatasetService {
             filters: queryFilters,
           }
         : undefined;
-    const analyticsResult = await (
-      this.getAnalyticsService(type) as IAnalyticsService<M, D>
-    ).getAnalytics(
-      analyticsDatamartId,
-      analyticsSourceJson.metrics,
-      dateRanges,
-      analyticsSourceJson.dimensions,
-      scopedDimensionFilterClauses,
-      undefined,
-      analyticsSourceJson.order_by,
-    );
-    const metricNames = analyticsSourceJson.metrics.map(m => m.expression.toLocaleLowerCase());
-    const dimensionNames = analyticsSourceJson.dimensions.map(d => d.name.toLocaleLowerCase());
-    return formatDatasetForReportView(
-      analyticsResult.data.report_view,
-      xKey,
-      metricNames,
-      dimensionNames,
-      source.series_title,
-    );
+    return (this.getAnalyticsService(type) as IAnalyticsService<M, D>)
+      .getAnalytics(
+        analyticsDatamartId,
+        analyticsSourceJson.metrics,
+        dateRanges,
+        analyticsSourceJson.dimensions,
+        scopedDimensionFilterClauses,
+        undefined,
+        analyticsSourceJson.order_by,
+      )
+      .then(result => {
+        const metricNames = analyticsSourceJson.metrics.map(m => m.expression.toLocaleLowerCase());
+        const dimensionNames = analyticsSourceJson.dimensions.map(d => d.name.toLocaleLowerCase());
+        return formatDatasetForReportView(
+          result.data.report_view,
+          xKey,
+          metricNames,
+          dimensionNames,
+          source.series_title,
+        );
+      });
   }
 
   /**
@@ -425,28 +426,40 @@ export class ChartDatasetService implements IChartDatasetService {
         dataset: dataset,
       } as OTQLDataset;
     } else if (sourceType === 'activities_analytics') {
-      const analyticsDataset: AbstractDataset = await this.fetchActivitiesAnalytics(
+      const analyticsDataset: AbstractDataset | string = await this.fetchActivitiesAnalytics(
         datamartId,
         source as AnalyticsSource<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>,
         xKey,
         providedScope,
         queryFragment,
-      );
-      return {
-        ...source,
-        dataset: analyticsDataset,
-      } as AnalyticsDataset;
+      ).catch(e => {
+        return e;
+      });
+      if (typeof analyticsDataset === 'string') {
+        return Promise.reject(analyticsDataset);
+      } else {
+        return {
+          ...source,
+          dataset: analyticsDataset,
+        } as AnalyticsDataset;
+      }
     } else if (sourceType === 'collection_volumes') {
-      const volumesDataset = await this.fetchCollectionVolumes(
+      const volumesDataset: AbstractDataset | string = await this.fetchCollectionVolumes(
         datamartId,
         source as AnalyticsSource<CollectionVolumesMetric, CollectionVolumesDimension>,
         xKey,
         providedScope,
-      );
-      return {
-        ...source,
-        dataset: volumesDataset,
-      } as AnalyticsDataset;
+      ).catch(e => {
+        return e;
+      });
+      if (typeof volumesDataset === 'string') {
+        return Promise.reject(volumesDataset);
+      } else {
+        return {
+          ...source,
+          dataset: volumesDataset,
+        } as AnalyticsDataset;
+      }
     } else if (sourceType === 'data_file') {
       const datafileSource = source as DataFileSource;
       if (providedScope && providedScope.type === 'SEGMENT') {
@@ -505,7 +518,13 @@ export class ChartDatasetService implements IChartDatasetService {
             queryFragment,
           ),
         ),
-      );
+      ).catch(e => {
+        return e as string;
+      });
+      if (typeof childDatasets === 'string') {
+        return Promise.reject(childDatasets);
+      }
+
       const definedChildren: AbstractDatasetTree[] = childDatasets
         .filter(x => !!x)
         .map(x => x as AbstractDatasetTree);
@@ -556,8 +575,10 @@ export class ChartDatasetService implements IChartDatasetService {
     ).catch(e => {
       return e;
     });
-    if (!hydratedTree) {
-      return Promise.reject('Could not retrieve data for the chart');
+    if (!hydratedTree || typeof hydratedTree === 'string') {
+      return Promise.reject(
+        hydratedTree ? (hydratedTree as string) : 'Could not retrieve data for the chart',
+      );
     } else {
       return this.transformationProcessor.applyTransformations(
         datamartId,
