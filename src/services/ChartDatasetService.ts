@@ -426,40 +426,30 @@ export class ChartDatasetService implements IChartDatasetService {
         dataset: dataset,
       } as OTQLDataset;
     } else if (sourceType === 'activities_analytics') {
-      const analyticsDataset: AbstractDataset | string = await this.fetchActivitiesAnalytics(
+      return this.fetchActivitiesAnalytics(
         datamartId,
         source as AnalyticsSource<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>,
         xKey,
         providedScope,
         queryFragment,
-      ).catch(e => {
-        return e;
-      });
-      if (typeof analyticsDataset === 'string') {
-        return Promise.reject(analyticsDataset);
-      } else {
+      ).then(analyticsDataset => {
         return {
           ...source,
           dataset: analyticsDataset,
         } as AnalyticsDataset;
-      }
+      });
     } else if (sourceType === 'collection_volumes') {
-      const volumesDataset: AbstractDataset | string = await this.fetchCollectionVolumes(
+      return this.fetchCollectionVolumes(
         datamartId,
         source as AnalyticsSource<CollectionVolumesMetric, CollectionVolumesDimension>,
         xKey,
         providedScope,
-      ).catch(e => {
-        return e;
-      });
-      if (typeof volumesDataset === 'string') {
-        return Promise.reject(volumesDataset);
-      } else {
+      ).then(volumesDataset => {
         return {
           ...source,
           dataset: volumesDataset,
         } as AnalyticsDataset;
-      }
+      });
     } else if (sourceType === 'data_file') {
       const datafileSource = source as DataFileSource;
       if (providedScope && providedScope.type === 'SEGMENT') {
@@ -504,7 +494,8 @@ export class ChartDatasetService implements IChartDatasetService {
     } else {
       const aggregationSource = source as AggregationSource;
       const childSources = aggregationSource.sources;
-      const childDatasets = await Promise.all(
+
+      return Promise.all(
         childSources.map(s =>
           this.hydrateDatasets(
             datamartId,
@@ -518,20 +509,16 @@ export class ChartDatasetService implements IChartDatasetService {
             queryFragment,
           ),
         ),
-      ).catch(e => {
-        return e as string;
-      });
-      if (typeof childDatasets === 'string') {
-        return Promise.reject(childDatasets);
-      }
-
-      const definedChildren: AbstractDatasetTree[] = childDatasets
-        .filter(x => !!x)
-        .map(x => x as AbstractDatasetTree);
-      return {
-        ...source,
-        children: definedChildren,
-      } as AbstractDatasetTree;
+      )
+        .then(childDatasets => {
+          return childDatasets.filter(x => !!x).map(x => x as AbstractDatasetTree);
+        })
+        .then(definedChildren => {
+          return {
+            ...source,
+            children: definedChildren,
+          } as AbstractDatasetTree;
+        });
     }
   }
 
