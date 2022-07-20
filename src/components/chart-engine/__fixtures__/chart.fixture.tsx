@@ -5,9 +5,11 @@ import { IocProvider } from '../../../inversify/inversify.react';
 import { container } from '../../../inversify/inversify.config';
 import config from '../../../react-configuration';
 import { ChartConfig } from '../../../services/ChartDatasetService';
+import { FetchMock } from '@react-mock/fetch';
 import { Provider } from 'react-redux';
 import configureStore from '../../../redux/store';
 import { IntlProvider } from 'react-intl';
+import { fetchmockOptions } from '../__utils__/fetchMockOptions';
 
 (global as any).window.MCS_CONSTANTS = config;
 const chartConfigPie: ChartConfig = {
@@ -80,14 +82,17 @@ const chartConfigMetric: ChartConfig = {
   },
 };
 const store = configureStore();
+
 export default (
   <Provider store={store}>
-    <IntlProvider>
+    <IntlProvider locale='en'>
       <IocProvider container={container}>
-        <Chart chartConfig={chartConfigPie} datamartId={'1414'} />
-        <Chart chartConfig={chartConfigRadar} datamartId={'1414'} />
-        <Chart chartConfig={chartConfigBars} datamartId={'1414'} />
-        <Chart chartConfig={chartConfigMetric} datamartId={'1414'} />
+        <FetchMock mocks={fetchmockOptions}>
+          <Chart chartConfig={chartConfigPie} datamartId={'1414'} />
+          <Chart chartConfig={chartConfigRadar} datamartId={'1414'} />
+          <Chart chartConfig={chartConfigBars} datamartId={'1414'} />
+          <Chart chartConfig={chartConfigMetric} datamartId={'1414'} />
+        </FetchMock>
       </IocProvider>
     </IntlProvider>
   </Provider>

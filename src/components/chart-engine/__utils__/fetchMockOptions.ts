@@ -11,24 +11,6 @@ import {
 
 export const fetchmockOptions = [
   {
-    matcher: 'glob:/undefined/v1/datamarts/*/user_account_compartments/*',
-    response: {
-      data: [
-        {
-          id: 1,
-          organisation_id: 1,
-          token: 'myToken',
-          name: 'myCompartment',
-          archived: false,
-        },
-      ],
-      count: 1,
-      total: 1,
-      first_result: 0,
-      max_results: 50,
-    },
-  },
-  {
     matcher: 'glob:/undefined/v1/datamarts/*/queries/*',
     response: { data: { query_text: 'Select @count() from UserPoint', query_language: 'OTQL' } },
   },

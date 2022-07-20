@@ -33,20 +33,23 @@ function adaptToEditable(_props: DashboardLayoutProps) {
     schema: _props.schema,
   };
 }
+
 export default {
   standard: (
     <Provider store={store}>
       <IocProvider container={container}>
-        <LocalStorageMock items={{ access_token: 're4lt0k3n' }}>
-          <FetchMock mocks={fetchmockOptions}>
-            <WithDrawerDashboardLayout {...propsMetric} />
-            <WithDrawerDashboardLayout {...props} />
-            <WithDrawerDashboardLayout {...propsAnalytics1} />
-            <WithDrawerDashboardLayout {...propsAnalytics2} />
-            <WithDrawerDashboardLayout {...propsAnalytics3} />
-            <WithDrawerDashboardLayout {...propsAnalytics4} />
-          </FetchMock>
-        </LocalStorageMock>
+        <IntlProvider locale='en'>
+          <LocalStorageMock items={{ access_token: 're4lt0k3n' }}>
+            <FetchMock mocks={fetchmockOptions}>
+              <WithDrawerDashboardLayout {...propsMetric} />
+              <WithDrawerDashboardLayout {...props} />
+              <WithDrawerDashboardLayout {...propsAnalytics1} />
+              <WithDrawerDashboardLayout {...propsAnalytics2} />
+              <WithDrawerDashboardLayout {...propsAnalytics3} />
+              <WithDrawerDashboardLayout {...propsAnalytics4} />
+            </FetchMock>
+          </LocalStorageMock>
+        </IntlProvider>
       </IocProvider>
     </Provider>
   ),
