@@ -3,7 +3,7 @@ import { Tabs } from 'antd';
 import { TabsProps } from 'antd/lib/tabs';
 import classNames from 'classnames';
 
-interface McsTabsItem {
+export interface McsTabsItem {
   className?: string;
   title: React.ReactChild;
   display?: JSX.Element;
@@ -44,8 +44,8 @@ class McsTabs extends React.Component<McTabsProps> {
         <Tabs
           className='mcs-tabs'
           defaultActiveKey={items[0] ? items[0].key || '0' : '0'}
-          {...rest}
           animated={animated !== undefined ? animated : true}
+          {...rest}
         >
           {menuItems}
         </Tabs>
