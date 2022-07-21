@@ -41,7 +41,7 @@ interface EmptyTableProps {
   message: string;
 }
 
-export interface ItemListProps<T = any> extends ViewComponentWithFiltersProps<T> {
+export interface ItemListProps<T> extends ViewComponentWithFiltersProps<T> {
   fetchList: (organisationId: string, filters: Filters, isInitialFetch?: boolean) => void;
   dataSource: T[];
   total: number;
@@ -173,4 +173,4 @@ class ItemList<T> extends React.Component<Props<T>> {
   }
 }
 
-export default compose<Props, ItemListProps>(withRouter)(ItemList);
+export default compose<Props, ItemListProps<any>>(withRouter)(ItemList);
