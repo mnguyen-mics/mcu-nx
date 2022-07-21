@@ -37,7 +37,7 @@ export interface IOrganisationService {
 }
 
 @injectable()
-export default class OrganisationService implements IOrganisationService {
+export class OrganisationService implements IOrganisationService {
   logoCache: { [orgId: string]: Blob } = {};
   getWorkspace(organisationId: string): Promise<DataResponse<UserWorkspaceResource>> {
     const endpoint = `organisations/${organisationId}/workspace`;

@@ -4,7 +4,7 @@ import { TYPES } from '../constants/types';
 import { IAuthService, AuthService } from '../services/AuthService';
 import getDecorators from 'inversify-inject-decorators';
 import { ILabelService, LabelService } from '../services/LabelsService';
-import OrganisationService, { IOrganisationService } from '../services/OrganisationService';
+import { OrganisationService, IOrganisationService } from '../services/OrganisationService';
 import { IQueryService, QueryService } from '../services/QueryService';
 import { ChartDatasetService, IChartDatasetService } from '../services/ChartDatasetService';
 import { ActivitiesAnalyticsService } from '../services/analytics/ActivitiesAnalyticsService';
@@ -38,6 +38,10 @@ import StandardSegmentBuilderService, {
 } from '../services/StandardSegmentBuilderService';
 import ChannelService, { IChannelService } from '../services/ChannelService';
 import CompartmentService, { ICompartmentService } from '../services/CompartmentService';
+import {
+  IdentityProviderService,
+  IIdentityProviderService,
+} from '../services/IdentityProviderService';
 
 export const container = new Container();
 
@@ -77,6 +81,9 @@ container
 container.bind<IUsersService>(TYPES.IUsersService).to(UsersService);
 container.bind<IChannelService>(TYPES.IChannelService).to(ChannelService);
 container.bind<ICompartmentService>(TYPES.ICompartmentService).to(CompartmentService);
+container
+  .bind<IIdentityProviderService>(TYPES.IIdentityProviderService)
+  .to(IdentityProviderService);
 
 export const { lazyInject } = getDecorators(container, false);
 

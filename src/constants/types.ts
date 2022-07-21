@@ -18,6 +18,7 @@ const TYPES = {
   IUsersService: Symbol.for('usersService'),
   IChannelService: Symbol.for('channelService'),
   ICompartmentService: Symbol.for('compartmentService'),
+  IIdentityProviderService: Symbol.for('identityProviderService'),
 };
 
 export { TYPES };
