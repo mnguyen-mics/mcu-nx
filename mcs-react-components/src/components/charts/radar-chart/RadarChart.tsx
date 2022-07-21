@@ -20,7 +20,7 @@ export interface RadarChartProps {
 type Format = 'count' | 'percentage';
 
 type Legend = {
-  enabled?: boolean;
+  enabled: boolean;
   position?: 'bottom' | 'right';
 };
 
