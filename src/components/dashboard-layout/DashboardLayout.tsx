@@ -534,27 +534,32 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
 
     const isMetricChartType = chartType.toLowerCase() === 'metric';
     const metricChartsList = charts.filter(chart => chart.type.toLowerCase() === 'metric');
-    const gridColumnHeight = BASE_FRAMEWORK_HEIGHT + 16;
-    const cardHeightInPixel = cardHeight * gridColumnHeight;
     const metricHeigthInPx = 63;
-    const chartTitleHeight = 45;
     const cardPadding = 15;
+    const vSpaceBetweenRows = 10;
+    const metricHeightInPxWithPadding = 83;
     const cardEditMenuHeight = 18;
+    const cardHeightInPixel =
+      cardHeight * BASE_FRAMEWORK_HEIGHT + (cardHeight - 1) * vSpaceBetweenRows;
 
-    const horizontalChartHeight = cardHeightInPixel - chartTitleHeight - cardPadding * 2 + 5;
+    const horizontalChartHeight =
+      cardHeightInPixel - 2 * cardPadding - (editable ? cardEditMenuHeight : 0) - 5;
 
     const horizontalCssProperties = {
       float: 'left' as any,
-      height: editable
-        ? `${horizontalChartHeight - cardEditMenuHeight}px`
-        : `${horizontalChartHeight}px`,
+      height: `${horizontalChartHeight}px`,
     };
 
+    const nonMetricChartsCount =
+      charts.length - metricChartsList.length > 0 ? charts.length - metricChartsList.length : 1;
+
     const otherThanMetricChartHeigth =
-      (cardHeight * BASE_FRAMEWORK_HEIGHT -
-        metricChartsList.length * metricHeigthInPx -
-        (charts.length - metricChartsList.length) * 28) /
-      (charts.length - metricChartsList.length);
+      (cardHeightInPixel -
+        2 * cardPadding -
+        (editable ? cardEditMenuHeight : 0) -
+        metricChartsList.length * metricHeightInPxWithPadding) /
+        nonMetricChartsCount -
+      20;
 
     const metricChartWidthSize = 30;
     const otherThanMetricChartWidth =
