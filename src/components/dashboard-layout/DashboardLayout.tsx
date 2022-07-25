@@ -541,9 +541,15 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     const cardEditMenuHeight = 18;
     const cardHeightInPixel =
       cardHeight * BASE_FRAMEWORK_HEIGHT + (cardHeight - 1) * vSpaceBetweenRows;
+    const chartPadding = 20;
+    // We add this correction to avoid charts exceeding the bottom limits in some cases
+    const heightCorrectionForHorizontalCase = 12;
 
     const horizontalChartHeight =
-      cardHeightInPixel - 2 * cardPadding - (editable ? cardEditMenuHeight : 0) - 5;
+      cardHeightInPixel -
+      2 * cardPadding -
+      (editable ? cardEditMenuHeight : 0) -
+      heightCorrectionForHorizontalCase;
 
     const horizontalCssProperties = {
       float: 'left' as any,
@@ -559,7 +565,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
         (editable ? cardEditMenuHeight : 0) -
         metricChartsList.length * metricHeightInPxWithPadding) /
         nonMetricChartsCount -
-      20;
+      chartPadding;
 
     const metricChartWidthSize = 30;
     const otherThanMetricChartWidth =
