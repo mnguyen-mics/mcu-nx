@@ -19,6 +19,8 @@ import {
   QueryExecutionSource,
   QueryExecutionSubSource,
 } from '../../models/platformMetrics/QueryExecutionSource';
+import { McsTabsItem } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-tabs/McsTabs';
+import { RouteComponentProps, withRouter } from 'react-router';
 
 export interface DashboardPageProps {
   dataFileDashboards?: DataFileDashboardResource[];
@@ -53,11 +55,45 @@ const messagesDashboardPage = defineMessages({
   },
 });
 
-type Props = DashboardPageProps & InjectedFeaturesProps & InjectedIntlProps & InjectedDrawerProps;
+type Tabs = 'COHORT';
 
-class DashboardPage extends React.Component<Props> {
+const TabMapKeys: { [t in Tabs]: string } = { COHORT: 'cohort_tab' };
+
+type Props = DashboardPageProps &
+  InjectedFeaturesProps &
+  InjectedIntlProps &
+  InjectedDrawerProps &
+  RouteComponentProps<{}, {}, { tab?: Tabs }>;
+
+type State = {
+  activeKey?: string;
+};
+
+class DashboardPage extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+
+    this.state = {};
+  }
+
+  shouldComponentUpdate(nextProps: Props, nextState: State) {
+    const { uid } = this.props;
+
+    return (
+      uid === undefined || uid !== nextProps.uid || nextState.activeKey !== this.state.activeKey
+    );
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    const { location, history } = prevProps;
+
+    if (location.state && location.state.tab) {
+      this.setState({
+        activeKey: TabMapKeys[location.state.tab as Tabs],
+      });
+
+      history.replace({ state: {} });
+    }
   }
 
   getDashboardPageContent = (
@@ -83,6 +119,15 @@ class DashboardPage extends React.Component<Props> {
       queryExecutionSource,
       queryExecutionSubSource,
     } = this.props;
+
+    const { activeKey } = this.state;
+
+    const onTabClick = (key: string) => {
+      this.setState({
+        activeKey: key,
+      });
+    };
+
     const defaultContent = (
       <div>
         {DashboardWrapper &&
@@ -133,7 +178,7 @@ class DashboardPage extends React.Component<Props> {
     }
 
     if (apiDashboards && apiDashboards.length > 0) {
-      const dashboardTabs = apiDashboards
+      const dashboardTabs: McsTabsItem[] = apiDashboards
         .filter(dashboard => !!dashboard.dashboardContent)
         .map(dashboard => {
           const handleShowDashboard = () => {
@@ -190,6 +235,7 @@ class DashboardPage extends React.Component<Props> {
       }
       if (cohortLookalikeCalibration) {
         dashboardTabs.unshift({
+          key: 'cohort_tab',
           title: formatMessage(messagesDashboardPage.cohortLookalikeCalibrationTab),
           display: <div>{cohortLookalikeCalibration}</div>,
         });
@@ -226,6 +272,8 @@ class DashboardPage extends React.Component<Props> {
           items={dashboardTabs}
           className={tabsClassname}
           animated={false}
+          activeKey={activeKey}
+          onTabClick={onTabClick}
         />
       );
     } else if (segmentDashboardTechnicalInformation) {
@@ -236,6 +284,7 @@ class DashboardPage extends React.Component<Props> {
       });
       if (cohortLookalikeCalibration) {
         dashboardTabs.push({
+          key: 'cohort_tab',
           title: formatMessage(messagesDashboardPage.cohortLookalikeCalibrationTab),
           display: <div>{cohortLookalikeCalibration}</div>,
         });
@@ -266,6 +315,8 @@ class DashboardPage extends React.Component<Props> {
             items={dashboardTabs}
             className={tabsClassname}
             animated={false}
+            activeKey={activeKey}
+            onTabClick={onTabClick}
           />
         );
       } else
@@ -276,17 +327,13 @@ class DashboardPage extends React.Component<Props> {
             destroyInactiveTabPane={true}
             items={dashboardTabs}
             className={tabsClassname}
+            activeKey={activeKey}
             animated={false}
+            onTabClick={onTabClick}
           />
         );
     } else return defaultContent;
   };
-
-  shouldComponentUpdate(nextProps: Props) {
-    const { uid } = this.props;
-
-    return uid === undefined || uid !== nextProps.uid;
-  }
 
   render() {
     const {
@@ -327,5 +374,6 @@ class DashboardPage extends React.Component<Props> {
 export default compose<Props, DashboardPageProps>(
   injectFeatures,
   injectIntl,
+  withRouter,
   injectDrawer,
 )(DashboardPage);
