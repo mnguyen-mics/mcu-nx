@@ -16,22 +16,26 @@ import {
 } from '../models/dashboards/dataset/dataset_tree';
 
 export function formatDatasetAsKeyValueForOtql(
-  buckets: OTQLBucket[],
+  buckets: OTQLBucket[] | undefined,
   xKey: string,
   yKey: string,
-): Dataset {
-  const dataset: any = buckets.map(buck => {
-    const value = buck.aggregations?.metrics[0] ? buck.aggregations.metrics[0].value : buck.count;
-    return {
-      [xKey]: buck.key as string,
-      [yKey]: value as number,
-      buckets: formatDatasetAsKeyValueForOtql(
-        buck.aggregations?.buckets[0]?.buckets || [],
-        xKey,
-        yKey,
-      ),
-    };
-  });
+): Dataset | undefined {
+  const dataset: any = !!buckets
+    ? buckets.map(buck => {
+        const value = buck.aggregations?.metrics[0]
+          ? buck.aggregations.metrics[0].value
+          : buck.count;
+        return {
+          [xKey]: buck.key as string,
+          [yKey]: value as number,
+          buckets: formatDatasetAsKeyValueForOtql(
+            buck.aggregations?.buckets[0]?.buckets || undefined,
+            xKey,
+            yKey,
+          ),
+        };
+      })
+    : undefined;
   return dataset;
 }
 
@@ -82,7 +86,7 @@ export function formatDatasetForOtql(
   seriesTitle: string,
 ): AbstractDataset | undefined {
   if (dataResult && isAggregateResult(dataResult.rows) && !isCountResult(dataResult.rows)) {
-    let buckets = dataResult.rows[0]?.aggregations?.buckets[0]?.buckets || [];
+    let buckets = dataResult.rows[0]?.aggregations?.buckets[0]?.buckets || undefined;
 
     if (dataResult.rows[0]?.aggregations?.metrics[0]?.metric_type === 'cardinality') {
       buckets = [
@@ -113,7 +117,7 @@ export function formatDatasetForOtql(
         seriesTitles: [seriesTitle],
       },
       type: 'aggregate',
-      dataset: dataset,
+      dataset: !!dataset ? dataset : [],
     } as AggregateDataset;
   } else if (isCountResult(dataResult.rows)) {
     const value = dataResult.rows[0].count;
