@@ -10,6 +10,7 @@ export interface MetricChartProps {
   separator?: string;
   decimal?: string;
   duration?: number;
+  formattingFn?: (value: number) => string;
 }
 
 export class MetricChart extends React.Component<MetricChartProps> {
@@ -19,7 +20,7 @@ export class MetricChart extends React.Component<MetricChartProps> {
   }
 
   render() {
-    const { value, start, separator, decimal, duration } = this.props;
+    const { value, start, separator, decimal, duration, formattingFn } = this.props;
 
     const countUpProps = {
       start: start || 0,
@@ -30,7 +31,12 @@ export class MetricChart extends React.Component<MetricChartProps> {
 
     return (
       <div className='mcs-dashboardMetric'>
-        <CountUp className={'mcs-otqlChart_resultMetrics'} end={value} {...countUpProps} />
+        <CountUp
+          className={'mcs-otqlChart_resultMetrics'}
+          end={value}
+          formattingFn={formattingFn}
+          {...countUpProps}
+        />
       </div>
     );
   }
