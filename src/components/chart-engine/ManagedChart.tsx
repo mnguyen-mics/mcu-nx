@@ -240,11 +240,9 @@ class ManagedChart extends React.Component<Props> {
     const opt = chartConfig.options as MetricChartOptions;
     const formattingFn = (c: number) => {
       return formatMetric(c, opt && this.getFormat(opt.format));
-    }
+    };
 
-    return (
-      <MetricChart value={count} formattingFn={formattingFn} />
-    );
+    return <MetricChart value={count} formattingFn={formattingFn} />;
   }
 
   private renderAlert(msg: string): JSX.Element {
