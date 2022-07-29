@@ -238,9 +238,11 @@ class ManagedChart extends React.Component<Props> {
   renderMetricChart(count: number) {
     const { chartConfig } = this.props;
     const opt = chartConfig.options as MetricChartOptions;
-    return (
-      <MetricChart value={parseInt(formatMetric(count, opt && this.getFormat(opt.format)), 10)} />
-    );
+    const formattingFn = (c: number) => {
+      return formatMetric(c, opt && this.getFormat(opt.format));
+    };
+
+    return <MetricChart value={count} formattingFn={formattingFn} />;
   }
 
   private renderAlert(msg: string): JSX.Element {
