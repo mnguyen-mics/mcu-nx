@@ -43,8 +43,8 @@ else
 fi
 
 DEV_MAIL="dev@mediarithmics.com"
-DEV_PWD='kpkQrULCeVVGKtKL4gYFUExcX5mxzAdscTdv7Qu4'
-API_TOKEN='api:W1EcVPjvsJym4LP+joqPEs2uukoPV6XxpEcF35mTf7ymSdJNKL+gURzY04DrooM4';
+DEV_PWD='DQ69uA8wSmSYrL22ELW7btSZbwhRwhRuZt7TTuzk4P'
+API_TOKEN='api:W1EcVPjvsJxkA+6wiYNz3deJQjbKKPQyrpjtM+eMidGTt7XqKG+Q0EVq9NwX69FJ';
 
 set -u
 cat << EOF
