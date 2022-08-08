@@ -162,7 +162,7 @@ class TableView<
     const dataSourceWithIds = dataSource.map(elem => {
       const cuid = _cuid();
       return {
-        key: cuid,
+        key: elem.id ? elem.id : cuid,
         ...(elem as any),
       };
     });
