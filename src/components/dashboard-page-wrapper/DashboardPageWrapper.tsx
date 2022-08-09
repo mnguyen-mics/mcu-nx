@@ -210,11 +210,17 @@ class DashboardPageWrapper extends React.Component<Props, State> {
       'audience-dashboards-datamart_users_analytics',
     );
 
+    const shouldDisplayContextualFeature = hasFeature('segments-contextual-targeting');
+
+    const shouldDisplayCohortFeature = hasFeature('audience-segments-cohort-lookalike');
+
     return (
       !isLoading &&
       dataFileDashboards &&
       dataFileDashboards.length === 0 &&
       !shouldDisplayAnalyticsFeature &&
+      !shouldDisplayContextualFeature &&
+      !shouldDisplayCohortFeature &&
       (apiDashboards && apiDashboards.length) === 0
     );
   };
