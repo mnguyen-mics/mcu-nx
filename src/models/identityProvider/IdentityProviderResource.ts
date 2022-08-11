@@ -4,7 +4,7 @@ export interface IdentityProviderResource {
   name: string;
   community_id: string;
   provider_type: IdentityProviderType;
-  sso_service_url?: string;
+  metadata_xml_url: string;
   redirect_url?: string;
   entity_id: string;
   status: IdentityProviderStatus;
