@@ -43,7 +43,8 @@ const BRIGHTNESS_THRESHOLD = 160;
 
 export type PluginCardModalTab = 'configuration' | 'stats';
 
-export interface PluginCardModalContentProps<T> {
+export interface PluginCardModalContentProps<T extends LayoutablePlugin> {
+  isPresetCreation?: boolean;
   plugin: T;
   onClose: () => void;
   organisationId: string;
@@ -52,6 +53,7 @@ export interface PluginCardModalContentProps<T> {
     propertiesValue: PropertyResourceShape[],
     name?: string,
     description?: string,
+    activate?: boolean,
   ) => void;
   pluginProperties: PropertyResourceShape[];
   disableFields: boolean;
@@ -201,7 +203,7 @@ class PluginCardModalContent<T extends LayoutablePlugin> extends React.Component
     });
   };
 
-  onSubmit = (formValues: any) => {
+  onSubmit = (activateFeed: boolean) => (formValues: any) => {
     const { editionMode, save, nameField, descriptionField } = this.props;
     if (editionMode === false) {
       formValues.id = formValues.id ? formValues.id : generateFakeId();
@@ -229,6 +231,7 @@ class PluginCardModalContent<T extends LayoutablePlugin> extends React.Component
       formattedProperties,
       (formValues.plugin && formValues.plugin.name) || (nameField && nameField.value),
       formValues.description || (descriptionField && descriptionField.value),
+      activateFeed,
     );
   };
 
@@ -238,7 +241,7 @@ class PluginCardModalContent<T extends LayoutablePlugin> extends React.Component
       <Form
         className={this.state.loading ? 'hide-section' : 'edit-layout mcs-form-container'}
         layout='vertical'
-        onSubmit={handleSubmit(this.onSubmit)}
+        onSubmit={handleSubmit(this.onSubmit(false))}
       >
         {this.generateFormFromPluginLayout(pluginLayout)}
         <div style={{ height: 110, width: '100%' }} />
@@ -293,7 +296,18 @@ class PluginCardModalContent<T extends LayoutablePlugin> extends React.Component
   };
 
   public render() {
-    const { onClose, handleSubmit, isLoading, pluginLayout, editionMode, hasFeature } = this.props;
+    const {
+      onClose,
+      handleSubmit,
+      isLoading,
+      pluginLayout,
+      editionMode,
+      hasFeature,
+      intl: { formatMessage },
+      plugin,
+      disableFields,
+      isPresetCreation,
+    } = this.props;
     const { backgroundColor, color, loading, selectedTab } = this.state;
 
     if (loading || !pluginLayout || isLoading)
@@ -324,6 +338,11 @@ class PluginCardModalContent<T extends LayoutablePlugin> extends React.Component
     const onActiveKeyChange = (activeKey: PluginCardModalTab) => {
       this.setState({ selectedTab: activeKey });
     };
+
+    const saveAndActivateAvailable =
+      !isPresetCreation &&
+      (plugin.plugin_type === 'AUDIENCE_SEGMENT_EXTERNAL_FEED' ||
+        plugin.plugin_type === 'AUDIENCE_SEGMENT_TAG_FEED');
 
     return (
       <div className='plugin-modal' ref={node => (this.node = node)}>
@@ -361,15 +380,26 @@ class PluginCardModalContent<T extends LayoutablePlugin> extends React.Component
               <Button className={' m-r-20'} onClick={onClose}>
                 Close
               </Button>
-              <ColoredButton
-                className='mcs-primary'
-                backgroundColor={backgroundColor}
-                color={color}
-                onClick={handleSubmit(this.onSubmit)}
-              >
-                {' '}
-                {isLoading ? <LoadingOutlined /> : null} Save
-              </ColoredButton>
+              {!disableFields && (
+                <>
+                  {saveAndActivateAvailable && (
+                    <Button className={' m-r-20'} onClick={handleSubmit(this.onSubmit(false))}>
+                      {formatMessage(messages.saveAndActivateLater)}
+                    </Button>
+                  )}
+                  <ColoredButton
+                    className='mcs-primary'
+                    backgroundColor={backgroundColor}
+                    color={color}
+                    onClick={handleSubmit(this.onSubmit(saveAndActivateAvailable ? true : false))}
+                  >
+                    {isLoading ? <LoadingOutlined /> : null}
+                    {formatMessage(
+                      saveAndActivateAvailable ? messages.saveAndActivate : messages.save,
+                    )}
+                  </ColoredButton>
+                </>
+              )}
             </div>
           ) : null}
         </div>
@@ -406,5 +436,17 @@ const messages: {
     entered the segment prior to the feed creation to be sure that the full segment is \
     shared with the external platform. Hence, it is normal to see a spike in the user \
     additions load at the creation of the feed and afterwards a decrease in the segment loads size.',
+  },
+  saveAndActivateLater: {
+    id: 'pluginCardModalContent.submit.saveAndActivateLater',
+    defaultMessage: 'Save and activate later',
+  },
+  saveAndActivate: {
+    id: 'pluginCardModalContent.submit.saveAndActivate',
+    defaultMessage: 'Save and activate',
+  },
+  save: {
+    id: 'pluginCardModalContent.submit.save',
+    defaultMessage: 'Save',
   },
 });

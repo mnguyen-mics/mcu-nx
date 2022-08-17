@@ -23,7 +23,7 @@ const titleMessages: {
   },
 });
 
-interface PluginCardSelectorProps<T> {
+interface PluginCardSelectorProps<T extends LayoutablePlugin> {
   onSelect: (item: T) => void;
   onPresetDelete: (item: T) => void;
   availablePresetLayouts: T[];
@@ -34,7 +34,7 @@ interface PluginCardSelectorProps<T> {
   pluginListSubTitle: FormattedMessage.MessageDescriptor;
 }
 
-type Props<T> = PluginCardSelectorProps<T> &
+type Props<T extends LayoutablePlugin> = PluginCardSelectorProps<T> &
   RouteComponentProps<{ organisationId: string }> &
   InjectedFeaturesProps;
 

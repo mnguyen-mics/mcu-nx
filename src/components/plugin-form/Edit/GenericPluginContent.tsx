@@ -53,7 +53,11 @@ export interface PluginContentOuterProps<T extends PluginInstance> {
   pluginInstanceService: IPluginInstanceService<T>;
   pluginInstanceId?: string;
   onClose: () => void;
-  onSaveOrCreatePluginInstance: (pluginInstance: T, properties: PropertyResourceShape[]) => void;
+  onSaveOrCreatePluginInstance: (
+    pluginInstance: T,
+    properties: PropertyResourceShape[],
+    activate?: boolean,
+  ) => void;
   createPluginInstance: (
     organisationId: string,
     plugin: PluginResource,
@@ -79,7 +83,7 @@ interface PluginContentState<T> {
   initializedPresetValues?: { properties: any };
 }
 
-function initEmptyPluginSelection() {
+function initEmptyPluginSelection(): PluginResource {
   return {
     id: '',
     organisation_id: '',
@@ -284,6 +288,8 @@ class PluginContent<T extends PluginInstance> extends React.Component<
     pluginInstance: T,
     properties: PropertyResourceShape[],
     name?: string,
+    description?: string,
+    activate?: boolean,
   ) => {
     const {
       match: {
@@ -310,7 +316,7 @@ class PluginContent<T extends PluginInstance> extends React.Component<
         });
         Promise.all([updateInstancePromise, updatePropertiesPromise])
           .then(res => {
-            onSaveOrCreatePluginInstance(res[0].data, properties);
+            onSaveOrCreatePluginInstance(res[0].data, properties, activate);
           })
           .catch(err => {
             notifyError(err);
@@ -338,7 +344,7 @@ class PluginContent<T extends PluginInstance> extends React.Component<
 
       Promise.all([createInstancePromise, updatePropertiesPromise])
         .then(res => {
-          onSaveOrCreatePluginInstance(res[0], properties);
+          onSaveOrCreatePluginInstance(res[0], properties, activate);
         })
         .catch(err => {
           notifyError(err);
