@@ -78,9 +78,10 @@ export class IdentityProviderService implements IIdentityProviderService {
 
   getCommunityIdentityProviders(
     communityId: string,
+    params: { [key: string]: any } = {},
   ): Promise<DataListResponse<IdentityProviderResource>> {
     const endpoint = `community/${communityId}/identity_providers`;
-    return ApiService.getRequest(endpoint);
+    return ApiService.getRequest(endpoint, params);
   }
 
   getCommunityIdentityProvider(
