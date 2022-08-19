@@ -22,6 +22,7 @@ export interface IIdentityProviderService {
 
   getCommunityIdentityProviders: (
     communityId: string,
+    params: { [key: string]: any },
   ) => Promise<DataListResponse<IdentityProviderResource>>;
 
   getCommunityIdentityProvider: (
