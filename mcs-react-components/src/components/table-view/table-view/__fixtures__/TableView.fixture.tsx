@@ -13,7 +13,7 @@ const props: TableViewProps<TableViewMockData> = {
   columns: tableViewMockColumns,
   dataSource: tableViewMockData(),
   rowSelection: {
-    selectedRowKeys: ['1', '2'],
+    selectedRowKeys: [1, 2],
   },
   pagination: {
     pageSize: 10,

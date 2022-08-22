@@ -5,10 +5,11 @@ exports[`renders the SelectionNotifyer with 3 items selected 1`] = `
   style={
     Object {
       "display": "block",
-      "height": "50px",
+      "height": "100%",
+      "maxHeight": "50px",
       "opacity": 1,
       "textAlign": "center",
-      "transition": "height 120ms ease-in-out",
+      "transition": "max-height 1000ms ease-in-out",
     }
   }
 >
@@ -53,10 +54,11 @@ exports[`renders the SelectionNotifyer with all items selected 1`] = `
   style={
     Object {
       "display": "block",
-      "height": "50px",
+      "height": "100%",
+      "maxHeight": "50px",
       "opacity": 1,
       "textAlign": "center",
-      "transition": "height 120ms ease-in-out",
+      "transition": "max-height 1000ms ease-in-out",
     }
   }
 >
@@ -101,10 +103,11 @@ exports[`renders the SelectionNotifyer with all the page items selected 1`] = `
   style={
     Object {
       "display": "block",
-      "height": "50px",
+      "height": "100%",
+      "maxHeight": "50px",
       "opacity": 1,
       "textAlign": "center",
-      "transition": "height 120ms ease-in-out",
+      "transition": "max-height 1000ms ease-in-out",
     }
   }
 >

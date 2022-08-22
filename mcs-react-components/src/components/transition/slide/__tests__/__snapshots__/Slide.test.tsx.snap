@@ -5,11 +5,11 @@ exports[`does not render the Slide 1`] = `
   style={
     Object {
       "display": "inline-block",
-      "height": "0px",
+      "height": "100%",
       "opacity": 0,
       "textAlign": "center",
-      "transition": "width 120ms ease-in-out",
-      "width": "0px",
+      "transition": "max-width 1000ms ease-in-out",
+      "width": "100%",
     }
   }
 />
@@ -20,11 +20,12 @@ exports[`renders the Slide horizontally 1`] = `
   style={
     Object {
       "display": "inline-block",
-      "height": "0px",
+      "height": "100%",
+      "maxWidth": "120px",
       "opacity": 1,
       "textAlign": "center",
-      "transition": "width 120ms ease-in-out",
-      "width": "120px",
+      "transition": "max-width 1000ms ease-in-out",
+      "width": "100%",
     }
   }
 >
@@ -45,10 +46,11 @@ exports[`renders the Slide vertically 1`] = `
   style={
     Object {
       "display": "block",
-      "height": "50px",
+      "height": "100%",
+      "maxHeight": "50px",
       "opacity": 1,
       "textAlign": "center",
-      "transition": "height 120ms ease-in-out",
+      "transition": "max-height 1000ms ease-in-out",
     }
   }
 >

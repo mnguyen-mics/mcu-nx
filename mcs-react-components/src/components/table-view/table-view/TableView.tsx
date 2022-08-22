@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as _cuid from 'cuid';
 import { Menu, Table } from 'antd';
 import { TableProps, ColumnProps } from 'antd/lib/table';
-import { TableRowSelection, TablePaginationConfig } from 'antd/lib/table/interface';
+import { TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
 import { PaginationProps } from 'antd/lib/pagination/Pagination';
 import { MenuInfo } from '../../../../node_modules/rc-menu/lib/interface';
 import { Dropdown } from '../../popup-container/PopupContainer';
@@ -37,11 +37,9 @@ export interface ActionsColumnDefinition<T> extends ColumnProps<T> {
 }
 
 export interface ExtendedTableRowSelection<T = any> extends TableRowSelection<T> {
-  selectedRowKeys?: string[];
   allRowsAreSelected?: boolean;
   selectAllItemIds?: () => void;
   unselectAllItemIds?: () => void;
-  onSelect?: () => void;
 }
 
 export interface TableViewProps<T> extends TableProps<T> {

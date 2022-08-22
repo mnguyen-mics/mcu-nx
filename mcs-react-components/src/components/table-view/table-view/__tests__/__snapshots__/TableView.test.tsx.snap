@@ -1202,10 +1202,10 @@ exports[`renders a tableView with 3 selected rows 1`] = `
     style={
       Object {
         "display": "block",
-        "height": "0px",
+        "height": "100%",
         "opacity": 0,
         "textAlign": "center",
-        "transition": "height 120ms ease-in-out",
+        "transition": "max-height 1000ms ease-in-out",
       }
     }
   />
