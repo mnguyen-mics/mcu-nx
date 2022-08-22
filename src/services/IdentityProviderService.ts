@@ -120,7 +120,7 @@ export class IdentityProviderService implements IIdentityProviderService {
     organisationId: string,
     identityProviderId: string,
   ): Promise<DataResponse<OrganisationResource>> {
-    const endpoint = `community/${organisationId}/identity_providers/${identityProviderId}`;
+    const endpoint = `organisations/${organisationId}/identity_providers/${identityProviderId}`;
     return ApiService.deleteRequest(endpoint);
   }
 }
