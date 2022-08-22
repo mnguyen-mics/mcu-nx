@@ -9,22 +9,22 @@ export interface SlideProps {
 
 class Slide extends React.Component<SlideProps> {
   render() {
-    const duration = 120;
+    const duration = 1000;
 
     const { toShow } = this.props;
 
     const defaultStyle = !this.props.horizontal
       ? {
-          transition: `height ${duration}ms ease-in-out`,
+          transition: `max-height ${duration}ms ease-in-out`,
           display: 'block',
-          height: '0px',
+          height: '100%',
           opacity: 0,
           textAlign: 'center',
         }
       : {
-          transition: `width ${duration}ms ease-in-out`,
-          width: '0px',
-          height: '0px',
+          transition: `max-width ${duration}ms ease-in-out`,
+          width: '100%',
+          height: '100%',
           opacity: 0,
           textAlign: 'center',
           display: 'inline-block',
@@ -32,12 +32,12 @@ class Slide extends React.Component<SlideProps> {
 
     const transitionStyles: any /*React.CSSProperties*/ = !this.props.horizontal
       ? {
-          entering: { height: '0px', opacity: 0 },
-          entered: { height: '50px', opacity: 1 },
+          entering: { maxHeight: '0px', opacity: 0 },
+          entered: { maxHeight: '50px', opacity: 1 },
         }
       : {
-          entering: { width: '0px', opacity: 0 },
-          entered: { width: '120px', opacity: 1 }, // pas scalable
+          entering: { maxWidth: '0px', opacity: 0 },
+          entered: { maxWidth: '120px', opacity: 1 }, // pas scalable
         };
 
     return (
