@@ -86,8 +86,9 @@ export class OrganisationService implements IOrganisationService {
     communityId: string,
     params?: { [key: string]: any },
   ): Promise<DataListResponse<OrganisationResource>> {
-    const endpoint = `organisations?community_id=${communityId}`;
-    return ApiService.getRequest(endpoint, params);
+    const finalParams = { ...params, community_id: communityId };
+    const endpoint = `organisations`;
+    return ApiService.getRequest(endpoint, finalParams);
   }
   getProcessings(
     communityId: string,
