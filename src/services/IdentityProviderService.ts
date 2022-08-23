@@ -22,7 +22,7 @@ export interface IIdentityProviderService {
 
   getCommunityIdentityProviders: (
     communityId: string,
-    params: { [key: string]: any },
+    params?: { [key: string]: any },
   ) => Promise<DataListResponse<IdentityProviderResource>>;
 
   getCommunityIdentityProvider: (
@@ -33,6 +33,7 @@ export interface IIdentityProviderService {
   getOrganisationsAssociatedToIdentityProvider: (
     communityId: string,
     identityProviderId: string,
+    params?: { [key: string]: any },
   ) => Promise<DataListResponse<OrganisationResource>>;
 
   getIdentityProviderAssociatedToOrganisation: (
@@ -79,7 +80,7 @@ export class IdentityProviderService implements IIdentityProviderService {
 
   getCommunityIdentityProviders(
     communityId: string,
-    params: { [key: string]: any } = {},
+    params?: { [key: string]: any },
   ): Promise<DataListResponse<IdentityProviderResource>> {
     const endpoint = `community/${communityId}/identity_providers`;
     return ApiService.getRequest(endpoint, params);
@@ -96,9 +97,10 @@ export class IdentityProviderService implements IIdentityProviderService {
   getOrganisationsAssociatedToIdentityProvider(
     communityId: string,
     identityProviderId: string,
+    params?: { [key: string]: any },
   ): Promise<DataListResponse<OrganisationResource>> {
     const endpoint = `community/${communityId}/identity_providers/${identityProviderId}/organisations`;
-    return ApiService.getRequest(endpoint);
+    return ApiService.getRequest(endpoint, params);
   }
 
   getIdentityProviderAssociatedToOrganisation(

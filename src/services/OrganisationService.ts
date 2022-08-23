@@ -15,7 +15,10 @@ export interface IOrganisationService {
   putLogo: (organisationId: string, formData: FormData) => Promise<any>;
   getBillingAccounts: (organisationId: string) => Promise<DataListResponse<BillingAccountResource>>;
   getOrganisation: (organisationId: string) => Promise<DataResponse<OrganisationResource>>;
-  getOrganisations: (communityId: string) => Promise<DataListResponse<OrganisationResource>>;
+  getOrganisations: (
+    communityId: string,
+    params?: { [key: string]: any },
+  ) => Promise<DataListResponse<OrganisationResource>>;
   getProcessings: (
     communityId: string,
     filters?: object,
@@ -79,9 +82,12 @@ export class OrganisationService implements IOrganisationService {
     const endpoint = `organisations/${organisationId}`;
     return ApiService.getRequest(endpoint);
   }
-  getOrganisations(communityId: string): Promise<DataListResponse<OrganisationResource>> {
+  getOrganisations(
+    communityId: string,
+    params?: { [key: string]: any },
+  ): Promise<DataListResponse<OrganisationResource>> {
     const endpoint = `organisations?community_id=${communityId}`;
-    return ApiService.getRequest(endpoint);
+    return ApiService.getRequest(endpoint, params);
   }
   getProcessings(
     communityId: string,
