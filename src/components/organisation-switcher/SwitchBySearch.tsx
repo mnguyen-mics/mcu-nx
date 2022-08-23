@@ -9,6 +9,7 @@ import { InjectedIntlProps, injectIntl } from 'react-intl';
 import LocalStorage from '../../services/LocalStorage';
 import cuid from 'cuid';
 import { isCommunity, switchWorkspace } from './OrganisationSwitcherHelpers';
+import { escapeRegExp } from '../../utils';
 
 export interface SwitchBySearchState {
   searchKeyword: string;
@@ -168,7 +169,7 @@ class SwitchBySearch extends React.Component<Props, SwitchBySearchState> {
   };
 
   searchByNameOrId = (value: string, nodes: UserWorkspaceResource[]) => {
-    const regex = new RegExp(value, 'i');
+    const regex = new RegExp(escapeRegExp(value), 'i');
     return nodes.filter(w => regex.test(w.organisation_name) || value === w.organisation_id);
   };
 
