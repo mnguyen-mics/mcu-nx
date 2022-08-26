@@ -85,6 +85,11 @@ export default function AreaChartSlider(props: AreaChartSliderProps) {
     },
   };
 
+  if (xAxis.reversed) {
+    formatedSerie.data = formatedSerie.data?.reverse();
+    formatedSerieWithNull.data = formatedSerieWithNull.data?.reverse();
+  }
+
   const onSliderChange = (i: number) => {
     if (chartRef.current) {
       const chart: Highcharts.Chart = chartRef.current.chart;
