@@ -9,7 +9,7 @@ export interface SlideProps {
 
 class Slide extends React.Component<SlideProps> {
   render() {
-    const duration = 1000;
+    const duration = 120;
 
     const { toShow } = this.props;
 
@@ -23,7 +23,7 @@ class Slide extends React.Component<SlideProps> {
         }
       : {
           transition: `max-width ${duration}ms ease-in-out`,
-          width: '100%',
+          width: 'auto',
           height: '100%',
           opacity: 0,
           textAlign: 'center',

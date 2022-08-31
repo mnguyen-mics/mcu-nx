@@ -9,7 +9,7 @@ exports[`renders the SelectionNotifyer with 3 items selected 1`] = `
       "maxHeight": "50px",
       "opacity": 1,
       "textAlign": "center",
-      "transition": "max-height 1000ms ease-in-out",
+      "transition": "max-height 120ms ease-in-out",
     }
   }
 >
@@ -58,7 +58,7 @@ exports[`renders the SelectionNotifyer with all items selected 1`] = `
       "maxHeight": "50px",
       "opacity": 1,
       "textAlign": "center",
-      "transition": "max-height 1000ms ease-in-out",
+      "transition": "max-height 120ms ease-in-out",
     }
   }
 >
@@ -107,7 +107,7 @@ exports[`renders the SelectionNotifyer with all the page items selected 1`] = `
       "maxHeight": "50px",
       "opacity": 1,
       "textAlign": "center",
-      "transition": "max-height 1000ms ease-in-out",
+      "transition": "max-height 120ms ease-in-out",
     }
   }
 >
