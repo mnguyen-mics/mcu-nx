@@ -1205,7 +1205,7 @@ exports[`renders a tableView with 3 selected rows 1`] = `
         "height": "100%",
         "opacity": 0,
         "textAlign": "center",
-        "transition": "max-height 1000ms ease-in-out",
+        "transition": "max-height 120ms ease-in-out",
       }
     }
   />

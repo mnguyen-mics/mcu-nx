@@ -8,8 +8,8 @@ exports[`does not render the Slide 1`] = `
       "height": "100%",
       "opacity": 0,
       "textAlign": "center",
-      "transition": "max-width 1000ms ease-in-out",
-      "width": "100%",
+      "transition": "max-width 120ms ease-in-out",
+      "width": "auto",
     }
   }
 />
@@ -24,8 +24,8 @@ exports[`renders the Slide horizontally 1`] = `
       "maxWidth": "120px",
       "opacity": 1,
       "textAlign": "center",
-      "transition": "max-width 1000ms ease-in-out",
-      "width": "100%",
+      "transition": "max-width 120ms ease-in-out",
+      "width": "auto",
     }
   }
 >
@@ -50,7 +50,7 @@ exports[`renders the Slide vertically 1`] = `
       "maxHeight": "50px",
       "opacity": 1,
       "textAlign": "center",
-      "transition": "max-height 1000ms ease-in-out",
+      "transition": "max-height 120ms ease-in-out",
     }
   }
 >
