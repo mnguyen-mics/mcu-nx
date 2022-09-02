@@ -23,7 +23,7 @@ export default defineMessages({
   },
   home: {
     id: 'dashboards.home',
-    defaultMessage: 'Navigator > Audience > Home',
+    defaultMessage: 'Navigator > Home',
   },
   segments: {
     id: 'dashboards.segments',
