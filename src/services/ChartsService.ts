@@ -1,10 +1,6 @@
 import { injectable } from 'inversify';
-import {
-  DataListResponse,
-  DataResponse,
-} from '@mediarithmics-private/advanced-components/lib/services/ApiService';
-import { ApiService } from '@mediarithmics-private/advanced-components';
 import { ChartResource } from '../models/chart/Chart';
+import ApiService, { DataListResponse, DataResponse } from './ApiService';
 
 export interface IChartService {
   getCharts: (organisationId: string, filters?: object) => Promise<DataListResponse<ChartResource>>;

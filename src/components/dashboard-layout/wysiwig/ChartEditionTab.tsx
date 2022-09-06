@@ -1,6 +1,6 @@
 import { Button, Form, Input } from 'antd';
 import React from 'react';
-import { ChartConfig } from '../../../services/ChartDatasetService';
+import { ChartCommonConfig } from '../../../services/ChartDatasetService';
 import AceEditor from 'react-ace';
 import { Ace } from 'ace-builds';
 import { CloseOutlined } from '@ant-design/icons';
@@ -16,8 +16,8 @@ import { IQueryService, QueryService } from '../../../services/QueryService';
 import { QueryScopeAdapter } from '../../../utils/QueryScopeAdapter';
 
 interface ChartEditionProps {
-  chartConfig?: ChartConfig;
-  saveChart: (c: ChartConfig) => void;
+  chartConfig?: ChartCommonConfig;
+  saveChart: (c: ChartCommonConfig) => void;
   deleteChart?: () => void;
   closeTab: () => void;
   datamartId: string;

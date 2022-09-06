@@ -1,9 +1,6 @@
+import { ChartApiOptions, ChartType } from '../../services/ChartDatasetService';
+import { SourceType } from '../dashboards/dataset/common';
 import { QueryLanguage } from './../datamart/DatamartResource';
-import { SourceType } from '@mediarithmics-private/advanced-components/lib/models/dashboards/dataset/common';
-import {
-  ChartApiOptions,
-  ChartType,
-} from '@mediarithmics-private/advanced-components/lib/services/ChartDatasetService';
 
 // TO DO: move into ADV library
 export interface ChartSource {
