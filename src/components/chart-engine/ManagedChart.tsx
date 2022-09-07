@@ -73,11 +73,7 @@ interface ManagedChartProps {
   openDrawer?: () => void;
   loading: boolean;
   stillLoading: boolean;
-  errorContext?: ErrorContext;
-}
-
-interface ErrorContext {
-  description: string;
+  errorContext?: string;
 }
 
 /**
@@ -348,7 +344,7 @@ class ManagedChart extends React.Component<Props> {
       return (
         <Alert
           message='Error'
-          description={`Cannot fetch data for chart: ${errorContext.description}`}
+          description={`Cannot fetch data for chart: ${errorContext}`}
           type='error'
           showIcon={true}
         />

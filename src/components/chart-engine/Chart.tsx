@@ -55,15 +55,11 @@ interface ChartProps {
   queryExecutionSubSource: QueryExecutionSubSource;
 }
 
-interface ErrorContext {
-  description: string;
-}
-
 interface ChartState {
   formattedData?: AbstractDataset;
   loading: boolean;
   stillLoading: boolean;
-  errorContext?: ErrorContext;
+  errorContext?: string;
 }
 
 type Props = InjectedDrawerProps & InjectedIntlProps & ChartProps;
@@ -119,9 +115,7 @@ class Chart extends React.Component<Props, ChartState> {
       .catch(e => {
         clearTimeout(loadingTimeout);
         this.setState({
-          errorContext: {
-            description: e,
-          },
+          errorContext: JSON.stringify(e),
           loading: false,
           stillLoading: false,
         });
@@ -251,7 +245,7 @@ class Chart extends React.Component<Props, ChartState> {
       return (
         <Alert
           message='Error'
-          description={`Cannot fetch data for chart: ${errorContext.description}`}
+          description={`Cannot fetch data for chart: ${errorContext}`}
           type='error'
           showIcon={true}
         />

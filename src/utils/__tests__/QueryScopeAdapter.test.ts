@@ -5,14 +5,14 @@ import {
   QueryTranslationResource,
 } from '../../models/datamart/DatamartResource';
 import { OTQLResult, QueryPrecisionMode } from '../../models/datamart/graphdb/OTQLResult';
+import { SegmentScope } from '../../models/datamart/graphdb/Scope';
 import { DataResponse } from '../../services/ApiService';
 import { IQueryService } from '../../services/QueryService';
 import { QueryScopeAdapter } from '../QueryScopeAdapter';
 
-const WHERE_CLAUSE1 = ' activity_events { app_id = 1 }';
-const WHERE_CLAUSE2 = ' segments { id = 123 }';
-const QUERY1 = `select {id} from UserPoint where${WHERE_CLAUSE1}`;
-const QUERY2 = `select {id} from UserPoint where${WHERE_CLAUSE2}`;
+const WHERE_CLAUSE1 = 'activity_events { app_id = 1 }';
+const JOIN_CLAUSE = 'UserSegment WHERE id = 123';
+const QUERY1 = `select {id} from UserPoint where ${WHERE_CLAUSE1}`;
 
 const jsonOtqlQuery1 = {
   from: 'UserPoint',
@@ -32,32 +32,6 @@ const jsonOtqlQuery1 = {
               type: 'STRING',
               operator: 'EQ',
               values: ['1'],
-            },
-          },
-        ],
-      },
-    ],
-  },
-};
-
-const jsonOtqlQuery2 = {
-  from: 'UserPoint',
-  where: {
-    type: 'GROUP',
-    boolean_operator: 'OR',
-    expressions: [
-      {
-        boolean_operator: 'OR',
-        field: 'segments',
-        type: 'OBJECT',
-        expressions: [
-          {
-            type: 'FIELD',
-            field: 'id',
-            comparison: {
-              type: 'STRING',
-              operator: 'EQ',
-              values: ['123'],
             },
           },
         ],
@@ -139,20 +113,13 @@ test('test the query is correctly scoped', cb => {
     query_text: QUERY1,
     query_language: 'OTQL',
   };
-  const queryResource2: QueryResource = {
-    id: 'xxx',
-    datamart_id: 'xxx',
-    query_text: QUERY2,
-    query_language: 'OTQL',
+  const scope: SegmentScope = {
+    type: 'SEGMENT',
+    segmentId: '123',
   };
-  const resultQueryPromise = adapter.scopeQueryWithWhereClause(
-    '123',
-    {},
-    queryResource1,
-    queryResource2,
-  );
+  const resultQueryPromise = adapter.scopeQueryWithWhereClause('123', {}, queryResource1, scope);
   resultQueryPromise.then(query => {
-    expect(query).toBe(`select {id} from UserPoint where${WHERE_CLAUSE1} AND ${WHERE_CLAUSE2}`);
+    expect(query).toBe(`select {id} from UserPoint where ${WHERE_CLAUSE1} JOIN ${JOIN_CLAUSE}`);
     cb();
   });
 });
@@ -173,7 +140,7 @@ test('test the query is correctly non scoped', cb => {
     undefined,
   );
   resultQueryPromise.then(query => {
-    expect(query).toBe(`select {id} from UserPoint where${WHERE_CLAUSE1}`);
+    expect(query).toBe(`select {id} from UserPoint where ${WHERE_CLAUSE1}`);
     cb();
   });
 });
@@ -187,11 +154,9 @@ test('test the query is correctly formatted with query fragment', cb => {
     query_text: QUERY1,
     query_language: 'OTQL',
   };
-  const queryResource2: QueryResource = {
-    id: 'xxx',
-    datamart_id: 'xxx',
-    query_text: QUERY2,
-    query_language: 'OTQL',
+  const scope: SegmentScope = {
+    type: 'SEGMENT',
+    segmentId: '123',
   };
 
   const queryFragment: QueryFragment = {
@@ -207,11 +172,11 @@ test('test the query is correctly formatted with query fragment', cb => {
     '123',
     queryFragment,
     queryResource1,
-    queryResource2,
+    scope,
   );
   resultQueryPromise.then(query => {
     expect(query).toBe(
-      `select {id} from UserPoint where activity_events { app_id = 1 } AND  segments { id = 123 } AND profiles {compartment_id IN [\"1234\"]}`,
+      `select {id} from UserPoint where ${WHERE_CLAUSE1} AND profiles {compartment_id IN [\"1234\"]} JOIN ${JOIN_CLAUSE}`,
     );
     cb();
   });
@@ -226,11 +191,9 @@ test('test the query is correctly not to be formatted with query fragment', cb =
     query_text: QUERY1,
     query_language: 'OTQL',
   };
-  const queryResource2: QueryResource = {
-    id: 'xxx',
-    datamart_id: 'xxx',
-    query_text: QUERY2,
-    query_language: 'OTQL',
+  const scope: SegmentScope = {
+    type: 'SEGMENT',
+    segmentId: '123',
   };
 
   const queryFragment: QueryFragment = {
@@ -246,12 +209,10 @@ test('test the query is correctly not to be formatted with query fragment', cb =
     '123',
     queryFragment,
     queryResource1,
-    queryResource2,
+    scope,
   );
   resultQueryPromise.then(query => {
-    expect(query).toBe(
-      `select {id} from UserPoint where activity_events { app_id = 1 } AND  segments { id = 123 }`,
-    );
+    expect(query).toBe(`select {id} from UserPoint where ${WHERE_CLAUSE1} JOIN ${JOIN_CLAUSE}`);
     cb();
   });
 });

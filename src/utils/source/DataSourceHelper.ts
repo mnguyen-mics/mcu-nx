@@ -55,10 +55,9 @@ export function fetchAndFormatQuery(
   scope?: AbstractScope,
   queryFragment?: QueryFragment,
 ): Promise<QueryInfo> {
-  const otqlScope = queryScopeAdapter.buildScopeOtqlQuery(datamartId, scope);
   return fetchOtqlQuery(queryService, datamartId, otqlSource).then(dashboardQueryResource => {
     return queryScopeAdapter
-      .scopeQueryWithWhereClause(datamartId, queryFragment || {}, dashboardQueryResource, otqlScope)
+      .scopeQueryWithWhereClause(datamartId, queryFragment || {}, dashboardQueryResource, scope)
       .then(adaptedQueryText => {
         return {
           queryId: otqlSource.query_id ? otqlSource.query_id : '0',

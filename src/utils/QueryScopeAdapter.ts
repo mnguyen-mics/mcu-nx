@@ -69,41 +69,9 @@ export class QueryScopeAdapter {
     }
   }
 
-  buildScopeOtqlQuery(datamartId: string, scope?: AbstractScope): QueryShape | undefined {
-    if (!scope) return undefined;
-
-    if (scope.query) {
-      return scope.query;
-    } else if (scope.type === 'SEGMENT') {
-      const segmentScope = scope as SegmentScope;
-      const queryDoc = {
-        operations: [],
-        from: 'UserPoint',
-        where: {
-          type: 'OBJECT',
-          field: 'segments',
-          expressions: [
-            {
-              type: 'FIELD',
-              field: 'id',
-              comparison: {
-                type: 'STRING',
-                operator: 'EQ',
-                values: [segmentScope.segmentId],
-              },
-            },
-          ],
-          boolean_operator: 'OR',
-        },
-      };
-      return {
-        datamart_id: datamartId,
-        query_language: 'JSON_OTQL',
-        query_text: JSON.stringify(queryDoc),
-      };
-    } else {
-      return undefined;
-    }
+  buildScopeOtqlQuery(datamartId: string, scope?: AbstractScope): Promise<string | undefined> {
+    if (scope && scope.query) return this.convertToOtql(datamartId, scope.query);
+    else return new Promise(resolve => resolve(undefined));
   }
 
   private appendAdditionalQuery(query: string, additionalQuery?: string) {
@@ -115,16 +83,24 @@ export class QueryScopeAdapter {
     }
   }
 
+  private appendJoinClause(query: string, scope?: AbstractScope) {
+    if (scope && scope.type === 'SEGMENT') {
+      const segmentScope = scope as SegmentScope;
+      return `${query} JOIN UserSegment WHERE id = ${segmentScope.segmentId}`;
+    } else return query;
+  }
+
   scopeQueryWithWhereClause(
     datamartId: string,
     queryFragment: QueryFragment,
     dashboardQuery: QueryShape,
-    sourceQuery?: QueryShape,
+    scope?: AbstractScope,
   ): Promise<string> {
     const dashboardOtqlQueryPromise = this.convertToOtql(datamartId, dashboardQuery);
-    const sourceOtqlQueryPromise: Promise<string | undefined> = sourceQuery
-      ? this.convertToOtql(datamartId, sourceQuery)
-      : new Promise(resolve => resolve(undefined));
+    const sourceOtqlQueryPromise: Promise<string | undefined> = this.buildScopeOtqlQuery(
+      datamartId,
+      scope,
+    );
     return Promise.all([dashboardOtqlQueryPromise, sourceOtqlQueryPromise]).then(
       ([dashboardOtqlQuery, sourceOtqlQuery]) => {
         const additionalQuery =
@@ -147,6 +123,7 @@ export class QueryScopeAdapter {
             }
           }
         }
+        scopedQuery = this.appendJoinClause(scopedQuery, scope);
         return scopedQuery;
       },
     );
