@@ -17,6 +17,9 @@ import {
   CustomDashboardResource,
   CustomDashboardContentResource,
   DashboardContentSchema,
+  DashboardContentSchemaCID,
+  DashboardContentSectionCID,
+  DashboardContentCardCID,
 } from '@mediarithmics-private/advanced-components/lib/models/customDashboards/customDashboards';
 import { IAudienceSegmentService } from '@mediarithmics-private/advanced-components/lib/services/AudienceSegmentService';
 import { IStandardSegmentBuilderService } from '@mediarithmics-private/advanced-components/lib/services/StandardSegmentBuilderService';
@@ -43,6 +46,10 @@ import {
 } from '@mediarithmics-private/advanced-components/lib/services/ApiService';
 import UserResource from '@mediarithmics-private/advanced-components/lib/models/directory/UserResource';
 import omitDeep from 'omit-deep-lodash';
+import {
+  ChartConfig,
+  ChartCommonConfig,
+} from '@mediarithmics-private/advanced-components/lib/services/ChartDatasetService';
 
 const { Content } = Layout;
 
@@ -95,6 +102,7 @@ interface EditDashboardPageState {
   dashboard?: CustomDashboardResource;
   content?: CustomDashboardContentResource;
   contentTextOrig?: string;
+  contentTextEditor: string;
   homeCheckboxChecked: boolean;
   segmentCheckboxChecked: boolean;
   builderCheckboxChecked: boolean;
@@ -103,7 +111,6 @@ interface EditDashboardPageState {
   selectedSegments: SelectValue[];
   selectedBuilders: SelectValue[];
   contentText: string;
-  contentHasIds: boolean;
   userNamesMap: Map<string, string>;
   existingSegments: LabelValueOption[];
   existingBuilders: LabelValueOption[];
@@ -114,6 +121,8 @@ interface EditDashboardPageState {
   formInitialValues?: FormInitialValues;
   displaySegmentInput?: boolean;
   displayBuilderInput?: boolean;
+  mapCharts: Map<string, ChartConfig>;
+  lastContentEditorModificationTs: number;
 }
 
 interface RouterProps {
@@ -165,13 +174,15 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       selectedSegments: [],
       selectedBuilders: [],
       contentText: defaultContent,
-      contentHasIds: false,
+      contentTextEditor: defaultContent,
       userNamesMap: new Map(),
       loading: true,
       existingSegments: [],
       existingBuilders: [],
       validated: false,
       form: React.createRef<FormInstance>(),
+      mapCharts: new Map(),
+      lastContentEditorModificationTs: 0,
     };
   }
 
@@ -202,11 +213,108 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     }
   }
 
-  formatContent = (content?: DashboardContentSchema, removeIds?: boolean) => {
+  moveExternallyLoadedPropertiesFromDashboardContent = (
+    content: DashboardContentSchema,
+    action: 'remove' | 'restore',
+    mapCharts?: Map<string, ChartConfig>,
+  ): DashboardContentSchemaCID => {
+    const result: DashboardContentSchemaCID = {
+      ...content,
+      sections: content.sections.map(section => {
+        const modifiedSection: DashboardContentSectionCID = {
+          ...section,
+          cards: section.cards.map(card => {
+            const modifiedCard: DashboardContentCardCID = {
+              ...card,
+              charts: card.charts.map(chart => {
+                if (action === 'remove')
+                  return this.removeExternallyLoadedPropertiesFromChartConfig(chart);
+                else return this.restoreExternallyLoadedPropertiesToChartConfig(chart, mapCharts);
+              }),
+            };
+            return modifiedCard;
+          }),
+        };
+        return modifiedSection;
+      }),
+    };
+
+    return result;
+  };
+
+  removeExternallyLoadedPropertiesFromChartConfig = (
+    chartConfig: ChartConfig,
+  ): ChartCommonConfig => {
+    if (chartConfig.chart_id !== undefined) {
+      const { mapCharts } = this.state;
+      const chartConfigCopy: ChartConfig = JSON.parse(JSON.stringify(chartConfig));
+      chartConfigCopy.id = undefined;
+      this.setState({
+        mapCharts: mapCharts.set(chartConfig.chart_id, chartConfigCopy),
+      });
+
+      const modifiedChartConfig: ChartCommonConfig = {
+        chart_id: chartConfig.chart_id,
+      };
+
+      return modifiedChartConfig;
+    } else {
+      return chartConfig;
+    }
+  };
+
+  restoreExternallyLoadedPropertiesToChartConfig = (
+    chartConfig: ChartCommonConfig,
+    mapCharts?: Map<string, ChartConfig>,
+  ): ChartCommonConfig => {
+    if (chartConfig.chart_id !== undefined) {
+      const storedChart = !!mapCharts ? mapCharts.get(chartConfig.chart_id) : undefined;
+      if (!!storedChart) return storedChart;
+      else return chartConfig;
+    } else {
+      return chartConfig;
+    }
+  };
+
+  refreshExternalChartsMap = (
+    dashboardContent: DashboardContentSchema,
+  ): Promise<Map<string, ChartConfig>> => {
+    const { mapCharts } = this.state;
+    const {
+      match: {
+        params: { organisationId },
+      },
+    } = this.props;
+
+    const allChartsIds: string[] = this._dashboardService.getAllChartsIds(dashboardContent);
+    const newChartsIds: string[] = allChartsIds.filter(chartId => !mapCharts.has(chartId));
+
+    if (newChartsIds.length > 0) {
+      return this._dashboardService
+        .loadChartsByIds(newChartsIds, organisationId)
+        .then(newMapCharts => {
+          newMapCharts.forEach((value, key) => {
+            const currentChartConfig: ChartConfig = {
+              ...value,
+              chart_id: key,
+            };
+            mapCharts.set(key, currentChartConfig);
+          });
+
+          return mapCharts;
+        });
+    } else return Promise.resolve(mapCharts);
+  };
+
+  formatContent = (
+    content?: DashboardContentSchema | DashboardContentSchemaCID,
+    removeIds?: boolean,
+  ) => {
     let purifiedContent;
     if (removeIds === undefined || removeIds)
       purifiedContent = content ? omitDeep(content, 'id') : undefined;
     else purifiedContent = content;
+
     return content ? JSON.stringify(purifiedContent, null, 4) : '';
   };
 
@@ -234,7 +342,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       }
       const segments = await this.fetchSegments(organisationId);
       const builders = await this.fetchBuilders(organisationId);
-      const contentText = content ? this.formatContent(content.content) : '';
+      const contentText = content ? this.formatContent(content.content, false) : '';
       const selectedSegments = this.convertIdsToSelectValues(dashboard.segment_ids);
       const selectedBuilders = this.convertIdsToSelectValues(dashboard.builder_ids);
       const enrichedSegmentsValues = this.enrichSelectedValuesByOptions(selectedSegments, segments);
@@ -262,7 +370,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
         selectedBuilders: enrichedBuildersValues,
         contentTextOrig: contentText,
         contentText: contentText.length > 0 ? contentText : defaultContent,
-        contentHasIds: false,
+        contentTextEditor: contentText.length > 0 ? contentText : defaultContent,
         content: content,
         loading: false,
         existingBuilders: builders,
@@ -275,7 +383,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     } else {
       this.setState({
         contentText: defaultContent,
-        contentHasIds: false,
+        contentTextEditor: defaultContent,
         loading: false,
         formInitialValues: {
           input_title: 'Untitled dashboard',
@@ -425,7 +533,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       content: content,
       contentTextOrig: this.formatContent(content?.content),
       contentText: this.formatContent(content?.content),
-      contentHasIds: false,
+      contentTextEditor: this.formatContent(content?.content),
     });
   };
 
@@ -572,11 +680,43 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     return result;
   };
 
+  parseDashboardContentSchema = (e: string): DashboardContentSchema | undefined => {
+    try {
+      const parsedContent: DashboardContentSchema = JSON.parse(e);
+      return parsedContent;
+    } catch (e) {
+      return undefined;
+    }
+  };
+
   onContentTextChange = (e: string) => {
     this.setState({
-      contentText: e,
-      contentHasIds: false,
+      contentTextEditor: e,
+      lastContentEditorModificationTs: Date.now(),
     });
+
+    setTimeout(() => {
+      const { lastContentEditorModificationTs } = this.state;
+      if (Date.now() - lastContentEditorModificationTs >= 1000) {
+        const parsedContent = this.parseDashboardContentSchema(e);
+        if (!!parsedContent)
+          this.refreshExternalChartsMap(parsedContent).then(newMapCharts => {
+            const formattedContentTextWithChartIds = this.formatContent(
+              this.moveExternallyLoadedPropertiesFromDashboardContent(
+                parsedContent,
+                'restore',
+                newMapCharts,
+              ),
+              false,
+            );
+
+            this.setState({
+              contentText: formattedContentTextWithChartIds,
+              mapCharts: newMapCharts,
+            });
+          });
+      }
+    }, 1000);
   };
 
   onSave = () => {
@@ -779,16 +919,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
   }
 
   renderEditorTab() {
-    const { contentErrorMessage, contentText, contentHasIds } = this.state;
-
-    let contentTextWithoutIds;
-    if (contentHasIds) {
-      try {
-        contentTextWithoutIds = this.formatContent(JSON.parse(contentText));
-      } catch (err) {
-        contentTextWithoutIds = contentText;
-      }
-    } else contentTextWithoutIds = contentText;
+    const { contentErrorMessage, contentTextEditor } = this.state;
 
     const contentErrorStatus = contentErrorMessage ? 'error' : 'success';
     return (
@@ -806,7 +937,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
           showGutter={true}
           highlightActiveLine={false}
           width='100%'
-          value={contentTextWithoutIds}
+          value={contentTextEditor}
           minLines={20}
           maxLines={1000}
           height='auto'
@@ -822,10 +953,13 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
       </Form.Item>
     );
   }
+
   updateSchema = (newState: DashboardContentSchema) => {
     this.setState({
       contentText: this.formatContent(newState, false),
-      contentHasIds: true,
+      contentTextEditor: this.formatContent(
+        this.moveExternallyLoadedPropertiesFromDashboardContent(newState, 'remove'),
+      ),
     });
   };
 
