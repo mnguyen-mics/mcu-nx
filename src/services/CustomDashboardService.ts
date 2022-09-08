@@ -7,6 +7,7 @@ import {
   CustomDashboardResource,
   CustomDashboardContentResource,
   DashboardContentSchema,
+  DashboardContentSchemaCID,
   DashboardContentCard,
   DashboardContentSection,
 } from '../models/customDashboards/customDashboards';
@@ -19,7 +20,6 @@ import {
   DashboardScope,
   DashboardContentStats,
   DataFileDashboardResource,
-  DashboardContentSectionsContent,
 } from '../models/dashboards/dashboardsModel';
 import { DashboardType } from '../models/dashboards/dashboards';
 import { myDashboards } from '../utils/DefaultDashboards';
@@ -28,12 +28,14 @@ import { IDataFileService } from './DataFileService';
 import { AbstractParentSource, AbstractSource } from '../models/dashboards/dataset/datasource_tree';
 import { ChartResource } from '../models/chart/Chart';
 import {
-  isExternalChartConfigExt,
+  isExternalChartConfig,
   ChartCommonConfig,
   ChartConfig,
-  ExternalChartConfigExt,
+  ExternalChartConfig,
+  ChartType,
 } from './ChartDatasetService';
 import { IChartService } from './ChartsService';
+import { SourceType } from '../models/dashboards/dataset/common';
 
 export interface GetDashboardsOptions extends PaginatedApiParam {
   organisation_id?: string;
@@ -101,6 +103,22 @@ const dashboardsSchema = yup.array().of(
     ),
   }),
 );
+
+export const defaultChartConfigText = {
+  title: 'Number of active user points',
+  type: 'Metric' as ChartType,
+  dataset: {
+    type: 'activities_analytics' as SourceType,
+    query_json: {
+      dimensions: [],
+      metrics: [
+        {
+          expression: 'users',
+        },
+      ],
+    },
+  },
+};
 
 export interface ICustomDashboardService {
   getDashboards: (
@@ -180,16 +198,12 @@ export interface ICustomDashboardService {
 
   removeExternallyLoadedPropertiesFromChartConfig: (chartConfig: ChartConfig) => ChartCommonConfig;
 
-  removeExternallyLoadedPropertiesFromDashboardContent: (
-    content: DashboardContentSchema,
-  ) => DashboardContentSchema;
-
-  getAllChartsIds: (dashboardPageContent: DashboardPageContent) => string[];
+  getAllChartsIds: (dashboardContent: DashboardContentSchemaCID) => string[];
 
   loadChartsByIds: (
     chartsIds: string[],
     organisationId: string,
-  ) => Promise<Map<string, ChartResource>>;
+  ) => Promise<Map<string, ChartConfig>>;
 }
 
 @injectable()
@@ -322,27 +336,6 @@ export default class CustomDashboardService implements ICustomDashboardService {
     );
   }
 
-  removeExternallyLoadedPropertiesFromDashboardContent = (
-    content: DashboardContentSchema,
-  ): DashboardContentSchema => {
-    return {
-      ...content,
-      sections: content.sections.map(section => {
-        return {
-          ...section,
-          cards: section.cards.map(card => {
-            return {
-              ...card,
-              charts: card.charts.map(chart => {
-                return this.removeExternallyLoadedPropertiesFromChartConfig(chart);
-              }),
-            } as DashboardContentCard;
-          }),
-        } as DashboardContentSection;
-      }),
-    } as DashboardContentSchema;
-  };
-
   removeExternallyLoadedPropertiesFromChartConfig = (
     chartConfig: ChartConfig,
   ): ChartCommonConfig => {
@@ -356,19 +349,20 @@ export default class CustomDashboardService implements ICustomDashboardService {
   };
 
   private addExternallyLoadedPropertiesToChartConfig = (
-    chartConfig: ExternalChartConfigExt,
+    chartConfig: ExternalChartConfig,
     organisationId: string,
   ): Promise<ChartConfig> => {
     return this._chartService
       .getChart(chartConfig.chart_id, organisationId)
       .then(response => {
-        return response.data as ChartResource;
+        return response.data.content;
       })
-      .then(chartResource => {
+      .then(externalChartConfig => {
         return {
-          ...chartResource.content,
+          ...externalChartConfig,
           chart_id: chartConfig.chart_id,
-        } as ChartConfig;
+          id: chartConfig.id,
+        };
       });
   };
 
@@ -376,86 +370,95 @@ export default class CustomDashboardService implements ICustomDashboardService {
     chartConfig: ChartCommonConfig,
     organisationId: string,
   ): Promise<ChartConfig> => {
-    if (isExternalChartConfigExt(chartConfig)) {
+    if (isExternalChartConfig(chartConfig)) {
       return this.addExternallyLoadedPropertiesToChartConfig(chartConfig, organisationId);
     } else {
       return Promise.resolve(chartConfig);
     }
   };
 
-  getAllChartsIds = (dashboardPageContent: DashboardPageContent): string[] => {
+  getAllChartsIds = (dashboardContent: DashboardContentSchemaCID): string[] => {
     const chartIds: string[] = [];
-    if (dashboardPageContent.dashboardContent) {
-      dashboardPageContent.dashboardContent.sections.forEach(section => {
-        section.cards.forEach(card => {
-          card.charts.forEach(chart => {
-            if (isExternalChartConfigExt(chart)) {
-              chartIds.push(chart.chart_id);
-            }
-          });
+    dashboardContent.sections.forEach(section => {
+      section.cards.forEach(card => {
+        card.charts.forEach(chart => {
+          if (isExternalChartConfig(chart)) {
+            chartIds.push(chart.chart_id);
+          }
         });
       });
-    }
+    });
     return chartIds;
   };
 
   loadChartsByIds = (
     chartsIds: string[],
     organisationId: string,
-  ): Promise<Map<string, ChartResource>> => {
+  ): Promise<Map<string, ChartConfig>> => {
     const promises: Array<Promise<ChartResource>> = [];
     chartsIds.forEach(chartId => {
       promises.push(
         this._chartService.getChart(chartId, organisationId).then(response => {
-          return response.data as ChartResource;
+          return response.data;
         }),
       );
     });
 
     return Promise.all(promises).then(results => {
-      const map: Map<string, ChartResource> = new Map();
+      const map: Map<string, ChartConfig> = new Map();
 
       results.forEach(chartResource => {
-        map.set(chartResource.id, chartResource);
+        map.set(chartResource.id, chartResource.content);
       });
 
       return map;
     });
   };
 
-  private enrichDashboardPageContextWithExternalCharts = (
-    dashboardPageContent: DashboardPageContent,
+  private enrichDashboardContentSchemaWithExternalCharts = (
+    dashboardContentSchema: DashboardContentSchemaCID,
     organisationId: string,
-  ): Promise<DashboardPageContent> => {
-    const contentCopy: DashboardPageContent = JSON.parse(JSON.stringify(dashboardPageContent));
+  ): Promise<DashboardContentSchema> => {
+    const contentCopy: DashboardContentSchemaCID = JSON.parse(
+      JSON.stringify(dashboardContentSchema),
+    );
 
     const chartsIds = this.getAllChartsIds(contentCopy);
 
     return this.loadChartsByIds(chartsIds, organisationId).then(chartsMap => {
-      return {
+      const dashboardContent: DashboardContentSchema = {
         ...contentCopy,
-        dashboardContent: contentCopy.dashboardContent?.sections.map(section => {
-          return {
+        sections: contentCopy.sections.map(section => {
+          const modifiedSection: DashboardContentSection = {
             ...section,
             cards: section.cards.map(card => {
-              return {
+              const modifiedCard: DashboardContentCard = {
                 ...card,
                 charts: card.charts.map(chart => {
-                  if (isExternalChartConfigExt(chart)) {
-                    const externalChart = chartsMap.get(chart.chart_id);
-                    return {
+                  if (isExternalChartConfig(chart)) {
+                    const externalChartOpt = chartsMap.get(chart.chart_id);
+                    const externalChart: ChartConfig = !!externalChartOpt
+                      ? externalChartOpt
+                      : defaultChartConfigText;
+
+                    const enrichedChartConfig: ChartConfig = {
                       ...chart,
-                      ...externalChart?.content,
-                    } as ChartCommonConfig;
+                      ...externalChart,
+                    };
+                    return enrichedChartConfig;
                   } else {
                     return chart;
                   }
                 }),
-              } as DashboardContentCard;
+              };
+              return modifiedCard;
             }),
-          } as DashboardContentSectionsContent;
+          };
+          return modifiedSection;
         }),
-      } as DashboardPageContent;
+      };
+
+      return dashboardContent;
     });
   };
 
@@ -498,7 +501,19 @@ export default class CustomDashboardService implements ICustomDashboardService {
             .filter(dashboard => !!dashboard) as DashboardPageContent[];
 
           const promises = apiDashboardContents.map(content => {
-            return this.enrichDashboardPageContextWithExternalCharts(content, organisationId);
+            if (!!content.dashboardContent) {
+              return this.enrichDashboardContentSchemaWithExternalCharts(
+                content.dashboardContent,
+                organisationId,
+              ).then(enrichedSchema => {
+                const result: DashboardPageContent = {
+                  ...content,
+                  dashboardContent: enrichedSchema,
+                };
+
+                return result;
+              });
+            } else return content;
           });
 
           return Promise.all(promises);

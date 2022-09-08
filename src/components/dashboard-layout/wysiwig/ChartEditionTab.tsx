@@ -14,6 +14,7 @@ import {
 } from '../../../utils/source/DataSourceHelper';
 import { IQueryService, QueryService } from '../../../services/QueryService';
 import { QueryScopeAdapter } from '../../../utils/QueryScopeAdapter';
+import { defaultChartConfigText } from '../../../services/CustomDashboardService';
 
 interface ChartEditionProps {
   chartConfig?: ChartCommonConfig;
@@ -47,22 +48,6 @@ const messages = defineMessages({
     defaultMessage: 'Delete chart',
   },
 });
-
-const defaultChartConfigText = {
-  title: 'Number of active user points',
-  type: 'Metric',
-  dataset: {
-    type: 'activities_analytics',
-    query_json: {
-      dimensions: [],
-      metrics: [
-        {
-          expression: 'users',
-        },
-      ],
-    },
-  },
-};
 
 class ChartEditionTab extends React.Component<Props, ChartEditionState> {
   constructor(props: Props) {

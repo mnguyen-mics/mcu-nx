@@ -82,19 +82,16 @@ export interface ManagedChartConfig {
 }
 
 export interface ExternalChartConfig {
+  id?: string;
   chart_id: string;
 }
 
-export type ExternalChartConfigExt = ExternalChartConfig & Partial<ManagedChartConfig>;
-
 export type ChartConfig = ManagedChartConfig & DataSource;
 
-export type ChartCommonConfig = ChartConfig | ExternalChartConfigExt;
+export type ChartCommonConfig = ChartConfig | ExternalChartConfig;
 
-export function isExternalChartConfigExt(
-  config: ChartCommonConfig,
-): config is ExternalChartConfigExt {
-  return (config as ExternalChartConfigExt).chart_id !== undefined;
+export function isExternalChartConfig(config: ChartCommonConfig): config is ExternalChartConfig {
+  return (config as ExternalChartConfig).chart_id !== undefined;
 }
 
 interface PieChartApiProps {

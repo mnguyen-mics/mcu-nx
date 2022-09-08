@@ -183,8 +183,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       .getChartConfigByCommonChartConfig(newChartConfig, organisationId)
       .then(chartConfig => {
         const newChart: any = chartConfig;
-
-        const keys = Object.keys(newChart);
+        const keys = Object.keys(newChart).filter(key => key !== 'id');
         keys.forEach(key => {
           existingChart[key] = newChart[key];
         });
@@ -200,7 +199,6 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
   ) {
     const { updateState, organisationId } = this.props;
     newChartConfig.id = newId;
-
     this._dashboardService
       .getChartConfigByCommonChartConfig(newChartConfig, organisationId)
       .then(chartConfig => {

@@ -10,7 +10,6 @@ import injectNotifications, {
   InjectedNotificationProps,
 } from '../notifications/injectNotifications';
 import {
-  DashboardContentSections,
   DashboardPageContent,
   DashboardWrapperProps,
   DataFileDashboardResource,
@@ -25,6 +24,7 @@ import {
   QueryExecutionSource,
   QueryExecutionSubSource,
 } from '../../models/platformMetrics/QueryExecutionSource';
+import { DashboardContentSchema } from '../../models/customDashboards/customDashboards';
 
 export const messages = defineMessages({
   comingSoon: {
@@ -48,7 +48,7 @@ interface DashboardPageWrapperProps {
   className?: string;
   segmentDashboardTechnicalInformation?: React.ReactNode;
   cohortLookalikeCalibration?: React.ReactNode;
-  defaultDashboardContent?: DashboardContentSections;
+  defaultDashboardContent?: DashboardContentSchema;
   DatamartUsersAnalyticsWrapper?: React.ComponentClass<DatamartUsersAnalyticsWrapperProps>;
   DashboardWrapper?: React.ComponentClass<DashboardWrapperProps>;
   contextualTargetingTab?: React.ReactNode;

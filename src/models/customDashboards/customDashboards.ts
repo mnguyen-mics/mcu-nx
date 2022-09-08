@@ -1,4 +1,4 @@
-import { ChartConfig } from '../../services/ChartDatasetService';
+import { ChartCommonConfig, ChartConfig } from '../../services/ChartDatasetService';
 import { SourceType } from '../dashboards/dataset/common';
 import { DimensionFilter } from '../report/ReportRequestBody';
 
@@ -20,7 +20,7 @@ export interface CustomDashboardResource {
 
 export interface CustomDashboardContentResource {
   id: string;
-  content: DashboardContentSchema;
+  content: DashboardContentSchema | DashboardContentSchemaCID;
   organisation_id: string;
   created_ts: Date;
   created_by: string;
@@ -45,6 +45,16 @@ export interface DashboardContentCard {
   h: number;
   layout?: string;
   charts: ChartConfig[];
+}
+
+export interface DashboardContentSchemaCID extends Omit<DashboardContentSchema, 'sections'> {
+  sections: DashboardContentSectionCID[];
+}
+export interface DashboardContentSectionCID extends Omit<DashboardContentSection, 'cards'> {
+  cards: DashboardContentCardCID[];
+}
+export interface DashboardContentCardCID extends Omit<DashboardContentCard, 'charts'> {
+  charts: ChartCommonConfig[];
 }
 
 export interface DashboardAvailableFilters {
