@@ -248,20 +248,14 @@ export class ChartDatasetService implements IChartDatasetService {
                 if (err.error_code === 'SERVICE_UNAVAILABLE') {
                   retry(err);
                 }
-
                 throw err;
               });
           },
           { retries: 50 },
-        ).catch(e => {
-          return e;
-        });
+        );
       })
       .then(res => {
         return res.data;
-      })
-      .catch(e => {
-        return e;
       });
   }
 
@@ -414,13 +408,9 @@ export class ChartDatasetService implements IChartDatasetService {
         queryExecutionSubSource,
         scope,
         queryFragment,
-      )
-        .then(res => {
-          return formatDatasetForOtql(res, xKey, seriesTitle);
-        })
-        .catch(e => {
-          return e;
-        });
+      ).then(res => {
+        return formatDatasetForOtql(res, xKey, seriesTitle);
+      });
       return {
         ...source,
         dataset: dataset,
@@ -559,9 +549,7 @@ export class ChartDatasetService implements IChartDatasetService {
       queryExecutionSubSource,
       providedScope,
       queryFragment,
-    ).catch(e => {
-      return e;
-    });
+    );
     if (!hydratedTree || typeof hydratedTree === 'string') {
       return Promise.reject(
         hydratedTree ? (hydratedTree as string) : 'Could not retrieve data for the chart',
