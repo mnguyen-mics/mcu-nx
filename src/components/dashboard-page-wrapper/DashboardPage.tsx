@@ -10,7 +10,7 @@ import {
   DashboardWrapperProps,
   DataFileDashboardResource,
   DatamartUsersAnalyticsWrapperProps,
-} from '../../models/dashboards/old-dashboards-model';
+} from '../../models/dashboards/dashboardsModel';
 import { StandardSegmentBuilderQueryDocument } from '../../models/standardSegmentBuilder/StandardSegmentBuilderResource';
 import { AudienceSegmentShape } from '../../models/audienceSegment/AudienceSegmentResource';
 import { injectDrawer } from '../drawer';

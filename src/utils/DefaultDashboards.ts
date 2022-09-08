@@ -1,5 +1,5 @@
 import cuid from 'cuid';
-import { DataFileDashboardResource } from '../models/dashboards/old-dashboards-model';
+import { DataFileDashboardResource } from '../models/dashboards/dashboardsModel';
 
 export const myDashboards: DataFileDashboardResource[] = [
   {

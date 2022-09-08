@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { DashboardScope } from '../models/dashboards/old-dashboards-model';
+import { DashboardScope } from '../models/dashboards/dashboardsModel';
 
 export interface DataLayerDefinition {
   [key: string]: any;

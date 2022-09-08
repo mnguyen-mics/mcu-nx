@@ -20,7 +20,7 @@ import {
   DashboardContentStats,
   DataFileDashboardResource,
   DashboardContentSectionsContent,
-} from '../models/dashboards/old-dashboards-model';
+} from '../models/dashboards/dashboardsModel';
 import { DashboardType } from '../models/dashboards/dashboards';
 import { myDashboards } from '../utils/DefaultDashboards';
 import { TYPES } from '../constants/types';
@@ -403,7 +403,7 @@ export default class CustomDashboardService implements ICustomDashboardService {
     chartsIds: string[],
     organisationId: string,
   ): Promise<Map<string, ChartResource>> => {
-    const promises: Promise<ChartResource>[] = [];
+    const promises: Array<Promise<ChartResource>> = [];
     chartsIds.forEach(chartId => {
       promises.push(
         this._chartService.getChart(chartId, organisationId).then(response => {
