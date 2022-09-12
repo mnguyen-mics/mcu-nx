@@ -1,3 +1,4 @@
+import { MockedDataActivityEventNature } from './../MockedData';
 import {
   MockedAnalytics,
   MockedAnalytics2,
@@ -54,5 +55,17 @@ export const fetchmockOptions = [
   {
     matcher: 'glob:/undefined/v1/datamarts/1418/channels',
     response: MockedFetchChannels,
+  },
+  {
+    matcher: 'glob:/undefined/v1/datamarts/1414/query_executions/otql?use_cache=true*',
+    response: MockedMetricData,
+  },
+  {
+    matcher: 'glob:/undefined/v1/datamarts/1415/query_executions/otql?use_cache=true*',
+    response: MockedDataActivityEventNature,
+  },
+  {
+    matcher: 'glob:/undefined/v1/datamarts/*/queries/*',
+    response: { data: { query_text: 'Select @count() from UserPoint', query_language: 'OTQL' } },
   },
 ];

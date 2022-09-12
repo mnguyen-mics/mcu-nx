@@ -22,5 +22,5 @@
     "removeComments": true,
     "experimentalDecorators": true
   },
-  "exclude": ["node_modules", "lib", "**/*.test.*", "**/*.fixture.*"]
+  "exclude": ["node_modules", "lib", "**/*.test.*"]
 }

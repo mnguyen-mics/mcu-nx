@@ -228,6 +228,8 @@ export default (
                 organisationId='504'
                 defaultDashboardContent={defaultDashboardContent}
                 fetchApiDashboards={fetchApiDashboards}
+                queryExecutionSource='DASHBOARD'
+                queryExecutionSubSource='ADVANCED_SEGMENT_BUILDER_DASHBOARD'
               />
             </FetchMock>
           </LocalStorageMock>

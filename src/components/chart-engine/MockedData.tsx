@@ -19,6 +19,75 @@ export const MockedMetricData = {
   },
 };
 
+export const MockedDataActivityEventNature = {
+  status: 'ok',
+  data: {
+    took: 41396,
+    timed_out: false,
+    offset: null,
+    limit: null,
+    result_type: 'AGGREGATION',
+    precision: 'FULL_PRECISION',
+    sampling_ratio: null,
+    rows: [
+      {
+        aggregations: {
+          bucket_aggregations: [
+            {
+              name: 'map_nature',
+              field_name: 'nature',
+              path: 'activity_events',
+              type: 'map',
+              buckets: [
+                { key: 'item_view', count: 1298429159 },
+                { key: '$set_user_profile_properties', count: 1022688613 },
+                { key: 'navigation', count: 1898685200 },
+                { key: 'search', count: 1065794655 },
+                { key: 'home', count: 127178688 },
+                { key: '$ad_view', count: 111695368 },
+                { key: 'user_identifiers_association', count: 165816430 },
+                { key: 'basket_view', count: 135723390 },
+                { key: 'offline_order', count: 164167310 },
+                { key: '$quit_while_running', count: 105356062 },
+                { key: 'transaction_confirmed', count: 10682105 },
+                { key: 'editorials', count: 14077987 },
+                { key: '$conversion', count: 16347167 },
+                { key: 'online_order', count: 16131453 },
+                { key: 'artist_view', count: 15922742 },
+                { key: 'services', count: 13674901 },
+                { key: 'set_user_profile_properties', count: 12556969 },
+              ],
+            },
+          ],
+          buckets: [
+            {
+              name: 'map_nature',
+              field_name: 'nature',
+              path: 'activity_events',
+              type: 'map',
+              buckets: [
+                { key: 'item_view', count: 1298429159 },
+                { key: '$set_user_profile_properties', count: 1022688613 },
+                { key: 'navigation', count: 1898685200 },
+                { key: 'search', count: 1065794655 },
+                { key: 'home', count: 127178688 },
+                { key: '$ad_view', count: 111695368 },
+                { key: 'user_identifiers_association', count: 165816430 },
+                { key: 'basket_view', count: 135723390 },
+                { key: 'offline_order', count: 164167310 },
+                { key: '$quit_while_running', count: 105356062 },
+              ],
+            },
+          ],
+          metrics: [],
+        },
+      },
+    ],
+    cache_hit: false,
+    warning_message: null,
+  },
+};
+
 export const MockedData = {
   status: 'ok',
   data: {

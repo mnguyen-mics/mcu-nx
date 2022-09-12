@@ -38,7 +38,7 @@ import {
 
 type Layout = 'vertical' | 'horizontal';
 
-interface ChartProps {
+export interface ChartProps {
   datamartId: string;
   organisationId: string;
   chartConfig: ChartConfig;

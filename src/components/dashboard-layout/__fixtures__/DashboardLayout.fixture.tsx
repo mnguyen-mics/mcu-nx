@@ -18,12 +18,12 @@ import {
   propsMetric,
 } from '../__utils__/dashboardConfig';
 import { fetchmockOptions } from '../__utils__/fetchMockOptions';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider, InjectedIntlProps } from 'react-intl';
 
 const store = configureStore();
 
 const WithDrawerDashboardLayout = compose<
-  DashboardLayoutProps & InjectedDrawerProps,
+  DashboardLayoutProps & InjectedDrawerProps & InjectedIntlProps,
   DashboardLayoutProps
 >(injectDrawer)(DashboardLayout);
 
@@ -31,8 +31,16 @@ function adaptToEditable(_props: DashboardLayoutProps) {
   return {
     ..._props,
     schema: _props.schema,
+    updateSchema: () => undefined,
   };
 }
+
+const commonProps = {
+  organisationId: '504',
+  editable: false,
+  queryExecutionSource: 'AUTOMATION',
+  queryExecutionSubSource: 'AUTOMATION_BUILDER',
+} as DashboardLayoutProps;
 
 export default {
   standard: (
@@ -41,12 +49,12 @@ export default {
         <IntlProvider locale='en'>
           <LocalStorageMock items={{ access_token: 're4lt0k3n' }}>
             <FetchMock mocks={fetchmockOptions}>
-              <WithDrawerDashboardLayout {...propsMetric} />
-              <WithDrawerDashboardLayout {...props} />
-              <WithDrawerDashboardLayout {...propsAnalytics1} />
-              <WithDrawerDashboardLayout {...propsAnalytics2} />
-              <WithDrawerDashboardLayout {...propsAnalytics3} />
-              <WithDrawerDashboardLayout {...propsAnalytics4} />
+              <WithDrawerDashboardLayout {...propsMetric} {...commonProps} />
+              <WithDrawerDashboardLayout {...props} {...commonProps} />
+              <WithDrawerDashboardLayout {...propsAnalytics1} {...commonProps} />
+              <WithDrawerDashboardLayout {...propsAnalytics2} {...commonProps} />
+              <WithDrawerDashboardLayout {...propsAnalytics3} {...commonProps} />
+              <WithDrawerDashboardLayout {...propsAnalytics4} {...commonProps} />
             </FetchMock>
           </LocalStorageMock>
         </IntlProvider>
@@ -59,7 +67,7 @@ export default {
         <IntlProvider locale='en'>
           <LocalStorageMock items={{ access_token: 're4lt0k3n' }}>
             <FetchMock mocks={fetchmockOptions}>
-              <EditableDashboardLayout {...adaptToEditable(props)} />
+              <EditableDashboardLayout {...adaptToEditable({ ...props, ...commonProps })} />
             </FetchMock>
           </LocalStorageMock>
         </IntlProvider>
