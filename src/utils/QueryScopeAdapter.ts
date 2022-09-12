@@ -86,7 +86,7 @@ export class QueryScopeAdapter {
   private appendJoinClause(query: string, scope?: AbstractScope) {
     if (scope && scope.type === 'SEGMENT') {
       const segmentScope = scope as SegmentScope;
-      return `${query} JOIN UserSegment WHERE id = ${segmentScope.segmentId}`;
+      return `${query} JOIN UserSegment WHERE id = "${segmentScope.segmentId}"`;
     } else return query;
   }
 

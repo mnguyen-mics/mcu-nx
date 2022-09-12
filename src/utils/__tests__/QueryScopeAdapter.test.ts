@@ -11,7 +11,7 @@ import { IQueryService } from '../../services/QueryService';
 import { QueryScopeAdapter } from '../QueryScopeAdapter';
 
 const WHERE_CLAUSE1 = 'activity_events { app_id = 1 }';
-const JOIN_CLAUSE = 'UserSegment WHERE id = 123';
+const JOIN_CLAUSE = 'UserSegment WHERE id = "123"';
 const QUERY1 = `select {id} from UserPoint where ${WHERE_CLAUSE1}`;
 
 const jsonOtqlQuery1 = {
