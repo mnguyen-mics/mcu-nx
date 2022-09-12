@@ -3,7 +3,8 @@ import { StandardModal } from '@mediarithmics-private/mcs-components-library';
 import PluginCardModalContent, { PluginCardModalContentProps } from './PluginCardModalContent';
 import { LayoutablePlugin } from '../../../../models/plugin/Plugins';
 
-export interface PluginCardModalProps<T> extends PluginCardModalContentProps<T> {
+export interface PluginCardModalProps<T extends LayoutablePlugin>
+  extends PluginCardModalContentProps<T> {
   opened: boolean;
 }
 
