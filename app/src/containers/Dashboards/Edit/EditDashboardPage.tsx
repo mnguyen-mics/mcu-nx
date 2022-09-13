@@ -337,7 +337,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
 
   fetchSegments = async (organisationId: string): Promise<LabelValueOption[]> => {
     const segmentsResponse = await this._audienceSegmentService.getSegments(organisationId, {
-      max_results: Number.MAX_SAFE_INTEGER,
+      max_results: 1000000,
     });
     const result = segmentsResponse.data.map(segment => {
       const labelValueOption: LabelValueOption = {
