@@ -165,7 +165,7 @@ const myMockedReduxState = {
 };
 
 const save = (pluginValue: any, propertiesValue: PropertyResourceShape[]): void => {
-  return null;
+  return;
 };
 
 const pluginProperties: PropertyResourceShape[] = [

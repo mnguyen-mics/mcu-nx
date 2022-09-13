@@ -57,7 +57,7 @@ export interface DashboardAvailableFilters {
 }
 
 export type DashboardAvailableFilterType = 'compartments';
-type DashboardValuesRetrieveMethodType = 'query';
+export type DashboardValuesRetrieveMethodType = 'query';
 
 export interface DashboardFilterQueryFragments {
   type: SourceType;

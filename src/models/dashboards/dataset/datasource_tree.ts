@@ -1,3 +1,11 @@
+import {
+  ActivitiesAnalyticsMetric,
+  ActivitiesAnalyticsDimension,
+} from '../../../utils/analytics/ActivitiesAnalyticsReportHelper';
+import {
+  CollectionVolumesMetric,
+  CollectionVolumesDimension,
+} from '../../../utils/analytics/CollectionVolumesReportHelper';
 import { QueryPrecisionMode } from '../../datamart/graphdb/OTQLResult';
 import { ReportRequestBody } from '../../report/ReportRequestBody';
 import { DateOptions, DecoratorsOptions, IndexOptions, ReduceOptions, SourceType } from './common';
@@ -50,5 +58,16 @@ export interface ReduceSource extends AbstractParentSource {
 }
 
 export interface DataSource {
-  dataset: AbstractSource;
+  dataset: GenericSource;
 }
+
+export type GenericSource =
+  | AnalyticsSource<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>
+  | AnalyticsSource<CollectionVolumesMetric, CollectionVolumesDimension>
+  | OTQLSource
+  | AggregationSource
+  | IndexSource
+  | RatioSource
+  | DateFormatSource
+  | GetDecoratorsSource
+  | DataFileSource;

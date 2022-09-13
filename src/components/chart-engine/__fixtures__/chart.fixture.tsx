@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import * as React from 'react';
-import Chart from '../Chart';
+import Chart, { ChartProps } from '../Chart';
 import { IocProvider } from '../../../inversify/inversify.react';
 import { container } from '../../../inversify/inversify.config';
 import config from '../../../react-configuration';
@@ -12,6 +12,14 @@ import { IntlProvider } from 'react-intl';
 import { fetchmockOptions } from '../__utils__/fetchMockOptions';
 
 (global as any).window.MCS_CONSTANTS = config;
+
+const commonProps: Partial<ChartProps> = {
+  datamartId: '1414',
+  organisationId: '504',
+  queryExecutionSource: 'AUTOMATION',
+  queryExecutionSubSource: 'AUTOMATION_BUILDER',
+};
+
 const chartConfigPie: ChartConfig = {
   title: 'Chart 1',
   type: 'pie',
@@ -20,7 +28,7 @@ const chartConfigPie: ChartConfig = {
     query_id: '23',
   },
   options: {
-    innerRadius: true,
+    inner_radius: true,
   },
 };
 
@@ -34,16 +42,6 @@ const chartConfigRadar: ChartConfig = {
   options: {
     height: 300,
     xKey: 'xKey',
-    yKeys: [
-      {
-        key: 'value',
-        message: 'segment',
-      },
-      {
-        key: 'datamart',
-        message: 'datamart',
-      },
-    ],
   },
 };
 
@@ -57,16 +55,6 @@ const chartConfigBars: ChartConfig = {
   options: {
     height: 300,
     xKey: 'xKey',
-    yKeys: [
-      {
-        key: 'value',
-        message: 'segment',
-      },
-      {
-        key: 'datamart',
-        message: 'datamart',
-      },
-    ],
   },
 };
 
@@ -83,15 +71,35 @@ const chartConfigMetric: ChartConfig = {
 };
 const store = configureStore();
 
+const chartPieProps = {
+  chartConfig: chartConfigPie,
+  ...commonProps,
+} as ChartProps;
+
+const chartRadarProps = {
+  chartConfig: chartConfigRadar,
+  ...commonProps,
+} as ChartProps;
+
+const chartBarProps = {
+  chartConfig: chartConfigBars,
+  ...commonProps,
+} as ChartProps;
+
+const chartMetricProps = {
+  chartConfig: chartConfigMetric,
+  ...commonProps,
+} as ChartProps;
+
 export default (
   <Provider store={store}>
     <IntlProvider locale='en'>
       <IocProvider container={container}>
         <FetchMock mocks={fetchmockOptions}>
-          <Chart chartConfig={chartConfigPie} datamartId={'1414'} />
-          <Chart chartConfig={chartConfigRadar} datamartId={'1414'} />
-          <Chart chartConfig={chartConfigBars} datamartId={'1414'} />
-          <Chart chartConfig={chartConfigMetric} datamartId={'1414'} />
+          <Chart {...chartPieProps} />
+          <Chart {...chartRadarProps} />
+          <Chart {...chartBarProps} />
+          <Chart {...chartMetricProps} />
         </FetchMock>
       </IocProvider>
     </IntlProvider>
