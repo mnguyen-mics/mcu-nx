@@ -3,9 +3,9 @@ import React from 'react';
 import { CloseOutlined } from '@ant-design/icons';
 import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
-import { DashboardContentCard } from '../../../models/dashboards/old-dashboards-model';
 import { FormInstance, Rule } from 'antd/lib/form';
 import lodash from 'lodash';
+import { DashboardContentCard } from '../../../models/customDashboards/customDashboards';
 
 interface CardEditionProps {
   card?: DashboardContentCard;

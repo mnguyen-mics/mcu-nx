@@ -7,6 +7,9 @@ import {
   CustomDashboardResource,
   CustomDashboardContentResource,
   DashboardContentSchema,
+  DashboardContentSchemaCID,
+  DashboardContentCard,
+  DashboardContentSection,
 } from '../models/customDashboards/customDashboards';
 import ApiService, { DataListResponse, DataResponse } from './ApiService';
 import {
@@ -17,12 +20,22 @@ import {
   DashboardScope,
   DashboardContentStats,
   DataFileDashboardResource,
-} from '../models/dashboards/old-dashboards-model';
+} from '../models/dashboards/dashboardsModel';
 import { DashboardType } from '../models/dashboards/dashboards';
 import { myDashboards } from '../utils/DefaultDashboards';
 import { TYPES } from '../constants/types';
 import { IDataFileService } from './DataFileService';
 import { AbstractParentSource, AbstractSource } from '../models/dashboards/dataset/datasource_tree';
+import { ChartResource } from '../models/chart/Chart';
+import {
+  isExternalChartConfig,
+  ChartCommonConfig,
+  ChartConfig,
+  ExternalChartConfig,
+  ChartType,
+} from './ChartDatasetService';
+import { IChartService } from './ChartsService';
+import { SourceType } from '../models/dashboards/dataset/common';
 
 export interface GetDashboardsOptions extends PaginatedApiParam {
   organisation_id?: string;
@@ -90,6 +103,22 @@ const dashboardsSchema = yup.array().of(
     ),
   }),
 );
+
+export const defaultChartConfigText = {
+  title: 'Number of active user points',
+  type: 'Metric' as ChartType,
+  dataset: {
+    type: 'activities_analytics' as SourceType,
+    query_json: {
+      dimensions: [],
+      metrics: [
+        {
+          expression: 'users',
+        },
+      ],
+    },
+  },
+};
 
 export interface ICustomDashboardService {
   getDashboards: (
@@ -161,12 +190,29 @@ export interface ICustomDashboardService {
   ) => Promise<DataListResponse<DataFileDashboardResource>>;
 
   getDefaultDashboard: (dashboardId: string) => Promise<DataResponse<DataFileDashboardResource>>;
+
+  getChartConfigByCommonChartConfig: (
+    chartConfig: ChartCommonConfig,
+    organisationId: string,
+  ) => Promise<ChartConfig>;
+
+  removeExternallyLoadedPropertiesFromChartConfig: (chartConfig: ChartConfig) => ChartCommonConfig;
+
+  getAllChartsIds: (dashboardContent: DashboardContentSchemaCID) => string[];
+
+  loadChartsByIds: (
+    chartsIds: string[],
+    organisationId: string,
+  ) => Promise<Map<string, ChartConfig>>;
 }
 
 @injectable()
 export default class CustomDashboardService implements ICustomDashboardService {
   @inject(TYPES.IDataFileService)
   private _datafileService!: IDataFileService;
+
+  @inject(TYPES.IChartService)
+  private _chartService: IChartService;
 
   async deleteDashboard(dashboardId: string, organisationId: string): Promise<void> {
     const endpoint = `dashboards/${dashboardId}`;
@@ -290,6 +336,132 @@ export default class CustomDashboardService implements ICustomDashboardService {
     );
   }
 
+  removeExternallyLoadedPropertiesFromChartConfig = (
+    chartConfig: ChartConfig,
+  ): ChartCommonConfig => {
+    if (chartConfig.chart_id !== undefined) {
+      return {
+        chart_id: chartConfig.chart_id,
+      } as ChartCommonConfig;
+    } else {
+      return chartConfig;
+    }
+  };
+
+  private addExternallyLoadedPropertiesToChartConfig = (
+    chartConfig: ExternalChartConfig,
+    organisationId: string,
+  ): Promise<ChartConfig> => {
+    return this._chartService
+      .getChart(chartConfig.chart_id, organisationId)
+      .then(response => {
+        return response.data.content;
+      })
+      .then(externalChartConfig => {
+        return {
+          ...externalChartConfig,
+          chart_id: chartConfig.chart_id,
+          id: chartConfig.id,
+        };
+      });
+  };
+
+  getChartConfigByCommonChartConfig = (
+    chartConfig: ChartCommonConfig,
+    organisationId: string,
+  ): Promise<ChartConfig> => {
+    if (isExternalChartConfig(chartConfig)) {
+      return this.addExternallyLoadedPropertiesToChartConfig(chartConfig, organisationId);
+    } else {
+      return Promise.resolve(chartConfig);
+    }
+  };
+
+  getAllChartsIds = (dashboardContent: DashboardContentSchemaCID): string[] => {
+    const chartIds: string[] = [];
+    dashboardContent.sections.forEach(section => {
+      section.cards.forEach(card => {
+        card.charts.forEach(chart => {
+          if (isExternalChartConfig(chart)) {
+            chartIds.push(chart.chart_id);
+          }
+        });
+      });
+    });
+    return chartIds;
+  };
+
+  loadChartsByIds = (
+    chartsIds: string[],
+    organisationId: string,
+  ): Promise<Map<string, ChartConfig>> => {
+    const promises: Array<Promise<ChartResource>> = [];
+    chartsIds.forEach(chartId => {
+      promises.push(
+        this._chartService.getChart(chartId, organisationId).then(response => {
+          return response.data;
+        }),
+      );
+    });
+
+    return Promise.all(promises).then(results => {
+      const map: Map<string, ChartConfig> = new Map();
+
+      results.forEach(chartResource => {
+        map.set(chartResource.id, chartResource.content);
+      });
+
+      return map;
+    });
+  };
+
+  private enrichDashboardContentSchemaWithExternalCharts = (
+    dashboardContentSchema: DashboardContentSchemaCID,
+    organisationId: string,
+  ): Promise<DashboardContentSchema> => {
+    const contentCopy: DashboardContentSchemaCID = JSON.parse(
+      JSON.stringify(dashboardContentSchema),
+    );
+
+    const chartsIds = this.getAllChartsIds(contentCopy);
+
+    return this.loadChartsByIds(chartsIds, organisationId).then(chartsMap => {
+      const dashboardContent: DashboardContentSchema = {
+        ...contentCopy,
+        sections: contentCopy.sections.map(section => {
+          const modifiedSection: DashboardContentSection = {
+            ...section,
+            cards: section.cards.map(card => {
+              const modifiedCard: DashboardContentCard = {
+                ...card,
+                charts: card.charts.map(chart => {
+                  if (isExternalChartConfig(chart)) {
+                    const externalChartOpt = chartsMap.get(chart.chart_id);
+                    const externalChart: ChartConfig = !!externalChartOpt
+                      ? externalChartOpt
+                      : defaultChartConfigText;
+
+                    const enrichedChartConfig: ChartConfig = {
+                      ...chart,
+                      ...externalChart,
+                    };
+                    return enrichedChartConfig;
+                  } else {
+                    return chart;
+                  }
+                }),
+              };
+              return modifiedCard;
+            }),
+          };
+          return modifiedSection;
+        }),
+      };
+
+      return dashboardContent;
+    });
+  };
+
   getDashboardsPageContents(
     organisationId: string,
     options?: DashboardsOptions,
@@ -328,7 +500,23 @@ export default class CustomDashboardService implements ICustomDashboardService {
             })
             .filter(dashboard => !!dashboard) as DashboardPageContent[];
 
-          return apiDashboardContents;
+          const promises = apiDashboardContents.map(content => {
+            if (!!content.dashboardContent) {
+              return this.enrichDashboardContentSchemaWithExternalCharts(
+                content.dashboardContent,
+                organisationId,
+              ).then(enrichedSchema => {
+                const result: DashboardPageContent = {
+                  ...content,
+                  dashboardContent: enrichedSchema,
+                };
+
+                return result;
+              });
+            } else return content;
+          });
+
+          return Promise.all(promises);
         });
       }
     });
@@ -577,8 +765,6 @@ export default class CustomDashboardService implements ICustomDashboardService {
   }
 
   getDefaultDashboard(dashboardId: string): Promise<DataResponse<DataFileDashboardResource>> {
-    // const endpoint = `dashboards/${dashboardId}`;
-    // return ApiService.getRequest(endpoint);
     const foundDashboard = myDashboards.find(d => d.id === dashboardId);
     if (foundDashboard) {
       return Promise.resolve({ status: 'ok' as any, data: foundDashboard });

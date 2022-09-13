@@ -78,9 +78,21 @@ export interface ManagedChartConfig {
   type: ChartType;
   colors?: string[];
   options?: ChartApiOptions;
+  chart_id?: string;
+}
+
+export interface ExternalChartConfig {
+  id?: string;
+  chart_id: string;
 }
 
 export type ChartConfig = ManagedChartConfig & DataSource;
+
+export type ChartCommonConfig = ChartConfig | ExternalChartConfig;
+
+export function isExternalChartConfig(config: ChartCommonConfig): config is ExternalChartConfig {
+  return (config as ExternalChartConfig).chart_id !== undefined;
+}
 
 interface PieChartApiProps {
   height?: number;

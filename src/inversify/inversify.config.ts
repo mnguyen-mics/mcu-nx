@@ -42,6 +42,7 @@ import {
   IdentityProviderService,
   IIdentityProviderService,
 } from '../services/IdentityProviderService';
+import ChartService, { IChartService } from '../services/ChartsService';
 
 export const container = new Container();
 
@@ -84,6 +85,7 @@ container.bind<ICompartmentService>(TYPES.ICompartmentService).to(CompartmentSer
 container
   .bind<IIdentityProviderService>(TYPES.IIdentityProviderService)
   .to(IdentityProviderService);
+container.bind<IChartService>(TYPES.IChartService).to(ChartService);
 
 export const { lazyInject } = getDecorators(container, false);
 

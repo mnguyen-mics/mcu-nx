@@ -5,7 +5,6 @@
  *
  **************************************/
 
-import { ChartConfig } from '../../services/ChartDatasetService';
 import { Layout } from 'react-grid-layout';
 import { OTQLResult, QueryPrecisionMode } from '../datamart/graphdb/OTQLResult';
 import { AudienceSegmentShape } from '../audienceSegment/AudienceSegmentResource';
@@ -21,6 +20,7 @@ import {
   QueryExecutionSource,
   QueryExecutionSubSource,
 } from '../platformMetrics/QueryExecutionSource';
+import { DashboardContentSchema } from '../customDashboards/customDashboards';
 
 export type DashboardScope = 'home' | 'segments' | 'builders' | 'console';
 export type DashboardType = 'HOME' | 'SEGMENT' | 'AUDIENCE_BUILDER' | 'CONSOLE';
@@ -50,20 +50,6 @@ export interface DashboardResource {
   archived: boolean;
 }
 
-export interface DashboardContentCard {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  layout?: string;
-  charts: ChartConfig[];
-}
-
-export interface DashboardContentSectionsContent {
-  title: string;
-  cards: DashboardContentCard[];
-}
-
 export interface DashboardContent {
   content: string;
 }
@@ -72,15 +58,11 @@ export interface DashboardContentResource {
   data: DashboardContent;
 }
 
-export interface DashboardContentSections {
-  sections: DashboardContentSectionsContent[];
-}
-
 export interface DashboardPageContent {
   dashboardRegistrationId?: string;
   scopes: DashboardScope[];
   title: string;
-  dashboardContent?: DashboardContentSections;
+  dashboardContent?: DashboardContentSchema;
 }
 
 export interface DashboardContentDataset {

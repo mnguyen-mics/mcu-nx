@@ -4,7 +4,7 @@ import React, { CSSProperties } from 'react';
 import { Layout, Responsive, WidthProvider } from 'react-grid-layout';
 import Chart from '../chart-engine';
 import cuid from 'cuid';
-import { ChartConfig, ChartType } from '../../services/ChartDatasetService';
+import { ChartCommonConfig, ChartConfig, ChartType } from '../../services/ChartDatasetService';
 import McsLazyLoad from '../lazyload';
 import { AbstractScope } from '../../models/datamart/graphdb/Scope';
 import DashboardFilter from './dashboard-filter';
@@ -15,7 +15,7 @@ import {
   DashboardContentSection,
   DashboardFilterQueryFragments,
 } from '../../models/customDashboards/customDashboards';
-import { InjectedDrawerProps } from '../..';
+import { ICustomDashboardService, InjectedDrawerProps, lazyInject, TYPES } from '../..';
 import ChartEditionTab from './wysiwig/ChartEditionTab';
 import CardEditionTab from './wysiwig/CardEditionTab';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
@@ -85,6 +85,9 @@ const messages = defineMessages({
 });
 
 export default class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
+  @lazyInject(TYPES.ICustomDashboardService)
+  private _dashboardService: ICustomDashboardService;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -169,33 +172,40 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
   }
 
   private updateChart(
-    newChartConfig: ChartConfig,
+    newChartConfig: ChartCommonConfig,
     chartNode: ChartConfig,
     contentCopy: DashboardContentSchema,
   ) {
-    const { updateState } = this.props;
+    const { updateState, organisationId } = this.props;
     const existingChart: any = chartNode;
-    const newChart: any = newChartConfig;
 
-    const keys = Object.keys(newChart);
-    keys.forEach(key => {
-      existingChart[key] = newChart[key];
-    });
-    if (updateState) updateState(contentCopy);
+    this._dashboardService
+      .getChartConfigByCommonChartConfig(newChartConfig, organisationId)
+      .then(chartConfig => {
+        const newChart: any = chartConfig;
+        const keys = Object.keys(newChart).filter(key => key !== 'id');
+        keys.forEach(key => {
+          existingChart[key] = newChart[key];
+        });
+        if (updateState) updateState(contentCopy);
+      });
   }
 
   private createChart(
-    newChartConfig: ChartConfig,
+    newChartConfig: ChartCommonConfig,
     cardNode: DashboardContentCard,
     contentCopy: DashboardContentSchema,
     newId: string,
   ) {
-    const { updateState } = this.props;
+    const { updateState, organisationId } = this.props;
     newChartConfig.id = newId;
+    this._dashboardService
+      .getChartConfigByCommonChartConfig(newChartConfig, organisationId)
+      .then(chartConfig => {
+        cardNode.charts.push(chartConfig);
 
-    cardNode.charts.push(newChartConfig);
-
-    if (updateState) updateState(contentCopy);
+        if (updateState) updateState(contentCopy);
+      });
   }
 
   private deleteChart(
@@ -308,8 +318,9 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
           additionalProps: {
             datamartId: datamart_id,
             closeTab: closeNextDrawer,
-            chartConfig: chartNode,
-            saveChart: (c: ChartConfig) => {
+            chartConfig:
+              this._dashboardService.removeExternallyLoadedPropertiesFromChartConfig(chartNode),
+            saveChart: (c: ChartCommonConfig) => {
               this.updateChart(c, chartNode, contentCopy);
             },
             deleteChart: () => {
@@ -379,7 +390,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
           additionalProps: {
             datamartId: datamart_id,
             closeTab: closeNextDrawer,
-            saveChart: (newChartConfig: ChartConfig) => {
+            saveChart: (newChartConfig: ChartCommonConfig) => {
               const chartNode = this.findChartNode(newId, contentCopy);
               if (chartNode) {
                 this.updateChart(newChartConfig, chartNode, contentCopy);

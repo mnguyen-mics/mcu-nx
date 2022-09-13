@@ -1,6 +1,6 @@
 import { Button, Form, Input } from 'antd';
 import React from 'react';
-import { ChartConfig } from '../../../services/ChartDatasetService';
+import { ChartCommonConfig } from '../../../services/ChartDatasetService';
 import AceEditor from 'react-ace';
 import { Ace } from 'ace-builds';
 import { CloseOutlined } from '@ant-design/icons';
@@ -14,10 +14,11 @@ import {
 } from '../../../utils/source/DataSourceHelper';
 import { IQueryService, QueryService } from '../../../services/QueryService';
 import { QueryScopeAdapter } from '../../../utils/QueryScopeAdapter';
+import { defaultChartConfigText } from '../../../services/CustomDashboardService';
 
 interface ChartEditionProps {
-  chartConfig?: ChartConfig;
-  saveChart: (c: ChartConfig) => void;
+  chartConfig?: ChartCommonConfig;
+  saveChart: (c: ChartCommonConfig) => void;
   deleteChart?: () => void;
   closeTab: () => void;
   datamartId: string;
@@ -47,22 +48,6 @@ const messages = defineMessages({
     defaultMessage: 'Delete chart',
   },
 });
-
-const defaultChartConfigText = {
-  title: 'Number of active user points',
-  type: 'Metric',
-  dataset: {
-    type: 'activities_analytics',
-    query_json: {
-      dimensions: [],
-      metrics: [
-        {
-          expression: 'users',
-        },
-      ],
-    },
-  },
-};
 
 class ChartEditionTab extends React.Component<Props, ChartEditionState> {
   constructor(props: Props) {
