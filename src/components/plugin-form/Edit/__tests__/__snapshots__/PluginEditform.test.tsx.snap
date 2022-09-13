@@ -1,0 +1,743 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render PluginEditForm 1`] = `
+<section
+  className="ant-layout"
+>
+  <form
+    className="edit-layout ant-layout"
+    id="tset"
+    onSubmit={[Function]}
+  >
+    <main
+      className="ant-layout-content mcs-content-container mcs-form-container ad-group-form"
+      id="tset"
+    >
+      <div
+        className="ant-row"
+        style={Object {}}
+      >
+        <span
+          className="ant-col-3"
+        />
+        <div
+          className="form-field-wrapper"
+        >
+          <div
+            className="ant-row ant-legacy-form-item"
+            style={Object {}}
+          >
+            <div
+              className="ant-col ant-col-15 ant-col-offset-1 ant-legacy-form-item-control-wrapper"
+              style={Object {}}
+            >
+              <div
+                className="ant-legacy-form-item-control"
+              >
+                <span
+                  className="ant-legacy-form-item-children"
+                >
+                  <div
+                    className="ant-row ant-row-middle"
+                    style={Object {}}
+                  >
+                    <div
+                      className="ant-col ant-col-20"
+                      style={Object {}}
+                    />
+                    <div
+                      className="ant-col ant-col-2 no-renderFieldAction"
+                      style={Object {}}
+                    />
+                  </div>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div
+          id="general"
+        >
+          <div
+            className="ant-row ant-row-space-between ant-row-middle section-header"
+            style={Object {}}
+          >
+            <div
+              className="title-container"
+            >
+              <div
+                className="title"
+              >
+                <span>
+                  General Information
+                </span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div
+              className="form-field-wrapper"
+            >
+              <div
+                className="ant-row ant-legacy-form-item"
+                style={Object {}}
+              >
+                <div
+                  className="ant-col ant-col-3 ant-legacy-form-item-label"
+                  style={Object {}}
+                >
+                  <label
+                    className="ant-legacy-form-item-required"
+                    htmlFor={null}
+                    onClick={[Function]}
+                    title=""
+                  >
+                    <span
+                      className="field-label"
+                    >
+                      Name
+                    </span>
+                  </label>
+                </div>
+                <div
+                  className="ant-col ant-col-15 ant-col-offset-1 ant-legacy-form-item-control-wrapper"
+                  style={Object {}}
+                >
+                  <div
+                    className="ant-legacy-form-item-control has-success"
+                  >
+                    <span
+                      className="ant-legacy-form-item-children"
+                    >
+                      <div
+                        className="ant-row ant-row-middle"
+                        style={Object {}}
+                      >
+                        <div
+                          className="ant-col ant-col-20"
+                          style={Object {}}
+                        >
+                          <input
+                            className="ant-input mcs-PluginEditForm_name_field"
+                            disabled={false}
+                            id="plugin.name"
+                            name="plugin.name"
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onDragStart={[Function]}
+                            onDrop={[Function]}
+                            onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            placeholder="Name"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                        <div
+                          className="ant-col ant-col-2 field-tooltip"
+                          style={Object {}}
+                        >
+                          <span
+                            className="mcs-icon "
+                            onMouseEnter={[Function]}
+                            onMouseLeave={[Function]}
+                          >
+                            <i
+                              className="mcs-info"
+                              style={Object {}}
+                            />
+                          </span>
+                        </div>
+                        <div
+                          className="ant-col ant-col-2 no-renderFieldAction"
+                          style={Object {}}
+                        />
+                      </div>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div>
+        <div>
+          <div
+            id="Facebook Custom Audience"
+          >
+            <div
+              className="ant-row ant-row-space-between ant-row-middle section-header"
+              style={Object {}}
+            >
+              <div
+                className="title-container"
+              >
+                <div
+                  className="title"
+                >
+                  <span>
+                    Facebook Custom Audience
+                  </span>
+                </div>
+                <div
+                  className="subtitle"
+                >
+                  <span>
+                    Synchronize your CRM Audiences with Facebook
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                className="form-field-wrapper"
+              >
+                <div
+                  className="ant-row ant-legacy-form-item"
+                  style={Object {}}
+                >
+                  <div
+                    className="ant-col ant-col-3 ant-legacy-form-item-label"
+                    style={Object {}}
+                  >
+                    <label
+                      className="ant-legacy-form-item-required"
+                      htmlFor={null}
+                      onClick={[Function]}
+                      title=""
+                    >
+                      <span
+                        className="field-label"
+                      >
+                        Facebook Ad Account ID
+                      </span>
+                    </label>
+                  </div>
+                  <div
+                    className="ant-col ant-col-15 ant-col-offset-1 ant-legacy-form-item-control-wrapper"
+                    style={Object {}}
+                  >
+                    <div
+                      className="ant-legacy-form-item-control has-success"
+                    >
+                      <span
+                        className="ant-legacy-form-item-children"
+                      >
+                        <div
+                          className="ant-row ant-row-middle"
+                          style={Object {}}
+                        >
+                          <div
+                            className="ant-col ant-col-20"
+                            style={Object {}}
+                          >
+                            <input
+                              className="ant-input"
+                              disabled={false}
+                              id="properties.fb_ad_account_id.value.value"
+                              name="properties.fb_ad_account_id.value.value"
+                              onBlur={[Function]}
+                              onChange={[Function]}
+                              onDragStart={[Function]}
+                              onDrop={[Function]}
+                              onFocus={[Function]}
+                              onKeyDown={[Function]}
+                              placeholder="Fb Ad Account Id"
+                              type="text"
+                              value=""
+                            />
+                          </div>
+                          <div
+                            className="ant-col ant-col-2 field-tooltip"
+                            style={Object {}}
+                          >
+                            <span
+                              className="mcs-icon "
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
+                            >
+                              <i
+                                className="mcs-info"
+                                style={Object {}}
+                              />
+                            </span>
+                          </div>
+                          <div
+                            className="ant-col ant-col-2 no-renderFieldAction"
+                            style={Object {}}
+                          />
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                className="form-field-wrapper"
+              >
+                <div
+                  className="ant-row ant-legacy-form-item"
+                  style={Object {}}
+                >
+                  <div
+                    className="ant-col ant-col-3 ant-legacy-form-item-label"
+                    style={Object {}}
+                  >
+                    <label
+                      className=""
+                      htmlFor={null}
+                      onClick={[Function]}
+                      title=""
+                    >
+                      <span
+                        className="field-label"
+                      >
+                        Compartments to use
+                      </span>
+                    </label>
+                  </div>
+                  <div
+                    className="ant-col ant-col-15 ant-col-offset-1 ant-legacy-form-item-control-wrapper"
+                    style={Object {}}
+                  >
+                    <div
+                      className="ant-legacy-form-item-control has-success"
+                    >
+                      <span
+                        className="ant-legacy-form-item-children"
+                      >
+                        <div
+                          className="ant-row ant-row-middle"
+                          style={Object {}}
+                        >
+                          <div
+                            className="ant-col ant-col-20"
+                            style={Object {}}
+                          >
+                            <input
+                              className="ant-input"
+                              disabled={false}
+                              id="properties.used_compartments.value.value"
+                              name="properties.used_compartments.value.value"
+                              onBlur={[Function]}
+                              onChange={[Function]}
+                              onDragStart={[Function]}
+                              onDrop={[Function]}
+                              onFocus={[Function]}
+                              onKeyDown={[Function]}
+                              placeholder="Used Compartments"
+                              type="text"
+                              value=""
+                            />
+                          </div>
+                          <div
+                            className="ant-col ant-col-2 field-tooltip"
+                            style={Object {}}
+                          >
+                            <span
+                              className="mcs-icon "
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
+                            >
+                              <i
+                                className="mcs-info"
+                                style={Object {}}
+                              />
+                            </span>
+                          </div>
+                          <div
+                            className="ant-col ant-col-2 no-renderFieldAction"
+                            style={Object {}}
+                          />
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div
+                className="form-field-wrapper"
+              >
+                <div
+                  className="ant-row ant-legacy-form-item"
+                  style={Object {}}
+                >
+                  <div
+                    className="ant-col ant-col-3 ant-legacy-form-item-label"
+                    style={Object {}}
+                  >
+                    <label
+                      className="ant-legacy-form-item-required"
+                      htmlFor={null}
+                      onClick={[Function]}
+                      title=""
+                    >
+                      <span
+                        className="field-label"
+                      >
+                        Customer file source
+                      </span>
+                    </label>
+                  </div>
+                  <div
+                    className="ant-col ant-col-15 ant-col-offset-1 ant-legacy-form-item-control-wrapper"
+                    style={Object {}}
+                  >
+                    <div
+                      className="ant-legacy-form-item-control has-success"
+                    >
+                      <span
+                        className="ant-legacy-form-item-children"
+                      >
+                        <div
+                          className="ant-row ant-row-middle"
+                          style={Object {}}
+                        >
+                          <div
+                            className="ant-col ant-col-20"
+                            style={Object {}}
+                          >
+                            <div
+                              id="123"
+                              style={
+                                Object {
+                                  "width": "100%",
+                                }
+                              }
+                            >
+                              <div
+                                className="ant-select ant-select-single ant-select-show-arrow"
+                                onBlur={[Function]}
+                                onFocus={[Function]}
+                                onKeyDown={[Function]}
+                                onKeyUp={[Function]}
+                                onMouseDown={[Function]}
+                              >
+                                <div
+                                  className="ant-select-selector"
+                                  onClick={[Function]}
+                                  onMouseDown={[Function]}
+                                >
+                                  <span
+                                    className="ant-select-selection-search"
+                                  >
+                                    <input
+                                      aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                      aria-autocomplete="list"
+                                      aria-controls="rc_select_TEST_OR_SSR_list"
+                                      aria-haspopup="listbox"
+                                      aria-owns="rc_select_TEST_OR_SSR_list"
+                                      autoComplete="off"
+                                      className="ant-select-selection-search-input"
+                                      disabled={false}
+                                      id="rc_select_TEST_OR_SSR"
+                                      onChange={[Function]}
+                                      onCompositionEnd={[Function]}
+                                      onCompositionStart={[Function]}
+                                      onKeyDown={[Function]}
+                                      onMouseDown={[Function]}
+                                      onPaste={[Function]}
+                                      readOnly={true}
+                                      role="combobox"
+                                      style={
+                                        Object {
+                                          "opacity": 0,
+                                        }
+                                      }
+                                      type="search"
+                                      unselectable="on"
+                                      value=""
+                                    />
+                                  </span>
+                                  <span
+                                    className="ant-select-selection-item"
+                                  >
+                                    <span>
+                                      - Select One -
+                                    </span>
+                                  </span>
+                                </div>
+                                <span
+                                  aria-hidden={true}
+                                  className="ant-select-arrow"
+                                  onMouseDown={[Function]}
+                                  style={
+                                    Object {
+                                      "WebkitUserSelect": "none",
+                                      "userSelect": "none",
+                                    }
+                                  }
+                                  unselectable="on"
+                                >
+                                  <span
+                                    aria-label="down"
+                                    className="anticon anticon-down ant-select-suffix"
+                                    role="img"
+                                  >
+                                    <svg
+                                      aria-hidden="true"
+                                      data-icon="down"
+                                      fill="currentColor"
+                                      focusable="false"
+                                      height="1em"
+                                      viewBox="64 64 896 896"
+                                      width="1em"
+                                    >
+                                      <path
+                                        d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                                      />
+                                    </svg>
+                                  </span>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            className="ant-col ant-col-2 field-tooltip"
+                            style={Object {}}
+                          >
+                            <span
+                              className="mcs-icon "
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
+                            >
+                              <i
+                                className="mcs-info"
+                                style={Object {}}
+                              />
+                            </span>
+                          </div>
+                          <div
+                            className="ant-col ant-col-2 no-renderFieldAction"
+                            style={Object {}}
+                          />
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button
+                className="mcs-button optional-section-title"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "cursor": "pointer",
+                  }
+                }
+                type="button"
+              >
+                <span
+                  className="mcs-icon "
+                >
+                  <i
+                    className="mcs-settings"
+                    style={Object {}}
+                  />
+                </span>
+                <span
+                  className="step-title"
+                >
+                  Advanced
+                </span>
+                <span
+                  className="mcs-icon "
+                >
+                  <i
+                    className="mcs-chevron"
+                    style={Object {}}
+                  />
+                </span>
+              </button>
+              <div
+                className="hide-section"
+              >
+                <div>
+                  <div
+                    className="form-field-wrapper"
+                  >
+                    <div
+                      className="ant-row ant-legacy-form-item"
+                      style={Object {}}
+                    >
+                      <div
+                        className="ant-col ant-col-3 ant-legacy-form-item-label"
+                        style={Object {}}
+                      >
+                        <label
+                          className=""
+                          htmlFor={null}
+                          onClick={[Function]}
+                          title=""
+                        >
+                          <span
+                            className="field-label"
+                          >
+                            Facebook Custom Audience ID
+                          </span>
+                        </label>
+                      </div>
+                      <div
+                        className="ant-col ant-col-15 ant-col-offset-1 ant-legacy-form-item-control-wrapper"
+                        style={Object {}}
+                      >
+                        <div
+                          className="ant-legacy-form-item-control has-success"
+                        >
+                          <span
+                            className="ant-legacy-form-item-children"
+                          >
+                            <div
+                              className="ant-row ant-row-middle"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-col ant-col-20"
+                                style={Object {}}
+                              >
+                                <input
+                                  className="ant-input"
+                                  disabled={false}
+                                  id="properties.fb_custom_audience_id.value.value"
+                                  name="properties.fb_custom_audience_id.value.value"
+                                  onBlur={[Function]}
+                                  onChange={[Function]}
+                                  onDragStart={[Function]}
+                                  onDrop={[Function]}
+                                  onFocus={[Function]}
+                                  onKeyDown={[Function]}
+                                  placeholder="Fb Custom Audience Id"
+                                  type="text"
+                                  value=""
+                                />
+                              </div>
+                              <div
+                                className="ant-col ant-col-2 field-tooltip"
+                                style={Object {}}
+                              >
+                                <span
+                                  className="mcs-icon "
+                                  onMouseEnter={[Function]}
+                                  onMouseLeave={[Function]}
+                                >
+                                  <i
+                                    className="mcs-info"
+                                    style={Object {}}
+                                  />
+                                </span>
+                              </div>
+                              <div
+                                className="ant-col ant-col-2 no-renderFieldAction"
+                                style={Object {}}
+                              />
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div
+                    className="form-field-wrapper"
+                  >
+                    <div
+                      className="ant-row ant-legacy-form-item"
+                      style={Object {}}
+                    >
+                      <div
+                        className="ant-col ant-col-3 ant-legacy-form-item-label"
+                        style={Object {}}
+                      >
+                        <label
+                          className=""
+                          htmlFor={null}
+                          onClick={[Function]}
+                          title=""
+                        >
+                          <span
+                            className="field-label"
+                          >
+                            Facebook Custom Audience name
+                          </span>
+                        </label>
+                      </div>
+                      <div
+                        className="ant-col ant-col-15 ant-col-offset-1 ant-legacy-form-item-control-wrapper"
+                        style={Object {}}
+                      >
+                        <div
+                          className="ant-legacy-form-item-control has-success"
+                        >
+                          <span
+                            className="ant-legacy-form-item-children"
+                          >
+                            <div
+                              className="ant-row ant-row-middle"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-col ant-col-20"
+                                style={Object {}}
+                              >
+                                <input
+                                  className="ant-input"
+                                  disabled={false}
+                                  id="properties.fb_custom_audience_name.value.value"
+                                  name="properties.fb_custom_audience_name.value.value"
+                                  onBlur={[Function]}
+                                  onChange={[Function]}
+                                  onDragStart={[Function]}
+                                  onDrop={[Function]}
+                                  onFocus={[Function]}
+                                  onKeyDown={[Function]}
+                                  placeholder="Fb Custom Audience Name"
+                                  type="text"
+                                  value=""
+                                />
+                              </div>
+                              <div
+                                className="ant-col ant-col-2 field-tooltip"
+                                style={Object {}}
+                              >
+                                <span
+                                  className="mcs-icon "
+                                  onMouseEnter={[Function]}
+                                  onMouseLeave={[Function]}
+                                >
+                                  <i
+                                    className="mcs-info"
+                                    style={Object {}}
+                                  />
+                                </span>
+                              </div>
+                              <div
+                                className="ant-col ant-col-2 no-renderFieldAction"
+                                style={Object {}}
+                              />
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </form>
+</section>
+`;
