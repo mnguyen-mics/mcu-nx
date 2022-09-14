@@ -17,7 +17,7 @@ import injectNotifications, {
   InjectedNotificationProps,
 } from '../Notifications/injectNotifications';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
-import { DashboardPageContent } from '@mediarithmics-private/advanced-components/lib/models/dashboards/old-dashboards-model';
+import { DashboardPageContent } from '@mediarithmics-private/advanced-components/lib/models/dashboards/dashboardsModel';
 import getDefaultSections from './defaultDashboard';
 
 interface RouteProps {
