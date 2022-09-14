@@ -18,9 +18,9 @@ import {
   MockedFetchDashboardContent,
   MockedMetricData,
 } from '../../chart-engine/MockedData';
-import { DashboardContentSections } from '../../../models/dashboards/old-dashboards-model';
 import { IntlProvider } from 'react-intl';
 import CustomDashboardService from '../../../services/CustomDashboardService';
+import { DashboardContentSchema } from '../../../models/customDashboards/customDashboards';
 const fetchmockOptions = [
   {
     matcher:
@@ -67,7 +67,7 @@ const fetchmockOptions = [
   },
 ];
 
-export const defaultDashboardContent: DashboardContentSections = {
+export const defaultDashboardContent: DashboardContentSchema = {
   sections: [
     {
       title: 'General Information',
