@@ -918,6 +918,12 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
     );
   }
 
+  onTabChange = () => {
+    const { contentTextEditor, lastContentEditorModificationTs } = this.state;
+    if (Date.now() - lastContentEditorModificationTs < 1000)
+      this.onContentTextChange(contentTextEditor);
+  };
+
   renderEditorTab() {
     const { contentErrorMessage, contentTextEditor } = this.state;
 
@@ -1182,6 +1188,7 @@ class EditDashboardPage extends React.Component<Props, EditDashboardPageState> {
                 animated={false}
                 className='mcs-editDashboard_tabs'
                 destroyInactiveTabPane={true}
+                onChange={this.onTabChange}
               />
             </Form>
           </Content>
