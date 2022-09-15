@@ -19,15 +19,7 @@ import {
   Datapoint,
 } from '../utils';
 import { cloneDeep, omitBy, isUndefined } from 'lodash';
-
-type YKey = { key: string; message: string };
-type XKeyMode = 'DAY' | 'HOUR' | 'DEFAULT';
-type Type = 'area' | 'line';
-type XKey = { key: string; mode: XKeyMode };
-
-function isTypeofXKey(xkey: XKey | string): xkey is XKey {
-  return (xkey as XKey).key !== undefined;
-}
+import { isTypeofXKey, Type, XKey, YKey } from './AreaChartTypes';
 
 export interface AreaChartProps {
   height?: number;
