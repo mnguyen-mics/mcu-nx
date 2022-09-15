@@ -163,7 +163,7 @@ const propsForHourLineMode: AreaChartProps = {
       user_points_count: 484,
     },
     {
-      day: '2021-04-29 23:00:00',
+      day: '2021-04-30 02:00:00',
       user_points_count: 529,
     },
   ],
@@ -221,9 +221,109 @@ const propsForDefaultMode: AreaChartProps = {
   xKey: { key: 'category', mode: 'DEFAULT' },
 };
 
+const propsForSimpleXKeyWithCategoryMode: AreaChartProps = {
+  dataset: [
+    {
+      key: 'WINDOWS',
+      count: 1427,
+    },
+    {
+      key: 'MAC_OS',
+      count: 460,
+    },
+    {
+      key: 'LINUX',
+      count: 303,
+    },
+    {
+      key: 'OTHER',
+      count: 251,
+    },
+    {
+      key: 'IOS',
+      count: 20,
+    },
+    {
+      key: 'ANDROID',
+      count: 17,
+    },
+  ],
+  xKey: 'key',
+  yKeys: [
+    {
+      key: 'count',
+      message: 'count',
+    },
+  ],
+  legend: {
+    enabled: false,
+  },
+  format: 'count',
+  type: 'area',
+};
+
+const propsForSimpleXKeyWithDateMode: AreaChartProps = {
+  dataset: [
+    {
+      key: '2021-04-21 03:00:00',
+      count: 9,
+    },
+    {
+      key: '2021-04-22 04:00:00',
+      count: 16,
+    },
+    {
+      key: '2021-04-23 05:00:00',
+      count: 25,
+    },
+    {
+      key: '2021-04-24 06:00:00',
+      count: 36,
+    },
+    {
+      key: '2021-04-25 07:00:00',
+      count: 49,
+    },
+    {
+      key: '2021-04-26 08:00:00',
+      count: 64,
+    },
+    {
+      key: '2021-04-27 09:00:00',
+      count: 81,
+    },
+    {
+      key: '2021-04-28 10:00:00',
+      count: 100,
+    },
+    {
+      key: '2021-04-29 11:00:00',
+      count: 121,
+    },
+    {
+      key: '2021-04-30 12:00:00',
+      count: 144,
+    },
+  ],
+  xKey: 'key',
+  yKeys: [
+    {
+      key: 'count',
+      message: 'count',
+    },
+  ],
+  legend: {
+    enabled: false,
+  },
+  format: 'count',
+  type: 'area',
+};
+
 export default {
   'Day mode': <AreaChart {...propsForDayMode} />,
   'Day mode Double Y axis': <AreaChart {...propsForDayModeDoubleYAxis} />,
   'Hour Line mode': <AreaChart {...propsForHourLineMode} />,
   'Default mode': <AreaChart {...propsForDefaultMode} />,
+  'Simple xkey with date key': <AreaChart {...propsForSimpleXKeyWithDateMode} />,
+  'Simple xkey with string key': <AreaChart {...propsForSimpleXKeyWithCategoryMode} />,
 };
