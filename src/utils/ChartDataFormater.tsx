@@ -14,6 +14,7 @@ import {
   AggregateDataset,
   CountDataset,
 } from '../models/dashboards/dataset/dataset_tree';
+import { XKey } from '@mediarithmics-private/mcs-components-library/lib';
 
 export function formatDatasetAsKeyValueForOtql(
   buckets: OTQLBucket[] | undefined,
@@ -67,13 +68,14 @@ export function formatDatasetAsKeyValueForReportView(
   return bucketizeReportView(xKey, normalizedReportView, dimensions) || normalizedReportView;
 }
 
-export function getXKeyForChart(type: ChartType, xKey?: string) {
+export function getXKeyForChart(type: ChartType, xKey?: string | XKey) {
   switch (type.toLowerCase()) {
     case 'pie':
       return 'key';
     case 'radar':
-      return xKey ? xKey : 'key';
     case 'bars':
+    case 'area':
+    case 'line':
       return xKey ? xKey : 'key';
     default:
       return 'key';

@@ -69,6 +69,7 @@ import {
   MetricChartFormat,
   MetricChartProps,
 } from '@mediarithmics-private/mcs-components-library/lib/components/charts/metric-chart/MetricChart';
+import { isTypeofXKey, XKey } from '@mediarithmics-private/mcs-components-library/lib';
 
 export type ChartType = 'pie' | 'bars' | 'radar' | 'metric' | 'area' | 'line' | 'table';
 
@@ -157,15 +158,16 @@ interface MetricChartApiProps {
   format?: MetricChartFormat;
 }
 
-export type ChartApiOptions = (
-  | PieChartApiProps
-  | RadarChartApiProps
-  | BarChartApiProps
-  | MetricChartApiProps
-  | AreaChartApiProps
-  | TableChartApiOptions
-) &
-  WithOptionalXKey;
+export type ChartApiOptions =
+  | ((
+      | PieChartApiProps
+      | RadarChartApiProps
+      | BarChartApiProps
+      | MetricChartApiProps
+      | TableChartApiOptions
+    ) &
+      WithOptionalXKey)
+  | (AreaChartApiProps & WithOptionalComplexXKey);
 
 export type PieChartOptions = Omit<PieChartProps, 'dataset' | 'colors'>;
 export type RadarChartOptions = Omit<RadarChartProps, 'dataset' | 'colors'>;
@@ -173,18 +175,24 @@ export type BarChartOptions = Omit<BarChartProps, 'dataset' | 'colors'>;
 export type MetricChartOptions = Omit<MetricChartProps, 'dataset' | 'colors'>;
 export type AreaChartOptions = Omit<AreaChartProps, 'dataset' | 'colors'>;
 export type TableChartOptions = Omit<TableChartProps, 'dataset' | 'colors'>;
-interface WithOptionalXKey {
+export interface WithOptionalXKey {
   xKey?: string;
 }
-export type ChartOptions = (
-  | PieChartOptions
-  | RadarChartOptions
-  | BarChartOptions
-  | MetricChartOptions
-  | AreaChartOptions
-  | TableChartOptions
-) &
-  WithOptionalXKey;
+
+export interface WithOptionalComplexXKey {
+  xKey?: string | XKey;
+}
+
+export type ChartOptions =
+  | ((
+      | PieChartOptions
+      | RadarChartOptions
+      | BarChartOptions
+      | MetricChartOptions
+      | TableChartOptions
+    ) &
+      WithOptionalXKey)
+  | (AreaChartOptions & WithOptionalComplexXKey);
 
 export interface IChartDatasetService {
   fetchDataset(
@@ -399,13 +407,14 @@ export class ChartDatasetService implements IChartDatasetService {
     datamartId: string,
     organisationId: string,
     chartType: ChartType,
-    xKey: string,
+    xKeyAlt: string | XKey,
     source: AbstractSource,
     queryExecutionSource: QueryExecutionSource,
     queryExecutionSubSource: QueryExecutionSubSource,
     providedScope?: AbstractScope,
     queryFragment?: QueryFragment,
   ): Promise<AbstractDatasetTree | undefined> {
+    const xKey = isTypeofXKey(xKeyAlt) ? xKeyAlt.key : xKeyAlt;
     const sourceType = source.type.toLowerCase();
     const seriesTitle = source.series_title || DEFAULT_Y_KEY.key;
 
