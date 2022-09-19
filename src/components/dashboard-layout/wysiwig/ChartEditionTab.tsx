@@ -1,9 +1,8 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Row, Tabs } from 'antd';
 import React from 'react';
 import { ChartCommonConfig } from '../../../services/ChartDatasetService';
 import AceEditor from 'react-ace';
 import { Ace } from 'ace-builds';
-import { CloseOutlined } from '@ant-design/icons';
 import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import { AbstractScope } from '../../../models/datamart/graphdb/Scope';
@@ -15,6 +14,11 @@ import {
 import { IQueryService, QueryService } from '../../../services/QueryService';
 import { QueryScopeAdapter } from '../../../utils/QueryScopeAdapter';
 import { defaultChartConfigText } from '../../../services/CustomDashboardService';
+import { McsIcon } from '@mediarithmics-private/mcs-components-library';
+import { DotChartOutlined } from '@ant-design/icons';
+import { ChartsSearchPanel } from '../../chart-engine';
+import { RouteComponentProps, withRouter } from 'react-router';
+import { InjectedFeaturesProps, injectFeatures } from '../../Features';
 
 interface ChartEditionProps {
   chartConfig?: ChartCommonConfig;
@@ -26,7 +30,10 @@ interface ChartEditionProps {
   queryFragment?: QueryFragment;
 }
 
-type Props = InjectedIntlProps & ChartEditionProps;
+type Props = InjectedIntlProps &
+  ChartEditionProps &
+  RouteComponentProps<{ organisationId: string }> &
+  InjectedFeaturesProps;
 
 interface ChartEditionState {
   chartConfigText: string;
@@ -45,7 +52,7 @@ const messages = defineMessages({
   },
   chartEditionDelete: {
     id: 'chart.edition.delete',
-    defaultMessage: 'Delete chart',
+    defaultMessage: 'Remove chart from dashbaord',
   },
 });
 
@@ -171,58 +178,121 @@ class ChartEditionTab extends React.Component<Props, ChartEditionState> {
     });
   }
 
-  render() {
-    const { closeTab, intl, deleteChart } = this.props;
+  renderJsonEdition() {
     const { chartConfigText, contentErrorMessage } = this.state;
     const contentErrorStatus = contentErrorMessage ? 'error' : 'success';
 
-    const saveChartConfig = this.saveChartConfig.bind(this);
     const onChangeJson = this.onChangeJson.bind(this);
     const onContentValidateInAceEditor = this.onContentValidateInAceEditor.bind(this);
 
     return (
-      <div className='mcs-chartEdition-content'>
-        <div className='mcs-chartEdition-header'>
-          <span className='mcs-chartEdition-header-title'>
-            {intl.formatMessage(messages.chartEditionEditChart)}
-          </span>
-          <CloseOutlined className='mcs-chartEdition-header-close' onClick={closeTab} />
-        </div>
+      <div>
+        <Form.Item
+          className='mcs-chartEdition_aceEditor'
+          validateStatus={contentErrorStatus}
+          help={contentErrorMessage}
+        >
+          <AceEditor
+            mode='json'
+            theme='github'
+            fontSize={12}
+            showPrintMargin={false}
+            showGutter={true}
+            highlightActiveLine={false}
+            width='100%'
+            minLines={20}
+            maxLines={1000}
+            height='auto'
+            setOptions={{
+              highlightGutterLine: false,
+              enableBasicAutocompletion: true,
+              enableLiveAutocompletion: true,
+              enableSnippets: false,
+              showLineNumbers: true,
+            }}
+            onValidate={onContentValidateInAceEditor}
+            value={chartConfigText}
+            onChange={onChangeJson}
+          />
+        </Form.Item>
+        {this.renderQueriesList()}
+      </div>
+    );
+  }
 
-        <div className='mcs-chartEdition-scrollarea'>
-          <div className='mcs-chartEdition-sub-header'>
-            <span className='mcs-chartEdition-shellIcon'>{'>_'}</span>
-            <span className='mcs-chartEdition-json-title'>{'JSON'}</span>
-          </div>
-          <Form.Item
-            className='mcs-chartEdition_aceEditor'
-            validateStatus={contentErrorStatus}
-            help={contentErrorMessage}
-          >
-            <AceEditor
-              mode='json'
-              theme='github'
-              fontSize={12}
-              showPrintMargin={false}
-              showGutter={true}
-              highlightActiveLine={false}
-              width='100%'
-              minLines={20}
-              maxLines={1000}
-              height='auto'
-              setOptions={{
-                highlightGutterLine: false,
-                enableBasicAutocompletion: true,
-                enableLiveAutocompletion: true,
-                enableSnippets: false,
-                showLineNumbers: true,
-              }}
-              onValidate={onContentValidateInAceEditor}
-              value={chartConfigText}
-              onChange={onChangeJson}
+  render() {
+    const {
+      closeTab,
+      intl,
+      deleteChart,
+      match: {
+        params: { organisationId },
+      },
+      hasFeature,
+    } = this.props;
+
+    const saveChartConfig = this.saveChartConfig.bind(this);
+
+    return (
+      <React.Fragment>
+        <div className='mcs-chartEdition_container'>
+          <Row>
+            <span className='mcs-chartEdition_title'>
+              {intl.formatMessage(messages.chartEditionEditChart)}
+            </span>
+            <McsIcon
+              type='close'
+              className='close-icon'
+              style={{ cursor: 'pointer' }}
+              onClick={closeTab}
             />
-          </Form.Item>
-          {this.renderQueriesList()}
+          </Row>
+          <Row style={{ height: '100%' }}>
+            {
+              // Remove feature flag when charts selection work
+              hasFeature('dashboard-new-edition-drawer') ? (
+                <Tabs style={{ width: '100%', height: '100%' }}>
+                  <Tabs.TabPane
+                    className='mcs-chartEdition_scrollArea'
+                    tab={
+                      <div className='mcs-chartEdition-sub-header'>
+                        <DotChartOutlined className='mcs-chartEdition_chartsTab_icon' />
+                        <span className='mcs-chartEdition-tab-title'>{'Saved charts'}</span>
+                      </div>
+                    }
+                    key={'charts'}
+                  >
+                    <ChartsSearchPanel organisationId={organisationId} />
+                  </Tabs.TabPane>
+                  <Tabs.TabPane
+                    className='mcs-chartEdition_scrollArea'
+                    tab={
+                      <div className='mcs-chartEdition-sub-header'>
+                        <span className='mcs-chartEdition_jsonTab_icon'>{'>_'}</span>
+                        <span className='mcs-chartEdition-tab-title'>{'JSON'}</span>
+                      </div>
+                    }
+                    key={'JSON'}
+                  >
+                    {this.renderJsonEdition()}
+                  </Tabs.TabPane>
+                </Tabs>
+              ) : (
+                <React.Fragment>
+                  <div className='mcs-chartEdition-sub-header'>
+                    <span className='mcs-chartEdition_jsonTab_icon'>{'>_'}</span>
+                    <span className='mcs-chartEdition-tab-title'>{'JSON'}</span>
+                  </div>
+                  <div
+                    className='mcs-chartEdition_scrollArea'
+                    style={{ height: '100%', width: '100%' }}
+                  >
+                    {this.renderJsonEdition()}
+                  </div>
+                </React.Fragment>
+              )
+            }
+          </Row>
         </div>
         <div className='mcs-chartEdition-submit-button-container'>
           <Button
@@ -240,10 +310,14 @@ class ChartEditionTab extends React.Component<Props, ChartEditionState> {
             {intl.formatMessage(messages.chartEditionDelete)}
           </Button>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
 
-const editionTab = compose<Props, ChartEditionProps>(injectIntl)(ChartEditionTab);
+const editionTab = compose<Props, ChartEditionProps>(
+  injectIntl,
+  withRouter,
+  injectFeatures,
+)(ChartEditionTab);
 export default editionTab;

@@ -1,11 +1,11 @@
 import { Button, Form, InputNumber, Row, Select } from 'antd';
 import React from 'react';
-import { CloseOutlined } from '@ant-design/icons';
 import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import { FormInstance, Rule } from 'antd/lib/form';
 import lodash from 'lodash';
 import { DashboardContentCard } from '../../../models/customDashboards/customDashboards';
+import { McsIcon } from '@mediarithmics-private/mcs-components-library';
 
 interface CardEditionProps {
   card?: DashboardContentCard;
@@ -225,78 +225,87 @@ class CardEditionTab extends React.Component<Props, CardEditionState> {
       : {};
 
     return (
-      <div>
-        <div className='mcs-chartEdition-header'>
-          <span className='mcs-chartEdition-header-title'>
-            {intl.formatMessage(messages.cardEditionEditCard)}
-          </span>
-          <CloseOutlined className='mcs-chartEdition-header-close' onClick={closeTab} />
-        </div>
-        <Form className='mcs-cardEdition-form' ref={form} initialValues={initialValues}>
-          <div className='mcs-form-text'>Layout</div>
-          <Form.Item
-            name='layout_select'
-            className='mcs-form-layout'
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-          >
-            <Select
-              showSearch={true}
-              labelInValue={true}
-              autoFocus={true}
-              onChange={onChangeLayout}
-              optionFilterProp='label'
-              options={layouts}
+      <React.Fragment>
+        <div className='mcs-chartEdition_container'>
+          <Row>
+            <span className='mcs-chartEdition_title'>
+              {intl.formatMessage(messages.cardEditionEditCard)}
+            </span>
+            <McsIcon
+              type='close'
+              className='close-icon'
+              style={{ cursor: 'pointer' }}
+              onClick={closeTab}
             />
-          </Form.Item>
-          <Row className='mcs-form-row'>
-            <div>
-              <div className='mcs-form-text'>Width</div>
-              <Form.Item
-                name='w'
-                className='mcs-row-input mcs-row-input_left'
-                rules={generateRules(intl.formatMessage(messages.cardEditionLayoutEnterWidth))}
-              >
-                <InputNumber onChange={onChangeW} />
-              </Form.Item>
-            </div>
-            <div>
-              <div className='mcs-form-text'>Height</div>
-              <Form.Item
-                name='h'
-                className='mcs-row-input'
-                rules={generateRules(intl.formatMessage(messages.cardEditionLayoutEnterHeight))}
-              >
-                <InputNumber onChange={onChangeH} />
-              </Form.Item>
-            </div>
           </Row>
-          <Row className='mcs-form-row'>
-            <div>
-              <div className='mcs-form-text'>x</div>
+          <Row>
+            <Form className='mcs-cardEdition-form' ref={form} initialValues={initialValues}>
+              <div className='mcs-form-text'>Layout</div>
               <Form.Item
-                name='x'
-                className='mcs-row-input mcs-row-input_left'
-                rules={generateRules(intl.formatMessage(messages.cardEditionLayoutEnterX))}
+                name='layout_select'
+                className='mcs-form-layout'
+                rules={[
+                  {
+                    required: true,
+                  },
+                ]}
               >
-                <InputNumber onChange={onChangeX} />
+                <Select
+                  showSearch={true}
+                  labelInValue={true}
+                  autoFocus={true}
+                  onChange={onChangeLayout}
+                  optionFilterProp='label'
+                  options={layouts}
+                />
               </Form.Item>
-            </div>
-            <div>
-              <div className='mcs-form-text'>y</div>
-              <Form.Item
-                name='y'
-                className='mcs-row-input'
-                rules={generateRules(intl.formatMessage(messages.cardEditionLayoutEnterY))}
-              >
-                <InputNumber onChange={onChangeY} />
-              </Form.Item>
-            </div>
+              <Row className='mcs-form-row'>
+                <div>
+                  <div className='mcs-form-text'>Width</div>
+                  <Form.Item
+                    name='w'
+                    className='mcs-row-input mcs-row-input_left'
+                    rules={generateRules(intl.formatMessage(messages.cardEditionLayoutEnterWidth))}
+                  >
+                    <InputNumber onChange={onChangeW} />
+                  </Form.Item>
+                </div>
+                <div>
+                  <div className='mcs-form-text'>Height</div>
+                  <Form.Item
+                    name='h'
+                    className='mcs-row-input'
+                    rules={generateRules(intl.formatMessage(messages.cardEditionLayoutEnterHeight))}
+                  >
+                    <InputNumber onChange={onChangeH} />
+                  </Form.Item>
+                </div>
+              </Row>
+              <Row className='mcs-form-row'>
+                <div>
+                  <div className='mcs-form-text'>x</div>
+                  <Form.Item
+                    name='x'
+                    className='mcs-row-input mcs-row-input_left'
+                    rules={generateRules(intl.formatMessage(messages.cardEditionLayoutEnterX))}
+                  >
+                    <InputNumber onChange={onChangeX} />
+                  </Form.Item>
+                </div>
+                <div>
+                  <div className='mcs-form-text'>y</div>
+                  <Form.Item
+                    name='y'
+                    className='mcs-row-input'
+                    rules={generateRules(intl.formatMessage(messages.cardEditionLayoutEnterY))}
+                  >
+                    <InputNumber onChange={onChangeY} />
+                  </Form.Item>
+                </div>
+              </Row>
+            </Form>
           </Row>
-        </Form>
+        </div>
         <div className={'mcs-chartEdition-submit-button-container'}>
           <Button
             className={'mcs-primary mcs-chartEdition-submit-button mcs-cardEdition-button'}
@@ -313,7 +322,7 @@ class CardEditionTab extends React.Component<Props, CardEditionState> {
             {intl.formatMessage(messages.cardEditionDelete)}
           </Button>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

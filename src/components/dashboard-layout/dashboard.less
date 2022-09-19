@@ -100,35 +100,57 @@
 }
 
 .mcs-chartEdition-submit-button-container {
+  position: absolute;
+  bottom: 0;
+  height: 65px;
+  width: 100%;
+  padding-top: 15px;
+  .mcs-chartEdition-submit-button {
+    margin-top: 60px;
+    margin-right: 40px;
+  }
+}
+
+.mcs-chartEdition_container {
+  height: auto;
+  padding-top: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 130px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-}
-
-.mcs-chartEdition-submit-button {
-  margin-top: 60px;
-  margin-right: 40px;
-}
-
-.mcs-chartEdition-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  background-color: @info-color;
-  height: 60px;
-  &-title {
-    margin-left: 40px;
-    font-size: 12px;
-    font-weight: 400;
-    font-family: 'LLCircularWeb-Medium';
-    color: white;
+  overflow-y: hidden;
+  .mcs-chartEdition_title {
+    font-family: 'LLCircularWeb-Book';
+    font-size: 20px;
+    font-weight: bold;
     flex: 1;
+    & + .mcs-icon {
+      margin-top: 9px;
+    }
   }
-
-  &-close {
-    color: white;
-    margin-right: 40px;
-    font-size: 24px;
+  .mcs-chartEdition_chartsTab_icon {
+    margin-right: 0px;
+    font-size: 18px;
+    position: relative;
+    top: 2px;
+  }
+  .mcs-chartEdition_jsonTab_icon {
+    font-size: 8px;
+    font-weight: bold;
+    margin-left: 15px;
+    background-color: white;
+    border-style: solid;
+    border-width: 1.5px;
+    padding: 2px;
+    position: relative;
+    bottom: 2px;
+  }
+  .ant-tabs-content {
+    height: 100%;
+  }
+  .mcs-chartEdition_scrollArea {
+    overflow-y: auto;
   }
 }
 
