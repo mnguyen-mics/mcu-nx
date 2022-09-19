@@ -18,7 +18,7 @@ export { default as SessionReducers } from './redux/Session/reducer';
 export { default as NotificationsReducers } from './redux/Notifications/reducer';
 export { default as Store } from './redux/store';
 export { default as ChartMetadataInfo } from './components/chart-engine/ChartMetadataInfo';
-export { default as Chart } from './components/chart-engine';
+export { default as Chart, ChartsSearchPanel } from './components/chart-engine';
 export { default as ManagedChart } from './components/chart-engine/ManagedChart';
 export { logIn, logOut } from './redux/Login/actions';
 export { default as AuthenticatedRoute } from './utils/AuthenticatedRoute';
@@ -106,6 +106,7 @@ export {
 export { default as UsersService } from './services/UsersService';
 export { IUsersService } from './services/UsersService';
 export { ChartDatasetService, IChartDatasetService } from './services/ChartDatasetService';
+export { default as ChartService, IChartService } from './services/ChartsService';
 
 // Models
 
