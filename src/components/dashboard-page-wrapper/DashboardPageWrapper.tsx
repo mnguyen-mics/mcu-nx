@@ -204,15 +204,17 @@ class DashboardPageWrapper extends React.Component<Props, State> {
     dataFileDashboards: DataFileDashboardResource[],
     apiDashboards: DashboardPageContent[],
   ): boolean => {
-    const { hasFeature } = this.props;
+    const { hasFeature, contextualTargetingTab, cohortLookalikeCalibration } = this.props;
 
     const shouldDisplayAnalyticsFeature = hasFeature(
       'audience-dashboards-datamart_users_analytics',
     );
 
-    const shouldDisplayContextualFeature = hasFeature('segments-contextual-targeting');
+    const shouldDisplayContextualFeature =
+      hasFeature('segments-contextual-targeting') && contextualTargetingTab !== undefined;
 
-    const shouldDisplayCohortFeature = hasFeature('audience-segments-cohort-lookalike');
+    const shouldDisplayCohortFeature =
+      hasFeature('audience-segments-cohort-lookalike') && cohortLookalikeCalibration !== undefined;
 
     return (
       !isLoading &&
