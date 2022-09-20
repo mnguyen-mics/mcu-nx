@@ -44,6 +44,7 @@ export interface ChartsSearchPanelProps {
 export interface State {
   isLoading: boolean;
   charts: ChartResource[];
+  selectedChart?: ChartResource;
   usersMap: Map<string, UserResource>;
 }
 
@@ -62,6 +63,7 @@ class ChartsSearchPanel extends React.Component<Props, State> {
       isLoading: true,
       charts: [],
       usersMap: new Map(),
+      selectedChart: props.chartItem,
     };
     this.fetchData();
   }
@@ -161,7 +163,7 @@ class ChartsSearchPanel extends React.Component<Props, State> {
 
   renderItem = (item: ChartResource) => {
     const { onItemClick, intl } = this.props;
-    const { usersMap } = this.state;
+    const { usersMap, selectedChart } = this.state;
 
     let userName: string | undefined;
     if (item.last_modified_by) {
@@ -171,14 +173,18 @@ class ChartsSearchPanel extends React.Component<Props, State> {
       } else userName = item.last_modified_by;
     }
 
-    const onClick = onItemClick
-      ? () => {
-          onItemClick(item);
-        }
-      : undefined;
+    const onClick = () => {
+      this.setState({ selectedChart: item });
+      if (onItemClick) onItemClick(item);
+    };
 
     return (
-      <div className='mcs-charts-list-item' onClick={onClick}>
+      <div
+        className={
+          'mcs-charts-list-item' + (selectedChart === item ? ' mcs-charts-list-item_selected' : '')
+        }
+        onClick={onClick}
+      >
         <span className='mcs-charts-list_title'>{item.title}</span>
         <span>
           <span className='mcs-charts-list-item_author'>
