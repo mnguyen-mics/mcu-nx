@@ -60,7 +60,7 @@ const messages = defineMessages({
   },
   dashboardLayoutChartDeleteConfirmationText: {
     id: 'dashboard.layout.chartDeleteConfirmationText',
-    defaultMessage: 'Are you sure you want to delete this chart?',
+    defaultMessage: 'Are you sure you want to remove this chart?',
   },
   dashboardLayoutCardDeleteConfirmationText: {
     id: 'dashboard.layout.cardDeleteConfirmationText',
@@ -307,14 +307,16 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       const chartNode = this.findChartNode(chart.id, contentCopy);
       if (updateState && chartNode) {
         openNextDrawer(ChartEditionTab, {
-          size: 'small',
-          className: 'mcs-drawer-cardEdition',
+          size: 'large',
+          className: 'mcs-drawer-chartEdition',
+          closingDrawerClassName: 'mcs-drawer-chartEdition-close',
           additionalProps: {
             datamartId: datamart_id,
             closeTab: closeNextDrawer,
             chartConfig: chartNode,
             saveChart: (savingChartConfig: ChartConfig) => {
               this.updateChart(savingChartConfig, chartNode, contentCopy);
+              closeNextDrawer();
             },
             deleteChart: () => {
               const onOk = () => {
@@ -378,8 +380,9 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       const cardNode = this.findCardNode(card.id, contentCopy);
       if (updateState && cardNode) {
         openNextDrawer(ChartEditionTab, {
-          size: 'small',
-          className: 'mcs-drawer-cardEdition',
+          size: 'large',
+          className: 'mcs-drawer-chartEdition',
+          closingDrawerClassName: 'mcs-drawer-chartEdition-close',
           additionalProps: {
             datamartId: datamart_id,
             closeTab: closeNextDrawer,
@@ -388,6 +391,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
               if (chartNode) {
                 this.updateChart(newChartConfig, chartNode, contentCopy);
               } else this.createChart(newChartConfig, cardNode, contentCopy, newId);
+              closeNextDrawer();
             },
           },
         });

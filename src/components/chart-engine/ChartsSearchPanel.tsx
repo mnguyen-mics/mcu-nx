@@ -77,8 +77,12 @@ class ChartsSearchPanel extends React.Component<Props, State> {
   componentDidUpdate(prevProps: Props) {
     const { chartItem } = this.props;
     const { chartItem: prevChartItem } = prevProps;
-    if (!_.isEqual(chartItem, prevChartItem) && !chartItem) {
-      this.fetchData();
+    if (!_.isEqual(chartItem, prevChartItem)) {
+      if (chartItem)
+        this.setState({
+          selectedChart: chartItem,
+        });
+      else this.fetchData();
     }
   }
 
@@ -109,7 +113,7 @@ class ChartsSearchPanel extends React.Component<Props, State> {
     const { organisationId } = this.props;
     const { usersMap } = this.state;
     const filters = searchValue && searchValue.length > 0 ? { title: searchValue } : undefined;
-    const charts = await this.fetchCharts(organisationId, filters);
+    const charts = await this.fetchCharts(organisationId, { ...filters, max_results: 500 });
     const userIds =
       charts !== undefined
         ? charts.map(chart => chart.last_modified_by).filter(userId => userId !== undefined)

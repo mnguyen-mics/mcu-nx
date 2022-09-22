@@ -1,4 +1,4 @@
-import { Button, Form, Input, Row, Tabs } from 'antd';
+import { Button, Col, Form, Input, Row, Tabs } from 'antd';
 import React from 'react';
 import { ChartConfig, isExternalChartConfig } from '../../../services/ChartDatasetService';
 import AceEditor from 'react-ace';
@@ -14,12 +14,13 @@ import {
 import { IQueryService, QueryService } from '../../../services/QueryService';
 import { QueryScopeAdapter } from '../../../utils/QueryScopeAdapter';
 import { defaultChartConfigText as defaultChartConfig } from '../../../services/CustomDashboardService';
-import { McsIcon } from '@mediarithmics-private/mcs-components-library';
+import { Card, McsIcon } from '@mediarithmics-private/mcs-components-library';
 import { DotChartOutlined } from '@ant-design/icons';
-import { ChartsSearchPanel } from '../../chart-engine';
+import Chart, { ChartsSearchPanel } from '../../chart-engine';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { InjectedFeaturesProps, injectFeatures } from '../../Features';
 import { ChartResource } from '../../../models/chart/Chart';
+import _ from 'lodash';
+import cuid from 'cuid';
 
 interface ChartEditionProps {
   chartConfig?: ChartConfig;
@@ -33,11 +34,11 @@ interface ChartEditionProps {
 
 type Props = InjectedIntlProps &
   ChartEditionProps &
-  RouteComponentProps<{ organisationId: string }> &
-  InjectedFeaturesProps;
+  RouteComponentProps<{ organisationId: string }>;
 
 interface ChartEditionState {
-  chartConfigText: string;
+  chartConfigPreviewText?: string;
+  currentChartConfigText: string;
   selectedChartId?: string;
   resetSelectedChartId: boolean;
   contentErrorMessage?: string;
@@ -63,34 +64,39 @@ const messages = defineMessages({
 class ChartEditionTab extends React.Component<Props, ChartEditionState> {
   constructor(props: Props) {
     super(props);
+    const chartConfigText = this.convertChartConfigToText(
+      props.chartConfig ? props.chartConfig : defaultChartConfig,
+    );
     this.state = {
-      chartConfigText: this.convertChartConfigToText(
-        props.chartConfig ? props.chartConfig : defaultChartConfig,
-      ),
+      currentChartConfigText: chartConfigText,
       selectedChartId:
         props.chartConfig && isExternalChartConfig(props.chartConfig)
           ? props.chartConfig.chart_id
           : undefined,
       queryInfos: [],
-      activeTab: props.chartConfig?.chart_id !== undefined ? 'charts' : 'JSON',
+      activeTab: 'charts',
       resetSelectedChartId: false,
     };
+    setTimeout(() => {
+      this.setState({ chartConfigPreviewText: chartConfigText });
+    }, 500);
+  }
+
+  componentDidMount() {
+    this.fetchQueries();
   }
 
   private removeChartId = (chartConfig: ChartConfig): ChartConfig => {
     return {
       ...chartConfig,
       chart_id: undefined,
+      id: undefined,
     };
   };
 
   private convertChartConfigToText = (chartConfig: ChartConfig) => {
     return JSON.stringify(this.removeChartId(chartConfig), null, 2);
   };
-
-  componentDidMount() {
-    this.fetchQueries();
-  }
 
   private parseChartConfigText = (chartConfigText: string): ChartConfig | undefined => {
     try {
@@ -101,11 +107,11 @@ class ChartEditionTab extends React.Component<Props, ChartEditionState> {
   };
 
   private saveChartConfig = () => {
-    const { chartConfigText, contentErrorMessage, selectedChartId, resetSelectedChartId } =
+    const { currentChartConfigText, contentErrorMessage, selectedChartId, resetSelectedChartId } =
       this.state;
     const { saveChart } = this.props;
 
-    const savingChartConfig = this.parseChartConfigText(chartConfigText);
+    const savingChartConfig = this.parseChartConfigText(currentChartConfigText);
 
     if (selectedChartId === undefined || resetSelectedChartId) {
       if (!contentErrorMessage) {
@@ -170,8 +176,8 @@ class ChartEditionTab extends React.Component<Props, ChartEditionState> {
   };
 
   fetchQueries() {
-    const { chartConfigText } = this.state;
-    this.extractOtqlQueriesFromDataset(chartConfigText).then(otqlQueries => {
+    const { currentChartConfigText } = this.state;
+    this.extractOtqlQueriesFromDataset(currentChartConfigText).then(otqlQueries => {
       this.setState({
         queryInfos: otqlQueries,
       });
@@ -209,24 +215,34 @@ class ChartEditionTab extends React.Component<Props, ChartEditionState> {
   }
 
   onChangeJson = (value: string) => {
-    const { chartConfigText } = this.state;
-    if (chartConfigText !== value) {
-      this.setState({
-        chartConfigText: value,
-        resetSelectedChartId: true,
-      });
+    const { currentChartConfigText } = this.state;
+    const valueObject = this.parseChartConfigText(value);
+    const chartConfigObject = this.parseChartConfigText(currentChartConfigText);
+    if (valueObject && !_.isEqual(valueObject, chartConfigObject)) {
+      this.setState({ currentChartConfigText: value, resetSelectedChartId: true });
+      setTimeout(() => {
+        const currentChartConfigChangeObject = this.parseChartConfigText(
+          this.state.currentChartConfigText,
+        );
+        if (_.isEqual(valueObject, currentChartConfigChangeObject))
+          this.setState({
+            chartConfigPreviewText: value,
+            selectedChartId: cuid(),
+          });
+      }, 1000);
     }
   };
 
   onChangeChart = (item: ChartResource) => {
     this.setState({
-      chartConfigText: this.convertChartConfigToText(item.content),
+      currentChartConfigText: this.convertChartConfigToText(item.content),
+      chartConfigPreviewText: this.convertChartConfigToText(item.content),
       selectedChartId: item.id,
+      resetSelectedChartId: false,
     });
   };
 
   onTabClick = (activeKey: string, e: React.KeyboardEvent | React.MouseEvent) => {
-    const { resetSelectedChartId, selectedChartId } = this.state;
     switch (activeKey) {
       case 'JSON':
         this.setState({
@@ -236,15 +252,13 @@ class ChartEditionTab extends React.Component<Props, ChartEditionState> {
       case 'charts':
         this.setState({
           activeTab: activeKey,
-          selectedChartId: resetSelectedChartId ? undefined : selectedChartId,
-          resetSelectedChartId: false,
         });
         break;
     }
   };
 
   renderJsonEdition() {
-    const { chartConfigText, contentErrorMessage, activeTab } = this.state;
+    const { currentChartConfigText, contentErrorMessage, activeTab } = this.state;
     const contentErrorStatus = contentErrorMessage ? 'error' : 'success';
 
     if (activeTab === 'JSON')
@@ -274,7 +288,7 @@ class ChartEditionTab extends React.Component<Props, ChartEditionState> {
                 showLineNumbers: true,
               }}
               onValidate={this.onContentValidateInAceEditor}
-              value={chartConfigText}
+              value={currentChartConfigText}
               onChange={this.onChangeJson}
             />
           </Form.Item>
@@ -284,6 +298,41 @@ class ChartEditionTab extends React.Component<Props, ChartEditionState> {
     else return <div />;
   }
 
+  renderSelectedChartPreview = () => {
+    const { chartConfigPreviewText, selectedChartId } = this.state;
+    const {
+      datamartId,
+      match: {
+        params: { organisationId },
+      },
+    } = this.props;
+
+    const onClick = (e: any) => e.stopPropagation();
+
+    return chartConfigPreviewText ? (
+      <React.Fragment>
+        <div style={{ flex: '1' }} />
+        <div onClick={onClick}>
+          <Card className='mcs-chartEdition-preview-card'>
+            <Chart
+              chartContainerStyle={{ height: '400px', width: '560px' }}
+              key={selectedChartId}
+              datamartId={datamartId}
+              organisationId={organisationId}
+              chartConfig={this.parseChartConfigText(chartConfigPreviewText)!}
+              queryExecutionSource={'DASHBOARD'}
+              queryExecutionSubSource={'HOME_DASHBOARD'}
+              hideOpenDrawer={true}
+            />
+          </Card>
+        </div>
+        <div style={{ flex: '1' }} />
+      </React.Fragment>
+    ) : (
+      <div />
+    );
+  };
+
   render() {
     const {
       closeTab,
@@ -292,109 +341,88 @@ class ChartEditionTab extends React.Component<Props, ChartEditionState> {
       match: {
         params: { organisationId },
       },
-      hasFeature,
-      chartConfig,
     } = this.props;
 
-    const { selectedChartId } = this.state;
+    const { selectedChartId, activeTab } = this.state;
+
+    const chartPreview = this.renderSelectedChartPreview();
 
     return (
-      <React.Fragment>
-        <div className='mcs-chartEdition_container'>
-          <Row>
-            <span className='mcs-chartEdition_title'>
-              {intl.formatMessage(messages.chartEditionEditChart)}
-            </span>
-            <McsIcon
-              type='close'
-              className='close-icon'
-              style={{ cursor: 'pointer' }}
-              onClick={closeTab}
-            />
-          </Row>
-          <Row style={{ height: '100%' }}>
-            {
-              // Remove feature flag when charts selection work
-              hasFeature('dashboard-new-edition-drawer') ? (
-                <Tabs
-                  defaultActiveKey={
-                    chartConfig !== undefined && chartConfig.chart_id === undefined
-                      ? 'JSON'
-                      : 'charts'
+      <Row style={{ height: '100%' }}>
+        <Col span={13} onClick={closeTab} className='mcs-chartEdition-preview-container'>
+          {chartPreview}
+        </Col>
+        <Col span={11}>
+          <div className='mcs-chartEdition_container'>
+            <Row>
+              <span className='mcs-chartEdition_title'>
+                {intl.formatMessage(messages.chartEditionEditChart)}
+              </span>
+              <McsIcon
+                type='close'
+                className='close-icon'
+                style={{ cursor: 'pointer' }}
+                onClick={closeTab}
+              />
+            </Row>
+            <Row style={{ height: '100%' }}>
+              <Tabs
+                defaultActiveKey={activeTab}
+                style={{ width: '100%', height: '100%' }}
+                onTabClick={this.onTabClick}
+              >
+                <Tabs.TabPane
+                  className='mcs-chartEdition_scrollArea'
+                  tab={
+                    <div className='mcs-chartEdition-sub-header'>
+                      <DotChartOutlined className='mcs-chartEdition_chartsTab_icon' />
+                      <span className='mcs-chartEdition-tab-title'>{'Saved charts'}</span>
+                    </div>
                   }
-                  style={{ width: '100%', height: '100%' }}
-                  onTabClick={this.onTabClick}
+                  key={'charts'}
                 >
-                  <Tabs.TabPane
-                    className='mcs-chartEdition_scrollArea'
-                    tab={
-                      <div className='mcs-chartEdition-sub-header'>
-                        <DotChartOutlined className='mcs-chartEdition_chartsTab_icon' />
-                        <span className='mcs-chartEdition-tab-title'>{'Saved charts'}</span>
-                      </div>
-                    }
-                    key={'charts'}
-                  >
-                    <ChartsSearchPanel
-                      chartItem={selectedChartId}
-                      organisationId={organisationId}
-                      onItemClick={this.onChangeChart}
-                    />
-                  </Tabs.TabPane>
-                  <Tabs.TabPane
-                    className='mcs-chartEdition_scrollArea'
-                    tab={
-                      <div className='mcs-chartEdition-sub-header'>
-                        <span className='mcs-chartEdition_jsonTab_icon'>{'>_'}</span>
-                        <span className='mcs-chartEdition-tab-title'>{'JSON'}</span>
-                      </div>
-                    }
-                    key={'JSON'}
-                  >
-                    {this.renderJsonEdition()}
-                  </Tabs.TabPane>
-                </Tabs>
-              ) : (
-                <React.Fragment>
-                  <div className='mcs-chartEdition-sub-header'>
-                    <span className='mcs-chartEdition_jsonTab_icon'>{'>_'}</span>
-                    <span className='mcs-chartEdition-tab-title'>{'JSON'}</span>
-                  </div>
-                  <div
-                    className='mcs-chartEdition_scrollArea'
-                    style={{ height: '100%', width: '100%' }}
-                  >
-                    {this.renderJsonEdition()}
-                  </div>
-                </React.Fragment>
-              )
-            }
-          </Row>
-        </div>
-        <div className='mcs-chartEdition-submit-button-container'>
-          <Button
-            className='mcs-primary mcs-chartEdition-submit-button mcs-cardEdition-button'
-            type='primary'
-            onClick={this.saveChartConfig}
-          >
-            {intl.formatMessage(messages.chartEditionSave)}
-          </Button>
-          <Button
-            className='mcs-primary mcs-cardEdition-delete-button'
-            type='link'
-            onClick={deleteChart}
-          >
-            {intl.formatMessage(messages.chartEditionDelete)}
-          </Button>
-        </div>
-      </React.Fragment>
+                  <ChartsSearchPanel
+                    chartItem={selectedChartId}
+                    organisationId={organisationId}
+                    onItemClick={this.onChangeChart}
+                  />
+                </Tabs.TabPane>
+                <Tabs.TabPane
+                  className='mcs-chartEdition_scrollArea'
+                  tab={
+                    <div className='mcs-chartEdition-sub-header'>
+                      <span className='mcs-chartEdition_jsonTab_icon'>{'>_'}</span>
+                      <span className='mcs-chartEdition-tab-title'>{'JSON'}</span>
+                    </div>
+                  }
+                  key={'JSON'}
+                >
+                  {this.renderJsonEdition()}
+                </Tabs.TabPane>
+              </Tabs>
+            </Row>
+          </div>
+          <div className='mcs-chartEdition-submit-button-container'>
+            <Button
+              className='mcs-primary mcs-chartEdition-submit-button mcs-cardEdition-button'
+              type='primary'
+              onClick={this.saveChartConfig}
+            >
+              {intl.formatMessage(messages.chartEditionSave)}
+            </Button>
+            <Button
+              className='mcs-primary mcs-cardEdition-delete-button'
+              type='link'
+              onClick={deleteChart}
+            >
+              {intl.formatMessage(messages.chartEditionDelete)}
+            </Button>
+          </div>
+        </Col>
+      </Row>
     );
   }
 }
 
-const editionTab = compose<Props, ChartEditionProps>(
-  injectIntl,
-  withRouter,
-  injectFeatures,
-)(ChartEditionTab);
+const editionTab = compose<Props, ChartEditionProps>(injectIntl, withRouter)(ChartEditionTab);
 export default editionTab;
