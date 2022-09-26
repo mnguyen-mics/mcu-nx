@@ -38,13 +38,19 @@ export interface ChartsSearchPanelProps {
   organisationId: string;
   title?: string;
   onItemClick?: (item: ChartResource) => void;
-  chartItem?: ChartResource;
+  chartItem?: ChartResource | string;
+}
+
+export function isChartResource(
+  chartResource: ChartResource | string,
+): chartResource is ChartResource {
+  return (chartResource as ChartResource).id !== undefined;
 }
 
 export interface State {
   isLoading: boolean;
   charts: ChartResource[];
-  selectedChart?: ChartResource;
+  selectedChart?: ChartResource | string;
   usersMap: Map<string, UserResource>;
 }
 
@@ -151,7 +157,7 @@ class ChartsSearchPanel extends React.Component<Props, State> {
           notifyError(e);
           return [];
         });
-    else return Promise.apply([]);
+    else return Promise.resolve([]);
   };
 
   onSearch = (value: string) => {
@@ -178,10 +184,16 @@ class ChartsSearchPanel extends React.Component<Props, State> {
       if (onItemClick) onItemClick(item);
     };
 
+    let isSelectedItem = false;
+    if (selectedChart !== undefined) {
+      if (isChartResource(selectedChart)) isSelectedItem = selectedChart === item;
+      else isSelectedItem = selectedChart === item.id;
+    }
+
     return (
       <div
         className={
-          'mcs-charts-list-item' + (selectedChart === item ? ' mcs-charts-list-item_selected' : '')
+          'mcs-charts-list-item' + (isSelectedItem ? ' mcs-charts-list-item_selected' : '')
         }
         onClick={onClick}
       >
