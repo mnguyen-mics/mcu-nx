@@ -16,17 +16,10 @@ import {
   Dataset,
   buildLegendOptions,
   generateDraggable,
+  Datapoint,
 } from '../utils';
 import { cloneDeep, omitBy, isUndefined } from 'lodash';
-
-type YKey = { key: string; message: string };
-type XKeyMode = 'DAY' | 'HOUR' | 'DEFAULT';
-type Type = 'area' | 'line';
-type XKey = { key: string; mode: XKeyMode };
-
-function isTypeofXKey(xkey: XKey | string): xkey is XKey {
-  return (xkey as XKey).key !== undefined;
-}
+import { isTypeofXKey, Type, XKey, YKey } from './AreaChartTypes';
 
 export interface AreaChartProps {
   height?: number;
@@ -61,14 +54,34 @@ class AreaChart extends React.Component<Props, {}> {
     });
   }
 
+  formatKeyValue = (xKey: XKey | string, data: Datapoint, isDateKey: boolean) => {
+    if (isTypeofXKey(xKey)) {
+      return this.formatDateToTs(data[xKey.key] as string, xKey);
+    } else {
+      const key = data[xKey];
+      if (isDateKey) {
+        return this.formatDateToTsForXKeyType(
+          key as string,
+          data.hour_of_day
+            ? (data.hour_of_day as number)
+            : data.hour
+            ? (data.hour as number)
+            : undefined,
+        );
+      } else return key;
+    }
+  };
+
   formatSeries = (
     dataset: Dataset,
     xKey: XKey | string,
     yKeys: YKey[],
+    isDateKey: boolean,
     colors: string[] = defaultColors,
     type: Type = 'area',
   ): Highcharts.SeriesOptionsType[] => {
     const { doubleYAxis } = this.props;
+
     return yKeys.map((y, i) => {
       return {
         type: type as any,
@@ -76,16 +89,7 @@ class AreaChart extends React.Component<Props, {}> {
         data: dataset.map(data => {
           const yValue = data[y.key];
           return [
-            !isTypeofXKey(xKey)
-              ? this.formatDateToTsForXKeyType(
-                  data[xKey] as string,
-                  data.hour_of_day
-                    ? (data.hour_of_day as number)
-                    : data.hour
-                    ? (data.hour as number)
-                    : undefined,
-                )
-              : this.formatDateToTs(data[xKey.key] as string, xKey),
+            this.formatKeyValue(xKey, data, isDateKey),
             yValue && typeof yValue === 'string' ? parseFloat(yValue) : yValue,
           ];
         }),
@@ -130,6 +134,15 @@ class AreaChart extends React.Component<Props, {}> {
       .valueOf();
   };
 
+  checkSerieKeyIsDate = (xKey: string, dataset: Dataset): boolean => {
+    let result = true;
+    dataset.forEach(point => {
+      const key = point[xKey];
+      if (!moment(key as string).isValid()) result = false;
+    });
+    return result;
+  };
+
   render() {
     const {
       dataset,
@@ -149,6 +162,8 @@ class AreaChart extends React.Component<Props, {}> {
       doubleYAxis,
     } = this.props;
 
+    const isDateKeys = !isTypeofXKey(xKey) ? this.checkSerieKeyIsDate(xKey, dataset) : false;
+
     const xAxisDateTimeLabelFormatsOptions:
       | Highcharts.XAxisDateTimeLabelFormatsOptions
       | undefined = isTypeofXKey(xKey)
@@ -163,7 +178,13 @@ class AreaChart extends React.Component<Props, {}> {
             hour: '%H:%M',
           }
         : undefined
+      : isDateKeys
+      ? {
+          month: { main: '%e. %b' },
+          year: { main: '%b' },
+        }
       : undefined;
+
     const plotLines = plotLineValue
       ? [
           {
@@ -206,11 +227,8 @@ class AreaChart extends React.Component<Props, {}> {
       },
       xAxis: !isTypeofXKey(xKey)
         ? {
-            type: 'datetime',
-            dateTimeLabelFormats: {
-              month: { main: '%e. %b' },
-              year: { main: '%b' },
-            },
+            type: !isDateKeys ? 'category' : 'datetime',
+            dateTimeLabelFormats: xAxisDateTimeLabelFormatsOptions,
             ...generateXAxisGridLine(),
           }
         : {
@@ -247,7 +265,7 @@ class AreaChart extends React.Component<Props, {}> {
           };
         }
       }),
-      series: this.formatSeries(dataset, xKey, yKeys, colors, type),
+      series: this.formatSeries(dataset, xKey, yKeys, isDateKeys, colors, type),
       credits: {
         enabled: false,
       },

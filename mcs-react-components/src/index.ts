@@ -59,3 +59,5 @@ export { default as FoldableCardHierarchy } from './components/foldable-card-hie
 export { default as AreaChartSlider } from './components/charts/area-chart-slider';
 export { default as MetricChart } from './components/charts/metric-chart';
 export { default as CopyToClipboard } from './components/copy-to-clipboard';
+export type { XKey, XKeyMode } from './components/charts/area-chart/AreaChartTypes';
+export { isTypeofXKey, convertXKeyToString } from './components/charts/area-chart/AreaChartTypes';
