@@ -1,3 +1,4 @@
+import { isTypeofXKey, XKey } from '@mediarithmics-private/mcs-components-library/lib/';
 import { Datapoint } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 import {
   AbstractDataset,
@@ -53,9 +54,10 @@ export class TransformationProcessor {
     datamartId: string,
     organisationId: string,
     chartType: ChartType,
-    xKey: string,
+    xKeyAlt: string | XKey,
     dataset: AbstractDatasetTree,
   ): Promise<AbstractDataset | undefined> {
+    const xKey = isTypeofXKey(xKeyAlt) ? xKeyAlt.key : xKeyAlt;
     const sourceType = dataset.type.toLowerCase();
 
     // Leaf transformations, there is nothing to do

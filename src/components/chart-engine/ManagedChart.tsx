@@ -45,6 +45,7 @@ import {
 import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 import { ColumnsType } from 'antd/lib/table';
 import { MetricChartFormat } from '@mediarithmics-private/mcs-components-library/lib/components/charts/metric-chart/MetricChart';
+import { isTypeofXKey, XKey } from '@mediarithmics-private/mcs-components-library/lib';
 
 const messages = defineMessages({
   stillLoading: {
@@ -109,8 +110,9 @@ class ManagedChart extends React.Component<Props> {
     return formatMetric(value, numeralFormat, unlocalizedMoneyPrefix);
   };
 
-  renderAggregateChart(xKey: string, yKeys: YKey[], dataset: Dataset) {
+  renderAggregateChart(xKeyAlt: string | XKey, yKeys: YKey[], dataset: Dataset) {
     const { chartConfig } = this.props;
+    const xKey = isTypeofXKey(xKeyAlt) ? xKeyAlt.key : xKeyAlt;
     const options: ChartApiOptions = chartConfig.options || {};
     const formattedOptions: ChartOptions = keysToCamel(options) as ChartOptions;
     const withKeys = {
@@ -205,7 +207,14 @@ class ManagedChart extends React.Component<Props> {
         return renderTableChart(tableChartOptions);
       case 'area':
       case 'line':
-        return <AreaChart dataset={dataset as any} {...(sanitizedwithKeys as AreaChartOptions)} />;
+        const withKeysArea = {
+          ...withKeys,
+          xKey: xKeyAlt,
+        };
+        const sanitizedwithKeysArea = omitBy(withKeysArea, isUndefined);
+        return (
+          <AreaChart dataset={dataset as any} {...(sanitizedwithKeysArea as AreaChartOptions)} />
+        );
       default:
         return (
           <Alert
@@ -245,7 +254,7 @@ class ManagedChart extends React.Component<Props> {
     return <Alert message='Error' description={msg} type='error' />;
   }
 
-  renderChart(xKey: string, dataset: AbstractDataset) {
+  renderChart(xKey: string | XKey, dataset: AbstractDataset) {
     const { chartConfig } = this.props;
     const chartType = chartConfig.type.toLowerCase() as ChartType;
     const datasetType = dataset.type.toLowerCase();
