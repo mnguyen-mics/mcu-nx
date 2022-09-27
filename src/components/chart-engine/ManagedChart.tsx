@@ -341,6 +341,7 @@ class ManagedChart extends React.Component<Props> {
       onClickEdit,
       onClickMove,
       onClickDelete,
+      openDrawer,
       showButtonDown,
       showButtonUp,
       layout,
@@ -368,16 +369,22 @@ class ManagedChart extends React.Component<Props> {
     return (
       <div style={chartContainerStyle} className={'mcs-chart'}>
         <div className={'mcs-chart_header'}>
-          <span
-            style={{ cursor: 'pointer' }}
-            className={'mcs-chart_header_title'}
-            onClick={onClickEdit ? onClickEdit : this.props.openDrawer}
-          >
-            <span className='mcs-chart_header_text'>{chartConfig.title}</span>
-            {!onClickEdit && !!chartConfig.title ? (
-              <ArrowsAltOutlined className={'mcs-chartIcon mcs-hoverableIcon'} />
-            ) : undefined}
-          </span>
+          {onClickEdit || openDrawer ? (
+            <span
+              style={{ cursor: 'pointer' }}
+              className={'mcs-chart_header_title'}
+              onClick={onClickEdit ? onClickEdit : openDrawer}
+            >
+              <span className='mcs-chart_header_text'>{chartConfig.title}</span>
+              {!onClickEdit && !!chartConfig.title ? (
+                <ArrowsAltOutlined className={'mcs-chartIcon mcs-hoverableIcon'} />
+              ) : undefined}
+            </span>
+          ) : (
+            <div className={'mcs-chart_header_title'}>
+              <span className='mcs-chart_header_text'>{chartConfig.title}</span>
+            </div>
+          )}
           <span className='mcs-chart_header_editBtns'>
             {onClickEdit ? (
               <EditOutlined className={'mcs-chartIcon mcs-chart_edit'} onClick={onClickEdit} />

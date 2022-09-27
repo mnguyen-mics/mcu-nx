@@ -21,6 +21,7 @@ export interface DrawerManagerProps extends InjectedDrawerProps {
 export interface DrawerManagerState {
   drawerMaxWidth: number;
   viewportWidth: number;
+  closingDrawerClassName?: string;
 }
 
 class DrawerManager extends React.Component<DrawerManagerProps, DrawerManagerState> {
@@ -44,6 +45,10 @@ class DrawerManager extends React.Component<DrawerManagerProps, DrawerManagerSta
 
     if (prevDrawableContents.length !== drawableContents.length) {
       this.updateDimensions(drawableContents);
+      if (drawableContents.length === 0)
+        this.setState({
+          closingDrawerClassName: lodash.last(prevDrawableContents)?.closingDrawerClassName,
+        });
     }
     // TODO focus blur issue with GoalForm
     if (this.drawerDiv) {
@@ -108,7 +113,7 @@ class DrawerManager extends React.Component<DrawerManagerProps, DrawerManagerSta
 
   render() {
     const { drawableContents } = this.props;
-    const { drawerMaxWidth, viewportWidth } = this.state;
+    const { drawerMaxWidth, viewportWidth, closingDrawerClassName } = this.state;
     const foregroundContentSize = this.getForegroundContentSize(drawableContents);
 
     const drawerStyles = {
@@ -147,7 +152,12 @@ class DrawerManager extends React.Component<DrawerManagerProps, DrawerManagerSta
     );
 
     drawersWithOverlay.push(<div className='drawer-overlay' />);
-    drawersWithOverlay.push(<div className='drawer' style={drawerStyles.ready} />);
+    drawersWithOverlay.push(
+      <div
+        className={'drawer' + (closingDrawerClassName ? ` ${closingDrawerClassName}` : '')}
+        style={drawerStyles.ready}
+      />,
+    );
 
     return (
       <div onKeyDown={this.handleOnKeyDown} className='drawer-container'>

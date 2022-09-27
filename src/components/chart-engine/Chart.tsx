@@ -44,6 +44,7 @@ export interface ChartProps {
   chartConfig: ChartConfig;
   showButtonUp?: boolean;
   showButtonDown?: boolean;
+  hideOpenDrawer?: boolean;
   layout?: Layout;
   chartContainerStyle?: React.CSSProperties;
   scope?: AbstractScope;
@@ -239,6 +240,7 @@ class Chart extends React.Component<Props, ChartState> {
       onClickDelete,
       showButtonDown,
       showButtonUp,
+      hideOpenDrawer,
       layout,
     } = this.props;
     if (!!errorContext) {
@@ -252,7 +254,9 @@ class Chart extends React.Component<Props, ChartState> {
       );
     }
 
-    const openDrawer = () => this.openDrawer(chartConfig.title, formattedData);
+    const openDrawer = hideOpenDrawer
+      ? undefined
+      : () => this.openDrawer(chartConfig.title, formattedData);
     return (
       <ManagedChart
         chartConfig={chartConfig}

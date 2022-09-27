@@ -111,8 +111,13 @@
   }
 }
 
+.mcs-drawer-chartEdition-close {
+  width: 30vw !important;
+  left: 60vw !important;
+}
+
 .mcs-chartEdition_container {
-  height: auto;
+  height: 100%;
   padding-top: 20px;
   padding-left: 40px;
   padding-right: 40px;
@@ -120,6 +125,7 @@
   display: flex;
   flex-direction: column;
   overflow-y: hidden;
+  background: white;
   .mcs-chartEdition_title {
     font-family: 'LLCircularWeb-Book';
     font-size: 20px;
@@ -151,6 +157,20 @@
   }
   .mcs-chartEdition_scrollArea {
     overflow-y: auto;
+  }
+}
+
+.mcs-chartEdition-preview-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .mcs-chartEdition-preview-card {
+    flex: 0 0 auto;
+    margin-bottom: 0px;
+    height: 450px;
+    width: 600px;
+    z-index: 42;
   }
 }
 
@@ -244,6 +264,11 @@
 
 .mcs-drawer-cardEdition {
   background: white;
+  min-height: 400px;
+}
+
+.mcs-drawer-chartEdition {
+  background: transparent;
   min-height: 400px;
 }
 
