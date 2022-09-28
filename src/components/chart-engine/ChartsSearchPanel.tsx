@@ -12,6 +12,7 @@ import {
   BarChartOutlined,
   PieChartOutlined,
   RadarChartOutlined,
+  SmallDashOutlined,
   TableOutlined,
 } from '@ant-design/icons';
 import _ from 'lodash';
@@ -114,6 +115,12 @@ class ChartsSearchPanel extends React.Component<Props, State> {
     const { usersMap } = this.state;
     const filters = searchValue && searchValue.length > 0 ? { title: searchValue } : undefined;
     const charts = await this.fetchCharts(organisationId, { ...filters, max_results: 500 });
+
+    this.setState({
+      isLoading: false,
+      charts: charts,
+    });
+
     const userIds =
       charts !== undefined
         ? charts.map(chart => chart.last_modified_by).filter(userId => userId !== undefined)
@@ -127,8 +134,6 @@ class ChartsSearchPanel extends React.Component<Props, State> {
         updatedUsersMap.set(user.id, user);
       });
       this.setState({
-        isLoading: false,
-        charts: charts,
         usersMap: updatedUsersMap,
       });
     });
@@ -180,7 +185,7 @@ class ChartsSearchPanel extends React.Component<Props, State> {
       if (usersMap.has(item.last_modified_by)) {
         const user = usersMap.get(item.last_modified_by);
         if (user) userName = `${user.first_name} ${user.last_name}`;
-      } else userName = item.last_modified_by;
+      } else userName = undefined;
     }
 
     const onClick = () => {
@@ -204,7 +209,13 @@ class ChartsSearchPanel extends React.Component<Props, State> {
         <span className='mcs-charts-list_title'>{item.title}</span>
         <span>
           <span className='mcs-charts-list-item_author'>
-            {userName ? `${intl.formatMessage(messages.modifiedBy)} ${userName}` : ''}
+            {userName && `${intl.formatMessage(messages.modifiedBy)} ${userName}`}
+            {!userName && (
+              <span>
+                {`${intl.formatMessage(messages.modifiedBy)} `}
+                <SmallDashOutlined className='mcs-charts-list-item_placeholder' />
+              </span>
+            )}
           </span>
           <span className='mcs-charts-list-item_date'>
             {item.last_modified_ts
