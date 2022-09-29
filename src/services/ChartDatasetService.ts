@@ -80,6 +80,7 @@ export interface ManagedChartConfig {
   colors?: string[];
   options?: ChartApiOptions;
   chart_id?: string;
+  useCache?: boolean;
 }
 
 export interface ExternalChartConfig {
@@ -241,6 +242,7 @@ export class ChartDatasetService implements IChartDatasetService {
     queryExecutionSubSource: QueryExecutionSubSource,
     scope?: AbstractScope,
     queryFragment?: QueryFragment,
+    useCache?: boolean,
   ): Promise<OTQLResult> {
     return fetchAndFormatQuery(
       this.queryService,
@@ -261,7 +263,7 @@ export class ChartDatasetService implements IChartDatasetService {
                 queryExecutionSubSource,
                 {
                   precision: otqlSource.precision,
-                  use_cache: true,
+                  use_cache: useCache,
                 },
               )
               .catch(err => {
@@ -413,6 +415,7 @@ export class ChartDatasetService implements IChartDatasetService {
     queryExecutionSubSource: QueryExecutionSubSource,
     providedScope?: AbstractScope,
     queryFragment?: QueryFragment,
+    useCache?: boolean,
   ): Promise<AbstractDatasetTree | undefined> {
     const xKey = isTypeofXKey(xKeyAlt) ? xKeyAlt.key : xKeyAlt;
     const sourceType = source.type.toLowerCase();
@@ -429,6 +432,7 @@ export class ChartDatasetService implements IChartDatasetService {
         queryExecutionSubSource,
         scope,
         queryFragment,
+        useCache,
       ).then(res => {
         return formatDatasetForOtql(res, xKey, seriesTitle);
       });
@@ -518,6 +522,7 @@ export class ChartDatasetService implements IChartDatasetService {
             queryExecutionSubSource,
             providedScope,
             queryFragment,
+            useCache,
           ),
         ),
       )
@@ -570,9 +575,8 @@ export class ChartDatasetService implements IChartDatasetService {
       queryExecutionSubSource,
       providedScope,
       queryFragment,
+      chartConfig.useCache,
     );
-    console.log('hydratedTree');
-    console.log(hydratedTree);
     if (!hydratedTree || typeof hydratedTree === 'string') {
       return Promise.reject(
         hydratedTree ? (hydratedTree as string) : 'Could not retrieve data for the chart',
