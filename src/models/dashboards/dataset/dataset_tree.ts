@@ -1,5 +1,6 @@
 import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 import { DateOptions, DecoratorsOptions, IndexOptions, ReduceOptions, SourceType } from './common';
+import { OTQLDataResult } from '../../datamart/graphdb/OTQLResult';
 
 export interface AbstractDatasetTree {
   type: SourceType;
@@ -48,7 +49,7 @@ export type DatasetShape =
   | ReduceDataset
   | GetDecoratorsDataset;
 
-export type DatasetType = 'aggregate' | 'count';
+export type DatasetType = 'aggregate' | 'count' | 'json';
 
 export abstract class AbstractDataset {
   type: DatasetType;
@@ -65,6 +66,10 @@ export interface AggregateDataset extends AbstractDataset {
 
 export interface CountDataset extends AbstractDataset {
   value: number;
+}
+
+export interface JsonDataset extends AbstractDataset {
+  rows: OTQLDataResult[];
 }
 
 export interface DatafileDataset extends AbstractDatasetTree {

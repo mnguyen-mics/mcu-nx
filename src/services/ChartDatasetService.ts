@@ -571,6 +571,8 @@ export class ChartDatasetService implements IChartDatasetService {
       providedScope,
       queryFragment,
     );
+    console.log('hydratedTree');
+    console.log(hydratedTree);
     if (!hydratedTree || typeof hydratedTree === 'string') {
       return Promise.reject(
         hydratedTree ? (hydratedTree as string) : 'Could not retrieve data for the chart',
