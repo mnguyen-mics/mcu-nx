@@ -156,7 +156,7 @@ class ChartsSearchPanel extends React.Component<Props, State> {
 
     const usersToFetch = userIds.filter(userId => !usersMap.has(userId));
 
-    if (usersToFetch.length > 1)
+    if (usersToFetch.length > 0)
       return this._usersService
         .getUsers({ max_results: 5000 })
         .then(res => {
