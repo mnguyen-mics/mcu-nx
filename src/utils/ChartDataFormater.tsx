@@ -1,6 +1,7 @@
 import {
   isAggregateResult,
   isCountResult,
+  isOTQLDataResult,
   OTQLBucket,
   OTQLResult,
 } from '../models/datamart/graphdb/OTQLResult';
@@ -13,6 +14,7 @@ import {
   AbstractDataset,
   AggregateDataset,
   CountDataset,
+  JsonDataset,
 } from '../models/dashboards/dataset/dataset_tree';
 import { XKey } from '@mediarithmics-private/mcs-components-library/lib';
 
@@ -127,6 +129,11 @@ export function formatDatasetForOtql(
       type: 'count',
       value: value,
     } as CountDataset;
+  } else if (dataResult && dataResult.rows && isOTQLDataResult(dataResult.rows)) {
+    return {
+      type: 'json',
+      rows: dataResult.rows,
+    } as JsonDataset;
   } else {
     return undefined;
   }

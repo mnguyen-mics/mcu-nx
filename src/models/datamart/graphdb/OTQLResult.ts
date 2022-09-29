@@ -62,6 +62,10 @@ export function isCountResult(rows: OTQLResultRowsShape): rows is OTQLCountResul
   return !!(rows.length && (rows as OTQLCountResult[])[0].count !== undefined);
 }
 
+export function isOTQLDataResult(rows: OTQLResultRowsShape): rows is OTQLDataResult[] {
+  return !!(rows as OTQLCountResult[]).length;
+}
+
 export interface GraphQLResult {
   took: number;
   cache_hit: boolean;
