@@ -99,7 +99,10 @@ class Chart extends React.Component<Props, ChartState> {
       .fetchDataset(
         datamartId,
         organisationId,
-        chartConfig,
+        {
+          ...chartConfig,
+          useCache: chartConfig.useCache !== undefined ? chartConfig.useCache : true,
+        },
         queryExecutionSource,
         queryExecutionSubSource,
         scope,
