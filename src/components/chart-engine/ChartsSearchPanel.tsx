@@ -14,6 +14,7 @@ import {
   RadarChartOutlined,
   SmallDashOutlined,
   TableOutlined,
+  BorderlessTableOutlined,
 } from '@ant-design/icons';
 import _ from 'lodash';
 import UserResource from '../../models/directory/UserResource';
@@ -37,7 +38,6 @@ const messages = defineMessages({
 
 export interface ChartsSearchPanelProps {
   organisationId: string;
-  title?: string;
   onItemClick?: (item: ChartResource) => void;
   chartItem?: ChartResource | string;
 }
@@ -104,6 +104,8 @@ class ChartsSearchPanel extends React.Component<Props, State> {
           return <RadarChartOutlined className={className} />;
         case 'area':
           return <AreaChartOutlined className={className} />;
+        case 'metric':
+          return <BorderlessTableOutlined className={className} />;
         default:
           return <TableOutlined className={className} />;
       }
@@ -232,12 +234,10 @@ class ChartsSearchPanel extends React.Component<Props, State> {
   };
 
   render() {
-    const { title } = this.props;
     const { isLoading, charts } = this.state;
 
     return (
       <div className='mcs-charts-search-panel'>
-        {title ? <div className='mcs-charts-search-panel_title'>{title}</div> : <div />}
         <Search
           className='mcs-charts-search-panel_search-bar'
           placeholder='Search'
