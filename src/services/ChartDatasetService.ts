@@ -1,3 +1,4 @@
+import { ResourcesUsageDimension } from './../utils/analytics/ResourcesUsageReportHelper';
 import {
   QueryExecutionSource,
   QueryExecutionSubSource,
@@ -70,6 +71,8 @@ import {
   MetricChartProps,
 } from '@mediarithmics-private/mcs-components-library/lib/components/charts/metric-chart/MetricChart';
 import { isTypeofXKey, XKey } from '@mediarithmics-private/mcs-components-library/lib';
+import { ResourcesUsageMetric } from '../utils/analytics/ResourcesUsageReportHelper';
+import { ResourcesUsageService } from './analytics/ResourcesUsageService';
 
 export type ChartType = 'pie' | 'bars' | 'radar' | 'metric' | 'area' | 'line' | 'table';
 
@@ -207,7 +210,7 @@ export interface IChartDatasetService {
   ): Promise<AbstractDataset | undefined>;
 }
 
-type AnalyticsType = 'collections' | 'activities';
+type AnalyticsType = 'collections' | 'activities' | 'resources';
 
 @injectable()
 export class ChartDatasetService implements IChartDatasetService {
@@ -227,6 +230,9 @@ export class ChartDatasetService implements IChartDatasetService {
     CollectionVolumesMetric,
     CollectionVolumesDimension
   > = new CollectionVolumesService();
+
+  private resourcesUsageService: IAnalyticsService<ResourcesUsageMetric, ResourcesUsageDimension> =
+    new ResourcesUsageService();
 
   private defaultDateRange: DateRange[] = [
     {
@@ -287,9 +293,16 @@ export class ChartDatasetService implements IChartDatasetService {
   }
 
   private getAnalyticsService<M, D>(type: AnalyticsType) {
-    if (type === 'activities') return this.activitiesAnalyticsService;
-    else if (type === 'collections') return this.collectionsAnalyticsService;
-    return this.activitiesAnalyticsService;
+    switch (type) {
+      case 'activities':
+        return this.activitiesAnalyticsService;
+      case 'collections':
+        return this.collectionsAnalyticsService;
+      case 'resources':
+        return this.resourcesUsageService;
+      default:
+        return this.activitiesAnalyticsService;
+    }
   }
 
   private fetchActivitiesAnalytics(
@@ -317,6 +330,21 @@ export class ChartDatasetService implements IChartDatasetService {
   ) {
     return this.fetchAnalytics(
       'collections' as AnalyticsType,
+      datamartId,
+      source,
+      xKey,
+      providedScope,
+    );
+  }
+
+  private fetchResourcesUsage(
+    datamartId: string,
+    source: AnalyticsSource<ResourcesUsageMetric, ResourcesUsageDimension>,
+    xKey: string,
+    providedScope?: AbstractScope,
+  ) {
+    return this.fetchAnalytics(
+      'resources' as AnalyticsType,
       datamartId,
       source,
       xKey,
@@ -463,6 +491,18 @@ export class ChartDatasetService implements IChartDatasetService {
         return {
           ...source,
           dataset: volumesDataset,
+        } as AnalyticsDataset;
+      });
+    } else if (sourceType === 'resources_usage') {
+      return this.fetchResourcesUsage(
+        datamartId,
+        source as AnalyticsSource<ResourcesUsageMetric, ResourcesUsageDimension>,
+        xKey,
+        providedScope,
+      ).then(usageDataset => {
+        return {
+          ...source,
+          dataset: usageDataset,
         } as AnalyticsDataset;
       });
     } else if (sourceType === 'data_file') {

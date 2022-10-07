@@ -24,6 +24,7 @@ export interface ITagService {
     otqlQueries: number,
     activitiesAnalyticsQueries: number,
     collectionVolumesQueries: number,
+    resourcesUsageQueries: number,
     datafileQueries: number,
   ) => void;
   addUserAccountProperty: (userAccountId: string) => void;
@@ -48,6 +49,7 @@ export class TagService implements ITagService {
     otqlQueries: number,
     activitiesAnalyticsQueries: number,
     collectionVolumesQueries: number,
+    resourcesUsageQueries: number,
     datafileQueries: number,
   ): void => {
     if ((window as any).mics && (window as any).mics.push) {
@@ -59,6 +61,7 @@ export class TagService implements ITagService {
         otql_queries: otqlQueries,
         activities_analytics_queries: activitiesAnalyticsQueries,
         collection_volumes_queries: collectionVolumesQueries,
+        resources_usage_queries: resourcesUsageQueries,
         datafile_queries: datafileQueries,
       });
     }

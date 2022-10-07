@@ -111,6 +111,7 @@ export async function extractQueriesHelper(
       return scopedQueryInfo ? [scopedQueryInfo] : [];
     case 'activities_analytics':
     case 'collection_volumes':
+    case 'resources_usage':
       const analyticsSource = source as AnalyticsSource<
         ActivitiesAnalyticsMetric,
         ActivitiesAnalyticsDimension
