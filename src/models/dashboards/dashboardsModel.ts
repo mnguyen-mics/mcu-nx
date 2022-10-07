@@ -361,6 +361,7 @@ export interface DashboardContentStats {
   otqlQueries: number; // Total number of OTQL queries in the dashboard
   activitiesAnalyticsQueries: number; // Total number of activities analytics queries in the dashboard
   collectionVolumesQueries: number; // Total number of collection volumes queries in the dashboard
+  resourcesUsageQueries: number; // Total number of resources usage queries in the dashboard
   datafileQueries: number; // Total number of datafile data sources in the dashboard
 }
 

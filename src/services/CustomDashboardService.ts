@@ -528,6 +528,7 @@ export default class CustomDashboardService implements ICustomDashboardService {
       otqlQueries: s1.otqlQueries + s2.otqlQueries,
       activitiesAnalyticsQueries: s1.activitiesAnalyticsQueries + s2.activitiesAnalyticsQueries,
       collectionVolumesQueries: s1.collectionVolumesQueries + s2.collectionVolumesQueries,
+      resourcesUsageQueries: s1.resourcesUsageQueries + s2.resourcesUsageQueries,
       datafileQueries: s1.datafileQueries + s2.datafileQueries,
     };
   }
@@ -544,6 +545,11 @@ export default class CustomDashboardService implements ICustomDashboardService {
         otqlQueries: initialStats.otqlQueries + 1,
       };
     } else if (sourceType === 'collection_volumes') {
+      return {
+        ...initialStats,
+        collectionVolumesQueries: initialStats.collectionVolumesQueries + 1,
+      };
+    } else if (sourceType === 'resources_usage') {
       return {
         ...initialStats,
         collectionVolumesQueries: initialStats.collectionVolumesQueries + 1,
@@ -587,6 +593,7 @@ export default class CustomDashboardService implements ICustomDashboardService {
       otqlQueries: 0,
       activitiesAnalyticsQueries: 0,
       collectionVolumesQueries: 0,
+      resourcesUsageQueries: 0,
       datafileQueries: 0,
     };
 

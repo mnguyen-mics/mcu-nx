@@ -64,7 +64,11 @@ export class TransformationProcessor {
     if (sourceType === 'otql') {
       const otqlDataset = dataset as OTQLDataset;
       return otqlDataset.dataset;
-    } else if (sourceType === 'activities_analytics' || sourceType === 'collection_volumes') {
+    } else if (
+      sourceType === 'activities_analytics' ||
+      sourceType === 'collection_volumes' ||
+      sourceType === 'resources_usage'
+    ) {
       const analyticsDataset = dataset as AnalyticsDataset;
       return analyticsDataset.dataset;
     } else if (sourceType === 'data_file') {

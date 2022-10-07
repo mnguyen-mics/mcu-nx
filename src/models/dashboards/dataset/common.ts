@@ -6,6 +6,7 @@ export type SourceType =
   | 'to-percentages'
   | 'activities_analytics'
   | 'collection_volumes'
+  | 'resources_usage'
   | 'ratio'
   | 'format-dates'
   | 'data_file'
