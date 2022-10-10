@@ -2,6 +2,7 @@
   "extends": ["tslint:latest", "tslint-react", "tslint-eslint-rules", "tslint-config-prettier"],
   "rules": {
     "array-type": [true, "array-simple"],
+    "no-implicit-dependencies": [true, "dev"],
     "arrow-parens": false,
     "arrow-return-shorthand": [false],
     "comment-format": [true, "check-space"],

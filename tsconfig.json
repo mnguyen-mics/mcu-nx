@@ -20,7 +20,8 @@
     "strictNullChecks": true,
     "pretty": true,
     "removeComments": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "esModuleInterop": true
   },
   "exclude": ["node_modules", "lib", "**/*.test.*"]
 }

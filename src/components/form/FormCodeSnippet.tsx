@@ -4,7 +4,7 @@ import { injectIntl, InjectedIntlProps, defineMessages } from 'react-intl';
 import { message } from 'antd';
 import { WrappedFieldProps } from 'redux-form';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { docco } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import FormFieldWrapper, { FormFieldWrapperProps } from './FormFieldWrapper';
 import { compose } from 'recompose';

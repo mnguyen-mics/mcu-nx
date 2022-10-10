@@ -1,6 +1,5 @@
 import { ReportView } from '../../models/report/ReportView';
 import { formatDatasetAsKeyValueForReportView } from '../ChartDataFormater';
-import { bucketizeReportView, normalizeReportView } from '../MetricHelper';
 
 const X_KEY = 'key';
 
@@ -15,7 +14,7 @@ test('formatting of a simple reportview', () => {
     total_items: 2,
   };
 
-  const dataset = formatDatasetAsKeyValueForReportView(X_KEY, reportView, ['hello']);
+  const dataset = formatDatasetAsKeyValueForReportView(X_KEY, reportView, ['hello'], '');
   expect(dataset).toEqual([
     { [X_KEY]: '1', world: 2, buckets: undefined },
     { [X_KEY]: '2', world: 3, buckets: undefined },
@@ -38,7 +37,7 @@ test('formatting of a multiple dimensions reportview', () => {
     total_items: 2,
   };
 
-  const dataset = formatDatasetAsKeyValueForReportView(X_KEY, reportView, ['date', 'city']);
+  const dataset = formatDatasetAsKeyValueForReportView(X_KEY, reportView, ['date', 'city'], '');
   expect(dataset).toEqual([
     {
       [X_KEY]: '2021-10-22',
@@ -117,7 +116,7 @@ test('formatting of a multiple dimensions, multiple metrics reportview', () => {
     total_items: 2,
   };
 
-  const dataset = formatDatasetAsKeyValueForReportView(X_KEY, reportView, ['date', 'city']);
+  const dataset = formatDatasetAsKeyValueForReportView(X_KEY, reportView, ['date', 'city'], '');
   expect(dataset).toEqual([
     {
       [X_KEY]: '2021-10-22',

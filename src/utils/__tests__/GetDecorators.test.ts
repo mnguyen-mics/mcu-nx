@@ -1,17 +1,16 @@
-import { ICompartmentService } from './../../../lib/services/CompartmentService.d';
-import AudienceSegmentService, {
+import { AudienceSegmentShape } from '../../models/audienceSegment/AudienceSegmentResource';
+import { ChannelResource } from '../../models/channel/ChannelResource';
+import { DecoratorsOptions } from '../../models/dashboards/dataset/common';
+import { AggregateDataset } from '../../models/dashboards/dataset/dataset_tree';
+import { UserAccountCompartmentResource } from '../../models/datamart/DatamartResource';
+import { DataListResponse } from '../../services/ApiService';
+import { IChannelService } from '../../services/ChannelService';
+import { ICompartmentService } from '../../services/CompartmentService';
+import { DecoratorsTransformation } from '../transformations/DecoratorsTransformation';
+import {
   GetSegmentsOption,
   IAudienceSegmentService,
 } from './../../services/AudienceSegmentService';
-import { IChannelService } from './../../../lib/services/ChannelService.d';
-import { AggregateDataset } from '../ChartDataFormater';
-import { DecoratorsTransformation } from '../transformations/DecoratorsTransformation';
-import { ChannelResource } from '../../../lib/models/channel/ChannelResource';
-import { AudienceSegmentShape } from '../../models/audienceSegment/AudienceSegmentResource';
-import { DataListResponse } from '../../services/ApiService';
-import { UserAccountCompartmentResource } from '../../../lib/models/datamart/DatamartResource';
-import CompartmentService from '../../services/CompartmentService';
-import { DecoratorsOptions } from '../../services/ChartDatasetService';
 
 const X_KEY = 'key';
 

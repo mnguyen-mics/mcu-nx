@@ -1,20 +1,7 @@
-import 'reflect-metadata';
-import * as React from 'react';
-import { IntlProvider } from 'react-intl';
-import { ReduxMock } from 'react-cosmos-redux';
-import { IocProvider } from '../../../inversify/inversify.react';
-import { container } from '../../../inversify/inversify.config';
-import configureStore from '../../../redux/store';
-import config from '../../../react-configuration';
-import PluginEditForm from '../Edit/PluginEditForm';
-import { HashRouter as Router } from 'react-router-dom';
+import { PluginLayout } from '../../..';
 import { PropertyResourceShape } from '../../../models/plugin';
-import { PluginLayout } from '../../../models/plugin/PluginLayout';
-import { Card } from 'antd';
 
-(global as any).window.MCS_CONSTANTS = config;
-
-const myMockedReduxState = {
+export const mockReduxState = {
   features: {
     organisation: [
       'audience-segment_exports',
@@ -164,120 +151,126 @@ const myMockedReduxState = {
   },
 };
 
-const save = (pluginValue: any, propertiesValue: PropertyResourceShape[]): void => {
-  return;
-};
-
-const pluginProperties: PropertyResourceShape[] = [
+export const mockPropertyResourceShapes: PropertyResourceShape[] = [
   {
-    deletable: false,
-    origin: 'INSTANCE',
-    technical_name: 'second_section_field',
-    writable: true,
+    technical_name: 'fb_ad_account_id',
+    value: { value: 'test' },
     property_type: 'STRING',
-    value: { value: 'field value' },
+    origin: 'PLUGIN',
+    writable: true,
+    deletable: false,
   },
   {
-    deletable: false,
-    origin: 'INSTANCE',
-    technical_name: 'first_field',
-    writable: true,
+    technical_name: 'fb_custom_audience_id',
+    value: { value: '' },
     property_type: 'STRING',
-    value: { value: 'tset first field value' },
+    origin: 'PLUGIN',
+    writable: true,
+    deletable: false,
   },
   {
-    deletable: false,
-    origin: 'INSTANCE',
-    technical_name: 'second_field',
-    writable: true,
+    technical_name: 'fb_custom_audience_name',
+    value: { value: '' },
     property_type: 'STRING',
-    value: { value: 'tset second field value' },
+    origin: 'PLUGIN',
+    writable: true,
+    deletable: false,
   },
   {
-    deletable: false,
-    origin: 'INSTANCE',
-    technical_name: 'advanced_field',
-    writable: true,
+    technical_name: 'fb_customer_file_source',
+    value: { value: 'USER_PROVIDED_ONLY' },
     property_type: 'STRING',
-    value: { value: 'tset advanced field value' },
+    origin: 'PLUGIN',
+    writable: true,
+    deletable: false,
+  },
+  {
+    technical_name: 'used_compartments',
+    value: { value: '' },
+    property_type: 'STRING',
+    origin: 'PLUGIN',
+    writable: true,
+    deletable: false,
+  },
+  {
+    technical_name: 'provider',
+    value: { value: 'MEDIARITHMICS' },
+    property_type: 'STRING',
+    origin: 'PLUGIN_STATIC',
+    writable: false,
+    deletable: false,
+  },
+  {
+    technical_name: 'name',
+    value: { value: 'Facebook Custom Audience (based on CRM data)' },
+    property_type: 'STRING',
+    origin: 'PLUGIN_STATIC',
+    writable: false,
+    deletable: false,
   },
 ];
 
-const pluginLayout: PluginLayout = {
-  version: '12',
+export const mockPluginLayout: PluginLayout = {
+  version: 'V201801',
   sections: [
     {
-      title: 'First section',
-      sub_title: 'indeed it is the first section',
+      title: 'Facebook Custom Audience',
+      sub_title: 'Synchronize your CRM Audiences with Facebook',
       fields: [
         {
-          property_technical_name: 'first_field',
-          field_type: 'TEXTAREA',
-          label: 'label for the first field',
-          tooltip: 'Tooltip for first field',
+          property_technical_name: 'fb_ad_account_id',
+          field_type: 'INPUT',
+          label: 'Facebook Ad Account ID',
+          tooltip:
+            'The ID of the Facebook Ad Account to which you want to synchronize your audience.',
+          required: true,
         },
         {
-          property_technical_name: 'second_field',
-          field_type: 'TEXTAREA',
-          label: 'label for the second field',
-          tooltip: 'Tooltip for second field',
+          property_technical_name: 'used_compartments',
+          field_type: 'INPUT',
+          label: 'Compartments to use',
+          tooltip:
+            'The compartment(s) from which the CRM data will be used. Format (case 1): 1111. Format (case 2): 1111,2222,3333. If you need to send mobile Ids you could add MOBILE, MOBILE_AND or MOBILE_IOS to the list of compartments to use. Format (case 3): 1111,2222,MOBILE_AND.',
+          required: false,
+        },
+        {
+          property_technical_name: 'fb_customer_file_source',
+          field_type: 'SELECT',
+          label: 'Customer file source',
+          tooltip:
+            'Describes how the customer information in your Custom Audience was originally collected. USER_PROVIDED_ONLY: Advertisers collected information directly from customers. PARTNER_PROVIDED_ONLY: Advertisers sourced information directly from partners (e.g. agencies or data providers). BOTH_USER_AND_PARTNER_ PROVIDED: Advertisers collected information directly from customers and it was also sourced from partners (ex: agencies).',
+          enum: [
+            { value: 'USER_PROVIDED_ONLY', label: 'USER PROVIDED ONLY (FIRST PARTY)' },
+            { value: 'PARTNER_PROVIDED_ONLY', label: 'PARTNER PROVIDED ONLY (THIRD PARTY)' },
+            { value: 'BOTH_USER_AND_PARTNER_PROVIDED', label: 'BOTH USER AND PARTNER PROVIDED' },
+          ],
+          required: true,
         },
       ],
       advanced_fields: [
         {
-          property_technical_name: 'advanced_field',
-          field_type: 'TEXTAREA',
-          label: 'label for the advanced field',
-          tooltip: 'Tooltip for advanced field',
+          property_technical_name: 'fb_custom_audience_id',
+          field_type: 'INPUT',
+          label: 'Facebook Custom Audience ID',
+          tooltip:
+            'If you want to enrich an existing Facebook Custom Audience, you can retrieve it by specifiying its ID here',
         },
-      ],
-    },
-    {
-      title: 'Second section',
-      sub_title: 'now the second section',
-      fields: [
         {
-          property_technical_name: 'second_section_field',
-          field_type: 'TEXTAREA',
-          label: 'label for the second section field',
-          tooltip: 'Tooltip for second section field',
+          property_technical_name: 'fb_custom_audience_name',
+          field_type: 'INPUT',
+          label: 'Facebook Custom Audience name',
+          tooltip:
+            'If you want to use a specific name for your Custom Audience, specify it here. Default name is the same as your segment in mediarithmics DMP',
         },
       ],
-      advanced_fields: [],
     },
   ],
   metadata: {
-    large_icon_asset_id: '12',
-    small_icon_asset_id: '12',
-    large_icon_asset_url: '12',
-    small_icon_asset_url: '12',
-    display_name: '12',
-    description: '12',
+    large_icon_asset_id: '9656',
+    small_icon_asset_id: '9656',
+    large_icon_asset_url: '/1/public/assets/1543859195254-NaPcgfuo/flogo_RGB_HEX-512.svg',
+    small_icon_asset_url: '/1/public/assets/1543859195254-NaPcgfuo/flogo_RGB_HEX-512.svg',
+    display_name: 'Facebook Custom Audience',
+    description: 'Synchronize your CRM Audiences with Facebook',
   },
 };
-
-export default (
-  <ReduxMock configureStore={configureStore} initialState={myMockedReduxState}>
-    <IocProvider container={container}>
-      <IntlProvider locale='en'>
-        <Router>
-          <Card>
-            <PluginEditForm
-              organisationId={'545'}
-              editionMode={true}
-              save={save}
-              pluginProperties={pluginProperties}
-              disableFields={false}
-              pluginLayout={pluginLayout}
-              isLoading={false}
-              pluginVersionId={'62'}
-              formId={'tset'}
-              initialValues={{}}
-              showGeneralInformation={true}
-            />
-          </Card>
-        </Router>
-      </IntlProvider>
-    </IocProvider>
-  </ReduxMock>
-);

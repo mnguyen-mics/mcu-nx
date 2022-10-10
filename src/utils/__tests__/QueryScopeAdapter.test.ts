@@ -1,4 +1,3 @@
-import { QueryFragment } from '../../components/chart-engine/Chart';
 import {
   QueryResource,
   QueryTranslationRequest,
@@ -6,39 +5,18 @@ import {
 } from '../../models/datamart/DatamartResource';
 import { OTQLResult, QueryPrecisionMode } from '../../models/datamart/graphdb/OTQLResult';
 import { SegmentScope } from '../../models/datamart/graphdb/Scope';
+import {
+  QueryExecutionSource,
+  QueryExecutionSubSource,
+} from '../../models/platformMetrics/QueryExecutionSource';
 import { DataResponse } from '../../services/ApiService';
 import { IQueryService } from '../../services/QueryService';
 import { QueryScopeAdapter } from '../QueryScopeAdapter';
+import { QueryFragment } from '../source/DataSourceHelper';
 
 const WHERE_CLAUSE1 = 'activity_events { app_id = 1 }';
 const JOIN_CLAUSE = 'UserSegment WHERE id = "123"';
 const QUERY1 = `select {id} from UserPoint where ${WHERE_CLAUSE1}`;
-
-const jsonOtqlQuery1 = {
-  from: 'UserPoint',
-  where: {
-    type: 'GROUP',
-    boolean_operator: 'OR',
-    expressions: [
-      {
-        boolean_operator: 'OR',
-        field: 'activity_events',
-        type: 'OBJECT',
-        expressions: [
-          {
-            type: 'FIELD',
-            field: 'app_id',
-            comparison: {
-              type: 'STRING',
-              operator: 'EQ',
-              values: ['1'],
-            },
-          },
-        ],
-      },
-    ],
-  },
-};
 
 class QueryServiceMock implements IQueryService {
   getQuery(datamartId: string, queryId: string): Promise<DataResponse<QueryResource>> {
@@ -48,7 +26,9 @@ class QueryServiceMock implements IQueryService {
   runOTQLQuery(
     datamartId: string,
     query: string,
-    options: {
+    source: QueryExecutionSource,
+    subSource: QueryExecutionSubSource,
+    options?: {
       index_name?: string;
       query_id?: string;
       limit?: number;
@@ -57,7 +37,7 @@ class QueryServiceMock implements IQueryService {
       use_cache?: boolean;
       precision?: QueryPrecisionMode;
       content_type?: string;
-    } = {},
+    },
   ): Promise<DataResponse<OTQLResult>> {
     return Promise.reject('Not implemented');
   }
@@ -65,13 +45,15 @@ class QueryServiceMock implements IQueryService {
   private printExpression(exp: any) {
     if (exp.type === 'OBJECT') {
       const printedExpressions = exp.expressions
-        .map(e => this.printExpression(e))
+        .map((e: any) => this.printExpression(e))
         .join(` ${exp.boolean_operator} `);
       return `${exp.field} { ${printedExpressions} }`;
     } else if (exp.type === 'FIELD') {
       return `${exp.field} = ${exp.comparison.values[0]}`;
     } else if (exp.type === 'GROUP') {
-      return exp.expressions.map(e => this.printExpression(e)).join(` ${exp.boolean_operator} `);
+      return exp.expressions
+        .map((e: any) => this.printExpression(e))
+        .join(` ${exp.boolean_operator} `);
     }
   }
 
