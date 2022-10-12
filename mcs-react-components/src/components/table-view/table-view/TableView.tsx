@@ -112,6 +112,11 @@ class TableView<
           key: dataColumn.key,
           render: dataColumn.render ? dataColumn.render : (text: any) => text,
           sorter: dataColumn.sorter ? dataColumn.sorter : false,
+          onCell: dataColumn.onCell
+            ? dataColumn.onCell
+            : (_: T) => {
+                return {};
+              },
         };
       });
   };
