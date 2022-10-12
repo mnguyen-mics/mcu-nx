@@ -1,17 +1,20 @@
+export type AnalyticsSourceType =
+  | 'activities_analytics'
+  | 'collection_volumes'
+  | 'resources_usage'
+  | 'data_ingestion';
+
 export type SourceType =
   | 'otql'
   | 'join'
   | 'to-list'
   | 'index'
   | 'to-percentages'
-  | 'activities_analytics'
-  | 'collection_volumes'
-  | 'data_ingestion'
-  | 'resources_usage'
   | 'ratio'
   | 'format-dates'
   | 'data_file'
-  | 'reduce';
+  | 'reduce'
+  | AnalyticsSourceType;
 
 export type Order = `descending` | `ascending`;
 

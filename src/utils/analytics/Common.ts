@@ -1,3 +1,13 @@
+import { DataIngestionDimension, DataIngestionMetric } from './DataIngestionReportHelper';
+import {
+  CollectionVolumesDimension,
+  CollectionVolumesMetric,
+} from './CollectionVolumesReportHelper';
+import {
+  ActivitiesAnalyticsDimension,
+  ActivitiesAnalyticsMetric,
+} from './ActivitiesAnalyticsReportHelper';
+import { ResourcesUsageDimension, ResourcesUsageMetric } from './ResourcesUsageReportHelper';
 import {
   ReportRequestBody,
   DateRange,
@@ -7,6 +17,18 @@ import {
   OrderBy,
 } from '../../models/report/ReportRequestBody';
 import McsMoment, { isNowFormat } from '../McsMoment';
+
+export type AnalyticsDimension =
+  | ActivitiesAnalyticsDimension
+  | CollectionVolumesDimension
+  | ResourcesUsageDimension
+  | DataIngestionDimension;
+
+export type AnalyticsMetric =
+  | ActivitiesAnalyticsMetric
+  | CollectionVolumesMetric
+  | ResourcesUsageMetric
+  | DataIngestionMetric;
 
 export function checkIsDateInvalid(formattedDate: string, date: string) {
   if (formattedDate === 'Invalid date') {

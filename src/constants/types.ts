@@ -6,6 +6,8 @@ const TYPES = {
   IChartDatasetService: Symbol.for('chartDatasetService'),
   IActivitiesAnalyticsService: Symbol.for('activitiesAnalyticsService'),
   ICollectionVolumesService: Symbol.for('collectionsAnalyticsService'),
+  IResourcesUsageService: Symbol.for('resourcesUsageService'),
+  IDataIngestionAnalyticsService: Symbol.for('dataIngestionAnalyticsService'),
   IAssetFileService: Symbol.for('assetFileService'),
   IDataFileService: Symbol.for('dataFileService'),
   IPluginService: Symbol.for('pluginService'),
