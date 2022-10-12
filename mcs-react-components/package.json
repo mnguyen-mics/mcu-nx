@@ -12,6 +12,7 @@
     "build": "rimraf lib && npm run lint && npm run test && webpack --config webpack.prod.js",
     "prepublishOnly": "rimraf lib && npm run lint && npm run test && webpack --config webpack.prod.js",
     "test": "jest",
+    "prettier-check": "prettier -c .",
     "prettier-fix": "prettier -w .",
     "test:watch": "jest --watch",
     "test:updateSnapshot": "jest --updateSnapshot",
