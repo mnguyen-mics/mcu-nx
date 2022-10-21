@@ -166,7 +166,7 @@ const getDefaultSections = (datamartId: string) => {
                                 {
                                   dimension_name: 'collection',
                                   operator: 'EXACT',
-                                  expressions: ['UserAgent'],
+                                  expressions: ['UserDevicePoint'],
                                 },
                               ],
                             },
@@ -176,7 +176,7 @@ const getDefaultSections = (datamartId: string) => {
                               },
                             ],
                           },
-                          series_title: 'UserAgent',
+                          series_title: 'UserDevicePoint',
                         },
                       ],
                     },
