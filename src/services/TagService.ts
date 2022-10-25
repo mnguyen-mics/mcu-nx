@@ -27,6 +27,7 @@ export interface ITagService {
     resourcesUsageQueries: number,
     datafileQueries: number,
   ) => void;
+  pushEvent: (nature: string, scope: string) => void;
   addUserAccountProperty: (userAccountId: string) => void;
   setUserProperties: (user: { id: string }) => void;
   googleAnalyticsTrack: (pathname: string) => void;
@@ -64,6 +65,12 @@ export class TagService implements ITagService {
         resources_usage_queries: resourcesUsageQueries,
         datafile_queries: datafileQueries,
       });
+    }
+  };
+
+  pushEvent = (nature: string, scope: string): void => {
+    if ((window as any).mics && (window as any).mics.push) {
+      (window as any).mics.push(nature, { scope: scope.toLowerCase() });
     }
   };
 
