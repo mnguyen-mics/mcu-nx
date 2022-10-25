@@ -95,7 +95,11 @@ function request(
 
     requestHeaders.append('X-Requested-By', 'mediarithmics-navigator');
 
-    if (isKeycloakEnabled) {
+    const adminApiToken = MCS_CONSTANTS.ADMIN_API_TOKEN;
+
+    if (adminApiToken && !options.localUrl && options.authenticated) {
+      requestHeaders.append('Authorization', adminApiToken);
+    } else if (isKeycloakEnabled) {
       if (!options.localUrl && KeycloakService.isLoggedIn()) {
         const token = KeycloakService.getToken();
         if (token) {
