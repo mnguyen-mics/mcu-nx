@@ -256,14 +256,7 @@ class PluginCardModalContent<T extends LayoutablePlugin> extends React.Component
     return (
       <div className='mcs-pluginModal_feedChart_container'>
         <div className='mcs-pluginModal_feedChart_container_header'>
-          <img
-            className='mcs-pluginModal_feedChart_container_header_image'
-            src='/react/src/assets/images/beta-icon.png'
-          />
-          <div className='mcs-pluginModal_feedChart_container_header_description'>
-            <FormattedMessage {...messages.stats_description1} />
-            <FormattedMessage {...messages.stats_description2} />
-          </div>
+          <FormattedMessage {...messages.stats_description} />
         </div>
         {React.cloneElement(pluginChart as React.ReactElement, {
           dateRange: dateRange,
@@ -328,7 +321,7 @@ class PluginCardModalContent<T extends LayoutablePlugin> extends React.Component
     if (hasFeature('audience-feeds_stats') && editionMode) {
       items = [
         {
-          title: 'Stats (BETA)',
+          title: 'Stats',
           key: 'stats',
           display: <div className='tab'>{this.renderStats()}</div>,
         },
@@ -422,20 +415,12 @@ export default compose<Props<LayoutablePlugin>, PluginCardModalContentProps<Layo
 const messages: {
   [metric: string]: FormattedMessage.MessageDescriptor;
 } = defineMessages({
-  stats_description1: {
-    id: 'audience.feeds.stats.description1',
+  stats_description: {
+    id: 'audience.feeds.stats.description',
     defaultMessage:
-      'The chart below displays the segment loads sent to the external platform, \
-    day by day: whenever a user is entering / leaving the segment, \
-    this feed is keeping in sync the destination segment.',
-  },
-  stats_description2: {
-    id: 'audience.feeds.stats.description2',
-    defaultMessage:
-      'When the feed is created, the platform is streaming all the users that \
-    entered the segment prior to the feed creation to be sure that the full segment is \
-    shared with the external platform. Hence, it is normal to see a spike in the user \
-    additions load at the creation of the feed and afterwards a decrease in the segment loads size.',
+      'On activation, the feed tries to send compatible identifiers of all user points in the segment. \
+      Then it sends update/remove signals for all compatible identifiers when a user point enters or \
+      leaves the segment or when it has new identifiers.',
   },
   saveAndActivateLater: {
     id: 'pluginCardModalContent.submit.saveAndActivateLater',
