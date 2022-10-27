@@ -28,6 +28,7 @@ export { default as Logo } from './components/top-bar/Logo';
 export { default as errorMessages } from './utils/errorMessage';
 export { default as NoAccess } from './utils/NoAccess';
 export { default as RenderOnAuthenticated } from './utils/RenderOnAuthenticated';
+export { default as RenderWhenHasAccess } from './utils/RenderWhenHasAccess';
 export { default as withValidators } from './components/form/withValidators';
 export { default as GenericPluginContent } from './components/plugin-form/Edit/GenericPluginContent';
 export { PluginContentOuterProps } from './components/plugin-form/Edit/GenericPluginContent';
