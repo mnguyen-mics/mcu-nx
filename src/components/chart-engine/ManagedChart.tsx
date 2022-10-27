@@ -94,13 +94,16 @@ class ManagedChart extends React.Component<Props> {
     };
   }
 
-  adaptDatasetForPieChart(xKey: string, yKeys: YKey[], dataset: Dataset) {
+  adaptDatasetForPieChart(xKey: string, yKey: YKey, dataset: Dataset) {
     const newDataset: Dataset = JSON.parse(JSON.stringify(dataset));
     newDataset.forEach(datapoint => {
-      const value = yKeys?.find(yKey => Object.keys(datapoint).includes(yKey.key))?.key;
       datapoint.key = datapoint[xKey];
-      datapoint.value = value ? datapoint[`${value}`] : undefined;
+      datapoint.value = datapoint[yKey.key];
       if (xKey !== 'key') delete datapoint[xKey];
+      if (yKey.key !== 'value') delete datapoint[yKey.key];
+      if (!!datapoint.buckets) {
+        datapoint.buckets = this.adaptDatasetForPieChart(xKey, yKey, datapoint.buckets);
+      }
     });
     return newDataset;
   }
@@ -193,8 +196,9 @@ class ManagedChart extends React.Component<Props> {
 
         return (
           <PieChart
+            drilldown={true}
             innerRadius={false}
-            dataset={this.adaptDatasetForPieChart(xKey, yKeys, dataset)}
+            dataset={this.adaptDatasetForPieChart(xKey, yKeys[0], dataset)}
             {...sanitizedwithKeys}
           />
         );
