@@ -5,7 +5,7 @@ import { MicsReduxState } from '../../utils/ReduxHelper';
 import { getWorkspace } from '../../redux/Session/selectors';
 import { Dropdown } from 'antd';
 import { UserWorkspaceResource } from '../../models/directory/UserProfileResource';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import SwitchBySearch from './SwitchBySearch';
 import SwitchByList from './SwitchByList';

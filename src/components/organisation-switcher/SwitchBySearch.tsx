@@ -2,7 +2,7 @@ import * as React from 'react';
 import { compose } from 'recompose';
 import { Input, Menu } from 'antd';
 import { UserWorkspaceResource } from '../../models/directory/UserProfileResource';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { partition, debounce, uniq, orderBy } from 'lodash';
 import messages from './messages';
 import { InjectedIntlProps, injectIntl } from 'react-intl';

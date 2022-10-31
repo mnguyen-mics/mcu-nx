@@ -10,8 +10,7 @@ import { To } from 'history';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { compose } from 'recompose';
 import { UserProfileResource } from '../../models/directory/UserProfileResource';
 import { MicsReduxState } from '../../utils/ReduxHelper';
@@ -49,23 +48,16 @@ type Props = TopBarMapStateToProps & TopBarProps & RouteProps;
 
 export const buildAccountsMenu = () => {
   const formattedMessage = <FormattedMessage {...messages.logout} />;
-  if (KeycloakService.isKeycloakEnabled()) {
-    const logOut = () => {
-      KeycloakService.doLogout();
-    };
 
-    return [
-      <div onClick={logOut} key={1}>
-        {formattedMessage}
-      </div>,
-    ];
-  } else {
-    return [
-      <Link to='/logout' key={1}>
-        {formattedMessage}
-      </Link>,
-    ];
-  }
+  const logOut = () => {
+    KeycloakService.doLogout();
+  };
+
+  return [
+    <div onClick={logOut} key={1}>
+      {formattedMessage}
+    </div>,
+  ];
 };
 
 class TopBar extends React.Component<Props> {

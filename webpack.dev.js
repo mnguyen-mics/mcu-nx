@@ -9,5 +9,5 @@ module.exports = merge(common, {
     aggregateTimeout: 300,
     poll: 1000,
   },
-  externals: ['antd', 'react', 'react-dom'],
+  externals: ['antd', 'react', 'react-dom', 'react-router-dom'],
 });

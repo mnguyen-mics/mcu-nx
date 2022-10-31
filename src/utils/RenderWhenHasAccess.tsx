@@ -8,7 +8,7 @@ import * as SessionHelper from '../redux/Session/selectors';
 import { getWorkspace } from '../redux/Session/actions';
 import { fetchAllLabels } from '../redux/Labels/actions';
 import { RouteParams } from './AuthenticatedRoute';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 
 export interface RenderWhenHasAccessProps {

@@ -36,10 +36,6 @@ const updateToken = (successCallback: any) =>
       return successCallback();
     });
 
-const isKeycloakEnabled = (): boolean => {
-  return !!(global as any).window.MCS_CONSTANTS?.ENABLE_KEYCLOAK;
-};
-
 const KeycloakService = {
   initKeycloak,
   getClientId,
@@ -48,7 +44,6 @@ const KeycloakService = {
   isLoggedIn,
   getToken,
   updateToken,
-  isKeycloakEnabled,
 };
 
 export default KeycloakService;

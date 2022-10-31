@@ -17,7 +17,7 @@ import { defaultChartConfigText as defaultChartConfig } from '../../../services/
 import { Card, McsIcon } from '@mediarithmics-private/mcs-components-library';
 import { DotChartOutlined } from '@ant-design/icons';
 import Chart, { ChartsSearchPanel } from '../../chart-engine';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { ChartResource } from '../../../models/chart/Chart';
 import _ from 'lodash';
 import cuid from 'cuid';

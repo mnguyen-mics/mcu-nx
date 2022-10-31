@@ -4,7 +4,7 @@ import { Layout, Row, Col } from 'antd';
 import PluginCard from './PluginCard';
 import { LayoutablePlugin } from '../../../../models/plugin/Plugins';
 import { FormTitle } from '../../../form';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { compose } from 'recompose';
 import { InjectedFeaturesProps, injectFeatures } from '../../../Features';
 
