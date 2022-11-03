@@ -1,6 +1,14 @@
 // TODO type accordingly here once the rework of
 // dashboard typings is done in ADV components library
+
+function formatDate(dateToFormat: Date) {
+  return `${dateToFormat.getFullYear()}-${dateToFormat.getMonth()}-${dateToFormat.getDate()} ${dateToFormat.getHours()}:${dateToFormat.getMinutes()}:${dateToFormat.getMinutes()}`;
+}
+
 const getDefaultSections = (datamartId: string) => {
+  const now = new Date();
+  const last30Days = new Date();
+  last30Days.setDate(now.getDate() - 30);
   return {
     sections: [
       {
@@ -293,6 +301,213 @@ const getDefaultSections = (datamartId: string) => {
             h: 5,
             layout: 'horizontal',
             w: 12,
+          },
+        ],
+      },
+      {
+        cards: [
+          {
+            x: 0,
+            y: 0,
+            h: 7,
+            w: 12,
+            charts: [
+              {
+                dataset: {
+                  type: 'JOIN',
+                  sources: [
+                    {
+                      type: 'data_ingestion',
+                      series_title: 'JS_TAG',
+                      query_json: {
+                        date_ranges: [
+                          {
+                            start_date: formatDate(last30Days),
+                            end_date: formatDate(now),
+                          },
+                        ],
+                        dimensions: [
+                          {
+                            name: 'event_name',
+                          },
+                        ],
+                        dimension_filter_clauses: {
+                          operator: 'AND',
+                          filters: [
+                            {
+                              dimension_name: 'datamart_id',
+                              operator: 'EXACT',
+                              expressions: [datamartId],
+                            },
+                            {
+                              dimension_name: 'pipeline_step',
+                              operator: 'EXACT',
+                              expressions: ['JS_TAG'],
+                            },
+                          ],
+                        },
+                        metrics: [
+                          {
+                            expression: 'event_count',
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      type: 'data_ingestion',
+                      series_title: 'API',
+                      query_json: {
+                        date_ranges: [
+                          {
+                            start_date: formatDate(last30Days),
+                            end_date: formatDate(now),
+                          },
+                        ],
+                        dimensions: [
+                          {
+                            name: 'event_name',
+                          },
+                        ],
+                        dimension_filter_clauses: {
+                          operator: 'AND',
+                          filters: [
+                            {
+                              dimension_name: 'datamart_id',
+                              operator: 'EXACT',
+                              expressions: [datamartId],
+                            },
+                            {
+                              dimension_name: 'pipeline_step',
+                              operator: 'EXACT',
+                              expressions: ['API'],
+                            },
+                          ],
+                        },
+                        metrics: [
+                          {
+                            expression: 'event_count',
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      type: 'data_ingestion',
+                      series_title: 'EVENT_RULES',
+                      query_json: {
+                        date_ranges: [
+                          {
+                            start_date: formatDate(last30Days),
+                            end_date: formatDate(now),
+                          },
+                        ],
+                        dimensions: [
+                          {
+                            name: 'event_name',
+                          },
+                        ],
+                        dimension_filter_clauses: {
+                          operator: 'AND',
+                          filters: [
+                            {
+                              dimension_name: 'datamart_id',
+                              operator: 'EXACT',
+                              expressions: [datamartId],
+                            },
+                            {
+                              dimension_name: 'pipeline_step',
+                              operator: 'EXACT',
+                              expressions: ['EVENT_RULES'],
+                            },
+                          ],
+                        },
+                        metrics: [
+                          {
+                            expression: 'event_count',
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      type: 'data_ingestion',
+                      series_title: 'ACTIVITY_ANALYZER',
+                      query_json: {
+                        date_ranges: [
+                          {
+                            start_date: formatDate(last30Days),
+                            end_date: formatDate(now),
+                          },
+                        ],
+                        dimensions: [
+                          {
+                            name: 'event_name',
+                          },
+                        ],
+                        dimension_filter_clauses: {
+                          operator: 'AND',
+                          filters: [
+                            {
+                              dimension_name: 'datamart_id',
+                              operator: 'EXACT',
+                              expressions: [datamartId],
+                            },
+                            {
+                              dimension_name: 'pipeline_step',
+                              operator: 'EXACT',
+                              expressions: ['ACTIVITY_ANALYZER'],
+                            },
+                          ],
+                        },
+                        metrics: [
+                          {
+                            expression: 'event_count',
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      type: 'data_ingestion',
+                      series_title: 'DOCUMENT_STORE',
+                      query_json: {
+                        date_ranges: [
+                          {
+                            start_date: formatDate(last30Days),
+                            end_date: formatDate(now),
+                          },
+                        ],
+                        dimensions: [
+                          {
+                            name: 'event_name',
+                          },
+                        ],
+                        dimension_filter_clauses: {
+                          operator: 'AND',
+                          filters: [
+                            {
+                              dimension_name: 'datamart_id',
+                              operator: 'EXACT',
+                              expressions: [datamartId],
+                            },
+                            {
+                              dimension_name: 'pipeline_step',
+                              operator: 'EXACT',
+                              expressions: ['DOCUMENT_STORE'],
+                            },
+                          ],
+                        },
+                        metrics: [
+                          {
+                            expression: 'event_count',
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+
+                title: 'Events ingestion on last 30 days',
+                type: 'table',
+              },
+            ],
           },
         ],
       },
