@@ -95,12 +95,12 @@ class ChartMetadataInfo extends React.Component<Props> {
     };
     return (
       <div className={'mcs-chartMetaDataInfo_container'}>
-        <Row>
+        <Row justify='space-between' align='middle'>
           <div className={'mcs-chartMetaDataInfo_title'}>{title}</div>
           <McsIcon
             type='close'
             className='close-icon'
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: 'pointer', margin: 0 }}
             onClick={onCloseDrawer}
           />
         </Row>
