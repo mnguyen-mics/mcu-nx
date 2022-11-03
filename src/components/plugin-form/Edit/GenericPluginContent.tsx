@@ -2,7 +2,7 @@ import * as React from 'react';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import PluginEditSelector from './PluginEditSelector';
 import PluginEditForm, { SpecificFieldsFunction } from './PluginEditForm';
 import {

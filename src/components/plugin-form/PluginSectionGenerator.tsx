@@ -8,7 +8,7 @@ import { FormTitle, FormInputField, FormInput, FormTextAreaField, FormTextArea }
 import withValidators from '../form/withValidators';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 import injectDrawer from '../../components/drawer/injectDrawer';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { PluginFieldGenerator } from '.';
 import { compose } from 'recompose';
 import messages from './Edit/messages';

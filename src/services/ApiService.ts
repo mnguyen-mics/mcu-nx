@@ -1,7 +1,5 @@
 import 'whatwg-fetch';
 import { isEmpty } from 'lodash';
-import LocalStorage from './LocalStorage';
-import { ACCESS_TOKEN } from './AuthService';
 import KeycloakService from './KeycloakService';
 
 export type StatusCode = 'ok' | 'error';
@@ -85,7 +83,8 @@ function request(
     authenticated?: boolean;
   } = {},
 ) {
-  const isKeycloakEnabled = KeycloakService.isKeycloakEnabled();
+  const adminApiToken = MCS_CONSTANTS.ADMIN_API_TOKEN;
+
   const requestFunction = () => {
     const baseUrl = options.adminApi ? ADMIN_API_URL : options.localUrl ? LOCAL_URL : API_URL;
 
@@ -95,27 +94,14 @@ function request(
 
     requestHeaders.append('X-Requested-By', 'mediarithmics-navigator');
 
-    const adminApiToken = MCS_CONSTANTS.ADMIN_API_TOKEN;
-
     if (adminApiToken && !options.localUrl && options.authenticated) {
       requestHeaders.append('Authorization', adminApiToken);
-    } else if (isKeycloakEnabled) {
-      if (!options.localUrl && KeycloakService.isLoggedIn()) {
-        const token = KeycloakService.getToken();
-        if (token) {
-          requestHeaders.append('Authorization', `Bearer ${token}`);
-        } else {
-          Promise.reject(`Error. Authenticated without token, endpoint:${endpoint}`);
-        }
-      }
-    } else {
-      if (!options.localUrl && options.authenticated) {
-        const token = LocalStorage.getItem(ACCESS_TOKEN);
-        if (token) {
-          requestHeaders.append('Authorization', token);
-        } else {
-          Promise.reject(`Error. Authenticated without token, endpoint:${endpoint}`);
-        }
+    } else if (!options.localUrl && KeycloakService.isLoggedIn()) {
+      const token = KeycloakService.getToken();
+      if (token) {
+        requestHeaders.append('Authorization', `Bearer ${token}`);
+      } else {
+        Promise.reject(`Error. Authenticated without token, endpoint:${endpoint}`);
       }
     }
 
@@ -185,9 +171,9 @@ function request(
       .then(checkAndParse);
   };
 
-  return isKeycloakEnabled && !options.localUrl
-    ? KeycloakService.updateToken(requestFunction)
-    : requestFunction();
+  return options.localUrl || adminApiToken
+    ? requestFunction()
+    : KeycloakService.updateToken(requestFunction);
 }
 
 function getRequest<T>(

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { compose } from 'recompose';
 import { Menu } from 'antd';
 import { UserWorkspaceResource } from '../../models/directory/UserProfileResource';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { partition } from 'lodash';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { isAChild, isCommunity, switchWorkspace } from './OrganisationSwitcherHelpers';

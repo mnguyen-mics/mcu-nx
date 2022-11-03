@@ -20,7 +20,7 @@ import {
   QueryExecutionSubSource,
 } from '../../models/platformMetrics/QueryExecutionSource';
 import { McsTabsItem } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-tabs/McsTabs';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 export interface DashboardPageProps {
   dataFileDashboards?: DataFileDashboardResource[];

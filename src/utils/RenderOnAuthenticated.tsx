@@ -6,7 +6,7 @@ import { errorMessages, MicsReduxState } from '..';
 import { UserProfileResource } from '../models/directory/UserProfileResource';
 import KeycloakService from '../services/KeycloakService';
 import { RouteParams } from './AuthenticatedRoute';
-import { withRouter, RouteComponentProps, Redirect } from 'react-router';
+import { withRouter, RouteComponentProps, Redirect } from 'react-router-dom';
 import { KeycloakPostLogin } from '../redux/KeycloakPostLogin/actions';
 import { InjectedFeaturesProps, injectFeatures } from '../components/Features';
 import RenderWhenHasAccess from './RenderWhenHasAccess';
@@ -45,9 +45,9 @@ class RenderOnAuthenticated extends React.Component<Props> {
   componentDidMount() {
     const { connectedUser, keycloakPostLoginAction } = this.props;
     if (
-      KeycloakService.isKeycloakEnabled() &&
-      KeycloakService.isLoggedIn() &&
-      (!connectedUser || !connectedUser.id)
+      KeycloakService.isLoggedIn() ||
+      ((global as any).window.MCS_CONSTANTS.ADMIN_API_TOKEN &&
+        (!connectedUser || !connectedUser.id))
     ) {
       keycloakPostLoginAction();
     }
@@ -68,7 +68,7 @@ class RenderOnAuthenticated extends React.Component<Props> {
     const defaultLoading = <Loading isFullScreen={true} />;
     const defaultError = <Error message={formatMessage(errorMessages.generic)} />;
 
-    if (!KeycloakService.isKeycloakEnabled() || !KeycloakService.isLoggedIn()) {
+    if (!KeycloakService.isLoggedIn() && !(global as any).window.MCS_CONSTANTS.ADMIN_API_TOKEN) {
       return defaultError;
     }
 

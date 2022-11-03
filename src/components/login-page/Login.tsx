@@ -12,7 +12,6 @@ import { Credentials } from '../../services/AuthService';
 import { UserProfileResource } from '../../models/directory/UserProfileResource';
 import { MicsReduxState } from '../../utils/ReduxHelper';
 import LocalStorage from '../../services/LocalStorage';
-import { StaticContext } from 'react-router';
 import { To } from 'history';
 
 const FormItem = Form.Item;
@@ -84,7 +83,7 @@ type Props = LoginProps &
   MapDispatchToProps &
   InjectedIntlProps &
   FormComponentProps &
-  RouteComponentProps<{}, StaticContext, { from?: string }>;
+  RouteComponentProps<{}, {}, { from?: string }>;
 
 const Login = (props: Props) => {
   const [isRequesting, setIsRequesting] = useState(false);

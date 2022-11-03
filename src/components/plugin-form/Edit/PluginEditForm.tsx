@@ -13,7 +13,7 @@ import { InjectedDrawerProps } from '../../../components/drawer/injectDrawer';
 import { injectDrawer } from '../../../components/drawer/index';
 import { Button, McsIcon } from '@mediarithmics-private/mcs-components-library';
 import { PluginLayout } from '../../../models/plugin/PluginLayout';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { BasicProps } from 'antd/lib/layout/layout';
 import PluginSectionGenerator from '../PluginSectionGenerator';
 import { PropertyResourceShape } from '../../../models/plugin';

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Upload, message, Button } from 'antd';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { compose } from 'recompose';
 import FormFieldWrapper, { FormFieldWrapperProps } from '../../../../form/FormFieldWrapper';
 import { WrappedFieldProps } from 'redux-form';

@@ -21,7 +21,10 @@ function* keycloakPostLoginHandler() {
     const connectedUserStored = yield select(getStoredConnectedUser);
     if (connectedUserStored && connectedUserStored.id) {
       connectedUser = connectedUserStored;
-    } else if (KeycloakService.isLoggedIn()) {
+    } else if (
+      KeycloakService.isLoggedIn() ||
+      (global as any).window.MCS_CONSTANTS.ADMIN_API_TOKEN
+    ) {
       connectedUser = yield call(_authService.getConnectedUser);
     }
 
