@@ -135,6 +135,7 @@ class DashboardFilter extends React.Component<DashboardFilterProps, DashboardFil
           onChange={this.handleFilterChange}
           value={appliedFilters}
           showArrow={true}
+          size='small'
         >
           {filterOptions}
         </Select>

@@ -1,5 +1,5 @@
 import { Card } from '@mediarithmics-private/mcs-components-library';
-import { Button, Modal } from 'antd';
+import { Button, Divider, Modal } from 'antd';
 import React, { CSSProperties } from 'react';
 import { Layout, Responsive, WidthProvider } from 'react-grid-layout';
 import Chart from '../chart-engine';
@@ -26,6 +26,12 @@ import {
   QueryExecutionSource,
   QueryExecutionSubSource,
 } from '../../models/platformMetrics/QueryExecutionSource';
+import {
+  AggregateDataset,
+  CountDataset,
+  JsonDataset,
+} from '../../models/dashboards/dataset/dataset_tree';
+import { ExportService } from '../../services/ExportService';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -35,6 +41,7 @@ export interface DashboardLayoutProps {
   datamart_id: string;
   organisationId: string;
   schema: DashboardContentSchema;
+  title?: string;
   scope?: AbstractScope;
   editable: boolean;
   updateState?: (d: DashboardContentSchema) => void;
@@ -46,6 +53,7 @@ export interface DashboardLayoutProps {
 interface FilterValues {
   [key: string]: string[];
 }
+type ChartsFormattedData = Map<string, AggregateDataset | CountDataset | JsonDataset | undefined>;
 export interface DashboardLayoutState {
   dashboardFilterValues: FilterValues;
   formattedQueryFragment: QueryFragment;
@@ -85,6 +93,7 @@ const messages = defineMessages({
 });
 
 export default class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
+  private chartsFormattedData: ChartsFormattedData = new Map();
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -167,6 +176,13 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
 
     return false;
   }
+
+  private setChartsFormattedData = (
+    chartTitle: string,
+    data?: AggregateDataset | CountDataset | JsonDataset,
+  ) => {
+    this.chartsFormattedData = this.chartsFormattedData.set(chartTitle, data);
+  };
 
   private mergeChartConfigs = (to: ChartConfig, from: ChartConfig) => {
     const newChart: any = from;
@@ -528,6 +544,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
         }
         queryExecutionSource={queryExecutionSource}
         queryExecutionSubSource={queryExecutionSubSource}
+        setChartsFormattedData={this.setChartsFormattedData}
       />
     );
   }
@@ -849,34 +866,56 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     );
   }
 
+  handleExportButtonClick =
+    (title = 'Dashboard') =>
+    () => {
+      new ExportService().exportMultipleDataset(this.chartsFormattedData, title);
+    };
+
   generateDOM(): React.ReactElement {
-    const { schema, datamart_id, organisationId, queryExecutionSource, queryExecutionSubSource } =
-      this.props;
+    const {
+      schema,
+      datamart_id,
+      organisationId,
+      queryExecutionSource,
+      queryExecutionSubSource,
+      title,
+    } = this.props;
     const sections = schema.sections.map((section, i) => this.renderSection(section, i));
     return (
       <div className={'mcs-dashboardLayout'}>
-        {schema.available_filters && (
-          <div className={'mcs-dashboardLayout_filters'}>
-            {schema.available_filters.map((filter, index) => (
-              <DashboardFilter
-                key={index.toString()}
-                filter={filter}
-                datamartId={datamart_id}
-                organisationId={organisationId}
-                onFilterChange={this.handleDashboardFilterChange}
-                queryExecutionSource={queryExecutionSource}
-                queryExecutionSubSource={queryExecutionSubSource}
-              />
-            ))}
-            <Button
-              onClick={this.applyFilter}
-              type='primary'
-              className='mcs-primary mcs-dashboardLayout_filters_applyBtn'
-            >
-              Apply
-            </Button>
-          </div>
-        )}
+        <div className={'mcs-dashboardLayout_filters'}>
+          <Button
+            type='default'
+            onClick={this.handleExportButtonClick(title)}
+            className='mcs-primary mcs-dashboardLayout_filters_applyBtn'
+          >
+            Export
+          </Button>
+          {schema.available_filters && (
+            <>
+              <Divider type='vertical' className='mcs-dashboardLayout_filters_divider' />
+              {schema.available_filters.map((filter, index) => (
+                <DashboardFilter
+                  key={index.toString()}
+                  filter={filter}
+                  datamartId={datamart_id}
+                  organisationId={organisationId}
+                  onFilterChange={this.handleDashboardFilterChange}
+                  queryExecutionSource={queryExecutionSource}
+                  queryExecutionSubSource={queryExecutionSubSource}
+                />
+              ))}
+              <Button
+                onClick={this.applyFilter}
+                type='primary'
+                className='mcs-primary mcs-dashboardLayout_filters_applyBtn'
+              >
+                Apply
+              </Button>
+            </>
+          )}
+        </div>
         {sections}
       </div>
     );

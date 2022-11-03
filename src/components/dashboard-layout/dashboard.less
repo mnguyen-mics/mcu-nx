@@ -84,11 +84,20 @@
   margin-left: 10px;
   font-size: 12px;
   font-family: 'LLCircularWeb-Book';
+
+  .ant-select-selector {
+    height: 32px;
+
+    .ant-select-selection-item {
+      height: 22px;
+      line-height: 20px;
+    }
+  }
 }
 
 .mcs-dashboardLayout_filters {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   width: 100%;
   justify-content: flex-end;
   margin-top: 10px;
@@ -96,6 +105,15 @@
 
   &_applyBtn {
     margin-left: 10px;
+  }
+
+  .mcs-dashboardLayout_filters_divider {
+    height: 32px;
+    margin: 0 0 0 8px;
+  }
+
+  .ant-btn {
+    padding: 6px 15px;
   }
 }
 

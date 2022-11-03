@@ -13,13 +13,6 @@ import { InjectedDrawerProps } from '../..';
 import ChartMetadataInfo from './ChartMetadataInfo';
 import { IQueryService, QueryService } from '../../services/QueryService';
 import { QueryScopeAdapter } from '../../utils/QueryScopeAdapter';
-import {
-  ArrowDownOutlined,
-  ArrowUpOutlined,
-  ArrowLeftOutlined,
-  ArrowRightOutlined,
-} from '@ant-design/icons';
-import cuid from 'cuid';
 import { extractQueriesHelper, QueryFragment } from '../../utils/source/DataSourceHelper';
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
@@ -54,6 +47,7 @@ export interface ChartProps {
   onClickDelete?: () => void;
   queryExecutionSource: QueryExecutionSource;
   queryExecutionSubSource: QueryExecutionSubSource;
+  setChartsFormattedData?: (title: string, data?: AbstractDataset) => void;
 }
 
 interface ChartState {
@@ -115,6 +109,7 @@ class Chart extends React.Component<Props, ChartState> {
           loading: false,
           stillLoading: false,
         });
+        this.props.setChartsFormattedData?.(chartConfig.title, formattedData);
       })
       .catch(e => {
         clearTimeout(loadingTimeout);
@@ -195,42 +190,6 @@ class Chart extends React.Component<Props, ChartState> {
         },
       });
     }
-  }
-
-  renderUpIcon(onClickMoveUp: () => void, layout?: Layout, showButton?: boolean) {
-    if (!showButton) return undefined;
-    else
-      return layout && layout === 'horizontal' ? (
-        <ArrowLeftOutlined
-          key={cuid()}
-          className={'mcs-chartIcon mcs-chart_arrow_up'}
-          onClick={onClickMoveUp}
-        />
-      ) : (
-        <ArrowUpOutlined
-          key={cuid()}
-          className={'mcs-chartIcon mcs-chart_arrow_up'}
-          onClick={onClickMoveUp}
-        />
-      );
-  }
-
-  renderDownIcon(onClickMoveDown: () => void, layout?: Layout, showButton?: boolean) {
-    if (!showButton) return undefined;
-    else
-      return layout && layout === 'horizontal' ? (
-        <ArrowRightOutlined
-          key={cuid()}
-          className={'mcs-chartIcon mcs-chart_arrow_down'}
-          onClick={onClickMoveDown}
-        />
-      ) : (
-        <ArrowDownOutlined
-          key={cuid()}
-          className={'mcs-chartIcon mcs-chart_arrow_down'}
-          onClick={onClickMoveDown}
-        />
-      );
   }
 
   render() {

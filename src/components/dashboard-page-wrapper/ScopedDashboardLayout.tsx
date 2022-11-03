@@ -29,6 +29,7 @@ interface ScopedDashboardLayoutProps {
   datamartId: string;
   organisationId: string;
   schema: DashboardContentSchema;
+  title?: string;
   source?: AudienceSegmentShape | StandardSegmentBuilderQueryDocument;
   editable: boolean;
   updateState?: (d: DashboardContentSchema) => void;
@@ -147,6 +148,7 @@ class ScopedDashboardLayout extends React.Component<Props, State> {
       onShowDashboard,
       queryExecutionSource,
       queryExecutionSubSource,
+      title,
     } = this.props;
     const { scope, isLoading, hasError } = this.state;
 
@@ -164,6 +166,7 @@ class ScopedDashboardLayout extends React.Component<Props, State> {
         editable={editable}
         updateState={updateState}
         datamart_id={datamartId}
+        title={title}
         organisationId={organisationId}
         schema={schema}
         scope={scope}
