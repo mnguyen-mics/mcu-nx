@@ -9,9 +9,10 @@ import { buildAnalyticsRequestBody } from './Common';
 
 export type ResourcesUsageDimension =
   | 'community_id'
+  | 'organisation_id'
+  | 'datamart_id'
   | 'date_time'
   | 'execution_id'
-  | 'organisation_id'
   | 'resource_id'
   | 'source'
   | 'sub_source';

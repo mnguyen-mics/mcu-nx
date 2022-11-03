@@ -530,6 +530,7 @@ export default class CustomDashboardService implements ICustomDashboardService {
       collectionVolumesQueries: s1.collectionVolumesQueries + s2.collectionVolumesQueries,
       resourcesUsageQueries: s1.resourcesUsageQueries + s2.resourcesUsageQueries,
       datafileQueries: s1.datafileQueries + s2.datafileQueries,
+      dataIngestionQueries: s1.dataIngestionQueries + s2.dataIngestionQueries,
     };
   }
 
@@ -549,10 +550,15 @@ export default class CustomDashboardService implements ICustomDashboardService {
         ...initialStats,
         collectionVolumesQueries: initialStats.collectionVolumesQueries + 1,
       };
+    } else if (sourceType === 'data_ingestion') {
+      return {
+        ...initialStats,
+        dataIngestionQueries: initialStats.dataIngestionQueries + 1,
+      };
     } else if (sourceType === 'resources_usage') {
       return {
         ...initialStats,
-        collectionVolumesQueries: initialStats.collectionVolumesQueries + 1,
+        resourcesUsageQueries: initialStats.resourcesUsageQueries + 1,
       };
     } else if (sourceType === 'activities_analytics') {
       return {
@@ -595,6 +601,7 @@ export default class CustomDashboardService implements ICustomDashboardService {
       collectionVolumesQueries: 0,
       resourcesUsageQueries: 0,
       datafileQueries: 0,
+      dataIngestionQueries: 0,
     };
 
     if (dashboard.dashboardContent) {
