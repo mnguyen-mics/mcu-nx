@@ -1,3 +1,8 @@
+import { DataIngestionAnalyticsService } from './analytics/DataIngestionAnalyticsService';
+import {
+  DataIngestionMetric,
+  DataIngestionDimension,
+} from './../utils/analytics/DataIngestionReportHelper';
 import { ResourcesUsageDimension } from './../utils/analytics/ResourcesUsageReportHelper';
 import {
   QueryExecutionSource,
@@ -210,7 +215,7 @@ export interface IChartDatasetService {
   ): Promise<AbstractDataset | undefined>;
 }
 
-type AnalyticsType = 'collections' | 'activities' | 'resources';
+type AnalyticsType = 'collections' | 'activities' | 'resources' | 'data_ingestion';
 
 @injectable()
 export class ChartDatasetService implements IChartDatasetService {
@@ -233,6 +238,11 @@ export class ChartDatasetService implements IChartDatasetService {
 
   private resourcesUsageService: IAnalyticsService<ResourcesUsageMetric, ResourcesUsageDimension> =
     new ResourcesUsageService();
+
+  private dataIngestionAnalyticsService: IAnalyticsService<
+    DataIngestionMetric,
+    DataIngestionDimension
+  > = new DataIngestionAnalyticsService();
 
   private defaultDateRange: DateRange[] = [
     {
@@ -300,6 +310,8 @@ export class ChartDatasetService implements IChartDatasetService {
         return this.collectionsAnalyticsService;
       case 'resources':
         return this.resourcesUsageService;
+      case 'data_ingestion':
+        return this.dataIngestionAnalyticsService;
       default:
         return this.activitiesAnalyticsService;
     }
@@ -330,6 +342,21 @@ export class ChartDatasetService implements IChartDatasetService {
   ) {
     return this.fetchAnalytics(
       'collections' as AnalyticsType,
+      datamartId,
+      source,
+      xKey,
+      providedScope,
+    );
+  }
+
+  private fetchDataIngestionMetrics(
+    datamartId: string,
+    source: AnalyticsSource<DataIngestionMetric, DataIngestionDimension>,
+    xKey: string,
+    providedScope?: AbstractScope,
+  ) {
+    return this.fetchAnalytics(
+      'data_ingestion' as AnalyticsType,
       datamartId,
       source,
       xKey,
@@ -485,6 +512,18 @@ export class ChartDatasetService implements IChartDatasetService {
       return this.fetchCollectionVolumes(
         datamartId,
         source as AnalyticsSource<CollectionVolumesMetric, CollectionVolumesDimension>,
+        xKey,
+        providedScope,
+      ).then(volumesDataset => {
+        return {
+          ...source,
+          dataset: volumesDataset,
+        } as AnalyticsDataset;
+      });
+    } else if (sourceType === 'data_ingestion') {
+      return this.fetchDataIngestionMetrics(
+        datamartId,
+        source as AnalyticsSource<DataIngestionMetric, DataIngestionDimension>,
         xKey,
         providedScope,
       ).then(volumesDataset => {

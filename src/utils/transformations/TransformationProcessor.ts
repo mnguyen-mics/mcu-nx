@@ -67,6 +67,7 @@ export class TransformationProcessor {
     } else if (
       sourceType === 'activities_analytics' ||
       sourceType === 'collection_volumes' ||
+      sourceType === 'data_ingestion' ||
       sourceType === 'resources_usage'
     ) {
       const analyticsDataset = dataset as AnalyticsDataset;

@@ -362,6 +362,7 @@ export interface DashboardContentStats {
   activitiesAnalyticsQueries: number; // Total number of activities analytics queries in the dashboard
   collectionVolumesQueries: number; // Total number of collection volumes queries in the dashboard
   resourcesUsageQueries: number; // Total number of resources usage queries in the dashboard
+  dataIngestionQueries: number; // Total number of data ingestion analytics queries in the dashboard
   datafileQueries: number; // Total number of datafile data sources in the dashboard
 }
 
