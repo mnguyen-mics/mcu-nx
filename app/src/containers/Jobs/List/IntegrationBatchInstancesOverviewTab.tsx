@@ -12,7 +12,7 @@ import {
   CloseCircleFilled,
 } from '@ant-design/icons';
 import { Drawer, Tag, Tooltip } from 'antd';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { RouteComponentProps, withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 import messages from '../messages';
 import {
@@ -46,7 +46,6 @@ import {
   JobExecutionPublicStatus,
 } from '@mediarithmics-private/advanced-components';
 import IntegrationBatchInstanceEditPage from '../Edit/IntegrationBatchInstanceEditPage';
-import { Link } from 'react-router-dom';
 
 const BATCH_INSTANCE_SEARCH_SETTINGS = [...PAGINATION_SEARCH_SETTINGS, ...PLUGIN_SEARCH_SETTINGS];
 

@@ -7,7 +7,7 @@ import {
   CheckCircleFilled,
   ClockCircleFilled,
 } from '@ant-design/icons';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import messages from '../messages';
 import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';

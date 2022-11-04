@@ -4,7 +4,7 @@ import * as React from 'react';
 import Sider from 'antd/lib/layout/Sider';
 import { Logo, TopBar } from '@mediarithmics-private/advanced-components';
 import { MainMenu } from '../Menu';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
 interface LayoutManagerProps {

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import lodash from 'lodash';
 import { compose } from 'recompose';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
 import { Layout, Modal, Tag } from 'antd';
 import { injectIntl, InjectedIntlProps } from 'react-intl';
 import ItemList, { Filters } from '../../../components/ItemList';
@@ -27,7 +27,6 @@ import {
 } from '@mediarithmics-private/advanced-components';
 import { IOrganisationService } from '@mediarithmics-private/advanced-components/lib/services/OrganisationService';
 import { dashboardsDefinition } from '../../../routes/dashboardsRoutes';
-import { Link } from 'react-router-dom';
 
 const { Content } = Layout;
 

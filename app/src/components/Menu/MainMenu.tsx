@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { Link, withRouter, matchPath } from 'react-router-dom';
+import { Link, withRouter, matchPath, RouteComponentProps } from 'react-router-dom';
 import { Menu } from 'antd';
 import { menuDefinitions } from '../../routes/menuDefinition';
 import { compose } from 'recompose';
-import { RouteComponentProps } from 'react-router';
 import { NavigatorMenuDefinition, NavigatorSubMenuDefinition } from '../../routes/domain';
 import { McsIcon, MentionTag } from '@mediarithmics-private/mcs-components-library';
 

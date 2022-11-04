@@ -2,7 +2,7 @@ import * as React from 'react';
 import _ from 'lodash';
 import moment, { Moment } from 'moment';
 import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { RouteComponentProps, withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 import injectNotifications, {
   InjectedNotificationProps,
@@ -28,7 +28,6 @@ import cronstrue from 'cronstrue';
 import DashboardHeader from '../../../components/DashboardHeader/DashboardHeader';
 import OrganisationName from '../../../components/Common/OrganisationName';
 import messages from '../messages';
-import { Link } from 'react-router-dom';
 import IntegrationBatchInstanceEditPage from '../Edit/IntegrationBatchInstanceEditPage';
 import IntegrationBatchInstanceExecutionEditPage from '../Edit/IntegrationBatchInstanceExecutionEditPage';
 

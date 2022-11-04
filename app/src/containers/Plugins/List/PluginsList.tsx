@@ -3,7 +3,7 @@ import _ from 'lodash';
 import queryString from 'query-string';
 import { FilterOutlined } from '@ant-design/icons';
 import { Layout, Select, Tag, Drawer, TablePaginationConfig } from 'antd';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { RouteComponentProps, withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 import messages from '../messages';
 import ItemList, { Filters } from '../../../components/ItemList';
@@ -28,7 +28,6 @@ import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';
 import PluginEditDrawer from '../Edit/PluginEditDrawer';
-import { Link } from 'react-router-dom';
 import { Card, PieChart } from '@mediarithmics-private/mcs-components-library';
 import { PluginType } from '@mediarithmics-private/advanced-components/lib/models/plugin/Plugins';
 import { getPaginatedApiParam } from '../../../utils/ApiHelper';

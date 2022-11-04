@@ -22,7 +22,7 @@ import {
 import PluginVersionProperty from './PluginVersionProperty';
 import { Loading } from '@mediarithmics-private/mcs-components-library';
 import { RouterProps } from '../PluginPageActionbar';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../../../Notifications/injectNotifications';

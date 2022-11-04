@@ -5,7 +5,7 @@ import { IPluginService, lazyInject, TYPES } from '@mediarithmics-private/advanc
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../../Notifications/injectNotifications';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PropertyResourceShape } from '@mediarithmics-private/advanced-components/lib/models/plugin';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
