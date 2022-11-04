@@ -52,6 +52,7 @@ module.exports = merge(common, {
       react: path.resolve('./node_modules/react'),
       'react-dom': path.resolve('./node_modules/react-dom'),
       '@ant-design/icons': path.resolve('./node_modules/@ant-design/icons'),
+      'react-router-dom': path.resolve('./node_modules/react-router-dom'),
     },
   },
 
@@ -73,10 +74,10 @@ module.exports = merge(common, {
           return content
             .toString()
             .replace(
-              /'API_URL'\ *:\ *'.*'/,
+              /API_URL\ *:\ *'.*'/,
               process.env.API_ENV === 'prod'
-                ? "'API_URL' : 'https://api.mediarithmics.com'"
-                : "'API_URL' : 'https://api.mediarithmics.local'",
+                ? "API_URL : 'https://api.mediarithmics.com'"
+                : "API_URL : 'https://api.mediarithmics.local'",
             );
         },
       },

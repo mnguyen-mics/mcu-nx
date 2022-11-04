@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { Button } from 'antd';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import { compose } from 'recompose';
 import { Actionbar, McsIcon } from '@mediarithmics-private/mcs-components-library';
 import messages from '../messages';
 import { UploadFile } from 'antd/lib/upload/interface';
-import { Link } from 'react-router-dom';
 
 interface RouterProps {
   organisationId: string;

@@ -7,4 +7,6 @@ const renderApp = () => {
   ReactDOM.render(<App />, document.getElementById('mcs-react-app'));
 };
 
-KeycloakService.isKeycloakEnabled() ? KeycloakService.initKeycloak(renderApp) : renderApp();
+(window as any)?.MCS_CONSTANTS?.ADMIN_API_TOKEN
+  ? renderApp()
+  : KeycloakService.initKeycloak(renderApp);

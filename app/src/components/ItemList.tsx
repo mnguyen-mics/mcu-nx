@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { compose } from 'recompose';
 import {
   buildDefaultSearch,

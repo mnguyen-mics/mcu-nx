@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { Button, Modal, Upload, message, Spin } from 'antd';
-import { withRouter, RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
 import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
 import { compose } from 'recompose';
 import { Actionbar } from '@mediarithmics-private/mcs-components-library';
 import messages from './messages';
 import { UploadFile } from 'antd/lib/upload/interface';
-import { Link } from 'react-router-dom';
 import { dashboardsDefinition } from '../../../routes/dashboardsRoutes';
 
 const maxFileSize = 200 * 1024;

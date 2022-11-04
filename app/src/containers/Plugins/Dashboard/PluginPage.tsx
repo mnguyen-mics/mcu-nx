@@ -1,7 +1,7 @@
 import * as React from 'react';
 import _ from 'lodash';
 import { Layout, Tag } from 'antd';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import {
   PluginResource,
