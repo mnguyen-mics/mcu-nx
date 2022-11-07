@@ -152,3 +152,4 @@ export {
   IIdentityProviderService,
 } from './services/IdentityProviderService';
 export { OrganisationService, IOrganisationService } from './services/OrganisationService';
+export { injectFeatures, InjectedFeaturesProps } from './components/Features';
