@@ -19,6 +19,7 @@ import injectNotifications, {
 import { InjectedIntlProps, injectIntl } from 'react-intl';
 import { DashboardPageContent } from '@mediarithmics-private/advanced-components/lib/models/dashboards/dashboardsModel';
 import getDefaultSections from './defaultDashboard';
+import { InjectedFeaturesProps, injectFeatures } from '@mediarithmics-private/advanced-components';
 
 interface RouteProps {
   organisationId: string;
@@ -27,7 +28,8 @@ interface RouteProps {
 type Props = RouteComponentProps<RouteProps> &
   WithDatamartSelectorProps &
   InjectedIntlProps &
-  InjectedNotificationProps;
+  InjectedNotificationProps &
+  InjectedFeaturesProps;
 const { Content } = Layout;
 class HomePage extends React.Component<Props> {
   @lazyInject(TYPES.ICustomDashboardService)
@@ -82,7 +84,7 @@ class HomePage extends React.Component<Props> {
       title: 'Standard Dashboard',
       scopes: ['console'],
       dashboardContent: {
-        sections: getDefaultSections(selectedDatamartId).sections,
+        sections: getDefaultSections(selectedDatamartId, this.props).sections,
       },
     };
 
@@ -112,4 +114,5 @@ export default compose<Props, {}>(
   withDatamartSelector,
   injectNotifications,
   injectIntl,
+  injectFeatures,
 )(HomePage);
