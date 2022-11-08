@@ -109,7 +109,7 @@ export default function AreaChartSlider(props: AreaChartSliderProps) {
   };
 
   const options: Highcharts.Options = {
-    colors: ['#00a1df'],
+    colors: [color],
     chart: {
       backgroundColor: 'transparent',
       type: 'area',
