@@ -177,12 +177,14 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     return false;
   }
 
-  private setChartsFormattedData = (
-    chartTitle: string,
-    data?: AggregateDataset | CountDataset | JsonDataset,
-  ) => {
-    this.chartsFormattedData = this.chartsFormattedData.set(chartTitle, data);
-  };
+  private setChartsFormattedData =
+    (cardIndex: string, chartIndex: number) =>
+    (chartTitle: string, data?: AggregateDataset | CountDataset | JsonDataset) => {
+      this.chartsFormattedData = this.chartsFormattedData.set(
+        `(${cardIndex}-${chartIndex}) ${chartTitle}`,
+        data,
+      );
+    };
 
   private mergeChartConfigs = (to: ChartConfig, from: ChartConfig) => {
     const newChart: any = from;
@@ -450,14 +452,15 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     );
   };
 
-  renderCard(card: DashboardContentCard, i: string) {
+  renderCard(card: DashboardContentCard, cardIndex: string) {
     const { editable, schema } = this.props;
 
-    const charts = card.charts.map((chart, index) => {
+    const charts = card.charts.map((chart, chartIndex) => {
       return this.renderChart(
         chart,
-        index,
+        chartIndex,
         card,
+        cardIndex,
         this.computeCSSProperties(card.charts, card.layout, chart.type, card.h),
       );
     });
@@ -494,7 +497,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       </Card>
     );
     return (
-      <div key={i}>
+      <div key={cardIndex}>
         <McsLazyLoad key={cuid()} child={cardComponent} />
       </div>
     );
@@ -504,6 +507,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     chart: ChartConfig,
     chartIndex: number,
     card: DashboardContentCard,
+    cardIndex: string,
     cssProperties?: CSSProperties,
   ) {
     const {
@@ -544,7 +548,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
         }
         queryExecutionSource={queryExecutionSource}
         queryExecutionSubSource={queryExecutionSubSource}
-        setChartsFormattedData={this.setChartsFormattedData}
+        setChartsFormattedData={this.setChartsFormattedData(cardIndex, chartIndex)}
       />
     );
   }
