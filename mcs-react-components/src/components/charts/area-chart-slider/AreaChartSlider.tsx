@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { Slider } from 'antd';
+import LoadingChart from '../loading-chart';
 
 function formatSerie(data: DataPoint[], xKey: string, yKey: string): Highcharts.SeriesAreaOptions {
   return {
@@ -26,7 +27,7 @@ export interface DataPoint {
 }
 export interface AreaChartSliderProps {
   data: DataPoint[];
-  initialValue: number;
+  value: number;
   xAxis: {
     key: string;
     labelFormat?: string;
@@ -41,22 +42,17 @@ export interface AreaChartSliderProps {
     subtitle?: string;
   };
   color: string;
+  isLoading?: boolean;
   disabled?: boolean;
-  onChange?: (selected: DataPoint) => any;
+  onChange?: (index: number) => any;
   tipFormatter?: (selected: DataPoint, index?: number) => React.ReactChild;
 }
 
 export default function AreaChartSlider(props: AreaChartSliderProps) {
-  const { data, xAxis, yAxis, color, initialValue, disabled, onChange, tipFormatter } = props;
-  const chartRef = React.useRef<HighchartsReact>(null);
+  const { data, xAxis, yAxis, color, value, disabled, isLoading, onChange, tipFormatter } = props;
 
-  const [sliderValue, setSliderValue] = React.useState(initialValue);
   const [sliderWidth, setSliderWidth] = React.useState(0);
   const [sliderOffsetX, setSliderOffsetX] = React.useState(0);
-
-  React.useEffect(() => {
-    onSliderChange(props.initialValue);
-  }, [props.initialValue]);
 
   function onChartRender(this: Highcharts.Chart, event: Event) {
     setSliderWidth(this.plotWidth - 16);
@@ -69,7 +65,7 @@ export default function AreaChartSlider(props: AreaChartSliderProps) {
     color: color,
     fillOpacity: 0.25,
     lineWidth: 0,
-    data: data.slice(0, sliderValue).map((point: DataPoint) => {
+    data: data.slice(0, value + 1).map((point: DataPoint) => {
       return [point[xAxis.key], point[yAxis.key]];
     }),
     marker: {
@@ -91,21 +87,13 @@ export default function AreaChartSlider(props: AreaChartSliderProps) {
   }
 
   const onSliderChange = (i: number) => {
-    if (chartRef.current) {
-      const chart: Highcharts.Chart = chartRef.current.chart;
-      if (formatedSerie.data)
-        chart.series[0].setData(formatedSerie.data.slice(0, i) as Highcharts.PointOptionsObject[]);
-      setSliderValue(i);
-      onChange?.(data[i - 1]);
-    }
+    onChange?.(i);
   };
 
   const modifiedTipFormatter = (i?: number) => {
-    if (i && i <= data.length && tipFormatter) {
-      const value = data[i - 1];
-      return tipFormatter(value);
-    }
-    return null;
+    if (i === undefined || !tipFormatter) return null;
+
+    return tipFormatter(data[i]);
   };
 
   const options: Highcharts.Options = {
@@ -176,6 +164,8 @@ export default function AreaChartSlider(props: AreaChartSliderProps) {
     },
   };
 
+  if (isLoading) return <LoadingChart />;
+
   return (
     <div className='mcs_areaChartSlider'>
       {yAxis.title && (
@@ -184,13 +174,13 @@ export default function AreaChartSlider(props: AreaChartSliderProps) {
           {yAxis && <div className='mcs_areaChartSlider_ordonate_subtitle'>{yAxis.subtitle}</div>}
         </div>
       )}
-      <HighchartsReact highcharts={Highcharts} ref={chartRef} options={options} />
+      <HighchartsReact highcharts={Highcharts} options={options} />
       <Slider
         className='mcs_areaChartSlider_slider'
         onChange={onSliderChange}
-        min={1}
-        max={data.length}
-        value={sliderValue}
+        min={0}
+        max={data.length - 1}
+        value={value}
         style={{ width: sliderWidth, marginLeft: sliderOffsetX }}
         tipFormatter={tipFormatter ? modifiedTipFormatter : undefined}
         tooltipPlacement='bottom'

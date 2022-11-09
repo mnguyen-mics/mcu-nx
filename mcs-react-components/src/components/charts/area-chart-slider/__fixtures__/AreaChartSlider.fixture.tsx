@@ -30,7 +30,7 @@ const props: AreaChartSliderProps = {
     subtitle: '% of similarities between seed segment and cohorts',
   },
   color: '#00a1df',
-  initialValue: 100,
+  value: 50,
   disabled: false,
 };
 
