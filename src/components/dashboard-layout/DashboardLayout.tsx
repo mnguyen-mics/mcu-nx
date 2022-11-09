@@ -1,5 +1,5 @@
 import { Card } from '@mediarithmics-private/mcs-components-library';
-import { Button, Divider, Modal } from 'antd';
+import { Button, Divider, Modal, Tooltip } from 'antd';
 import React, { CSSProperties } from 'react';
 import { Layout, Responsive, WidthProvider } from 'react-grid-layout';
 import Chart from '../chart-engine';
@@ -90,10 +90,15 @@ const messages = defineMessages({
     id: 'dashboard.layout.addCard',
     defaultMessage: 'Add a card',
   },
+  exportWarning: {
+    id: 'dashboard.layout.exportWarning',
+    defaultMessage: 'Only Charts you loaded will be displayed',
+  },
 });
 
 export default class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
   private chartsFormattedData: ChartsFormattedData = new Map();
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -177,14 +182,12 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     return false;
   }
 
-  private setChartsFormattedData =
-    (cardIndex: string, chartIndex: number) =>
-    (chartTitle: string, data?: AggregateDataset | CountDataset | JsonDataset) => {
-      this.chartsFormattedData = this.chartsFormattedData.set(
-        `(${cardIndex}-${chartIndex}) ${chartTitle}`,
-        data,
-      );
-    };
+  private setChartsFormattedData = (
+    chartTitle: string,
+    data?: AggregateDataset | CountDataset | JsonDataset,
+  ) => {
+    this.chartsFormattedData = this.chartsFormattedData.set(chartTitle, data);
+  };
 
   private mergeChartConfigs = (to: ChartConfig, from: ChartConfig) => {
     const newChart: any = from;
@@ -460,7 +463,6 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
         chart,
         chartIndex,
         card,
-        cardIndex,
         this.computeCSSProperties(card.charts, card.layout, chart.type, card.h),
       );
     });
@@ -507,7 +509,6 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     chart: ChartConfig,
     chartIndex: number,
     card: DashboardContentCard,
-    cardIndex: string,
     cssProperties?: CSSProperties,
   ) {
     const {
@@ -548,7 +549,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
         }
         queryExecutionSource={queryExecutionSource}
         queryExecutionSubSource={queryExecutionSubSource}
-        setChartsFormattedData={this.setChartsFormattedData(cardIndex, chartIndex)}
+        setChartsFormattedData={this.setChartsFormattedData}
       />
     );
   }
@@ -884,18 +885,21 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       queryExecutionSource,
       queryExecutionSubSource,
       title,
+      intl,
     } = this.props;
     const sections = schema.sections.map((section, i) => this.renderSection(section, i));
     return (
       <div className={'mcs-dashboardLayout'}>
         <div className={'mcs-dashboardLayout_filters'}>
-          <Button
-            type='default'
-            onClick={this.handleExportButtonClick(title)}
-            className='mcs-primary mcs-dashboardLayout_filters_applyBtn'
-          >
-            Export
-          </Button>
+          <Tooltip title={intl.formatMessage(messages.exportWarning)}>
+            <Button
+              type='default'
+              onClick={this.handleExportButtonClick(title)}
+              className='mcs-primary mcs-dashboardLayout_filters_applyBtn'
+            >
+              Export
+            </Button>
+          </Tooltip>
           {schema.available_filters && (
             <>
               <Divider type='vertical' className='mcs-dashboardLayout_filters_divider' />

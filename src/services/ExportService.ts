@@ -44,6 +44,7 @@ export class ExportService {
     filename: string,
   ) {
     const workBook = XLSX.utils.book_new();
+    let i = 1;
     datasetMap.forEach((dataset, title) => {
       if (dataset) {
         let data: Dataset | number[] | JsonDataset['rows'] | null = null;
@@ -67,7 +68,8 @@ export class ExportService {
           return;
         }
         const workSheet = XLSX.utils.json_to_sheet(data);
-        XLSX.utils.book_append_sheet(workBook, workSheet, title.substr(0, 31));
+        XLSX.utils.book_append_sheet(workBook, workSheet, `${i} - ${title}`.substr(0, 31));
+        i++;
       }
     });
     const workBookOut = XLSX.write(workBook, {
