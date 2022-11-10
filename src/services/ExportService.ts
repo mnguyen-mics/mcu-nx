@@ -50,7 +50,7 @@ export class ExportService {
         let data: Dataset | number[] | JsonDataset['rows'] | null = null;
         // dataset is an AggregateDataset
         if ('dataset' in dataset) {
-          // remove null or undefined values
+          // remove 'buckets' properties
           const cleanedDataset = dataset.dataset.map(datapoint =>
             _.omit<Datapoint>(datapoint, 'buckets'),
           );
