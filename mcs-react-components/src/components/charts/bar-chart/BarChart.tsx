@@ -186,12 +186,10 @@ class BarChart extends React.Component<Props, {}> {
       };
     }
 
-    if (stacking) {
-      plotOptionsForColumn = {
-        ...plotOptionsForColumn,
-        stacking: 'normal',
-      };
-    }
+    plotOptionsForColumn = {
+      ...plotOptionsForColumn,
+      stacking: stacking ? 'normal' : undefined,
+    };
 
     const plotLines = plotLineValue
       ? [
