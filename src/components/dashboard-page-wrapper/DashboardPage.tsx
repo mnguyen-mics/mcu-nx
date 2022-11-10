@@ -192,6 +192,7 @@ class DashboardPage extends React.Component<Props, State> {
             display: dashboard.dashboardContent ? (
               <ScopedDashboardLayout
                 datamartId={datamartId}
+                title={dashboard.title}
                 schema={dashboard.dashboardContent}
                 source={source}
                 organisationId={organisationId}
