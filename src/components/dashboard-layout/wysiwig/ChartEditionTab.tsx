@@ -21,6 +21,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { ChartResource } from '../../../models/chart/Chart';
 import _ from 'lodash';
 import cuid from 'cuid';
+import MCS_CONSTANTS from '../../../react-configuration';
 
 interface ChartEditionProps {
   chartConfig?: ChartConfig;
@@ -50,6 +51,10 @@ const messages = defineMessages({
   chartEditionEditChart: {
     id: 'chart.edition.chart.edit',
     defaultMessage: 'Edit chart',
+  },
+  chartEditionLink: {
+    id: 'chart.edition.link',
+    defaultMessage: 'Open in the query tool',
   },
   chartEditionSave: {
     id: 'chart.edition.save',
@@ -302,14 +307,18 @@ class ChartEditionTab extends React.Component<Props, ChartEditionState> {
     const { chartConfigPreviewText, selectedChartId } = this.state;
     const {
       datamartId,
+      intl,
       match: {
         params: { organisationId },
       },
     } = this.props;
 
     const onClick = (e: any) => e.stopPropagation();
+    const chartConfig = chartConfigPreviewText
+      ? this.parseChartConfigText(chartConfigPreviewText)
+      : null;
 
-    return chartConfigPreviewText ? (
+    return chartConfig ? (
       <React.Fragment>
         <div style={{ flex: '1' }} />
         <div onClick={onClick}>
@@ -319,11 +328,21 @@ class ChartEditionTab extends React.Component<Props, ChartEditionState> {
               key={selectedChartId}
               datamartId={datamartId}
               organisationId={organisationId}
-              chartConfig={this.parseChartConfigText(chartConfigPreviewText)!}
+              chartConfig={chartConfig}
               queryExecutionSource={'DASHBOARD'}
               queryExecutionSubSource={'HOME_DASHBOARD'}
               hideOpenDrawer={true}
             />
+            {selectedChartId && (
+              <a
+                href={`${MCS_CONSTANTS.NAVIGATOR_URL}/#/v2/o/${organisationId}/datastudio/query-tool?chartId=${selectedChartId}`}
+                target='_blank'
+              >
+                <Button className='mcs-chartEdition-preview-card-button' size='large'>
+                  {intl.formatMessage(messages.chartEditionLink)}
+                </Button>
+              </a>
+            )}
           </Card>
         </div>
         <div style={{ flex: '1' }} />
@@ -344,7 +363,6 @@ class ChartEditionTab extends React.Component<Props, ChartEditionState> {
     } = this.props;
 
     const { selectedChartId, activeTab } = this.state;
-
     const chartPreview = this.renderSelectedChartPreview();
 
     return (
