@@ -81,6 +81,7 @@ export interface UserLookalikeByCohortsSegment extends AudienceSegmentResource {
   include_seed_segment: boolean;
   user_points_target?: number;
   min_overlap?: number;
+  similarity_index?: number;
 }
 
 export interface UserPartitionSegment extends AudienceSegmentResource {
