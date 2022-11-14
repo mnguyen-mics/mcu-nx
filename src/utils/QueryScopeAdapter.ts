@@ -36,19 +36,23 @@ export class QueryScopeAdapter {
   private extractOtqlWhereClause(text: string): string {
     const formattedText = text.toLowerCase();
     const wherePosition = formattedText.indexOf('where');
-    const whereClause = text.substr(wherePosition + 5, formattedText.length);
+    const whereClause = text.substr(wherePosition + 5);
     return whereClause;
   }
 
-  private extractOtqlFromClause(text: string): string {
-    const formattedText = text.toLowerCase();
-    const fromPosition = formattedText.indexOf('from');
-    const wherePosition = formattedText.indexOf('where');
-    const fromClause = text.substr(
-      fromPosition + 4,
-      wherePosition === -1 ? formattedText.length : wherePosition,
-    );
-    return fromClause;
+  private extractWhereOrJoinClause(queryText: string, entityName: string) {
+    const entityPosition = queryText.indexOf(entityName);
+    if (entityPosition === -1) {
+      return;
+    }
+    const entityNameLength = entityName.length;
+    const entitySubstring = queryText.substr(entityPosition + entityNameLength);
+    const nextJoinPosition = entitySubstring.toLowerCase().indexOf('join');
+    if (nextJoinPosition === -1) {
+      return entitySubstring.trim();
+    } else {
+      return entitySubstring.substr(0, nextJoinPosition).trim();
+    }
   }
 
   buildScopeAnalyticsQuery(
@@ -113,11 +117,16 @@ export class QueryScopeAdapter {
           for (const [key, value] of Object.entries(queryFragment)) {
             if (key && value.length > 0) {
               value.forEach(f => {
-                const matchingStartingObjectType = this.extractOtqlFromClause(scopedQuery).indexOf(
+                const whereOrJoinClause = this.extractWhereOrJoinClause(
+                  scopedQuery,
                   f.starting_object_type,
                 );
-                if (matchingStartingObjectType !== -1) {
-                  scopedQuery = this.appendAdditionalQuery(scopedQuery, f.fragment as string);
+                if (whereOrJoinClause) {
+                  const updatedClause = this.appendAdditionalQuery(
+                    whereOrJoinClause,
+                    f.fragment as string,
+                  );
+                  scopedQuery = scopedQuery.replace(whereOrJoinClause, updatedClause);
                 }
               });
             }
