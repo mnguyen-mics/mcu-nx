@@ -92,7 +92,7 @@ const messages = defineMessages({
   },
   exportWarning: {
     id: 'dashboard.layout.exportWarning',
-    defaultMessage: 'Only Charts you loaded will be displayed',
+    defaultMessage: 'Only charts you loaded will be exported',
   },
 });
 
