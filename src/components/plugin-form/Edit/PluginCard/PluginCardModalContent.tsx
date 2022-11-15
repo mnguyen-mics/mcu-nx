@@ -66,6 +66,7 @@ export interface PluginCardModalContentProps<T extends LayoutablePlugin> {
   nameField?: PluginExtraField;
   descriptionField?: PluginExtraField;
   pluginChart?: React.ReactNode;
+  troubleshootingTab?: React.ReactNode;
 }
 
 type Props<T extends LayoutablePlugin> = PluginCardModalContentProps<T> &
@@ -251,14 +252,24 @@ class PluginCardModalContent<T extends LayoutablePlugin> extends React.Component
 
   renderStats = () => {
     const { pluginChart } = this.props;
-    const { dateRange } = this.state;
 
     return (
       <div className='mcs-pluginModal_feedChart_container'>
         <div className='mcs-pluginModal_feedChart_container_header'>
           <FormattedMessage {...messages.stats_description} />
         </div>
-        {React.cloneElement(pluginChart as React.ReactElement, {
+        {pluginChart}
+      </div>
+    );
+  };
+
+  renderTroubleshooting = () => {
+    const { troubleshootingTab } = this.props;
+    const { dateRange } = this.state;
+
+    return (
+      <div>
+        {React.cloneElement(troubleshootingTab as React.ReactElement, {
           dateRange: dateRange,
           title: this.renderDatePicker(),
         })}
@@ -300,6 +311,7 @@ class PluginCardModalContent<T extends LayoutablePlugin> extends React.Component
       plugin,
       disableFields,
       isPresetCreation,
+      troubleshootingTab,
     } = this.props;
     const { backgroundColor, color, loading, selectedTab } = this.state;
 
@@ -326,6 +338,14 @@ class PluginCardModalContent<T extends LayoutablePlugin> extends React.Component
           display: <div className='tab'>{this.renderStats()}</div>,
         },
       ].concat(items);
+    }
+
+    if (troubleshootingTab) {
+      items.push({
+        title: 'Troubleshooting',
+        key: 'troubleshooting',
+        display: <div className='tab'>{this.renderTroubleshooting()}</div>,
+      });
     }
 
     const onActiveKeyChange = (activeKey: PluginCardModalTab) => {
