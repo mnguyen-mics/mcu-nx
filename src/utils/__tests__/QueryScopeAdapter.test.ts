@@ -164,6 +164,38 @@ test('test the query is correctly formatted with query fragment', cb => {
   });
 });
 
+test('test the query with JOIN clause is correctly formatted with query fragment', cb => {
+  const queryServiceMock = new QueryServiceMock();
+  const adapter = new QueryScopeAdapter(queryServiceMock);
+  const queryResource1: QueryResource = {
+    id: 'xxx',
+    datamart_id: 'xxx',
+    query_text: `select {id} from UserPoint where activity_events { app_id = 1 } join UserProfile where activity_events { date >= "now-30d" }`,
+    query_language: 'OTQL',
+  };
+
+  const queryFragment: QueryFragment = {
+    compartments: [
+      {
+        type: 'otql',
+        starting_object_type: 'UserPoint',
+        fragment: 'profiles {compartment_id IN ["1234"]}',
+      },
+    ],
+  };
+  const resultQueryPromise = adapter.scopeQueryWithWhereClause(
+    '123',
+    queryFragment,
+    queryResource1,
+  );
+  resultQueryPromise.then(query => {
+    expect(query).toBe(
+      `select {id} from UserPoint where activity_events { app_id = 1 } AND profiles {compartment_id IN [\"1234\"]} join UserProfile where activity_events { date >= "now-30d" }`,
+    );
+    cb();
+  });
+});
+
 test('test the query is correctly not to be formatted with query fragment', cb => {
   const queryServiceMock = new QueryServiceMock();
   const adapter = new QueryScopeAdapter(queryServiceMock);
