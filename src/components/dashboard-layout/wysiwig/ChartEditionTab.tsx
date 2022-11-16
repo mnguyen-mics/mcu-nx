@@ -19,9 +19,9 @@ import { DotChartOutlined } from '@ant-design/icons';
 import Chart, { ChartsSearchPanel } from '../../chart-engine';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { ChartResource } from '../../../models/chart/Chart';
-import _ from 'lodash';
-import cuid from 'cuid';
 import MCS_CONSTANTS from '../../../react-configuration';
+import { debounce } from 'lodash';
+import cuid from 'cuid';
 
 interface ChartEditionProps {
   chartConfig?: ChartConfig;
@@ -220,23 +220,20 @@ class ChartEditionTab extends React.Component<Props, ChartEditionState> {
   }
 
   onChangeJson = (value: string) => {
-    const { currentChartConfigText } = this.state;
-    const valueObject = this.parseChartConfigText(value);
-    const chartConfigObject = this.parseChartConfigText(currentChartConfigText);
-    if (valueObject && !_.isEqual(valueObject, chartConfigObject)) {
-      this.setState({ currentChartConfigText: value, resetSelectedChartId: true });
-      setTimeout(() => {
-        const currentChartConfigChangeObject = this.parseChartConfigText(
-          this.state.currentChartConfigText,
-        );
-        if (_.isEqual(valueObject, currentChartConfigChangeObject))
-          this.setState({
-            chartConfigPreviewText: value,
-            selectedChartId: cuid(),
-          });
-      }, 1000);
-    }
+    this.setState({ currentChartConfigText: value, resetSelectedChartId: true });
+    this.setPreview(value);
   };
+
+  setPreview = debounce(value => {
+    // If value is a well-formatted JSON, set the preview
+    if (this.parseChartConfigText(value)) {
+      this.setState({
+        chartConfigPreviewText: value,
+        // Unselect chart in ChartsSearchPanel
+        selectedChartId: cuid(),
+      });
+    }
+  }, 1000);
 
   onChangeChart = (item: ChartResource) => {
     this.setState({
