@@ -4,7 +4,9 @@
 import { InjectedFeaturesProps } from '@mediarithmics-private/advanced-components/lib/components/Features';
 
 function formatDate(dateToFormat: Date) {
-  return `${dateToFormat.getFullYear()}-${dateToFormat.getMonth()}-${dateToFormat.getDate()} ${dateToFormat.getHours()}:${dateToFormat.getMinutes()}:${dateToFormat.getMinutes()}`;
+  return `${dateToFormat.getFullYear()}-${
+    dateToFormat.getMonth() + 1
+  }-${dateToFormat.getDate()} ${dateToFormat.getHours()}:${dateToFormat.getMinutes()}:${dateToFormat.getMinutes()}`;
 }
 
 const getDefaultSections = (datamartId: string, hasFeatureProps: InjectedFeaturesProps) => {
