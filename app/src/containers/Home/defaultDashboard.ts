@@ -398,6 +398,43 @@ const getDefaultSections = (datamartId: string, hasFeatureProps: InjectedFeature
                   },
                   {
                     type: 'data_ingestion',
+                    series_title: 'DOCUMENT_IMPORT',
+                    query_json: {
+                      date_ranges: [
+                        {
+                          start_date: formatDate(last30Days),
+                          end_date: formatDate(now),
+                        },
+                      ],
+                      dimensions: [
+                        {
+                          name: 'event_name',
+                        },
+                      ],
+                      dimension_filter_clauses: {
+                        operator: 'AND',
+                        filters: [
+                          {
+                            dimension_name: 'datamart_id',
+                            operator: 'EXACT',
+                            expressions: [datamartId],
+                          },
+                          {
+                            dimension_name: 'pipeline_step',
+                            operator: 'EXACT',
+                            expressions: ['DOCUMENT_IMPORT'],
+                          },
+                        ],
+                      },
+                      metrics: [
+                        {
+                          expression: 'event_count',
+                        },
+                      ],
+                    },
+                  },
+                  {
+                    type: 'data_ingestion',
                     series_title: 'EVENT_RULES',
                     query_json: {
                       date_ranges: [
