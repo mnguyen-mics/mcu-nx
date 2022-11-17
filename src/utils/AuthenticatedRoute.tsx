@@ -2,7 +2,7 @@ import * as React from 'react';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { Route, Redirect, match } from 'react-router-dom';
-import { injectIntl, InjectedIntlProps } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { IAuthService } from '../services/AuthService';
 import log from './Logger';
 import { getWorkspace } from '../redux/Session/actions';
@@ -39,7 +39,7 @@ export interface MapStateToProps {
 }
 
 type Props = AuthenticatedRouteProps &
-  InjectedIntlProps &
+  WrappedComponentProps &
   MapStateToProps &
   MissingRouterProps &
   InjectedFeaturesProps;

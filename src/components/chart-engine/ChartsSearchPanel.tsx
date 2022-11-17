@@ -6,7 +6,7 @@ import { ChartResource } from '../../models/chart/Chart';
 import Search from 'antd/lib/input/Search';
 import { List } from 'antd';
 import { compose } from 'recompose';
-import { InjectedIntlProps, injectIntl, defineMessages } from 'react-intl';
+import { WrappedComponentProps, injectIntl, defineMessages } from 'react-intl';
 import {
   AreaChartOutlined,
   BarChartOutlined,
@@ -55,7 +55,7 @@ export interface State {
   usersMap: Map<string, UserResource>;
 }
 
-type Props = ChartsSearchPanelProps & InjectedIntlProps & InjectedNotificationProps;
+type Props = ChartsSearchPanelProps & WrappedComponentProps & InjectedNotificationProps;
 
 class ChartsSearchPanel extends React.Component<Props, State> {
   @lazyInject(TYPES.IChartService)

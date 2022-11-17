@@ -14,7 +14,7 @@ import ChartMetadataInfo from './ChartMetadataInfo';
 import { IQueryService, QueryService } from '../../services/QueryService';
 import { QueryScopeAdapter } from '../../utils/QueryScopeAdapter';
 import { extractQueriesHelper, QueryFragment } from '../../utils/source/DataSourceHelper';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import { injectDrawer } from '../drawer';
 
@@ -57,7 +57,7 @@ interface ChartState {
   errorContext?: string;
 }
 
-type Props = InjectedDrawerProps & InjectedIntlProps & ChartProps;
+type Props = InjectedDrawerProps & WrappedComponentProps & ChartProps;
 let loadingTimeout: number;
 class Chart extends React.Component<Props, ChartState> {
   @lazyInject(TYPES.IChartDatasetService)

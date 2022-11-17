@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { injectIntl, InjectedIntlProps, FormattedMessage } from 'react-intl';
+import { injectIntl, WrappedComponentProps, MessageDescriptor } from 'react-intl';
 import { Layout, Row } from 'antd';
 import { LayoutablePlugin } from '../../../models/plugin/Plugins';
 import { FormTitle } from '../../form';
@@ -10,12 +10,12 @@ const { Content } = Layout;
 interface PluginEditSelectorProps<T> {
   onSelect: (item: T) => void;
   availablePlugins: T[];
-  listTitle: FormattedMessage.MessageDescriptor;
-  listSubTitle: FormattedMessage.MessageDescriptor;
+  listTitle: MessageDescriptor;
+  listSubTitle: MessageDescriptor;
 }
 
 class PluginEditSelector<T extends LayoutablePlugin> extends React.Component<
-  PluginEditSelectorProps<T> & InjectedIntlProps
+  PluginEditSelectorProps<T> & WrappedComponentProps
 > {
   onSelect = (item: T) => () => {
     this.props.onSelect(item);

@@ -10,7 +10,7 @@ import { withRouter, RouteComponentProps, Redirect } from 'react-router-dom';
 import { KeycloakPostLogin } from '../redux/KeycloakPostLogin/actions';
 import { InjectedFeaturesProps, injectFeatures } from '../components/Features';
 import RenderWhenHasAccess from './RenderWhenHasAccess';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 
 export interface RenderOnAuthenticatedProps {
   requiredFeatures?: string | string[];
@@ -33,7 +33,7 @@ type Props = RenderOnAuthenticatedProps &
   MapStateToProps &
   MapDispatchToProps &
   InjectedFeaturesProps &
-  InjectedIntlProps &
+  WrappedComponentProps &
   RouteComponentProps<RouteParams>;
 
 class RenderOnAuthenticated extends React.Component<Props> {

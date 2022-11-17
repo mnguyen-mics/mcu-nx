@@ -5,7 +5,7 @@ import { UserWorkspaceResource } from '../../models/directory/UserProfileResourc
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { partition, debounce, uniq, orderBy } from 'lodash';
 import messages from './messages';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import LocalStorage from '../../services/LocalStorage';
 import cuid from 'cuid';
 import { isCommunity, switchWorkspace } from './OrganisationSwitcherHelpers';
@@ -34,7 +34,7 @@ const savedCommunitiesKey = 'SAVED_COMMUNITY_SEARCHES';
 const savedOrganisationsKey = 'SAVED_ORGANISATIONS_SEARCHES';
 
 type Props = SwitchBySearchProps &
-  InjectedIntlProps &
+  WrappedComponentProps &
   RouteComponentProps<{ organisationId: string }>;
 
 class SwitchBySearch extends React.Component<Props, SwitchBySearchState> {

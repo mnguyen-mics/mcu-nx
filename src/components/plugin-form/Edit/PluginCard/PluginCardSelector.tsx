@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { injectIntl, InjectedIntlProps, FormattedMessage, defineMessages } from 'react-intl';
+import { injectIntl, WrappedComponentProps, MessageDescriptor, defineMessages } from 'react-intl';
 import { Layout, Row, Col } from 'antd';
 import PluginCard from './PluginCard';
 import { LayoutablePlugin } from '../../../../models/plugin/Plugins';
@@ -11,7 +11,7 @@ import { InjectedFeaturesProps, injectFeatures } from '../../../Features';
 const { Content } = Layout;
 
 const titleMessages: {
-  [key: string]: FormattedMessage.MessageDescriptor;
+  [key: string]: MessageDescriptor;
 } = defineMessages({
   presetTitle: {
     id: 'plugin.preset.list.default.title',
@@ -27,11 +27,11 @@ interface PluginCardSelectorProps<T extends LayoutablePlugin> {
   onSelect: (item: T) => void;
   onPresetDelete: (item: T) => void;
   availablePresetLayouts: T[];
-  pluginPresetListTitle?: FormattedMessage.MessageDescriptor;
-  pluginPresetListSubTitle?: FormattedMessage.MessageDescriptor;
+  pluginPresetListTitle?: MessageDescriptor;
+  pluginPresetListSubTitle?: MessageDescriptor;
   availablePluginLayouts: T[];
-  pluginListTitle: FormattedMessage.MessageDescriptor;
-  pluginListSubTitle: FormattedMessage.MessageDescriptor;
+  pluginListTitle: MessageDescriptor;
+  pluginListSubTitle: MessageDescriptor;
 }
 
 type Props<T extends LayoutablePlugin> = PluginCardSelectorProps<T> &
@@ -39,7 +39,7 @@ type Props<T extends LayoutablePlugin> = PluginCardSelectorProps<T> &
   InjectedFeaturesProps;
 
 class PluginCardSelector<T extends LayoutablePlugin> extends React.Component<
-  Props<T> & InjectedIntlProps
+  Props<T> & WrappedComponentProps
 > {
   renderPluginCards = (layouts: T[]) => {
     const cards = layouts

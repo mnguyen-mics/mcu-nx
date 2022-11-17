@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import { DashboardContentSchema } from '../../models/customDashboards/customDashboards';
 import { StandardSegmentBuilderQueryDocument } from '../../models/standardSegmentBuilder/StandardSegmentBuilderResource';
@@ -24,7 +24,7 @@ interface EditableDashboardLayoutProps {
   queryExecutionSubSource: QueryExecutionSubSource;
 }
 
-type Props = EditableDashboardLayoutProps & InjectedIntlProps & InjectedDrawerProps;
+type Props = EditableDashboardLayoutProps & WrappedComponentProps & InjectedDrawerProps;
 
 class EditableDashboardLayout extends React.Component<Props> {
   constructor(props: Props) {

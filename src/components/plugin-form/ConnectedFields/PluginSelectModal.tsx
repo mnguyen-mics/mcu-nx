@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Modal, Button, Select } from 'antd';
-import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import messages from '../messages';
 import { Button as McsButton, McsIcon } from '@mediarithmics-private/mcs-components-library';
 import { lazyInject } from '../../../inversify/inversify.config';
@@ -33,7 +33,7 @@ interface State {
   loading: boolean;
 }
 
-type Props = PluginSelectModalProps & InjectedIntlProps;
+type Props = PluginSelectModalProps & WrappedComponentProps;
 
 class PluginSelectModal extends React.Component<Props, State> {
   @lazyInject(TYPES.IPluginService)

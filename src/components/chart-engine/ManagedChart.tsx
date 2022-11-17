@@ -34,7 +34,7 @@ import {
   EditOutlined,
 } from '@ant-design/icons';
 import cuid from 'cuid';
-import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
+import { defineMessages, WrappedComponentProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import { injectDrawer } from '../drawer';
 import {
@@ -82,7 +82,7 @@ interface ManagedChartProps {
  * a hydrated dataset tree, but it still handles
  */
 
-type Props = InjectedDrawerProps & InjectedIntlProps & ManagedChartProps;
+type Props = InjectedDrawerProps & WrappedComponentProps & ManagedChartProps;
 class ManagedChart extends React.Component<Props> {
   constructor(props: Props) {
     super(props);

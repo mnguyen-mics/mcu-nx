@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { compose } from 'recompose';
-import { InjectedIntlProps, defineMessages } from 'react-intl';
+import { WrappedComponentProps, defineMessages } from 'react-intl';
 import { FormDataFileField, FormDataFile } from './ConnectedFields/FormDataFile';
 import { ValidatorProps } from '../form/withValidators';
 import { PluginProperty, PluginPresetProperty } from '../../models/plugin/Plugins';
@@ -58,7 +58,7 @@ interface PluginFieldGeneratorProps {
 type JoinedProps = PluginFieldGeneratorProps &
   ValidatorProps &
   InjectedDrawerProps &
-  InjectedIntlProps;
+  WrappedComponentProps;
 
 interface AdditionalInputProps extends InputProps {
   buttonText?: string;

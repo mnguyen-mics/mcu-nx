@@ -4,7 +4,7 @@ import { Menu } from 'antd';
 import { UserWorkspaceResource } from '../../models/directory/UserProfileResource';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { partition } from 'lodash';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { isAChild, isCommunity, switchWorkspace } from './OrganisationSwitcherHelpers';
 
 export interface SwitchByListState {}
@@ -14,7 +14,7 @@ export interface SwitchByListProps {
 }
 
 type Props = SwitchByListProps &
-  InjectedIntlProps &
+  WrappedComponentProps &
   RouteComponentProps<{ organisationId: string }>;
 
 class SwitchByList extends React.Component<Props, SwitchByListState> {

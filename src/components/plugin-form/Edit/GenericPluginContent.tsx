@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
+import { MessageDescriptor, injectIntl, WrappedComponentProps } from 'react-intl';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import PluginEditSelector from './PluginEditSelector';
 import PluginEditForm, { SpecificFieldsFunction } from './PluginEditForm';
@@ -45,10 +45,10 @@ export interface PluginInstanceForm<T> {
 
 export interface PluginContentOuterProps<T extends PluginInstance> {
   pluginType: PluginType;
-  listTitle: FormattedMessage.MessageDescriptor;
-  listSubTitle: FormattedMessage.MessageDescriptor;
-  pluginPresetListTitle?: FormattedMessage.MessageDescriptor;
-  pluginPresetListSubTitle?: FormattedMessage.MessageDescriptor;
+  listTitle: MessageDescriptor;
+  listSubTitle: MessageDescriptor;
+  pluginPresetListTitle?: MessageDescriptor;
+  pluginPresetListSubTitle?: MessageDescriptor;
   breadcrumbPaths: (pluginInstance?: T) => React.ReactNode[];
   pluginInstanceService: IPluginInstanceService<T>;
   pluginInstanceId?: string;
@@ -96,7 +96,7 @@ function initEmptyPluginSelection(): PluginResource {
 type JoinedProps<T extends PluginInstance> = PluginContentOuterProps<T> &
   RouteComponentProps<RouterProps> &
   InjectedNotificationProps &
-  InjectedIntlProps &
+  WrappedComponentProps &
   ValidatorProps;
 
 class PluginContent<T extends PluginInstance> extends React.Component<

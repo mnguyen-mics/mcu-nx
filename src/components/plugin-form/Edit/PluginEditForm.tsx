@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Form, reduxForm, InjectedFormProps, Field, GenericField, ConfigProps } from 'redux-form';
 import { compose } from 'recompose';
 import { Layout, Row } from 'antd';
-import { injectIntl, InjectedIntlProps } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { FormTitle, withValidators, FieldCtor, FormFieldWrapper } from '../../form';
 import { ValidatorProps } from '../../form/withValidators';
 import FormInput, { FormInputProps } from '../../form/FormInput';
@@ -49,7 +49,7 @@ export type SpecificFieldsFunction = (
 type JoinedProps = PluginEditFormProps &
   InjectedFormProps &
   ValidatorProps &
-  InjectedIntlProps &
+  WrappedComponentProps &
   InjectedDrawerProps &
   RouteComponentProps<{ organisationId: string }>;
 

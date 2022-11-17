@@ -9,7 +9,7 @@ import { getWorkspace } from '../redux/Session/actions';
 import { fetchAllLabels } from '../redux/Labels/actions';
 import { RouteParams } from './AuthenticatedRoute';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 
 export interface RenderWhenHasAccessProps {
   requiredFeatures?: string | string[];
@@ -29,7 +29,7 @@ export interface MapStateToProps {
 type Props = RenderWhenHasAccessProps &
   MapStateToProps &
   RouteComponentProps<RouteParams> &
-  InjectedIntlProps &
+  WrappedComponentProps &
   InjectedFeaturesProps;
 
 class RenderWhenHasAccess extends React.Component<Props> {

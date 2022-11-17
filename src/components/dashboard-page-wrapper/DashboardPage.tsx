@@ -2,7 +2,7 @@ import * as React from 'react';
 import { compose } from 'recompose';
 import { McsTabs } from '@mediarithmics-private/mcs-components-library';
 import { LabeledValue } from 'antd/lib/select';
-import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
+import { defineMessages, WrappedComponentProps, injectIntl } from 'react-intl';
 import ScopedDashboardLayout from '../dashboard-page-wrapper/ScopedDashboardLayout';
 import { InjectedFeaturesProps, injectFeatures } from '../Features';
 import {
@@ -61,7 +61,7 @@ const TabMapKeys: { [t in Tabs]: string } = { COHORT: 'cohort_tab' };
 
 type Props = DashboardPageProps &
   InjectedFeaturesProps &
-  InjectedIntlProps &
+  WrappedComponentProps &
   InjectedDrawerProps &
   RouteComponentProps<{}, {}, { tab?: Tabs }>;
 

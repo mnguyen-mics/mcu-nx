@@ -7,7 +7,7 @@ import { message, Input, Row, Button } from 'antd';
 import { TableViewFilters, McsIcon } from '@mediarithmics-private/mcs-components-library';
 import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
+import { defineMessages, WrappedComponentProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import { CopyOutlined } from '@ant-design/icons';
 import { ExportService } from '../../services/ExportService';
@@ -42,7 +42,7 @@ const messages = defineMessages({
   },
 });
 
-export type Props = ChartMetadataInfoProps & InjectedIntlProps;
+export type Props = ChartMetadataInfoProps & WrappedComponentProps;
 function buildDataColumns(dataset: Dataset) {
   if (dataset.length > 0) {
     const keys = Object.keys(dataset[0]).filter(k => k !== 'buckets');

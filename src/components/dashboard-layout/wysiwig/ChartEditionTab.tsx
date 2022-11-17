@@ -3,7 +3,7 @@ import React from 'react';
 import { ChartConfig, isExternalChartConfig } from '../../../services/ChartDatasetService';
 import AceEditor from 'react-ace';
 import { Ace } from 'ace-builds';
-import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
+import { defineMessages, WrappedComponentProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import { AbstractScope } from '../../../models/datamart/graphdb/Scope';
 import {
@@ -33,7 +33,7 @@ interface ChartEditionProps {
   queryFragment?: QueryFragment;
 }
 
-type Props = InjectedIntlProps &
+type Props = WrappedComponentProps &
   ChartEditionProps &
   RouteComponentProps<{ organisationId: string }>;
 

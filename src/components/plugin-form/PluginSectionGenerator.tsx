@@ -6,7 +6,7 @@ import {
 import { Row } from 'antd';
 import { FormTitle, FormInputField, FormInput, FormTextAreaField, FormTextArea } from '../form';
 import withValidators from '../form/withValidators';
-import { injectIntl, InjectedIntlProps } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import injectDrawer from '../../components/drawer/injectDrawer';
 import { withRouter } from 'react-router-dom';
 import { PluginFieldGenerator } from '.';
@@ -40,7 +40,7 @@ interface PluginSectionGeneratorProps {
   descriptionField?: PluginExtraField;
 }
 
-type JoinedProps = PluginSectionGeneratorProps & InjectedIntlProps;
+type JoinedProps = PluginSectionGeneratorProps & WrappedComponentProps;
 
 interface PluginSectionGeneratorState {
   displayAdvancedFields: boolean;

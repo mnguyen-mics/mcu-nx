@@ -70,9 +70,7 @@ exports[`render PluginEditForm 1`] = `
               <div
                 className="title"
               >
-                <span>
-                  General Information
-                </span>
+                General Information
               </div>
             </div>
           </div>
@@ -179,16 +177,12 @@ exports[`render PluginEditForm 1`] = `
                 <div
                   className="title"
                 >
-                  <span>
-                    Facebook Custom Audience
-                  </span>
+                  Facebook Custom Audience
                 </div>
                 <div
                   className="subtitle"
                 >
-                  <span>
-                    Synchronize your CRM Audiences with Facebook
-                  </span>
+                  Synchronize your CRM Audiences with Facebook
                 </div>
               </div>
             </div>
@@ -460,9 +454,7 @@ exports[`render PluginEditForm 1`] = `
                                   <span
                                     className="ant-select-selection-item"
                                   >
-                                    <span>
-                                      - Select One -
-                                    </span>
+                                    - Select One -
                                   </span>
                                 </div>
                                 <span
