@@ -5,10 +5,10 @@ import {
   BarChart,
   RadarChart,
   AreaChart,
-  McsIcon,
   MetricChart,
+  TableChart,
 } from '@mediarithmics-private/mcs-components-library';
-import { Alert, Spin, Table } from 'antd';
+import { Alert, Spin } from 'antd';
 import { isUndefined, omitBy } from 'lodash';
 import { formatMetric } from '../../utils/MetricHelper';
 import {
@@ -20,7 +20,6 @@ import {
   ManagedChartConfig,
   MetricChartOptions,
   RadarChartOptions,
-  TableChartOptions,
 } from '../../services/ChartDatasetService';
 import { keysToCamel } from '../../utils/CaseUtils';
 import { InjectedDrawerProps } from '../..';
@@ -43,7 +42,6 @@ import {
   CountDataset,
 } from '../../models/dashboards/dataset/dataset_tree';
 import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
-import { ColumnsType } from 'antd/lib/table';
 import { MetricChartFormat } from '@mediarithmics-private/mcs-components-library/lib/components/charts/metric-chart/MetricChart';
 import { isTypeofXKey, XKey } from '@mediarithmics-private/mcs-components-library/lib';
 
@@ -86,12 +84,6 @@ type Props = InjectedDrawerProps & InjectedIntlProps & ManagedChartProps;
 class ManagedChart extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
-
-    this.state = {
-      loading: true,
-      stillLoading: false,
-      errorContext: undefined,
-    };
   }
 
   adaptDatasetForPieChart(xKey: string, yKey: YKey, dataset: Dataset) {
@@ -124,70 +116,6 @@ class ManagedChart extends React.Component<Props> {
       xKey: xKey,
     };
 
-    const getSorter = (key: string) => {
-      const sorter = (a: any, b: any) => {
-        if (key === 'key') {
-          return typeof a.key === 'string' &&
-            typeof b.key === 'string' &&
-            !isNaN(Date.parse(a.key)) &&
-            !isNaN(Date.parse(b.key))
-            ? Date.parse(a.key) - Date.parse(b.key)
-            : a.key.length - b.key.length;
-        } else {
-          return a.count - b.count;
-        }
-      };
-      return sorter;
-    };
-
-    const renderTableChart = (tableChartOptions: TableChartOptions) => {
-      const getColumns = () => {
-        const columns: ColumnsType<object> = yKeys
-          .map(yKey => {
-            return {
-              title: yKey.message,
-              dataIndex: yKey.key,
-              key: yKey.key,
-              sorter: getSorter(yKey.key),
-              render: (text: string) => <span>{this.renderMetricData(text, '0,0')}</span>,
-            };
-          })
-          .concat({
-            render: (text: string, record: any) => {
-              if (tableChartOptions?.bucketHasData && tableChartOptions.bucketHasData(record)) {
-                return (
-                  <div className='float-right'>
-                    <McsIcon type='chevron-right' />
-                  </div>
-                );
-              }
-              return null;
-            },
-          } as any);
-        columns.unshift({
-          title: 'Key',
-          dataIndex: 'key',
-          key: 'key',
-          sorter: getSorter('key'),
-        });
-        return columns;
-      };
-      return (
-        <Table
-          columns={getColumns()}
-          className='mcs-aggregationRendered_table'
-          onRow={tableChartOptions.handleOnRow}
-          rowClassName={tableChartOptions.getRowClassName}
-          dataSource={dataset as any}
-          pagination={{
-            size: 'small',
-            showSizeChanger: true,
-            hideOnSinglePage: true,
-          }}
-        />
-      );
-    };
-
     const sanitizedwithKeys = omitBy(withKeys, isUndefined);
     switch (chartConfig.type.toLowerCase()) {
       case 'pie':
@@ -207,8 +135,7 @@ class ManagedChart extends React.Component<Props> {
       case 'bars':
         return <BarChart dataset={dataset as any} {...(sanitizedwithKeys as BarChartOptions)} />;
       case 'table':
-        const tableChartOptions = formattedOptions as TableChartOptions;
-        return renderTableChart(tableChartOptions);
+        return <TableChart dataset={dataset} yKeys={yKeys} />;
       case 'area':
       case 'line':
         const withKeysArea = {
