@@ -24,6 +24,7 @@ export { default as TableView } from './components/table-view';
 export { default as SelectionNotifyer } from './components/table-view';
 export { default as TableSelector } from './components/table-selector';
 export { default as PieChart } from './components/charts/pie-chart';
+export { default as TableChart } from './components/charts/table-chart';
 export { default as EmptyChart } from './components/charts/empty-chart';
 export { default as BarChart } from './components/charts/bar-chart';
 export { default as LoadingChart } from './components/charts/loading-chart';
