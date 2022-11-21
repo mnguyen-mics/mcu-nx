@@ -1,7 +1,7 @@
 import * as React from 'react';
 import _ from 'lodash';
 import moment, { Moment } from 'moment';
-import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { RouteComponentProps, withRouter, Link } from 'react-router-dom';
 import { compose } from 'recompose';
 import injectNotifications, {
@@ -36,7 +36,7 @@ interface RouteProps {
   batchInstanceId: string;
 }
 
-type Props = InjectedIntlProps & InjectedNotificationProps & RouteComponentProps<RouteProps>;
+type Props = WrappedComponentProps & InjectedNotificationProps & RouteComponentProps<RouteProps>;
 
 interface State {
   integrationBatchInstance?: IntegrationBatchResource;

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import injectNotifications, {
@@ -16,7 +16,7 @@ interface RouteProps {
   organisationId: string;
 }
 
-type Props = InjectedIntlProps & InjectedNotificationProps & RouteComponentProps<RouteProps>;
+type Props = WrappedComponentProps & InjectedNotificationProps & RouteComponentProps<RouteProps>;
 
 interface State {
   isDrawerVisible: boolean;

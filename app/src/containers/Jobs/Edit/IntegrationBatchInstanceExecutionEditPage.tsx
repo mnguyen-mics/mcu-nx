@@ -3,7 +3,7 @@ import { IntegrationBatchResource } from '@mediarithmics-private/advanced-compon
 import { Button, Form, Input, Divider } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import Cron, { CronError } from 'react-js-cron';
 import { compose } from 'recompose';
 import messages from '../messages';
@@ -14,7 +14,7 @@ interface IntegrationBatchInstanceExecutionEditPageProps {
   onSave: (cronValue: string) => void;
 }
 
-type Props = IntegrationBatchInstanceExecutionEditPageProps & InjectedIntlProps;
+type Props = IntegrationBatchInstanceExecutionEditPageProps & WrappedComponentProps;
 
 const IntegrationBatchInstanceExecutionEditPage = (props: Props) => {
   const inputRef = React.useRef<Input>(null);

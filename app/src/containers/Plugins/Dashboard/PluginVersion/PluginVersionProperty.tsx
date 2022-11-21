@@ -1,6 +1,6 @@
 import { Button, Checkbox, Col, Form, Input, Radio, Row, Select, Upload, UploadProps } from 'antd';
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import messages from '../../messages';
 import { DeleteOutlined, UploadOutlined } from '@ant-design/icons';
@@ -21,7 +21,7 @@ export interface PluginVersionPropertyProps {
   onChange: (key: string, fieldName: string, propertyType: PluginPropertyType) => (e?: any) => void;
 }
 
-type Props = PluginVersionPropertyProps & InjectedIntlProps;
+type Props = PluginVersionPropertyProps & WrappedComponentProps;
 
 interface State {
   propertyType: PluginPropertyType;

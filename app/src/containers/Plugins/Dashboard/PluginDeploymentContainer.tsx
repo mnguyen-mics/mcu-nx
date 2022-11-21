@@ -1,7 +1,7 @@
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
 import * as React from 'react';
 import { Button } from 'antd';
-import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import messages from '../messages';
 import { PAGINATION_SEARCH_SETTINGS } from '../../../utils/LocationSearchHelper';
@@ -38,7 +38,7 @@ interface RouteProps {
 }
 
 type Props = PluginDeploymentContainerProps &
-  InjectedIntlProps &
+  WrappedComponentProps &
   InjectedNotificationProps &
   RouteComponentProps<RouteProps>;
 

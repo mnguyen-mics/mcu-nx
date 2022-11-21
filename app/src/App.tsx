@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles/index.less';
 import { HashRouter as Router } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { Provider as ReduxProvider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import { Store } from '@mediarithmics-private/advanced-components';
 import MainUsingKeycloak from './containers/main/MainUsingKeycloak';
@@ -9,13 +9,13 @@ const store = Store();
 
 function App() {
   return (
-    <Provider store={store}>
-      <IntlProvider locale='en'>
+    <IntlProvider locale='en'>
+      <ReduxProvider store={store}>
         <Router>
           <MainUsingKeycloak />
         </Router>
-      </IntlProvider>
-    </Provider>
+      </ReduxProvider>
+    </IntlProvider>
   );
 }
 

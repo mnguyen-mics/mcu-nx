@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import {
   PlayCircleFilled,
   CloseCircleFilled,
@@ -34,7 +34,7 @@ interface IntegrationBatchExecutionsListTabProps {
   shouldUpdateExecutions?: boolean;
 }
 
-type Props = InjectedIntlProps &
+type Props = WrappedComponentProps &
   InjectedNotificationProps &
   RouteComponentProps<RouteProps> &
   IntegrationBatchExecutionsListTabProps;

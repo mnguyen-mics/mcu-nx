@@ -1,6 +1,6 @@
 import * as React from 'react';
 import _ from 'lodash';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import cronstrue from 'cronstrue';
 import {
   FilterOutlined,
@@ -53,7 +53,7 @@ interface RouteProps {
   organisationId: string;
 }
 
-type Props = InjectedIntlProps & InjectedNotificationProps & RouteComponentProps<RouteProps>;
+type Props = WrappedComponentProps & InjectedNotificationProps & RouteComponentProps<RouteProps>;
 
 interface IntegrationBatchLine {
   instance: IntegrationBatchResource;

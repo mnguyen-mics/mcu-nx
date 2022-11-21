@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import messages from '../messages';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -40,7 +40,7 @@ export interface BatchInstanceRouteParams {
 type Props = IntegrationBatchInstanceEditPageProps &
   RouteComponentProps<BatchInstanceRouteParams> &
   FieldValidatorsProps &
-  InjectedIntlProps;
+  WrappedComponentProps;
 
 class IntegrationBatchInstanceEditPage extends React.Component<Props> {
   @lazyInject(TYPES.IIntegrationBatchService)

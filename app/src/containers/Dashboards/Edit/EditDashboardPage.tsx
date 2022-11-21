@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { compose } from 'recompose';
-import { injectIntl, InjectedIntlProps } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import AceEditor from 'react-ace';
 import { Ace } from 'ace-builds';
 import { Layout, Select, Checkbox, Form, Input, Button } from 'antd';
@@ -141,7 +141,7 @@ interface LabelValueOption {
   value: string;
 }
 
-type Props = InjectedIntlProps &
+type Props = WrappedComponentProps &
   InjectedNotificationProps &
   InjectedWorkspaceProps &
   WithDatamartSelectorProps &

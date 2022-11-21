@@ -3,7 +3,7 @@ import lodash from 'lodash';
 import { compose } from 'recompose';
 import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
 import { Layout, Modal, Tag } from 'antd';
-import { injectIntl, InjectedIntlProps } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import ItemList, { Filters } from '../../../components/ItemList';
 import { PAGINATION_SEARCH_SETTINGS } from '../../../utils/LocationSearchHelper';
 import DashboardActionBar from './DashboardActionBar';
@@ -57,7 +57,7 @@ export interface DashboardPageProps {
 }
 
 type Props = DashboardPageProps &
-  InjectedIntlProps &
+  WrappedComponentProps &
   InjectedNotificationProps &
   RouteComponentProps<RouterProps>;
 

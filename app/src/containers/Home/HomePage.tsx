@@ -16,7 +16,7 @@ import _ from 'lodash';
 import injectNotifications, {
   InjectedNotificationProps,
 } from '../Notifications/injectNotifications';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { DashboardPageContent } from '@mediarithmics-private/advanced-components/lib/models/dashboards/dashboardsModel';
 import getDefaultSections from './defaultDashboard';
 import { InjectedFeaturesProps, injectFeatures } from '@mediarithmics-private/advanced-components';
@@ -27,7 +27,7 @@ interface RouteProps {
 
 type Props = RouteComponentProps<RouteProps> &
   WithDatamartSelectorProps &
-  InjectedIntlProps &
+  WrappedComponentProps &
   InjectedNotificationProps &
   InjectedFeaturesProps;
 const { Content } = Layout;
