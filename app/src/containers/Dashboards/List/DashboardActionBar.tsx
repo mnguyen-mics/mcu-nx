@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, Modal, Upload, message, Spin } from 'antd';
 import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
-import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { compose } from 'recompose';
 import { Actionbar } from '@mediarithmics-private/mcs-components-library';
 import messages from './messages';
@@ -26,7 +26,7 @@ interface DashboardsActionbarState {
   isLoading: boolean;
 }
 
-type Props = RouteComponentProps<RouterProps> & InjectedIntlProps & DashboardsActionbarProps;
+type Props = RouteComponentProps<RouterProps> & WrappedComponentProps & DashboardsActionbarProps;
 
 class DashboardsActionbar extends React.Component<Props, DashboardsActionbarState> {
   constructor(props: Props) {

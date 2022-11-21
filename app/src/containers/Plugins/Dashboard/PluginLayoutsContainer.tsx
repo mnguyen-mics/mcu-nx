@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import messages from '../messages';
 import injectNotifications, {
@@ -41,7 +41,7 @@ interface RouteProps {
 }
 
 type Props = PluginLayoutsContainerProps &
-  InjectedIntlProps &
+  WrappedComponentProps &
   InjectedNotificationProps &
   RouteComponentProps<RouteProps>;
 

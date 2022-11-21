@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, Drawer } from 'antd';
 import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
-import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { compose } from 'recompose';
 import { Actionbar, McsIcon } from '@mediarithmics-private/mcs-components-library';
 import messages from '../messages';
@@ -24,7 +24,7 @@ interface State {
   isDrawerVisible: boolean;
 }
 
-type Props = RouteComponentProps<RouterProps> & InjectedIntlProps & PluginPageActionbarProps;
+type Props = RouteComponentProps<RouterProps> & WrappedComponentProps & PluginPageActionbarProps;
 
 class PluginPageActionbar extends React.Component<Props, State> {
   constructor(props: Props) {

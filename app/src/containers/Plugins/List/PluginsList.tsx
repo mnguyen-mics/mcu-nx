@@ -22,7 +22,7 @@ import {
   updateSearch,
 } from '../../../utils/LocationSearchHelper';
 import PluginsListActionBar from './PluginsListActionBar';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { McsIconType } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-icon';
 import injectNotifications, {
   InjectedNotificationProps,
@@ -48,7 +48,7 @@ interface RouteProps {
   organisationId: string;
 }
 
-type Props = InjectedIntlProps & InjectedNotificationProps & RouteComponentProps<RouteProps>;
+type Props = WrappedComponentProps & InjectedNotificationProps & RouteComponentProps<RouteProps>;
 
 interface State {
   loading: boolean;
