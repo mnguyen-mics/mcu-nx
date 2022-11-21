@@ -56,6 +56,7 @@ interface ComparisonValues {
 }
 
 type ChartsFormattedData = Map<string, AggregateDataset | CountDataset | JsonDataset | undefined>;
+
 export interface DashboardLayoutState {
   dashboardFilterValues: FilterValues;
   formattedQueryFragment: QueryFragment;

@@ -4,10 +4,13 @@ import {
   DashboardContentSchema,
   DashboardContentSection,
 } from '../../models/customDashboards/customDashboards';
+import { AggregateDataset, CountDataset, JsonDataset } from '../../models/dashboards/dataset/dataset_tree';
 import { ChartConfig, ChartType } from '../../services/ChartDatasetService';
 import { VerticalDirection } from './wysiwig/SectionTitleEditionPanel';
 
 export const BASE_FRAMEWORK_HEIGHT = 96;
+
+export type ChartsFormattedData = Map<string, AggregateDataset | CountDataset | JsonDataset | undefined>;
 
 export function findSectionNode(
   nodeId: string,
