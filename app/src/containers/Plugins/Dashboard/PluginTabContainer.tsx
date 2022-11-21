@@ -11,7 +11,7 @@ import { ConfigurationFileListingEntryResource } from '@mediarithmics-private/ad
 import { McsTabs } from '@mediarithmics-private/mcs-components-library';
 import { Modal, Select, Spin, message, Tag, Input } from 'antd';
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 import { getPaginatedApiParam } from '../../../utils/ApiHelper';
@@ -37,7 +37,7 @@ interface PluginTabContainerProps {
 }
 
 type Props = PluginTabContainerProps &
-  InjectedIntlProps &
+  WrappedComponentProps &
   InjectedNotificationProps &
   RouteComponentProps<RouteProps>;
 

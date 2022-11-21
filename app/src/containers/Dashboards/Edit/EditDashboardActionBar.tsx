@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button } from 'antd';
 import { withRouter, RouteComponentProps, Link } from 'react-router-dom';
-import { FormattedMessage, injectIntl, InjectedIntlProps } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { compose } from 'recompose';
 import messages from './messages';
 import { UploadFile } from 'antd/lib/upload/interface';
@@ -22,7 +22,7 @@ interface DashboardCreateActionbarState {
   isLoading: boolean;
 }
 
-type Props = RouteComponentProps<RouterProps> & InjectedIntlProps & EditDashboardActionbarProps;
+type Props = RouteComponentProps<RouterProps> & WrappedComponentProps & EditDashboardActionbarProps;
 
 class DashboardCreateActionbar extends React.Component<Props, DashboardCreateActionbarState> {
   constructor(props: Props) {

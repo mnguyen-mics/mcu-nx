@@ -1,7 +1,7 @@
 import { Button, Col, Form, Input, message, Row } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import * as React from 'react';
-import { FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
+import { FormattedMessage, WrappedComponentProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import messages from '../../messages';
 import cuid from 'cuid';
@@ -55,7 +55,7 @@ export interface PluginVersionFormProps {
 }
 
 type Props = PluginVersionFormProps &
-  InjectedIntlProps &
+  WrappedComponentProps &
   RouteComponentProps<RouterProps> &
   InjectedNotificationProps;
 

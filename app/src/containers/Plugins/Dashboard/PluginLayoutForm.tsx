@@ -2,7 +2,7 @@ import { Button, Form, Input } from 'antd';
 import AceEditor from 'react-ace';
 import { Content } from 'antd/lib/layout/layout';
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import messages from '../messages';
 import { PluginLayoutFileFormData } from './PluginLayoutsContainer';
@@ -14,7 +14,7 @@ export interface PluginLayoutFormProps {
   isLayout?: boolean;
 }
 
-type Props = PluginLayoutFormProps & InjectedIntlProps;
+type Props = PluginLayoutFormProps & WrappedComponentProps;
 
 interface State {
   inputValue?: string;

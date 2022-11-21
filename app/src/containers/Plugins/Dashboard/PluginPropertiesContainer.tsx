@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import { IPluginService, lazyInject, TYPES } from '@mediarithmics-private/advanced-components';
 import injectNotifications, {
@@ -22,7 +22,7 @@ interface RouteProps {
 }
 
 type Props = PluginPropertiesContainerProps &
-  InjectedIntlProps &
+  WrappedComponentProps &
   InjectedNotificationProps &
   RouteComponentProps<RouteProps>;
 

@@ -1,7 +1,7 @@
 import { Button, Form, Input, Select } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { PluginResource, UserWorkspaceResource } from '@mediarithmics-private/advanced-components';
@@ -46,7 +46,7 @@ export interface PluginEditDrawerProps {
   save: (PluginResource: Partial<PluginResource>) => void;
 }
 
-type Props = PluginEditDrawerProps & InjectedIntlProps & MapStateToProps;
+type Props = PluginEditDrawerProps & WrappedComponentProps & MapStateToProps;
 
 interface State {
   organisationIdOption?: string;

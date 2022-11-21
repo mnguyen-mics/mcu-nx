@@ -2,7 +2,7 @@ import { Button, Form, Input } from 'antd';
 import AceEditor from 'react-ace';
 import { Content } from 'antd/lib/layout/layout';
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import messages from '../messages';
 import { ConfigurationFileFormData } from './ConfigurationFilesContainer';
@@ -13,7 +13,7 @@ export interface ConfigurationFileFormProps {
   isEditing?: boolean;
 }
 
-type Props = ConfigurationFileFormProps & InjectedIntlProps;
+type Props = ConfigurationFileFormProps & WrappedComponentProps;
 
 interface State {
   inputValue?: string;

@@ -14,7 +14,7 @@ import {
   PAGINATION_SEARCH_SETTINGS,
   PLUGIN_SEARCH_SETTINGS,
 } from '../../../utils/LocationSearchHelper';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 
 import injectNotifications, {
   InjectedNotificationProps,
@@ -38,7 +38,7 @@ interface RouteProps {
   pluginId: string;
 }
 
-type Props = InjectedIntlProps & InjectedNotificationProps & RouteComponentProps<RouteProps>;
+type Props = WrappedComponentProps & InjectedNotificationProps & RouteComponentProps<RouteProps>;
 
 interface State {
   isLoadingPlugin: boolean;

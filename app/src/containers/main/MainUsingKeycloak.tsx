@@ -6,11 +6,11 @@ import { compose } from 'recompose';
 import { NavigatorRoute } from '../../routes/domain';
 import routes from '../../routes/routes';
 import { LayoutManager } from '../../components/layoutManager';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { Notifications } from '../Notifications';
 import Datalayer from '../Main/Datalayer';
 
-type JoinedProps = InjectedIntlProps & RouteComponentProps<{ organisationId: string }>;
+type JoinedProps = WrappedComponentProps & RouteComponentProps<{ organisationId: string }>;
 
 const basePath = '/o/:organisationId(\\d+)';
 class MainUsingKeycloak extends React.Component<JoinedProps> {
