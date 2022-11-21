@@ -4,7 +4,7 @@ import React, { CSSProperties } from 'react';
 import { Layout, Responsive, WidthProvider } from 'react-grid-layout';
 import Chart from '../chart-engine';
 import cuid from 'cuid';
-import { ChartConfig, ChartType } from '../../services/ChartDatasetService';
+import { ChartConfig } from '../../services/ChartDatasetService';
 import McsLazyLoad from '../lazyload';
 import { AbstractScope } from '../../models/datamart/graphdb/Scope';
 import DashboardFilter from './dashboard-filter';
@@ -32,10 +32,18 @@ import {
   JsonDataset,
 } from '../../models/dashboards/dataset/dataset_tree';
 import { ExportService } from '../../services/ExportService';
+import {
+  BASE_FRAMEWORK_HEIGHT,
+  computeCSSProperties,
+  findCardNode,
+  findChartNode,
+  findSectionNode,
+  mergeChartConfigs,
+  moveChartNode,
+  moveSectionNode,
+} from './DashboardFunctions';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
-
-const BASE_FRAMEWORK_HEIGHT = 96;
 
 export interface DashboardLayoutProps {
   datamart_id: string;
@@ -120,68 +128,6 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     }
   }
 
-  private findSectionNode(
-    nodeId: string,
-    content: DashboardContentSchema,
-  ): DashboardContentSection | undefined {
-    return content.sections.find(section => section.id === nodeId);
-  }
-
-  private findCardNode(
-    nodeId: string,
-    content: DashboardContentSchema,
-  ): DashboardContentCard | undefined {
-    let res;
-    content.sections.forEach(section => {
-      section.cards.forEach(card => {
-        if (card.id === nodeId) res = card;
-      });
-    });
-    return res;
-  }
-
-  private findChartNode(nodeId: string, content: DashboardContentSchema): ChartConfig | undefined {
-    let res;
-    content.sections.forEach(section => {
-      section.cards.forEach(card => {
-        card.charts.forEach(chart => {
-          if (chart.id === nodeId) res = chart;
-        });
-      });
-    });
-    return res;
-  }
-
-  private swapCharts(chartsList: ChartConfig[], index1: number, index2: number) {
-    const tmp = chartsList[index1];
-    chartsList[index1] = chartsList[index2];
-    chartsList[index2] = tmp;
-  }
-
-  private swapSections(sectionsList: DashboardContentSection[], index1: number, index2: number) {
-    const tmp = sectionsList[index1];
-    sectionsList[index1] = sectionsList[index2];
-    sectionsList[index2] = tmp;
-  }
-
-  private moveChartNode(
-    direction: VerticalDirection,
-    chartIndex: number,
-    card: DashboardContentCard,
-  ): boolean {
-    let neighborIndex: number | undefined;
-    if (direction === 'up' && chartIndex > 0) neighborIndex = chartIndex - 1;
-    else if (direction === 'down' && chartIndex < card.charts.length - 1)
-      neighborIndex = chartIndex + 1;
-
-    if (neighborIndex !== undefined) {
-      this.swapCharts(card.charts, chartIndex, neighborIndex);
-      return true;
-    }
-
-    return false;
-  }
-
   private setChartsFormattedData = (
     chartTitle: string,
     data?: AggregateDataset | CountDataset | JsonDataset,
@@ -209,7 +155,8 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       })),
     }));
 
-    if (updateState) updateState({ ...contentCopy, sections: newSections });
+    mergeChartConfigs(chartNode, savingChartConfig);
+    if (updateState) updateState(contentCopy);
   }
 
   private createChart(
@@ -249,24 +196,6 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     }
   };
 
-  private moveSectionNode(
-    direction: VerticalDirection,
-    sectionIndex: number,
-    schema: DashboardContentSchema,
-  ): boolean {
-    let neighborIndex: number | undefined;
-    if (direction === 'up' && sectionIndex > 0) neighborIndex = sectionIndex - 1;
-    else if (direction === 'down' && sectionIndex < schema.sections.length - 1)
-      neighborIndex = sectionIndex + 1;
-
-    if (neighborIndex !== undefined) {
-      this.swapSections(schema.sections, sectionIndex, neighborIndex);
-      return true;
-    }
-
-    return false;
-  }
-
   private handleMoveChart(
     direction: VerticalDirection,
     chartIndex: number,
@@ -276,9 +205,9 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     const { updateState } = this.props;
     if (card.id && updateState) {
       const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(content));
-      const cardNode = this.findCardNode(card.id, contentCopy);
+      const cardNode = findCardNode(card.id, contentCopy);
 
-      if (cardNode && this.moveChartNode(direction, chartIndex, cardNode)) updateState(contentCopy);
+      if (cardNode && moveChartNode(direction, chartIndex, cardNode)) updateState(contentCopy);
     }
   }
 
@@ -286,7 +215,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     const { updateState, openNextDrawer, closeNextDrawer, intl } = this.props;
     const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(content));
     if (card.id) {
-      const cardNode: any = this.findCardNode(card.id, contentCopy);
+      const cardNode: any = findCardNode(card.id, contentCopy);
       if (updateState && cardNode) {
         openNextDrawer(CardEditionTab, {
           size: 'extrasmall',
@@ -328,9 +257,8 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     const { datamart_id, updateState, openNextDrawer, closeNextDrawer, intl } = this.props;
     const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(content));
     if (chart.id) {
-      const chartNode = this.findChartNode(chart.id, contentCopy);
-      if (updateState && chartNode?.id !== undefined) {
-        const chartId = chartNode.id;
+      const chartNode = findChartNode(chart.id, contentCopy);
+      if (updateState && chartNode) {
         openNextDrawer(ChartEditionTab, {
           size: 'large',
           className: 'mcs-drawer-chartEdition',
@@ -376,7 +304,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     const contentCopy = JSON.parse(JSON.stringify(content));
 
     if (card.id) {
-      const cardNode = this.findCardNode(card.id, contentCopy);
+      const cardNode = findCardNode(card.id, contentCopy);
       if (cardNode) {
         const deleteChart = () => {
           this.deleteChart(chartIndex, cardNode, contentCopy);
@@ -402,7 +330,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     const { datamart_id, updateState, openNextDrawer, closeNextDrawer } = this.props;
     const contentCopy = JSON.parse(JSON.stringify(content));
     if (card.id) {
-      const cardNode = this.findCardNode(card.id, contentCopy);
+      const cardNode = findCardNode(card.id, contentCopy);
       if (updateState && cardNode) {
         openNextDrawer(ChartEditionTab, {
           size: 'large',
@@ -412,7 +340,10 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
             datamartId: datamart_id,
             closeTab: closeNextDrawer,
             saveChart: (newChartConfig: ChartConfig) => {
-              this.createChart(newChartConfig, cardNode, contentCopy, newId);
+              const chartNode = findChartNode(newId, contentCopy);
+              if (chartNode) {
+                this.updateChart(newChartConfig, chartNode, contentCopy);
+              } else this.createChart(newChartConfig, cardNode, contentCopy, newId);
               closeNextDrawer();
             },
           },
@@ -464,7 +395,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
         chart,
         chartIndex,
         card,
-        this.computeCSSProperties(card.charts, card.layout, chart.type, card.h),
+        computeCSSProperties(card.charts, chart.type, card.h, editable, card.layout),
       );
     });
 
@@ -555,78 +486,6 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     );
   }
 
-  computeCSSProperties = (
-    charts: ChartConfig[],
-    layout: string = 'horizontal',
-    chartType: ChartType,
-    cardHeight: number,
-  ) => {
-    const { editable } = this.props;
-
-    const isMetricChartType = chartType.toLowerCase() === 'metric';
-    const metricChartsList = charts.filter(chart => chart.type.toLowerCase() === 'metric');
-    const metricHeigthInPx = 63;
-    const cardPadding = 15;
-    const vSpaceBetweenRows = 10;
-    const metricHeightInPxWithPadding = 83;
-    const cardEditMenuHeight = 18;
-    const cardHeightInPixel =
-      cardHeight * BASE_FRAMEWORK_HEIGHT + (cardHeight - 1) * vSpaceBetweenRows;
-    const chartPadding = 20;
-    // We add this correction to avoid charts exceeding the bottom limits in some cases
-    const heightCorrectionForHorizontalCase = 12;
-
-    const horizontalChartHeight =
-      cardHeightInPixel -
-      2 * cardPadding -
-      (editable ? cardEditMenuHeight : 0) -
-      heightCorrectionForHorizontalCase;
-
-    const horizontalCssProperties = {
-      float: 'left' as any,
-      height: `${horizontalChartHeight}px`,
-    };
-
-    const nonMetricChartsCount =
-      charts.length - metricChartsList.length > 0 ? charts.length - metricChartsList.length : 1;
-
-    const otherThanMetricChartHeigth =
-      (cardHeightInPixel -
-        2 * cardPadding -
-        (editable ? cardEditMenuHeight : 0) -
-        metricChartsList.length * metricHeightInPxWithPadding) /
-        nonMetricChartsCount -
-      chartPadding;
-
-    const metricChartWidthSize = 30;
-    const otherThanMetricChartWidth =
-      (100 - metricChartsList.length * metricChartWidthSize) /
-      (charts.length - metricChartsList.length);
-
-    if (layout === 'horizontal') {
-      if (isMetricChartType && charts.length > 1) {
-        return {
-          ...horizontalCssProperties,
-          width: `${metricChartWidthSize}%`,
-        };
-      }
-      return {
-        ...horizontalCssProperties,
-        width:
-          !isMetricChartType && metricChartsList
-            ? `${otherThanMetricChartWidth}%`
-            : `${100 / charts.length}%`,
-      };
-    } else {
-      if (isMetricChartType && charts.length > 1) {
-        return { height: `${metricHeigthInPx}px` };
-      }
-      return {
-        height: `${otherThanMetricChartHeigth}px`,
-      };
-    }
-  };
-
   handleDashboardFilterChange = (filterTechnicalName: string, filterValues: string[]) => {
     const { dashboardFilterValues } = this.state;
 
@@ -706,7 +565,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     const { schema, updateState } = this.props;
     if (updateState) {
       const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(schema));
-      const sectionNode = this.findSectionNode(sectionId, contentCopy);
+      const sectionNode = findSectionNode(sectionId, contentCopy);
       if (sectionNode) {
         currentLayout.forEach(layout => {
           const card = sectionNode.cards.find(c => c.id === layout.i);
@@ -728,7 +587,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     const { schema, updateState } = this.props;
 
     const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(schema));
-    const sectionNode = this.findSectionNode(sectionId, contentCopy);
+    const sectionNode = findSectionNode(sectionId, contentCopy);
 
     if (updateState && sectionNode) {
       let maxY = 0;
@@ -755,7 +614,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
 
     if (updateState) {
       const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(schema));
-      const sectionNode = this.findSectionNode(sectionId, contentCopy);
+      const sectionNode = findSectionNode(sectionId, contentCopy);
       if (sectionNode) {
         sectionNode.title = title;
         updateState(contentCopy);
@@ -786,9 +645,9 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
 
     if (updateState) {
       const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(schema));
-      const sectionNode = this.findSectionNode(sectionId, contentCopy);
+      const sectionNode = findSectionNode(sectionId, contentCopy);
       const sectionIndex = schema.sections.findIndex(s => s.id === sectionId);
-      if (sectionNode && this.moveSectionNode(direction, sectionIndex, contentCopy))
+      if (sectionNode && moveSectionNode(direction, sectionIndex, contentCopy))
         updateState(contentCopy);
     }
   };
@@ -878,7 +737,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       new ExportService().exportMultipleDataset(this.chartsFormattedData, title);
     };
 
-  generateDOM(): React.ReactElement {
+  render() {
     const {
       schema,
       datamart_id,
@@ -928,9 +787,5 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
         {sections}
       </div>
     );
-  }
-
-  render() {
-    return this.generateDOM();
   }
 }

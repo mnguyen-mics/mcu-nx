@@ -96,7 +96,7 @@ class DashboardPage extends React.Component<Props, State> {
     }
   }
 
-  getDashboardPageContent = (
+  renderDashboardPageContent = (
     datamartId: string,
     organisationId: string,
     dataFileDashboards?: DataFileDashboardResource[],
@@ -354,7 +354,7 @@ class DashboardPage extends React.Component<Props, State> {
 
     return (
       <div className={className}>
-        {this.getDashboardPageContent(
+        {this.renderDashboardPageContent(
           datamartId,
           organisationId,
           dataFileDashboards,
