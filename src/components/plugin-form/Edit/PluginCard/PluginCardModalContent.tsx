@@ -31,7 +31,13 @@ import { generateFakeId } from '../../../../utils/FakeIdHelper';
 import { injectFeatures, InjectedFeaturesProps } from '../../../Features';
 import McsMoment from '../../../../utils/McsMoment';
 import { McsDateRangeValue } from '@mediarithmics-private/mcs-components-library/lib/components/mcs-date-range-picker/McsDateRangePicker';
-import { defineMessages, FormattedMessage, InjectedIntlProps, injectIntl } from 'react-intl';
+import {
+  defineMessages,
+  FormattedMessage,
+  WrappedComponentProps,
+  injectIntl,
+  MessageDescriptor,
+} from 'react-intl';
 import {
   convertMessageDescriptorToString,
   mcsDateRangePickerMessages,
@@ -74,7 +80,7 @@ type Props<T extends LayoutablePlugin> = PluginCardModalContentProps<T> &
   InjectedNotificationProps &
   InjectedFormProps &
   InjectedFeaturesProps &
-  InjectedIntlProps &
+  WrappedComponentProps &
   ValidatorProps;
 
 interface State {
@@ -433,7 +439,7 @@ export default compose<Props<LayoutablePlugin>, PluginCardModalContentProps<Layo
 )(PluginCardModalContent);
 
 const messages: {
-  [metric: string]: FormattedMessage.MessageDescriptor;
+  [metric: string]: MessageDescriptor;
 } = defineMessages({
   stats_description: {
     id: 'audience.feeds.stats.description',

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IQueryService, QueryService } from '../../services/QueryService';
 import _ from 'lodash';
 import { Alert, Spin } from 'antd';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import { QueryCreateRequest, QueryResource } from '../../models/datamart/DatamartResource';
 import DashboardLayout from '../dashboard-layout';
@@ -38,7 +38,7 @@ interface ScopedDashboardLayoutProps {
   queryExecutionSubSource: QueryExecutionSubSource;
 }
 
-type Props = ScopedDashboardLayoutProps & InjectedIntlProps & InjectedDrawerProps;
+type Props = ScopedDashboardLayoutProps & WrappedComponentProps & InjectedDrawerProps;
 
 interface ScopedDashboardLayoutState {
   scope?: AbstractScope;

@@ -6,7 +6,7 @@ import { getWorkspace } from '../../redux/Session/selectors';
 import { Dropdown } from 'antd';
 import { UserWorkspaceResource } from '../../models/directory/UserProfileResource';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { InjectedIntlProps, injectIntl } from 'react-intl';
+import { WrappedComponentProps, injectIntl } from 'react-intl';
 import SwitchBySearch from './SwitchBySearch';
 import SwitchByList from './SwitchByList';
 import { McsIcon } from '@mediarithmics-private/mcs-components-library';
@@ -24,7 +24,7 @@ export interface StoreProps {
 
 const maxOrgOrCommunity = 6;
 
-type Props = StoreProps & InjectedIntlProps & RouteComponentProps<{ organisationId: string }>;
+type Props = StoreProps & WrappedComponentProps & RouteComponentProps<{ organisationId: string }>;
 
 class OrganizationListSwitcher extends React.Component<Props, OrganizationListSwitcherState> {
   constructor(props: Props) {

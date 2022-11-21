@@ -18,12 +18,12 @@ import {
   propsMetric,
 } from '../__utils__/dashboardConfig';
 import { fetchmockOptions } from '../__utils__/fetchMockOptions';
-import { IntlProvider, InjectedIntlProps } from 'react-intl';
+import { IntlProvider, WrappedComponentProps } from 'react-intl';
 
 const store = configureStore();
 
 const WithDrawerDashboardLayout = compose<
-  DashboardLayoutProps & InjectedDrawerProps & InjectedIntlProps,
+  DashboardLayoutProps & InjectedDrawerProps & WrappedComponentProps,
   DashboardLayoutProps
 >(injectDrawer)(DashboardLayout);
 

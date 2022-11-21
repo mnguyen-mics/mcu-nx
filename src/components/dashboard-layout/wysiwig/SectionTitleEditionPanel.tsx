@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons';
 import { Button, Input } from 'antd';
 import React, { ChangeEvent } from 'react';
-import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
+import { defineMessages, WrappedComponentProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import { DashboardContentSection } from '../../../models/customDashboards/customDashboards';
 
@@ -30,7 +30,7 @@ interface SectionTitleEditionPanelProps {
   onClickDelete?: () => void;
 }
 
-type Props = InjectedIntlProps & SectionTitleEditionPanelProps;
+type Props = WrappedComponentProps & SectionTitleEditionPanelProps;
 
 interface SectionTitleEditionPanelState {
   title: string;

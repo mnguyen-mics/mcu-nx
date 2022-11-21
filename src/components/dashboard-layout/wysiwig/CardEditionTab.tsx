@@ -1,6 +1,6 @@
 import { Button, Form, InputNumber, Row, Select } from 'antd';
 import React from 'react';
-import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
+import { defineMessages, WrappedComponentProps, injectIntl } from 'react-intl';
 import { compose } from 'recompose';
 import { FormInstance, Rule } from 'antd/lib/form';
 import lodash from 'lodash';
@@ -25,7 +25,7 @@ interface LabelValueOption {
   value: string;
 }
 
-type Props = InjectedIntlProps & CardEditionProps;
+type Props = WrappedComponentProps & CardEditionProps;
 
 interface CardEditionState {
   x?: number;

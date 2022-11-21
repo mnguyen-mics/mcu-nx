@@ -20,5 +20,6 @@ module.exports = merge(common, {
     },
     antd: 'antd',
     'react-router-dom': 'react-router-dom',
+    'react-intl': 'react-intl',
   },
 });

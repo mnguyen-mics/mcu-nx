@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { InjectedIntlProps, injectIntl, defineMessages } from 'react-intl';
+import { WrappedComponentProps, injectIntl, defineMessages } from 'react-intl';
 import { compose } from 'recompose';
 import { LabeledValue } from 'antd/lib/select';
 import DashboardPage from './DashboardPage';
@@ -60,7 +60,7 @@ interface DashboardPageWrapperProps {
 type Props = DashboardPageWrapperProps &
   InjectedFeaturesProps &
   InjectedNotificationProps &
-  InjectedIntlProps &
+  WrappedComponentProps &
   InjectedDrawerProps;
 
 interface State {

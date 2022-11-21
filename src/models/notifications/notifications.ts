@@ -1,4 +1,4 @@
-import { FormattedMessage } from 'react-intl';
+import { MessageDescriptor } from 'react-intl';
 
 export interface Notification {
   level: string;
@@ -10,6 +10,6 @@ export interface Notification {
   };
   newVersion: boolean;
   onClose: () => void;
-  intlMessage: FormattedMessage.MessageDescriptor;
-  intlDescription: FormattedMessage.MessageDescriptor;
+  intlMessage: MessageDescriptor;
+  intlDescription: MessageDescriptor;
 }

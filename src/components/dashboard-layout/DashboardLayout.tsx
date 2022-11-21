@@ -19,7 +19,7 @@ import { InjectedDrawerProps } from '../..';
 import ChartEditionTab from './wysiwig/ChartEditionTab';
 import CardEditionTab from './wysiwig/CardEditionTab';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { defineMessages, InjectedIntlProps } from 'react-intl';
+import { defineMessages, WrappedComponentProps } from 'react-intl';
 import { QueryFragment } from '../../utils/source/DataSourceHelper';
 import SectionTitleEditionPanel, { VerticalDirection } from './wysiwig/SectionTitleEditionPanel';
 import {
@@ -59,7 +59,7 @@ export interface DashboardLayoutState {
   formattedQueryFragment: QueryFragment;
 }
 
-type Props = DashboardLayoutProps & InjectedIntlProps & InjectedDrawerProps;
+type Props = DashboardLayoutProps & WrappedComponentProps & InjectedDrawerProps;
 
 const messages = defineMessages({
   dashboardLayoutConfirmation: {
