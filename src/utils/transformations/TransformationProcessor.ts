@@ -199,6 +199,7 @@ export class TransformationProcessor {
     xKey: string,
   ) {
     const childSources = indexSource.children;
+
     if (childSources && childSources.length === 2) {
       return Promise.all(
         childSources.map(s =>
@@ -213,7 +214,7 @@ export class TransformationProcessor {
         );
       });
     } else {
-      return this.rejectWrongNumberOfArguments('to-percentages', 2, childSources.length);
+      return this.rejectWrongNumberOfArguments('index', 2, childSources.length);
     }
   }
 
