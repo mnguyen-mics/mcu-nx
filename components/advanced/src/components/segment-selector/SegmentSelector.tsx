@@ -15,6 +15,7 @@ interface SegmentSelectorProps {
   segmentType?: AudienceSegmentType[];
   withFilter?: boolean;
   onSelectSegment: (segment: AudienceSegmentShape) => void;
+  text?: string;
 }
 
 type Props = SegmentSelectorProps & InjectedDrawerProps;
@@ -43,9 +44,11 @@ class SegmentSelector extends React.Component<Props> {
     });
   };
   render() {
+    const { text } = this.props;
+
     return (
       <Button onClick={this.openDrawer} className='mcs-segmentSelector_button'>
-        Open from existing segment
+        {text ? text : 'Open from existing segment'}
       </Button>
     );
   }

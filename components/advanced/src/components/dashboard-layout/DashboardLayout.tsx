@@ -15,11 +15,13 @@ import {
   DashboardContentSection,
   DashboardFilterQueryFragments,
 } from '../../models/customDashboards/customDashboards';
-import { InjectedDrawerProps } from '../..';
+import { InjectedFeaturesProps, injectFeatures } from '../Features';
+import { injectDrawer } from '../drawer';
+import { InjectedDrawerProps, SegmentSelector } from '../..';
 import ChartEditionTab from './wysiwig/ChartEditionTab';
 import CardEditionTab from './wysiwig/CardEditionTab';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { defineMessages, WrappedComponentProps } from 'react-intl';
+import { InjectedIntlProps, injectIntl, defineMessages, WrappedComponentProps } from 'react-intl';
 import { QueryFragment } from '../../utils/source/DataSourceHelper';
 import SectionTitleEditionPanel, { VerticalDirection } from './wysiwig/SectionTitleEditionPanel';
 import {
@@ -42,6 +44,8 @@ import {
   moveChartNode,
   moveSectionNode,
 } from './DashboardFunctions';
+import { AudienceSegmentShape } from '../../models/audienceSegment/AudienceSegmentResource';
+import { compose } from 'recompose';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -67,7 +71,7 @@ export interface DashboardLayoutState {
   formattedQueryFragment: QueryFragment;
 }
 
-type Props = DashboardLayoutProps & WrappedComponentProps & InjectedDrawerProps;
+type Props = DashboardLayoutProps & WrappedComponentProps & InjectedIntlProps & InjectedDrawerProps & InjectedFeaturesProps;
 
 const messages = defineMessages({
   dashboardLayoutConfirmation: {
@@ -102,9 +106,13 @@ const messages = defineMessages({
     id: 'dashboard.layout.exportWarning',
     defaultMessage: 'Only charts you loaded will be exported',
   },
+  compareToSegment: {
+    id: 'dashboard.layout.compareToSegment',
+    defaultMessage: 'Compare to segment...',
+  },
 });
 
-export default class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
+class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
   private chartsFormattedData: ChartsFormattedData = new Map();
 
   constructor(props: Props) {
@@ -488,6 +496,11 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
 
   handleDashboardFilterChange = (filterTechnicalName: string, filterValues: string[]) => {
     const { dashboardFilterValues } = this.state;
+    console.log(
+      `igor, filterTechnicalName = ${filterTechnicalName}, filterValues = ${JSON.stringify(
+        filterValues,
+      )}`,
+    );
 
     // deep copy array
     let newDashboardFilterValues = JSON.parse(JSON.stringify(dashboardFilterValues));
@@ -737,6 +750,10 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       new ExportService().exportMultipleDataset(this.chartsFormattedData, title);
     };
 
+  handleSelectSegmentForComparaison = (segment: AudienceSegmentShape) => {
+    console.log(`igor, handleSelectSegment, segment = ${JSON.stringify(segment)}`);
+  };
+
   render() {
     const {
       schema,
@@ -747,10 +764,19 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
       title,
       intl,
     } = this.props;
+
     const sections = schema.sections.map((section, i) => this.renderSection(section, i));
     return (
       <div className={'mcs-dashboardLayout'}>
         <div className={'mcs-dashboardLayout_filters'}>
+          <SegmentSelector
+            organisationId={organisationId}
+            datamartId={datamart_id}
+            onSelectSegment={this.handleSelectSegmentForComparaison}
+            segmentType={['USER_QUERY', 'USER_ACTIVATION']}
+            text={intl.formatMessage(messages.compareToSegment)}
+          />
+
           <Tooltip title={intl.formatMessage(messages.exportWarning)}>
             <Button
               type='default'
@@ -760,6 +786,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
               Export
             </Button>
           </Tooltip>
+
           {schema.available_filters && (
             <>
               <Divider type='vertical' className='mcs-dashboardLayout_filters_divider' />
@@ -789,3 +816,9 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     );
   }
 }
+
+export default compose<Props, DashboardLayoutProps>(
+  injectFeatures,
+  injectIntl,
+  injectDrawer,
+)(DashboardLayout);

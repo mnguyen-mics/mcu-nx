@@ -47,11 +47,8 @@ class EditableDashboardLayout extends React.Component<Props> {
 
   render() {
     const {
-      intl,
       datamart_id,
       organisationId,
-      openNextDrawer,
-      closeNextDrawer,
       updateSchema,
       schema,
       queryExecutionSource,
@@ -60,9 +57,6 @@ class EditableDashboardLayout extends React.Component<Props> {
     const identifiedSchema = this.labelInitialSchemaWithIds(schema);
     return (
       <DashboardLayout
-        intl={intl}
-        openNextDrawer={openNextDrawer}
-        closeNextDrawer={closeNextDrawer}
         datamart_id={datamart_id}
         schema={identifiedSchema}
         editable={true}

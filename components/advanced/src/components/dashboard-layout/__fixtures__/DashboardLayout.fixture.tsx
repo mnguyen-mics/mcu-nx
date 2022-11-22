@@ -4,11 +4,9 @@ import EditableDashboardLayout from '../EditableDashboardLayout';
 import { FetchMock } from '@react-mock/fetch';
 import { LocalStorageMock } from '@react-mock/localstorage';
 import { Provider } from 'react-redux';
-import { InjectedDrawerProps, IocProvider } from '../../..';
+import { IocProvider } from '../../..';
 import configureStore from '../../../redux/store';
 import { container } from '../../../inversify/inversify.config';
-import { injectDrawer } from '../../drawer';
-import { compose } from 'recompose';
 import {
   props,
   propsAnalytics1,
@@ -18,7 +16,7 @@ import {
   propsMetric,
 } from '../__utils__/dashboardConfig';
 import { fetchmockOptions } from '../__utils__/fetchMockOptions';
-import { IntlProvider, WrappedComponentProps } from 'react-intl';
+/* import { IntlProvider, WrappedComponentProps } from 'react-intl';
 
 const store = configureStore();
 
@@ -26,6 +24,10 @@ const WithDrawerDashboardLayout = compose<
   DashboardLayoutProps & InjectedDrawerProps & WrappedComponentProps,
   DashboardLayoutProps
 >(injectDrawer)(DashboardLayout);
+
+import { IntlProvider} from 'react-intl';
+
+const store = configureStore(); */
 
 function adaptToEditable(_props: DashboardLayoutProps) {
   return {
@@ -49,12 +51,12 @@ export default {
         <IntlProvider locale='en'>
           <LocalStorageMock items={{ access_token: 're4lt0k3n' }}>
             <FetchMock mocks={fetchmockOptions}>
-              <WithDrawerDashboardLayout {...propsMetric} {...commonProps} />
-              <WithDrawerDashboardLayout {...props} {...commonProps} />
-              <WithDrawerDashboardLayout {...propsAnalytics1} {...commonProps} />
-              <WithDrawerDashboardLayout {...propsAnalytics2} {...commonProps} />
-              <WithDrawerDashboardLayout {...propsAnalytics3} {...commonProps} />
-              <WithDrawerDashboardLayout {...propsAnalytics4} {...commonProps} />
+              <DashboardLayout {...propsMetric} {...commonProps} />
+              <DashboardLayout {...props} {...commonProps} />
+              <DashboardLayout {...propsAnalytics1} {...commonProps} />
+              <DashboardLayout {...propsAnalytics2} {...commonProps} />
+              <DashboardLayout {...propsAnalytics3} {...commonProps} />
+              <DashboardLayout {...propsAnalytics4} {...commonProps} />
             </FetchMock>
           </LocalStorageMock>
         </IntlProvider>
