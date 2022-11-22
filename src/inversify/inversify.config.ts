@@ -43,6 +43,16 @@ import {
   IIdentityProviderService,
 } from '../services/IdentityProviderService';
 import ChartService, { IChartService } from '../services/ChartsService';
+import { DataIngestionAnalyticsService } from '../services/analytics/DataIngestionAnalyticsService';
+import {
+  DataIngestionMetric,
+  DataIngestionDimension,
+} from './../utils/analytics/DataIngestionReportHelper';
+import { ResourcesUsageService } from './../services/analytics/ResourcesUsageService';
+import {
+  ResourcesUsageMetric,
+  ResourcesUsageDimension,
+} from './../utils/analytics/ResourcesUsageReportHelper';
 
 export const container = new Container();
 
@@ -57,6 +67,18 @@ container
     TYPES.ICollectionVolumesService,
   )
   .to(CollectionVolumesService);
+
+container
+  .bind<IAnalyticsService<ResourcesUsageMetric, ResourcesUsageDimension>>(
+    TYPES.IResourcesUsageService,
+  )
+  .to(ResourcesUsageService);
+
+container
+  .bind<IAnalyticsService<DataIngestionMetric, DataIngestionDimension>>(
+    TYPES.IDataIngestionAnalyticsService,
+  )
+  .to(DataIngestionAnalyticsService);
 
 container.bind<IChartDatasetService>(TYPES.IChartDatasetService).to(ChartDatasetService);
 container.bind<IQueryService>(TYPES.IQueryService).to(QueryService);

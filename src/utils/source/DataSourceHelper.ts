@@ -4,16 +4,13 @@ import { QueryService, IQueryService } from '../../services/QueryService';
 import { QueryScopeAdapter } from '../QueryScopeAdapter';
 import { DashboardFilterQueryFragments } from '../../models/customDashboards/customDashboards';
 import {
-  ActivitiesAnalyticsDimension,
-  ActivitiesAnalyticsMetric,
-} from '../analytics/ActivitiesAnalyticsReportHelper';
-import {
   AbstractSource,
   AggregationSource,
   AnalyticsSource,
   OTQLSource,
 } from '../../models/dashboards/dataset/datasource_tree';
 import { SourceType } from '../../models/dashboards/dataset/common';
+import { AnalyticsDimension, AnalyticsMetric } from '../analytics/Common';
 
 const mapOtqlQueries: Map<string, QueryResource> = new Map();
 
@@ -113,10 +110,7 @@ export async function extractQueriesHelper(
     case 'collection_volumes':
     case 'data_ingestion':
     case 'resources_usage':
-      const analyticsSource = source as AnalyticsSource<
-        ActivitiesAnalyticsMetric,
-        ActivitiesAnalyticsDimension
-      >;
+      const analyticsSource = source as AnalyticsSource<AnalyticsMetric, AnalyticsDimension>;
       const queryJson = analyticsSource.query_json;
       return [
         {

@@ -1,3 +1,4 @@
+import { AnalyticsMetric, AnalyticsDimension } from './../utils/analytics/Common';
 import { DataIngestionAnalyticsService } from './analytics/DataIngestionAnalyticsService';
 import {
   DataIngestionMetric,
@@ -62,9 +63,6 @@ import {
 import {
   AbstractDataset,
   AbstractDatasetTree,
-  AggregateDataset,
-  AnalyticsDataset,
-  CountDataset,
   OTQLDataset,
 } from '../models/dashboards/dataset/dataset_tree';
 import {
@@ -78,6 +76,7 @@ import {
 import { isTypeofXKey, XKey } from '@mediarithmics-private/mcs-components-library/lib';
 import { ResourcesUsageMetric } from '../utils/analytics/ResourcesUsageReportHelper';
 import { ResourcesUsageService } from './analytics/ResourcesUsageService';
+import { AnalyticsSourceType } from '../models/dashboards/dataset/common';
 
 export type ChartType = 'pie' | 'bars' | 'radar' | 'metric' | 'area' | 'line' | 'table';
 
@@ -215,8 +214,6 @@ export interface IChartDatasetService {
   ): Promise<AbstractDataset | undefined>;
 }
 
-type AnalyticsType = 'collections' | 'activities' | 'resources' | 'data_ingestion';
-
 @injectable()
 export class ChartDatasetService implements IChartDatasetService {
   // TODO: Put back injection for this service
@@ -302,81 +299,19 @@ export class ChartDatasetService implements IChartDatasetService {
     return shouldAdaptToScope ? providedScope : undefined;
   }
 
-  private getAnalyticsService<M, D>(type: AnalyticsType) {
+  private getAnalyticsService<M, D>(type: AnalyticsSourceType) {
     switch (type) {
-      case 'activities':
+      case 'activities_analytics':
         return this.activitiesAnalyticsService;
-      case 'collections':
+      case 'collection_volumes':
         return this.collectionsAnalyticsService;
-      case 'resources':
+      case 'resources_usage':
         return this.resourcesUsageService;
       case 'data_ingestion':
         return this.dataIngestionAnalyticsService;
       default:
         return this.activitiesAnalyticsService;
     }
-  }
-
-  private fetchActivitiesAnalytics(
-    datamartId: string,
-    source: AnalyticsSource<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>,
-    xKey: string,
-    providedScope?: AbstractScope,
-    queryFragment?: QueryFragment,
-  ) {
-    return this.fetchAnalytics(
-      'activities' as AnalyticsType,
-      datamartId,
-      source,
-      xKey,
-      providedScope,
-      queryFragment,
-    );
-  }
-
-  private fetchCollectionVolumes(
-    datamartId: string,
-    source: AnalyticsSource<CollectionVolumesMetric, CollectionVolumesDimension>,
-    xKey: string,
-    providedScope?: AbstractScope,
-  ) {
-    return this.fetchAnalytics(
-      'collections' as AnalyticsType,
-      datamartId,
-      source,
-      xKey,
-      providedScope,
-    );
-  }
-
-  private fetchDataIngestionMetrics(
-    datamartId: string,
-    source: AnalyticsSource<DataIngestionMetric, DataIngestionDimension>,
-    xKey: string,
-    providedScope?: AbstractScope,
-  ) {
-    return this.fetchAnalytics(
-      'data_ingestion' as AnalyticsType,
-      datamartId,
-      source,
-      xKey,
-      providedScope,
-    );
-  }
-
-  private fetchResourcesUsage(
-    datamartId: string,
-    source: AnalyticsSource<ResourcesUsageMetric, ResourcesUsageDimension>,
-    xKey: string,
-    providedScope?: AbstractScope,
-  ) {
-    return this.fetchAnalytics(
-      'resources' as AnalyticsType,
-      datamartId,
-      source,
-      xKey,
-      providedScope,
-    );
   }
 
   private handleAnalyticsScope(
@@ -389,12 +324,12 @@ export class ChartDatasetService implements IChartDatasetService {
     return this.scopeAdapter.buildScopeAnalyticsQuery(datamartId, analyticsScope);
   }
 
-  private shouldAdaptToScope<M, D>(type: AnalyticsType, source: AnalyticsSource<M, D>) {
-    return type === 'activities' && source?.adapt_to_scope;
+  private shouldAdaptToScope<M, D>(type: AnalyticsSourceType, source: AnalyticsSource<M, D>) {
+    return type === 'activities_analytics' && source?.adapt_to_scope;
   }
 
   private async fetchAnalytics<M extends string, D extends string>(
-    type: AnalyticsType,
+    type: AnalyticsSourceType,
     datamartId: string,
     source: AnalyticsSource<M, D>,
     xKey: string,
@@ -476,144 +411,111 @@ export class ChartDatasetService implements IChartDatasetService {
     const sourceType = source.type.toLowerCase();
     const seriesTitle = source.series_title || DEFAULT_Y_KEY.key;
 
-    if (sourceType === 'otql') {
-      const otqlSource = source as OTQLSource;
-      const scope = this.getScope(otqlSource.adapt_to_scope, providedScope);
-      const queryDatamartId = otqlSource.datamart_id || datamartId;
-      const dataset = await this.executeOtqlQuery(
-        queryDatamartId,
-        otqlSource,
-        queryExecutionSource,
-        queryExecutionSubSource,
-        scope,
-        queryFragment,
-        useCache,
-      ).then(res => {
-        return formatDatasetForOtql(res, xKey, seriesTitle);
-      });
-      return {
-        ...source,
-        dataset: dataset,
-      } as OTQLDataset;
-    } else if (sourceType === 'activities_analytics') {
-      return this.fetchActivitiesAnalytics(
-        datamartId,
-        source as AnalyticsSource<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>,
-        xKey,
-        providedScope,
-        queryFragment,
-      ).then(analyticsDataset => {
+    switch (sourceType) {
+      case 'otql':
+        const otqlSource = source as OTQLSource;
+        const scope = this.getScope(otqlSource.adapt_to_scope, providedScope);
+        const queryDatamartId = otqlSource.datamart_id || datamartId;
+        const otqlRes = await this.executeOtqlQuery(
+          queryDatamartId,
+          otqlSource,
+          queryExecutionSource,
+          queryExecutionSubSource,
+          scope,
+          queryFragment,
+          useCache,
+        );
+        const otqlDataset = formatDatasetForOtql(otqlRes, xKey, seriesTitle);
         return {
           ...source,
-          dataset: analyticsDataset,
-        } as AnalyticsDataset;
-      });
-    } else if (sourceType === 'collection_volumes') {
-      return this.fetchCollectionVolumes(
-        datamartId,
-        source as AnalyticsSource<CollectionVolumesMetric, CollectionVolumesDimension>,
-        xKey,
-        providedScope,
-      ).then(volumesDataset => {
-        return {
-          ...source,
-          dataset: volumesDataset,
-        } as AnalyticsDataset;
-      });
-    } else if (sourceType === 'data_ingestion') {
-      return this.fetchDataIngestionMetrics(
-        datamartId,
-        source as AnalyticsSource<DataIngestionMetric, DataIngestionDimension>,
-        xKey,
-        providedScope,
-      ).then(volumesDataset => {
-        return {
-          ...source,
-          dataset: volumesDataset,
-        } as AnalyticsDataset;
-      });
-    } else if (sourceType === 'resources_usage') {
-      return this.fetchResourcesUsage(
-        datamartId,
-        source as AnalyticsSource<ResourcesUsageMetric, ResourcesUsageDimension>,
-        xKey,
-        providedScope,
-      ).then(usageDataset => {
-        return {
-          ...source,
-          dataset: usageDataset,
-        } as AnalyticsDataset;
-      });
-    } else if (sourceType === 'data_file') {
-      const datafileSource = source as DataFileSource;
-      if (providedScope && providedScope.type === 'SEGMENT') {
-        const segmentToken = '{SEGMENT_ID}';
-        const segmentId = (providedScope as SegmentScope).segmentId;
-        datafileSource.uri = datafileSource.uri.replace(segmentToken, segmentId);
-        datafileSource.JSON_path = datafileSource.JSON_path.replace(segmentToken, segmentId);
-      }
-      return this.dataFileService
-        .getDatafileData(datafileSource.uri)
-        .then(res => {
-          return this.readFileContent(res).then((fileContent: string) => {
-            const fileContentJson = JSON.parse(fileContent);
-            const datasetFromDataFile = jsonpath.query(fileContentJson, datafileSource.JSON_path);
-            if (!datasetFromDataFile) return undefined;
-            if (chartType.toLowerCase() === 'metric') {
-              return {
-                value: datasetFromDataFile[0],
-                type: 'count',
-              } as CountDataset;
-            }
-            return {
-              ...source,
-              metadata: {
-                seriesTitles: [seriesTitle],
-              },
-              dataset: datasetFromDataFile[0],
-              type: 'aggregate',
-            } as AggregateDataset;
-          });
-        })
-        .catch(() => {
-          Promise.reject(`Cannot retrieve datafile: ${datafileSource.uri}`);
-          return undefined;
-        })
-        .then(d => {
-          return {
-            type: 'data_file',
-            dataset: d,
-          };
-        });
-    } else {
-      const aggregationSource = source as AggregationSource;
-      const childSources = aggregationSource.sources;
-
-      return Promise.all(
-        childSources.map(s =>
-          this.hydrateDatasets(
-            datamartId,
-            organisationId,
-            chartType,
-            xKey,
-            s,
-            queryExecutionSource,
-            queryExecutionSubSource,
-            providedScope,
-            queryFragment,
-            useCache,
-          ),
-        ),
-      )
-        .then(childDatasets => {
-          return childDatasets.filter(x => !!x).map(x => x as AbstractDatasetTree);
-        })
-        .then(definedChildren => {
+          dataset: otqlDataset,
+        } as OTQLDataset;
+      case 'activities_analytics':
+      case 'collection_volumes':
+      case 'data_ingestion':
+      case 'resources_usage':
+        return this.fetchAnalytics(
+          sourceType,
+          datamartId,
+          source as AnalyticsSource<AnalyticsMetric, AnalyticsDimension>,
+          xKey,
+          providedScope,
+          queryFragment,
+        ).then(analyticsDataset => {
           return {
             ...source,
-            children: definedChildren,
-          } as AbstractDatasetTree;
+            dataset: analyticsDataset,
+          };
         });
+      case 'data_file':
+        const datafileSource = source as DataFileSource;
+        if (providedScope && providedScope.type === 'SEGMENT') {
+          const segmentToken = '{SEGMENT_ID}';
+          const segmentId = (providedScope as SegmentScope).segmentId;
+          datafileSource.uri = datafileSource.uri.replace(segmentToken, segmentId);
+          datafileSource.JSON_path = datafileSource.JSON_path.replace(segmentToken, segmentId);
+        }
+        return this.dataFileService
+          .getDatafileData(datafileSource.uri)
+          .then(res => {
+            return this.readFileContent(res).then((fileContent: string) => {
+              const fileContentJson = JSON.parse(fileContent);
+              const datasetFromDataFile = jsonpath.query(fileContentJson, datafileSource.JSON_path);
+              if (!datasetFromDataFile) return undefined;
+              let dataset;
+              if (chartType.toLowerCase() === 'metric') {
+                dataset = {
+                  value: datasetFromDataFile[0],
+                  type: 'count',
+                };
+              }
+              dataset = {
+                ...source,
+                metadata: {
+                  seriesTitles: [seriesTitle],
+                },
+                dataset: datasetFromDataFile[0],
+                type: 'aggregate',
+              };
+              return {
+                type: 'data_file',
+                dataset: dataset,
+              } as AbstractDatasetTree;
+            });
+          })
+          .catch(() => {
+            Promise.reject(`Cannot retrieve datafile: ${datafileSource.uri}`);
+            return undefined;
+          });
+
+      default:
+        const aggregationSource = source as AggregationSource;
+        const childSources = aggregationSource.sources;
+        return Promise.all(
+          childSources.map(s =>
+            this.hydrateDatasets(
+              datamartId,
+              organisationId,
+              chartType,
+              xKey,
+              s,
+              queryExecutionSource,
+              queryExecutionSubSource,
+              providedScope,
+              queryFragment,
+              useCache,
+            ),
+          ),
+        )
+          .then(childDatasets => {
+            return childDatasets.filter(x => !!x);
+          })
+          .then(definedChildren => {
+            return {
+              ...source,
+              children: definedChildren,
+            };
+          });
     }
   }
 

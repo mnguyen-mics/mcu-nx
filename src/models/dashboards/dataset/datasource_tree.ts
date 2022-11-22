@@ -1,4 +1,8 @@
 import {
+  ResourcesUsageMetric,
+  ResourcesUsageDimension,
+} from './../../../utils/analytics/ResourcesUsageReportHelper';
+import {
   ActivitiesAnalyticsMetric,
   ActivitiesAnalyticsDimension,
 } from '../../../utils/analytics/ActivitiesAnalyticsReportHelper';
@@ -64,6 +68,7 @@ export interface DataSource {
 export type GenericSource =
   | AnalyticsSource<ActivitiesAnalyticsMetric, ActivitiesAnalyticsDimension>
   | AnalyticsSource<CollectionVolumesMetric, CollectionVolumesDimension>
+  | AnalyticsSource<ResourcesUsageMetric, ResourcesUsageDimension>
   | OTQLSource
   | AggregationSource
   | IndexSource
