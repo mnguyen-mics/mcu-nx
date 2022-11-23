@@ -106,6 +106,18 @@ class Charts extends Page {
   }
 
   @logFunction()
+  shouldContainForDoubleSeries(data: string, pos: number = 0) {
+    cy.get('.highcharts-point').eq(0).trigger('mouseover');
+    this.content.eq(pos).should('contain', data);
+  }
+
+  @logFunction()
+  shouldContainForRadar(data: string, pos: number = 0) {
+    cy.get('.highcharts-root').eq(0).trigger('mouseover');
+    this.content.eq(pos).should('contain', data);
+  }
+
+  @logFunction()
   shouldContain(data: string, pos: number = 0) {
     if (
       this.type == 'radar' ||
