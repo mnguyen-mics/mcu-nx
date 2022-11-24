@@ -1,20 +1,20 @@
 import * as React from 'react';
 import { isAggregateResult } from '../../models/datamart/graphdb/OTQLResult';
-import { IQueryService, QueryService } from '../../services/QueryService';
+import { TYPES } from '../../constants/types';
+import { IQueryService } from '../../services/QueryService';
 import { Select } from 'antd';
 import cuid from 'cuid';
 import { DashboardAvailableFilters } from '../../models/customDashboards/customDashboards';
 import { DecoratorsTransformation } from '../../utils/transformations/DecoratorsTransformation';
-import ChannelService, { IChannelService } from '../../services/ChannelService';
-import CompartmentService, { ICompartmentService } from '../../services/CompartmentService';
-import AudienceSegmentService, {
-  IAudienceSegmentService,
-} from '../../services/AudienceSegmentService';
+import { IChannelService } from '../../services/ChannelService';
+import { ICompartmentService } from '../../services/CompartmentService';
+import { IAudienceSegmentService } from '../../services/AudienceSegmentService';
 import { ModelType } from '../../models/dashboards/dataset/common';
 import {
   QueryExecutionSource,
   QueryExecutionSubSource,
 } from '../../models/platformMetrics/QueryExecutionSource';
+import { lazyInject } from '../../inversify/inversify.config';
 
 const { Option } = Select;
 interface DashboardFilterProps {
@@ -37,19 +37,27 @@ interface DashboardFilterState {
 }
 
 class DashboardFilter extends React.Component<DashboardFilterProps, DashboardFilterState> {
-  private queryService: IQueryService = new QueryService();
-  private channelService: IChannelService = new ChannelService();
-  private compartmentService: ICompartmentService = new CompartmentService();
-  private audienceSegmentService: IAudienceSegmentService = new AudienceSegmentService();
+  @lazyInject(TYPES.IQueryService)
+  private queryService: IQueryService;
 
-  private decoratorsTransformation: DecoratorsTransformation = new DecoratorsTransformation(
-    this.channelService,
-    this.compartmentService,
-    this.audienceSegmentService,
-  );
+  @lazyInject(TYPES.IChannelService)
+  private channelService: IChannelService;
+
+  @lazyInject(TYPES.ICompartmentService)
+  private compartmentService: ICompartmentService;
+
+  @lazyInject(TYPES.IAudienceSegmentService)
+  private audienceSegmentService: IAudienceSegmentService;
+
+  private decoratorsTransformation: DecoratorsTransformation;
 
   constructor(props: DashboardFilterProps) {
     super(props);
+    this.decoratorsTransformation = new DecoratorsTransformation(
+      this.channelService,
+      this.compartmentService,
+      this.audienceSegmentService,
+    );
     this.state = {
       filterOptionsResult: undefined,
       appliedFilters: undefined,
