@@ -12,7 +12,7 @@ import {
 import { InjectedFeaturesProps, injectFeatures } from '../Features';
 import { injectDrawer } from '../drawer';
 import { InjectedDrawerProps, SegmentSelector } from '../..';
-import { InjectedIntlProps, injectIntl, defineMessages } from 'react-intl';
+import { WrappedComponentProps, injectIntl, defineMessages } from 'react-intl';
 import { QueryFragment } from '../../utils/source/DataSourceHelper';
 import {
   QueryExecutionSource,
@@ -62,7 +62,10 @@ export interface DashboardLayoutState {
   comparisonValues?: ComparisonValues;
 }
 
-type Props = DashboardLayoutProps & WrappedComponentProps & InjectedIntlProps & InjectedDrawerProps & InjectedFeaturesProps;
+type Props = DashboardLayoutProps &
+  WrappedComponentProps &
+  InjectedDrawerProps &
+  InjectedFeaturesProps;
 
 const messages = defineMessages({
   exportWarning: {
@@ -72,6 +75,14 @@ const messages = defineMessages({
   compareToSegment: {
     id: 'dashboard.layout.compareToSegment',
     defaultMessage: 'Compare to segment...',
+  },
+  apply: {
+    id: 'dashboard.layout.apply',
+    defaultMessage: 'Apply',
+  },
+  export: {
+    id: 'dashboard.layout.export',
+    defaultMessage: 'Export',
   },
 });
 
@@ -240,6 +251,8 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
       title,
       intl,
       editable,
+      updateState,
+      scope,
     } = this.props;
 
     const { formattedQueryFragment, comparisonValues } = this.state;
@@ -266,6 +279,8 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
         queryExecutionSource={queryExecutionSource}
         queryExecutionSubSource={queryExecutionSubSource}
         formattedQueryFragment={formattedQueryFragment}
+        updateState={updateState}
+        scope={scope}
       />
     );
 
@@ -279,26 +294,30 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
           queryExecutionSource={queryExecutionSource}
           queryExecutionSubSource={queryExecutionSubSource}
           formattedQueryFragment={comparisonValues.fragment}
+          updateState={updateState}
+          scope={scope}
         />
       ) : undefined;
 
     return (
       <div className={'mcs-dashboardLayout'}>
         <div className={'mcs-dashboardLayout_filters'}>
-          <SegmentSelector
-            organisationId={organisationId}
-            datamartId={datamart_id}
-            onSelectSegment={this.handleSelectSegmentForComparaison}
-            segmentType={[
-              'USER_LIST',
-              'USER_QUERY',
-              'USER_LOOKALIKE_BY_COHORTS',
-              'USER_LOOKALIKE',
-              'USER_ACTIVATION',
-              'USER_PARTITION',
-            ]}
-            text={intl.formatMessage(messages.compareToSegment)}
-          />
+          {!editable && (
+            <SegmentSelector
+              organisationId={organisationId}
+              datamartId={datamart_id}
+              onSelectSegment={this.handleSelectSegmentForComparaison}
+              segmentType={[
+                'USER_LIST',
+                'USER_QUERY',
+                'USER_LOOKALIKE_BY_COHORTS',
+                'USER_LOOKALIKE',
+                'USER_ACTIVATION',
+                'USER_PARTITION',
+              ]}
+              text={intl.formatMessage(messages.compareToSegment)}
+            />
+          )}
 
           <Tooltip title={intl.formatMessage(messages.exportWarning)}>
             <Button
@@ -306,7 +325,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
               onClick={this.handleExportButtonClick(title)}
               className='mcs-primary mcs-dashboardLayout_filters_applyBtn'
             >
-              Export
+              {intl.formatMessage(messages.export)}
             </Button>
           </Tooltip>
 
@@ -329,7 +348,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
                 type='primary'
                 className='mcs-primary mcs-dashboardLayout_filters_applyBtn'
               >
-                Apply
+                {intl.formatMessage(messages.apply)}
               </Button>
             </>
           )}

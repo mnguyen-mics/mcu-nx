@@ -8,7 +8,7 @@ import {
 } from '../../models/audienceSegment/AudienceSegmentResource';
 import { injectDrawer } from '../drawer';
 import SegmentSelectorContent from './SegmentSelectorContent';
-import { InjectedIntlProps, injectIntl, defineMessages } from 'react-intl';
+import { WrappedComponentProps, injectIntl, defineMessages } from 'react-intl';
 
 const messages = defineMessages({
   openFromExistingSegment: {
@@ -26,7 +26,7 @@ interface SegmentSelectorProps {
   text?: string;
 }
 
-type Props = SegmentSelectorProps & InjectedDrawerProps & InjectedIntlProps;
+type Props = SegmentSelectorProps & InjectedDrawerProps & WrappedComponentProps;
 
 class SegmentSelector extends React.Component<Props> {
   openDrawer = () => {

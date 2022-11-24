@@ -16,18 +16,9 @@ import {
   propsMetric,
 } from '../__utils__/dashboardConfig';
 import { fetchmockOptions } from '../__utils__/fetchMockOptions';
-/* import { IntlProvider, WrappedComponentProps } from 'react-intl';
+import { IntlProvider } from 'react-intl';
 
 const store = configureStore();
-
-const WithDrawerDashboardLayout = compose<
-  DashboardLayoutProps & InjectedDrawerProps & WrappedComponentProps,
-  DashboardLayoutProps
->(injectDrawer)(DashboardLayout);
-
-import { IntlProvider} from 'react-intl';
-
-const store = configureStore(); */
 
 function adaptToEditable(_props: DashboardLayoutProps) {
   return {

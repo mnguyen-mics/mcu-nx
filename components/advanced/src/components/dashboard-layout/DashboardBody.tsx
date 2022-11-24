@@ -18,7 +18,7 @@ import { InjectedDrawerProps } from '../..';
 import ChartEditionTab from './wysiwig/ChartEditionTab';
 import CardEditionTab from './wysiwig/CardEditionTab';
 import { EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { InjectedIntlProps, injectIntl, defineMessages } from 'react-intl';
+import { WrappedComponentProps, injectIntl, defineMessages } from 'react-intl';
 import { QueryFragment } from '../../utils/source/DataSourceHelper';
 import SectionTitleEditionPanel, { VerticalDirection } from './wysiwig/SectionTitleEditionPanel';
 import {
@@ -89,7 +89,10 @@ export interface DashboardBodyProps {
 
 export interface DashboardBodyState {}
 
-type Props = DashboardBodyProps & InjectedIntlProps & InjectedDrawerProps & InjectedFeaturesProps;
+type Props = DashboardBodyProps &
+  WrappedComponentProps &
+  InjectedDrawerProps &
+  InjectedFeaturesProps;
 type ChartsFormattedData = Map<string, AggregateDataset | CountDataset | JsonDataset | undefined>;
 
 class DashboardBody extends React.Component<Props, DashboardBodyState> {
@@ -98,6 +101,27 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
   constructor(props: Props) {
     super(props);
     this.state = {};
+  }
+
+  shouldComponentUpdate(nextProps: Props, nextState: DashboardBodyState) {
+    const {
+      schema,
+      scope,
+      formattedQueryFragment,
+      queryExecutionSource,
+      organisationId,
+      datamartId,
+      editable,
+    } = this.props;
+    return (
+      JSON.stringify(schema) !== JSON.stringify(nextProps.schema) ||
+      JSON.stringify(scope) !== JSON.stringify(nextProps.scope) ||
+      JSON.stringify(formattedQueryFragment) !== JSON.stringify(nextProps.formattedQueryFragment) ||
+      JSON.stringify(queryExecutionSource) !== JSON.stringify(nextProps.queryExecutionSource) ||
+      organisationId !== nextProps.organisationId ||
+      datamartId !== nextProps.datamartId ||
+      editable !== nextProps.editable
+    );
   }
 
   private setChartsFormattedData = (
