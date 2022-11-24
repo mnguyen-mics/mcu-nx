@@ -31,17 +31,18 @@ export interface AreaChartSliderProps {
   xAxis: {
     key: string;
     labelFormat?: string;
-    title?: string;
-    subtitle?: string;
+    title?: React.ReactNode;
+    subtitle?: React.ReactNode;
     reversed?: boolean;
   };
   yAxis: {
     key: string;
     labelFormat?: string;
-    title?: string;
-    subtitle?: string;
+    title?: React.ReactNode;
+    subtitle?: React.ReactNode;
   };
   color: string;
+  fillOpacity?: number;
   isLoading?: boolean;
   disabled?: boolean;
   onChange?: (index: number) => any;
@@ -49,7 +50,18 @@ export interface AreaChartSliderProps {
 }
 
 export default function AreaChartSlider(props: AreaChartSliderProps) {
-  const { data, xAxis, yAxis, color, value, disabled, isLoading, onChange, tipFormatter } = props;
+  const {
+    data,
+    xAxis,
+    yAxis,
+    color,
+    fillOpacity,
+    value,
+    disabled,
+    isLoading,
+    onChange,
+    tipFormatter,
+  } = props;
 
   const [sliderWidth, setSliderWidth] = React.useState(0);
   const [sliderOffsetX, setSliderOffsetX] = React.useState(0);
@@ -63,7 +75,7 @@ export default function AreaChartSlider(props: AreaChartSliderProps) {
   const formatedSerieWithNull: Highcharts.SeriesAreaOptions = {
     type: 'area',
     color: color,
-    fillOpacity: 0.25,
+    fillOpacity: fillOpacity,
     lineWidth: 0,
     data: data.slice(0, value + 1).map((point: DataPoint) => {
       return [point[xAxis.key], point[yAxis.key]];
@@ -187,7 +199,10 @@ export default function AreaChartSlider(props: AreaChartSliderProps) {
         disabled={disabled}
       />
       {xAxis.title && (
-        <div className='mcs_areaChartSlider_abscissa'>
+        <div
+          className='mcs_areaChartSlider_abscissa'
+          style={{ width: sliderWidth, marginLeft: sliderOffsetX }}
+        >
           {xAxis.title}
           {xAxis && <div className='mcs_areaChartSlider_abscissa_subtitle'>{xAxis.subtitle}</div>}
         </div>
