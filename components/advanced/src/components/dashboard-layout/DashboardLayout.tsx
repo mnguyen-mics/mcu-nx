@@ -40,9 +40,12 @@ import {
   findCardNode,
   findChartNode,
   findSectionNode,
+  injectFirstSectionTitle,
+  limitTextLength,
   mergeChartConfigs,
   moveChartNode,
   moveSectionNode,
+  transformSchemaForComparaison,
 } from './DashboardFunctions';
 import { AudienceSegmentShape } from '../../models/audienceSegment/AudienceSegmentResource';
 import { compose } from 'recompose';
@@ -65,10 +68,17 @@ export interface DashboardLayoutProps {
 interface FilterValues {
   [key: string]: string[];
 }
+
+interface ComparisonValues {
+  fragment: QueryFragment;
+  segmentTitle: string;
+}
+
 type ChartsFormattedData = Map<string, AggregateDataset | CountDataset | JsonDataset | undefined>;
 export interface DashboardLayoutState {
   dashboardFilterValues: FilterValues;
   formattedQueryFragment: QueryFragment;
+  comparisonValues?: ComparisonValues;
 }
 
 type Props = DashboardLayoutProps & WrappedComponentProps & InjectedIntlProps & InjectedDrawerProps & InjectedFeaturesProps;
@@ -395,7 +405,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
     );
   };
 
-  renderCard(card: DashboardContentCard, cardIndex: string) {
+  renderCard(card: DashboardContentCard, cardIndex: string, queryFragment: QueryFragment) {
     const { editable, schema } = this.props;
 
     const charts = card.charts.map((chart, chartIndex) => {
@@ -403,6 +413,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
         chart,
         chartIndex,
         card,
+        queryFragment,
         computeCSSProperties(card.charts, chart.type, card.h, editable, card.layout),
       );
     });
@@ -449,6 +460,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
     chart: ChartConfig,
     chartIndex: number,
     card: DashboardContentCard,
+    queryFragment: QueryFragment,
     cssProperties?: CSSProperties,
   ) {
     const {
@@ -460,7 +472,6 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
       queryExecutionSource,
       queryExecutionSubSource,
     } = this.props;
-    const { formattedQueryFragment } = this.state;
 
     const onClickEdit = editable ? () => this.handleEditChart(chart, schema) : undefined;
     const onClickChartMove = editable
@@ -481,7 +492,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
         chartConfig={chart}
         chartContainerStyle={cssProperties}
         scope={scope}
-        queryFragment={formattedQueryFragment}
+        queryFragment={queryFragment}
         showButtonUp={chartIndex > 0}
         showButtonDown={chartIndex < card.charts.length - 1}
         layout={
@@ -496,11 +507,6 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
 
   handleDashboardFilterChange = (filterTechnicalName: string, filterValues: string[]) => {
     const { dashboardFilterValues } = this.state;
-    console.log(
-      `igor, filterTechnicalName = ${filterTechnicalName}, filterValues = ${JSON.stringify(
-        filterValues,
-      )}`,
-    );
 
     // deep copy array
     let newDashboardFilterValues = JSON.parse(JSON.stringify(dashboardFilterValues));
@@ -519,15 +525,16 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
     });
   };
 
-  applyFilter = () => {
-    const { dashboardFilterValues, formattedQueryFragment } = this.state;
-    const { schema } = this.props;
-
+  applyFilterOnFormattedQueryFragment = (
+    filterValues: FilterValues,
+    formattedQueryFragment: QueryFragment,
+    schema: DashboardContentSchema,
+  ): QueryFragment => {
     // deep copy array
     let newFormattedQueryFragment = JSON.parse(JSON.stringify(formattedQueryFragment));
 
-    for (const filterName in dashboardFilterValues) {
-      if (dashboardFilterValues.hasOwnProperty(filterName)) {
+    for (const filterName in filterValues) {
+      if (filterValues.hasOwnProperty(filterName)) {
         const availableFilter =
           schema.available_filters &&
           schema.available_filters.find(
@@ -540,12 +547,12 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
               case 'otql':
                 formattedFrament = (q.fragment as string).replace(
                   '$values',
-                  JSON.stringify(dashboardFilterValues[filterName]),
+                  JSON.stringify(filterValues[filterName]),
                 );
                 break;
               case 'activities_analytics':
                 formattedFrament = (q.fragment as DimensionFilter[]).map((f: DimensionFilter) => {
-                  return { ...f, expressions: dashboardFilterValues[filterName] };
+                  return { ...f, expressions: filterValues[filterName] };
                 });
                 break;
             }
@@ -559,7 +566,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
 
         if (newFormattedQueryFragment[filterName]) {
           newFormattedQueryFragment[filterName] =
-            dashboardFilterValues[filterName].length > 0 ? currentFormattedQueryFragment : {};
+            filterValues[filterName].length > 0 ? currentFormattedQueryFragment : {};
         } else {
           newFormattedQueryFragment = {
             ...newFormattedQueryFragment,
@@ -569,8 +576,19 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
       }
     }
 
+    return newFormattedQueryFragment;
+  };
+
+  applyFilter = () => {
+    const { dashboardFilterValues, formattedQueryFragment } = this.state;
+    const { schema } = this.props;
+
     this.setState({
-      formattedQueryFragment: newFormattedQueryFragment,
+      formattedQueryFragment: this.applyFilterOnFormattedQueryFragment(
+        dashboardFilterValues,
+        formattedQueryFragment,
+        schema,
+      ),
     });
   };
 
@@ -665,11 +683,15 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
     }
   };
 
-  renderSection(section: DashboardContentSection, sectionIndex: number) {
+  renderSection(
+    section: DashboardContentSection,
+    sectionIndex: number,
+    queryFragment: QueryFragment,
+  ) {
     const { editable, intl, schema } = this.props;
 
     const cards = section.cards.map((card, index) => {
-      return this.renderCard(card, editable && card.id ? card.id : index.toString());
+      return this.renderCard(card, editable && card.id ? card.id : index.toString(), queryFragment);
     });
     const layouts: Layout[] = section.cards.map((card, index) => {
       return {
@@ -752,6 +774,23 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
 
   handleSelectSegmentForComparaison = (segment: AudienceSegmentShape) => {
     console.log(`igor, handleSelectSegment, segment = ${JSON.stringify(segment)}`);
+    const dashboardFilterValues = {
+      segments: [segment.id],
+    };
+
+    const { formattedQueryFragment } = this.state;
+    const { schema } = this.props;
+
+    this.setState({
+      comparisonValues: {
+        segmentTitle: limitTextLength(segment.name, 90),
+        fragment: this.applyFilterOnFormattedQueryFragment(
+          dashboardFilterValues,
+          formattedQueryFragment,
+          schema,
+        ),
+      },
+    });
   };
 
   render() {
@@ -765,7 +804,32 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
       intl,
     } = this.props;
 
-    const sections = schema.sections.map((section, i) => this.renderSection(section, i));
+    const { formattedQueryFragment, comparisonValues } = this.state;
+
+    const schemaToDisplay = comparisonValues ? transformSchemaForComparaison(schema) : schema;
+
+    const schemaToCompare = comparisonValues
+      ? injectFirstSectionTitle(schemaToDisplay, comparisonValues.segmentTitle)
+      : undefined;
+
+    if (
+      comparisonValues &&
+      schemaToDisplay.sections.length > 0 &&
+      schemaToDisplay.sections[0].title.trim().length === 0
+    )
+      schemaToDisplay.sections[0].title = 'Original dashboard';
+
+    const sections = schemaToDisplay.sections.map((section, i) =>
+      this.renderSection(section, i, formattedQueryFragment),
+    );
+
+    const sectionsCompare =
+      schemaToCompare && comparisonValues
+        ? schemaToCompare.sections.map((section, i) =>
+            this.renderSection(section, i, comparisonValues.fragment),
+          )
+        : undefined;
+
     return (
       <div className={'mcs-dashboardLayout'}>
         <div className={'mcs-dashboardLayout_filters'}>
@@ -773,7 +837,14 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
             organisationId={organisationId}
             datamartId={datamart_id}
             onSelectSegment={this.handleSelectSegmentForComparaison}
-            segmentType={['USER_QUERY', 'USER_ACTIVATION']}
+            segmentType={[
+              'USER_LIST',
+              'USER_QUERY',
+              'USER_LOOKALIKE_BY_COHORTS',
+              'USER_LOOKALIKE',
+              'USER_ACTIVATION',
+              'USER_PARTITION',
+            ]}
             text={intl.formatMessage(messages.compareToSegment)}
           />
 
@@ -811,7 +882,13 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
             </>
           )}
         </div>
-        {sections}
+        {!sectionsCompare ? sections : undefined}
+        {sectionsCompare && (
+          <div className='mcs-dashboardLayout_compareContainer'>
+            <div className='mcs-dashboardLayout_columnLeft'>{sections}</div>
+            <div className='mcs-dashboardLayout_columnRight'>{sectionsCompare}</div>
+          </div>
+        )}
       </div>
     );
   }

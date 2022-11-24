@@ -175,3 +175,53 @@ export function computeCSSProperties(
     };
   }
 }
+
+export function transformSchemaForComparaison(
+  content: DashboardContentSchema,
+): DashboardContentSchema {
+  const arrangeCardsVertically = (cards: DashboardContentCard[]): DashboardContentCard[] => {
+    let y = 0;
+    return cards.map(card => {
+      const height =
+        card.layout && card.layout === 'horizontal' ? card.h * card.charts.length : card.h;
+
+      const transformedCard: DashboardContentCard = {
+        ...JSON.parse(JSON.stringify(card)),
+        x: 0,
+        y: y,
+        w: 12,
+        h: height,
+        layout: 'vertical',
+      };
+
+      y = y + height;
+
+      return transformedCard;
+    });
+  };
+
+  return {
+    ...content,
+    sections: content.sections.map(section => {
+      return {
+        ...section,
+        cards: arrangeCardsVertically(section.cards),
+      };
+    }),
+  };
+}
+
+export function injectFirstSectionTitle(
+  content: DashboardContentSchema,
+  title: string,
+): DashboardContentSchema {
+  const contentClone: DashboardContentSchema = JSON.parse(JSON.stringify(content));
+
+  if (contentClone.sections.length > 0) contentClone.sections[0].title = title;
+
+  return contentClone;
+}
+
+export function limitTextLength(text: string, maxLength: number) {
+  return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
+}
