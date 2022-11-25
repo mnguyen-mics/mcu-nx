@@ -83,22 +83,20 @@ class DashboardPageWrapper extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    const { datamartId, fetchDataFileDashboards, fetchApiDashboards } = this.props;
-    this.loadData(datamartId === '1500', fetchDataFileDashboards, fetchApiDashboards);
+    this.loadData();
   }
 
   componentDidUpdate(prevProps: Props) {
     const { organisationId } = this.props;
 
     if (organisationId !== prevProps.organisationId) {
-      const { datamartId, fetchDataFileDashboards, fetchApiDashboards } = this.props;
       this.setState(
         {
           dataFileDashboards: [],
           isLoading: true,
           apiDashboards: [],
         },
-        () => this.loadData(datamartId === '1500', fetchDataFileDashboards, fetchApiDashboards),
+        () => this.loadData(),
       );
     }
   }
@@ -129,19 +127,23 @@ class DashboardPageWrapper extends React.Component<Props, State> {
     return shouldUpdate;
   }
 
-  loadData = (
-    defaultContentForApiDashboards: boolean,
-    fetchDataFileDashboardsFunc?: () => Promise<DataListResponse<DataFileDashboardResource>>,
-    fetchApiDashboardsFunc?: () => Promise<DashboardPageContent[]>,
-  ) => {
-    const { hasFeature, defaultDashboardContent, onFinishLoading } = this.props;
+  loadData = () => {
+    const {
+      hasFeature,
+      defaultDashboardContent,
+      datamartId,
+      onFinishLoading,
+      fetchDataFileDashboards,
+      fetchApiDashboards,
+    } = this.props;
+    const defaultContentForApiDashboards = datamartId === '1500';
 
     const promises: Array<
       Promise<DataListResponse<DataFileDashboardResource> | DashboardPageContent[]>
-    > = fetchDataFileDashboardsFunc ? [fetchDataFileDashboardsFunc()] : [];
+    > = fetchDataFileDashboards ? [fetchDataFileDashboards()] : [];
 
-    if (hasFeature('dashboards-new-engine') && fetchApiDashboardsFunc)
-      promises.push(fetchApiDashboardsFunc());
+    if (hasFeature('dashboards-new-engine') && fetchApiDashboards)
+      promises.push(fetchApiDashboards());
 
     Promise.all(promises)
       .then(res => {
@@ -159,36 +161,20 @@ class DashboardPageWrapper extends React.Component<Props, State> {
             })
           : [];
 
-        if (filteredApiDashboards && filteredApiDashboards.length === 0) {
-          const shouldDisplayComingSoon = this.shouldDisplayComingSoon(
-            false,
-            (res[0] as DataListResponse<DataFileDashboardResource>).data,
-            [],
-          );
+        const shouldDisplayComingSoon = this.shouldDisplayComingSoon(
+          false,
+          (res[0] as DataListResponse<DataFileDashboardResource>).data,
+          filteredApiDashboards,
+        );
 
-          if (onFinishLoading) onFinishLoading(!shouldDisplayComingSoon);
+        if (onFinishLoading) onFinishLoading(!shouldDisplayComingSoon);
 
-          this.setState({
-            isLoading: false,
-            dataFileDashboards: (res[0] as DataListResponse<DataFileDashboardResource>).data,
-            shouldDisplayComingSoon: shouldDisplayComingSoon,
-          });
-        } else {
-          const shouldDisplayComingSoon = this.shouldDisplayComingSoon(
-            false,
-            (res[0] as DataListResponse<DataFileDashboardResource>).data,
-            filteredApiDashboards,
-          );
-
-          if (onFinishLoading) onFinishLoading(!shouldDisplayComingSoon);
-
-          this.setState({
-            dataFileDashboards: (res[0] as DataListResponse<DataFileDashboardResource>).data,
-            apiDashboards: filteredApiDashboards,
-            isLoading: false,
-            shouldDisplayComingSoon: shouldDisplayComingSoon,
-          });
-        }
+        this.setState({
+          isLoading: false,
+          dataFileDashboards: (res[0] as DataListResponse<DataFileDashboardResource>).data,
+          shouldDisplayComingSoon: shouldDisplayComingSoon,
+          apiDashboards: filteredApiDashboards,
+        });
       })
       .catch(err => {
         this.props.notifyError(err);

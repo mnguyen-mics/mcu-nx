@@ -189,24 +189,27 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     this.chartsFormattedData = this.chartsFormattedData.set(chartTitle, data);
   };
 
-  private mergeChartConfigs = (to: ChartConfig, from: ChartConfig) => {
-    const newChart: any = from;
-    const existingChart: any = to;
-    const keys = Object.keys(newChart).filter(key => key !== 'id');
-    keys.forEach(key => {
-      existingChart[key] = newChart[key];
-    });
-  };
-
   private updateChart(
-    savingChartConfig: ChartConfig,
-    chartNode: ChartConfig,
+    newChartConfig: ChartConfig,
+    chartId: string,
     contentCopy: DashboardContentSchema,
   ) {
     const { updateState } = this.props;
+    const newSections = contentCopy.sections.map(section => ({
+      ...section,
+      cards: section.cards.map(card => ({
+        ...card,
+        charts: card.charts.map(chart => {
+          if (chart.id === chartId) {
+            return { ...chart, ...newChartConfig };
+          } else {
+            return chart;
+          }
+        }),
+      })),
+    }));
 
-    this.mergeChartConfigs(chartNode, savingChartConfig);
-    if (updateState) updateState(contentCopy);
+    if (updateState) updateState({ ...contentCopy, sections: newSections });
   }
 
   private createChart(
@@ -326,7 +329,8 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
     const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(content));
     if (chart.id) {
       const chartNode = this.findChartNode(chart.id, contentCopy);
-      if (updateState && chartNode) {
+      if (updateState && chartNode?.id !== undefined) {
+        const chartId = chartNode.id;
         openNextDrawer(ChartEditionTab, {
           size: 'large',
           className: 'mcs-drawer-chartEdition',
@@ -336,7 +340,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
             closeTab: closeNextDrawer,
             chartConfig: chartNode,
             saveChart: (savingChartConfig: ChartConfig) => {
-              this.updateChart(savingChartConfig, chartNode, contentCopy);
+              this.updateChart(savingChartConfig, chartId, contentCopy);
               closeNextDrawer();
             },
             deleteChart: () => {
@@ -408,10 +412,7 @@ export default class DashboardLayout extends React.Component<Props, DashboardLay
             datamartId: datamart_id,
             closeTab: closeNextDrawer,
             saveChart: (newChartConfig: ChartConfig) => {
-              const chartNode = this.findChartNode(newId, contentCopy);
-              if (chartNode) {
-                this.updateChart(newChartConfig, chartNode, contentCopy);
-              } else this.createChart(newChartConfig, cardNode, contentCopy, newId);
+              this.createChart(newChartConfig, cardNode, contentCopy, newId);
               closeNextDrawer();
             },
           },

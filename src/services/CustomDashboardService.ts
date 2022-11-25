@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 import * as yup from 'yup';
 import log from '../utils/Logger';
-import { PaginatedApiParam } from './../utils/ApiHelper';
+import { PaginatedApiParam } from '../utils/ApiHelper';
 import { inject, injectable } from 'inversify';
 import {
   CustomDashboardResource,
@@ -404,15 +404,20 @@ export default class CustomDashboardService implements ICustomDashboardService {
       );
     });
 
-    return Promise.all(promises).then(results => {
-      const map: Map<string, ChartConfig> = new Map();
+    return Promise.all(promises)
+      .then(results => {
+        const map: Map<string, ChartConfig> = new Map();
 
-      results.forEach(chartResource => {
-        map.set(chartResource.id, chartResource.content);
+        results.forEach(chartResource => {
+          map.set(chartResource.id, chartResource.content);
+        });
+
+        return map;
+      })
+      .catch(() => {
+        // Prevent API call to crash dashboard page when chart_id is not found
+        return new Map();
       });
-
-      return map;
-    });
   };
 
   private enrichDashboardContentSchemaWithExternalCharts = (
@@ -437,11 +442,11 @@ export default class CustomDashboardService implements ICustomDashboardService {
                 charts: card.charts.map(chart => {
                   if (isExternalChartConfig(chart)) {
                     const externalChartOpt = chartsMap.get(chart.chart_id);
-                    const externalChart: ChartConfig = !!externalChartOpt
+                    const externalChart = !!externalChartOpt
                       ? externalChartOpt
                       : defaultChartConfigText;
 
-                    const enrichedChartConfig: ChartConfig = {
+                    const enrichedChartConfig = {
                       ...chart,
                       ...externalChart,
                     };
@@ -472,7 +477,7 @@ export default class CustomDashboardService implements ICustomDashboardService {
       const apiDashboards: DashboardResource[] = (res.data as DashboardResource[]).filter(
         dashboard => this.isDashboardMatchScope(dashboard, filterScope, filterScopedId),
       );
-      if (apiDashboards && apiDashboards.length === 0) return new Array() as DashboardPageContent[];
+      if (apiDashboards && apiDashboards.length === 0) return [];
       else {
         const dashboardContentsPromises = apiDashboards.map(dashboard =>
           this.getDashboardContent(dashboard.id, organisationId).catch(_ => undefined),
@@ -481,22 +486,12 @@ export default class CustomDashboardService implements ICustomDashboardService {
         return Promise.all(dashboardContentsPromises).then(contents => {
           const apiDashboardContents = contents
             .map((content, i) => {
-              if (!!content) {
-                return {
-                  dashboardRegistrationId: apiDashboards[i].id,
-                  scopes: apiDashboards[i].scopes,
-                  title: apiDashboards[i].title,
-                  dashboardContent: content.data.content,
-                };
-              } else {
-                const undefinedContent: DashboardPageContent = {
-                  dashboardRegistrationId: apiDashboards[i].id,
-                  scopes: apiDashboards[i].scopes,
-                  title: apiDashboards[i].title,
-                  dashboardContent: undefined,
-                };
-                return undefinedContent;
-              }
+              return {
+                dashboardRegistrationId: apiDashboards[i].id,
+                scopes: apiDashboards[i].scopes,
+                title: apiDashboards[i].title,
+                dashboardContent: content?.data?.content,
+              };
             })
             .filter(dashboard => !!dashboard) as DashboardPageContent[];
 
@@ -660,7 +655,7 @@ export default class CustomDashboardService implements ICustomDashboardService {
         .catch(e => {
           log.debug(e);
           return resolve({
-            status: 'ok' as any,
+            status: 'ok',
             data: hardcodedDashboards as DataFileDashboardResource[],
             count: hardcodedDashboards.filter(d => d.datamart_id === datamartId).length,
           });
