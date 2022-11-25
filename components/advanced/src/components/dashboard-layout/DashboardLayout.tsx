@@ -30,6 +30,7 @@ import {
   defaultSegmentFilter,
   injectFirstSectionTitle,
   limitTextLength,
+  mergeQueryFragmentsWithoutSegments,
   transformSchemaForComparaison,
 } from './DashboardFunctions';
 import { AudienceSegmentShape } from '../../models/audienceSegment/AudienceSegmentResource';
@@ -206,15 +207,26 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
   };
 
   applyFilter = () => {
-    const { dashboardFilterValues, formattedQueryFragment } = this.state;
+    const { dashboardFilterValues, formattedQueryFragment, comparisonValues } = this.state;
     const { schema } = this.props;
 
+    const formattedQueryFragmentWithFilters = this.applyFilterOnFormattedQueryFragment(
+      dashboardFilterValues,
+      formattedQueryFragment,
+      schema.available_filters,
+    );
+
     this.setState({
-      formattedQueryFragment: this.applyFilterOnFormattedQueryFragment(
-        dashboardFilterValues,
-        formattedQueryFragment,
-        schema.available_filters,
-      ),
+      formattedQueryFragment: formattedQueryFragmentWithFilters,
+      comparisonValues: comparisonValues
+        ? {
+            ...comparisonValues,
+            fragment: mergeQueryFragmentsWithoutSegments(
+              comparisonValues.fragment,
+              formattedQueryFragmentWithFilters,
+            ),
+          }
+        : undefined,
     });
   };
 
