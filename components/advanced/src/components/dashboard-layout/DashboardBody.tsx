@@ -41,6 +41,7 @@ import {
   moveSectionNode,
 } from './DashboardFunctions';
 import { compose } from 'recompose';
+import DashboardChartLayout from './DashboardChartLayout';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -156,34 +157,6 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
     if (updateState) updateState(contentCopy);
   }
 
-  private deleteChart(
-    chartIndex: number,
-    card: DashboardContentCard,
-    contentCopy: DashboardContentSchema,
-  ) {
-    const { updateState } = this.props;
-
-    if (updateState) {
-      card.charts.splice(chartIndex, 1);
-      updateState(contentCopy);
-    }
-  }
-
-  private handleMoveChart(
-    direction: VerticalDirection,
-    chartIndex: number,
-    card: DashboardContentCard,
-    content: DashboardContentSchema,
-  ) {
-    const { updateState } = this.props;
-    if (card.id && updateState) {
-      const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(content));
-      const cardNode = findCardNode(card.id, contentCopy);
-
-      if (cardNode && moveChartNode(direction, chartIndex, cardNode)) updateState(contentCopy);
-    }
-  }
-
   private handleEditCard(card: DashboardContentCard, content: DashboardContentSchema) {
     const { updateState, openNextDrawer, closeNextDrawer, intl } = this.props;
     const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(content));
@@ -220,75 +193,6 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
               });
               updateState(contentCopy);
             },
-          },
-        });
-      }
-    }
-  }
-
-  private handleEditChart(chart: ChartConfig, content: DashboardContentSchema) {
-    const { datamartId, updateState, openNextDrawer, closeNextDrawer, intl } = this.props;
-    const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(content));
-    if (chart.id) {
-      const chartNode = findChartNode(chart.id, contentCopy);
-      if (updateState && chartNode) {
-        openNextDrawer(ChartEditionTab, {
-          size: 'large',
-          className: 'mcs-drawer-chartEdition',
-          closingDrawerClassName: 'mcs-drawer-chartEdition-close',
-          additionalProps: {
-            datamartId: datamartId,
-            closeTab: closeNextDrawer,
-            chartConfig: chartNode,
-            saveChart: (savingChartConfig: ChartConfig) => {
-              this.updateChart(savingChartConfig, chartNode, contentCopy);
-              closeNextDrawer();
-            },
-            deleteChart: () => {
-              const onOk = () => {
-                contentCopy.sections.forEach(section => {
-                  section.cards.forEach(card => {
-                    card.charts = card.charts.filter(ch => ch.id !== chart.id);
-                  });
-                });
-                updateState(contentCopy);
-                closeNextDrawer();
-              };
-              Modal.confirm({
-                title: intl.formatMessage(messages.dashboardLayoutConfirmation),
-                content: intl.formatMessage(messages.dashboardLayoutChartDeleteConfirmationText),
-                okText: intl.formatMessage(messages.confirm),
-                cancelText: intl.formatMessage(messages.decline),
-                onOk,
-              });
-            },
-          },
-        });
-      }
-    }
-  }
-
-  private handleDeleteChart(
-    chartIndex: number,
-    card: DashboardContentCard,
-    content: DashboardContentSchema,
-  ) {
-    const { intl } = this.props;
-    const contentCopy = JSON.parse(JSON.stringify(content));
-
-    if (card.id) {
-      const cardNode = findCardNode(card.id, contentCopy);
-      if (cardNode) {
-        const deleteChart = () => {
-          this.deleteChart(chartIndex, cardNode, contentCopy);
-        };
-        Modal.confirm({
-          title: intl.formatMessage(messages.dashboardLayoutConfirmation),
-          content: intl.formatMessage(messages.dashboardLayoutChartDeleteConfirmationText),
-          okText: intl.formatMessage(messages.confirm),
-          cancelText: intl.formatMessage(messages.decline),
-          onOk() {
-            deleteChart();
           },
         });
       }
@@ -461,16 +365,44 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
     );
   };
 
-  renderCard(card: DashboardContentCard, cardIndex: string, queryFragment: QueryFragment) {
-    const { editable, schema } = this.props;
+  renderCard(card: DashboardContentCard, cardIndex: string) {
+    const {
+      editable,
+      schema,
+      datamartId,
+      scope,
+      organisationId,
+      queryExecutionSource,
+      queryExecutionSubSource,
+      formattedQueryFragment,
+      updateState,
+    } = this.props;
 
     const charts = card.charts.map((chart, chartIndex) => {
-      return this.renderChart(
-        chart,
-        chartIndex,
-        card,
-        queryFragment,
-        computeCSSProperties(card.charts, chart.type, card.h, editable, card.layout),
+      return (
+        <DashboardChartLayout
+          datamartId={datamartId}
+          scope={scope}
+          organisationId={organisationId}
+          editable={editable}
+          schema={schema}
+          queryExecutionSource={queryExecutionSource}
+          queryExecutionSubSource={queryExecutionSubSource}
+          formattedQueryFragment={formattedQueryFragment}
+          chart={chart}
+          chartIndex={chartIndex}
+          card={card}
+          updateChart={this.updateChart}
+          updateState={updateState}
+          setChartsFormattedData={this.setChartsFormattedData}
+          cssProperties={computeCSSProperties(
+            card.charts,
+            chart.type,
+            card.h,
+            editable,
+            card.layout,
+          )}
+        />
       );
     });
 
@@ -512,64 +444,11 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
     );
   }
 
-  renderChart(
-    chart: ChartConfig,
-    chartIndex: number,
-    card: DashboardContentCard,
-    queryFragment: QueryFragment,
-    cssProperties?: CSSProperties,
-  ) {
-    const {
-      datamartId,
-      scope,
-      organisationId,
-      editable,
-      schema,
-      queryExecutionSource,
-      queryExecutionSubSource,
-    } = this.props;
-
-    const onClickEdit = editable ? () => this.handleEditChart(chart, schema) : undefined;
-    const onClickChartMove = editable
-      ? (direction: 'up' | 'down') => this.handleMoveChart(direction, chartIndex, card, schema)
-      : undefined;
-    const onClickDelete = editable
-      ? () => this.handleDeleteChart(chartIndex, card, schema)
-      : undefined;
-
-    return (
-      <Chart
-        key={chart.id ? chart.id : cuid()}
-        datamartId={datamartId}
-        onClickEdit={onClickEdit}
-        onClickMove={onClickChartMove}
-        onClickDelete={onClickDelete}
-        organisationId={organisationId}
-        chartConfig={chart}
-        chartContainerStyle={cssProperties}
-        scope={scope}
-        queryFragment={queryFragment}
-        showButtonUp={chartIndex > 0}
-        showButtonDown={chartIndex < card.charts.length - 1}
-        layout={
-          card.layout === 'vertical' || card.layout === 'horizontal' ? card.layout : 'horizontal'
-        }
-        queryExecutionSource={queryExecutionSource}
-        queryExecutionSubSource={queryExecutionSubSource}
-        setChartsFormattedData={this.setChartsFormattedData}
-      />
-    );
-  }
-
-  renderSection(
-    section: DashboardContentSection,
-    sectionIndex: number,
-    queryFragment: QueryFragment,
-  ) {
+  renderSection(section: DashboardContentSection, sectionIndex: number) {
     const { editable, intl, schema } = this.props;
 
     const cards = section.cards.map((card, index) => {
-      return this.renderCard(card, editable && card.id ? card.id : index.toString(), queryFragment);
+      return this.renderCard(card, editable && card.id ? card.id : index.toString());
     });
     const layouts: Layout[] = section.cards.map((card, index) => {
       return {
@@ -645,11 +524,9 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
   }
 
   render() {
-    const { schema, formattedQueryFragment } = this.props;
+    const { schema } = this.props;
 
-    return schema.sections.map((section, i) =>
-      this.renderSection(section, i, formattedQueryFragment),
-    );
+    return schema.sections.map((section, i) => this.renderSection(section, i));
   }
 }
 

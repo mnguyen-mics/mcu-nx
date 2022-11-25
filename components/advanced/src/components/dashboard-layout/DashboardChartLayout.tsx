@@ -1,6 +1,6 @@
 import cuid from 'cuid';
 import React, { CSSProperties } from 'react';
-import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl';
+import { defineMessages, WrappedComponentProps, injectIntl } from 'react-intl';
 import {
   DashboardContentCard,
   DashboardContentSchema,
@@ -26,7 +26,7 @@ import { Modal } from 'antd';
 import { compose } from 'recompose';
 
 export interface DashboardChartLayoutProps {
-  datamart_id: string;
+  datamartId: string;
   scope?: AbstractScope;
   organisationId: string;
   editable: boolean;
@@ -52,7 +52,7 @@ export interface DashboardChartLayoutProps {
 
 export interface DashboardChartLayoutState {}
 
-type Props = DashboardChartLayoutProps & InjectedIntlProps & InjectedDrawerProps;
+type Props = DashboardChartLayoutProps & WrappedComponentProps & InjectedDrawerProps;
 
 const messages = defineMessages({
   dashboardLayoutConfirmation: {
@@ -82,7 +82,7 @@ class DashboardChartLayout extends React.Component<
   }
 
   private handleEditChart(chart: ChartConfig, content: DashboardContentSchema) {
-    const { datamart_id, updateState, openNextDrawer, closeNextDrawer, intl, updateChart } = this.props;
+    const { datamartId, updateState, openNextDrawer, closeNextDrawer, intl, updateChart } = this.props;
     const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(content));
     if (chart.id) {
       const chartNode = findChartNode(chart.id, contentCopy);
@@ -92,7 +92,7 @@ class DashboardChartLayout extends React.Component<
           className: 'mcs-drawer-chartEdition',
           closingDrawerClassName: 'mcs-drawer-chartEdition-close',
           additionalProps: {
-            datamartId: datamart_id,
+            datamartId: datamartId,
             closeTab: closeNextDrawer,
             chartConfig: chartNode,
             saveChart: (savingChartConfig: ChartConfig) => {
@@ -181,7 +181,7 @@ class DashboardChartLayout extends React.Component<
   render() {
     const { chart, chartIndex, card, cssProperties } = this.props;
     const {
-      datamart_id,
+      datamartId,
       scope,
       organisationId,
       editable,
@@ -200,12 +200,10 @@ class DashboardChartLayout extends React.Component<
       ? () => this.handleDeleteChart(chartIndex, card, schema)
       : undefined;
 
-    console.log(`igor, queryFragment = ${JSON.stringify(formattedQueryFragment, null, ' ')}`);
-
     return (
       <Chart
         key={chart.id ? chart.id : cuid()}
-        datamartId={datamart_id}
+        datamartId={datamartId}
         onClickEdit={onClickEdit}
         onClickMove={onClickChartMove}
         onClickDelete={onClickDelete}
