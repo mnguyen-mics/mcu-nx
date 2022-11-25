@@ -33,9 +33,7 @@ import {
   BASE_FRAMEWORK_HEIGHT,
   computeCSSProperties,
   findCardNode,
-  findChartNode,
   findSectionNode,
-  mergeChartConfigs,
   moveSectionNode,
 } from './DashboardFunctions';
 import { compose } from 'recompose';
@@ -130,14 +128,26 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
   };
 
   private updateChart(
-    savingChartConfig: ChartConfig,
-    chartNode: ChartConfig,
+    newChartConfig: ChartConfig,
+    chartId: string,
     contentCopy: DashboardContentSchema,
   ) {
     const { updateState } = this.props;
 
-    mergeChartConfigs(chartNode, savingChartConfig);
-    if (updateState) updateState(contentCopy);
+    const newSections = contentCopy.sections.map(section => ({
+      ...section,
+      cards: section.cards.map(card => ({
+        ...card,
+        charts: card.charts.map(chart => {
+          if (chart.id === chartId) {
+            return { ...chart, ...newChartConfig };
+          } else {
+            return chart;
+          }
+        }),
+      })),
+    }));
+    if (updateState) updateState({ ...contentCopy, sections: newSections });
   }
 
   private createChart(
@@ -214,10 +224,7 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
             datamartId: datamartId,
             closeTab: closeNextDrawer,
             saveChart: (newChartConfig: ChartConfig) => {
-              const chartNode = findChartNode(newId, contentCopy);
-              if (chartNode) {
-                this.updateChart(newChartConfig, chartNode, contentCopy);
-              } else this.createChart(newChartConfig, cardNode, contentCopy, newId);
+              this.createChart(newChartConfig, cardNode, contentCopy, newId);
               closeNextDrawer();
             },
           },

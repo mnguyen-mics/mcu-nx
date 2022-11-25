@@ -126,15 +126,6 @@ export function moveChartNode(
   return false;
 }
 
-export function mergeChartConfigs(to: ChartConfig, from: ChartConfig) {
-  const newChart: any = from;
-  const existingChart: any = to;
-  const keys = Object.keys(newChart).filter(key => key !== 'id');
-  keys.forEach(key => {
-    existingChart[key] = newChart[key];
-  });
-}
-
 export function moveSectionNode(
   direction: VerticalDirection,
   sectionIndex: number,

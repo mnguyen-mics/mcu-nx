@@ -43,8 +43,8 @@ export interface DashboardChartLayoutProps {
     data?: AggregateDataset | CountDataset | JsonDataset,
   ) => void;
   updateChart: (
-    savingChartConfig: ChartConfig,
-    chartNode: ChartConfig,
+    newChartConfig: ChartConfig,
+    chartId: string,
     contentCopy: DashboardContentSchema,
   ) => void;
 }
@@ -72,20 +72,19 @@ const messages = defineMessages({
   },
 });
 
-class DashboardChartLayout extends React.Component<
-  Props,
-  DashboardChartLayoutState
-> {
+class DashboardChartLayout extends React.Component<Props, DashboardChartLayoutState> {
   constructor(props: Props) {
     super(props);
   }
 
   private handleEditChart(chart: ChartConfig, content: DashboardContentSchema) {
-    const { datamartId, updateState, openNextDrawer, closeNextDrawer, intl, updateChart } = this.props;
+    const { datamartId, updateState, openNextDrawer, closeNextDrawer, intl, updateChart } =
+      this.props;
     const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(content));
     if (chart.id) {
       const chartNode = findChartNode(chart.id, contentCopy);
-      if (updateState && chartNode) {
+      if (updateState && chartNode?.id !== undefined) {
+        const chartId = chartNode.id;
         openNextDrawer(ChartEditionTab, {
           size: 'large',
           className: 'mcs-drawer-chartEdition',
@@ -95,7 +94,7 @@ class DashboardChartLayout extends React.Component<
             closeTab: closeNextDrawer,
             chartConfig: chartNode,
             saveChart: (savingChartConfig: ChartConfig) => {
-              updateChart(savingChartConfig, chartNode, contentCopy);
+              updateChart(savingChartConfig, chartId, contentCopy);
               closeNextDrawer();
             },
             deleteChart: () => {
@@ -224,4 +223,7 @@ class DashboardChartLayout extends React.Component<
   }
 }
 
-export default compose<Props, DashboardChartLayoutProps>(injectIntl, injectDrawer)(DashboardChartLayout);
+export default compose<Props, DashboardChartLayoutProps>(
+  injectIntl,
+  injectDrawer,
+)(DashboardChartLayout);
