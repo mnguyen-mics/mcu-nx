@@ -1,5 +1,6 @@
 import { CSSProperties } from 'react';
 import {
+  DashboardAvailableFilters,
   DashboardContentCard,
   DashboardContentSchema,
   DashboardContentSection,
@@ -14,6 +15,37 @@ import { QueryFragment } from '../../utils/source/DataSourceHelper';
 import { VerticalDirection } from './wysiwig/SectionTitleEditionPanel';
 
 export const BASE_FRAMEWORK_HEIGHT = 96;
+
+export const defaultSegmentFilter: DashboardAvailableFilters = {
+  values_retrieve_method: 'query',
+  values_query: 'SELECT {id @map} FROM UserSegment',
+  technical_name: 'segments',
+  query_fragments: [
+    {
+      type: 'otql',
+      starting_object_type: 'UserPoint',
+      fragment: 'segments {id IN $values}',
+    },
+    {
+      type: 'otql',
+      starting_object_type: 'UserSegment',
+      fragment: 'id IN $values',
+    },
+    {
+      type: 'activities_analytics',
+      fragment: [
+        {
+          dimension_name: 'segment_id',
+          operator: 'IN_LIST',
+          not: false,
+          expressions: ['$values'],
+        },
+      ],
+    },
+  ],
+  multi_select: true,
+  title: 'User segments',
+};
 
 export type ChartsFormattedData = Map<
   string,

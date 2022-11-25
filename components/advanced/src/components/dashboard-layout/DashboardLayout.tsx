@@ -5,6 +5,7 @@ import { AbstractScope } from '../../models/datamart/graphdb/Scope';
 import DashboardFilter from './dashboard-filter';
 import { DimensionFilter } from '../../models/report/ReportRequestBody';
 import {
+  DashboardAvailableFilters,
   DashboardContentSchema,
   DashboardContentSection,
   DashboardFilterQueryFragments,
@@ -26,6 +27,7 @@ import {
 import { ExportService } from '../../services/ExportService';
 import {
   ComparisonValues,
+  defaultSegmentFilter,
   injectFirstSectionTitle,
   limitTextLength,
   transformSchemaForComparaison,
@@ -152,7 +154,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
   applyFilterOnFormattedQueryFragment = (
     filterValues: FilterValues,
     formattedQueryFragment: QueryFragment,
-    schema: DashboardContentSchema,
+    availableFilters?: DashboardAvailableFilters[],
   ): QueryFragment => {
     // deep copy array
     let newFormattedQueryFragment = JSON.parse(JSON.stringify(formattedQueryFragment));
@@ -160,8 +162,8 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
     for (const filterName in filterValues) {
       if (filterValues.hasOwnProperty(filterName)) {
         const availableFilter =
-          schema.available_filters &&
-          schema.available_filters.find(
+          availableFilters &&
+          availableFilters.find(
             f => f.technical_name.toLowerCase() === filterName.toLocaleLowerCase(),
           );
         const currentFormattedQueryFragment = availableFilter?.query_fragments.map(
@@ -211,7 +213,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
       formattedQueryFragment: this.applyFilterOnFormattedQueryFragment(
         dashboardFilterValues,
         formattedQueryFragment,
-        schema,
+        schema.available_filters,
       ),
     });
   };
@@ -236,13 +238,24 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
     const { formattedQueryFragment } = this.state;
     const { schema } = this.props;
 
+    let filters: DashboardAvailableFilters[];
+    if (schema.available_filters) {
+      filters = schema.available_filters;
+      if (
+        schema.available_filters.filter(
+          filter => filter.technical_name.toLowerCase() === 'segments',
+        ).length === 0
+      )
+        filters = filters.concat([defaultSegmentFilter]);
+    } else filters = [defaultSegmentFilter];
+
     this.setState({
       comparisonValues: {
         segmentTitle: limitTextLength(segment.name, 90),
         fragment: this.applyFilterOnFormattedQueryFragment(
           dashboardFilterValues,
           formattedQueryFragment,
-          schema,
+          filters,
         ),
       },
     });
@@ -269,6 +282,8 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
         formattedQueryFragment,
       )}`,
     );
+
+    console.log(`igor, compare segment fragment = ${JSON.stringify(comparisonValues?.fragment)}`);
 
     const schemaToDisplay = comparisonValues ? transformSchemaForComparaison(schema) : schema;
 
