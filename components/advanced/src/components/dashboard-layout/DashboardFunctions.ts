@@ -4,13 +4,26 @@ import {
   DashboardContentSchema,
   DashboardContentSection,
 } from '../../models/customDashboards/customDashboards';
-import { AggregateDataset, CountDataset, JsonDataset } from '../../models/dashboards/dataset/dataset_tree';
+import {
+  AggregateDataset,
+  CountDataset,
+  JsonDataset,
+} from '../../models/dashboards/dataset/dataset_tree';
 import { ChartConfig, ChartType } from '../../services/ChartDatasetService';
+import { QueryFragment } from '../../utils/source/DataSourceHelper';
 import { VerticalDirection } from './wysiwig/SectionTitleEditionPanel';
 
 export const BASE_FRAMEWORK_HEIGHT = 96;
 
-export type ChartsFormattedData = Map<string, AggregateDataset | CountDataset | JsonDataset | undefined>;
+export type ChartsFormattedData = Map<
+  string,
+  AggregateDataset | CountDataset | JsonDataset | undefined
+>;
+
+export interface ComparisonValues {
+  fragment: QueryFragment;
+  segmentTitle: string;
+}
 
 export function findSectionNode(
   nodeId: string,
@@ -227,4 +240,21 @@ export function injectFirstSectionTitle(
 
 export function limitTextLength(text: string, maxLength: number) {
   return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
+}
+
+export function mergeQueryFragmentsWithoutSegments(
+  toFragment: QueryFragment,
+  fromFragment: QueryFragment,
+): QueryFragment {
+  const toFragmentClone = {
+    ...toFragment,
+  };
+
+  Object.keys(fromFragment)
+    .filter(key => key !== 'segments')
+    .forEach(key => {
+      toFragmentClone[key] = fromFragment[key];
+    });
+
+  return toFragmentClone;
 }

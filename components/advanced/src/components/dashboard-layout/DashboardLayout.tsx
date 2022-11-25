@@ -25,6 +25,7 @@ import {
 } from '../../models/dashboards/dataset/dataset_tree';
 import { ExportService } from '../../services/ExportService';
 import {
+  ComparisonValues,
   injectFirstSectionTitle,
   limitTextLength,
   transformSchemaForComparaison,
@@ -49,11 +50,6 @@ export interface DashboardLayoutProps {
 
 interface FilterValues {
   [key: string]: string[];
-}
-
-interface ComparisonValues {
-  fragment: QueryFragment;
-  segmentTitle: string;
 }
 
 type ChartsFormattedData = Map<string, AggregateDataset | CountDataset | JsonDataset | undefined>;
@@ -268,6 +264,12 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
 
     const { formattedQueryFragment, comparisonValues } = this.state;
 
+    console.log(
+      `igor, scope = ${JSON.stringify(scope)}, formattedQueryFragment = ${JSON.stringify(
+        formattedQueryFragment,
+      )}`,
+    );
+
     const schemaToDisplay = comparisonValues ? transformSchemaForComparaison(schema) : schema;
 
     const schemaToCompare = comparisonValues
@@ -283,7 +285,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
 
     const sections = (
       <DashboardBody
-        key={cuid()}
+        key={'1'}
         schema={schemaToDisplay}
         editable={editable}
         datamartId={datamart_id}
@@ -299,7 +301,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
     const sectionsCompare =
       schemaToCompare && comparisonValues ? (
         <DashboardBody
-          key={cuid()}
+          key={'2'}
           schema={schemaToCompare}
           editable={editable}
           datamartId={datamart_id}

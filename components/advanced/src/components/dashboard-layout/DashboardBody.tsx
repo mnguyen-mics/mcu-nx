@@ -378,6 +378,7 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
     const charts = card.charts.map((chart, chartIndex) => {
       return (
         <DashboardChartLayout
+          key={chartIndex + 10000}
           datamartId={datamartId}
           scope={scope}
           organisationId={organisationId}

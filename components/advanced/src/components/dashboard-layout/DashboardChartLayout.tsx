@@ -1,4 +1,3 @@
-import cuid from 'cuid';
 import React, { CSSProperties } from 'react';
 import { defineMessages, WrappedComponentProps, injectIntl } from 'react-intl';
 import {
@@ -202,7 +201,7 @@ class DashboardChartLayout extends React.Component<
 
     return (
       <Chart
-        key={chart.id ? chart.id : cuid()}
+        key={chart.id ? chart.id : chartIndex}
         datamartId={datamartId}
         onClickEdit={onClickEdit}
         onClickMove={onClickChartMove}
