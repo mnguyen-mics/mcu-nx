@@ -1,8 +1,7 @@
 import { Card } from '@mediarithmics-private/mcs-components-library';
 import { Button, Modal } from 'antd';
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import { Layout, Responsive, WidthProvider } from 'react-grid-layout';
-import Chart from '../chart-engine';
 import cuid from 'cuid';
 import { ChartConfig } from '../../services/ChartDatasetService';
 import McsLazyLoad from '../lazyload';
@@ -37,7 +36,6 @@ import {
   findChartNode,
   findSectionNode,
   mergeChartConfigs,
-  moveChartNode,
   moveSectionNode,
 } from './DashboardFunctions';
 import { compose } from 'recompose';
@@ -101,7 +99,6 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
 
   constructor(props: Props) {
     super(props);
-    this.state = {};
   }
 
   shouldComponentUpdate(nextProps: Props, nextState: DashboardBodyState) {

@@ -32,6 +32,7 @@ import {
 import { AudienceSegmentShape } from '../../models/audienceSegment/AudienceSegmentResource';
 import { compose } from 'recompose';
 import DashboardBody from './DashboardBody';
+import { CloseOutlined } from '@ant-design/icons';
 
 export interface DashboardLayoutProps {
   datamart_id: string;
@@ -84,6 +85,10 @@ const messages = defineMessages({
   export: {
     id: 'dashboard.layout.export',
     defaultMessage: 'Export',
+  },
+  stopComparing: {
+    id: 'dashboard.layout.stopComparing',
+    defaultMessage: 'Stop comparing',
   },
 });
 
@@ -221,8 +226,13 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
       new ExportService().exportMultipleDataset(this.chartsFormattedData, title);
     };
 
+  handleStopComparingButtonClick = () => {
+    this.setState({
+      comparisonValues: undefined,
+    });
+  };
+
   handleSelectSegmentForComparaison = (segment: AudienceSegmentShape) => {
-    console.log(`igor, handleSelectSegment, segment = ${JSON.stringify(segment)}`);
     const dashboardFilterValues = {
       segments: [segment.id],
     };
@@ -273,6 +283,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
 
     const sections = (
       <DashboardBody
+        key={cuid()}
         schema={schemaToDisplay}
         editable={editable}
         datamartId={datamart_id}
@@ -288,6 +299,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
     const sectionsCompare =
       schemaToCompare && comparisonValues ? (
         <DashboardBody
+          key={cuid()}
           schema={schemaToCompare}
           editable={editable}
           datamartId={datamart_id}
@@ -303,7 +315,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
     return (
       <div className={'mcs-dashboardLayout'}>
         <div className={'mcs-dashboardLayout_filters'}>
-          {!editable && (
+          {!editable && !comparisonValues && (
             <SegmentSelector
               organisationId={organisationId}
               datamartId={datamart_id}
@@ -320,15 +332,28 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
             />
           )}
 
-          <Tooltip title={intl.formatMessage(messages.exportWarning)}>
+          {!editable && comparisonValues && (
             <Button
               type='default'
-              onClick={this.handleExportButtonClick(title)}
-              className='mcs-primary mcs-dashboardLayout_filters_applyBtn'
+              onClick={this.handleStopComparingButtonClick}
+              icon={<CloseOutlined />}
+              className='mcs-primary mcs-dashboardLayout_stopCompareBtn'
             >
-              {intl.formatMessage(messages.export)}
+              {intl.formatMessage(messages.stopComparing)}
             </Button>
-          </Tooltip>
+          )}
+
+          {!comparisonValues && (
+            <Tooltip title={intl.formatMessage(messages.exportWarning)}>
+              <Button
+                type='default'
+                onClick={this.handleExportButtonClick(title)}
+                className='mcs-primary mcs-dashboardLayout_filters_applyBtn'
+              >
+                {intl.formatMessage(messages.export)}
+              </Button>
+            </Tooltip>
+          )}
 
           {schema.available_filters && (
             <>
