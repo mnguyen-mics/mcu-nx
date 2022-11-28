@@ -46,6 +46,7 @@ export interface DashboardLayoutProps {
   onShowDashboard?: () => void;
   queryExecutionSource: QueryExecutionSource;
   queryExecutionSubSource: QueryExecutionSubSource;
+  layoutIndex?: number;
 }
 
 interface FilterValues {
@@ -276,6 +277,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
       updateState,
       scope,
       hasFeature,
+      layoutIndex,
     } = this.props;
 
     const { formattedQueryFragment, comparaison, segmentForComparaison } = this.state;
@@ -310,9 +312,11 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
       compareScope = this.createScope(segmentForComparaison.id);
     else compareScope = undefined;
 
+    const keyGen = (index: number) => `${!!layoutIndex ? layoutIndex * 10 + index : index}`;
+
     const sections = (
       <DashboardBody
-        key={'1'} // TODO improve key
+        key={keyGen(1)}
         schema={schemaToDisplay}
         editable={editable}
         datamartId={datamart_id}
@@ -328,7 +332,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
     const sectionsCompare =
       schemaToCompare && comparaisonEnabled ? (
         <DashboardBody
-          key={'2'} // TODO improve key
+          key={keyGen(2)}
           schema={schemaToCompare}
           editable={editable}
           datamartId={datamart_id}
