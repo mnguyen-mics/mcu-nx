@@ -1,7 +1,7 @@
 import { Button, Divider, Tooltip } from 'antd';
 import React from 'react';
 import cuid from 'cuid';
-import { AbstractScope } from '../../models/datamart/graphdb/Scope';
+import { AbstractScope, SegmentScope } from '../../models/datamart/graphdb/Scope';
 import DashboardFilter from './dashboard-filter';
 import { DimensionFilter } from '../../models/report/ReportRequestBody';
 import {
@@ -26,11 +26,8 @@ import {
 } from '../../models/dashboards/dataset/dataset_tree';
 import { ExportService } from '../../services/ExportService';
 import {
-  ComparisonValues,
-  defaultSegmentFilter,
   injectFirstSectionTitle,
   limitTextLength,
-  mergeQueryFragmentsWithoutSegments,
   transformSchemaForComparaison,
 } from './DashboardFunctions';
 import { AudienceSegmentShape } from '../../models/audienceSegment/AudienceSegmentResource';
@@ -60,7 +57,8 @@ type ChartsFormattedData = Map<string, AggregateDataset | CountDataset | JsonDat
 export interface DashboardLayoutState {
   dashboardFilterValues: FilterValues;
   formattedQueryFragment: QueryFragment;
-  comparisonValues?: ComparisonValues;
+  segmentForComparaison?: AudienceSegmentShape;
+  comparaison: boolean;
 }
 
 type Props = DashboardLayoutProps &
@@ -77,6 +75,10 @@ const messages = defineMessages({
     id: 'dashboard.layout.compareToSegment',
     defaultMessage: 'Compare to segment...',
   },
+  compareToAllUsers: {
+    id: 'dashboard.layout.compareToAllUsers',
+    defaultMessage: 'Compare to all users',
+  },
   apply: {
     id: 'dashboard.layout.apply',
     defaultMessage: 'Apply',
@@ -89,6 +91,14 @@ const messages = defineMessages({
     id: 'dashboard.layout.stopComparing',
     defaultMessage: 'Stop comparing',
   },
+  allUsers: {
+    id: 'dashboard.layout.allUsers',
+    defaultMessage: 'All users',
+  },
+  originalDashboard: {
+    id: 'dashboard.layout.originalDashboard',
+    defaultMessage: 'Original dashboard',
+  },
 });
 
 class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
@@ -99,6 +109,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
     this.state = {
       dashboardFilterValues: {},
       formattedQueryFragment: {},
+      comparaison: false,
     };
   }
 
@@ -207,7 +218,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
   };
 
   applyFilter = () => {
-    const { dashboardFilterValues, formattedQueryFragment, comparisonValues } = this.state;
+    const { dashboardFilterValues, formattedQueryFragment } = this.state;
     const { schema } = this.props;
 
     const formattedQueryFragmentWithFilters = this.applyFilterOnFormattedQueryFragment(
@@ -218,15 +229,6 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
 
     this.setState({
       formattedQueryFragment: formattedQueryFragmentWithFilters,
-      comparisonValues: comparisonValues
-        ? {
-            ...comparisonValues,
-            fragment: mergeQueryFragmentsWithoutSegments(
-              comparisonValues.fragment,
-              formattedQueryFragmentWithFilters,
-            ),
-          }
-        : undefined,
     });
   };
 
@@ -238,39 +240,27 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
 
   handleStopComparingButtonClick = () => {
     this.setState({
-      comparisonValues: undefined,
+      comparaison: false,
+      segmentForComparaison: undefined,
+    });
+  };
+
+  handleCompareToAllUsersButtonClick = () => {
+    this.setState({
+      comparaison: true,
+      segmentForComparaison: undefined,
     });
   };
 
   handleSelectSegmentForComparaison = (segment: AudienceSegmentShape) => {
-    const dashboardFilterValues = {
-      segments: [segment.id],
-    };
-
-    const { formattedQueryFragment } = this.state;
-    const { schema } = this.props;
-
-    let filters: DashboardAvailableFilters[];
-    if (schema.available_filters) {
-      filters = schema.available_filters;
-      if (
-        schema.available_filters.filter(
-          filter => filter.technical_name.toLowerCase() === 'segments',
-        ).length === 0
-      )
-        filters = filters.concat([defaultSegmentFilter]);
-    } else filters = [defaultSegmentFilter];
-
     this.setState({
-      comparisonValues: {
-        segmentTitle: limitTextLength(segment.name, 90),
-        fragment: this.applyFilterOnFormattedQueryFragment(
-          dashboardFilterValues,
-          formattedQueryFragment,
-          filters,
-        ),
-      },
+      comparaison: true,
+      segmentForComparaison: segment,
     });
+  };
+
+  createScope = (segmentId: string): SegmentScope => {
+    return { type: 'SEGMENT', segmentId: segmentId };
   };
 
   render() {
@@ -285,34 +275,44 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
       editable,
       updateState,
       scope,
+      hasFeature,
     } = this.props;
 
-    const { formattedQueryFragment, comparisonValues } = this.state;
+    const { formattedQueryFragment, comparaison, segmentForComparaison } = this.state;
 
-    console.log(
-      `igor, scope = ${JSON.stringify(scope)}, formattedQueryFragment = ${JSON.stringify(
-        formattedQueryFragment,
-      )}`,
-    );
+    const comparaisonEnabled = hasFeature('dashboards-comparisons') && comparaison;
 
-    console.log(`igor, compare segment fragment = ${JSON.stringify(comparisonValues?.fragment)}`);
+    const schemaToDisplay = comparaisonEnabled ? transformSchemaForComparaison(schema) : schema;
 
-    const schemaToDisplay = comparisonValues ? transformSchemaForComparaison(schema) : schema;
-
-    const schemaToCompare = comparisonValues
-      ? injectFirstSectionTitle(schemaToDisplay, comparisonValues.segmentTitle)
-      : undefined;
+    let schemaToCompare: DashboardContentSchema | undefined;
+    if (comparaisonEnabled) {
+      if (segmentForComparaison)
+        schemaToCompare = injectFirstSectionTitle(
+          schemaToDisplay,
+          limitTextLength(segmentForComparaison.name, 90),
+        );
+      else
+        schemaToCompare = injectFirstSectionTitle(
+          schemaToDisplay,
+          limitTextLength(intl.formatMessage(messages.allUsers), 90),
+        );
+    } else schemaToCompare = undefined;
 
     if (
-      comparisonValues &&
+      comparaisonEnabled &&
       schemaToDisplay.sections.length > 0 &&
       schemaToDisplay.sections[0].title.trim().length === 0
     )
-      schemaToDisplay.sections[0].title = 'Original dashboard';
+      schemaToDisplay.sections[0].title = intl.formatMessage(messages.originalDashboard);
+
+    let compareScope: SegmentScope | undefined;
+    if (comparaisonEnabled && segmentForComparaison && segmentForComparaison.id)
+      compareScope = this.createScope(segmentForComparaison.id);
+    else compareScope = undefined;
 
     const sections = (
       <DashboardBody
-        key={'1'}
+        key={'1'} // TODO improve key
         schema={schemaToDisplay}
         editable={editable}
         datamartId={datamart_id}
@@ -326,42 +326,58 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
     );
 
     const sectionsCompare =
-      schemaToCompare && comparisonValues ? (
+      schemaToCompare && comparaisonEnabled ? (
         <DashboardBody
-          key={'2'}
+          key={'2'} // TODO improve key
           schema={schemaToCompare}
           editable={editable}
           datamartId={datamart_id}
           organisationId={organisationId}
           queryExecutionSource={queryExecutionSource}
           queryExecutionSubSource={queryExecutionSubSource}
-          formattedQueryFragment={comparisonValues.fragment}
+          formattedQueryFragment={formattedQueryFragment}
           updateState={updateState}
-          scope={scope}
+          scope={compareScope}
         />
       ) : undefined;
 
     return (
       <div className={'mcs-dashboardLayout'}>
         <div className={'mcs-dashboardLayout_filters'}>
-          {!editable && !comparisonValues && (
-            <SegmentSelector
-              organisationId={organisationId}
-              datamartId={datamart_id}
-              onSelectSegment={this.handleSelectSegmentForComparaison}
-              segmentType={[
-                'USER_LIST',
-                'USER_QUERY',
-                'USER_LOOKALIKE_BY_COHORTS',
-                'USER_LOOKALIKE',
-                'USER_ACTIVATION',
-                'USER_PARTITION',
-              ]}
-              text={intl.formatMessage(messages.compareToSegment)}
-            />
-          )}
+          {!editable &&
+            hasFeature('dashboards-comparisons') &&
+            !comparaison &&
+            ['SEGMENT_DASHBOARD', 'HOME_DASHBOARD'].includes(queryExecutionSubSource) && (
+              <SegmentSelector
+                organisationId={organisationId}
+                datamartId={datamart_id}
+                onSelectSegment={this.handleSelectSegmentForComparaison}
+                segmentType={[
+                  'USER_QUERY',
+                  'USER_LIST',
+                  'USER_ACTIVATION',
+                  'USER_LOOKALIKE_BY_COHORTS',
+                  'USER_LOOKALIKE',
+                  'USER_PARTITION',
+                ]}
+                text={intl.formatMessage(messages.compareToSegment)}
+              />
+            )}
 
-          {!editable && comparisonValues && (
+          {!editable &&
+            hasFeature('dashboards-comparisons') &&
+            !comparaison &&
+            queryExecutionSubSource === 'SEGMENT_DASHBOARD' && (
+              <Button
+                type='default'
+                onClick={this.handleCompareToAllUsersButtonClick}
+                className='mcs-primary mcs-dashboardLayout_compareToAllBtn'
+              >
+                {intl.formatMessage(messages.compareToAllUsers)}
+              </Button>
+            )}
+
+          {!editable && comparaisonEnabled && (
             <Button
               type='default'
               onClick={this.handleStopComparingButtonClick}
@@ -372,7 +388,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
             </Button>
           )}
 
-          {!comparisonValues && (
+          {!comparaisonEnabled && (
             <Tooltip title={intl.formatMessage(messages.exportWarning)}>
               <Button
                 type='default'
