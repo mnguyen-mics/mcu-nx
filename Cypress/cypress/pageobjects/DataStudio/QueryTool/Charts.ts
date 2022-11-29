@@ -31,12 +31,12 @@ class Charts extends Page {
         // return cy.get('.mcs-chart_content_container');
         return cy.get('.ant-tabs-content-holder');
       case 'chart':
-        //return cy.get('.mcs-chart_content_container');
         return cy.get('.ant-tabs-content-holder');
       case 'pie':
         return cy.get('.mcs-otqlChart_content_pie');
       case 'radar':
-        return cy.get('.mcs-otqlChart_content_radar');
+        //return cy.get('.mcs-otqlChart_content_radar');
+        return cy.get('.mcs-chart_content_container');
       default:
         return cy.get('.mcs-otqlChart_content_bar');
     }
