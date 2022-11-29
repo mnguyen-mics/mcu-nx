@@ -372,13 +372,13 @@ class QueryResultRenderer extends React.Component<Props, State> {
     aggregations: OTQLAggregations | CountDataset | AggregateDataset | undefined,
   ) => {
     if (
-      (aggregations &&
+      (!!aggregations &&
         isOTQLAggregations(aggregations) &&
         aggregations.buckets.length > 0 &&
         aggregations &&
         isOTQLAggregations(aggregations) &&
         aggregations.buckets.length > 0) ||
-      (aggregations && isAggregateDataset(aggregations) && aggregations.dataset[0].buckets)
+      (!!aggregations && isAggregateDataset(aggregations) && aggregations.dataset[0]?.buckets)
     ) {
       return '0';
     } else {
