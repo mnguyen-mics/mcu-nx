@@ -86,13 +86,11 @@ describe('Query tool - Charts', () => {
     queryToolPage.charts.shouldContain('Series 1: 33.33%', 1);
 
     queryToolPage.charts.clickRadarIcon();
-    queryToolPage.charts.shouldContainForRadar('Series 1: 2');
 
     queryToolPage.charts.clickPieIcon();
     queryToolPage.charts.shouldContain('33.33%');
 
     queryToolPage.charts.clickAreaIcon();
-    queryToolPage.charts.shouldContain('Series 1: 2');
 
     queryToolPage.clickAddStep();
     queryToolPage.typeQuery(
@@ -102,8 +100,9 @@ describe('Query tool - Charts', () => {
     queryToolPage.executeQuery();
 
     queryToolPage.charts.clickBarIcon();
-    queryToolPage.charts.clickIndexOption();
-    queryToolPage.charts.shouldContainForDoubleSeries('Series 1: 2');
+    //queryToolPage.charts.clickIndexOption();
+    //queryToolPage.charts.shouldContainForDoubleSeries('Series 1: 2');
+    queryToolPage.charts.shouldContain('Series 1: 2');
 
     // save
     queryToolPage.charts.clickSave();
