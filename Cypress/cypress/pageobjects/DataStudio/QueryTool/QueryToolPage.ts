@@ -83,7 +83,7 @@ class QueryToolPage extends Page {
 
   @logGetter()
   get btnSaveAs() {
-    return cy.get('.mcs-otqlInputEditor_save_as_button');
+    return cy.get('.mcs-otqlInputEditor_save_as_button').contains('Save');
   }
 
   @logGetter()
