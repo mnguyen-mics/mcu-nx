@@ -1,0 +1,3 @@
+export const propertyLayout = (assetId: any): string => {
+  return `{"version":"V201801", "sections": [{ "title": "test","sub_title":"title sub_title", "fields":[ { "property_technical_name":"provider", "field_type":"INPUT", "label":"label", "tooltip":"tooltip", "enum":null, "max_length":null }, { "property_technical_name":"name", "field_type":"INPUT", "label":"label", "tooltip":"tooltip", "enum":null, "max_length":null } ], "advanced_fields": [] } ], "metadata":{ "large_icon_asset_id": "${assetId}", "small_icon_asset_id": "${assetId}", "display_name": "Un test de display name", "description": "Un test de description" } }`;
+};

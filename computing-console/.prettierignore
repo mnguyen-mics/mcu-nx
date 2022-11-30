@@ -1,0 +1,10 @@
+node_modules/
+build/
+dist/
+app/version.json
+.history
+react-configuration.js
+.babelrc
+app/index.html
+index.html
+version.json

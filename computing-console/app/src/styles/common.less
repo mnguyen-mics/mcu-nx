@@ -1,0 +1,238 @@
+body {
+  overflow: hidden;
+}
+
+// Computing console main color
+// N.B: this is not a theme color and that's why it is not
+// decalred in theme.less
+@main-color: #513fab;
+
+.mcs-fullScreen {
+  height: 100%;
+}
+
+.mcs-contentContainer {
+  padding: 0 40px 60px;
+  height: inherit;
+  overflow-y: scroll;
+
+  &.flex {
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+  }
+
+  &.flex-basic {
+    display: flex;
+    flex: auto;
+  }
+}
+
+.mcs-react-app {
+  height: 100%;
+}
+.mcs-react-app > div {
+  height: 100%;
+}
+.mcs-fullscreen {
+  height: 100%;
+}
+
+.ant-spin-dot i:first-child {
+  background-color: @info-color !important;
+  opacity: 1 !important;
+}
+
+.ant-spin-dot i:nth-child(2) {
+  background-color: @warning-color !important;
+  opacity: 1 !important;
+}
+
+.ant-spin-dot i:nth-child(3) {
+  background-color: @success-color !important;
+  opacity: 1 !important;
+}
+
+.ant-spin-dot i:first-child {
+  background-color: @error-color !important;
+  opacity: 1 !important;
+}
+
+.ant-layout-content {
+  background-color: @layout-content-background;
+}
+
+.ant-select-item:active,
+.ant-select-item-option-selected,
+.ant-menu-item:active,
+.ant-menu-submenu-title:active {
+  background: @hover-color !important;
+}
+
+.mcs-content-container {
+  padding: 40px 40px 60px;
+  height: inherit;
+  overflow-y: scroll;
+  &.flex {
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+  }
+
+  &.flex-basic {
+    display: flex;
+    flex: auto;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.new-mcs-sider {
+  height: 100%;
+  overflow-y: scroll;
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// Common action bar style
+
+.mcs-actionbar_innerElementsPanel {
+  display: inline;
+  .mcs-primary {
+    height: 38px;
+    margin-right: 10px;
+    .mcs-icon {
+      padding-right: 10px;
+      vertical-align: middle;
+    }
+  }
+}
+
+.mcs-pluginList-filterContainer {
+  height: 50px;
+  width: 100%;
+  .mcs-pluginList-filters {
+    float: right;
+    margin-right: 30px;
+    .mcs-actionBar_filterInput {
+      width: 160px;
+      margin-left: 10px;
+      .mcs-actionBar_iconFilter {
+        margin-top: 13px;
+        float: right;
+      }
+    }
+    .mcs-actionBar-batchInstanceFilterInput {
+      width: 400px;
+    }
+  }
+  .mcs-pluginVersions_totalTag {
+    float: right;
+    margin-top: 8px;
+  }
+}
+
+.mcs-table-cell-loading-large {
+  display: inline-block;
+  font-style: normal;
+  vertical-align: baseline;
+  text-align: center;
+  text-transform: none;
+  line-height: 1;
+  width: 70%;
+  height: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  background: linear-gradient(149deg, #dee4e8, #eceaea);
+  background-size: 400% 400%;
+  -webkit-animation: loadingAnimation 1s ease infinite;
+  -moz-animation: loadingAnimation 1s ease infinite;
+  -o-animation: loadingAnimation 1s ease infinite;
+  animation: loadingAnimation 1s ease infinite;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+}
+
+.mcs-card {
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+.mcs-amcs-actionbarctionbar {
+  box-shadow: none;
+}
+
+.drawer-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+  height: 0 !important;
+
+  .drawer-container {
+    .drawer-overlay {
+      transition: all 0.4s;
+      background: black;
+      bottom: 0;
+      left: 0;
+      position: fixed;
+      right: 0;
+      top: 0;
+      z-index: 41;
+    }
+
+    .drawer-overlay:nth-last-of-type(2) {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .drawer-overlay:nth-last-of-type(4) {
+      opacity: 0.12;
+      visibility: visible;
+    }
+
+    .drawer {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      transition: transform 0.4s;
+      background: #eee;
+      bottom: 0;
+      left: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 41;
+    }
+
+    .drawer:focus {
+      outline: 0 !important;
+    }
+
+    .drawer:nth-last-of-type(3) {
+      box-shadow: 0 0 10px -5px rgba(0, 0, 0, 0.2), 0 0 24px 2px rgba(0, 0, 0, 0.14),
+        0 0 30px 5px rgba(0, 0, 0, 0.12);
+    }
+  }
+}
+
+.mcs-themed-header {
+  background-color: #513fab;
+}
