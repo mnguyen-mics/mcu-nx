@@ -1,0 +1,25 @@
+/mediarithmics-navigator.iml
+node_modules/
+dist/
+.tmp/
+.sass-cache/
+.idea/
+.vscode/
+.editorconfig
+generated/
+*.zip
+npm-debug.log*
+navigator-zip/
+app/conf/plugins-configuration.js
+app/conf/react-configuration.js
+app/version*
+.tags*
+.DS_Store
+Icon?
+.eslintcache
+build/
+ts-build
+.scannerwork
+# vscode plugin local history
+.history
+Cypress/cypress.json
