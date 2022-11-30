@@ -13,10 +13,6 @@ def checkoutCommit(commit) {
 
 pipeline {
     agent any
-    parameters {
-        string(name: 'pr-mediarithmics-client-universe',
-	    description: 'Pipeline for pull requests on mediarithmics-client-universe')
-    }
     stages {
         stage('Checkout') {
             agent {
@@ -35,7 +31,7 @@ pipeline {
                     navigator: {
                         sh 'cd $WORKSPACE/navigator && ./build-support/jenkins/pr.sh'
                     },
-                    computing-console: {
+                    computing_console: {
                         sh 'cd $WORKSPACE/computing-console && ./build-support/jenkins/pr.sh'
                     },
                     basic: {
