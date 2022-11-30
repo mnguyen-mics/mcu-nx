@@ -1,4 +1,4 @@
-def branch = env.BRANCH_NAME
+def branch = env.sha1
 def build_id = env.BUILD_ID
 
 def checkoutCommit(commit) {
