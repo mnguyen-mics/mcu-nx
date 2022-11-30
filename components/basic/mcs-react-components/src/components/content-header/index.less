@@ -1,0 +1,40 @@
+@import './../../style/theme.less';
+
+@content-header-prefix-cls: ~'@{mcs-prefix}-contentHeader';
+
+.@{content-header-prefix-cls} {
+  margin: 20px 0px;
+  width: 100%;
+  line-height: 45px;
+  &_title--large,
+  &_title--medium {
+    font-weight: bold;
+    color: @primary-color;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  &_title--large {
+    max-width: 70%;
+    font-size: 28px;
+  }
+
+  &_title--medium {
+    max-width: 100%;
+    font-size: 20px;
+    button {
+      float: right;
+    }
+  }
+
+  &_subtitle {
+    float: right;
+    text-align: right;
+    max-width: 29%;
+
+    div {
+      display: inline-block;
+    }
+  }
+}

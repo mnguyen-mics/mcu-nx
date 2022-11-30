@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the FormModalWrapper 1`] = `
+<div
+  className="mcs-form-modal "
+>
+  <button
+    className="mcs-button form-close"
+    onClick={[Function]}
+    style={
+      Object {
+        "cursor": "pointer",
+      }
+    }
+    type="button"
+  >
+    <span
+      className="mcs-icon "
+    >
+      <i
+        className="mcs-close-big"
+        style={Object {}}
+      />
+    </span>
+  </button>
+  <div
+    className="mcs-form-modal-container mcs-content-container mcs-form-container"
+  >
+    <div
+      className="submit-button"
+    />
+  </div>
+</div>
+`;

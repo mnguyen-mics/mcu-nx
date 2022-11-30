@@ -1,0 +1,159 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the Origin 1`] = `
+<div
+  className="ant-row section table-line border-top mcs-origin "
+  style={
+    Object {
+      "marginLeft": -5,
+      "marginRight": -5,
+    }
+  }
+>
+  <div
+    className="ant-col ant-col-5 section-title"
+    style={
+      Object {
+        "paddingLeft": 5,
+        "paddingRight": 5,
+      }
+    }
+  >
+    Origin
+  </div>
+  <div
+    className="ant-col ant-col-19"
+    style={
+      Object {
+        "paddingLeft": 5,
+        "paddingRight": 5,
+      }
+    }
+  >
+    <div
+      className="ant-row"
+      style={Object {}}
+    >
+      <div
+        className="ant-col ant-col-12 table-left"
+        style={Object {}}
+      >
+        <span>
+          <span
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          >
+            $channel
+          </span>
+        </span>
+      </div>
+      <div
+        className="ant-col ant-col-12 table-right"
+        style={Object {}}
+      >
+        <span>
+          <span
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          >
+            referral
+          </span>
+        </span>
+      </div>
+    </div>
+    <div
+      className="ant-row"
+      style={Object {}}
+    >
+      <div
+        className="ant-col ant-col-12 table-left"
+        style={Object {}}
+      >
+        <span>
+          <span
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          >
+            $referral_path
+          </span>
+        </span>
+      </div>
+      <div
+        className="ant-col ant-col-12 table-right"
+        style={Object {}}
+      >
+        <span>
+          <span
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          >
+            https://www.google.com/
+          </span>
+        </span>
+      </div>
+    </div>
+    <div
+      className="ant-row"
+      style={Object {}}
+    >
+      <div
+        className="ant-col ant-col-12 table-left"
+        style={Object {}}
+      >
+        <span>
+          <span
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          >
+            $source
+          </span>
+        </span>
+      </div>
+      <div
+        className="ant-col ant-col-12 table-right"
+        style={Object {}}
+      >
+        <span>
+          <span
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          >
+            www.google.com
+          </span>
+        </span>
+      </div>
+    </div>
+    <div
+      className="ant-row"
+      style={Object {}}
+    >
+      <div
+        className="ant-col ant-col-12 table-left"
+        style={Object {}}
+      >
+        <span>
+          <span
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          >
+            $ts
+          </span>
+        </span>
+      </div>
+      <div
+        className="ant-col ant-col-12 table-right"
+        style={Object {}}
+      >
+        <span>
+          <span
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          >
+            2019–11–13T12:34:56+00:00
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

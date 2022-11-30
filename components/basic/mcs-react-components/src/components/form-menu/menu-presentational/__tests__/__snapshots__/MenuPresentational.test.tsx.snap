@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the MenuPresentational 1`] = `
+<button
+  className="mcs-menu-presentational"
+  onClick={[Function]}
+>
+  <div
+    className="content"
+  >
+    <span
+      className="mcs-icon "
+    >
+      <i
+        className="mcs-automation"
+        style={Object {}}
+      />
+    </span>
+    <div
+      className="title"
+    >
+      Title
+    </div>
+    <div
+      className="subtitle"
+    >
+      subtitle_1, 
+      subtitle_2
+    </div>
+  </div>
+</button>
+`;

@@ -1,0 +1,137 @@
+.mcs-card {
+  transition: width 0.5s, transition 0.5s;
+  overflow: hidden;
+  padding: 15px 20px;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
+    0 2px 1px -1px rgba(0, 0, 0, 0.12);
+  background-color: #fff;
+  margin-bottom: 40px;
+
+  hr {
+    margin-bottom: 14px;
+  }
+
+  .sm-footer {
+    margin-bottom: -15px !important;
+  }
+
+  .timed-footer {
+    color: darken(@normal-color, 30);
+    letter-spacing: 0.3px;
+    font-size: 0.8em;
+  }
+
+  .table-line {
+    margin: 3px 0;
+    .sub-title {
+      color: @primary-color;
+      font-size: 1.2em;
+      padding-bottom: 20px;
+    }
+    .table-right {
+      color: @primary-color;
+      text-align: left;
+      width: 50%;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: noWrap;
+    }
+
+    .table-left {
+      text-align: left;
+      width: 50%;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: noWrap;
+    }
+
+    .title {
+      font-weight: 500;
+      color: @primary-color;
+    }
+
+    .subtitle {
+      color: #919191;
+    }
+
+    .@{mcs-prefix}-icon {
+      font-size: 2.5em;
+      color: #919191;
+      width: 30px;
+    }
+
+    .icon-left {
+      float: left;
+    }
+
+    .info-right {
+      div {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: noWrap;
+      }
+    }
+  }
+}
+
+.mcs-card-header {
+  margin-bottom: 15px;
+  // border-bottom: 1px solid #e8e8e8;
+}
+
+.mcs-card_content {
+  height: 100%;
+}
+
+.mcs-card-title {
+  font-family: 'LLCircularWeb-Medium', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: 0.5px;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 22px;
+}
+
+.mcs-card-content-text {
+  font-size: 14px;
+  font-weight: normal;
+  letter-spacing: 0.5px;
+  text-align: left;
+  color: @primary-color;
+  line-height: 40px;
+}
+
+.mcs-settings-card {
+  padding: 0px !important;
+}
+
+.mcs-card-button {
+  float: right;
+  div {
+    margin-left: 8px;
+  }
+}
+
+.mcs-card-inner-action {
+  text-align: center;
+  color: @info-color;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+
+.mcs-card-footer {
+  text-align: center;
+  width: 100%;
+  padding-top: 20px;
+  .mcs-card-footer-link {
+    .mcs-card-inner-action;
+  }
+}

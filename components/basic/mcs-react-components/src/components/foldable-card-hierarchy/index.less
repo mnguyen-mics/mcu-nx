@@ -1,0 +1,42 @@
+.mcs-foldable-card-children-container {
+  margin-left: 5px;
+  padding-top: 15px;
+  &-first {
+    margin-left: 15px;
+  }
+}
+
+.mcs-foldable-card {
+  background-color: white;
+  margin-top: 0px;
+  position: relative;
+  z-index: 1;
+  border-radius: 3px !important;
+}
+
+.mcs-foldable-card-timeline {
+  padding-bottom: 0px;
+  .mcs-foldable-card-timeline-dash-container {
+    margin-top: 55px;
+    height: 60%;
+    .mcs-foldable-card-timeline-dash {
+      margin-left: 25px;
+      width: 25px;
+      border-color: #d3dbe1;
+      border-width: 2px;
+    }
+  }
+  .ant-timeline-item-tail {
+    border-width: 2px;
+    height: 100%;
+    top: 0px;
+  }
+  &-last {
+    .ant-timeline-item-tail {
+      height: 31px;
+    }
+  }
+  .ant-timeline-item-head {
+    background-color: #11ffee00;
+  }
+}

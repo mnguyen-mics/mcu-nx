@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render the EmptyChart 1`] = `
+<div
+  className="ant-row mcs-empty-chart-no-data "
+  style={Object {}}
+>
+  <div
+    className="ant-col ant-col-24"
+    style={Object {}}
+  >
+    <span
+      className="mcs-icon "
+    >
+      <i
+        className="mcs-automation"
+        style={Object {}}
+      />
+    </span>
+  </div>
+  <div
+    className="ant-col ant-col-24"
+    style={Object {}}
+  >
+    There is no automation to display.
+  </div>
+</div>
+`;

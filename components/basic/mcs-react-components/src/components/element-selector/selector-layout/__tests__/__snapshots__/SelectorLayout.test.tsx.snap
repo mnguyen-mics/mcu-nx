@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the SelectorLayout with children 1`] = `
+<section
+  className="ant-layout mcs-selector-layout"
+>
+  <div
+    className="ant-row ant-row-space-between ant-row-middle mcs-actionbar-edit  "
+    style={Object {}}
+  >
+    <div
+      className="ant-breadcrumb mcs-breadcrumb"
+    >
+      <span>
+        <span
+          className="ant-breadcrumb-link"
+        >
+          Action Bar Title
+        </span>
+        <span
+          className="ant-breadcrumb-separator"
+        >
+          <span
+            className="mcs-icon "
+          >
+            <i
+              className="mcs-chevron-right"
+              style={Object {}}
+            />
+          </span>
+        </span>
+      </span>
+    </div>
+    <div
+      className="left-part-margin"
+    >
+      <button
+        className="ant-btn add-button mcs-addButton"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="mcs-icon "
+        >
+          <i
+            className="mcs-plus"
+            style={Object {}}
+          />
+        </span>
+        <span>
+          Add
+        </span>
+      </button>
+      <span
+        className="mcs-icon close-icon mcs-table-cursor"
+        onClick={[Function]}
+      >
+        <i
+          className="mcs-close"
+          style={Object {}}
+        />
+      </span>
+    </div>
+  </div>
+  <section
+    className="ant-layout"
+  >
+    <main
+      className="ant-layout-content mcs-edit-container "
+    >
+      <div>
+        Children elements
+      </div>
+    </main>
+  </section>
+</section>
+`;
+
+exports[`renders the SelectorLayout with no element 1`] = `
+<section
+  className="ant-layout mcs-selector-layout"
+>
+  <div
+    className="ant-row ant-row-space-between ant-row-middle mcs-actionbar-edit  "
+    style={Object {}}
+  >
+    <div
+      className="ant-breadcrumb mcs-breadcrumb"
+    >
+      <span>
+        <span
+          className="ant-breadcrumb-link"
+        >
+          Action Bar Title
+        </span>
+        <span
+          className="ant-breadcrumb-separator"
+        >
+          <span
+            className="mcs-icon "
+          >
+            <i
+              className="mcs-chevron-right"
+              style={Object {}}
+            />
+          </span>
+        </span>
+      </span>
+    </div>
+    <div
+      className="left-part-margin"
+    >
+      <button
+        className="ant-btn add-button mcs-addButton"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="mcs-icon "
+        >
+          <i
+            className="mcs-plus"
+            style={Object {}}
+          />
+        </span>
+        <span>
+          Add
+        </span>
+      </button>
+      <span
+        className="mcs-icon close-icon mcs-table-cursor"
+        onClick={[Function]}
+      >
+        <i
+          className="mcs-close"
+          style={Object {}}
+        />
+      </span>
+    </div>
+  </div>
+  <section
+    className="ant-layout"
+  >
+    <main
+      className="ant-layout-content mcs-edit-container "
+    >
+      <div
+        className="mcs-empty-table-view"
+      >
+        <div
+          className="ant-col ant-col-24 mcs-empty-table-view-content mcs-table-view-empty"
+          style={Object {}}
+        >
+          <div
+            className="mcs-empty-table-view-logo"
+          >
+            <span
+              className="mcs-icon "
+            >
+              <i
+                className="mcs-warning"
+                style={Object {}}
+              />
+            </span>
+          </div>
+          No data found
+        </div>
+      </div>
+    </main>
+  </section>
+</section>
+`;

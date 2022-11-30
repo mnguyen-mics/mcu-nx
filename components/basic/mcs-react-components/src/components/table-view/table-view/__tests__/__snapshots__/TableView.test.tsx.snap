@@ -1,0 +1,3950 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a basic tableView 1`] = `
+<div
+  className="mcs-table-view"
+>
+  <div
+    className="ant-table-wrapper"
+  >
+    <div
+      className="ant-spin-nested-loading"
+    >
+      <div
+        className="ant-spin-container"
+      >
+        <div
+          className="ant-table"
+        >
+          <div
+            className="ant-table-container"
+          >
+            <div
+              className="ant-table-content"
+              onScroll={[Function]}
+              style={Object {}}
+            >
+              <table
+                style={
+                  Object {
+                    "tableLayout": "auto",
+                  }
+                }
+              >
+                <colgroup />
+                <thead
+                  className="ant-table-thead"
+                >
+                  <tr>
+                    <th
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      Name
+                    </th>
+                    <th
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      Age
+                    </th>
+                    <th
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      Address
+                    </th>
+                    <th
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  className="ant-table-tbody"
+                >
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="1"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      12
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 1 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="2"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      22
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 2 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="3"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      32
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 3 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="4"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      42
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 4 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="5"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      52
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 5 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="6"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      62
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 6 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="7"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      72
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 7 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="8"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      82
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 8 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="9"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      92
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 9 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="10"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      102
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 10 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <ul
+          className="ant-pagination mini ant-table-pagination ant-table-pagination-right"
+          style={Object {}}
+          unselectable="unselectable"
+        >
+          <li
+            aria-disabled={true}
+            className="ant-pagination-prev ant-pagination-disabled"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex={null}
+            title="Previous Page"
+          >
+            <button
+              className="ant-pagination-item-link"
+              disabled={true}
+              tabIndex={-1}
+              type="button"
+            >
+              <span
+                aria-label="left"
+                className="anticon anticon-left"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="left"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </li>
+          <li
+            className="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex="0"
+            title={1}
+          >
+            <a
+              rel="nofollow"
+            >
+              1
+            </a>
+          </li>
+          <li
+            className="ant-pagination-item ant-pagination-item-2"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex="0"
+            title={2}
+          >
+            <a
+              rel="nofollow"
+            >
+              2
+            </a>
+          </li>
+          <li
+            className="ant-pagination-item ant-pagination-item-3"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex="0"
+            title={3}
+          >
+            <a
+              rel="nofollow"
+            >
+              3
+            </a>
+          </li>
+          <li
+            className="ant-pagination-item ant-pagination-item-4"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex="0"
+            title={4}
+          >
+            <a
+              rel="nofollow"
+            >
+              4
+            </a>
+          </li>
+          <li
+            className="ant-pagination-item ant-pagination-item-5"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex="0"
+            title={5}
+          >
+            <a
+              rel="nofollow"
+            >
+              5
+            </a>
+          </li>
+          <li
+            aria-disabled={false}
+            className="ant-pagination-next"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex={0}
+            title="Next Page"
+          >
+            <button
+              className="ant-pagination-item-link"
+              disabled={false}
+              tabIndex={-1}
+              type="button"
+            >
+              <span
+                aria-label="right"
+                className="anticon anticon-right"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="right"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </li>
+          <li
+            className="ant-pagination-options"
+          >
+            <div
+              aria-label="Page Size"
+              className="ant-select ant-select-sm ant-pagination-options-size-changer ant-select-single ant-select-show-arrow"
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+            >
+              <div
+                className="ant-select-selector"
+                onClick={[Function]}
+                onMouseDown={[Function]}
+              >
+                <span
+                  className="ant-select-selection-search"
+                >
+                  <input
+                    aria-activedescendant="undefined_list_0"
+                    aria-autocomplete="list"
+                    aria-controls="undefined_list"
+                    aria-expanded={false}
+                    aria-haspopup="listbox"
+                    aria-label="Page Size"
+                    aria-owns="undefined_list"
+                    autoComplete="off"
+                    className="ant-select-selection-search-input"
+                    onChange={[Function]}
+                    onCompositionEnd={[Function]}
+                    onCompositionStart={[Function]}
+                    onKeyDown={[Function]}
+                    onMouseDown={[Function]}
+                    onPaste={[Function]}
+                    readOnly={true}
+                    role="combobox"
+                    style={
+                      Object {
+                        "opacity": 0,
+                      }
+                    }
+                    type="search"
+                    unselectable="on"
+                    value=""
+                  />
+                </span>
+                <span
+                  className="ant-select-selection-item"
+                  title="10 / page"
+                >
+                  10 / page
+                </span>
+              </div>
+              <span
+                aria-hidden={true}
+                className="ant-select-arrow"
+                onMouseDown={[Function]}
+                style={
+                  Object {
+                    "WebkitUserSelect": "none",
+                    "userSelect": "none",
+                  }
+                }
+                unselectable="on"
+              >
+                <span
+                  aria-label="down"
+                  className="anticon anticon-down ant-select-suffix"
+                  role="img"
+                >
+                  <svg
+                    aria-hidden="true"
+                    data-icon="down"
+                    fill="currentColor"
+                    focusable="false"
+                    height="1em"
+                    viewBox="64 64 896 896"
+                    width="1em"
+                  >
+                    <path
+                      d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders a tableView with 3 selected rows 1`] = `
+<div
+  className="mcs-table-view"
+>
+  <div
+    style={
+      Object {
+        "display": "block",
+        "height": "100%",
+        "opacity": 0,
+        "textAlign": "center",
+        "transition": "max-height 120ms ease-in-out",
+      }
+    }
+  />
+  <div
+    className="ant-table-wrapper"
+  >
+    <div
+      className="ant-spin-nested-loading"
+    >
+      <div
+        className="ant-spin-container"
+      >
+        <div
+          className="ant-table"
+        >
+          <div
+            className="ant-table-container"
+          >
+            <div
+              className="ant-table-content"
+              onScroll={[Function]}
+              style={Object {}}
+            >
+              <table
+                style={
+                  Object {
+                    "tableLayout": "auto",
+                  }
+                }
+              >
+                <colgroup>
+                  <col
+                    className="ant-table-selection-col"
+                    style={
+                      Object {
+                        "minWidth": undefined,
+                        "width": undefined,
+                      }
+                    }
+                  />
+                </colgroup>
+                <thead
+                  className="ant-table-thead"
+                >
+                  <tr>
+                    <th
+                      className="ant-table-cell ant-table-selection-column"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <div
+                        className="ant-table-selection"
+                      >
+                        <label
+                          className="ant-checkbox-wrapper"
+                        >
+                          <span
+                            className="ant-checkbox ant-checkbox-indeterminate"
+                            style={Object {}}
+                          >
+                            <input
+                              checked={false}
+                              className="ant-checkbox-input"
+                              disabled={false}
+                              onBlur={[Function]}
+                              onChange={[Function]}
+                              onFocus={[Function]}
+                              onKeyDown={[Function]}
+                              onKeyPress={[Function]}
+                              onKeyUp={[Function]}
+                              type="checkbox"
+                            />
+                            <span
+                              className="ant-checkbox-inner"
+                            />
+                          </span>
+                        </label>
+                      </div>
+                    </th>
+                    <th
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      Name
+                    </th>
+                    <th
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      Age
+                    </th>
+                    <th
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      Address
+                    </th>
+                    <th
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  className="ant-table-tbody"
+                >
+                  <tr
+                    className="ant-table-row ant-table-row-level-0 ant-table-row-selected"
+                    data-row-key="1"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell ant-table-selection-column"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <label
+                        className="ant-checkbox-wrapper ant-checkbox-wrapper-checked"
+                      >
+                        <span
+                          className="ant-checkbox ant-checkbox-checked"
+                          style={Object {}}
+                        >
+                          <input
+                            checked={true}
+                            className="ant-checkbox-input"
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
+                            type="checkbox"
+                          />
+                          <span
+                            className="ant-checkbox-inner"
+                          />
+                        </span>
+                      </label>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      12
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 1 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0 ant-table-row-selected"
+                    data-row-key="2"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell ant-table-selection-column"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <label
+                        className="ant-checkbox-wrapper ant-checkbox-wrapper-checked"
+                      >
+                        <span
+                          className="ant-checkbox ant-checkbox-checked"
+                          style={Object {}}
+                        >
+                          <input
+                            checked={true}
+                            className="ant-checkbox-input"
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
+                            type="checkbox"
+                          />
+                          <span
+                            className="ant-checkbox-inner"
+                          />
+                        </span>
+                      </label>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      22
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 2 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0 ant-table-row-selected"
+                    data-row-key="3"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell ant-table-selection-column"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <label
+                        className="ant-checkbox-wrapper ant-checkbox-wrapper-checked"
+                      >
+                        <span
+                          className="ant-checkbox ant-checkbox-checked"
+                          style={Object {}}
+                        >
+                          <input
+                            checked={true}
+                            className="ant-checkbox-input"
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
+                            type="checkbox"
+                          />
+                          <span
+                            className="ant-checkbox-inner"
+                          />
+                        </span>
+                      </label>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      32
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 3 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="4"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell ant-table-selection-column"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <label
+                        className="ant-checkbox-wrapper"
+                      >
+                        <span
+                          className="ant-checkbox"
+                          style={Object {}}
+                        >
+                          <input
+                            checked={false}
+                            className="ant-checkbox-input"
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
+                            type="checkbox"
+                          />
+                          <span
+                            className="ant-checkbox-inner"
+                          />
+                        </span>
+                      </label>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      42
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 4 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="5"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell ant-table-selection-column"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <label
+                        className="ant-checkbox-wrapper"
+                      >
+                        <span
+                          className="ant-checkbox"
+                          style={Object {}}
+                        >
+                          <input
+                            checked={false}
+                            className="ant-checkbox-input"
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
+                            type="checkbox"
+                          />
+                          <span
+                            className="ant-checkbox-inner"
+                          />
+                        </span>
+                      </label>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      52
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 5 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="6"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell ant-table-selection-column"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <label
+                        className="ant-checkbox-wrapper"
+                      >
+                        <span
+                          className="ant-checkbox"
+                          style={Object {}}
+                        >
+                          <input
+                            checked={false}
+                            className="ant-checkbox-input"
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
+                            type="checkbox"
+                          />
+                          <span
+                            className="ant-checkbox-inner"
+                          />
+                        </span>
+                      </label>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      62
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 6 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="7"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell ant-table-selection-column"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <label
+                        className="ant-checkbox-wrapper"
+                      >
+                        <span
+                          className="ant-checkbox"
+                          style={Object {}}
+                        >
+                          <input
+                            checked={false}
+                            className="ant-checkbox-input"
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
+                            type="checkbox"
+                          />
+                          <span
+                            className="ant-checkbox-inner"
+                          />
+                        </span>
+                      </label>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      72
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 7 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="8"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell ant-table-selection-column"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <label
+                        className="ant-checkbox-wrapper"
+                      >
+                        <span
+                          className="ant-checkbox"
+                          style={Object {}}
+                        >
+                          <input
+                            checked={false}
+                            className="ant-checkbox-input"
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
+                            type="checkbox"
+                          />
+                          <span
+                            className="ant-checkbox-inner"
+                          />
+                        </span>
+                      </label>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      82
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 8 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="9"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell ant-table-selection-column"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <label
+                        className="ant-checkbox-wrapper"
+                      >
+                        <span
+                          className="ant-checkbox"
+                          style={Object {}}
+                        >
+                          <input
+                            checked={false}
+                            className="ant-checkbox-input"
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
+                            type="checkbox"
+                          />
+                          <span
+                            className="ant-checkbox-inner"
+                          />
+                        </span>
+                      </label>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      92
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 9 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="10"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell ant-table-selection-column"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <label
+                        className="ant-checkbox-wrapper"
+                      >
+                        <span
+                          className="ant-checkbox"
+                          style={Object {}}
+                        >
+                          <input
+                            checked={false}
+                            className="ant-checkbox-input"
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
+                            type="checkbox"
+                          />
+                          <span
+                            className="ant-checkbox-inner"
+                          />
+                        </span>
+                      </label>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      102
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 10 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <ul
+          className="ant-pagination mini ant-table-pagination ant-table-pagination-right"
+          style={Object {}}
+          unselectable="unselectable"
+        >
+          <li
+            aria-disabled={true}
+            className="ant-pagination-prev ant-pagination-disabled"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex={null}
+            title="Previous Page"
+          >
+            <button
+              className="ant-pagination-item-link"
+              disabled={true}
+              tabIndex={-1}
+              type="button"
+            >
+              <span
+                aria-label="left"
+                className="anticon anticon-left"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="left"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </li>
+          <li
+            className="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex="0"
+            title={1}
+          >
+            <a
+              rel="nofollow"
+            >
+              1
+            </a>
+          </li>
+          <li
+            className="ant-pagination-item ant-pagination-item-2"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex="0"
+            title={2}
+          >
+            <a
+              rel="nofollow"
+            >
+              2
+            </a>
+          </li>
+          <li
+            className="ant-pagination-item ant-pagination-item-3"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex="0"
+            title={3}
+          >
+            <a
+              rel="nofollow"
+            >
+              3
+            </a>
+          </li>
+          <li
+            className="ant-pagination-item ant-pagination-item-4"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex="0"
+            title={4}
+          >
+            <a
+              rel="nofollow"
+            >
+              4
+            </a>
+          </li>
+          <li
+            className="ant-pagination-item ant-pagination-item-5"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex="0"
+            title={5}
+          >
+            <a
+              rel="nofollow"
+            >
+              5
+            </a>
+          </li>
+          <li
+            aria-disabled={false}
+            className="ant-pagination-next"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex={0}
+            title="Next Page"
+          >
+            <button
+              className="ant-pagination-item-link"
+              disabled={false}
+              tabIndex={-1}
+              type="button"
+            >
+              <span
+                aria-label="right"
+                className="anticon anticon-right"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="right"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </li>
+          <li
+            className="ant-pagination-options"
+          >
+            <div
+              aria-label="Page Size"
+              className="ant-select ant-select-sm ant-pagination-options-size-changer ant-select-single ant-select-show-arrow"
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+            >
+              <div
+                className="ant-select-selector"
+                onClick={[Function]}
+                onMouseDown={[Function]}
+              >
+                <span
+                  className="ant-select-selection-search"
+                >
+                  <input
+                    aria-activedescendant="undefined_list_0"
+                    aria-autocomplete="list"
+                    aria-controls="undefined_list"
+                    aria-expanded={false}
+                    aria-haspopup="listbox"
+                    aria-label="Page Size"
+                    aria-owns="undefined_list"
+                    autoComplete="off"
+                    className="ant-select-selection-search-input"
+                    onChange={[Function]}
+                    onCompositionEnd={[Function]}
+                    onCompositionStart={[Function]}
+                    onKeyDown={[Function]}
+                    onMouseDown={[Function]}
+                    onPaste={[Function]}
+                    readOnly={true}
+                    role="combobox"
+                    style={
+                      Object {
+                        "opacity": 0,
+                      }
+                    }
+                    type="search"
+                    unselectable="on"
+                    value=""
+                  />
+                </span>
+                <span
+                  className="ant-select-selection-item"
+                  title="10 / page"
+                >
+                  10 / page
+                </span>
+              </div>
+              <span
+                aria-hidden={true}
+                className="ant-select-arrow"
+                onMouseDown={[Function]}
+                style={
+                  Object {
+                    "WebkitUserSelect": "none",
+                    "userSelect": "none",
+                  }
+                }
+                unselectable="on"
+              >
+                <span
+                  aria-label="down"
+                  className="anticon anticon-down ant-select-suffix"
+                  role="img"
+                >
+                  <svg
+                    aria-hidden="true"
+                    data-icon="down"
+                    fill="currentColor"
+                    focusable="false"
+                    height="1em"
+                    viewBox="64 64 896 896"
+                    width="1em"
+                  >
+                    <path
+                      d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders a tableView with pagination 1`] = `
+<div
+  className="mcs-table-view"
+>
+  <div
+    className="ant-table-wrapper"
+  >
+    <div
+      className="ant-spin-nested-loading"
+    >
+      <div
+        className="ant-spin-container"
+      >
+        <div
+          className="ant-table"
+        >
+          <div
+            className="ant-table-container"
+          >
+            <div
+              className="ant-table-content"
+              onScroll={[Function]}
+              style={Object {}}
+            >
+              <table
+                style={
+                  Object {
+                    "tableLayout": "auto",
+                  }
+                }
+              >
+                <colgroup />
+                <thead
+                  className="ant-table-thead"
+                >
+                  <tr>
+                    <th
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      Name
+                    </th>
+                    <th
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      Age
+                    </th>
+                    <th
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      Address
+                    </th>
+                    <th
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  className="ant-table-tbody"
+                >
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="1"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      12
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 1 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="2"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      22
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 2 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="3"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      32
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 3 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="4"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      42
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 4 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="5"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      52
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 5 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="6"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      62
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 6 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="7"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      72
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 7 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="8"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      82
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 8 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="9"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      92
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 9 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr
+                    className="ant-table-row ant-table-row-level-0"
+                    data-row-key="10"
+                    onClick={[Function]}
+                    style={Object {}}
+                  >
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <a
+                        href="javascript:;"
+                      >
+                        John Brown
+                      </a>
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      102
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      New York No. 10 Lake Park
+                    </td>
+                    <td
+                      className="ant-table-cell"
+                      colSpan={null}
+                      rowSpan={null}
+                      style={Object {}}
+                    >
+                      <span>
+                        <a
+                          href="javascript:;"
+                        >
+                          Action 一 
+                          John Brown
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          href="javascript:;"
+                        >
+                          Delete
+                        </a>
+                        <div
+                          className="ant-divider ant-divider-vertical"
+                          role="separator"
+                        />
+                        <a
+                          className="ant-dropdown-link"
+                          href="javascript:;"
+                        >
+                          More actions 
+                          <span
+                            aria-label="down"
+                            className="anticon anticon-down"
+                            role="img"
+                          >
+                            <svg
+                              aria-hidden="true"
+                              data-icon="down"
+                              fill="currentColor"
+                              focusable="false"
+                              height="1em"
+                              viewBox="64 64 896 896"
+                              width="1em"
+                            >
+                              <path
+                                d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                              />
+                            </svg>
+                          </span>
+                        </a>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <ul
+          className="ant-pagination mini ant-table-pagination ant-table-pagination-right"
+          style={Object {}}
+          unselectable="unselectable"
+        >
+          <li
+            aria-disabled={true}
+            className="ant-pagination-prev ant-pagination-disabled"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex={null}
+            title="Previous Page"
+          >
+            <button
+              className="ant-pagination-item-link"
+              disabled={true}
+              tabIndex={-1}
+              type="button"
+            >
+              <span
+                aria-label="left"
+                className="anticon anticon-left"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="left"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </li>
+          <li
+            className="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex="0"
+            title={1}
+          >
+            <a
+              rel="nofollow"
+            >
+              1
+            </a>
+          </li>
+          <li
+            className="ant-pagination-item ant-pagination-item-2"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex="0"
+            title={2}
+          >
+            <a
+              rel="nofollow"
+            >
+              2
+            </a>
+          </li>
+          <li
+            className="ant-pagination-item ant-pagination-item-3"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex="0"
+            title={3}
+          >
+            <a
+              rel="nofollow"
+            >
+              3
+            </a>
+          </li>
+          <li
+            className="ant-pagination-item ant-pagination-item-4"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex="0"
+            title={4}
+          >
+            <a
+              rel="nofollow"
+            >
+              4
+            </a>
+          </li>
+          <li
+            className="ant-pagination-item ant-pagination-item-5"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex="0"
+            title={5}
+          >
+            <a
+              rel="nofollow"
+            >
+              5
+            </a>
+          </li>
+          <li
+            aria-disabled={false}
+            className="ant-pagination-next"
+            onClick={[Function]}
+            onKeyPress={[Function]}
+            tabIndex={0}
+            title="Next Page"
+          >
+            <button
+              className="ant-pagination-item-link"
+              disabled={false}
+              tabIndex={-1}
+              type="button"
+            >
+              <span
+                aria-label="right"
+                className="anticon anticon-right"
+                role="img"
+              >
+                <svg
+                  aria-hidden="true"
+                  data-icon="right"
+                  fill="currentColor"
+                  focusable="false"
+                  height="1em"
+                  viewBox="64 64 896 896"
+                  width="1em"
+                >
+                  <path
+                    d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
+                  />
+                </svg>
+              </span>
+            </button>
+          </li>
+          <li
+            className="ant-pagination-options"
+          >
+            <div
+              aria-label="Page Size"
+              className="ant-select ant-select-sm ant-pagination-options-size-changer ant-select-single ant-select-show-arrow"
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+            >
+              <div
+                className="ant-select-selector"
+                onClick={[Function]}
+                onMouseDown={[Function]}
+              >
+                <span
+                  className="ant-select-selection-search"
+                >
+                  <input
+                    aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                    aria-autocomplete="list"
+                    aria-controls="rc_select_TEST_OR_SSR_list"
+                    aria-expanded={false}
+                    aria-haspopup="listbox"
+                    aria-label="Page Size"
+                    aria-owns="rc_select_TEST_OR_SSR_list"
+                    autoComplete="off"
+                    className="ant-select-selection-search-input"
+                    id="rc_select_TEST_OR_SSR"
+                    onChange={[Function]}
+                    onCompositionEnd={[Function]}
+                    onCompositionStart={[Function]}
+                    onKeyDown={[Function]}
+                    onMouseDown={[Function]}
+                    onPaste={[Function]}
+                    readOnly={true}
+                    role="combobox"
+                    style={
+                      Object {
+                        "opacity": 0,
+                      }
+                    }
+                    type="search"
+                    unselectable="on"
+                    value=""
+                  />
+                </span>
+                <span
+                  className="ant-select-selection-item"
+                  title="10 / page"
+                >
+                  10 / page
+                </span>
+              </div>
+              <span
+                aria-hidden={true}
+                className="ant-select-arrow"
+                onMouseDown={[Function]}
+                style={
+                  Object {
+                    "WebkitUserSelect": "none",
+                    "userSelect": "none",
+                  }
+                }
+                unselectable="on"
+              >
+                <span
+                  aria-label="down"
+                  className="anticon anticon-down ant-select-suffix"
+                  role="img"
+                >
+                  <svg
+                    aria-hidden="true"
+                    data-icon="down"
+                    fill="currentColor"
+                    focusable="false"
+                    height="1em"
+                    viewBox="64 64 896 896"
+                    width="1em"
+                  >
+                    <path
+                      d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,20 @@
+.mcs-fade-enter {
+  opacity: 0.01;
+}
+
+.mcs-fade-enter.mcs-fade-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.mcs-fade-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.mcs-fade-exit.mcs-fade-exit-active {
+  transition: all 100ms ease-in;
+  transform: translateX(100%);
+  overflow: hidden;
+  opacity: 0.01;
+}

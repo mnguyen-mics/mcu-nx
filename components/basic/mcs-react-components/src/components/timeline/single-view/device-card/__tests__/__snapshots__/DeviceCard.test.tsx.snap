@@ -1,0 +1,116 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the DeviceCard 1`] = `
+<div
+  className="ant-row mcs-card mcs-device-card "
+  style={
+    Object {
+      "display": "block",
+    }
+  }
+>
+  <div
+    className="ant-row mcs-card-header"
+    style={Object {}}
+  >
+    <div
+      className="ant-col ant-col-24"
+      style={Object {}}
+    >
+      <span
+        className="mcs-card-title"
+      >
+        User Device
+      </span>
+    </div>
+  </div>
+  <div
+    className="ant-row mcs-card_content"
+    style={
+      Object {
+        "display": "block",
+      }
+    }
+  >
+    <div
+      className="ant-row table-line border-top "
+      style={
+        Object {
+          "marginLeft": -5,
+          "marginRight": -5,
+        }
+      }
+    >
+      <div
+        className="ant-col ant-col-12 table-left"
+        style={
+          Object {
+            "paddingLeft": 5,
+            "paddingRight": 5,
+          }
+        }
+      >
+        <span
+          style={
+            Object {
+              "float": "left",
+            }
+          }
+        >
+          <span
+            className="mcs-icon "
+          >
+            <i
+              className="mcs-laptop"
+              style={Object {}}
+            />
+          </span>
+        </span>
+        <span
+          style={
+            Object {
+              "float": "left",
+            }
+          }
+        >
+          <span>
+            <span
+              className="title"
+            >
+               
+              CHROME
+            </span>
+            <br />
+             
+          </span>
+          <span
+            className="subtitle"
+          >
+            LINUX
+          </span>
+        </span>
+      </div>
+      <div
+        className="ant-col ant-col-12 table-right"
+        style={
+          Object {
+            "paddingLeft": 5,
+            "paddingRight": 5,
+          }
+        }
+      >
+        <span
+          className="subtitle"
+          style={
+            Object {
+              "float": "right",
+            }
+          }
+        >
+          vec:123456789
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

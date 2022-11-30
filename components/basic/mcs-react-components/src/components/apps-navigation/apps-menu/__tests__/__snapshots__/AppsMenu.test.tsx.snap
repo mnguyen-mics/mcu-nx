@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render the AppsMenu 1`] = `
+<ul
+  className="ant-menu ant-menu-light mcs_appMenu fake-class-name ant-menu-root ant-menu-inline"
+  onMouseEnter={[Function]}
+  onTransitionEnd={[Function]}
+  role="menu"
+  style={Object {}}
+>
+  <div>
+    toto
+  </div>
+  <li
+    className="ant-menu-item ant-menu-item-only-child mcs_appMenu_item"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    role="menuitem"
+    style={
+      Object {
+        "paddingLeft": 24,
+      }
+    }
+  >
+    <a
+      href="url1"
+    >
+      <span>
+        Platform Admin
+      </span>
+    </a>
+  </li>
+  <li
+    className="ant-menu-item ant-menu-item-only-child mcs_appMenu_item mcs_appMenu_item--withDivider"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    role="menuitem"
+    style={
+      Object {
+        "paddingLeft": 24,
+      }
+    }
+  >
+    <a
+      href="url2"
+    >
+      <span>
+        computing console
+      </span>
+    </a>
+  </li>
+  <li
+    className="ant-menu-item ant-menu-item-only-child mcs_appMenu_item"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    role="menuitem"
+    style={
+      Object {
+        "paddingLeft": 24,
+      }
+    }
+  >
+    <a
+      href="url2"
+    >
+      <span>
+        Navigator2
+      </span>
+    </a>
+  </li>
+  <li
+    className="ant-menu-item ant-menu-item-only-child mcs_appMenu_item mcs_appMenu_item--withDivider"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    role="menuitem"
+    style={
+      Object {
+        "paddingLeft": 24,
+      }
+    }
+  >
+    <a
+      href="url2"
+    >
+      <span>
+        Navigator3
+      </span>
+    </a>
+  </li>
+  <li
+    className="ant-menu-item ant-menu-item-only-child mcs_appMenu_item"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    role="menuitem"
+    style={
+      Object {
+        "paddingLeft": 24,
+      }
+    }
+  >
+    <a
+      href="url2"
+    >
+      <span>
+        Doc 1
+      </span>
+    </a>
+  </li>
+  <li
+    className="ant-menu-item ant-menu-item-only-child mcs_appMenu_item"
+    onClick={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    role="menuitem"
+    style={
+      Object {
+        "paddingLeft": 24,
+      }
+    }
+  >
+    <a
+      href="url2"
+    >
+      <span>
+        Doc 2
+      </span>
+    </a>
+  </li>
+</ul>
+`;

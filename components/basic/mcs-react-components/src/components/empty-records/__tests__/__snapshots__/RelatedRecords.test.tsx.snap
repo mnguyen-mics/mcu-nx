@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the EmptyRecords 1`] = `
+<div
+  className="mcs_emptyRelatedRecords mcs-customClass"
+>
+  <span
+    className="mcs-icon "
+  >
+    <i
+      className="mcs-question"
+      style={Object {}}
+    />
+  </span>
+  Hello world!
+</div>
+`;

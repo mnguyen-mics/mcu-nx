@@ -1,0 +1,191 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the Counter 1`] = `
+<div
+  className="mcs-counter-dashboard  "
+>
+  <div
+    className="mcs-counter "
+  >
+    <span
+      className="mcs-icon "
+    >
+      <i
+        className="mcs-users"
+        style={Object {}}
+      />
+    </span>
+    <div
+      className="title"
+    >
+      Users
+    </div>
+    <div
+      className="number"
+    >
+       Users
+      <div
+        className="ant-statistic"
+      >
+        
+        <div
+          className="ant-statistic-content"
+          style={
+            Object {
+              "color": "#4ea500",
+            }
+          }
+        >
+          <span
+            className="ant-statistic-content-prefix"
+          >
+            <span
+              aria-label="up"
+              className="anticon anticon-up"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                data-icon="up"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                />
+              </svg>
+            </span>
+          </span>
+          <span
+            className="ant-statistic-content-value"
+          >
+            <span
+              className="ant-statistic-content-value-int"
+            >
+              
+              20
+            </span>
+            <span
+              className="ant-statistic-content-value-decimal"
+            >
+              .0
+            </span>
+          </span>
+          <span
+            className="ant-statistic-content-suffix"
+          >
+            %
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="mcs-counter "
+  >
+    <span
+      className="mcs-icon "
+    >
+      <i
+        className="mcs-library"
+        style={Object {}}
+      />
+    </span>
+    <div
+      className="title"
+    >
+      Library
+    </div>
+    <div
+      className="number"
+    >
+      <div
+        className="ant-spin ant-spin-spinning"
+      >
+        <span
+          className="ant-spin-dot ant-spin-dot-spin"
+        >
+          <i
+            className="ant-spin-dot-item"
+          />
+          <i
+            className="ant-spin-dot-item"
+          />
+          <i
+            className="ant-spin-dot-item"
+          />
+          <i
+            className="ant-spin-dot-item"
+          />
+        </span>
+      </div>
+    </div>
+  </div>
+  <div
+    className="mcs-counter "
+  >
+    <span
+      className="mcs-icon "
+    >
+      <i
+        className="mcs-settings"
+        style={Object {}}
+      />
+    </span>
+    <div
+      className="title"
+    >
+      Settings
+    </div>
+    <div
+      className="number"
+    >
+      
+    </div>
+  </div>
+  <div
+    className="mcs-counter "
+  >
+    <span
+      className="mcs-icon "
+    >
+      <i
+        className="mcs-display"
+        style={Object {}}
+      />
+    </span>
+    <div
+      className="title"
+    >
+      Display
+    </div>
+    <div
+      className="number"
+    >
+      <div
+        className="ant-spin ant-spin-spinning"
+      >
+        <span
+          className="ant-spin-dot ant-spin-dot-spin"
+        >
+          <i
+            className="ant-spin-dot-item"
+          />
+          <i
+            className="ant-spin-dot-item"
+          />
+          <i
+            className="ant-spin-dot-item"
+          />
+          <i
+            className="ant-spin-dot-item"
+          />
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;

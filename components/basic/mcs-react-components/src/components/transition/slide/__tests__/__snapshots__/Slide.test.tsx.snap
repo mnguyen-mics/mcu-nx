@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`does not render the Slide 1`] = `
+<div
+  style={
+    Object {
+      "display": "inline-block",
+      "height": "100%",
+      "opacity": 0,
+      "textAlign": "center",
+      "transition": "max-width 120ms ease-in-out",
+      "width": "auto",
+    }
+  }
+/>
+`;
+
+exports[`renders the Slide horizontally 1`] = `
+<div
+  style={
+    Object {
+      "display": "inline-block",
+      "height": "100%",
+      "maxWidth": "120px",
+      "opacity": 1,
+      "textAlign": "center",
+      "transition": "max-width 120ms ease-in-out",
+      "width": "auto",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "backgroundColor": "#EFEFEF",
+      }
+    }
+  >
+    Hello world !
+  </div>
+</div>
+`;
+
+exports[`renders the Slide vertically 1`] = `
+<div
+  style={
+    Object {
+      "display": "block",
+      "height": "100%",
+      "maxHeight": "50px",
+      "opacity": 1,
+      "textAlign": "center",
+      "transition": "max-height 120ms ease-in-out",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "backgroundColor": "#EFEFEF",
+      }
+    }
+  >
+    Hello world !
+  </div>
+</div>
+`;

@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the Fade component 1`] = `
+<div
+  style={
+    Object {
+      "backgroundColor": "#EFEFEF",
+    }
+  }
+>
+  Hello world !
+</div>
+`;
