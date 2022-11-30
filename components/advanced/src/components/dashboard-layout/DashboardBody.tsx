@@ -70,6 +70,18 @@ const messages = defineMessages({
     id: 'dashboard.layout.addCard',
     defaultMessage: 'Add a card',
   },
+  editCard: {
+    id: 'dashboard.layout.editCard',
+    defaultMessage: 'Edit card',
+  },
+  addChart: {
+    id: 'dashboard.layout.addChart',
+    defaultMessage: 'Add chart',
+  },
+  createNewSection: {
+    id: 'dashboard.layout.createNewSection',
+    defaultMessage: 'Create new section',
+  },
 });
 
 export interface DashboardBodyProps {
@@ -306,19 +318,20 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
   }
 
   handleDeleteSection = (sectionId: string, content: DashboardContentSchema) => {
-    const { intl } = this.props;
-    const contentCopy = JSON.parse(JSON.stringify(content));
+    const { intl, updateState } = this.props;
+    const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(content));
 
-    const deleteSection = () => {
-      this.deleteSection(sectionId, contentCopy);
-    };
     Modal.confirm({
       title: intl.formatMessage(messages.dashboardLayoutConfirmation),
       content: intl.formatMessage(messages.dashboardLayoutConfirmationSectionText),
       okText: intl.formatMessage(messages.confirm),
       cancelText: intl.formatMessage(messages.decline),
-      onOk() {
-        deleteSection();
+      onOk: () => {
+        if (updateState) {
+          const sectionIndex = contentCopy.sections.findIndex(s => s.id === sectionId);
+          contentCopy.sections.splice(sectionIndex, 1);
+          updateState(contentCopy);
+        }
       },
     });
   };
@@ -335,29 +348,17 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
     }
   };
 
-  private deleteSection = (sectionId: string, contentCopy: DashboardContentSchema) => {
-    const { updateState } = this.props;
-
-    if (updateState) {
-      const sectionIndex = contentCopy.sections.findIndex(s => s.id === sectionId);
-      contentCopy.sections.splice(sectionIndex, 1);
-      updateState(contentCopy);
-    }
-  };
-
   renderCreateSectionIcon = (index: number) => {
+    const { intl } = this.props;
     const handleCreateSection = () => {
       this.handleCreateSection(index);
     };
 
     return (
-      <div className='mcs-section_buttons'>
-        <PlusOutlined className='mcs-section_circleIcon' onClick={handleCreateSection} />
-        <div
-          className='mcs-cardMenu-option mcs-cardMenu-option_left mcs-dashboardLayout_add_section'
-          onClick={handleCreateSection}
-        >
-          Create new section
+      <div className='mcs-section_buttons' onClick={handleCreateSection}>
+        <PlusOutlined className='mcs-section_circleIcon' />
+        <div className='mcs-cardMenu-option mcs-cardMenu-option_left mcs-dashboardLayout_add_section'>
+          {intl.formatMessage(messages.createNewSection)}
         </div>
       </div>
     );
@@ -375,6 +376,7 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
       formattedQueryFragment,
       updateState,
       setChartsFormattedData,
+      intl,
     } = this.props;
 
     const charts = card.charts.map((chart, chartIndex) => {
@@ -418,14 +420,14 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
               onClick={handleEditCard}
             >
               <EditOutlined className='mcs-cardMenu-circleIcon' />
-              Edit card
+              {intl.formatMessage(messages.editCard)}
             </div>
             <div
               className='mcs-cardMenu-option mcs-dashboardLayout_add_chart'
               onClick={handleCreateChart}
             >
               <PlusOutlined className='mcs-cardMenu-circleIcon' />
-              Add chart
+              {intl.formatMessage(messages.addChart)}
             </div>
           </div>
         </div>
