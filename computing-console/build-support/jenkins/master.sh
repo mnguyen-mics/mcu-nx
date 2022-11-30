@@ -1,27 +1,18 @@
 #!/usr/bin/env bash
 
-set -eu
+source $HOME/.bashrc
 
-# Actual build
-
-rm -rf ./node_modules
-rm -rf ./lib
 ./build-support/jenkins/common.sh
 
-rm -rf dist
-npm run cosmos:export
-cd cosmos-export
-zip ../cosmos-export.zip *
-cd ..
-
-# Publish artifact
+set -eu
 
 VERSION=$1
-GROUP_ID="com.mediarithmics.web"
-ARTIFACT_ID="advanced-components-website"
-REPOSITORY="releases"
 
-mvn -X -q deploy:deploy-file \
+REPOSITORY="releases"
+GROUP_ID="com.mediarithmics.web"
+ARTIFACT_ID="mediarithmics-computing-console"
+
+mvn -q deploy:deploy-file \
   -DgroupId=${GROUP_ID} \
   -DartifactId=${ARTIFACT_ID} \
   -Dversion="${VERSION}" \
@@ -29,7 +20,7 @@ mvn -X -q deploy:deploy-file \
   -Dpackaging=zip \
   -DrepositoryId=nexus \
   -Durl=https://sf-nexus.mediarithmics.com/repository/${REPOSITORY} \
-  -Dfile=cosmos-export.zip
+  -Dfile=mediarithmics-computing-console.zip
 
 echo '================================================'
 echo 'Master Build'
