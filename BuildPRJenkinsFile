@@ -1,0 +1,40 @@
+def branch = env.BRANCH_NAME
+
+pipeline {
+    agent any
+    parameters {
+        string(name: 'pr-mediarithmics-client-universe',
+	    description: 'Pipeline for pull requests on mediarithmics-client-universe')
+    }
+    stages {
+        stage('Checkout') {
+            agent {
+                label "master"
+            }
+            steps {
+                script {
+                    checkoutCommit(branch)
+                    GIT_COMMIT_REV = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%H'").trim()
+                }
+            }
+        },
+        stage('run-parallel-builds') {
+            steps {
+                parallel(
+                    navigator: {
+                        sh 'cd $WORKSPACE/navigator && ./build-support/jenkins/pr.sh'
+                    },
+                    computing-console: {
+                        sh 'cd $WORKSPACE/computing-console && ./build-support/jenkins/pr.sh'
+                    },
+                    basic: {
+                        sh 'cd $WORKSPACE/components/advanced && ./build-support/jenkins/pr.sh'
+                    },
+                    advanced: {
+                        sh 'cd $WORKSPACE/components/basic/mcs-react-components && ./build-support/jenkins/pr.sh'
+                    }
+                )
+            }
+        }
+    }
+}
