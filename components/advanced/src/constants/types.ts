@@ -1,0 +1,27 @@
+const TYPES = {
+  IAuthService: Symbol.for('authService'),
+  ILabelService: Symbol.for('labelService'),
+  IOrganisationService: Symbol.for('organisationService'),
+  IQueryService: Symbol.for('queryService'),
+  IChartDatasetService: Symbol.for('chartDatasetService'),
+  IActivitiesAnalyticsService: Symbol.for('activitiesAnalyticsService'),
+  ICollectionVolumesService: Symbol.for('collectionsAnalyticsService'),
+  IResourcesUsageService: Symbol.for('resourcesUsageService'),
+  IDataIngestionAnalyticsService: Symbol.for('dataIngestionAnalyticsService'),
+  IAssetFileService: Symbol.for('assetFileService'),
+  IDataFileService: Symbol.for('dataFileService'),
+  IPluginService: Symbol.for('pluginService'),
+  ICustomDashboardService: Symbol.for('customDashboardService'),
+  IDatamartService: Symbol.for('datamartService'),
+  IIntegrationBatchService: Symbol.for('integrationBatchService'),
+  ITagService: Symbol.for('tagService'),
+  IAudienceSegmentService: Symbol.for('audienceSegmentService'),
+  IStandardSegmentBuilderService: Symbol.for('standardSegmentBuilderService'),
+  IUsersService: Symbol.for('usersService'),
+  IChannelService: Symbol.for('channelService'),
+  ICompartmentService: Symbol.for('compartmentService'),
+  IIdentityProviderService: Symbol.for('identityProviderService'),
+  IChartService: Symbol.for('chartService'),
+};
+
+export { TYPES };

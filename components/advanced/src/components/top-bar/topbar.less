@@ -1,0 +1,50 @@
+.mcs-app-menu-main-layout {
+  .mcs-logo-placeholder {
+    display: flex;
+    min-height: 60px !important;
+    align-items: center;
+    justify-content: center;
+    .mcs-logo {
+      display: flex;
+      align-items: center;
+      align-content: center;
+      margin: 10px;
+      padding: 20px;
+      img {
+        max-height: 50px;
+        max-width: 140px;
+      }
+    }
+  }
+
+  .mcs-app_developerConsoleIcon {
+    color: #7057d1;
+  }
+
+  .mcs-app_navigatorIcon {
+    color: #00a1df;
+  }
+
+  .mcs-app_documentationIcon {
+    color: #00ab67;
+  }
+}
+
+.mcs-topBar-envAlert {
+  display: flex;
+  margin: auto;
+  margin-right: 0;
+  border-color: red;
+}
+
+.ant-menu-item.ant-menu-item-selected.mcs_appMenu_item,
+.ant-menu-item.mcs_appMenu_item:active {
+  background-color: #e6fcff;
+  a {
+    color: #00a1df;
+  }
+
+  &.ant-menu-item::after {
+    border-color: #00a1df;
+  }
+}

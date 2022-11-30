@@ -1,0 +1,263 @@
+.mcs-chart {
+  margin-bottom: 20px;
+
+  &:hover {
+    .mcs-chart_header_editBtns {
+      visibility: visible;
+    }
+  }
+}
+
+.mcs-chart_header {
+  display: flex;
+
+  &_title {
+    display: flex;
+    font-size: 14px;
+    font-family: 'LLCircularWeb-Medium';
+    color: rgba(0, 0, 0, 0.65);
+  }
+
+  &_loader {
+    height: 100%;
+    font-size: 16px;
+    flex-direction: column;
+
+    .ant-spin-text {
+      margin-top: 10px;
+      color: rgba(0, 0, 0, 0.65);
+      font-size: 12px;
+    }
+  }
+}
+
+.mcs-chart_content_container {
+  height: 94%;
+}
+
+.mcs-chartMetaDataInfo_drawer {
+  background-color: white;
+  background: white !important;
+}
+
+.mcs-chartMetaDataInfo_container {
+  height: auto;
+  padding-top: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.mcs-chartIcon {
+  height: 26px;
+  width: 26px;
+  font-size: 16px;
+  margin-top: 3px;
+}
+
+.mcs-hoverableIcon {
+  visibility: hidden;
+}
+
+.mcs-chart_header_title:hover > .mcs-hoverableIcon {
+  visibility: visible;
+}
+
+.mcs-chart_header_text {
+  margin-right: 10px;
+  margin-bottom: 15px;
+  line-height: 22px;
+}
+
+.mcs-chartMetaDataInfo_query_list {
+  margin-top: 15px;
+}
+
+.mcs-chartMetaDataInfo_query_item {
+  margin-bottom: 10px;
+
+  &_label {
+    font-family: 'LLCircularWeb-Medium';
+    font-weight: 400;
+    letter-spacing: normal;
+    font-size: 10px;
+    margin-bottom: 5px;
+    color: rgba(0, 0, 0, 0.65);
+  }
+
+  &_input {
+    margin-top: 5px;
+    resize: none;
+  }
+}
+
+.mcs-chartMetaDataInfo_section_title {
+  font-family: 'LLCircularWeb-Medium';
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  font-weight: 500;
+  &_queries {
+    margin-top: 48px;
+  }
+  &_data {
+    flex: 1;
+  }
+}
+
+.mcs-chartMetaDataInfo_section_data {
+  margin-top: 35px;
+}
+
+.mcs-chartMetaDataInfo_section_button {
+  padding: 15px 9px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-right: 10px;
+  &:last-child {
+    margin-right: 0px;
+  }
+  &.ant-btn-sm {
+    height: 32px !important;
+  }
+}
+
+.mcs-chartMetaDataInfo_data_table {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+.mcs-chartMetaDataInfo_data {
+  &_key {
+    font-family: 'LLCircularWeb-Medium';
+    font-size: 14px;
+    font-weight: 500;
+    flex: 1;
+  }
+  &_value {
+    font-family: 'LLCircularWeb-Medium';
+    font-size: 12px;
+    font-weight: 400;
+  }
+}
+
+.mcs-chartEdition-tab-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 4px;
+  color: @primary-color;
+}
+
+.mcs-chartEdition-content {
+  height: 100%;
+}
+
+.mcs-chartEdition-scrollarea {
+  height: 85%;
+  overflow-y: scroll;
+}
+
+.mcs-chartEdition_aceEditor {
+  min-width: 100px;
+  font-family: 'LLCircularWeb-Book';
+  font-size: 14px;
+  margin-top: 20px;
+  min-height: 100px;
+  background: #fff;
+  border-radius: 6px;
+
+  .ant-form-item-explain-error div::first-letter {
+    text-transform: uppercase;
+  }
+
+  .ace_editor {
+    margin: 10px 0;
+  }
+
+  .ace-github .ace_gutter {
+    background: #fff;
+  }
+}
+
+.mcs-chart_header_editBtns {
+  visibility: hidden;
+}
+
+.mcs-charts-list-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  cursor: pointer;
+  &:hover {
+    background-color: #f0f3f5;
+  }
+  &_selected {
+    background-color: #f0f3f5;
+  }
+}
+
+.mcs-charts-list-item_icon {
+  width: 16px;
+  height: 16px;
+  font-size: 16px;
+  position: absolute;
+  right: 16px;
+}
+
+.mcs-charts-list-item_title {
+  font-size: 12px;
+  font-family: 'LLCircularWeb-Book', sans-serif;
+  font-weight: 400;
+  color: #000000a6;
+}
+
+.mcs-charts-list-item_author {
+  font-size: 10px;
+  font-family: 'LLCircularWeb-Book', sans-serif;
+  font-weight: 400;
+  color: #000000a6;
+  margin-right: 5px;
+}
+
+.mcs-charts-list-item_placeholder {
+  width: 25px;
+}
+
+.mcs-charts-list-item_date {
+  font-size: 10px;
+  font-family: 'LLCircularWeb-Book', sans-serif;
+  font-weight: 400;
+  color: #0000006e;
+}
+
+.mcs-charts-search-panel {
+  height: 70vh;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: max-width 0.3s ease;
+  background-color: #fff;
+  padding: 5px;
+}
+
+.mcs-charts-search-panel_search-bar {
+  margin: 15px 10px 20px 10px;
+  height: 40px;
+  width: ~'calc(100% - 20px)';
+  input {
+    height: 40px;
+    padding-left: 15px;
+    ::placeholder {
+      color: #cccccc;
+    }
+  }
+}
+
+.mcs-charts-search-panel_title {
+  font-size: 12px;
+  font-family: 'LLCircularWeb-Book', sans-serif;
+  font-weight: 400;
+  color: #000000;
+  line-height: 32px;
+  margin-left: 20px;
+  margin-top: 20px;
+}
