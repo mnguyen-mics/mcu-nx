@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
-set -eu
-source ~/.bashrc
+source $HOME/.bashrc
+source $HOME/.nvm/nvm.sh
 
-nvm use v18
+nvm use 14
+
+set -eu
 
 npm ci
 npm run lint

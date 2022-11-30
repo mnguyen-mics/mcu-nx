@@ -2,8 +2,7 @@
   "name": "new-computing-console",
   "version": "1.2.0",
   "scripts": {
-    "test:tslint": "tslint -c tslint.json 'app/src/**/*.{ts,tsx}'",
-    "test:lint": "eslint --cache --max-warnings 0 app/src",
+    "lint": "eslint --cache --max-warnings 0 app/src",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "start": "npm run start:local",
     "prettier-check": "prettier -c .",
