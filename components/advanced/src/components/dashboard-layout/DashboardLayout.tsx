@@ -19,11 +19,6 @@ import {
   QueryExecutionSource,
   QueryExecutionSubSource,
 } from '../../models/platformMetrics/QueryExecutionSource';
-import {
-  AggregateDataset,
-  CountDataset,
-  JsonDataset,
-} from '../../models/dashboards/dataset/dataset_tree';
 import { ExportService } from '../../services/ExportService';
 import {
   injectFirstSectionTitle,
@@ -34,6 +29,11 @@ import { AudienceSegmentShape } from '../../models/audienceSegment/AudienceSegme
 import { compose } from 'recompose';
 import DashboardBody from './DashboardBody';
 import { CloseOutlined } from '@ant-design/icons';
+import {
+  AggregateDataset,
+  CountDataset,
+  JsonDataset,
+} from '../../models/dashboards/dataset/dataset_tree';
 
 export interface DashboardLayoutProps {
   datamart_id: string;
@@ -52,8 +52,6 @@ export interface DashboardLayoutProps {
 interface FilterValues {
   [key: string]: string[];
 }
-
-type ChartsFormattedData = Map<string, AggregateDataset | CountDataset | JsonDataset | undefined>;
 
 export interface DashboardLayoutState {
   dashboardFilterValues: FilterValues;
@@ -101,6 +99,11 @@ const messages = defineMessages({
     defaultMessage: 'Original dashboard',
   },
 });
+
+export type ChartsFormattedData = Map<
+  string,
+  AggregateDataset | CountDataset | JsonDataset | undefined
+>;
 
 class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
   private chartsFormattedData: ChartsFormattedData = new Map();
@@ -264,6 +267,13 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
     return { type: 'SEGMENT', segmentId: segmentId };
   };
 
+  private setChartsFormattedData = (
+    chartTitle: string,
+    data?: AggregateDataset | CountDataset | JsonDataset,
+  ) => {
+    this.chartsFormattedData = this.chartsFormattedData.set(chartTitle, data);
+  };
+
   render() {
     const {
       schema,
@@ -326,6 +336,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
         formattedQueryFragment={formattedQueryFragment}
         updateState={updateState}
         scope={scope}
+        setChartsFormattedData={this.setChartsFormattedData}
       />
     );
 
@@ -342,6 +353,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
           formattedQueryFragment={formattedQueryFragment}
           updateState={updateState}
           scope={compareScope}
+          setChartsFormattedData={this.setChartsFormattedData}
         />
       ) : undefined;
 

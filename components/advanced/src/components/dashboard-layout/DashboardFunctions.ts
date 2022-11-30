@@ -4,20 +4,10 @@ import {
   DashboardContentSchema,
   DashboardContentSection,
 } from '../../models/customDashboards/customDashboards';
-import {
-  AggregateDataset,
-  CountDataset,
-  JsonDataset,
-} from '../../models/dashboards/dataset/dataset_tree';
 import { ChartConfig, ChartType } from '../../services/ChartDatasetService';
 import { VerticalDirection } from './wysiwig/SectionTitleEditionPanel';
 
 export const BASE_FRAMEWORK_HEIGHT = 96;
-
-export type ChartsFormattedData = Map<
-  string,
-  AggregateDataset | CountDataset | JsonDataset | undefined
->;
 
 export function findSectionNode(
   nodeId: string,
@@ -54,56 +44,29 @@ export function findChartNode(
   return res;
 }
 
-export function swapCharts(chartsList: ChartConfig[], index1: number, index2: number) {
-  const tmp = chartsList[index1];
-  chartsList[index1] = chartsList[index2];
-  chartsList[index2] = tmp;
-}
-
-export function swapSections(
-  sectionsList: DashboardContentSection[],
+export function swapElements(
+  array: ChartConfig[] | DashboardContentSection[],
   index1: number,
   index2: number,
 ) {
-  const tmp = sectionsList[index1];
-  sectionsList[index1] = sectionsList[index2];
-  sectionsList[index2] = tmp;
+  const tmp = array[index1];
+  array[index1] = array[index2];
+  array[index2] = tmp;
 }
 
-export function moveChartNode(
+export function moveElement(
   direction: VerticalDirection,
-  chartIndex: number,
-  card: DashboardContentCard,
+  index: number,
+  array: ChartConfig[] | DashboardContentSection[],
 ): boolean {
   let neighborIndex: number | undefined;
-  if (direction === 'up' && chartIndex > 0) neighborIndex = chartIndex - 1;
-  else if (direction === 'down' && chartIndex < card.charts.length - 1)
-    neighborIndex = chartIndex + 1;
+  if (direction === 'up' && index > 0) neighborIndex = index - 1;
+  else if (direction === 'down' && index < array.length - 1) neighborIndex = index + 1;
 
   if (neighborIndex !== undefined) {
-    swapCharts(card.charts, chartIndex, neighborIndex);
+    swapElements(array, index, neighborIndex);
     return true;
-  }
-
-  return false;
-}
-
-export function moveSectionNode(
-  direction: VerticalDirection,
-  sectionIndex: number,
-  schema: DashboardContentSchema,
-): boolean {
-  let neighborIndex: number | undefined;
-  if (direction === 'up' && sectionIndex > 0) neighborIndex = sectionIndex - 1;
-  else if (direction === 'down' && sectionIndex < schema.sections.length - 1)
-    neighborIndex = sectionIndex + 1;
-
-  if (neighborIndex !== undefined) {
-    swapSections(schema.sections, sectionIndex, neighborIndex);
-    return true;
-  }
-
-  return false;
+  } else return false;
 }
 
 export function computeCSSProperties(

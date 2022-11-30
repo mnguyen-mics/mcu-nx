@@ -34,7 +34,7 @@ import {
   computeCSSProperties,
   findCardNode,
   findSectionNode,
-  moveSectionNode,
+  moveElement,
 } from './DashboardFunctions';
 import { compose } from 'recompose';
 import DashboardChartLayout from './DashboardChartLayout';
@@ -82,6 +82,10 @@ export interface DashboardBodyProps {
   queryExecutionSource: QueryExecutionSource;
   queryExecutionSubSource: QueryExecutionSubSource;
   formattedQueryFragment: QueryFragment;
+  setChartsFormattedData: (
+    chartTitle: string,
+    data?: AggregateDataset | CountDataset | JsonDataset,
+  ) => void;
 }
 
 export interface DashboardBodyState {}
@@ -90,11 +94,8 @@ type Props = DashboardBodyProps &
   WrappedComponentProps &
   InjectedDrawerProps &
   InjectedFeaturesProps;
-type ChartsFormattedData = Map<string, AggregateDataset | CountDataset | JsonDataset | undefined>;
 
 class DashboardBody extends React.Component<Props, DashboardBodyState> {
-  private chartsFormattedData: ChartsFormattedData = new Map();
-
   constructor(props: Props) {
     super(props);
   }
@@ -119,13 +120,6 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
       editable !== nextProps.editable
     );
   }
-
-  private setChartsFormattedData = (
-    chartTitle: string,
-    data?: AggregateDataset | CountDataset | JsonDataset,
-  ) => {
-    this.chartsFormattedData = this.chartsFormattedData.set(chartTitle, data);
-  };
 
   private updateChart(
     newChartConfig: ChartConfig,
@@ -336,7 +330,7 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
       const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(schema));
       const sectionNode = findSectionNode(sectionId, contentCopy);
       const sectionIndex = schema.sections.findIndex(s => s.id === sectionId);
-      if (sectionNode && moveSectionNode(direction, sectionIndex, contentCopy))
+      if (sectionNode && moveElement(direction, sectionIndex, contentCopy.sections))
         updateState(contentCopy);
     }
   };
@@ -380,6 +374,7 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
       queryExecutionSubSource,
       formattedQueryFragment,
       updateState,
+      setChartsFormattedData,
     } = this.props;
 
     const charts = card.charts.map((chart, chartIndex) => {
@@ -399,7 +394,7 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
           card={card}
           updateChart={this.updateChart}
           updateState={updateState}
-          setChartsFormattedData={this.setChartsFormattedData}
+          setChartsFormattedData={setChartsFormattedData}
           cssProperties={computeCSSProperties(
             card.charts,
             chart.type,

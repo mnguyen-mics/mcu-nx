@@ -13,7 +13,7 @@ import { ChartConfig } from '../../services/ChartDatasetService';
 import { QueryFragment } from '../../utils/source/DataSourceHelper';
 import injectDrawer, { InjectedDrawerProps } from '../drawer/injectDrawer';
 import Chart from '../chart-engine';
-import { findCardNode, findChartNode, moveChartNode } from './DashboardFunctions';
+import { findCardNode, findChartNode, moveElement } from './DashboardFunctions';
 import ChartEditionTab from './wysiwig/ChartEditionTab';
 import {
   AggregateDataset,
@@ -172,7 +172,7 @@ class DashboardChartLayout extends React.Component<Props, DashboardChartLayoutSt
       const contentCopy: DashboardContentSchema = JSON.parse(JSON.stringify(content));
       const cardNode = findCardNode(card.id, contentCopy);
 
-      if (cardNode && moveChartNode(direction, chartIndex, cardNode)) updateState(contentCopy);
+      if (cardNode && moveElement(direction, chartIndex, cardNode.charts)) updateState(contentCopy);
     }
   }
 
