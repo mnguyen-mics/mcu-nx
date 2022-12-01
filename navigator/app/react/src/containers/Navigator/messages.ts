@@ -12,7 +12,15 @@ export default defineMessages({
   },
   notFound: {
     id: 'errors.notFound',
-    defaultMessage: '404 not found',
+    defaultMessage: 'Oops... Looks like there is nothing over here',
+  },
+  redirectHome: {
+    id: 'errors.notFound.redirectHome',
+    defaultMessage: 'Get back on track',
+  },
+  lostParrot: {
+    id: 'errors.notFound.lostParrot',
+    defaultMessage: 'Oh! You’ve found our lost parrot ',
   },
   noAccess: {
     id: 'errors.noAccess',

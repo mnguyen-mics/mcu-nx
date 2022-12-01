@@ -21,6 +21,7 @@ import { INavigatorService } from '../../services/NavigatorService';
 import { Notifications } from '../../containers/Notifications';
 import { Error, Loading } from '@mediarithmics-private/mcs-components-library';
 import { RenderOnAuthenticated, MicsReduxState } from '@mediarithmics-private/advanced-components';
+import { PageNotFound } from './PageNotFound/PageNotFound';
 
 interface MapStateToProps {
   initialized: boolean;
@@ -134,10 +135,6 @@ class NavigatorWithKeycloak extends React.Component<JoinedProps, NavigatorState>
       );
     };
 
-    const errorRouteRender = () => {
-      return <Error message={formatMessage(errorMessages.notFound)} />;
-    };
-
     const routeMapping = routes.map((route: NavigatorRoute, i) => {
       const renderRoute = (props: any) => {
         const compsForRender =
@@ -205,7 +202,7 @@ class NavigatorWithKeycloak extends React.Component<JoinedProps, NavigatorState>
         <Route exact={true} path='/' render={renderSlashRoute} />
         <Route exact={true} path='/login' render={renderSlashRoute} />
         {routeMapping}
-        <Route render={errorRouteRender} />
+        <Route render={() => <PageNotFound />} />
       </Switch>
     );
   }
