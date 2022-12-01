@@ -385,7 +385,6 @@ class CohortLookalikeCalibrationSettings extends React.Component<
       match: {
         params: { organisationId },
       },
-      cohorts,
       similarityIndexInfos,
       intl: { formatMessage },
     } = this.props;
@@ -493,13 +492,9 @@ class CohortLookalikeCalibrationSettings extends React.Component<
               />
               <Tooltip
                 className='reachTooltip'
-                title={
-                  dataPointSelected
-                    ? `${dataPointSelected.nbCohorts}/${cohorts.length} ${formatMessage(
-                        messages.cohortsSelectedTip,
-                      )}`
-                    : '...'
-                }
+                title={formatMessage(messages.cohortsTooltip, {
+                  boldSubMessage: <b>{formatMessage(messages.cohortsTooltipBold)}</b>,
+                })}
                 placement='bottom'
               >
                 <InfoCircleFilled />
@@ -606,9 +601,18 @@ const messages = defineMessages({
     id: 'audience.segments.lookalike.type.cohort.settings.seedSegment.exclude',
     defaultMessage: 'Exclude',
   },
-  cohortsSelectedTip: {
-    id: 'audience.segments.lookalike.type.cohort.settings.reach.tip.cohortsSelected',
-    defaultMessage: 'cohorts selected',
+  cohortsTooltip: {
+    id: 'audience.segments.lookalike.type.cohort.settings.tooltip.message',
+    defaultMessage:
+      'Before the segment calculation (when userpoints enter or leave a segment),\
+      we will update the list of cohorts used to populate the lookalike segment\
+      based on those settings. Cohorts with largest similarity index will be selected\
+      to {boldSubMessage} defined. Please check our documentation for more details about it.',
+  },
+  cohortsTooltipBold: {
+    id: 'audience.segments.lookalike.type.cohort.settings.tooltip.message.bold',
+    defaultMessage:
+      'reach the expected number of userpoints without going below the minimum similarity index',
   },
   notifSuccess: {
     id: 'audience.segments.lookalike.type.cohort.settings.save.success',
