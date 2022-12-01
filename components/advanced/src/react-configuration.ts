@@ -51,6 +51,7 @@ const defaultFeatures = [
   'audience-segment_builder_v2',
   'audience-builder-new_design',
   'new-audienceFeatureSelector',
+  'dashboards-comparisons',
 ];
 
 const MCS_CONSTANTS = {

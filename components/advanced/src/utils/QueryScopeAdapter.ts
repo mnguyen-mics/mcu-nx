@@ -40,7 +40,10 @@ export class QueryScopeAdapter {
     return whereClause;
   }
 
-  private extractWhereOrJoinClause(queryText: string, entityName: string) {
+  private extractWhereOrJoinClause(queryText: string, entityName?: string) {
+    if (!entityName) {
+      return;
+    }
     const entityPosition = queryText.indexOf(entityName);
     if (entityPosition === -1) {
       return;

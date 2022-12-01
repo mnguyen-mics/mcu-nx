@@ -11,7 +11,7 @@ import {
 import { AbstractScope } from '../../models/datamart/graphdb/Scope';
 import { InjectedDrawerProps } from '../..';
 import ChartMetadataInfo from './ChartMetadataInfo';
-import { IQueryService, QueryService } from '../../services/QueryService';
+import { IQueryService } from '../../services/QueryService';
 import { QueryScopeAdapter } from '../../utils/QueryScopeAdapter';
 import { extractQueriesHelper, QueryFragment } from '../../utils/source/DataSourceHelper';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
@@ -63,8 +63,14 @@ class Chart extends React.Component<Props, ChartState> {
   @lazyInject(TYPES.IChartDatasetService)
   private _chartDatasetService: IChartDatasetService;
 
+  @lazyInject(TYPES.IQueryService)
+  private queryService: IQueryService;
+
+  private scopeAdapter: QueryScopeAdapter;
+
   private chartDatasetService(): IChartDatasetService {
     if (!this._chartDatasetService) this._chartDatasetService = new ChartDatasetService();
+    this.scopeAdapter = new QueryScopeAdapter(this.queryService);
 
     return this._chartDatasetService;
   }
@@ -134,9 +140,6 @@ class Chart extends React.Component<Props, ChartState> {
       }
     }, 6000);
   }
-
-  private queryService: IQueryService = new QueryService();
-  private scopeAdapter: QueryScopeAdapter = new QueryScopeAdapter(this.queryService);
 
   async extractOtqlQueriesFromDataset() {
     const { chartConfig, datamartId, scope, queryFragment } = this.props;

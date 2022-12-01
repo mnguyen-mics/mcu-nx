@@ -162,7 +162,6 @@ class ScopedDashboardLayout extends React.Component<Props, State> {
       <Spin size={'small'} />
     ) : (
       <DashboardLayout
-        intl={intl}
         editable={editable}
         updateState={updateState}
         datamart_id={datamartId}
@@ -170,8 +169,6 @@ class ScopedDashboardLayout extends React.Component<Props, State> {
         organisationId={organisationId}
         schema={schema}
         scope={scope}
-        openNextDrawer={this.props.openNextDrawer}
-        closeNextDrawer={this.props.closeNextDrawer}
         onShowDashboard={handleOnShowDashboard}
         queryExecutionSource={queryExecutionSource}
         queryExecutionSubSource={queryExecutionSubSource}

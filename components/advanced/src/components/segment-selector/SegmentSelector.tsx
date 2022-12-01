@@ -8,6 +8,14 @@ import {
 } from '../../models/audienceSegment/AudienceSegmentResource';
 import { injectDrawer } from '../drawer';
 import SegmentSelectorContent from './SegmentSelectorContent';
+import { WrappedComponentProps, injectIntl, defineMessages } from 'react-intl';
+
+const messages = defineMessages({
+  openFromExistingSegment: {
+    id: 'segmentSelector.openFromExistingSegment',
+    defaultMessage: 'Open from existing segment',
+  },
+});
 
 interface SegmentSelectorProps {
   datamartId: string;
@@ -15,9 +23,10 @@ interface SegmentSelectorProps {
   segmentType?: AudienceSegmentType[];
   withFilter?: boolean;
   onSelectSegment: (segment: AudienceSegmentShape) => void;
+  text?: string;
 }
 
-type Props = SegmentSelectorProps & InjectedDrawerProps;
+type Props = SegmentSelectorProps & InjectedDrawerProps & WrappedComponentProps;
 
 class SegmentSelector extends React.Component<Props> {
   openDrawer = () => {
@@ -43,12 +52,14 @@ class SegmentSelector extends React.Component<Props> {
     });
   };
   render() {
+    const { text, intl } = this.props;
+
     return (
       <Button onClick={this.openDrawer} className='mcs-segmentSelector_button'>
-        Open from existing segment
+        {text ? text : intl.formatMessage(messages.openFromExistingSegment)}
       </Button>
     );
   }
 }
 
-export default compose<Props, SegmentSelectorProps>(injectDrawer)(SegmentSelector);
+export default compose<Props, SegmentSelectorProps>(injectDrawer, injectIntl)(SegmentSelector);

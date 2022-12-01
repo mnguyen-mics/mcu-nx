@@ -66,11 +66,11 @@ export interface DashboardAvailableFilters {
   query_fragments: DashboardFilterQueryFragments[];
 }
 
-export type DashboardAvailableFilterType = 'compartments';
+export type DashboardAvailableFilterType = 'compartments' | 'segments' | 'organisations';
 export type DashboardValuesRetrieveMethodType = 'query';
 
 export interface DashboardFilterQueryFragments {
   type: SourceType;
-  starting_object_type: string;
+  starting_object_type?: string;
   fragment: string | DimensionFilter[];
 }
