@@ -45,75 +45,77 @@ pipeline {
                     }
                 }
             }
-            stages('MCU Parallel Stages') {
+            stage('MCU Parallel Stages') {
                 parallel {
-                    stages('navigator stages') {
-                        stage('Building and Publishing Navigator Staging Artifacts'){
-                            when {
-                                // Only publish staging if END_TO_END_CHECK == true
-                                expression { params.END_TO_END_CHECK == true && params.GIVEN_VIRTUAL_PLATFORM_NAME == '' }
+                    stage('navigator stages') {
+                        stages('zezeaze')  {
+                            stage('Building and Publishing Navigator Staging Artifacts'){
+                                when {
+                                    // Only publish staging if END_TO_END_CHECK == true
+                                    expression { params.END_TO_END_CHECK == true && params.GIVEN_VIRTUAL_PLATFORM_NAME == '' }
+                                }
+                                steps {
+                                    echo 'Running mediarithmics-navigator-publish-zip'
+                                    build job: 'mediarithmics-navigator-publish-zip'
+                                }
                             }
-                            steps {
-                                echo 'Running mediarithmics-navigator-publish-zip'
-                                 build job: 'mediarithmics-navigator-publish-zip'
+                            stage('Virtual Platform Creation') {
+                                when {
+                                    // Only create sandbox if END_TO_END_CHECK == true
+                                    expression { params.END_TO_END_CHECK == true && params.GIVEN_VIRTUAL_PLATFORM_NAME == ''}
+                                }
+                                steps {
+                                    script {
+                                        echo 'Running Virtual Platform Creation Job'
+                                        def user_id = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')?.userId[0]
+                                        sandbox_build = build job: 'sandbox-creation-from-template', parameters: [
+                                            [$class: 'StringParameterValue', name: 'template', value: "master"],
+                                            [$class: 'StringParameterValue', name: 'lifetime', value: "1"],
+                                            [$class: 'StringParameterValue', name: 'custom_navigator_build', value: "staging-1+"],
+                                            [$class: 'StringParameterValue',  name: 'parent_job_name', value: "mediarithmics-navigator-pipeline"],
+                                            [$class: 'StringParameterValue',  name: 'parent_job_id', value: build_id],
+                                            [$class: 'StringParameterValue',  name: 'user_id', value: user_id],
+                                        ]
+                                    copyArtifacts projectName: 'sandbox-creation-from-template', selector: specific("${sandbox_build.number}"), filter: 'output.json'
+                                    props = readJSON file: 'output.json'
+                                    VIRTUAL_PLATFORM_NAME = props['data']['name']
+                                    echo "Got the virtual platform ${VIRTUAL_PLATFORM_NAME} (build #${sandbox_build.number})"
+                                    VIRTUAL_PLATFORM_ID = props['data']['id']
+                                    echo "Got the virtual platform id ${VIRTUAL_PLATFORM_ID} (build #${sandbox_build.number})"
+                                    }
+                                }
                             }
-                        }
-                        stage('Virtual Platform Creation') {
-                            when {
-                                // Only create sandbox if END_TO_END_CHECK == true
-                                expression { params.END_TO_END_CHECK == true && params.GIVEN_VIRTUAL_PLATFORM_NAME == ''}
+                            stage('Cypress Parallel Tests On Given Virtual Platform'){
+                                when {
+                                    expression { params.GIVEN_VIRTUAL_PLATFORM_NAME != '' }
+                                }
+                                steps {
+                                    echo 'Running Cypress end-to-end front-end scenarios'
+                                    build job: 'cypress-navigator-pipeline-tests/cypress tests', parameters: [[$class: 'StringParameterValue', name: 'VIRTUAL_PLATFORM_NAME', value: "${params.GIVEN_VIRTUAL_PLATFORM_NAME}"]]
+                                }
                             }
-                            steps {
-                                script {
-                                    echo 'Running Virtual Platform Creation Job'
-                                    def user_id = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')?.userId[0]
-                                    sandbox_build = build job: 'sandbox-creation-from-template', parameters: [
-                                        [$class: 'StringParameterValue', name: 'template', value: "master"],
-                                        [$class: 'StringParameterValue', name: 'lifetime', value: "1"],
-                                        [$class: 'StringParameterValue', name: 'custom_navigator_build', value: "staging-1+"],
-                                        [$class: 'StringParameterValue',  name: 'parent_job_name', value: "mediarithmics-navigator-pipeline"],
-                                        [$class: 'StringParameterValue',  name: 'parent_job_id', value: build_id],
-                                        [$class: 'StringParameterValue',  name: 'user_id', value: user_id],
-                                    ]
-                                copyArtifacts projectName: 'sandbox-creation-from-template', selector: specific("${sandbox_build.number}"), filter: 'output.json'
-                                props = readJSON file: 'output.json'
-                                VIRTUAL_PLATFORM_NAME = props['data']['name']
-                                echo "Got the virtual platform ${VIRTUAL_PLATFORM_NAME} (build #${sandbox_build.number})"
-                                VIRTUAL_PLATFORM_ID = props['data']['id']
-                                echo "Got the virtual platform id ${VIRTUAL_PLATFORM_ID} (build #${sandbox_build.number})"
+                            stage('Cypress Parallel Tests On Created Virtual Platform'){
+                                when {
+                                    // Only run end to end scenarios is END_TO_END_CHECK == true
+                                    expression { params.END_TO_END_CHECK == true && params.GIVEN_VIRTUAL_PLATFORM_NAME == ''}
+                                }
+                                steps {
+                                    echo 'Running Cypress end-to-end front-end scenarios'
+                                    build job: 'cypress-navigator-pipeline-tests/cypress tests', parameters: [[$class: 'StringParameterValue', name: 'VIRTUAL_PLATFORM_NAME', value: "${VIRTUAL_PLATFORM_NAME}"]]
+                                }
+                            }
+                            stage('Push to master') {
+                                agent {
+                                    label "master"
+                                }
+                                steps {
+                                    checkoutCommit(GIT_COMMIT_REV)
+                                    echo 'Pushing to master'
+                                    build job: 'mediarithmics-navigator-push-to-master', parameters: [[$class: 'StringParameterValue', name: 'revision', value: "${GIT_COMMIT_REV}"]]
                                 }
                             }
                         }
-                        stage('Cypress Parallel Tests On Given Virtual Platform'){
-                            when {
-                                expression { params.GIVEN_VIRTUAL_PLATFORM_NAME != '' }
-                            }
-                            steps {
-                                echo 'Running Cypress end-to-end front-end scenarios'
-                                build job: 'cypress-navigator-pipeline-tests/cypress tests', parameters: [[$class: 'StringParameterValue', name: 'VIRTUAL_PLATFORM_NAME', value: "${params.GIVEN_VIRTUAL_PLATFORM_NAME}"]]
-                            }
-                        }
-                        stage('Cypress Parallel Tests On Created Virtual Platform'){
-                            when {
-                                // Only run end to end scenarios is END_TO_END_CHECK == true
-                                expression { params.END_TO_END_CHECK == true && params.GIVEN_VIRTUAL_PLATFORM_NAME == ''}
-                            }
-                            steps {
-                                echo 'Running Cypress end-to-end front-end scenarios'
-                                build job: 'cypress-navigator-pipeline-tests/cypress tests', parameters: [[$class: 'StringParameterValue', name: 'VIRTUAL_PLATFORM_NAME', value: "${VIRTUAL_PLATFORM_NAME}"]]
-                            }
-                        }
-                        stage('Push to master') {
-                            agent {
-                                label "master"
-                            }
-                            steps {
-                                checkoutCommit(GIT_COMMIT_REV)
-                                echo 'Pushing to master'
-                                build job: 'mediarithmics-navigator-push-to-master', parameters: [[$class: 'StringParameterValue', name: 'revision', value: "${GIT_COMMIT_REV}"]]
-                            }
-                        }
-                    }
+                    },
                     stage('Building and Publishing Computing Console Artifact') {
                         when {
                             expression { params.computing_console == true }
@@ -122,7 +124,7 @@ pipeline {
                             echo 'Running computing_console-publish-zip'
                             sh 'cd $WORKSPACE/computing-console && ./build-support/jenkins/master.sh'
                         }
-                    }
+                    },
                     stage('Building and Publishing Advanced Components Website Artifact') {
                         when {
                             expression { params.advanced_components == true }
@@ -131,8 +133,7 @@ pipeline {
                             echo 'Running advanced-components-publish-zip'
                             sh 'cd $WORKSPACE/components/advanced && ./build-support/jenkins/master.sh'
                         }
-                    }
-
+                    },
                     stage('Building and Publishing Basic Components Website Staging Artifact') {
                          when {
                              expression { params.basic_components == true }
