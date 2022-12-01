@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source $HOME/.bashrc
+
 set -eu
 
 # Gitlint
@@ -10,7 +12,6 @@ gitlint --commits "$git_range"
 
 # Actual build
 
-cd mcs-react-components
 ./build-support/jenkins/common.sh
 
 # Publish

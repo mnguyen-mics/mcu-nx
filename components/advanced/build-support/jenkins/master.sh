@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source $HOME/.bashrc
+
 set -eu
 
 # Actual build
