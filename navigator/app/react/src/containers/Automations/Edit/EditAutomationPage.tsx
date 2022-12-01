@@ -75,17 +75,21 @@ class EditAutomationPage extends React.Component<Props, State> {
   componentDidUpdate(prevProps: Props) {
     const {
       match: {
-        params: { automationId },
+        params: { automationId, organisationId },
       },
       location: { search },
+      history,
     } = this.props;
 
     const {
       match: {
-        params: { automationId: prevAutomationId },
+        params: { automationId: prevAutomationId, organisationId: prevOrganisationId },
       },
       location: { search: prevSearch },
     } = prevProps;
+
+    if (organisationId !== prevOrganisationId)
+      history.replace(`/v2/o/${organisationId}/automations`);
 
     if (automationId && automationId !== prevAutomationId) {
       this.loadData(automationId);

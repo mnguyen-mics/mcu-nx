@@ -105,16 +105,20 @@ class AutomationDashboardPage extends React.Component<Props, State> {
   componentDidUpdate(previousProps: Props) {
     const {
       match: {
-        params: { automationId: previousAutomationId },
+        params: { automationId: previousAutomationId, organisationId: prevOrganisationId },
       },
       location: { search: previousSearch },
     } = previousProps;
     const {
       match: {
-        params: { automationId },
+        params: { automationId, organisationId },
       },
       location: { search },
+      history,
     } = this.props;
+
+    if (organisationId !== prevOrganisationId)
+      history.replace(`/v2/o/${organisationId}/automations`);
 
     const { isLoading, isLoadingScenarioCountersData } = this.state;
 
