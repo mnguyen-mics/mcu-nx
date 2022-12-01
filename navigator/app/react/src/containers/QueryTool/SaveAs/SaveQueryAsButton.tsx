@@ -10,6 +10,7 @@ import injectNotifications, {
 import { compose } from 'recompose';
 import { InjectedFeaturesProps, injectFeatures } from '../../Features';
 import { Button, Dropdown, Menu } from 'antd';
+import { SaveOutlined } from '@ant-design/icons';
 
 export interface SaveQueryAsButtonProps {
   saveAsUserQuery?: (formData: NewUserQuerySimpleFormData) => Promise<any>;
@@ -126,7 +127,12 @@ class SaveQueryAsButton extends React.Component<Props, State> {
     return (
       <div>
         <Dropdown overlay={saveAsMenu} trigger={['click']}>
-          <Button className='mcs-otqlInputEditor_save_as_button'>
+          <Button
+            type='primary'
+            className='mcs-otqlInputEditor_extra_button mcs-otqlInputEditor_save_as_button mcs-primary'
+          >
+            <SaveOutlined />
+            <span> </span>
             <FormattedMessage
               id='queryTool.query-builder.actionbar.save'
               defaultMessage='Save As...'
