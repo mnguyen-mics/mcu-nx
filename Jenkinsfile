@@ -34,7 +34,6 @@ pipeline {
             description: 'Please provide the given virtual platforms id so that it would be killed properly')  
     }
     stages {
-        steps {
             stage('Checkout') {
                 agent {
                     label "front-staging"
@@ -48,7 +47,7 @@ pipeline {
             }
             stage('MCU Parallel Stages') {
                 parallel {
-                    stage('navigator stages') {
+                    stages('navigator stages') {
                         stage('Building and Publishing Navigator Staging Artifacts'){
                             when {
                                 // Only publish staging if END_TO_END_CHECK == true
@@ -144,7 +143,6 @@ pipeline {
                          }
                     }
                 }
-            }
         }
     }
     post {
