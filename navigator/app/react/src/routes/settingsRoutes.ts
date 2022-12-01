@@ -45,7 +45,7 @@ import CleaningRulesDashboardPage from '../containers/Settings/DatamartSettings/
 import CleaningRuleEditPage from '../containers/Settings/DatamartSettings/CleaningRules/Edit/CleaningRuleEditPage';
 import AudienceFeatureEditPage from '../containers/Settings/DatamartSettings/StandardSegmentBuilder/Edit/AudienceFeatureEditPage';
 import StandardSegmentBuilderEditPage from '../containers/Settings/DatamartSettings/StandardSegmentBuilder/Edit/StandardSegmentBuilderEditPage';
-import DeviceIdRegistriesList from '../containers/Settings/OrganisationSettings/DeviceIdRegistries/List/DeviceIdRegistriesList';
+import DeviceIdRegistriesPage from '../containers/Settings/OrganisationSettings/DeviceIdRegistries/List/DeviceIdRegistriesPage';
 import UserListPage from '../containers/Settings/OrganisationSettings/Users/List/UserListPage';
 import IdentityProviderSettings from '../containers/Settings/OrganisationSettings/IdentityProviders/IdentityProviderSettings';
 
@@ -429,7 +429,7 @@ export const settingsDefinition: NavigatorDefinition = {
   settingsOrganisationDeviceIdRegistryList: {
     path: '/settings/organisation/device_registries',
     layout: 'settings',
-    contentComponent: DeviceIdRegistriesList,
+    contentComponent: DeviceIdRegistriesPage,
     requiredFeature: 'organisationSettings-settings',
   },
 

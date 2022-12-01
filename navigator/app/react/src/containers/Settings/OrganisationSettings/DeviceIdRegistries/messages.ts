@@ -79,7 +79,7 @@ const messages = defineMessages({
     id: 'settings.organisation.device.registries.thirdParty.subscriptions.drawer.title',
     defaultMessage: 'Device Registries > New Third-Party Device Registry',
   },
-  firstPartyDatamartSelectionsDrawerTitle: {
+  registryDatamartSelectionsDrawerTitle: {
     id: 'settings.organisation.device.registries.datamarts.selections.title',
     defaultMessage: 'Edit linked datamarts for device registry: {registryName}',
   },
@@ -210,7 +210,7 @@ const messages = defineMessages({
     defaultMessage:
       'You are about to unsubscribe from the offer {offerName}. Are you sure you want to continue?',
   },
-  emptyEvailableThirdPartyRegistries: {
+  emptyAvailableThirdPartyRegistries: {
     id: 'settings.organisation.device.registries.thirdParty.subscriptions.availableRegistries.empty',
     defaultMessage:
       'You have already subscribed to all available third-party device registries. Stay tuned for new integrations!',
