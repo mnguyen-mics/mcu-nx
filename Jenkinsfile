@@ -45,7 +45,7 @@ pipeline {
                     }
                 }
             }
-            stage('MCU Parallel Stages') {
+            stages('MCU Parallel Stages') {
                 parallel {
                     stages('navigator stages') {
                         stage('Building and Publishing Navigator Staging Artifacts'){
