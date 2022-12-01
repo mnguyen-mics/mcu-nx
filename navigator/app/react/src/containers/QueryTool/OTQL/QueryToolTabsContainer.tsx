@@ -15,7 +15,11 @@ import injectNotifications, {
 } from '../../Notifications/injectNotifications';
 import { DataResponse } from '@mediarithmics-private/advanced-components/lib/services/ApiService';
 import SchemaVizualizer from '../../Audience/AdvancedSegmentBuilder/SchemaVisualizer/SchemaVizualizer';
-import { computeFinalSchemaItem } from '../../Audience/AdvancedSegmentBuilder/domain';
+import {
+  computeFinalSchemaItem,
+  FieldInfoEnhancedResource,
+  SchemaItem,
+} from '../../Audience/AdvancedSegmentBuilder/domain';
 import { IRuntimeSchemaService } from '../../../services/RuntimeSchemaService';
 import { lazyInject } from '../../../config/inversify.config';
 import { TYPES } from '../../../constants/types';
@@ -260,6 +264,12 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
       newSavedQueries[oldestEditedDatamart].queries.pop();
     }
     localStorage.setItem('savedQueries', JSON.stringify(newSavedQueries));
+  };
+
+  getCurrentTab = () => {
+    const { tabs, activeKey } = this.state;
+
+    return tabs.find(tab => tab.key === activeKey);
   };
 
   initTabState = async (): Promise<void> => {
@@ -731,7 +741,11 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
     });
   };
 
-  addNewTab = (force_clear = false, mcsTabsItemOverride: Partial<McsTabsItem> = {}) => {
+  addNewTab = (
+    force_clear = false,
+    mcsTabsItemOverride: Partial<McsTabsItem> = {},
+    callback?: () => void,
+  ) => {
     const { tabs } = this.state;
 
     if (tabs.length === 1) {
@@ -756,10 +770,58 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
       ...mcsTabsItemOverride,
     });
 
-    this.setState({
-      tabs: newTabs,
-      activeKey,
+    this.setState({ tabs: newTabs, activeKey }, () => {
+      callback?.();
     });
+  };
+
+  isCurrentTabDefaultQuery = () => {
+    const currentTab = this.getCurrentTab();
+    const serieQueriesSize = currentTab?.serieQueries?.length;
+    const firstSerieQuery = currentTab?.serieQueries?.[0];
+
+    return (
+      serieQueriesSize === 1 &&
+      (firstSerieQuery?.queryModel as OTQLQueryModel)?.query === this.getInitialQuery()
+    );
+  };
+
+  onVisualizerPropertyClick = (
+    item: SchemaItem | FieldInfoEnhancedResource,
+    objectType?: string,
+  ) => {
+    // If the item clicked is a model or if no schemaType, no action
+    if ('fields' in item) {
+      return;
+    }
+
+    const { name, field_type } = item;
+    const queryType = field_type === 'Date' || field_type === 'Date!' ? '@date_histogram' : '@map';
+    const newQuery = getNewSerieQuery(
+      'Series 1',
+      `SELECT {${name} ${queryType}} FROM ${objectType}`,
+    );
+    if (this.isCurrentTabDefaultQuery()) {
+      // Set query to current tab
+      const { tabs, activeKey } = this.state;
+
+      // Update current tab query
+      const newTabs = [...tabs];
+      const activeTabIndex = newTabs.findIndex(tab => tab.key === activeKey);
+      newTabs.splice(activeTabIndex, 1, {
+        ...newTabs[activeTabIndex],
+        serieQueries: [newQuery],
+      });
+
+      this.setState({ tabs: newTabs }, () => {
+        this.runQuery();
+      });
+    } else {
+      // Set query to new tab
+      this.addNewTab(false, { serieQueries: [newQuery] }, () => {
+        this.runQuery();
+      });
+    }
   };
 
   renderSchemaVisualizer = (startType: string) => {
@@ -774,6 +836,7 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
               : undefined
           }
           disableDragAndDrop={true}
+          onPropertyClick={this.onVisualizerPropertyClick}
         />
       </div>
     );

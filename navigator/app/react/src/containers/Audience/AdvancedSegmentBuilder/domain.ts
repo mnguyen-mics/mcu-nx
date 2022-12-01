@@ -668,13 +668,11 @@ interface DragAndDropCommonInterface {
 }
 
 interface DragAndDropFieldInterface extends DragAndDropCommonInterface {
-  type: 'field';
   fieldType: string;
   item: FieldInfoEnhancedResource;
 }
 
 interface DragAndDropObjectdInterface extends DragAndDropCommonInterface {
-  type: 'object';
   schemaType: string;
   item: SchemaItem;
 }

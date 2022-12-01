@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Tree } from 'antd';
-import { SchemaItem, isSchemaItem, FieldInfoEnhancedResource } from '../domain';
-import FieldNode from './FieldNode';
+import { SchemaItem, isSchemaItem, Field, FieldInfoEnhancedResource } from '../domain';
+import FieldDraggableNode from './FieldDraggableNode';
 import FieldStandardNode from './FieldStandardNode';
 import { DataNode } from 'antd/lib/tree';
 import Search from 'antd/lib/input/Search';
@@ -11,6 +11,7 @@ import _ from 'lodash';
 export interface SchemaVizualizerProps {
   schema?: SchemaItem;
   disableDragAndDrop?: boolean;
+  onPropertyClick?: (item: SchemaItem | FieldInfoEnhancedResource, objectType?: string) => void;
 }
 
 export interface SchemaVizualizerState {
@@ -23,12 +24,7 @@ export default class SchemaVizualizer extends React.Component<
   SchemaVizualizerProps,
   SchemaVizualizerState
 > {
-  private debouncedLoop: (
-    gData: SchemaItem,
-    objectType?: string,
-    searchString?: string,
-    disableDragAndDrop?: boolean,
-  ) => void;
+  private debouncedLoop: (gData: SchemaItem) => void;
   constructor(props: SchemaVizualizerProps) {
     super(props);
     this.state = {
@@ -37,51 +33,35 @@ export default class SchemaVizualizer extends React.Component<
       treeData: [],
     };
     this.debouncedLoop = _.debounce(
-      (
-        gData: SchemaItem,
-        objectType?: string,
-        searchString?: string,
-        disableDragAndDrop?: boolean,
-      ) =>
+      (gData: SchemaItem) =>
         this.setState({
-          treeData: this.loop(gData, objectType, searchString, disableDragAndDrop),
+          treeData: this.loop(gData),
         }),
       300,
     );
   }
 
-  onExpand = (expandedKeys: string[]) => {
+  componentDidMount() {
+    const { schema } = this.props;
     this.setState({
-      expandedKeys: expandedKeys,
+      treeData: schema ? this.loop(schema) : [],
     });
-  };
-
-  isIncludedInUnderlyingItems(item: SchemaItem, searchString?: string): boolean {
-    return (
-      item &&
-      item.fields &&
-      item.fields.some(field => {
-        if (isSchemaItem(field)) {
-          if (
-            searchString &&
-            (field.decorator
-              ? field.decorator.label.toLowerCase().includes(searchString.toLowerCase())
-              : field.name.toLowerCase().includes(searchString.toLowerCase()))
-          )
-            return true;
-          return this.isIncludedInUnderlyingItems(field, searchString);
-        }
-        if (
-          searchString &&
-          (field.decorator
-            ? field.decorator.label.toLowerCase().includes(searchString.toLowerCase())
-            : field.name.toLowerCase().includes(searchString.toLowerCase()))
-        )
-          return true;
-        return false;
-      })
-    );
   }
+
+  componentDidUpdate(previousProps: SchemaVizualizerProps, previousState: SchemaVizualizerState) {
+    const { schema } = this.props;
+    const { searchValue, treeData } = this.state;
+    if (treeData && searchValue && previousState.treeData !== treeData) {
+      this.setState({
+        expandedKeys: this.getExpandedKeys(treeData, []),
+      });
+    }
+    if (schema !== previousProps.schema)
+      this.setState({
+        treeData: schema ? this.loop(schema) : [],
+      });
+  }
+
   // To avoid Tree loosing its state of expanded/collapsed nodes
   // we disable component update.
   // Since schema or disableDragAndDrop props should not change when this component
@@ -97,205 +77,79 @@ export default class SchemaVizualizer extends React.Component<
     return false;
   }
 
-  unfilteredLoop = (
-    gData: SchemaItem,
-    objectType?: string,
-    disableDragAndDrop?: boolean,
-    searchString?: string,
-  ) =>
-    gData &&
-    gData.fields.map((item): DataNode => {
-      if (isSchemaItem(item)) {
-        return {
-          title: disableDragAndDrop ? (
-            <FieldStandardNode
-              id={item.id}
-              item={item}
-              type='object'
-              searchString={searchString}
-              hasChildren={true}
-            />
-          ) : (
-            <FieldNode
-              id={item.id}
-              item={item}
-              type='object'
-              searchString={searchString}
-              hasChildren={true}
-            />
-          ),
-          key: cuid(),
-          selectable: false,
-          className: 'mcs-schemaVizualizer_fieldNode_parent',
-          children: this.unfilteredLoop(item, item.schemaType, disableDragAndDrop, searchString),
-        };
-      }
-      return {
-        title: disableDragAndDrop ? (
-          <FieldStandardNode
-            id={item.id}
-            type='field'
-            schemaType={objectType}
-            item={item as FieldInfoEnhancedResource}
-            searchString={searchString}
-          />
-        ) : (
-          <FieldNode
-            id={item.id}
-            type='field'
-            schemaType={objectType}
-            item={item as FieldInfoEnhancedResource}
-            searchString={searchString}
-          />
-        ),
-        key: cuid(),
-        className: 'mcs-schemaVizualizer_fieldNode_child',
-        selectable: false,
-      };
-    });
-  loop = (
-    gData: SchemaItem,
-    objectType?: string,
-    searchString?: string,
-    disableDragAndDrop?: boolean,
-  ) =>
-    gData &&
-    gData.fields
-      .filter(item => {
-        if (
-          isSchemaItem(item) &&
-          searchString &&
-          !(item.decorator
-            ? item.decorator.label.toLowerCase().includes(searchString.toLowerCase())
-            : item.name.toLowerCase().includes(searchString.toLowerCase())) &&
-          !this.isIncludedInUnderlyingItems(item, searchString)
-        )
-          return false;
-        if (
-          !isSchemaItem(item) &&
-          searchString &&
-          !(item.decorator
-            ? item.decorator.label.toLowerCase().includes(searchString.toLowerCase())
-            : item.name.toLowerCase().includes(searchString.toLowerCase()))
-        )
-          return false;
-        return true;
-      })
-      .map((item): DataNode => {
-        if (
-          isSchemaItem(item) &&
-          searchString &&
-          (item.decorator
-            ? item.decorator.label.toLowerCase().includes(searchString.toLowerCase())
-            : item.name.toLowerCase().includes(searchString.toLowerCase()))
-        ) {
-          return {
-            title: disableDragAndDrop ? (
-              <FieldStandardNode
-                id={item.id}
-                item={item}
-                type='object'
-                searchString={searchString}
-                hasChildren={true}
-              />
-            ) : (
-              <FieldNode
-                id={item.id}
-                item={item}
-                type='object'
-                searchString={searchString}
-                hasChildren={true}
-              />
-            ),
-            key: cuid(),
-            className: 'mcs-schemaVizualizer_fieldNode_parent',
-            selectable: false,
-            children: this.unfilteredLoop(item, item.schemaType, disableDragAndDrop, searchString),
-          };
-        }
-        if (isSchemaItem(item)) {
-          return {
-            title: disableDragAndDrop ? (
-              <FieldStandardNode
-                id={item.id}
-                item={item}
-                type='object'
-                searchString={searchString}
-                hasChildren={true}
-              />
-            ) : (
-              <FieldNode
-                id={item.id}
-                item={item}
-                type='object'
-                searchString={searchString}
-                hasChildren={true}
-              />
-            ),
-            key: cuid(),
-            className: 'mcs-schemaVizualizer_fieldNode_parent',
-            selectable: false,
-            children: this.loop(item, item.schemaType, searchString, disableDragAndDrop),
-          };
-        }
-        return {
-          title: disableDragAndDrop ? (
-            <FieldStandardNode
-              id={item.id}
-              type='field'
-              schemaType={objectType}
-              item={item as FieldInfoEnhancedResource}
-              searchString={searchString}
-            />
-          ) : (
-            <FieldNode
-              id={item.id}
-              type='field'
-              schemaType={objectType}
-              item={item as FieldInfoEnhancedResource}
-              searchString={searchString}
-            />
-          ),
-          key: cuid(),
-          className: 'mcs-schemaVizualizer_fieldNode_child',
-          selectable: false,
-        };
-      });
+  isFieldWithinSearch = (field: Field): boolean => {
+    const { searchValue } = this.state;
+    const lowerSearchValue = searchValue.toLowerCase();
 
-  componentDidUpdate(previousProps: SchemaVizualizerProps, previousState: SchemaVizualizerState) {
-    const { schema, disableDragAndDrop } = this.props;
-    if (
-      previousState.treeData !== this.state.treeData &&
-      this.state.searchValue &&
-      this.state.treeData
-    ) {
-      this.setState({
-        expandedKeys: this.getExpandedKeys(this.state.treeData, []),
+    if (!lowerSearchValue) {
+      return true;
+    }
+
+    return field.decorator
+      ? field.decorator.label.toLowerCase().includes(lowerSearchValue)
+      : field.name.toLowerCase().includes(lowerSearchValue);
+  };
+
+  filterField = (field: Field): boolean => {
+    if (isSchemaItem(field)) {
+      return field.fields.some(subField => {
+        return this.isFieldWithinSearch(subField) ? true : this.filterField(subField);
       });
     }
-    if (this.props.schema && previousProps.schema && this.props.schema !== previousProps.schema)
-      this.setState({
-        treeData: schema
-          ? this.loop(schema, undefined, this.state.searchValue, disableDragAndDrop)
-          : [],
-      });
-  }
+    return this.isFieldWithinSearch(field);
+  };
 
-  componentDidMount() {
-    const { schema, disableDragAndDrop } = this.props;
+  loop = (gData: SchemaItem, parentType = '', isFiltered = false) => {
+    const { searchValue: searchString } = this.state;
+    const { disableDragAndDrop, onPropertyClick } = this.props;
+    return (
+      gData &&
+      gData.fields
+        ?.filter(item => (isFiltered ? this.filterField(item) : true))
+        .map((item): DataNode => {
+          const hasChildren = isSchemaItem(item);
+          const NodeComponent = disableDragAndDrop ? FieldStandardNode : FieldDraggableNode;
+
+          // SchemaType from parent
+          const fieldSchemaItem = item as SchemaItem;
+          const schemaType =
+            parentType || fieldSchemaItem.schemaType || fieldSchemaItem.closestParentType;
+          return {
+            title: (
+              <NodeComponent
+                id={fieldSchemaItem.id}
+                item={fieldSchemaItem}
+                searchString={searchString}
+                hasChildren={hasChildren}
+                onPropertyClick={onPropertyClick}
+                schemaType={schemaType}
+              />
+            ),
+            key: cuid(),
+            className: hasChildren
+              ? 'mcs-schemaVizualizer_fieldNode_parent'
+              : 'mcs-schemaVizualizer_fieldNode_child',
+            selectable: false,
+            children: this.isFieldWithinSearch(fieldSchemaItem)
+              ? this.loop(fieldSchemaItem, schemaType)
+              : this.loop(fieldSchemaItem, schemaType, true),
+          };
+        })
+    );
+  };
+
+  onExpand = (expandedKeys: string[]) => {
     this.setState({
-      treeData: schema
-        ? this.loop(schema, undefined, this.state.searchValue, disableDragAndDrop)
-        : [],
+      expandedKeys: expandedKeys,
     });
-  }
+  };
 
   onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { schema, disableDragAndDrop } = this.props;
+    const { schema } = this.props;
     this.setState({
       searchValue: e.target.value,
     });
-    if (schema) this.debouncedLoop(schema, undefined, e.target.value, disableDragAndDrop);
+    if (schema) this.debouncedLoop(schema);
   };
 
   getExpandedKeys = (tree: DataNode[], expandedKeys: string[]): string[] => {
