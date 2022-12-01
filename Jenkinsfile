@@ -115,7 +115,7 @@ pipeline {
                                 }
                             }
                         }
-                    },
+                    }
                     stage('Building and Publishing Computing Console Artifact') {
                         when {
                             expression { params.computing_console == true }
@@ -124,7 +124,7 @@ pipeline {
                             echo 'Running computing_console-publish-zip'
                             sh 'cd $WORKSPACE/computing-console && ./build-support/jenkins/master.sh'
                         }
-                    },
+                    }
                     stage('Building and Publishing Advanced Components Website Artifact') {
                         when {
                             expression { params.advanced_components == true }
@@ -133,7 +133,7 @@ pipeline {
                             echo 'Running advanced-components-publish-zip'
                             sh 'cd $WORKSPACE/components/advanced && ./build-support/jenkins/master.sh'
                         }
-                    },
+                    }
                     stage('Building and Publishing Basic Components Website Staging Artifact') {
                          when {
                              expression { params.basic_components == true }
