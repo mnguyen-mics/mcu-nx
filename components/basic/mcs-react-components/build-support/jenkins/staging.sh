@@ -36,7 +36,7 @@ echo "Pushing new version to staging..."
 git checkout staging
 git pull origin staging
 git merge --ff-only temporary
-git tag $NEW_VERSION_NUM
+git tag basic-components@$NEW_VERSION_NUM
 git push origin staging --tags
 
 # Slack
