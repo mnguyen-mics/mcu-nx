@@ -202,7 +202,7 @@ class NavigatorWithKeycloak extends React.Component<JoinedProps, NavigatorState>
         <Route exact={true} path='/' render={renderSlashRoute} />
         <Route exact={true} path='/login' render={renderSlashRoute} />
         {routeMapping}
-        <Route render={() => <PageNotFound/>} />
+        <Route render={() => <PageNotFound />} />
       </Switch>
     );
   }
