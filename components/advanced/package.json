@@ -1,6 +1,6 @@
 {
   "name": "@mediarithmics-private/advanced-components",
-  "version": "12.1.1",
+  "version": "13.0.0",
   "main": "lib/index.js",
   "files": [
     "lib"
