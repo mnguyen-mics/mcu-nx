@@ -431,33 +431,29 @@ class CohortLookalikeCalibrationSettings extends React.Component<
         <div className='mcs-cohortLookalikeCalibrationSettings_header'>
           <div className='mcs-cohortLookalikeCalibrationSettings_header_content'>
             <div className='seedSegmentAndSwitch'>
-              <div className='seedSegmentMessage'>
-                <FormattedMessage
-                  {...messages.seedSegmentGeneral}
-                  values={{
-                    seedSegment: <b>{formatMessage(messages.seedSegment)}</b>,
-                    seedSegmentName: (
-                      <Link
-                        to={`/v2/o/${organisationId}/audience/segments/${seedSegment.id}`}
-                        target='_blank'
-                      >
-                        {seedSegment.name}
-                      </Link>
-                    ),
-                    linkToSeedSegment: (
-                      <Link
-                        to={`/v2/o/${organisationId}/audience/segments/${seedSegment.id}`}
-                        target='_blank'
-                      >
-                        #{seedSegment.id}
-                      </Link>
-                    ),
-                    nbUserPoints: (
-                      <b>{(seedSegment.user_points_count || 0).toLocaleString('en')}</b>
-                    ),
-                  }}
-                />
-              </div>
+              <FormattedMessage
+                {...messages.seedSegmentGeneral}
+                values={{
+                  seedSegment: <b>{formatMessage(messages.seedSegment)}</b>,
+                  seedSegmentName: (
+                    <Link
+                      to={`/v2/o/${organisationId}/audience/segments/${seedSegment.id}`}
+                      target='_blank'
+                    >
+                      {seedSegment.name}
+                    </Link>
+                  ),
+                  linkToSeedSegment: (
+                    <Link
+                      to={`/v2/o/${organisationId}/audience/segments/${seedSegment.id}`}
+                      target='_blank'
+                    >
+                      #{seedSegment.id}
+                    </Link>
+                  ),
+                  nbUserPoints: <b>{(seedSegment.user_points_count || 0).toLocaleString('en')}</b>,
+                }}
+              />
               <Switch
                 checkedChildren={formatMessage(messages.include)}
                 unCheckedChildren={formatMessage(messages.exclude)}
