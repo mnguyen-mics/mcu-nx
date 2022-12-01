@@ -68,7 +68,7 @@ class UserContainer extends React.Component<Props, State> {
 
   componentDidMount() {
     const { communityId } = this.props;
-    this.initializeUserHierarchy(communityId);
+    this.initializeUserHierarchy(communityId, true);
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -83,11 +83,11 @@ class UserContainer extends React.Component<Props, State> {
       displayInheritedRole !== prevDisplayInheritedRole ||
       (filterValue !== prevFilterValue && (filterValue.length >= 3 || filterValue.length === 0))
     ) {
-      this.initializeUserHierarchy(communityId, filterValue);
+      this.initializeUserHierarchy(communityId, false, filterValue);
     }
   }
 
-  initializeUserHierarchy(communityId: string, filterValue?: string) {
+  initializeUserHierarchy(communityId: string, scrollToOrg: boolean, filterValue?: string) {
     const {
       displayMode: userDisplay,
       match: {
@@ -164,8 +164,10 @@ class UserContainer extends React.Component<Props, State> {
             );
           })
           .then(() => {
-            const element = document.getElementById(`mcs-foldable-card-${organisationId}`);
-            element?.scrollIntoView();
+            if (scrollToOrg) {
+              const element = document.getElementById(`mcs-foldable-card-${organisationId}`);
+              element?.scrollIntoView();
+            }
           })
           .catch(err => {
             this.props.notifyError(err);
