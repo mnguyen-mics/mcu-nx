@@ -153,14 +153,11 @@
     "ts-jest": "28.0.5",
     "ts-node": "10.9.1",
     "typescript": "4.1.6",
-    "url-loader": "^4.1.1",
-    "webpack": "^5.58.1",
-    "webpack-cli": "^4.9.0",
-    "webpack-dev-middleware": "^5.2.1",
-    "webpack-dev-server": "^4.3.1",
-    "webpack-merge": "^5.8.0"
+    "url-loader": "^4.1.1"
   },
-  "engines": {
-    "node": ">=18.0.0"
+  "overrides": {
+    "react-dimensions": {
+      "element-resize-event": "2.0.7"
+    }
   }
 }

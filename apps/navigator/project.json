@@ -20,7 +20,7 @@
           "apps/navigator/src/assets/images/favicon.ico",
           "apps/navigator/src/assets"
         ],
-        "styles": ["apps/navigator/src/styles.less"],
+        "styles": ["apps/navigator/src/styles/index.less"],
         "scripts": []
       },
       "configurations": {
