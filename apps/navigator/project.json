@@ -9,6 +9,7 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
+        "maxWorkers": 8,
         "compiler": "babel",
         "outputPath": "dist/apps/navigator",
         "index": "apps/navigator/index.html",
@@ -17,8 +18,21 @@
         "polyfills": "apps/navigator/src/polyfills.ts",
         "tsConfig": "apps/navigator/tsconfig.app.json",
         "assets": [
-          "apps/navigator/src/assets/images/favicon.ico",
-          "apps/navigator/src/assets"
+          {
+            "glob": "favicon.ico",
+            "input": "apps/navigator/src/assets/images",
+            "output": "favicon.ico"
+          },
+          {
+            "glob": "react-configuration.js",
+            "input": "apps/navigator/src/conf",
+            "output": "conf/react-configuration.js"
+          },
+          {
+            "glob": "*",
+            "input": "apps/navigator/src/assets",
+            "output": "/"
+          }
         ],
         "styles": ["apps/navigator/src/styles/index.less"],
         "scripts": []
@@ -40,7 +54,7 @@
           ],
           "optimization": true,
           "outputHashing": "all",
-          "sourceMap": false,
+          "sourceMap": true,
           "namedChunks": false,
           "extractLicenses": true,
           "vendorChunk": false,

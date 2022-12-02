@@ -4,7 +4,5 @@ const nrwlConfig = require('@nrwl/react/plugins/webpack.js');
 
 module.exports = (config, context) => {
   nrwlConfig(config);
-  return merge(config, common, {
-    devtool: 'eval-source-map',
-  });
+  return merge(config, common);
 };
