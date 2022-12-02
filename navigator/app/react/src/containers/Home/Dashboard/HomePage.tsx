@@ -294,8 +294,6 @@ class Partition extends React.Component<JoinedProps, HomeState> {
       },
     } = this.props;
 
-    const emptyFunction = () => void 0;
-
     return (
       <div className='ant-layout'>
         <div className='ant-layout'>
@@ -310,13 +308,10 @@ class Partition extends React.Component<JoinedProps, HomeState> {
 
               <div className='mcs-homeContent_dashboard'>
                 <DashboardLayout
-                  intl={intl}
                   editable={false}
                   datamart_id={selectedDatamartId}
                   organisationId={organisationId}
                   schema={defaultDashboard as DashboardContentSchema}
-                  openNextDrawer={emptyFunction}
-                  closeNextDrawer={emptyFunction}
                   queryExecutionSource={'DASHBOARD'}
                   queryExecutionSubSource={'HOME_DASHBOARD'}
                 />
