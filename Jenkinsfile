@@ -49,17 +49,17 @@ pipeline {
                     }
                 }
             }
-            stage('MCU Parallel Stages') {
+            stage('Starting mediarithmics-client-universe parallel stages...') {
                 parallel {
-                    stage('navigator stages') {
-                        stages('substeps')  {
+                    stage('Navigator stages') {
+                        stages('Substeps...')  {
                             stage('Building and Publishing Navigator Staging Artifacts'){
                                 when {
                                     // Only publish staging if END_TO_END_CHECK == true
                                     expression { params.END_TO_END_CHECK == true && params.GIVEN_VIRTUAL_PLATFORM_NAME == '' }
                                 }
                                 steps {
-                                    echo 'Running mediarithmics-navigator-publish-zip'
+                                    echo 'Running mediarithmics-navigator-publish-zip (staging)'
                                     build job: 'mediarithmics-navigator-publish-zip'
                                 }
                             }
@@ -118,6 +118,15 @@ pipeline {
                                     build job: 'mediarithmics-navigator-push-to-master', parameters: [[$class: 'StringParameterValue', name: 'revision', value: "${GIT_COMMIT_REV}"]]
                                 }
                             }
+                            stage('Building and Publishing Navigator Artifacts'){
+                                when {
+                                    expression { params.END_TO_END_CHECK == true && params.GIVEN_VIRTUAL_PLATFORM_NAME == '' }
+                                }
+                                steps {
+                                    echo 'Start of navigator zip process (master)'
+                                    sh 'cd $WORKSPACE/navigator && ./build-support/jenkins/master.sh'
+                                }
+                            }
                         }
                     }
                     stage('Building and Publishing Computing Console Artifact') {
@@ -129,7 +138,7 @@ pipeline {
                             sh 'cd $WORKSPACE/computing-console && ./build-support/jenkins/master.sh'
                         }
                     }
-                    stage('Building and Publishing Advanced Components Website Artifact') {
+                    stage('Building and Publishing Advanced Components Website Artifact (Cosmos)') {
                         when {
                             expression { params.advanced_components == true }
                         }
@@ -138,7 +147,7 @@ pipeline {
                             sh 'cd $WORKSPACE/components/advanced && ./build-support/jenkins/master.sh'
                         }
                     }
-                    stage('Building and Publishing Basic Components Website Staging Artifact') {
+                    stage('Building and Publishing Basic Components Website Staging Artifact (Cosmos)') {
                          when {
                              expression { params.basic_components == true }
                          }
