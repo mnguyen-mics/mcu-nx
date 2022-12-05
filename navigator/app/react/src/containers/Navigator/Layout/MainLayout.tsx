@@ -170,7 +170,7 @@ class MainLayout extends React.Component<Props, MainLayoutState> {
             prodEnv={process.env.API_ENV === 'prod'}
             className='mcs-themed-header'
           />
-          <Layout>
+          <Layout className='mcs-mainLayout_body'>
             <Sider
               className={'mcs-sider'}
               collapsible={true}
