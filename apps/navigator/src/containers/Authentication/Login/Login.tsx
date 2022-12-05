@@ -11,7 +11,6 @@ import { logIn } from '../../../redux/Login/actions';
 import { UserProfileResource } from '../../../models/directory/UserProfileResource';
 import { MicsReduxState } from '@mediarithmics-private/advanced-components';
 import LocalStorage from '../../../services/LocalStorage';
-import { LocationDescriptorObject } from 'history';
 import { Credentials } from '@mediarithmics-private/advanced-components/lib/services/AuthService';
 
 const FormItem = Form.Item;
@@ -102,7 +101,7 @@ const Login = (props: Props) => {
   }, []);
 
   const handleSubmit = (e: any) => {
-    const defaultRedirect: LocationDescriptorObject = { pathname: '/' };
+    const defaultRedirect = { pathname: '/' };
     const from = (props.location.state && props.location.state.from) || defaultRedirect;
     const { match } = props;
     const redirect = () => {

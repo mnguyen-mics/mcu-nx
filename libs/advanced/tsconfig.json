@@ -10,6 +10,7 @@
     "strictNullChecks": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
+    "declaration": true
 
 //    "declaration": true,
 //    "target": "es6",

@@ -1,5 +1,5 @@
 import { AggregateDataset } from '../../models/dashboards/dataset/dataset_tree';
-import { Datapoint } from '../../../node_modules/@mediarithmics-private/mcs-components-library/lib/components/charts/utils.d';
+import { Datapoint } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils.d';
 
 export function percentages(xKey: string, dataset: AggregateDataset): AggregateDataset {
   return uniteSeries(

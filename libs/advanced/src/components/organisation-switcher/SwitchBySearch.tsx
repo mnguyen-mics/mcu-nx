@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { compose } from 'recompose';
-import { Input, Menu } from 'antd';
+import { Input, InputRef, Menu } from 'antd';
 import { UserWorkspaceResource } from '../../models/directory/UserProfileResource';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { partition, debounce, uniq, orderBy } from 'lodash';
@@ -40,14 +40,14 @@ type Props = SwitchBySearchProps &
 class SwitchBySearch extends React.Component<Props, SwitchBySearchState> {
   private debouncedSearch: (value: string) => void;
 
-  private inputRef: React.RefObject<Input>;
+  private inputRef: React.RefObject<InputRef>;
 
   constructor(props: Props) {
     super(props);
 
     const [communities, orgs] = partition(props.workspaces, w => isCommunity(w));
 
-    this.inputRef = React.createRef<Input>();
+    this.inputRef = React.createRef<InputRef>();
 
     this.state = {
       searchKeyword: '',
