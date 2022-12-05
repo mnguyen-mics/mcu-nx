@@ -98,6 +98,7 @@ export interface DashboardBodyProps {
     chartTitle: string,
     data?: AggregateDataset | CountDataset | JsonDataset,
   ) => void;
+  lazyLoading?: boolean;
 }
 
 export interface DashboardBodyState {}
@@ -121,16 +122,22 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
       organisationId,
       datamartId,
       editable,
+      lazyLoading,
     } = this.props;
-    return (
+    const primaryUpdateCriteria =
       JSON.stringify(schema) !== JSON.stringify(nextProps.schema) ||
       JSON.stringify(scope) !== JSON.stringify(nextProps.scope) ||
       JSON.stringify(formattedQueryFragment) !== JSON.stringify(nextProps.formattedQueryFragment) ||
       JSON.stringify(queryExecutionSource) !== JSON.stringify(nextProps.queryExecutionSource) ||
       organisationId !== nextProps.organisationId ||
       datamartId !== nextProps.datamartId ||
-      editable !== nextProps.editable
-    );
+      editable !== nextProps.editable;
+
+    if (!primaryUpdateCriteria) {
+      const switchedFromLazyToNotLazy =
+        (lazyLoading === undefined || lazyLoading === true) && nextProps.lazyLoading === false;
+      return switchedFromLazyToNotLazy;
+    } else return true;
   }
 
   private updateChart(
@@ -377,6 +384,7 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
       updateState,
       setChartsFormattedData,
       intl,
+      lazyLoading,
     } = this.props;
 
     const charts = card.charts.map((chart, chartIndex) => {
@@ -439,9 +447,13 @@ class DashboardBody extends React.Component<Props, DashboardBodyState> {
         {charts}
       </Card>
     );
+
     return (
       <div key={cardIndex}>
-        <McsLazyLoad key={cuid()} child={cardComponent} />
+        {(lazyLoading === undefined || lazyLoading) && (
+          <McsLazyLoad key={cuid()} child={cardComponent} />
+        )}
+        {lazyLoading === false && cardComponent}
       </div>
     );
   }

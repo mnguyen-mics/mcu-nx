@@ -189,3 +189,15 @@ export function injectFirstSectionTitle(
 export function limitTextLength(text: string, maxLength: number) {
   return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
 }
+
+export function getDashboardChartsTitles(content: DashboardContentSchema) {
+  const titles: string[] = [];
+  content.sections.forEach(section => {
+    section.cards.forEach(card => {
+      card.charts.forEach(chart => {
+        titles.push(chart.title);
+      });
+    });
+  });
+  return titles;
+}

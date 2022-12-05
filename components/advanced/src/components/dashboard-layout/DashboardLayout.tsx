@@ -1,4 +1,4 @@
-import { Button, Divider, Tooltip } from 'antd';
+import { Button, Divider } from 'antd';
 import React from 'react';
 import cuid from 'cuid';
 import { AbstractScope, SegmentScope } from '../../models/datamart/graphdb/Scope';
@@ -21,6 +21,7 @@ import {
 } from '../../models/platformMetrics/QueryExecutionSource';
 import { ExportService } from '../../services/ExportService';
 import {
+  getDashboardChartsTitles,
   injectFirstSectionTitle,
   limitTextLength,
   transformSchemaForComparaison,
@@ -34,6 +35,10 @@ import {
   CountDataset,
   JsonDataset,
 } from '../../models/dashboards/dataset/dataset_tree';
+import moment from 'moment';
+import injectNotifications, {
+  InjectedNotificationProps,
+} from '../notifications/injectNotifications';
 
 export interface DashboardLayoutProps {
   datamart_id: string;
@@ -58,18 +63,16 @@ export interface DashboardLayoutState {
   formattedQueryFragment: QueryFragment;
   segmentForComparaison?: AudienceSegmentShape;
   comparaison: boolean;
+  exportInProgress: boolean;
 }
 
 type Props = DashboardLayoutProps &
   WrappedComponentProps &
   InjectedDrawerProps &
-  InjectedFeaturesProps;
+  InjectedFeaturesProps &
+  InjectedNotificationProps;
 
 const messages = defineMessages({
-  exportWarning: {
-    id: 'dashboard.layout.exportWarning',
-    defaultMessage: 'Only charts you loaded will be exported',
-  },
   compareToSegment: {
     id: 'dashboard.layout.compareToSegment',
     defaultMessage: 'Compare to segment...',
@@ -98,6 +101,14 @@ const messages = defineMessages({
     id: 'dashboard.layout.originalDashboard',
     defaultMessage: 'Original dashboard',
   },
+  exportInProgress: {
+    id: 'dashboard.layout.exportInProgress',
+    defaultMessage: 'Export is in progress',
+  },
+  exportTakesLonger: {
+    id: 'dashboard.layout.exportTakesLonger',
+    defaultMessage: 'Export takes a little longer than expected, please wait or try again later',
+  },
 });
 
 export type ChartsFormattedData = Map<
@@ -114,6 +125,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
       dashboardFilterValues: {},
       formattedQueryFragment: {},
       comparaison: false,
+      exportInProgress: false,
     };
   }
 
@@ -231,16 +243,12 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
       schema.available_filters,
     );
 
+    this.chartsFormattedData = new Map();
+
     this.setState({
       formattedQueryFragment: formattedQueryFragmentWithFilters,
     });
   };
-
-  handleExportButtonClick =
-    (title = 'Dashboard') =>
-    () => {
-      new ExportService().exportMultipleDataset(this.chartsFormattedData, title);
-    };
 
   handleStopComparingButtonClick = () => {
     this.setState({
@@ -267,11 +275,70 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
     return { type: 'SEGMENT', segmentId: segmentId };
   };
 
-  private setChartsFormattedData = (
+  private generateExportFileName = () => {
+    const { title } = this.props;
+    const dashboardTitle = title ? title.replace(' ', '-') : '';
+    const currentTime = moment(new Date()).format('yyyy-MM-DD-HH-mm-ss');
+
+    return `export_dashboard_${dashboardTitle}_${currentTime}`;
+  };
+
+  private handleExportChartsFormattedDataReceived = (
     chartTitle: string,
     data?: AggregateDataset | CountDataset | JsonDataset,
   ) => {
+    const { exportInProgress } = this.state;
+
     this.chartsFormattedData = this.chartsFormattedData.set(chartTitle, data);
+
+    if (exportInProgress && this.allChartsLoaded()) this.downloadExport();
+  };
+
+  private allChartsLoaded = (): boolean => {
+    const { schema } = this.props;
+    const loadingCharts = getDashboardChartsTitles(schema);
+
+    let allChartsLoaded = this.chartsFormattedData.size > 0;
+    loadingCharts.forEach(chartTitle => {
+      if (!this.chartsFormattedData.has(chartTitle)) allChartsLoaded = false;
+    });
+
+    return allChartsLoaded;
+  };
+
+  private downloadExport = () => {
+    this.props.resetNotifications();
+    new ExportService().exportMultipleDataset(
+      this.chartsFormattedData,
+      this.generateExportFileName(),
+    );
+    this.setState({
+      exportInProgress: false,
+    });
+  };
+
+  private handleExportButtonClick = () => () => {
+    const { intl } = this.props;
+    const duration = 10;
+
+    if (this.allChartsLoaded()) this.downloadExport();
+    else {
+      this.props.notifyInfo({
+        message: intl.formatMessage(messages.exportInProgress),
+        duration: duration,
+      });
+      this.setState({
+        exportInProgress: true,
+      });
+      setTimeout(() => {
+        const { exportInProgress } = this.state;
+        if (exportInProgress)
+          this.props.notifyWarning({
+            message: intl.formatMessage(messages.exportTakesLonger),
+            duration: null,
+          });
+      }, duration * 1000);
+    }
   };
 
   render() {
@@ -281,7 +348,6 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
       organisationId,
       queryExecutionSource,
       queryExecutionSubSource,
-      title,
       intl,
       editable,
       updateState,
@@ -290,7 +356,8 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
       layoutIndex,
     } = this.props;
 
-    const { formattedQueryFragment, comparaison, segmentForComparaison } = this.state;
+    const { formattedQueryFragment, comparaison, segmentForComparaison, exportInProgress } =
+      this.state;
 
     const comparaisonEnabled = hasFeature('dashboards-comparisons') && comparaison;
 
@@ -336,7 +403,8 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
         formattedQueryFragment={formattedQueryFragment}
         updateState={updateState}
         scope={scope}
-        setChartsFormattedData={this.setChartsFormattedData}
+        setChartsFormattedData={this.handleExportChartsFormattedDataReceived}
+        lazyLoading={!exportInProgress}
       />
     );
 
@@ -353,7 +421,8 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
           formattedQueryFragment={formattedQueryFragment}
           updateState={updateState}
           scope={compareScope}
-          setChartsFormattedData={this.setChartsFormattedData}
+          setChartsFormattedData={this.handleExportChartsFormattedDataReceived}
+          lazyLoading={!exportInProgress}
         />
       ) : undefined;
 
@@ -405,15 +474,13 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
           )}
 
           {!comparaisonEnabled && (
-            <Tooltip title={intl.formatMessage(messages.exportWarning)}>
-              <Button
-                type='default'
-                onClick={this.handleExportButtonClick(title)}
-                className='mcs-primary mcs-dashboardLayout_filters_applyBtn'
-              >
-                {intl.formatMessage(messages.export)}
-              </Button>
-            </Tooltip>
+            <Button
+              type='default'
+              onClick={this.handleExportButtonClick()}
+              className='mcs-primary mcs-dashboardLayout_filters_applyBtn'
+            >
+              {intl.formatMessage(messages.export)}
+            </Button>
           )}
 
           {schema.available_filters && (
@@ -456,4 +523,5 @@ export default compose<Props, DashboardLayoutProps>(
   injectFeatures,
   injectIntl,
   injectDrawer,
+  injectNotifications,
 )(DashboardLayout);
