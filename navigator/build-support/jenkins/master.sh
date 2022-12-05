@@ -6,7 +6,7 @@ source $HOME/.bashrc
 
 set -eu
 
-VERSION=$1
+VERSION="1.0.$(date +%Y%m%d)-build-${BUILD_NUMBER:-DEV}-rev-$(git rev-parse --short HEAD)"
 
 REPOSITORY="releases"
 GROUP_ID="com.mediarithmics.web"

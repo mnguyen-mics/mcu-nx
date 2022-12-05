@@ -124,7 +124,7 @@ pipeline {
                                 }
                                 steps {
                                     echo 'Start of navigator zip process (master)'
-                                    sh 'cd $WORKSPACE/navigator && ./build-support/jenkins/master.sh'
+                                    sh 'cd $WORKSPACE/navigator && ./build-support/jenkins/master.sh $BUILD_NUMBER'
                                 }
                             }
                         }
