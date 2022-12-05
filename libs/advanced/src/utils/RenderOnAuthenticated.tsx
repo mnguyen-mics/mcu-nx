@@ -10,7 +10,7 @@ import { KeycloakPostLogin } from '../redux/KeycloakPostLogin/actions';
 import { InjectedFeaturesProps, injectFeatures } from '../components/Features';
 import RenderWhenHasAccess from './RenderWhenHasAccess';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
-import { MicsReduxState } from './ReduxHelper';
+import { MicsReduxState } from './MicsReduxState';
 import errorMessages from '../utils/errorMessage';
 
 export interface RenderOnAuthenticatedProps {

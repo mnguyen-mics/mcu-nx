@@ -34,7 +34,7 @@ import injectNotifications, {
 import { lazyInject } from '../../../../config/inversify.config';
 import { TYPES } from '../../../../constants/types';
 import { ExtendedTableRowSelection } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
-import { DrawableContent } from '@mediarithmics-private/advanced-components/lib/components/drawer';
+import { DrawableContent } from '@mediarithmics-private/advanced-components/lib/components/drawer/types';
 
 const { Dropdown } = PopupContainer;
 

@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import * as React from 'react';
 import lodash from 'lodash';
-import { injectDrawer, DrawableContent, DrawerSize } from './index';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { DrawerStore } from './DrawerStore';
-import { InjectedDrawerProps } from './injectDrawer';
+import injectDrawer, { InjectedDrawerProps } from './injectDrawer';
+import { DrawableContent, DrawerSize } from './types';
 
 const viewportDrawerRatio = {
   large: 0.85,

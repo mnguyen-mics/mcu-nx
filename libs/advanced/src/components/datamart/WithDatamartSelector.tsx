@@ -7,7 +7,7 @@ import { UserProfileResource } from '../../models/directory/UserProfileResource'
 import { Layout, Row } from 'antd';
 import { MenuList } from '@mediarithmics-private/mcs-components-library';
 import { defineMessages } from 'react-intl';
-import { MicsReduxState } from '../../utils/ReduxHelper';
+import { MicsReduxState } from '../../utils/MicsReduxState';
 import { FormTitle } from '../form';
 
 export interface WithDatamartSelectorProps extends RouteComponentProps<{ organisationId: string }> {

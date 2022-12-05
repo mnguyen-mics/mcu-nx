@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { MicsReduxState } from '../../utils/ReduxHelper';
+import { MicsReduxState } from '../../utils/MicsReduxState';
 import { getWorkspace } from '../../redux/Session/selectors';
 import { Dropdown } from 'antd';
 import { UserWorkspaceResource } from '../../models/directory/UserProfileResource';

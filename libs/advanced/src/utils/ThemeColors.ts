@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { MicsReduxState } from './ReduxHelper';
+import { MicsReduxState } from './MicsReduxState';
 
 export interface InjectedThemeColorsProps {
   colors: ThemeColorsShape;

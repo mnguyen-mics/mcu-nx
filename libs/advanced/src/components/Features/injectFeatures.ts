@@ -8,7 +8,7 @@ import {
   UserProfileResource,
   UserWorkspaceResource,
 } from '../../models/directory/UserProfileResource';
-import { MicsReduxState } from '../../utils/ReduxHelper';
+import { MicsReduxState } from '../../utils/MicsReduxState';
 
 export interface InjectedFeaturesProps {
   hasFeature: (requiredFeatures?: string | string[], requireDatamart?: boolean) => boolean;

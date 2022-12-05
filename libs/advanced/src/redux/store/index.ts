@@ -7,7 +7,7 @@ import sagas from '../sagas';
 import container from '../../inversify/inversify.config';
 import { TYPES } from '../../constants/types';
 import { IAuthService } from '../../services/AuthService';
-import { MicsReduxState } from '../../utils/ReduxHelper';
+import { MicsReduxState } from '../../utils/MicsReduxState';
 import { ILabelService } from '../../services/LabelsService';
 import { IOrganisationService } from '../../services/OrganisationService';
 

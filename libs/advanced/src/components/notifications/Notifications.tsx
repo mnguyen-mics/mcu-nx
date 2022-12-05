@@ -6,7 +6,7 @@ import { injectIntl, defineMessages, WrappedComponentProps, MessageDescriptor } 
 import * as notificationsActions from '../../redux/Notifications/actions';
 import { isValidFormattedMessageProps } from '../../utils/IntlMessageHelper';
 import { ArgsProps } from 'antd/lib/notification';
-import { MicsReduxState } from '../../utils/ReduxHelper';
+import { MicsReduxState } from '../../utils/MicsReduxState';
 
 const messages = defineMessages({
   newVersionMessage: {

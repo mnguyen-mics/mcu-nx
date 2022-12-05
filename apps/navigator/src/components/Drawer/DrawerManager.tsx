@@ -8,7 +8,7 @@ import { InjectedDrawerProps } from './injectDrawer';
 import {
   DrawableContent,
   DrawerSize,
-} from '@mediarithmics-private/advanced-components/lib/components/drawer';
+} from '@mediarithmics-private/advanced-components/lib/components/drawer/types';
 
 const viewportDrawerRatio: {
   [key: string]: number;

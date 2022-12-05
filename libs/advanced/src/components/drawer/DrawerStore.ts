@@ -1,6 +1,5 @@
-import { DrawableContentOptions, DrawableContent } from './index';
-
 import lodash from 'lodash';
+import { DrawableContent, DrawableContentOptions } from './types';
 
 export interface DrawerStore {
   drawableContents: DrawableContent[];

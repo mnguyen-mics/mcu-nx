@@ -5,7 +5,7 @@ import { compose } from 'recompose';
 
 import { getLogo } from '../../redux/Session/actions';
 import { MenuMode } from 'antd/lib/menu';
-import { MicsReduxState } from '../../utils/ReduxHelper';
+import { MicsReduxState } from '../../utils/MicsReduxState';
 import { To } from 'history';
 
 export interface LogoProps {

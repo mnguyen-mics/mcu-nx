@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { compose } from 'recompose';
 import { UserProfileResource } from '../../models/directory/UserProfileResource';
-import { MicsReduxState } from '../../utils/ReduxHelper';
+import { MicsReduxState } from '../../utils/MicsReduxState';
 import OrganisationListSwitcher from '../organisation-switcher/OrganisationListSwitcher';
 import Logo from './Logo';
 import messages from './messages';

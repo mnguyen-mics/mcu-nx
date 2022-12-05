@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { closeNextDrawer, openNextDrawer } from './DrawerStore';
-import { DrawableContentOptions } from './index';
+import { DrawableContentOptions } from './types';
 
 export interface InjectedDrawerProps {
   openNextDrawer: <T>(

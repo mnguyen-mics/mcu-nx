@@ -9,7 +9,7 @@ import { fetchAllLabels } from '../redux/Labels/actions';
 import { RouteParams } from './AuthenticatedRoute';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
-import { MicsReduxState } from './ReduxHelper';
+import { MicsReduxState } from './MicsReduxState';
 import errorMessages from '../utils/errorMessage';
 
 export interface RenderWhenHasAccessProps {
