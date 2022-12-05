@@ -13,9 +13,11 @@
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
-      "@mediarithmics-private/advanced-components": ["libs/advanced/src/index.ts"]
+      "@mediarithmics-private/advanced-components": ["libs/advanced/src/index.ts"],
+      "@mediarithmics-private/advanced-components/lib/*": ["libs/advanced/src/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

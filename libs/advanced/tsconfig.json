@@ -1,27 +1,38 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "./lib",
-    "module": "es6",
-    "moduleResolution": "node",
-    "declaration": true,
+    "jsx": "react-jsx",
     "allowJs": false,
     "checkJs": false,
-    "jsx": "react",
-    "target": "es6",
-    "lib": ["dom", "es7", "ES2019"],
-    "noEmitOnError": true,
-    "sourceMap": true,
-    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "noImplicitReturns": true,
+    "strictNullChecks": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "strictNullChecks": true,
-    "pretty": true,
-    "removeComments": true,
-    "experimentalDecorators": true,
-    "esModuleInterop": true
+
+//    "declaration": true,
+//    "target": "es6",
+//    "lib": ["dom", "es7", "ES2019"],
+//    "noEmitOnError": true,
+//    "sourceMap": true,
+//    "allowSyntheticDefaultImports": true,
+//    "noImplicitAny": true,
+//    "noImplicitThis": true,
+//    "noUnusedLocals": true,
+//    "pretty": true,
+//    "removeComments": true,
+//    "experimentalDecorators": true,
+//    "esModuleInterop": true
   },
-  "exclude": ["node_modules", "lib", "**/*.test.*"]
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
 }

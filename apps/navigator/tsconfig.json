@@ -14,11 +14,10 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "strictNullChecks": true,
     "pretty": true,
     "removeComments": true,
-    "experimentalDecorators": true,
     "esModuleInterop": true
     // "types": ["reflect-metadata"]
   },

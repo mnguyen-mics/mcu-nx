@@ -1,8 +1,11 @@
 module.exports = {
-  // Setup jest typescript
-  roots: ['<rootDir>/src'],
+  displayName: 'advanced',
+  preset: '../../jest.preset.js',
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',
+    '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nrwl/react/plugins/jest',
+    '^.+\\.[tj]sx?$': ['babel-jest', { presets: ['@nrwl/react/babel'] }],
   },
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  coverageDirectory: '../../coverage/libs/advanced',
   setupFilesAfterEnv: ['./src/utils/Mocks.ts'],
 };

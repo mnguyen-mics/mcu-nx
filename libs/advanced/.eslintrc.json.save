@@ -1,5 +1,6 @@
 {
-  "extends": "airbnb",
+  "extends": ["plugin:@nrwl/nx/react", "../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*"],
   "globals": {
     "window": true,
     "Event": true
