@@ -27,6 +27,9 @@ pipeline {
         booleanParam(name: 'basic_components',
             defaultValue: false,
             description: 'set to true to publish basic components website artifact on Nexus ')
+        booleanParam(name: 'END_TO_END_CHECK',
+	        defaultValue: true,
+	        description: 'set to false to bypass the virtual platform creation and the cypress tests')
         string(name: 'GIVEN_VIRTUAL_PLATFORM_NAME',
             defaultValue: '',
             description: 'If you would like to run the tests on a precedently created virtual platform (For example if a previous build fails because of false positive tests) please provide its name')
@@ -49,7 +52,7 @@ pipeline {
             stage('MCU Parallel Stages') {
                 parallel {
                     stage('navigator stages') {
-                        stages('zezeaze')  {
+                        stages('substeps')  {
                             stage('Building and Publishing Navigator Staging Artifacts'){
                                 when {
                                     // Only publish staging if END_TO_END_CHECK == true
