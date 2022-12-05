@@ -12,7 +12,6 @@ import {
 } from '../../models/customDashboards/customDashboards';
 import { InjectedFeaturesProps, injectFeatures } from '../Features';
 import { injectDrawer } from '../drawer';
-import { InjectedDrawerProps, SegmentSelector } from '../..';
 import { WrappedComponentProps, injectIntl, defineMessages } from 'react-intl';
 import { QueryFragment } from '../../utils/source/DataSourceHelper';
 import {
@@ -40,6 +39,8 @@ import {
   CountDataset,
   JsonDataset,
 } from '../../models/dashboards/dataset/dataset_tree';
+import SegmentSelector from '../../components/segment-selector';
+import { InjectedDrawerProps } from '../../components/drawer/injectDrawer';
 import moment from 'moment';
 import { Card } from '@mediarithmics-private/mcs-components-library';
 

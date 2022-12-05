@@ -2,7 +2,6 @@ import { Error, Loading } from '@mediarithmics-private/mcs-components-library';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { errorMessages, MicsReduxState } from '..';
 import { UserProfileResource } from '../models/directory/UserProfileResource';
 import KeycloakService from '../services/KeycloakService';
 import { RouteParams } from './AuthenticatedRoute';
@@ -11,6 +10,8 @@ import { KeycloakPostLogin } from '../redux/KeycloakPostLogin/actions';
 import { InjectedFeaturesProps, injectFeatures } from '../components/Features';
 import RenderWhenHasAccess from './RenderWhenHasAccess';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
+import { MicsReduxState } from './ReduxHelper';
+import errorMessages from '../utils/errorMessage';
 
 export interface RenderOnAuthenticatedProps {
   requiredFeatures?: string | string[];

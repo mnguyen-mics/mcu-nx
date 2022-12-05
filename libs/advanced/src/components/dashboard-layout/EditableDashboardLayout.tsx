@@ -7,12 +7,12 @@ import { StandardSegmentBuilderQueryDocument } from '../../models/standardSegmen
 import { AudienceSegmentShape } from '../../models/audienceSegment/AudienceSegmentResource';
 import cuid from 'cuid';
 import { injectDrawer } from '../drawer';
-import DashboardLayout from '.';
-import { InjectedDrawerProps } from '../..';
 import {
   QueryExecutionSource,
   QueryExecutionSubSource,
 } from '../../models/platformMetrics/QueryExecutionSource';
+import { InjectedDrawerProps } from '../drawer/injectDrawer';
+import DashboardLayout from './DashboardLayout';
 
 interface EditableDashboardLayoutProps {
   datamart_id: string;

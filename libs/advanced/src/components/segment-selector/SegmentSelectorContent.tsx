@@ -1,7 +1,6 @@
 import { McsIcon, TableViewFilters } from '@mediarithmics-private/mcs-components-library';
 import { AutoComplete, Input, Row, Tooltip, Select } from 'antd';
 import * as React from 'react';
-import { lazyInject } from '../..';
 import { IAudienceSegmentService } from '../../services/AudienceSegmentService';
 import { TYPES } from '../../constants/types';
 import injectNotifications, {
@@ -27,6 +26,8 @@ import {
   UsergroupAddOutlined,
 } from '@ant-design/icons';
 import { DataColumnDefinition } from '@mediarithmics-private/mcs-components-library/lib/components/table-view/table-view/TableView';
+import { lazyInject } from '../../inversify/inversify.config';
+
 interface SegmentSelectorContentProps {
   organisationId: string;
   datamartId: string;

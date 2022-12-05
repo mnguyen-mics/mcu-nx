@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TimePicker } from 'antd';
 import { WrappedFieldProps } from 'redux-form';
-import { FormFieldWrapper } from '.';
+import FormFieldWrapper from './FormFieldWrapper';
 
 export interface FormTimePickerProps {
   className?: string;

@@ -2,7 +2,6 @@ import { Error } from '@mediarithmics-private/mcs-components-library';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { errorMessages, MicsReduxState } from '..';
 import { InjectedFeaturesProps, injectFeatures } from '../components/Features';
 import * as SessionHelper from '../redux/Session/selectors';
 import { getWorkspace } from '../redux/Session/actions';
@@ -10,6 +9,8 @@ import { fetchAllLabels } from '../redux/Labels/actions';
 import { RouteParams } from './AuthenticatedRoute';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { WrappedComponentProps, injectIntl } from 'react-intl';
+import { MicsReduxState } from './ReduxHelper';
+import errorMessages from '../utils/errorMessage';
 
 export interface RenderWhenHasAccessProps {
   requiredFeatures?: string | string[];

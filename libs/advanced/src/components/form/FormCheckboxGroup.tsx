@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Checkbox } from 'antd';
 import { WrappedFieldProps } from 'redux-form';
-import { FormFieldWrapper } from '.';
+import FormFieldWrapper from './FormFieldWrapper';
 
 interface OptionProps {
   label: string;

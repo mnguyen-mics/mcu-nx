@@ -1,4 +1,5 @@
 /* eslint-disable */
+import 'reflect-metadata';
 import React from 'react';
 import { render } from 'react-dom';
 import { KeycloakService } from '@mediarithmics-private/advanced-components';

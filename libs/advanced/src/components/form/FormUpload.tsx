@@ -6,7 +6,7 @@ import { UploadProps, UploadFile, UploadChangeParam } from 'antd/lib/upload/inte
 import { WrappedFieldProps } from 'redux-form';
 import { TooltipPropsWithTitle } from 'antd/lib/tooltip';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import { FormFieldWrapper } from './index';
+import FormFieldWrapper from './FormFieldWrapper';
 
 export interface FormUploadProps {
   formItemProps?: FormItemProps;
