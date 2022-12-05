@@ -1,6 +1,8 @@
 import * as React from 'react';
 
-import { MainLayout, EditLayout, SettingLayout } from './';
+import EditLayout from './EditLayout';
+import SettingLayout from './SettingLayout';
+import MainLayout from './MainLayout';
 
 import log from '../../../utils/Logger';
 
