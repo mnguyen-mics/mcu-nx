@@ -1,4 +1,5 @@
-def branch = env.sha1
+// def branch = env.sha1
+def branch = 'staging'
 
 def checkoutCommit(commit) {
     checkout([
