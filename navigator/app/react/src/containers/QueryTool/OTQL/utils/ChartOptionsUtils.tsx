@@ -362,9 +362,19 @@ export function getQuickOptionsByChartTypeAndDatasourceType(
   const formatDateOptions: QuickOptionsSelector = {
     title: 'date_format',
     options: [
-      { key: 'YYYY-MM-DD hh:mm', value: 'YYYY-MM-DD hh:mm', label: 'YYYY-MM-DD hh:mm' },
-      { key: 'YYYY-MM-DD', value: 'YYYY-MM-DD', label: 'YYYY-MM-DD' },
-      { key: 'YYYY-MM', value: 'YYYY-MM', label: 'YYYY-MM' },
+      { key: 'YYYY-MM-DD hh:mm', value: 'YYYY-MM-DD hh:mm', label: '2022-11-30 14:30' },
+      { key: 'YYYY-MM-DD', value: 'YYYY-MM-DD', label: '2022-11-30' },
+      { key: 'YYYY-MM', value: 'YYYY-MM', label: '2022-11' },
+
+      { key: 'MM-DD-YYYY hh:mm', value: 'MM-DD-YYYY hh:mm', label: '11-30-2022 14:30' },
+      { key: 'MM-DD-YYYY', value: 'MM-DD-YYYY', label: '11-30-2022' },
+      { key: 'MM-DD', value: 'MM-DD', label: '11-30' },
+      { key: 'MMM-DD', value: 'MMM-DD', label: 'Nov-30' },
+
+      { key: 'DD-MM-YYYY hh:mm', value: 'DD-MM-YYYY hh:mm', label: '30-11-2022 14:30' },
+      { key: 'DD-MM-YYYY', value: 'DD-MM-YYYY', label: '30-11-2022' },
+      { key: 'DD-MM', value: 'DD-MM', label: '30-11' },
+      { key: 'DD-MMM', value: 'DD-MMM', label: '30-Nov' },
     ],
   };
 
@@ -496,7 +506,7 @@ function renderQuickOptionsSelector(
             key={option.key}
             title={option.key}
             value={option.value}
-            className={option.className}
+            className={'mcs-otqlChart_item_select_option ' + option.className}
           >
             {option.label}
           </Select.Option>
