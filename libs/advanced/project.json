@@ -15,7 +15,7 @@
         "entryFile": "libs/advanced/src/index.ts",
         "external": ["react/jsx-runtime"],
         "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
-        "compiler": "swc",
+        "compiler": "babel",
         "buildableProjectDepsInPackageJsonType": "dependencies",
         "assets": [
           {
