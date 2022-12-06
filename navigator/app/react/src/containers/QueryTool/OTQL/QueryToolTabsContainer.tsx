@@ -878,7 +878,11 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
               queryModel: (s as AnalyticsSource<AnalyticsMetric, AnalyticsDimension>).query_json,
               type: s.type as QueryModelType,
             });
-          else return Promise.resolve({ sources: (s as AbstractParentSource).sources });
+          else
+            return Promise.resolve({
+              name: s.series_title,
+              sources: (s as AbstractParentSource).sources,
+            });
         });
 
       Promise.all(queryPromises)
@@ -896,6 +900,8 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
             for (const [i, res] of queryResponses.entries()) {
               // If sources
               const sources = (res as AbstractParentSource).sources;
+              const parentSeriesTitle = (res as any).name;
+
               if (sources) {
                 const subQueryPromises: Array<Promise<any>> = sources.map(s => {
                   const queryId = (s as OTQLSource).query_id;
@@ -932,7 +938,7 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
                     } else {
                       newSerieQueries.push({
                         id: cuid(),
-                        name: `Serie ${i}`,
+                        name: parentSeriesTitle || `Serie ${i}`,
                         inputVisible: false,
                         queryModel:
                           subResponse.length === 1
@@ -1143,7 +1149,6 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
           renderSaveAsButton((serieQueryToUse.queryModel as OTQLQueryModel).query, datamartId)}
       </Row>
     );
-
     return (
       <Layout>
         {renderActionBar &&
