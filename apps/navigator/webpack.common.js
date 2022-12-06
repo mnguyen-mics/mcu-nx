@@ -2,18 +2,6 @@ const webpack = require('webpack');
 
 module.exports = {
   module: {
-    rules: [
-      {
-        test: /\.[tj]sx?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'swc-loader',
-          options: {
-            parseMap: true,
-          },
-        },
-      },
-    ],
     parser: {
       javascript: {
         reexportExportsPresence: false,
