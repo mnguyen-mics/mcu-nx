@@ -1,10 +1,13 @@
 {
   "extends": [
+    "plugin:@nrwl/nx/react",
+    "../../.eslintrc.json",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
+  "ignorePatterns": ["!**/*"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
