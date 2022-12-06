@@ -18,7 +18,7 @@ cd ..
 
 # Publish artifact
 
-VERSION=$1
+VERSION="1.0.$(date +%Y%m%d)-build-${BUILD_NUMBER:-DEV}-rev-$(git rev-parse --short HEAD)"
 GROUP_ID="com.mediarithmics.web"
 ARTIFACT_ID="advanced-components-website"
 REPOSITORY="releases"

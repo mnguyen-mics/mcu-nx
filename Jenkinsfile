@@ -135,7 +135,7 @@ pipeline {
                         }
                         steps {
                             echo 'Running computing_console-publish-zip'
-                            sh 'cd $WORKSPACE/computing-console && ./build-support/jenkins/master.sh'
+                            sh 'cd $WORKSPACE/computing-console && ./build-support/jenkins/master.sh $BUILD_NUMBER'
                         }
                     }
                     stage('Building and Publishing Advanced Components Website Artifact (Cosmos)') {
@@ -144,7 +144,7 @@ pipeline {
                         }
                         steps {
                             echo 'Running advanced-components-publish-zip'
-                            sh 'cd $WORKSPACE/components/advanced && ./build-support/jenkins/master.sh'
+                            sh 'cd $WORKSPACE/components/advanced && ./build-support/jenkins/master.sh $BUILD_NUMBER'
                         }
                     }
                     stage('Building and Publishing Basic Components Website Staging Artifact (Cosmos)') {
@@ -153,7 +153,7 @@ pipeline {
                          }
                          steps {
                             echo 'Running basic-components-publish-zip'
-                             sh 'cd $WORKSPACE/components/basic/mcs-react-components && ./build-support/jenkins/master.sh'
+                             sh 'cd $WORKSPACE/components/basic/mcs-react-components && ./build-support/jenkins/master.sh $BUILD_NUMBER'
                          }
                     }
                 }
