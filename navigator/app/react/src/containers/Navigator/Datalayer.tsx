@@ -24,7 +24,6 @@ class Datalayer extends React.Component<Props> {
       location: { pathname },
     } = this.props;
     this.pushEvent(this.buildFinalDatalayer(organisationId, pathname, datalayer));
-    this.googleAnalyticsTrack(pathname);
   }
   componentDidUpdate(previousProps: Props) {
     const {
@@ -49,7 +48,6 @@ class Datalayer extends React.Component<Props> {
       organisationId !== previousOrganisationId
     ) {
       this.pushEvent(this.buildFinalDatalayer(organisationId, pathname, datalayer));
-      this.googleAnalyticsTrack(pathname);
     }
   }
 
@@ -63,10 +61,6 @@ class Datalayer extends React.Component<Props> {
 
   pushEvent = (datalayer: any) => {
     this._tagService.pushPageView(datalayer);
-  };
-
-  googleAnalyticsTrack = (pathname: string) => {
-    this._tagService.googleAnalyticsTrack(pathname);
   };
 
   public render() {
