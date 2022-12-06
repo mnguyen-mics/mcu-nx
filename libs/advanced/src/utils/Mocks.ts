@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 beforeAll(() => {
   Object.defineProperty(window, 'matchMedia', {
     writable: true,

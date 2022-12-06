@@ -10,7 +10,7 @@
       "defaultConfiguration": "production",
       "options": {
         "maxWorkers": 8,
-        "compiler": "babel",
+        "compiler": "swc",
         "outputPath": "dist/apps/navigator",
         "index": "apps/navigator/index.html",
         "baseHref": "/",

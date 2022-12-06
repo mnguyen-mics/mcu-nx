@@ -12,7 +12,6 @@
     "noImplicitAny": true,
     "declaration": true
 
-//    "declaration": true,
 //    "target": "es6",
 //    "lib": ["dom", "es7", "ES2019"],
 //    "noEmitOnError": true,
