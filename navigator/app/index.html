@@ -11,26 +11,7 @@
 
   <head>
     <script src="conf/react-configuration.js"></script>
-    <script type="text/javascript">
-      // Global site tag (gtag.js) - Google Analytics
-      if (window.MCS_CONSTANTS.USE_GTAG) {
-        const head = document.getElementsByTagName('head')[0];
-        const js = document.createElement('script');
-        js.type = 'text/javascript';
-        js.src = 'https://www.googletagmanager.com/gtag/js?id=' + window.MCS_CONSTANTS.GTAG_ID;
-        head.appendChild(js);
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-          dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', window.MCS_CONSTANTS.GTAG_ID);
-        // The global varibale userId can be undefined if user is logged out
-        gtag('config', 'GA_MEASUREMENT_ID', {
-          user_id: window.userId,
-        });
-      }
-    </script>
+    <script type="text/javascript"></script>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- the page title is init with the organisation name in Session init -->
