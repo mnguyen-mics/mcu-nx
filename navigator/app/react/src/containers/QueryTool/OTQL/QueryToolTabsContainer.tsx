@@ -4,6 +4,7 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { compose } from 'recompose';
 import { injectIntl, WrappedComponentProps, defineMessages } from 'react-intl';
 import { CancelablePromise } from '../../../utils/ApiHelper';
+import { ClearOutlined, ShareAltOutlined } from '@ant-design/icons';
 import {
   isQueryListModel,
   OTQLResult,
@@ -1123,7 +1124,11 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
 
     const saveExtraOptions = (
       <Row>
-        <Button className='mcs-otqlInputEditor_save_as_button' onClick={this.clearAllSavedQueries}>
+        <Button
+          className='mcs-otqlInputEditor_extra_button mcs-primary'
+          onClick={this.clearAllSavedQueries}
+        >
+          <ClearOutlined />
           {intl.formatMessage(messages.clearTabs)}
         </Button>
         {currentTab?.chartItem && (
@@ -1131,7 +1136,8 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
             onCopy={this.handleShareButtonClick}
             text={this.getCurrentChartUrl(currentTab.chartItem.id)}
           >
-            <Button className='mcs-otqlInputEditor_save_as_button'>
+            <Button className='mcs-otqlInputEditor_extra_button mcs-primary'>
+              <ShareAltOutlined />
               {intl.formatMessage(messages.shareButton)}
             </Button>
           </CopyToClipboard>
@@ -1151,7 +1157,7 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
           renderActionBar((serieQueryToUse.queryModel as OTQLQueryModel).query, datamartId)}
         <Layout>
           <QueryToolTabContext.Provider value={{ queryExecutionSource, queryExecutionSubSource }}>
-            <Content className='mcs-content-container'>
+            <Content className='mcs-content-container tabbed-container'>
               {schemaLoading ? (
                 <Loading isFullScreen={false} className={'mcs-otqlConsoleContainer_loader'} />
               ) : (
