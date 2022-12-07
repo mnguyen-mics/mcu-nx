@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Alert, Button, Layout, message, Row, Tabs } from 'antd';
+import { Alert, Button, Layout, message, Modal, Row, Tabs } from 'antd';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { compose } from 'recompose';
 import { injectIntl, WrappedComponentProps, defineMessages } from 'react-intl';
@@ -80,6 +80,18 @@ const messages = defineMessages({
   clearTabs: {
     id: 'queryTool.OtqlConsole.tab.clearTabs',
     defaultMessage: 'Clear tabs',
+  },
+  clearTabsModalTitle: {
+    id: 'queryTool.OtqlConsole.tab.clearTabs.modal.title',
+    defaultMessage: 'All tabs will be cleared, are you sure ?',
+  },
+  clearTabsModalOkText: {
+    id: 'queryTool.OtqlConsole.tab.clearTabs.modal.ok',
+    defaultMessage: 'Ok',
+  },
+  clearTabsModalCancelText: {
+    id: 'queryTool.OtqlConsole.tab.clearTabs.modal.cancel',
+    defaultMessage: 'Cancel',
   },
 });
 
@@ -1074,8 +1086,19 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
   };
 
   clearAllSavedQueries = () => {
-    localStorage.removeItem('savedQueries');
-    this.initTabState();
+    const {
+      intl: { formatMessage },
+    } = this.props;
+    const onOk = () => {
+      localStorage.removeItem('savedQueries');
+      this.initTabState();
+    };
+    Modal.confirm({
+      title: formatMessage(messages.clearTabsModalTitle),
+      okText: formatMessage(messages.clearTabsModalOkText),
+      cancelText: formatMessage(messages.clearTabsModalCancelText),
+      onOk,
+    });
   };
 
   render() {
