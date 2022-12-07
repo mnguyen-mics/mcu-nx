@@ -137,7 +137,7 @@ class AnalyticsDimensionFilters extends React.Component<Props, State> {
             expressions: value,
             operator: (value.length > 1 ? 'IN_LIST' : 'EXACT') as DimensionFilterOperator,
           };
-        } else dimensionFilter;
+        }
         return dimensionFilter;
       });
       onAnalyticsDimensionFiltersChange({ ...dimensionFilterClause, filters: updatedFilters });
