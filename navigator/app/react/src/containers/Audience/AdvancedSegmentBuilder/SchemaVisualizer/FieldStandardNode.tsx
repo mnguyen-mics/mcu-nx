@@ -2,41 +2,31 @@ import * as React from 'react';
 import { SchemaItem, FieldInfoEnhancedResource } from '../domain';
 import { Tooltip } from 'antd';
 import { McsIcon } from '@mediarithmics-private/mcs-components-library';
+import { ReactNode } from 'react';
 
-export type FieldNodeProps = FieldNodeObjectProps | FieldNodeFieldProps;
-
-interface FieldNodeObjectProps extends FieldNodeCommonProps {
-  type: 'object';
-  item: SchemaItem;
-}
-
-interface FieldNodeFieldProps extends FieldNodeCommonProps {
-  type: 'field';
-  item: FieldInfoEnhancedResource;
-}
-
-interface FieldNodeState {
+interface FieldStandardNodeState {
   truncated: boolean;
 }
 
-interface FieldNodeCommonProps {
+export interface FieldStandardNodeProps {
   id: string;
   schemaType?: string;
+  rootSchemaType?: string;
   searchString?: string;
   hasChildren?: boolean;
+  iconLeft?: ReactNode;
+  item: SchemaItem | FieldInfoEnhancedResource;
+  fieldsName?: string[];
+  onPropertyClick?: (
+    item: SchemaItem | FieldInfoEnhancedResource,
+    fieldsName?: string[],
+    rootSchemaType?: string,
+  ) => void;
 }
 
-class FieldNode extends React.Component<FieldNodeProps, FieldNodeState> {
+class FieldStandardNode extends React.Component<FieldStandardNodeProps, FieldStandardNodeState> {
   contentRef: React.RefObject<HTMLDivElement>;
-  formatString(search: string, expression: string): string[] {
-    const diplayableString: string[] = [];
-    const index = expression.toLowerCase().indexOf(search.toLowerCase());
-    diplayableString.push(expression.substring(0, index));
-    diplayableString.push(expression.substring(index, search.length + index));
-    diplayableString.push(expression.substring(index + search.length));
-    return diplayableString;
-  }
-  constructor(props: FieldNodeProps) {
+  constructor(props: FieldStandardNodeProps) {
     super(props);
     this.state = {
       truncated: false,
@@ -54,22 +44,39 @@ class FieldNode extends React.Component<FieldNodeProps, FieldNodeState> {
       });
   }
 
+  formatString(search: string, expression: string): string[] {
+    const diplayableString: string[] = [];
+    const index = expression.toLowerCase().indexOf(search.toLowerCase());
+    diplayableString.push(expression.substring(0, index));
+    diplayableString.push(expression.substring(index, search.length + index));
+    diplayableString.push(expression.substring(index + search.length));
+    return diplayableString;
+  }
+
   render() {
-    const { item, type, searchString, hasChildren } = this.props;
+    const {
+      item,
+      searchString,
+      hasChildren,
+      iconLeft,
+      fieldsName,
+      rootSchemaType,
+      onPropertyClick,
+    } = this.props;
     const { truncated } = this.state;
     const itemName = item.name;
 
-    const Fieldtype =
-      type === 'object'
-        ? (item as SchemaItem).schemaType
-        : (item as FieldInfoEnhancedResource).field_type;
+    const Fieldtype = hasChildren
+      ? (item as SchemaItem).schemaType
+      : (item as FieldInfoEnhancedResource).field_type;
+
     let helper = (
       <span className='field-type'>
         {Fieldtype} <McsIcon type='dots' />
       </span>
     );
 
-    if (item.decorator && item.decorator.hidden === false && item.decorator.help_text) {
+    if (item.decorator && !item.decorator.hidden && item.decorator.help_text) {
       const helptext = `${item.decorator.help_text} - ${Fieldtype}`;
       helper = (
         <span className='field-type'>
@@ -90,7 +97,11 @@ class FieldNode extends React.Component<FieldNodeProps, FieldNodeState> {
           <div
             ref={this.contentRef}
             className={`mcs-fieldNode_content ${hasChildren ? 'mcs-fieldNode_parent' : ''}`}
+            onClick={() => {
+              onPropertyClick?.(item, fieldsName, rootSchemaType);
+            }}
           >
+            {iconLeft}
             {searchString && itemName.toLocaleLowerCase().includes(searchString.toLowerCase())
               ? this.formatString(searchString, itemName).map((expr, index) => {
                   if (expr.toLowerCase() === searchString.toLowerCase())
@@ -110,4 +121,4 @@ class FieldNode extends React.Component<FieldNodeProps, FieldNodeState> {
   }
 }
 
-export default FieldNode;
+export default FieldStandardNode;
