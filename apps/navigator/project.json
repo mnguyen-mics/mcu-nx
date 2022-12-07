@@ -83,7 +83,8 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/navigator/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["apps/navigator/**/*.{ts,tsx,js,jsx}"],
+        "quiet": true
       }
     },
     "test": {

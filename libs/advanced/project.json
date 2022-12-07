@@ -30,7 +30,8 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/advanced/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["libs/advanced/**/*.{ts,tsx,js,jsx}"],
+        "quiet": true
       }
     },
     "test": {
