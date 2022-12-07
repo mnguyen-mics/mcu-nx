@@ -619,7 +619,7 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
       .then(res => {
         const response = res as any;
         this.setState({
-          tabs: tabs.map(tab => {
+          tabs: this.state.tabs.map(tab => {
             if (tab.key === activeKey) {
               return {
                 ...tab,
