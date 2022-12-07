@@ -343,20 +343,6 @@ container
   .bind<IExternalFeedSessionService>(TYPES.IExternalFeedSessionService)
   .to(ExternalFeedSessionService);
 
-const { lazyInject: originalLazyInject } = getDecorators(container, false);
-
-// Additional function to make properties decorators compatible with babel.
-function fixPropertyDecorator<T extends Function>(decorator: T): T {
-  return ((...args: any[]) => (
-    target: any,
-    propertyName: any,
-    ...decoratorArgs: any[]
-  ) => {
-    decorator(...args)(target, propertyName, ...decoratorArgs);
-    return Object.getOwnPropertyDescriptor(target, propertyName);
-  }) as any;
-}
-
-export const lazyInject = fixPropertyDecorator(originalLazyInject);
+export const { lazyInject } = getDecorators(container, false);
 
 export default { container };
