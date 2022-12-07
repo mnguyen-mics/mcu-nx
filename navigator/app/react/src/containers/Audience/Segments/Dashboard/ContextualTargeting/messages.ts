@@ -3,7 +3,7 @@ import { defineMessages } from 'react-intl';
 export const messages = defineMessages({
   noContextualTargetingTabText: {
     id: 'audience.segment.dashboard.contextualTargeting.noContextualTargetingTabText',
-    defaultMessage: 'Target this segment using content visited by its users',
+    defaultMessage: 'Use this segment as a panel for contextual targeting',
   },
   noContextualTargetingTabButton: {
     id: 'audience.segment.dashboard.contextualTargeting.noContextualTargetingTabButton',
