@@ -117,7 +117,7 @@ class ContextualTargetingChart extends React.Component<Props, State> {
       <div className='mcs-contextualTargetingDashboard_noCtStep'>
         <EmptyChart
           title={intl.formatMessage(messages.noContextualTargetingTabText)}
-          icon='optimization'
+          icon='users'
         />
         <Button className='mcs-primary' type='primary' onClick={createContextualTargeting}>
           {intl.formatMessage(messages.noContextualTargetingTabButton)}
