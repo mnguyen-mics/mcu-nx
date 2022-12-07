@@ -788,19 +788,26 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
 
   onVisualizerPropertyClick = (
     item: SchemaItem | FieldInfoEnhancedResource,
-    objectType?: string,
+    fieldsName: string[] = [],
+    rootSchemaType?: string,
   ) => {
     // If the item clicked is a model or if no schemaType, no action
     if ('fields' in item) {
       return;
     }
 
-    const { name, field_type } = item;
+    const { field_type } = item;
     const queryType = field_type === 'Date' || field_type === 'Date!' ? '@date_histogram' : '@map';
-    const newQuery = getNewSerieQuery(
-      'Series 1',
-      `SELECT {${name} ${queryType}} FROM ${objectType}`,
-    );
+
+    // Generate the query from fieldsName:
+    // ex: ['agents', 'user_agent_info', 'brand'] => { agents { user_agent_info { brand $queryType } } }
+    const lastFieldsName = fieldsName[fieldsName.length - 1];
+    const reversedFieldsNameMinusLast = fieldsName.slice(0, fieldsName.length - 1).reverse();
+    const selectQuery = reversedFieldsNameMinusLast.reduce((acc, fieldName) => {
+      return `{ ${fieldName} ${acc} }`;
+    }, `{ ${lastFieldsName} ${queryType} }`);
+
+    const newQuery = getNewSerieQuery('Series 1', `SELECT ${selectQuery} FROM ${rootSchemaType}`);
     if (this.isCurrentTabDefaultQuery()) {
       // Set query to current tab
       const { tabs, activeKey } = this.state;

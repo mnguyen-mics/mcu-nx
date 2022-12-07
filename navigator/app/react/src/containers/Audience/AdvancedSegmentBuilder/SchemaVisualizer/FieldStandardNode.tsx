@@ -11,11 +11,17 @@ interface FieldStandardNodeState {
 export interface FieldStandardNodeProps {
   id: string;
   schemaType?: string;
+  rootSchemaType?: string;
   searchString?: string;
   hasChildren?: boolean;
   iconLeft?: ReactNode;
   item: SchemaItem | FieldInfoEnhancedResource;
-  onPropertyClick?: (item: SchemaItem | FieldInfoEnhancedResource, objectType?: string) => void;
+  fieldsName?: string[];
+  onPropertyClick?: (
+    item: SchemaItem | FieldInfoEnhancedResource,
+    fieldsName?: string[],
+    rootSchemaType?: string,
+  ) => void;
 }
 
 class FieldStandardNode extends React.Component<FieldStandardNodeProps, FieldStandardNodeState> {
@@ -48,7 +54,15 @@ class FieldStandardNode extends React.Component<FieldStandardNodeProps, FieldSta
   }
 
   render() {
-    const { item, searchString, hasChildren, iconLeft, schemaType, onPropertyClick } = this.props;
+    const {
+      item,
+      searchString,
+      hasChildren,
+      iconLeft,
+      fieldsName,
+      rootSchemaType,
+      onPropertyClick,
+    } = this.props;
     const { truncated } = this.state;
     const itemName = item.name;
 
@@ -84,7 +98,7 @@ class FieldStandardNode extends React.Component<FieldStandardNodeProps, FieldSta
             ref={this.contentRef}
             className={`mcs-fieldNode_content ${hasChildren ? 'mcs-fieldNode_parent' : ''}`}
             onClick={() => {
-              onPropertyClick?.(item, schemaType);
+              onPropertyClick?.(item, fieldsName, rootSchemaType);
             }}
           >
             {iconLeft}

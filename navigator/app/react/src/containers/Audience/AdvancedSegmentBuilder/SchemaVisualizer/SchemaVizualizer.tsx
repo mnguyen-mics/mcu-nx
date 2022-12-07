@@ -11,7 +11,11 @@ import _ from 'lodash';
 export interface SchemaVizualizerProps {
   schema?: SchemaItem;
   disableDragAndDrop?: boolean;
-  onPropertyClick?: (item: SchemaItem | FieldInfoEnhancedResource, objectType?: string) => void;
+  onPropertyClick?: (
+    item: SchemaItem | FieldInfoEnhancedResource,
+    fieldsName?: string[],
+    rootSchemaType?: string,
+  ) => void;
 }
 
 export interface SchemaVizualizerState {
@@ -99,9 +103,9 @@ export default class SchemaVizualizer extends React.Component<
     return this.isFieldWithinSearch(field);
   };
 
-  loop = (gData: SchemaItem, parentType = '', isFiltered = false) => {
+  loop = (gData: SchemaItem, fieldsName: string[] = [], isFiltered = false) => {
     const { searchValue: searchString } = this.state;
-    const { disableDragAndDrop, onPropertyClick } = this.props;
+    const { disableDragAndDrop, schema, onPropertyClick } = this.props;
     return (
       gData &&
       gData.fields
@@ -112,8 +116,8 @@ export default class SchemaVizualizer extends React.Component<
 
           // SchemaType from parent
           const fieldSchemaItem = item as SchemaItem;
-          const schemaType =
-            parentType || fieldSchemaItem.schemaType || fieldSchemaItem.closestParentType;
+          const schemaType = fieldSchemaItem.schemaType || fieldSchemaItem.closestParentType;
+          const newFieldsName = [...fieldsName, item.name];
           return {
             title: (
               <NodeComponent
@@ -122,7 +126,9 @@ export default class SchemaVizualizer extends React.Component<
                 searchString={searchString}
                 hasChildren={hasChildren}
                 onPropertyClick={onPropertyClick}
+                fieldsName={newFieldsName}
                 schemaType={schemaType}
+                rootSchemaType={schema?.name}
               />
             ),
             key: cuid(),
@@ -131,8 +137,8 @@ export default class SchemaVizualizer extends React.Component<
               : 'mcs-schemaVizualizer_fieldNode_child',
             selectable: false,
             children: this.isFieldWithinSearch(fieldSchemaItem)
-              ? this.loop(fieldSchemaItem, schemaType)
-              : this.loop(fieldSchemaItem, schemaType, true),
+              ? this.loop(fieldSchemaItem, newFieldsName)
+              : this.loop(fieldSchemaItem, newFieldsName, true),
           };
         })
     );
