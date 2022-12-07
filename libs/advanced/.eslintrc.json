@@ -1,10 +1,62 @@
 {
   "extends": ["plugin:@nrwl/nx/react", "../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*"],
+  "ignorePatterns": ["!**/*", "*.js", "*.d.ts"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {}
+      "rules": {
+        "comma-dangle": "off",
+        "max-len": "off",
+        "padded-blocks": "off",
+        "no-unused-vars": "off",
+        "arrow-parens": "off",
+        "no-nested-ternary": "off",
+        "no-unneeded-ternary": "off",
+        "arrow-body-style": ["off"],
+        "class-methods-use-this": ["off"],
+        "no-class-assign": "off",
+        "no-case-declarations": "off",
+        "no-useless-escape": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/ban-types": "off",
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-empty-interface": "off",
+        "import/first": "off",
+        "react/no-typos": "off",
+        "no-prototype-builtins": "off",
+        "no-restricted-globals": "off",
+        "no-extra-boolean-cast": "off",
+        "object-shorthand": "off",
+        "import/no-unresolved": "off",
+        "import/prefer-default-export": "off",
+        "react/jsx-filename-extension": [
+          "warn",
+          {
+            "extensions": [".js", ".jsx"]
+          }
+        ],
+        "react/prefer-stateless-function": [
+          "off",
+          {
+            "ignorePureComponents": false
+          }
+        ],
+        "react/prop-types": [
+          "error",
+          {
+            "ignore": ["children"]
+          }
+        ],
+        "react/sort-comp": ["off"],
+        "react/no-unused-prop-types": [
+          "warn",
+          {
+            "skipShapeProps": true
+          }
+        ],
+        "react/require-extension": ["off"]
+      }
     },
     {
       "files": ["*.ts", "*.tsx"],
