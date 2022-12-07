@@ -183,8 +183,7 @@ class FieldNodeWidget extends React.Component<Props, State> {
     const onMouseLeave = () => this.props.lockGlobalInteraction(false);
 
     return (
-      <React.Fragment>
-        <div
+      <div
           id={this.id}
           style={{
             backgroundColor: '#ffffff',
@@ -234,7 +233,6 @@ class FieldNodeWidget extends React.Component<Props, State> {
             isEdge={this.props.isEdge}
           />
         </div>
-      </React.Fragment>
     );
   };
 

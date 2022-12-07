@@ -119,8 +119,7 @@ class QueryFragmentFormSection extends React.Component<Props> {
     const actionDotStyle = 'mcs-timeline_actionDot ' + timelineConfiguration.actionDotColor;
 
     return (
-      <React.Fragment>
-        <div className='mcs-timeline'>
+      <div className='mcs-timeline'>
           {fields.map((name, index) => {
             return (
               <React.Fragment key={`${index}_${fields.length}`}>
@@ -162,7 +161,6 @@ class QueryFragmentFormSection extends React.Component<Props> {
             );
           })}
         </div>
-      </React.Fragment>
     );
   }
 }

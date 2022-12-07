@@ -117,8 +117,7 @@ class StandardSegmentBuilderDashboard extends React.Component<Props> {
 
     return (
       <div className='mcs-standardSegmentBuilder_liveDashboard'>
-        <React.Fragment>
-          <CardFlex className='mcs-standardSegmentBuilder_totalAudience'>
+        <CardFlex className='mcs-standardSegmentBuilder_totalAudience'>
             <McsIcon type='full-users' />
             {isQueryRunning ? (
               <span />
@@ -159,7 +158,6 @@ class StandardSegmentBuilderDashboard extends React.Component<Props> {
               isLoading={isQueryRunning}
             />
           </div>
-        </React.Fragment>
       </div>
     );
   }

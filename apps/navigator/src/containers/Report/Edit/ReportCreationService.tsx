@@ -78,12 +78,12 @@ const ReportCreationService = {
     requestValues: RequestValuesInterface,
   ): Promise<ReportViewResponse> {
     const {
-      reportType: reportType,
-      dimensions: dimensions,
-      metrics: metrics,
-      durationStartDate: durationStartDate,
-      durationEndDate: durationEndDate,
-      filters: filters,
+      reportType,
+      dimensions,
+      metrics,
+      durationStartDate,
+      durationEndDate,
+      filters,
     } = requestValues;
 
     switch (reportType) {

@@ -89,8 +89,7 @@ class QueryResultContainer extends React.Component<Props> {
       <div className='mcs-otqlQuery_result'>
         {result && isOTQLResult(result) && (
           <div className='mcs-otqlQuery_result_tag_container'>
-            <>
-              <Tag className='mcs-otqlQuery_result_tag'>
+            <Tag className='mcs-otqlQuery_result_tag'>
                 <FormattedMessage
                   id='otql-result-renderer-card-subtitle-duration'
                   defaultMessage='Took {duration}ms'
@@ -105,7 +104,6 @@ class QueryResultContainer extends React.Component<Props> {
                   />
                 </Tag>
               )}
-            </>
           </div>
         )}
         {content}

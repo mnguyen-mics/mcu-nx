@@ -128,7 +128,7 @@ class ReactToEventAutomationForm extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    const { storylineNodeModel: storylineNodeModel, dispatch } = this.props;
+    const { storylineNodeModel, dispatch } = this.props;
 
     const node = storylineNodeModel.node as QueryInputNodeResource;
     const {
@@ -175,7 +175,7 @@ class ReactToEventAutomationForm extends React.Component<Props, State> {
     const {
       dispatch,
       intl: { formatMessage },
-      storylineNodeModel: storylineNodeModel,
+      storylineNodeModel,
       initialValues,
     } = this.props;
 
@@ -467,7 +467,7 @@ class ReactToEventAutomationForm extends React.Component<Props, State> {
       close,
       disabled,
       breadCrumbPaths,
-      storylineNodeModel: storylineNodeModel,
+      storylineNodeModel,
       initialValues,
       dispatch,
       change: injectedFormPropsChange,

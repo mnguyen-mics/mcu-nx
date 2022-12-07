@@ -82,8 +82,7 @@ class AudienceSegmentHeader extends React.Component<Props> {
     ) : undefined;
 
     const segmentType = segment ? (
-      <React.Fragment>
-        <div className='mcs-audienceSegmentHeader_segment_type'>
+      <div className='mcs-audienceSegmentHeader_segment_type'>
           {iconType} {renderName()}
           {isUserQuerySegment(segment) &&
             segment.subtype &&
@@ -94,7 +93,6 @@ class AudienceSegmentHeader extends React.Component<Props> {
             )}
           {createdOn}
         </div>
-      </React.Fragment>
     ) : (
       <span />
     );

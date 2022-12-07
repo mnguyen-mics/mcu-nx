@@ -51,7 +51,7 @@ class IfNodeForm extends React.Component<Props, State> {
     const {
       breadCrumbPaths,
       close,
-      storylineNodeModel: storylineNodeModel,
+      storylineNodeModel,
       initialValues,
       onSubmit,
       disabled,

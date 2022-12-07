@@ -9,8 +9,6 @@ import {
   PieChartOptions,
   RadarChartOptions,
 } from '@mediarithmics-private/advanced-components/lib/services/ChartDatasetService';
-
-export type chartType = 'radar' | 'bar' | 'table' | 'metric' | 'pie' | 'area';
 import { WrappedAbstractDataset } from '../QueryResultRenderer';
 import { ChartType } from '@mediarithmics-private/advanced-components';
 import {
@@ -19,6 +17,8 @@ import {
 } from '@mediarithmics-private/advanced-components/lib/models/dashboards/dataset/dataset_tree';
 import omitDeep from 'omit-deep-lodash';
 import { DateOptions } from '@mediarithmics-private/advanced-components/lib/models/dashboards/dataset/common';
+
+export type chartType = 'radar' | 'bar' | 'table' | 'metric' | 'pie' | 'area';
 
 export interface QuickOption {
   key: string;

@@ -4,10 +4,6 @@ import moment from 'moment';
 import { WrappedFieldProps } from 'redux-form';
 import { FormItemProps } from 'antd/lib/form/FormItem';
 
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
-const InputGroup = Input.Group;
-
 import FormFieldWrapper, {
   FormFieldWrapperProps,
 } from '../../../../../../../components/Form/FormFieldWrapper';
@@ -16,6 +12,10 @@ import { defineMessages, FormattedMessage } from 'react-intl';
 import { TimeComparisonOperator } from '../../../../../../../models/datamart/graphdb/QueryDocument';
 import { DatePickerProps } from 'antd/lib/date-picker';
 import { valueType } from 'antd/lib/statistic/utils';
+
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
+const InputGroup = Input.Group;
 
 const messages = defineMessages({
   absolute: {

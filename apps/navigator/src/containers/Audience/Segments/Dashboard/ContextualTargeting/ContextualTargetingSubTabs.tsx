@@ -165,15 +165,13 @@ class ContextualTargetingSubTabs extends React.Component<Props, State> {
             key={'1'}
           >
             {signatureScoredCategoryResources ? (
-              <React.Fragment>
-                <TableViewFilters
+              <TableViewFilters
                   dataSource={
                     signatureScoredCategoryResources ? signatureScoredCategoryResources : []
                   }
                   loading={isLoadingSignature}
                   columns={signatureDataColumnsDefinition}
                 />
-              </React.Fragment>
             ) : (
               <EmptyChart
                 title={intl.formatMessage(messages.InitializationTabText)}
