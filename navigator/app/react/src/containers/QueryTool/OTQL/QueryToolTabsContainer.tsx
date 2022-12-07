@@ -1154,13 +1154,15 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
 
     const saveExtraOptions = (
       <Row>
-        <Button
-          className='mcs-otqlInputEditor_extra_button mcs-primary'
-          onClick={this.clearAllSavedQueries}
-        >
-          <ClearOutlined />
-          {intl.formatMessage(messages.clearTabs)}
-        </Button>
+        {!editionMode && (
+          <Button
+            className='mcs-otqlInputEditor_extra_button mcs-primary'
+            onClick={this.clearAllSavedQueries}
+          >
+            <ClearOutlined />
+            {intl.formatMessage(messages.clearTabs)}
+          </Button>
+        )}
         {currentTab?.chartItem && (
           <CopyToClipboard
             onCopy={this.handleShareButtonClick}
@@ -1183,8 +1185,7 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
     return (
       <Layout>
         {renderActionBar &&
-          serieQueryToUse?.type === 'otql' &&
-          renderActionBar((serieQueryToUse.queryModel as OTQLQueryModel).query, datamartId)}
+          renderActionBar((serieQueryToUse?.queryModel as OTQLQueryModel)?.query, datamartId)}
         <Layout>
           <QueryToolTabContext.Provider value={{ queryExecutionSource, queryExecutionSubSource }}>
             <Content className='mcs-content-container tabbed-container'>
