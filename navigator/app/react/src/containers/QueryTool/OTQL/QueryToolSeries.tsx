@@ -322,7 +322,7 @@ class QueryToolSeries extends React.Component<Props> {
               key={queryModelId}
               onChange={updateOTQLQueryModel}
               datamartId={datamartId}
-              value={(queryModel as OTQLQueryModel).query}
+              value={(queryModel as OTQLQueryModel)?.query}
               showPrintMargin={false}
               enableBasicAutocompletion={true}
               enableLiveAutocompletion={false}

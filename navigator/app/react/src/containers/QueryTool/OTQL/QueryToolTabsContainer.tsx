@@ -895,7 +895,6 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
               });
             }
             for (const [i, res] of queryResponses.entries()) {
-              // If sources
               const sources = (res as AbstractParentSource).sources;
               if (sources) {
                 const subQueryPromises: Array<Promise<any>> = sources.map(s => {
@@ -981,6 +980,7 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
           notifyError(err);
         });
     };
+    let sources;
     switch (dataset.type.toLowerCase()) {
       case 'otql':
         const queryId = (dataset as OTQLSource).query_id;
@@ -1007,11 +1007,18 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
         break;
       case 'join':
       case 'to-list':
+        sources = (dataset as AbstractParentSource).sources;
+        if (sources) buildSerieQueryTree(sources, dataset.type.toLowerCase() as SourceType);
+        break;
       case 'to-percentages':
       case 'format-dates':
       case 'index':
-        const sources = (dataset as AbstractParentSource).sources;
-        if (sources) buildSerieQueryTree(sources, dataset.type.toLowerCase() as SourceType);
+        sources = (dataset as AbstractParentSource).sources;
+        if (sources)
+          buildSerieQueryTree(
+            (sources[0] as AbstractParentSource).sources,
+            dataset.type.toLowerCase() as SourceType,
+          );
         break;
       case 'activities_analytics':
       case 'collection_volumes':
