@@ -18,7 +18,7 @@ import { ChartResource } from '@mediarithmics-private/advanced-components/lib/mo
 import { lazyInject } from '../../../config/inversify.config';
 import { TYPES } from '../../../constants/types';
 import { ITagService } from '@mediarithmics-private/advanced-components';
-import { AnalyticsSourceType } from '@mediarithmics-private/advanced-components/lib/models/dashboards/dataset/common';
+import { SourceType } from '@mediarithmics-private/advanced-components/lib/models/dashboards/dataset/common';
 import { ReportRequestBody } from '@mediarithmics-private/advanced-components/lib/models/report/ReportRequestBody';
 import {
   AnalyticsDimension,
@@ -46,7 +46,7 @@ export interface QueryToolTabProps {
   onQueryParamsChange: (eg: boolean, c: boolean, p: QueryPrecisionMode) => void;
 }
 
-export type QueryModelType = 'otql' | AnalyticsSourceType;
+export type QueryModelType = SourceType;
 
 export interface OTQLQueryModel {
   query: string;
