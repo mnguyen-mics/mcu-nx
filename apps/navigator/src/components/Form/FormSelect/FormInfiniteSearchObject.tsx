@@ -39,12 +39,6 @@ interface FormInfiniteSearchObjectState {
 type Props = FormInfiniteSearchObjectProps & WrappedFieldProps;
 
 class FormInfiniteSearchObject extends React.Component<Props, FormInfiniteSearchObjectState> {
-  static defaultprops = {
-    formItemProps: {},
-    inputProps: {},
-    helpToolTipProps: {},
-  };
-
   private debounce = debounce;
 
   constructor(props: Props) {

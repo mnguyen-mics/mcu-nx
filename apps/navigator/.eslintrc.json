@@ -7,7 +7,7 @@
     "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
-  "ignorePatterns": ["!**/*"],
+  "ignorePatterns": ["!**/*", "*.js", "*.d.ts"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {

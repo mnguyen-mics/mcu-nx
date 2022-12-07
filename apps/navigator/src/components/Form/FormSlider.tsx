@@ -17,12 +17,6 @@ export interface FormSliderProps {
 }
 
 class FormSlider extends React.Component<FormSliderProps & WrappedFieldProps> {
-  static defaultprops = {
-    formItemProps: {},
-    inputProps: {},
-    helpToolTipProps: {},
-  };
-
   onChange = (checked: boolean) => {
     const { input } = this.props;
     input.onChange(checked);

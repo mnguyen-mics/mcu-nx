@@ -21,12 +21,6 @@ interface StateInterface {
 }
 
 class FormBoolean extends React.Component<FormBooleanProps & WrappedFieldProps, StateInterface> {
-  static defaultprops = {
-    formItemProps: {},
-    inputProps: {},
-    helpToolTipProps: {},
-  };
-
   constructor(props: FormBooleanProps & WrappedFieldProps) {
     super(props);
     this.state = {

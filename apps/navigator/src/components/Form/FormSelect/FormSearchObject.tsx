@@ -41,12 +41,6 @@ interface FormSearchObjectState {
 type Props = FormSearchObjectProps & WrappedFieldProps;
 
 class FormSearchObject extends React.Component<Props, FormSearchObjectState> {
-  static defaultprops = {
-    formItemProps: {},
-    inputProps: {},
-    helpToolTipProps: {},
-  };
-
   private debounce = debounce;
 
   constructor(props: Props) {
