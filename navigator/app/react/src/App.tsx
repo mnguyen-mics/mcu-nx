@@ -9,6 +9,7 @@ import { IntlProvider } from 'react-intl';
 import { ConfigProvider } from 'antd';
 import { HashRouter as Router } from 'react-router-dom';
 import NavigatorWithKeycloak from './containers/Navigator/NavigatorWithKeycloak';
+import { PageNotFound } from './containers/Navigator/PageNotFound/PageNotFound';
 
 const store = configureStore();
 const formats = {
@@ -31,9 +32,14 @@ class App extends React.Component<{}> {
         <ReduxProvider store={store}>
           <IocProvider container={container}>
             <ConfigProvider locale={enUS}>
-              <Router>
-                <NavigatorWithKeycloak />
-              </Router>
+              {window?.location?.pathname !== '/' &&
+              !window?.location?.pathname.startsWith('/#') ? (
+                <PageNotFound />
+              ) : (
+                <Router>
+                  <NavigatorWithKeycloak />
+                </Router>
+              )}
             </ConfigProvider>
           </IocProvider>
         </ReduxProvider>

@@ -2,15 +2,9 @@ import * as React from 'react';
 import { useIntl } from 'react-intl';
 import messages from '../messages';
 import { Button } from 'antd';
-import { useHistory } from 'react-router-dom';
 
 export const PageNotFound = () => {
   const intl = useIntl();
-  const history = useHistory();
-
-  const redirect = () => {
-    history.push('/');
-  };
 
   return (
     <div className='mcs-pageNotFound'>
@@ -28,8 +22,8 @@ export const PageNotFound = () => {
       <div className='pnf-parrot-text'>
         {intl.formatMessage(messages.lostParrot)} <a> ❤️ </a>
       </div>
-      <Button className='pnf-btn' onClick={redirect}>
-        {intl.formatMessage(messages.redirectHome)}
+      <Button className='pnf-btn' href='/'>
+        <div>{intl.formatMessage(messages.redirectHome)}</div>
       </Button>
     </div>
   );
