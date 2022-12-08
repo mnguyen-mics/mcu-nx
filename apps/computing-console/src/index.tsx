@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { KeycloakService } from '@mediarithmics-private/advanced-components';
 import React from 'react';
 import ReactDOM from 'react-dom';

@@ -17,6 +17,8 @@ interface IntegrationBatchInstanceExecutionEditPageProps {
 type Props = IntegrationBatchInstanceExecutionEditPageProps & WrappedComponentProps;
 
 const IntegrationBatchInstanceExecutionEditPage = (props: Props) => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const inputRef = React.useRef<Input>(null);
   const defaultValue =
     props.integrationBatchInstance && props.integrationBatchInstance.cron

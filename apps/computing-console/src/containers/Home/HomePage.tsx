@@ -11,7 +11,7 @@ import {
   TYPES,
   withDatamartSelector,
   WithDatamartSelectorProps,
-} from '@mediarithmics-private/advanced-components/lib';
+} from '@mediarithmics-private/advanced-components';
 import _ from 'lodash';
 import injectNotifications, {
   InjectedNotificationProps,
