@@ -9,15 +9,22 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "compiler": "babel",
+        "compiler": "swc",
         "outputPath": "dist/apps/computing-console",
-        "index": "apps/computing-console/src/index.html",
+        "index": "apps/computing-console/index.html",
         "baseHref": "/",
-        "main": "apps/computing-console/src/main.tsx",
+        "main": "apps/computing-console/src/index.tsx",
         "polyfills": "apps/computing-console/src/polyfills.ts",
         "tsConfig": "apps/computing-console/tsconfig.app.json",
-        "assets": ["apps/computing-console/src/favicon.ico", "apps/computing-console/src/assets"],
-        "styles": ["apps/computing-console/src/styles.less"],
+        "assets": [
+          "apps/computing-console/src/assets/images/favicon.ico",
+          {
+            "glob": "*",
+            "input": "apps/navigator/src/assets",
+            "output": "/"
+          }
+        ],
+        "styles": ["apps/computing-console/src/index.less"],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"
       },
@@ -26,7 +33,8 @@
           "extractLicenses": false,
           "optimization": false,
           "sourceMap": true,
-          "vendorChunk": true
+          "vendorChunk": true,
+          "webpackConfig": "apps/computing-console/webpack.dev.js"
         },
         "production": {
           "fileReplacements": [
@@ -40,13 +48,15 @@
           "sourceMap": false,
           "namedChunks": false,
           "extractLicenses": true,
-          "vendorChunk": false
+          "vendorChunk": false,
+          "webpackConfig": "apps/computing-console/webpack.prod.js"
         }
       }
     },
     "serve": {
       "executor": "@nrwl/webpack:dev-server",
       "defaultConfiguration": "development",
+      "port": 4201,
       "options": {
         "buildTarget": "computing-console:build",
         "hmr": true
