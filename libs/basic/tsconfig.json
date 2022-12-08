@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./lib",
     "module": "es6",
@@ -20,6 +21,15 @@
     "pretty": true,
     "removeComments": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "lib", "**/*.test.*", "**/*.fixture.*"]
+  "include": [],
+  "exclude": ["node_modules", "lib", "**/*.test.*", "**/*.fixture.*"],
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
 }
