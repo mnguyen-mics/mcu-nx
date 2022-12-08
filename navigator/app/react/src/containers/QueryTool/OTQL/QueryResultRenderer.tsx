@@ -71,13 +71,19 @@ import {
 } from '@mediarithmics-private/advanced-components/lib/models/datamart/graphdb/OTQLResult';
 import { ChartResource } from '@mediarithmics-private/advanced-components/lib/models/chart/Chart';
 import {
+  AbstractParentSource,
   AbstractSource,
   AnalyticsSource,
   OTQLSource,
 } from '@mediarithmics-private/advanced-components/lib/models/dashboards/dataset/datasource_tree';
 import { QueryToolTabContext } from './QueryToolTabContext';
 import log from '../../../utils/Logger';
-import { AnalyticsQueryModel, OTQLQueryModel } from './QueryToolTab';
+import {
+  AbstractListQueryModel,
+  AbstractQueryModel,
+  AnalyticsQueryModel,
+  OTQLQueryModel,
+} from './QueryToolTab';
 import {
   AnalyticsDimension,
   AnalyticsMetric,
@@ -119,6 +125,17 @@ const MAX_ELEMENTS = 999;
 interface BucketPath {
   aggregationBucket: OTQLBuckets;
   bucket: OTQLBucket;
+}
+
+export interface LocalDataset {
+  type?: SourceType | 'OTQL';
+  query_id?: string;
+  series_title?: string;
+  query_json?: AbstractQueryModel | AbstractListQueryModel[];
+  operation_type?: 'join' | 'to-list';
+  promises?: Array<Promise<LocalDataset>>;
+  list?: AbstractSource[];
+  parent_series_title?: string;
 }
 
 // To align source and dataset when building the tree
@@ -643,6 +660,14 @@ class QueryResultRenderer extends React.Component<Props, State> {
     }
   }
 
+  convertLocalDatasetToAbstractSource = (localDataset: LocalDataset): AbstractSource => {
+    const purifiedLocalDataset = {
+      ...localDataset,
+      parent_series_title: undefined,
+    };
+    return purifiedLocalDataset as AbstractSource;
+  };
+
   async generateChartJson(title?: string): Promise<string | undefined> {
     const { query, datamartId, datasource, tab } = this.props;
     const { selectedChart } = this.state;
@@ -650,7 +675,6 @@ class QueryResultRenderer extends React.Component<Props, State> {
     const buildJson = (_dataset: WrappedAbstractDataset | AbstractSource) => {
       const chartProps = { ...this.getChartProps(selectedChart) };
       const dataset = getChartDataset(_dataset, false, chartProps);
-
       let filteredOptions = omit(chartProps, [
         'date_options',
         'xKey',
@@ -700,12 +724,13 @@ class QueryResultRenderer extends React.Component<Props, State> {
       };
       return buildJson(dataset);
     } else {
-      let _dataset: any;
+      let _dataset: WrappedAbstractDataset | AbstractSource | AbstractParentSource;
       const createQueryPromise = (
         queryText: string,
         serieTitle: string,
         type: 'join' | 'to-list',
-      ) => {
+        parentSerieTitle?: string,
+      ): Promise<LocalDataset> => {
         return this._queryService
           .createQuery(datamartId, {
             query_language: 'OTQL',
@@ -717,11 +742,12 @@ class QueryResultRenderer extends React.Component<Props, State> {
               query_id: res.data.id,
               series_title: serieTitle,
               operation_type: type,
+              parent_series_title: parentSerieTitle,
             };
           });
       };
 
-      const promises: Array<Promise<any>> = [];
+      const promises: Array<Promise<LocalDataset>> = [];
       tab.serieQueries?.forEach(serieQuery => {
         if (!isQueryListModel(serieQuery.queryModel)) {
           if (!serieQuery.type || serieQuery.type === 'otql')
@@ -741,26 +767,28 @@ class QueryResultRenderer extends React.Component<Props, State> {
               }),
             );
         } else {
-          const listPromises: Array<Promise<any>> = [];
+          const listPromises: Array<Promise<LocalDataset>> = [];
           serieQuery.queryModel.forEach(model => {
-            if (!model.type || model.type === 'otql')
+            if (!model.type || model.type === 'otql') {
               listPromises.push(
                 createQueryPromise(
                   (model.queryModel as OTQLQueryModel).query,
                   model.name,
                   'to-list',
+                  serieQuery.name,
                 ),
               );
-            else
+            } else
               listPromises.push(
                 Promise.resolve({
                   query_json: model.queryModel,
                   type: model.type,
                   series_title: model.name,
+                  parent_series_title: serieQuery.name,
                 }),
               );
           });
-          const p = new Promise((resolve, reject) => {
+          const p = new Promise<LocalDataset>((resolve, reject) => {
             return resolve({
               promises: listPromises,
             });
@@ -768,8 +796,8 @@ class QueryResultRenderer extends React.Component<Props, State> {
           promises.push(p);
         }
       });
-      const sources: any[] = [];
-      const listSources: any[] = [];
+      const sources: LocalDataset[] = [];
+      const listSources: LocalDataset[] = [];
       return Promise.all(promises).then(responses => {
         // eslint-disable-next-line
         const forEachPromise = new Promise<void>(async (resolve, reject) => {
@@ -777,7 +805,10 @@ class QueryResultRenderer extends React.Component<Props, State> {
             if (res.promises) {
               const step = Promise.all(res.promises).then(r => {
                 listSources.push({
-                  list: r,
+                  parent_series_title: r.length > 0 ? r[0].parent_series_title : undefined,
+                  list: r.map(localDataset =>
+                    this.convertLocalDatasetToAbstractSource(localDataset),
+                  ),
                 });
                 if (i === responses.length - 1) resolve();
               });
@@ -793,33 +824,41 @@ class QueryResultRenderer extends React.Component<Props, State> {
           if (sources.length === 0 && listSources.length > 0) {
             _dataset = {
               type: 'join',
-              sources: listSources.map((s: any) => {
-                return {
+              series_title: listSources[0].parent_series_title,
+              sources: listSources.map((s: LocalDataset) => {
+                const r: AbstractParentSource = {
                   type: 'to-list',
-                  sources: s.list,
+                  sources: s.list ? s.list : [],
                 };
+
+                return r;
               }),
             };
           } else if (sources.length === 1 && listSources.length === 0) {
             _dataset = {
-              ...sources[0],
-            };
+              ...this.convertLocalDatasetToAbstractSource(sources[0]),
+              series_title: sources[0].parent_series_title,
+            } as AbstractSource;
           } else if (sources.length >= 1) {
             if (listSources.length === 0) {
               _dataset = {
                 type: 'join',
-                sources: sources,
+                series_title: sources[0].parent_series_title,
+                sources: sources.map(s => this.convertLocalDatasetToAbstractSource(s)),
               };
             } else {
-              const toListArray = listSources.map((s: any) => {
+              const toListArray = listSources.map((s: LocalDataset) => {
                 return {
                   type: 'to-list',
+                  series_title: s.parent_series_title,
                   sources: s.list,
-                };
+                } as LocalDataset;
               });
               _dataset = {
                 type: 'join',
-                sources: sources.concat(toListArray),
+                sources: sources
+                  .concat(toListArray)
+                  .map(s => this.convertLocalDatasetToAbstractSource(s)),
               };
             }
           }
