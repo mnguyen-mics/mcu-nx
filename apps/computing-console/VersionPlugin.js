@@ -16,11 +16,11 @@ class VersionPlugin {
         '-rev-' +
         require('child_process').execSync('git rev-parse --short HEAD').toString().trim();
 
-      fs.writeFile(this.path + '/version.txt', version, error => {
+      fs.writeFile(this.path + '/src/assets/version.txt', version, error => {
         if (error) throw error;
         console.log('version.txt created successfully !');
       });
-      fs.writeFile(this.path + '/version.json', JSON.stringify({ version: version }), error => {
+      fs.writeFile(this.path + '/src/assets/version.json', JSON.stringify({ version: version }), error => {
         if (error) throw error;
         console.log('version.json created successfully !');
       });

@@ -19,12 +19,17 @@
         "assets": [
           "apps/computing-console/src/assets/images/favicon.ico",
           {
+            "glob": "react-configuration.js",
+            "input": "apps/navigator/src/conf",
+            "output": "conf/react-configuration.js"
+          },
+          {
             "glob": "*",
             "input": "apps/navigator/src/assets",
             "output": "/"
           }
         ],
-        "styles": ["apps/computing-console/src/index.less"],
+        "styles": ["apps/computing-console/src/styles/index.less"],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"
       },
@@ -56,8 +61,8 @@
     "serve": {
       "executor": "@nrwl/webpack:dev-server",
       "defaultConfiguration": "development",
-      "port": 4201,
       "options": {
+        "port": 4201,
         "buildTarget": "computing-console:build",
         "hmr": true
       },
