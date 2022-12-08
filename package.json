@@ -21,7 +21,7 @@
     "@mediarithmics-private/advanced-components": "13.0.2",
     "@mediarithmics-private/mcs-components-library": "8.2.0",
     "@splitsoftware/splitio": "^10.17.3",
-    "@svgr/webpack": "5.5.0",
+    "@svgr/webpack": "^6.1.2",
     "ace-builds": "^1.4.13",
     "antd": "^4.16.13",
     "brace": "^0.11.0",
@@ -92,6 +92,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.14.2",
+    "@babel/preset-react": "^7.14.5",
     "@nrwl/cli": "15.3.0",
     "@nrwl/cypress": "15.3.0",
     "@nrwl/eslint-plugin-nx": "15.3.0",
@@ -100,7 +101,7 @@
     "@nrwl/react": "15.3.0",
     "@nrwl/web": "15.3.0",
     "@nrwl/workspace": "15.3.0",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@swc/core": "^1.2.203",
     "@testing-library/react": "13.4.0",
     "@types/cuid": "^1.3.1",
@@ -139,7 +140,7 @@
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "copy-webpack-plugin": "^4.6.0",
     "cross-env": "^7.0.2",
-    "css-loader": "^3.2.0",
+    "css-loader": "^6.4.0",
     "css-minimizer-webpack-plugin": "^4.0.0",
     "cypress": "^11.0.0",
     "eslint": "^8.17.0",
@@ -169,11 +170,15 @@
     "properties": "^1.2.1",
     "react-test-renderer": "18.2.0",
     "style-loader": "^3.3.0",
+    "stylus": "^0.55.0",
+    "stylus-loader": "^7.1.0",
     "swc-loader": "^0.2.3",
     "ts-jest": "28.0.5",
     "ts-node": "10.9.1",
     "typescript": "4.1.6",
-    "url-loader": "^4.1.1"
+    "url-loader": "^4.1.1",
+    "webpack": "^5.75.0",
+    "webpack-merge": "^5.8.0"
   },
   "overrides": {
     "react-dimensions": {
