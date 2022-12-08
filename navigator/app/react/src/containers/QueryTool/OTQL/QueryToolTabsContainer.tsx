@@ -900,7 +900,7 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
             for (const [i, res] of queryResponses.entries()) {
               // If sources
               const sources = (res as AbstractParentSource).sources;
-              const parentSeriesTitle = (res as any).name;
+              const seriesTitle = (res as AbstractListQueryModel).name;
 
               if (sources) {
                 const subQueryPromises: Array<Promise<any>> = sources.map(s => {
@@ -938,7 +938,7 @@ class QueryToolTabsContainer extends React.Component<Props, State> {
                     } else {
                       newSerieQueries.push({
                         id: cuid(),
-                        name: parentSeriesTitle || `Serie ${i}`,
+                        name: seriesTitle || `Serie ${i}`,
                         inputVisible: false,
                         queryModel:
                           subResponse.length === 1
