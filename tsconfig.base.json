@@ -17,7 +17,8 @@
     "baseUrl": ".",
     "paths": {
       "@mediarithmics-private/advanced-components": ["libs/advanced/src/index.ts"],
-      "@mediarithmics-private/advanced-components/lib/*": ["libs/advanced/src/*"]
+      "@mediarithmics-private/advanced-components/lib/*": ["libs/advanced/src/*"],
+      "@mediarithmics/ux-components": ["libs/basic/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
