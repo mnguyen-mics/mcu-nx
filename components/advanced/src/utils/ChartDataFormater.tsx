@@ -91,19 +91,18 @@ export function formatDatasetForOtql(
 ): AbstractDataset | undefined {
   if (dataResult && isAggregateResult(dataResult.rows) && !isCountResult(dataResult.rows)) {
     let buckets = dataResult.rows[0]?.aggregations?.buckets[0]?.buckets || undefined;
-
-    if (dataResult.rows[0]?.aggregations?.metrics[0]?.metric_type === 'cardinality') {
+    const metricType = dataResult.rows[0]?.aggregations?.metrics[0]?.metric_type;
+    if (
+      metricType === 'cardinality' ||
+      metricType === 'sum' ||
+      metricType === 'avg' ||
+      metricType === 'max' ||
+      metricType === 'min'
+    ) {
+      const bucketKeyName = dataResult.rows[0]?.aggregations?.metrics[0]?.name;
       buckets = [
         {
-          key: 'cardinality_id',
-          count: dataResult.rows[0]?.aggregations?.metrics[0]?.value,
-          aggregations: null,
-        },
-      ];
-    } else if (dataResult.rows[0]?.aggregations?.metrics[0]?.metric_type === 'sum') {
-      buckets = [
-        {
-          key: 'sum_price',
+          key: bucketKeyName,
           count: dataResult.rows[0]?.aggregations?.metrics[0]?.value,
           aggregations: null,
         },
