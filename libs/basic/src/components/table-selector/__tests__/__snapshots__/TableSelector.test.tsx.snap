@@ -8,34 +8,37 @@ exports[`renders a basic tableSelector 1`] = `
     className="ant-row ant-row-space-between ant-row-middle mcs-actionbar-edit  "
     style={Object {}}
   >
-    <div
+    <nav
       className="ant-breadcrumb mcs-breadcrumb"
     >
-      <span>
-        <span
-          className="ant-breadcrumb-link"
-        >
-          This is the Table Selector Title
-        </span>
-        <span
-          className="ant-breadcrumb-separator"
-        >
+      <ol>
+        <li>
           <span
-            className="mcs-icon "
+            className="ant-breadcrumb-link"
           >
-            <i
-              className="mcs-chevron-right"
-              style={Object {}}
-            />
+            This is the Table Selector Title
           </span>
-        </span>
-      </span>
-    </div>
+          <span
+            className="ant-breadcrumb-separator"
+          >
+            <span
+              className="mcs-icon "
+            >
+              <i
+                className="mcs-chevron-right"
+                style={Object {}}
+              />
+            </span>
+          </span>
+        </li>
+      </ol>
+    </nav>
     <div
       className="left-part-margin"
     >
       <button
-        className="ant-btn add-button mcs-addButton"
+        className="ant-btn ant-btn-default add-button mcs-addButton"
+        disabled={false}
         onClick={[Function]}
         type="button"
       >
@@ -85,8 +88,11 @@ exports[`renders a basic tableSelector 1`] = `
               >
                 <input
                   className="ant-input"
+                  hidden={null}
                   onBlur={[Function]}
                   onChange={[Function]}
+                  onCompositionEnd={[Function]}
+                  onCompositionStart={[Function]}
                   onFocus={[Function]}
                   onKeyDown={[Function]}
                   placeholder="Search placeholder"
@@ -98,7 +104,8 @@ exports[`renders a basic tableSelector 1`] = `
                   className="ant-input-group-addon"
                 >
                   <button
-                    className="ant-btn ant-btn-icon-only ant-input-search-button"
+                    className="ant-btn ant-btn-default ant-btn-icon-only ant-input-search-button"
+                    disabled={false}
                     onClick={[Function]}
                     onMouseDown={[Function]}
                     type="button"
@@ -135,7 +142,8 @@ exports[`renders a basic tableSelector 1`] = `
               id="ckr0m8gkw0000w0hq4r212w1u"
             >
               <button
-                className="ant-btn ant-dropdown-trigger mcs-table-filters-item"
+                className="ant-btn ant-btn-default ant-dropdown-trigger mcs-table-filters-item"
+                disabled={false}
                 onClick={[Function]}
                 onMouseDown={[Function]}
                 onTouchStart={[Function]}
@@ -178,6 +186,8 @@ exports[`renders a basic tableSelector 1`] = `
             >
               <div>
                 <div
+                  aria-busy={true}
+                  aria-live="polite"
                   className="ant-spin ant-spin-spinning"
                 >
                   <span
@@ -227,12 +237,16 @@ exports[`renders a basic tableSelector 1`] = `
                             <th
                               className="ant-table-cell"
                               colSpan={null}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
                               rowSpan={null}
                               style={Object {}}
                             />
                             <th
                               className="ant-table-cell"
                               colSpan={null}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
                               rowSpan={null}
                               style={Object {}}
                             >
@@ -241,6 +255,8 @@ exports[`renders a basic tableSelector 1`] = `
                             <th
                               className="ant-table-cell"
                               colSpan={null}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
                               rowSpan={null}
                               style={Object {}}
                             >
@@ -249,6 +265,8 @@ exports[`renders a basic tableSelector 1`] = `
                             <th
                               className="ant-table-cell"
                               colSpan={null}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
                               rowSpan={null}
                               style={Object {}}
                             >
@@ -257,6 +275,8 @@ exports[`renders a basic tableSelector 1`] = `
                             <th
                               className="ant-table-cell"
                               colSpan={null}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
                               rowSpan={null}
                               style={Object {}}
                             >
@@ -278,6 +298,8 @@ exports[`renders a basic tableSelector 1`] = `
                             <td
                               className="ant-table-cell"
                               colSpan={5}
+                              onMouseEnter={[Function]}
+                              onMouseLeave={[Function]}
                               rowSpan={null}
                               style={Object {}}
                             >
@@ -321,11 +343,11 @@ exports[`renders a basic tableSelector 1`] = `
                                     </g>
                                   </svg>
                                 </div>
-                                <p
+                                <div
                                   className="ant-empty-description"
                                 >
-                                  No Data
-                                </p>
+                                  No data
+                                </div>
                               </div>
                             </td>
                           </tr>

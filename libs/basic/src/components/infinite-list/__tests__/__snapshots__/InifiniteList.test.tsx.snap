@@ -15,8 +15,11 @@ exports[`renders the list 1`] = `
           <input
             className="ant-input ant-input-disabled"
             disabled={true}
+            hidden={null}
             onBlur={[Function]}
             onChange={[Function]}
+            onCompositionEnd={[Function]}
+            onCompositionStart={[Function]}
             onFocus={[Function]}
             onKeyDown={[Function]}
             placeholder="Loading, please wait...."
@@ -28,7 +31,7 @@ exports[`renders the list 1`] = `
             className="ant-input-group-addon"
           >
             <button
-              className="ant-btn ant-btn-icon-only ant-input-search-button"
+              className="ant-btn ant-btn-default ant-btn-icon-only ant-input-search-button"
               disabled={true}
               onClick={[Function]}
               onMouseDown={[Function]}
@@ -61,6 +64,8 @@ exports[`renders the list 1`] = `
         className="mcs-infinite-list-loading"
       >
         <div
+          aria-busy={true}
+          aria-live="polite"
           className="ant-spin ant-spin-spinning"
         >
           <span

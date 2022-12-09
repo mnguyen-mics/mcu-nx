@@ -10,13 +10,14 @@ exports[`renders PopContainer components 1`] = `
   >
     <div
       className="ant-picker"
-      onMouseUp={[Function]}
+      onClick={[Function]}
     >
       <div
         className="ant-picker-input"
       >
         <input
           autoComplete="off"
+          disabled={false}
           onBlur={[Function]}
           onChange={[Function]}
           onFocus={[Function]}
@@ -104,6 +105,7 @@ exports[`renders PopContainer components 1`] = `
   >
     <button
       className="ant-btn ant-btn-primary"
+      disabled={false}
       onClick={[Function]}
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
@@ -153,6 +155,7 @@ exports[`renders PopContainer components 1`] = `
             aria-owns="rc_select_TEST_OR_SSR_list"
             autoComplete="off"
             className="ant-select-selection-search-input"
+            disabled={false}
             id="rc_select_TEST_OR_SSR"
             onChange={[Function]}
             onCompositionEnd={[Function]}

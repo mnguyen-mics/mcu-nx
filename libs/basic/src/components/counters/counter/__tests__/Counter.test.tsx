@@ -2,9 +2,9 @@ import 'jest';
 import * as React from 'react';
 import * as TestRenderer from 'react-test-renderer';
 import Counter, { CounterProps } from '../Counter';
-jest.mock('numeral', (value: number) => ({
+jest.mock('numeral', () => ({
   default: () => ({
-    format: () => value,
+    format: (value: number) => value,
   }),
 }));
 it('renders the Counter', () => {

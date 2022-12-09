@@ -11,6 +11,8 @@ export interface McsTabsItem {
   key?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 export interface McTabsProps extends TabsProps {
   items: McsTabsItem[];
   isCard?: boolean;

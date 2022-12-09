@@ -6,7 +6,7 @@ import { PaginationProps } from 'antd/lib/pagination';
 import { normalizeArrayOfObject } from '../../utils/Normalizer';
 import { DataListResponse, DataResponse } from '../../utils/ApiResponses';
 import { SearchFilter, SelectableItem } from '../../utils';
-import { MultiSelectProps } from '..//multi-select';
+import { MultiSelectProps } from '../multi-select';
 import {
   PaginationSearchSettings,
   KeywordSearchSettings,

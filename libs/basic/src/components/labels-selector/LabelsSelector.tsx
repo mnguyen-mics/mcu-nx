@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Tag, Tooltip, Input, Button, Menu } from 'antd';
-import { MenuInfo } from '../../../node_modules/rc-menu/lib/interface';
+import { Tag, Tooltip, Input, Button, Menu, InputRef } from 'antd';
+import { MenuInfo } from 'rc-menu/lib/interface';
 import McsIcon from '../mcs-icon';
 import { Dropdown } from '../popup-container/PopupContainer';
 import { Label } from '../../models/labels/labels';
@@ -26,7 +26,7 @@ interface LabelsSelectorState {
 }
 
 class LabelsSelector extends React.Component<LabelsSelectorProps, LabelsSelectorState> {
-  input: React.RefObject<Input>;
+  input: React.RefObject<InputRef>;
   constructor(props: LabelsSelectorProps) {
     super(props);
     this.input = React.createRef();

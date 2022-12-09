@@ -1,10 +1,10 @@
 import * as React from 'react';
-import * as _cuid from 'cuid';
+import * as cuid from 'cuid';
 import { Menu, Table } from 'antd';
 import { TableProps, ColumnProps } from 'antd/lib/table';
 import { TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';
 import { PaginationProps } from 'antd/lib/pagination/Pagination';
-import { MenuInfo } from '../../../../node_modules/rc-menu/lib/interface';
+import { MenuInfo } from 'rc-menu/lib/interface';
 import { Dropdown } from '../../popup-container/PopupContainer';
 import McsIcon from '../../mcs-icon';
 import SelectionNotifyer from '../selection-notifyer';
@@ -163,9 +163,8 @@ class TableView<
     if (dataSource === undefined) throw new Error('Undefined dataSource in TableView');
 
     const dataSourceWithIds = dataSource.map(elem => {
-      const cuid = _cuid();
       return {
-        key: elem.id ? elem.id : cuid,
+        key: elem.id ? elem.id : cuid(),
         ...(elem as any),
       };
     });

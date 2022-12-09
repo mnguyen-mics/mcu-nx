@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { CheckOutlined } from '@ant-design/icons';
 import { Menu, Button } from 'antd';
-import { MenuInfo } from '../../../node_modules/rc-menu/lib/interface';
+import { MenuInfo } from 'rc-menu/lib/interface';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { Dropdown } from '../popup-container/PopupContainer';
 

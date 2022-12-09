@@ -17,7 +17,7 @@
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "pretty": true,
-    "esModuleInterop": true,
+    "esModuleInterop": false,
     "removeComments": true
   },
   "include": [],

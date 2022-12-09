@@ -6,10 +6,11 @@ exports[`renders the SearchAndMultiSelect 1`] = `
 >
   <span
     className="ant-input-affix-wrapper ant-dropdown-trigger prefixCls "
-    onMouseUp={[Function]}
+    onClick={[Function]}
   >
     <input
       className="ant-input"
+      hidden={null}
       onBlur={[Function]}
       onChange={[Function]}
       onClick={[Function]}

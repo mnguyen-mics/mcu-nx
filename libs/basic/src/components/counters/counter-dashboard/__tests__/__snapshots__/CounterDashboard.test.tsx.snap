@@ -23,6 +23,7 @@ exports[`renders the Counter 1`] = `
     <div
       className="number"
     >
+      0,0
        Users
       <div
         className="ant-statistic"
@@ -103,6 +104,8 @@ exports[`renders the Counter 1`] = `
       className="number"
     >
       <div
+        aria-busy={true}
+        aria-live="polite"
         className="ant-spin ant-spin-spinning"
       >
         <span
@@ -143,6 +146,7 @@ exports[`renders the Counter 1`] = `
     <div
       className="number"
     >
+      0,0
       
     </div>
   </div>
@@ -166,6 +170,8 @@ exports[`renders the Counter 1`] = `
       className="number"
     >
       <div
+        aria-busy={true}
+        aria-live="polite"
         className="ant-spin ant-spin-spinning"
       >
         <span

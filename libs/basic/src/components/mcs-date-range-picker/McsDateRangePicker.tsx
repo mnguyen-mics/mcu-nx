@@ -2,7 +2,7 @@ import * as React from 'react';
 import { CalendarOutlined, ClockCircleOutlined, DownOutlined } from '@ant-design/icons';
 import { Button, DatePicker, Menu } from 'antd';
 import moment from 'moment';
-import { MenuInfo } from '../../../node_modules/rc-menu/lib/interface';
+import { MenuInfo } from 'rc-menu/lib/interface';
 import { Dropdown } from '../popup-container/PopupContainer';
 import McsMoment, { convertMcsDateToMoment } from '../../utils/McsMoment';
 import OnOutsideClick from 'react-outclick';
