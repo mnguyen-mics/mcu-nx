@@ -1,4 +1,4 @@
-import { Button, Divider, Tooltip } from 'antd';
+import { Button, Divider, Spin } from 'antd';
 import React from 'react';
 import cuid from 'cuid';
 import { AbstractScope, SegmentScope } from '../../models/datamart/graphdb/Scope';
@@ -21,6 +21,7 @@ import {
 } from '../../models/platformMetrics/QueryExecutionSource';
 import { ExportService } from '../../services/ExportService';
 import {
+  getDashboardChartsTitles,
   injectFirstSectionTitle,
   limitTextLength,
   transformSchemaForComparaison,
@@ -28,12 +29,19 @@ import {
 import { AudienceSegmentShape } from '../../models/audienceSegment/AudienceSegmentResource';
 import { compose } from 'recompose';
 import DashboardBody from './DashboardBody';
-import { CloseOutlined } from '@ant-design/icons';
+import {
+  ArrowLeftOutlined,
+  ClockCircleOutlined,
+  CloseOutlined,
+  CloudDownloadOutlined,
+} from '@ant-design/icons';
 import {
   AggregateDataset,
   CountDataset,
   JsonDataset,
 } from '../../models/dashboards/dataset/dataset_tree';
+import moment from 'moment';
+import { Card } from '@mediarithmics-private/mcs-components-library';
 
 export interface DashboardLayoutProps {
   datamart_id: string;
@@ -58,6 +66,9 @@ export interface DashboardLayoutState {
   formattedQueryFragment: QueryFragment;
   segmentForComparaison?: AudienceSegmentShape;
   comparaison: boolean;
+  exportInProgress: boolean;
+  exportStep?: 'step1_init' | 'step2_in_progress' | 'step3_wait_longer' | 'step4_finished';
+  exportedFileName?: string;
 }
 
 type Props = DashboardLayoutProps &
@@ -66,10 +77,6 @@ type Props = DashboardLayoutProps &
   InjectedFeaturesProps;
 
 const messages = defineMessages({
-  exportWarning: {
-    id: 'dashboard.layout.exportWarning',
-    defaultMessage: 'Only charts you loaded will be exported',
-  },
   compareToSegment: {
     id: 'dashboard.layout.compareToSegment',
     defaultMessage: 'Compare to segment...',
@@ -98,6 +105,35 @@ const messages = defineMessages({
     id: 'dashboard.layout.originalDashboard',
     defaultMessage: 'Original dashboard',
   },
+  exportCheckingDataLoaded: {
+    id: 'dashboard.layout.exportCheckingDataLoaded',
+    defaultMessage: 'Checking if data is loaded',
+  },
+  exportExecutingQueries: {
+    id: 'dashboard.layout.exportExecutingQueries',
+    defaultMessage: 'Executing queries for missing data',
+  },
+  exportQueriesTakeTime: {
+    id: 'dashboard.layout.exportQueriesTakeTime',
+    defaultMessage: 'Queries take some time',
+  },
+  exportQueriesTakeTimeDescription: {
+    id: 'dashboard.layout.exportQueriesTakeTimeDescription',
+    defaultMessage:
+      'We queued all the queries. You can navigate to other pages and come back in 10 minutes to export again. Your download will start once ready if you wait.',
+  },
+  exportTryLater: {
+    id: 'dashboard.layout.exportTryLater',
+    defaultMessage: "I'll retry an export later",
+  },
+  exportDownloaded: {
+    id: 'dashboard.layout.exportDownloaded',
+    defaultMessage: 'Dashboard downloaded as',
+  },
+  exportBackToDashboard: {
+    id: 'dashboard.layout.exportBackToDashboard',
+    defaultMessage: 'Back to the dashboard',
+  },
 });
 
 export type ChartsFormattedData = Map<
@@ -114,6 +150,7 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
       dashboardFilterValues: {},
       formattedQueryFragment: {},
       comparaison: false,
+      exportInProgress: false,
     };
   }
 
@@ -231,16 +268,12 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
       schema.available_filters,
     );
 
+    this.chartsFormattedData = new Map();
+
     this.setState({
       formattedQueryFragment: formattedQueryFragmentWithFilters,
     });
   };
-
-  handleExportButtonClick =
-    (title = 'Dashboard') =>
-    () => {
-      new ExportService().exportMultipleDataset(this.chartsFormattedData, title);
-    };
 
   handleStopComparingButtonClick = () => {
     this.setState({
@@ -267,11 +300,152 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
     return { type: 'SEGMENT', segmentId: segmentId };
   };
 
-  private setChartsFormattedData = (
+  private generateExportFileName = () => {
+    const { title } = this.props;
+    const dashboardTitle = title ? title.replace(' ', '-') : '';
+    const currentTime = moment(new Date()).format('yyyy-MM-DD-HH-mm-ss');
+
+    return `export_dashboard_${dashboardTitle}_${currentTime}`;
+  };
+
+  private handleExportChartsFormattedDataReceived = (
     chartTitle: string,
     data?: AggregateDataset | CountDataset | JsonDataset,
   ) => {
+    const { exportInProgress, exportStep } = this.state;
+
     this.chartsFormattedData = this.chartsFormattedData.set(chartTitle, data);
+
+    if (exportInProgress && exportStep !== 'step4_finished' && this.allChartsLoaded())
+      this.downloadExport();
+  };
+
+  private allChartsLoaded = (): boolean => {
+    const { schema } = this.props;
+    const loadingCharts = getDashboardChartsTitles(schema);
+
+    let allChartsLoaded = this.chartsFormattedData.size > 0;
+    loadingCharts.forEach(chartTitle => {
+      if (!this.chartsFormattedData.has(chartTitle)) allChartsLoaded = false;
+    });
+
+    return allChartsLoaded;
+  };
+
+  private downloadExport = () => {
+    const fileName = this.generateExportFileName();
+    new ExportService().exportMultipleDataset(this.chartsFormattedData, fileName);
+    this.setState({
+      exportStep: 'step4_finished',
+      exportedFileName: `${fileName}.xlsx`,
+    });
+  };
+
+  private handleExportButtonClick = () => () => {
+    const initialStepDuration = 2;
+    const secondStepDuration = initialStepDuration + 7;
+
+    if (this.allChartsLoaded()) this.downloadExport();
+    else {
+      this.setState({
+        exportInProgress: true,
+        exportStep: 'step1_init',
+      });
+      setTimeout(() => {
+        const { exportInProgress, exportStep } = this.state;
+        if (exportInProgress && exportStep !== 'step4_finished')
+          this.setState({
+            exportStep: 'step2_in_progress',
+          });
+      }, initialStepDuration * 1000);
+
+      setTimeout(() => {
+        const { exportInProgress, exportStep } = this.state;
+        if (exportInProgress && exportStep !== 'step4_finished')
+          this.setState({
+            exportStep: 'step3_wait_longer',
+          });
+      }, secondStepDuration * 1000);
+    }
+  };
+
+  handleReturnFromExportBtn = () => {
+    this.setState({
+      exportInProgress: false,
+      exportStep: undefined,
+      exportedFileName: undefined,
+    });
+  };
+
+  renderExportProgressCard = () => {
+    const { intl } = this.props;
+    const { exportStep, exportedFileName } = this.state;
+
+    let cardContent;
+    switch (exportStep) {
+      case 'step1_init':
+        cardContent = (
+          <>
+            <Spin className='mcs-dashboardLayout_statusIcon' size='large' />
+            {intl.formatMessage(messages.exportCheckingDataLoaded)}
+          </>
+        );
+        break;
+      case 'step2_in_progress':
+        cardContent = (
+          <>
+            <Spin className='mcs-dashboardLayout_statusIcon' size={'large'} />
+            {intl.formatMessage(messages.exportExecutingQueries)}
+          </>
+        );
+        break;
+      case 'step3_wait_longer':
+        cardContent = (
+          <>
+            <ClockCircleOutlined className='mcs-dashboardLayout_iconWait' />
+            <span className='mcs-dashboardLayout_card_boldText'>
+              {intl.formatMessage(messages.exportQueriesTakeTime)}
+            </span>
+            <span className='mcs-dashboardLayout_card_msgText'>
+              {intl.formatMessage(messages.exportQueriesTakeTimeDescription)}
+            </span>
+            <Button
+              type='default'
+              onClick={this.handleReturnFromExportBtn}
+              className='mcs-primary mcs-dashboardLayout_returnFromExportBtn'
+            >
+              <ArrowLeftOutlined />
+              {intl.formatMessage(messages.exportTryLater)}
+            </Button>
+          </>
+        );
+        break;
+      case 'step4_finished':
+        cardContent = (
+          <>
+            <CloudDownloadOutlined className='mcs-dashboardLayout_iconDownload' />
+            {intl.formatMessage(messages.exportDownloaded)} {exportedFileName}
+            <Button
+              type='primary'
+              onClick={this.handleReturnFromExportBtn}
+              className='mcs-primary mcs-dashboardLayout_returnFromExportBtn'
+            >
+              <ArrowLeftOutlined />
+              {intl.formatMessage(messages.exportBackToDashboard)}
+            </Button>
+          </>
+        );
+        break;
+    }
+
+    return (
+      <Card
+        className='mcs-cardFlex mcs-dashboardLayout_card mcs-dashboardLayout_cardCentered'
+        style={{}}
+      >
+        <div className='mcs-statusCardContent'>{cardContent}</div>
+      </Card>
+    );
   };
 
   render() {
@@ -281,7 +455,6 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
       organisationId,
       queryExecutionSource,
       queryExecutionSubSource,
-      title,
       intl,
       editable,
       updateState,
@@ -290,7 +463,8 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
       layoutIndex,
     } = this.props;
 
-    const { formattedQueryFragment, comparaison, segmentForComparaison } = this.state;
+    const { formattedQueryFragment, comparaison, segmentForComparaison, exportInProgress } =
+      this.state;
 
     const comparaisonEnabled = hasFeature('dashboards-comparisons') && comparaison;
 
@@ -336,7 +510,8 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
         formattedQueryFragment={formattedQueryFragment}
         updateState={updateState}
         scope={scope}
-        setChartsFormattedData={this.setChartsFormattedData}
+        setChartsFormattedData={this.handleExportChartsFormattedDataReceived}
+        lazyLoading={!exportInProgress}
       />
     );
 
@@ -353,7 +528,8 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
           formattedQueryFragment={formattedQueryFragment}
           updateState={updateState}
           scope={compareScope}
-          setChartsFormattedData={this.setChartsFormattedData}
+          setChartsFormattedData={this.handleExportChartsFormattedDataReceived}
+          lazyLoading={!exportInProgress}
         />
       ) : undefined;
 
@@ -405,15 +581,13 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
           )}
 
           {!comparaisonEnabled && (
-            <Tooltip title={intl.formatMessage(messages.exportWarning)}>
-              <Button
-                type='default'
-                onClick={this.handleExportButtonClick(title)}
-                className='mcs-primary mcs-dashboardLayout_filters_applyBtn'
-              >
-                {intl.formatMessage(messages.export)}
-              </Button>
-            </Tooltip>
+            <Button
+              type='default'
+              onClick={this.handleExportButtonClick()}
+              className='mcs-primary mcs-dashboardLayout_filters_applyBtn'
+            >
+              {intl.formatMessage(messages.export)}
+            </Button>
           )}
 
           {schema.available_filters && (
@@ -440,7 +614,12 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
             </>
           )}
         </div>
-        {!sectionsCompare ? sections : undefined}
+        {!sectionsCompare && (
+          <>
+            {exportInProgress && this.renderExportProgressCard()}
+            <div className={exportInProgress ? 'mcs-hiddenLoading' : undefined}>{sections}</div>
+          </>
+        )}
         {sectionsCompare && (
           <div className='mcs-dashboardLayout_compareContainer'>
             <div className='mcs-dashboardLayout_columnLeft'>{sections}</div>
