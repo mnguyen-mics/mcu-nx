@@ -10,22 +10,10 @@
     "strictNullChecks": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
-    "declaration": true
-
-//    "target": "es6",
-//    "lib": ["dom", "es7", "ES2019"],
-//    "noEmitOnError": true,
-//    "sourceMap": true,
-//    "allowSyntheticDefaultImports": true,
-//    "noImplicitAny": true,
-//    "noImplicitThis": true,
-//    "noUnusedLocals": true,
-//    "pretty": true,
-//    "removeComments": true,
-//    "experimentalDecorators": true,
-//    "esModuleInterop": true
+    "declaration": true,
+    "esModuleInterop": true
   },
-  "files": [],
+  "files": ["./src/typing.d.ts"],
   "include": [],
   "references": [
     {
