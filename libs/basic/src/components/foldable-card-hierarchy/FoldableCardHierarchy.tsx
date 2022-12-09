@@ -1,6 +1,6 @@
 import { Timeline } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
-import * as React from 'react';
+import React from 'react';
 import FoldableCard, { FoldableCardProps } from './FoldableCard';
 
 export interface FoldableCardHierarchyResource {

@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { TreeSelect } from 'antd';
-import * as cuid from 'cuid';
+import cuid from 'cuid';
 
 export interface TreeDataParent {
   className?: string;

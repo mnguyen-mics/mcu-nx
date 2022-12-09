@@ -1,4 +1,4 @@
-import * as queryString from 'query-string';
+import queryString from 'query-string';
 import { isEqual } from 'lodash';
 import McsMoment from './McsMoment';
 import { Index } from '.';

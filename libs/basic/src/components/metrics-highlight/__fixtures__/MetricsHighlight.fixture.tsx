@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import { MetricsColumnProps } from '../../metrics-column/MetricsColumn';
 import MetricsHighlight from '../MetricsHighlight';

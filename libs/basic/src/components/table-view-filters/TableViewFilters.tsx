@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { LayoutOutlined } from '@ant-design/icons';
 import { Row, Col, Input } from 'antd';
 import { SearchProps } from 'antd/lib/input/Search';

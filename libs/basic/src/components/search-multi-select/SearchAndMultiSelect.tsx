@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import { Checkbox, Menu } from 'antd';
 import Input from 'antd/lib/input/Input';

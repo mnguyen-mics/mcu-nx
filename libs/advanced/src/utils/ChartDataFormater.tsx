@@ -16,7 +16,7 @@ import {
   CountDataset,
   JsonDataset,
 } from '../models/dashboards/dataset/dataset_tree';
-import { XKey } from '@mediarithmics-private/mcs-components-library/lib';
+import { XKey } from '@mediarithmics-private/mcs-components-library';
 
 export function formatDatasetAsKeyValueForOtql(
   buckets: OTQLBucket[] | undefined,

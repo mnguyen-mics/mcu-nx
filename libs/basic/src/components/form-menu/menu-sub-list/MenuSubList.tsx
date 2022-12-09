@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as cuid from 'cuid';
+import React from 'react';
+import cuid from 'cuid';
 import { Spin } from 'antd';
 import McsIcon from '../../mcs-icon';
 import { AbstractMessages } from '../../../utils/IntlHelper';

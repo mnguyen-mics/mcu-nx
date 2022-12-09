@@ -1,7 +1,7 @@
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Collapse } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
-import * as React from 'react';
+import React from 'react';
 
 const { Panel } = Collapse;
 

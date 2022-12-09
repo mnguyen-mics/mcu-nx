@@ -1,5 +1,5 @@
 import { Spin } from 'antd';
-import * as React from 'react';
+import React from 'react';
 import EmptyRecords, { EmptyRecordsProps } from '../empty-records';
 
 export interface RelatedRecordsProps {

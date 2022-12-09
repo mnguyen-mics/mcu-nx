@@ -1,6 +1,6 @@
 import { DownOutlined } from '@ant-design/icons';
 import { Button, Menu, Select as AntdSelect, Divider } from 'antd';
-import * as React from 'react';
+import React from 'react';
 import { DatePicker, Dropdown, Popover, Select } from '../PopupContainer';
 
 const menu = (

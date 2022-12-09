@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import CounterDashboard, { CounterDashboardProps } from '../CounterDashboard';
 
 const props: CounterDashboardProps = {

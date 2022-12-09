@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { BASE_CHART_HEIGHT } from '../../utils';
 import RadarChart, { RadarChartProps } from '../RadarChart';
 

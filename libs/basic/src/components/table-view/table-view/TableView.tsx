@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as cuid from 'cuid';
+import React from 'react';
+import cuid from 'cuid';
 import { Menu, Table } from 'antd';
 import { TableProps, ColumnProps } from 'antd/lib/table';
 import { TablePaginationConfig, TableRowSelection } from 'antd/lib/table/interface';

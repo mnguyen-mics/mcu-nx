@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import 'jest';
-import * as TestRenderer from 'react-test-renderer';
+import TestRenderer from 'react-test-renderer';
 import CopyToClipboard from '../CopyToClipboard';
 
 it('render the CopyToClipboard', () => {

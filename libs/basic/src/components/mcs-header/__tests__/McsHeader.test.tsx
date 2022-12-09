@@ -1,7 +1,7 @@
 import { Alert, Menu } from 'antd';
 import 'jest';
-import * as React from 'react';
-import * as TestRenderer from 'react-test-renderer';
+import React from 'react';
+import TestRenderer from 'react-test-renderer';
 import McsIcon from '../../mcs-icon';
 import McsHeader, { McsHeaderProps } from '../McsHeader';
 

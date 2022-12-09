@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 import { List, Spin, Input } from 'antd';
-import * as InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroller';
 import { AbstractMessages } from '../../utils/IntlHelper';
 export interface InfiniteListMessages extends AbstractMessages {
   searchBarPlaceholder: string;

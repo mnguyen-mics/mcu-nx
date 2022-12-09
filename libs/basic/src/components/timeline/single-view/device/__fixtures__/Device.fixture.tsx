@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Device, { DeviceProps } from '../Device';
 
 const props: DeviceProps = {

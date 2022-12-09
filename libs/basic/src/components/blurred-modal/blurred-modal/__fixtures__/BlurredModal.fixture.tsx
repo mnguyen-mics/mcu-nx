@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import BlurredModal, { BlurredModalProps } from '../BlurredModal';
 
 const onClose = (e: React.MouseEvent) => {

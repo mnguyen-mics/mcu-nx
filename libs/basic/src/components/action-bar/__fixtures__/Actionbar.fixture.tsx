@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Actionbar, { ActionbarProps } from '../Actionbar';
 import { Button } from 'antd';
 

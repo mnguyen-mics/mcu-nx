@@ -1,6 +1,6 @@
 import 'jest';
-import * as React from 'react';
-import * as TestRenderer from 'react-test-renderer';
+import React from 'react';
+import TestRenderer from 'react-test-renderer';
 import FormFieldWrapper, { FormFieldWrapperProps } from '../FormFieldWrapper';
 import McsIcon from '../../../mcs-icon';
 import { FormItemProps } from 'antd/lib/form';

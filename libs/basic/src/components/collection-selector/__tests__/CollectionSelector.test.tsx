@@ -1,7 +1,7 @@
 import 'jest';
-import * as React from 'react';
+import React from 'react';
 import CollectionSelector, { CollectionSelectorProps } from '../CollectionSelector';
-import * as TestRenderer from 'react-test-renderer';
+import TestRenderer from 'react-test-renderer';
 import { DataResponse, DataListResponse } from '../../../utils/ApiResponses';
 import { SelectableItem, SearchFilter } from '../../../utils';
 

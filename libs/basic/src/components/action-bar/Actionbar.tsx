@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Row } from 'antd';
 import Breadcrumb, { BreadcrumbProps } from 'antd/lib/breadcrumb';
 import McsIcon from '../mcs-icon';

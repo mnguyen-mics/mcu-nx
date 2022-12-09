@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Tag, Tooltip, Input, Button, Menu, InputRef } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';
 import McsIcon from '../mcs-icon';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Row, Col, Spin } from 'antd';
 
 export interface LoadingChartProps {

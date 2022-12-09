@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { AppstoreOutlined } from '@ant-design/icons';
 import { Layout, Menu, Dropdown } from 'antd';
 import McsIcon from '../mcs-icon';

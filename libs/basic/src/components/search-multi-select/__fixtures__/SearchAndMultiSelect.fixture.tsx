@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import SearchAndMultiSelect, { SearchAndMultiSelectProps } from '../SearchAndMultiSelect';
 
 const props: SearchAndMultiSelectProps = {

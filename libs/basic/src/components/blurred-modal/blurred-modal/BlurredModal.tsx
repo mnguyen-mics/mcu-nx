@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import FullScreenModal, { FullScreenFormModalProps } from '../full-screen-form-modal';
 import FormModalWrapper, { FormModalWrapperProps } from '../form-modal-wrapper';
 

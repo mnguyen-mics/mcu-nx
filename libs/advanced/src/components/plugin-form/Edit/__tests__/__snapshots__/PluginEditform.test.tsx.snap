@@ -119,7 +119,6 @@ exports[`render PluginEditForm 1`] = `
                         >
                           <input
                             className="ant-input mcs-PluginEditForm_name_field"
-                            disabled={false}
                             id="plugin.name"
                             name="plugin.name"
                             onBlur={[Function]}
@@ -231,7 +230,6 @@ exports[`render PluginEditForm 1`] = `
                           >
                             <input
                               className="ant-input"
-                              disabled={false}
                               id="properties.fb_ad_account_id.value.value"
                               name="properties.fb_ad_account_id.value.value"
                               onBlur={[Function]}
@@ -316,7 +314,6 @@ exports[`render PluginEditForm 1`] = `
                           >
                             <input
                               className="ant-input"
-                              disabled={false}
                               id="properties.used_compartments.value.value"
                               name="properties.used_compartments.value.value"
                               onBlur={[Function]}
@@ -599,7 +596,6 @@ exports[`render PluginEditForm 1`] = `
                               >
                                 <input
                                   className="ant-input"
-                                  disabled={false}
                                   id="properties.fb_custom_audience_id.value.value"
                                   name="properties.fb_custom_audience_id.value.value"
                                   onBlur={[Function]}
@@ -684,7 +680,6 @@ exports[`render PluginEditForm 1`] = `
                               >
                                 <input
                                   className="ant-input"
-                                  disabled={false}
                                   id="properties.fb_custom_audience_name.value.value"
                                   name="properties.fb_custom_audience_name.value.value"
                                   onBlur={[Function]}

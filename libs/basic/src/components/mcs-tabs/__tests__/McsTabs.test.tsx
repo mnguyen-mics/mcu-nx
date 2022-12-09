@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import McsTabs, { McTabsProps } from '../McsTabs';
 import { render } from 'enzyme';
 

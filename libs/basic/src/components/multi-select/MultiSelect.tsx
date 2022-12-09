@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { CheckOutlined } from '@ant-design/icons';
 import { Menu, Button } from 'antd';
 import { MenuInfo } from 'rc-menu/lib/interface';

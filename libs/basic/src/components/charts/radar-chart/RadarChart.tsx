@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Highcharts, { DataLabelsFilterOptionsObject, SeriesAreaOptions } from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { Dataset, defaultColors, generateTooltip, Tooltip } from '../utils';

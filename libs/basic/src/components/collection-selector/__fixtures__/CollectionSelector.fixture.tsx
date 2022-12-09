@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import CollectionSelector, { CollectionSelectorProps } from '../CollectionSelector';
 import { SelectableItem, SearchFilter } from '../../../utils';
 import faker from 'faker';

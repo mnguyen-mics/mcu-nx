@@ -1,6 +1,6 @@
 import 'jest';
-import * as React from 'react';
-import * as TestRenderer from 'react-test-renderer';
+import React from 'react';
+import TestRenderer from 'react-test-renderer';
 import { DownOutlined } from '@ant-design/icons';
 import { Button, Menu, Select as AntdSelect, Divider } from 'antd';
 import { DatePicker, Dropdown, Popover, Select } from '../PopupContainer';

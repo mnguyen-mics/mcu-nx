@@ -10,8 +10,7 @@
     "strictNullChecks": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
-    "declaration": true,
-    "esModuleInterop": true
+    "declaration": true
   },
   "files": ["./src/typing.d.ts"],
   "include": [],

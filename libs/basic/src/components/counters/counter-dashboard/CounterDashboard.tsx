@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Counter, { CounterProps } from '../counter/Counter';
 
 export interface CounterDashboardProps {

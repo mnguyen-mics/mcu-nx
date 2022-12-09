@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Col } from 'antd';
 import McsIcon, { McsIconType } from '../../components/mcs-icon';
 

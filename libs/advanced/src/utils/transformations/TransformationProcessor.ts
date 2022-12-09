@@ -1,4 +1,4 @@
-import { isTypeofXKey, XKey } from '@mediarithmics-private/mcs-components-library/lib/';
+import { isTypeofXKey, XKey } from '@mediarithmics-private/mcs-components-library';
 import { Datapoint } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 import {
   AbstractDataset,

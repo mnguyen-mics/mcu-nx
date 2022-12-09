@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import MenuList, { MenuListProps } from '../MenuList';
 
 const props: MenuListProps = {

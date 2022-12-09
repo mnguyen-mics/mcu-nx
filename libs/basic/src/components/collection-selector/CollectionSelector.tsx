@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { omit } from 'lodash';
 import { PaginationProps } from 'antd/lib/pagination';
 import CollectionView, { CollectionViewProps } from '../collection-view';

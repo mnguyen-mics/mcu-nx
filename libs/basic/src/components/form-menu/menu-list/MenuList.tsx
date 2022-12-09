@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import McsIcon from '../../mcs-icon';
 import classNames from 'classnames';
 

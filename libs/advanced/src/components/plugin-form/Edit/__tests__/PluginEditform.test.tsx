@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import * as React from 'react';
+import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { ReduxMock } from 'react-cosmos-redux';
 import { IocProvider } from '../../../../inversify/inversify.react';

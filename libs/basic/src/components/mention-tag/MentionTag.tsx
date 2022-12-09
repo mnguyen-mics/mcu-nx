@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Tag, Tooltip } from 'antd';
 import { InfoCircleFilled } from '@ant-design/icons';
 

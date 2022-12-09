@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { isEmpty } from 'lodash';
 import { Col, Form, Row, Tooltip } from 'antd';
 import { FormItemProps } from 'antd/lib/form/FormItem';

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as _moment from 'moment';
+import React from 'react';
+import _moment from 'moment';
 import { Row, Col, Tooltip } from 'antd';
 import { OriginProps } from '../../../../models/timeline/timeline';
 

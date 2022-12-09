@@ -1,9 +1,9 @@
 import 'jest';
-import * as React from 'react';
+import React from 'react';
 import TableView, { TableViewProps } from '../TableView';
 import { DownOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
-import * as TestRenderer from 'react-test-renderer';
+import TestRenderer from 'react-test-renderer';
 
 interface Data {
   key: string;

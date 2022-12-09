@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Tabs } from 'antd';
 import { TabsProps } from 'antd/lib/tabs';
 import classNames from 'classnames';

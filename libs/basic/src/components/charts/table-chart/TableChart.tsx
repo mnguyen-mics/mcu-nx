@@ -1,6 +1,6 @@
 import { Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
-import * as React from 'react';
+import React from 'react';
 import { formatMetric } from '../../../utils/MetricHelper';
 import McsIcon from '../../mcs-icon';
 import { YKey } from '../area-chart/AreaChartTypes';

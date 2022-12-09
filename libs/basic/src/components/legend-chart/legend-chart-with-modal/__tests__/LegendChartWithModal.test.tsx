@@ -1,7 +1,7 @@
 import 'jest';
-import * as React from 'react';
+import React from 'react';
 import LegendChartWithModal, { LegendChartWithModalProps } from '../LegendChartWithModal';
-import * as TestRenderer from 'react-test-renderer';
+import TestRenderer from 'react-test-renderer';
 
 it('renders the legendchartWithModal', () => {
   const props: LegendChartWithModalProps = {

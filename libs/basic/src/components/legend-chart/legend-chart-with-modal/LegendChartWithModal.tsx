@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Modal, Row, Col, Radio } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';
 import McsIcon from '../../mcs-icon';

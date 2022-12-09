@@ -43,7 +43,7 @@ import {
 } from '../../models/dashboards/dataset/dataset_tree';
 import { Dataset } from '@mediarithmics-private/mcs-components-library/lib/components/charts/utils';
 import { MetricChartFormat } from '@mediarithmics-private/mcs-components-library/lib/components/charts/metric-chart/MetricChart';
-import { isTypeofXKey, XKey } from '@mediarithmics-private/mcs-components-library/lib';
+import { isTypeofXKey, XKey } from '@mediarithmics-private/mcs-components-library';
 
 const messages = defineMessages({
   stillLoading: {

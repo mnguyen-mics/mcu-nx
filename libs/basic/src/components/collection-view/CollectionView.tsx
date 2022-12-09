@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Row, Col, Spin, Pagination } from 'antd';
 import cuid from 'cuid';
 import { PaginationProps } from 'antd/lib/pagination/Pagination';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Location, { LocationProps } from '../Location';
 
 const props: LocationProps = {

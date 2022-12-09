@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Slide from '../../transition/slide';
 import { Alert } from 'antd';
 import { PaginationProps } from 'antd/lib/pagination/Pagination';

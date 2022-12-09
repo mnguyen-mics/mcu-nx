@@ -1,7 +1,7 @@
 import 'jest';
-import * as React from 'react';
+import React from 'react';
 import CollectionViewFilters, { CollectionViewFiltersProps } from '../CollectionViewFilters';
-import * as TestRenderer from 'react-test-renderer';
+import TestRenderer from 'react-test-renderer';
 
 it('should display a loading collection view filters', () => {
   const items = [];

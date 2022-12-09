@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Origin, { Props } from '../Origin';
 
 const props: Props = {

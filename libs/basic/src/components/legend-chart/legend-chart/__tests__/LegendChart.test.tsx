@@ -1,7 +1,7 @@
 import 'jest';
-import * as React from 'react';
+import React from 'react';
 import LegendChart, { LegendChartProps } from '../LegendChart';
-import * as TestRenderer from 'react-test-renderer';
+import TestRenderer from 'react-test-renderer';
 
 it('renders the legendchart', () => {
   const props: LegendChartProps = {

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import AreaChart, { AreaChartProps } from '../AreaChart';
 
 const propsForDayMode: AreaChartProps = {

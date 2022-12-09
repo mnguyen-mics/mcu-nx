@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import AppsMenu, { AppsMenuProps } from '../AppsMenu';
 
 const props: AppsMenuProps = {

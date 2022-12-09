@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import AreaChartSlider, { AreaChartSliderProps, DataPoint } from '../AreaChartSlider';
 import _ from 'lodash';
 

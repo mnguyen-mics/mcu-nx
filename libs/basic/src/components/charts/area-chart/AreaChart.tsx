@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as Highcharts from 'highcharts';
+import React from 'react';
+import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { compose } from 'recompose';
 import moment from 'moment';

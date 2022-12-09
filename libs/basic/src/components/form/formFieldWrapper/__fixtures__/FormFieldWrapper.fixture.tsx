@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import FormFieldWrapper, { FormFieldWrapperProps } from '../FormFieldWrapper';
 import McsIcon from '../../../mcs-icon';
 import { Input } from 'antd';

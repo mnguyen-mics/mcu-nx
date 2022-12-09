@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import ContentHeader, { ContentHeaderProps } from '../ContentHeader';
 
 const props: ContentHeaderProps = {

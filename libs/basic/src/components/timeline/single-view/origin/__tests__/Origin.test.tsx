@@ -1,6 +1,6 @@
 import 'jest';
-import * as React from 'react';
-import * as TestRenderer from 'react-test-renderer';
+import React from 'react';
+import TestRenderer from 'react-test-renderer';
 import Origin, { Props } from '../Origin';
 
 // Return a fixed timestamp when moment().format() is called

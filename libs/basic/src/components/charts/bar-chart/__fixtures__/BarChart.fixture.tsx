@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import barChartProps from '../__examples__/BarChartProps';
 import barChartWithDrilldownProps from '../__examples__/BarChartDrilldown';
 import barChartLegendRightProps from '../__examples__/BarChartLegendRight';

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import TableViewFilters, { ViewComponentWithFiltersProps } from '../TableViewFilters';
 import { DownOutlined } from '@ant-design/icons';
 import { MultiSelectProps } from '../../multi-select';

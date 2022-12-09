@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { StatusCode } from '../../../utils/ApiResponses';
 import TableSelector, { TableSelectorProps } from '../TableSelector';
 

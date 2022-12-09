@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Button, Layout } from 'antd';
 import ActionBar from '../../action-bar';
 import McsIcon from '../../mcs-icon';

@@ -1,5 +1,5 @@
 import { Alert, Menu } from 'antd';
-import * as React from 'react';
+import React from 'react';
 import McsIcon from '../../mcs-icon';
 import McsHeader, { McsHeaderProps } from '../McsHeader';
 

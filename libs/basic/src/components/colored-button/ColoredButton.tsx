@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Omit } from '../../utils/Types';
 import { shadeColor } from '../../utils/ColorHelpers';
 

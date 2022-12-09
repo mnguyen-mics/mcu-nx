@@ -1,6 +1,6 @@
 import 'jest';
-import * as React from 'react';
-import * as TestRenderer from 'react-test-renderer';
+import React from 'react';
+import TestRenderer from 'react-test-renderer';
 import AppsMenu, { AppsMenuProps } from '../AppsMenu';
 
 it('render the AppsMenu', () => {

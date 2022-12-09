@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Row, Col } from 'antd';
 import { QuestionOutlined } from '@ant-design/icons';
 import McsIcon from '../../../mcs-icon';

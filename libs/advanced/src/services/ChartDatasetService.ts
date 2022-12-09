@@ -73,7 +73,7 @@ import {
   MetricChartFormat,
   MetricChartProps,
 } from '@mediarithmics-private/mcs-components-library/lib/components/charts/metric-chart/MetricChart';
-import { isTypeofXKey, XKey } from '@mediarithmics-private/mcs-components-library/lib';
+import { isTypeofXKey, XKey } from '@mediarithmics-private/mcs-components-library';
 import { ResourcesUsageMetric } from '../utils/analytics/ResourcesUsageReportHelper';
 import { ResourcesUsageService } from './analytics/ResourcesUsageService';
 import { AnalyticsSourceType } from '../models/dashboards/dataset/common';

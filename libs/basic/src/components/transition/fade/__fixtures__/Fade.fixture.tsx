@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Fade, { FadeProps } from '../Fade';
 // import { Button } from 'antd';
 

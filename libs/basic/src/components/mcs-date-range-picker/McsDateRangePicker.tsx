@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { CalendarOutlined, ClockCircleOutlined, DownOutlined } from '@ant-design/icons';
 import { Button, DatePicker, Menu } from 'antd';
 import moment from 'moment';

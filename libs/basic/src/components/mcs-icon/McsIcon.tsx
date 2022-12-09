@@ -1,5 +1,5 @@
 import { HomeOutlined } from '@ant-design/icons';
-import * as React from 'react';
+import React from 'react';
 
 export type McsIconType =
   | 'adGroups'

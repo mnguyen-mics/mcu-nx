@@ -1,4 +1,4 @@
-import * as Highcharts from 'highcharts';
+import Highcharts from 'highcharts';
 import { uniqueId } from 'lodash';
 import moment from 'moment';
 

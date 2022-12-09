@@ -1,7 +1,7 @@
 import 'jest';
-import * as React from 'react';
+import React from 'react';
 import { List } from 'antd';
-import * as TestRenderer from 'react-test-renderer';
+import TestRenderer from 'react-test-renderer';
 
 import InfiniteList, { InfiniteListProps } from '../InfiniteList';
 

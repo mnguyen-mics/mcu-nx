@@ -1,7 +1,7 @@
 import 'jest';
-import * as React from 'react';
+import React from 'react';
 import CollectionView, { CollectionViewProps } from '../CollectionView';
-import * as TestRenderer from 'react-test-renderer';
+import TestRenderer from 'react-test-renderer';
 import { Col } from 'antd';
 
 it('should display a loading collection view', () => {
