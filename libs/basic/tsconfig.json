@@ -2,12 +2,10 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./lib",
-    "module": "es6",
     "moduleResolution": "node",
     "declaration": true,
     "allowJs": false,
     "jsx": "react",
-    "target": "es5",
     "lib": ["dom", "es7"],
     "noEmitOnError": true,
     "sourceMap": true,
@@ -19,6 +17,7 @@
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "pretty": true,
+    "esModuleInterop": true,
     "removeComments": true
   },
   "include": [],
