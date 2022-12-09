@@ -1,4 +1,4 @@
-import { Button, Divider } from 'antd';
+import { Button, Divider, Spin } from 'antd';
 import React from 'react';
 import cuid from 'cuid';
 import { AbstractScope, SegmentScope } from '../../models/datamart/graphdb/Scope';
@@ -29,16 +29,19 @@ import {
 import { AudienceSegmentShape } from '../../models/audienceSegment/AudienceSegmentResource';
 import { compose } from 'recompose';
 import DashboardBody from './DashboardBody';
-import { CloseOutlined } from '@ant-design/icons';
+import {
+  ArrowLeftOutlined,
+  ClockCircleOutlined,
+  CloseOutlined,
+  CloudDownloadOutlined,
+} from '@ant-design/icons';
 import {
   AggregateDataset,
   CountDataset,
   JsonDataset,
 } from '../../models/dashboards/dataset/dataset_tree';
 import moment from 'moment';
-import injectNotifications, {
-  InjectedNotificationProps,
-} from '../notifications/injectNotifications';
+import { Card } from '@mediarithmics-private/mcs-components-library';
 
 export interface DashboardLayoutProps {
   datamart_id: string;
@@ -64,13 +67,14 @@ export interface DashboardLayoutState {
   segmentForComparaison?: AudienceSegmentShape;
   comparaison: boolean;
   exportInProgress: boolean;
+  exportStep?: 'step1_init' | 'step2_in_progress' | 'step3_wait_longer' | 'step4_finished';
+  exportedFileName?: string;
 }
 
 type Props = DashboardLayoutProps &
   WrappedComponentProps &
   InjectedDrawerProps &
-  InjectedFeaturesProps &
-  InjectedNotificationProps;
+  InjectedFeaturesProps;
 
 const messages = defineMessages({
   compareToSegment: {
@@ -101,13 +105,34 @@ const messages = defineMessages({
     id: 'dashboard.layout.originalDashboard',
     defaultMessage: 'Original dashboard',
   },
-  exportInProgress: {
-    id: 'dashboard.layout.exportInProgress',
-    defaultMessage: 'Export is in progress',
+  exportCheckingDataLoaded: {
+    id: 'dashboard.layout.exportCheckingDataLoaded',
+    defaultMessage: 'Checking if data is loaded',
   },
-  exportTakesLonger: {
-    id: 'dashboard.layout.exportTakesLonger',
-    defaultMessage: 'Export takes a little longer than expected, please wait or try again later',
+  exportExecutingQueries: {
+    id: 'dashboard.layout.exportExecutingQueries',
+    defaultMessage: 'Executing queries for missing data',
+  },
+  exportQueriesTakeTime: {
+    id: 'dashboard.layout.exportQueriesTakeTime',
+    defaultMessage: 'Queries take some time',
+  },
+  exportQueriesTakeTimeDescription: {
+    id: 'dashboard.layout.exportQueriesTakeTimeDescription',
+    defaultMessage:
+      'We queued all the queries. You can navigate to other pages and come back in 10 minutes to export again. Your download will start once ready if you wait.',
+  },
+  exportTryLater: {
+    id: 'dashboard.layout.exportTryLater',
+    defaultMessage: "I'll retry an export later",
+  },
+  exportDownloaded: {
+    id: 'dashboard.layout.exportDownloaded',
+    defaultMessage: 'Dashboard downloaded as',
+  },
+  exportBackToDashboard: {
+    id: 'dashboard.layout.exportBackToDashboard',
+    defaultMessage: 'Back to the dashboard',
   },
 });
 
@@ -287,11 +312,12 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
     chartTitle: string,
     data?: AggregateDataset | CountDataset | JsonDataset,
   ) => {
-    const { exportInProgress } = this.state;
+    const { exportInProgress, exportStep } = this.state;
 
     this.chartsFormattedData = this.chartsFormattedData.set(chartTitle, data);
 
-    if (exportInProgress && this.allChartsLoaded()) this.downloadExport();
+    if (exportInProgress && exportStep !== 'step4_finished' && this.allChartsLoaded())
+      this.downloadExport();
   };
 
   private allChartsLoaded = (): boolean => {
@@ -307,38 +333,119 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
   };
 
   private downloadExport = () => {
-    this.props.resetNotifications();
-    new ExportService().exportMultipleDataset(
-      this.chartsFormattedData,
-      this.generateExportFileName(),
-    );
+    const fileName = this.generateExportFileName();
+    new ExportService().exportMultipleDataset(this.chartsFormattedData, fileName);
     this.setState({
-      exportInProgress: false,
+      exportStep: 'step4_finished',
+      exportedFileName: `${fileName}.xlsx`,
     });
   };
 
   private handleExportButtonClick = () => () => {
-    const { intl } = this.props;
-    const duration = 10;
+    const initialStepDuration = 2;
+    const secondStepDuration = initialStepDuration + 7;
 
     if (this.allChartsLoaded()) this.downloadExport();
     else {
-      this.props.notifyInfo({
-        message: intl.formatMessage(messages.exportInProgress),
-        duration: duration,
-      });
       this.setState({
         exportInProgress: true,
+        exportStep: 'step1_init',
       });
       setTimeout(() => {
-        const { exportInProgress } = this.state;
-        if (exportInProgress)
-          this.props.notifyWarning({
-            message: intl.formatMessage(messages.exportTakesLonger),
-            duration: null,
+        const { exportInProgress, exportStep } = this.state;
+        if (exportInProgress && exportStep !== 'step4_finished')
+          this.setState({
+            exportStep: 'step2_in_progress',
           });
-      }, duration * 1000);
+      }, initialStepDuration * 1000);
+
+      setTimeout(() => {
+        const { exportInProgress, exportStep } = this.state;
+        if (exportInProgress && exportStep !== 'step4_finished')
+          this.setState({
+            exportStep: 'step3_wait_longer',
+          });
+      }, secondStepDuration * 1000);
     }
+  };
+
+  handleReturnFromExportBtn = () => {
+    this.setState({
+      exportInProgress: false,
+      exportStep: undefined,
+      exportedFileName: undefined,
+    });
+  };
+
+  renderExportProgressCard = () => {
+    const { intl } = this.props;
+    const { exportStep, exportedFileName } = this.state;
+
+    let cardContent;
+    switch (exportStep) {
+      case 'step1_init':
+        cardContent = (
+          <>
+            <Spin className='mcs-dashboardLayout_statusIcon' size='large' />
+            {intl.formatMessage(messages.exportCheckingDataLoaded)}
+          </>
+        );
+        break;
+      case 'step2_in_progress':
+        cardContent = (
+          <>
+            <Spin className='mcs-dashboardLayout_statusIcon' size={'large'} />
+            {intl.formatMessage(messages.exportExecutingQueries)}
+          </>
+        );
+        break;
+      case 'step3_wait_longer':
+        cardContent = (
+          <>
+            <ClockCircleOutlined className='mcs-dashboardLayout_iconWait' />
+            <span className='mcs-dashboardLayout_card_boldText'>
+              {intl.formatMessage(messages.exportQueriesTakeTime)}
+            </span>
+            <span className='mcs-dashboardLayout_card_msgText'>
+              {intl.formatMessage(messages.exportQueriesTakeTimeDescription)}
+            </span>
+            <Button
+              type='default'
+              onClick={this.handleReturnFromExportBtn}
+              className='mcs-primary mcs-dashboardLayout_returnFromExportBtn'
+            >
+              <ArrowLeftOutlined />
+              {intl.formatMessage(messages.exportTryLater)}
+            </Button>
+          </>
+        );
+        break;
+      case 'step4_finished':
+        cardContent = (
+          <>
+            <CloudDownloadOutlined className='mcs-dashboardLayout_iconDownload' />
+            {intl.formatMessage(messages.exportDownloaded)} {exportedFileName}
+            <Button
+              type='primary'
+              onClick={this.handleReturnFromExportBtn}
+              className='mcs-primary mcs-dashboardLayout_returnFromExportBtn'
+            >
+              <ArrowLeftOutlined />
+              {intl.formatMessage(messages.exportBackToDashboard)}
+            </Button>
+          </>
+        );
+        break;
+    }
+
+    return (
+      <Card
+        className='mcs-cardFlex mcs-dashboardLayout_card mcs-dashboardLayout_cardCentered'
+        style={{}}
+      >
+        <div className='mcs-statusCardContent'>{cardContent}</div>
+      </Card>
+    );
   };
 
   render() {
@@ -507,7 +614,12 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
             </>
           )}
         </div>
-        {!sectionsCompare ? sections : undefined}
+        {!sectionsCompare && (
+          <>
+            {exportInProgress && this.renderExportProgressCard()}
+            <div className={exportInProgress ? 'mcs-hiddenLoading' : undefined}>{sections}</div>
+          </>
+        )}
         {sectionsCompare && (
           <div className='mcs-dashboardLayout_compareContainer'>
             <div className='mcs-dashboardLayout_columnLeft'>{sections}</div>
@@ -523,5 +635,4 @@ export default compose<Props, DashboardLayoutProps>(
   injectFeatures,
   injectIntl,
   injectDrawer,
-  injectNotifications,
 )(DashboardLayout);
