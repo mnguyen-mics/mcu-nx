@@ -36,7 +36,8 @@ exports[`renders the labelsSelector component 1`] = `
     </span>
   </span>
   <button
-    className="ant-btn ant-btn-sm mcs-labelsSelector_button"
+    className="ant-btn ant-btn-default ant-btn-sm mcs-labelsSelector_button"
+    disabled={false}
     onClick={[Function]}
     type="button"
   >

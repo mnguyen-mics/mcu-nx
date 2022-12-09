@@ -50,9 +50,6 @@ exports[`renders the Error component 1`] = `
         >
           You are using production API environment !
         </div>
-        <div
-          className="ant-alert-description"
-        />
       </div>
     </div>
   </div>

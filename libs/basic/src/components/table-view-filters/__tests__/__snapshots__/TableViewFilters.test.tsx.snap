@@ -53,12 +53,16 @@ exports[`renders the table view filters 1`] = `
                       <th
                         className="ant-table-cell"
                         colSpan={null}
+                        onMouseEnter={[Function]}
+                        onMouseLeave={[Function]}
                         rowSpan={null}
                         style={Object {}}
                       />
                       <th
                         className="ant-table-cell"
                         colSpan={null}
+                        onMouseEnter={[Function]}
+                        onMouseLeave={[Function]}
                         rowSpan={null}
                         style={Object {}}
                       />
@@ -76,12 +80,16 @@ exports[`renders the table view filters 1`] = `
                       <td
                         className="ant-table-cell"
                         colSpan={null}
+                        onMouseEnter={[Function]}
+                        onMouseLeave={[Function]}
                         rowSpan={null}
                         style={Object {}}
                       />
                       <td
                         className="ant-table-cell"
                         colSpan={null}
+                        onMouseEnter={[Function]}
+                        onMouseLeave={[Function]}
                         rowSpan={null}
                         style={Object {}}
                       />
@@ -95,12 +103,16 @@ exports[`renders the table view filters 1`] = `
                       <td
                         className="ant-table-cell"
                         colSpan={null}
+                        onMouseEnter={[Function]}
+                        onMouseLeave={[Function]}
                         rowSpan={null}
                         style={Object {}}
                       />
                       <td
                         className="ant-table-cell"
                         colSpan={null}
+                        onMouseEnter={[Function]}
+                        onMouseLeave={[Function]}
                         rowSpan={null}
                         style={Object {}}
                       />
@@ -111,9 +123,8 @@ exports[`renders the table view filters 1`] = `
             </div>
           </div>
           <ul
-            className="ant-pagination mini ant-table-pagination ant-table-pagination-right"
+            className="ant-pagination ant-pagination-mini ant-table-pagination ant-table-pagination-right"
             style={Object {}}
-            unselectable="unselectable"
           >
             <li
               aria-disabled={true}
@@ -228,6 +239,7 @@ exports[`renders the table view filters 1`] = `
                       aria-owns="undefined_list"
                       autoComplete="off"
                       className="ant-select-selection-search-input"
+                      disabled={false}
                       onChange={[Function]}
                       onCompositionEnd={[Function]}
                       onCompositionStart={[Function]}

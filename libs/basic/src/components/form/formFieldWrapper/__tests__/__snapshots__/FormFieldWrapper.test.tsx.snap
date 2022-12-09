@@ -5,58 +5,62 @@ exports[`Should render the FormFieldWrapper 1`] = `
   className="form-field-wrapper "
 >
   <div
-    className="ant-row ant-form-item"
-    style={Object {}}
+    className="ant-form-item"
   >
     <div
-      className="ant-col ant-col-15 ant-col-offset-1 ant-form-item-control"
+      className="ant-row ant-form-item-row"
       style={Object {}}
     >
       <div
-        className="ant-form-item-control-input"
+        className="ant-col ant-col-15 ant-col-offset-1 ant-form-item-control"
+        style={Object {}}
       >
         <div
-          className="ant-form-item-control-input-content"
+          className="ant-form-item-control-input"
         >
           <div
-            className="ant-row ant-row-middle"
-            style={Object {}}
+            className="ant-form-item-control-input-content"
           >
             <div
-              className="ant-col ant-col-20"
+              className="ant-row ant-row-middle"
               style={Object {}}
             >
-              <div>
-                Content
+              <div
+                className="ant-col ant-col-20"
+                style={Object {}}
+              >
+                <div>
+                  Content
+                </div>
               </div>
-            </div>
-            <div
-              className="ant-col ant-col-2 field-tooltip"
-              style={Object {}}
-            >
-              <span
-                className="mcs-icon "
-                onMouseEnter={[Function]}
-                onMouseLeave={[Function]}
+              <div
+                className="ant-col ant-col-2 field-tooltip"
+                style={Object {}}
               >
-                <i
-                  className="mcs-info"
-                  style={Object {}}
-                />
-              </span>
-            </div>
-            <div
-              className="ant-col ant-col-2 renderFieldAction"
-              style={Object {}}
-            >
-              <span
-                className="mcs-icon "
+                <span
+                  className="mcs-icon "
+                  onMouseEnter={[Function]}
+                  onMouseLeave={[Function]}
+                >
+                  <i
+                    className="mcs-info"
+                    style={Object {}}
+                  />
+                </span>
+              </div>
+              <div
+                className="ant-col ant-col-2 renderFieldAction"
+                style={Object {}}
               >
-                <i
-                  className="mcs-close"
-                  style={Object {}}
-                />
-              </span>
+                <span
+                  className="mcs-icon "
+                >
+                  <i
+                    className="mcs-close"
+                    style={Object {}}
+                  />
+                </span>
+              </div>
             </div>
           </div>
         </div>

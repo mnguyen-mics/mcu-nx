@@ -8,34 +8,37 @@ exports[`should test a collection selector with filtering 1`] = `
     className="ant-row ant-row-space-between ant-row-middle mcs-actionbar-edit  "
     style={Object {}}
   >
-    <div
+    <nav
       className="ant-breadcrumb mcs-breadcrumb"
     >
-      <span>
-        <span
-          className="ant-breadcrumb-link"
-        >
-          Welcome to the Collection Selector
-        </span>
-        <span
-          className="ant-breadcrumb-separator"
-        >
+      <ol>
+        <li>
           <span
-            className="mcs-icon "
+            className="ant-breadcrumb-link"
           >
-            <i
-              className="mcs-chevron-right"
-              style={Object {}}
-            />
+            Welcome to the Collection Selector
           </span>
-        </span>
-      </span>
-    </div>
+          <span
+            className="ant-breadcrumb-separator"
+          >
+            <span
+              className="mcs-icon "
+            >
+              <i
+                className="mcs-chevron-right"
+                style={Object {}}
+              />
+            </span>
+          </span>
+        </li>
+      </ol>
+    </nav>
     <div
       className="left-part-margin"
     >
       <button
-        className="ant-btn add-button mcs-addButton"
+        className="ant-btn ant-btn-default add-button mcs-addButton"
+        disabled={false}
         onClick={[Function]}
         type="button"
       >
@@ -87,8 +90,11 @@ exports[`should test a collection selector with filtering 1`] = `
               >
                 <input
                   className="ant-input"
+                  hidden={null}
                   onBlur={[Function]}
                   onChange={[Function]}
+                  onCompositionEnd={[Function]}
+                  onCompositionStart={[Function]}
                   onFocus={[Function]}
                   onKeyDown={[Function]}
                   placeholder="Insert your keywords here"
@@ -100,7 +106,8 @@ exports[`should test a collection selector with filtering 1`] = `
                   className="ant-input-group-addon"
                 >
                   <button
-                    className="ant-btn ant-btn-icon-only ant-input-search-button"
+                    className="ant-btn ant-btn-default ant-btn-icon-only ant-input-search-button"
+                    disabled={false}
                     onClick={[Function]}
                     onMouseDown={[Function]}
                     type="button"
@@ -147,6 +154,8 @@ exports[`should test a collection selector with filtering 1`] = `
                 style={Object {}}
               >
                 <div
+                  aria-busy={true}
+                  aria-live="polite"
                   className="ant-spin ant-spin-spinning"
                 >
                   <span
@@ -184,34 +193,37 @@ exports[`should test a collection selector without filtering 1`] = `
     className="ant-row ant-row-space-between ant-row-middle mcs-actionbar-edit  "
     style={Object {}}
   >
-    <div
+    <nav
       className="ant-breadcrumb mcs-breadcrumb"
     >
-      <span>
-        <span
-          className="ant-breadcrumb-link"
-        >
-          Welcome to the Collection Selector
-        </span>
-        <span
-          className="ant-breadcrumb-separator"
-        >
+      <ol>
+        <li>
           <span
-            className="mcs-icon "
+            className="ant-breadcrumb-link"
           >
-            <i
-              className="mcs-chevron-right"
-              style={Object {}}
-            />
+            Welcome to the Collection Selector
           </span>
-        </span>
-      </span>
-    </div>
+          <span
+            className="ant-breadcrumb-separator"
+          >
+            <span
+              className="mcs-icon "
+            >
+              <i
+                className="mcs-chevron-right"
+                style={Object {}}
+              />
+            </span>
+          </span>
+        </li>
+      </ol>
+    </nav>
     <div
       className="left-part-margin"
     >
       <button
-        className="ant-btn add-button mcs-addButton"
+        className="ant-btn ant-btn-default add-button mcs-addButton"
+        disabled={false}
         onClick={[Function]}
         type="button"
       >
@@ -253,6 +265,8 @@ exports[`should test a collection selector without filtering 1`] = `
           style={Object {}}
         >
           <div
+            aria-busy={true}
+            aria-live="polite"
             className="ant-spin ant-spin-spinning"
           >
             <span

@@ -740,7 +740,6 @@ exports[`should display a collection view with items and pagination 1`] = `
     <ul
       className="ant-pagination"
       style={Object {}}
-      unselectable="unselectable"
     >
       <li
         aria-disabled={true}
@@ -911,15 +910,17 @@ exports[`should display a collection view with items and pagination 1`] = `
               className="ant-select-selection-search"
             >
               <input
-                aria-activedescendant="undefined_list_0"
+                aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
                 aria-autocomplete="list"
-                aria-controls="undefined_list"
+                aria-controls="rc_select_TEST_OR_SSR_list"
                 aria-expanded={false}
                 aria-haspopup="listbox"
                 aria-label="Page Size"
-                aria-owns="undefined_list"
+                aria-owns="rc_select_TEST_OR_SSR_list"
                 autoComplete="off"
                 className="ant-select-selection-search-input"
+                disabled={false}
+                id="rc_select_TEST_OR_SSR"
                 onChange={[Function]}
                 onCompositionEnd={[Function]}
                 onCompositionStart={[Function]}
@@ -994,6 +995,8 @@ exports[`should display a loading collection view 1`] = `
     style={Object {}}
   >
     <div
+      aria-busy={true}
+      aria-live="polite"
       className="ant-spin ant-spin-spinning"
     >
       <span

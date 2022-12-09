@@ -10,6 +10,8 @@ exports[`Should render the LoadingChart 1`] = `
     style={Object {}}
   >
     <div
+      aria-busy={true}
+      aria-live="polite"
       className="ant-spin ant-spin-lg ant-spin-spinning"
     >
       <span

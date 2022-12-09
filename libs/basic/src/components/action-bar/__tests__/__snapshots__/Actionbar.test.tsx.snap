@@ -5,56 +5,58 @@ exports[`renders the actionBar 1`] = `
   className="ant-row ant-row-space-between ant-row-middle mcs-actionbar  "
   style={Object {}}
 >
-  <div
+  <nav
     className="ant-breadcrumb mcs-breadcrumb"
   >
-    <span>
-      <span
-        className="ant-breadcrumb-link"
-      >
-        <a
-          href="https://www.google.fr"
-        >
-          Campaigns
-        </a>
-      </span>
-      <span
-        className="ant-breadcrumb-separator"
-      >
+    <ol>
+      <li>
         <span
-          className="mcs-icon "
+          className="ant-breadcrumb-link"
         >
-          <i
-            className="mcs-chevron-right"
-            style={Object {}}
-          />
+          <a
+            href="https://www.google.fr"
+          >
+            Campaigns
+          </a>
         </span>
-      </span>
-    </span>
-    <span>
-      <span
-        className="ant-breadcrumb-link"
-      >
-        <a
-          href="https://www.github.fr"
-        >
-          Display
-        </a>
-      </span>
-      <span
-        className="ant-breadcrumb-separator"
-      >
         <span
-          className="mcs-icon "
+          className="ant-breadcrumb-separator"
         >
-          <i
-            className="mcs-chevron-right"
-            style={Object {}}
-          />
+          <span
+            className="mcs-icon "
+          >
+            <i
+              className="mcs-chevron-right"
+              style={Object {}}
+            />
+          </span>
         </span>
-      </span>
-    </span>
-  </div>
+      </li>
+      <li>
+        <span
+          className="ant-breadcrumb-link"
+        >
+          <a
+            href="https://www.github.fr"
+          >
+            Display
+          </a>
+        </span>
+        <span
+          className="ant-breadcrumb-separator"
+        >
+          <span
+            className="mcs-icon "
+          >
+            <i
+              className="mcs-chevron-right"
+              style={Object {}}
+            />
+          </span>
+        </span>
+      </li>
+    </ol>
+  </nav>
   <div
     className="left-part-margin"
   />

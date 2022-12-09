@@ -20,8 +20,11 @@ exports[`should display a collection view filters with pagination and a search p
         >
           <input
             className="ant-input"
+            hidden={null}
             onBlur={[Function]}
             onChange={[Function]}
+            onCompositionEnd={[Function]}
+            onCompositionStart={[Function]}
             onFocus={[Function]}
             onKeyDown={[Function]}
             placeholder="The search isn't supposed to work buddy !"
@@ -33,7 +36,8 @@ exports[`should display a collection view filters with pagination and a search p
             className="ant-input-group-addon"
           >
             <button
-              className="ant-btn ant-btn-icon-only ant-input-search-button"
+              className="ant-btn ant-btn-default ant-btn-icon-only ant-input-search-button"
+              disabled={false}
               onClick={[Function]}
               onMouseDown={[Function]}
               type="button"
@@ -480,7 +484,6 @@ exports[`should display a collection view filters with pagination and a search p
           <ul
             className="ant-pagination"
             style={Object {}}
-            unselectable="unselectable"
           >
             <li
               aria-disabled={true}
@@ -651,15 +654,17 @@ exports[`should display a collection view filters with pagination and a search p
                     className="ant-select-selection-search"
                   >
                     <input
-                      aria-activedescendant="undefined_list_0"
+                      aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
                       aria-autocomplete="list"
-                      aria-controls="undefined_list"
+                      aria-controls="rc_select_TEST_OR_SSR_list"
                       aria-expanded={false}
                       aria-haspopup="listbox"
                       aria-label="Page Size"
-                      aria-owns="undefined_list"
+                      aria-owns="rc_select_TEST_OR_SSR_list"
                       autoComplete="off"
                       className="ant-select-selection-search-input"
+                      disabled={false}
+                      id="rc_select_TEST_OR_SSR"
                       onChange={[Function]}
                       onCompositionEnd={[Function]}
                       onCompositionStart={[Function]}
@@ -757,6 +762,8 @@ exports[`should display a loading collection view filters 1`] = `
           style={Object {}}
         >
           <div
+            aria-busy={true}
+            aria-live="polite"
             className="ant-spin ant-spin-spinning"
           >
             <span

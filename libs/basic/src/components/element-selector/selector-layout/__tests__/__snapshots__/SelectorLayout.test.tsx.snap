@@ -8,34 +8,37 @@ exports[`renders the SelectorLayout with children 1`] = `
     className="ant-row ant-row-space-between ant-row-middle mcs-actionbar-edit  "
     style={Object {}}
   >
-    <div
+    <nav
       className="ant-breadcrumb mcs-breadcrumb"
     >
-      <span>
-        <span
-          className="ant-breadcrumb-link"
-        >
-          Action Bar Title
-        </span>
-        <span
-          className="ant-breadcrumb-separator"
-        >
+      <ol>
+        <li>
           <span
-            className="mcs-icon "
+            className="ant-breadcrumb-link"
           >
-            <i
-              className="mcs-chevron-right"
-              style={Object {}}
-            />
+            Action Bar Title
           </span>
-        </span>
-      </span>
-    </div>
+          <span
+            className="ant-breadcrumb-separator"
+          >
+            <span
+              className="mcs-icon "
+            >
+              <i
+                className="mcs-chevron-right"
+                style={Object {}}
+              />
+            </span>
+          </span>
+        </li>
+      </ol>
+    </nav>
     <div
       className="left-part-margin"
     >
       <button
-        className="ant-btn add-button mcs-addButton"
+        className="ant-btn ant-btn-default add-button mcs-addButton"
+        disabled={false}
         onClick={[Function]}
         type="button"
       >
@@ -84,34 +87,37 @@ exports[`renders the SelectorLayout with no element 1`] = `
     className="ant-row ant-row-space-between ant-row-middle mcs-actionbar-edit  "
     style={Object {}}
   >
-    <div
+    <nav
       className="ant-breadcrumb mcs-breadcrumb"
     >
-      <span>
-        <span
-          className="ant-breadcrumb-link"
-        >
-          Action Bar Title
-        </span>
-        <span
-          className="ant-breadcrumb-separator"
-        >
+      <ol>
+        <li>
           <span
-            className="mcs-icon "
+            className="ant-breadcrumb-link"
           >
-            <i
-              className="mcs-chevron-right"
-              style={Object {}}
-            />
+            Action Bar Title
           </span>
-        </span>
-      </span>
-    </div>
+          <span
+            className="ant-breadcrumb-separator"
+          >
+            <span
+              className="mcs-icon "
+            >
+              <i
+                className="mcs-chevron-right"
+                style={Object {}}
+              />
+            </span>
+          </span>
+        </li>
+      </ol>
+    </nav>
     <div
       className="left-part-margin"
     >
       <button
-        className="ant-btn add-button mcs-addButton"
+        className="ant-btn ant-btn-default add-button mcs-addButton"
+        disabled={false}
         onClick={[Function]}
         type="button"
       >

@@ -2,6 +2,8 @@
 
 exports[`renders the Loading 1`] = `
 <div
+  aria-busy={true}
+  aria-live="polite"
   className="ant-spin ant-spin-lg ant-spin-spinning mcs-loading loading-full-screen undefined"
 >
   <span

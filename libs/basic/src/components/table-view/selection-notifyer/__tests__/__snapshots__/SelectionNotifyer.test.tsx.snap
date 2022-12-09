@@ -41,9 +41,6 @@ exports[`renders the SelectionNotifyer with 3 items selected 1`] = `
           </button>
         </div>
       </div>
-      <div
-        className="ant-alert-description"
-      />
     </div>
   </div>
 </div>
@@ -90,9 +87,6 @@ exports[`renders the SelectionNotifyer with all items selected 1`] = `
           </button>
         </div>
       </div>
-      <div
-        className="ant-alert-description"
-      />
     </div>
   </div>
 </div>
@@ -139,9 +133,6 @@ exports[`renders the SelectionNotifyer with all the page items selected 1`] = `
           </button>
         </div>
       </div>
-      <div
-        className="ant-alert-description"
-      />
     </div>
   </div>
 </div>
