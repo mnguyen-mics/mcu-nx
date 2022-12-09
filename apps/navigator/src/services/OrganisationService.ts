@@ -66,7 +66,6 @@ export default class OrganisationService implements IOrganisationService {
     const endpoint = `organisations/${organisationId}/logo`;
     const headers = { Accept: 'image/png' };
     return ApiService.getRequest<Blob>(endpoint, undefined, headers)
-      .catch(() => this.getStandardLogo())
       .then(blobLogo => {
         this.logoCache[organisationId] = blobLogo;
         return blobLogo;

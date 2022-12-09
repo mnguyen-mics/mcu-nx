@@ -6,6 +6,7 @@ import { compose } from 'recompose';
 import { getLogo } from '../../redux/Session/actions';
 import { MenuMode } from 'antd/lib/menu';
 import { MicsReduxState } from '@mediarithmics-private/advanced-components';
+import defaultLogo from '../../assets/images/logo.png';
 
 export interface LogoProps {
   mode: MenuMode;
@@ -65,7 +66,7 @@ class Logo extends React.Component<Props> {
         {mode === 'inline' && (
           <div className='mcs-logo'>
             <Link to={`/v2/o/${organisationId}/campaigns/display`} id='logo'>
-              <img alt='logo' src={logoUrl} />
+              <img alt='logo' src={logoUrl || defaultLogo} />
             </Link>
           </div>
         )}

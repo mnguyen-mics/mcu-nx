@@ -12,6 +12,7 @@ import { defaultErrorMessages } from '../../../components/Form/withValidators';
 import { lazyInject } from '../../../config/inversify.config';
 import { TYPES } from '../../../constants/types';
 import { IAuthService } from '@mediarithmics-private/advanced-components';
+import logo from '../../../assets/images/logo.png';
 
 type Props = WrappedComponentProps & FormComponentProps & RouteComponentProps<{}>;
 
@@ -118,11 +119,7 @@ class SetPassword extends React.Component<Props, State> {
     return (
       <div className='mcs-reset-password-container'>
         <div className='image-wrapper'>
-          <img
-            alt='mics-logo'
-            className='reset-password-logo'
-            src={'/react/src/assets/images/logo.png'}
-          />
+          <img alt='mics-logo' className='reset-password-logo' src={logo} />
         </div>
         <div className='reset-password-title'>
           <FormattedMessage {...messages.setPassword} />

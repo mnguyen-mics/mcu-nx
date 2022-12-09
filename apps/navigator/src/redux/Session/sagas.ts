@@ -39,14 +39,7 @@ function* downloadLogo({ payload }: Payload) {
     yield put(getLogo.success({ logoUrl }));
   } catch (e) {
     log.error('Cannot get specific logo: ', e);
-    try {
-      const response = yield call(_organisationService.getStandardLogo);
-      const logoUrl = URL.createObjectURL(response); /* global URL */
-      yield put(getLogo.success({ logoUrl }));
-    } catch (er) {
-      log.error('Error while getting org logo: ', e);
-      yield put(getLogo.failure(er));
-    }
+    yield put(getLogo.failure(e));
   }
 }
 

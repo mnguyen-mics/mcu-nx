@@ -12,6 +12,7 @@ import { UserProfileResource } from '../../../models/directory/UserProfileResour
 import { MicsReduxState } from '@mediarithmics-private/advanced-components';
 import LocalStorage from '../../../services/LocalStorage';
 import { Credentials } from '@mediarithmics-private/advanced-components/lib/services/AuthService';
+import logo from '../../../assets/images/logo.png';
 
 const FormItem = Form.Item;
 
@@ -152,7 +153,7 @@ const Login = (props: Props) => {
     <div className='mcs-login-container'>
       <div className='mcs-login-container-left'>
         <div className='image-wrapper'>
-          <img alt='mics-logo' className='login-logo' src={'/react/src/assets/images/logo.png'} />
+          <img alt='mics-logo' className='login-logo' src={logo} />
         </div>
         <div className='login-frame mcs-legacy_form_container'>
           <Form onFinish={handleSubmit} form={form}>

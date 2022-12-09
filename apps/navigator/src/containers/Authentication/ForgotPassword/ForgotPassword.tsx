@@ -7,6 +7,7 @@ import messages from './messages';
 import { TYPES } from '../../../constants/types';
 import { useInjection } from '../../../config/inversify.react';
 import { IAuthService } from '@mediarithmics-private/advanced-components';
+import logo from '../../../assets/images/logo.png';
 
 const FormItem = Form.Item;
 
@@ -49,11 +50,7 @@ const ForgotPassword = (props: Props) => {
   return (
     <div className='mcs-reset-password-container'>
       <div className='image-wrapper'>
-        <img
-          alt='mics-logo'
-          className='reset-password-logo'
-          src={'/react/src/assets/images/logo.png'}
-        />
+        <img alt='mics-logo' className='reset-password-logo' src={logo} />
       </div>
       <div className='reset-password-title'>
         <FormattedMessage {...messages.resetPasswordTitle} />
