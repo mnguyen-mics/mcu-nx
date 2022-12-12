@@ -83,7 +83,7 @@ class DeviceIdRegistrySubscriptionsEditForm extends React.Component<
             <EmptyTableView
               className='mcs-table-view-empty mcs-empty-card'
               iconType={'settings'}
-              message={formatMessage(messages.emptyEvailableThirdPartyRegistries)}
+              message={formatMessage(messages.emptyAvailableThirdPartyRegistries)}
             />
           </div>
         ) : (
