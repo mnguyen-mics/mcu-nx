@@ -189,6 +189,9 @@
     "webpack": "^5.75.0",
     "webpack-merge": "^5.8.0"
   },
+  "engines": {
+    "node": ">=18.12.1"
+  },
   "overrides": {
     "react-dimensions": {
       "element-resize-event": "2.0.7"
