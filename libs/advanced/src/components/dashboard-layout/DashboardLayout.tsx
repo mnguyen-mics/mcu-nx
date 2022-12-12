@@ -39,8 +39,8 @@ import {
   CountDataset,
   JsonDataset,
 } from '../../models/dashboards/dataset/dataset_tree';
-import SegmentSelector from '../../components/segment-selector';
-import { InjectedDrawerProps } from '../../components/drawer/injectDrawer';
+import SegmentSelector from '../segment-selector';
+import { InjectedDrawerProps } from '../drawer/injectDrawer';
 import moment from 'moment';
 import { Card } from '@mediarithmics-private/mcs-components-library';
 

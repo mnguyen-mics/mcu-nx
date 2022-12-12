@@ -18,20 +18,11 @@
         "polyfills": "apps/navigator/src/polyfills.ts",
         "tsConfig": "apps/navigator/tsconfig.app.json",
         "assets": [
-          {
-            "glob": "favicon.ico",
-            "input": "apps/navigator/src/assets/images",
-            "output": "favicon.ico"
-          },
+          "apps/navigator/src/assets",
           {
             "glob": "react-configuration.js",
             "input": "apps/navigator/src/conf",
             "output": "conf/react-configuration.js"
-          },
-          {
-            "glob": "*",
-            "input": "apps/navigator/src/assets",
-            "output": "/"
           }
         ],
         "styles": ["apps/navigator/src/styles/index.less"],

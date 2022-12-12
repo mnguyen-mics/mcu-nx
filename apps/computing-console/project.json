@@ -17,16 +17,11 @@
         "polyfills": "apps/computing-console/src/polyfills.ts",
         "tsConfig": "apps/computing-console/tsconfig.app.json",
         "assets": [
-          "apps/computing-console/src/assets/images/favicon.ico",
+          "apps/computing-console/src/assets",
           {
             "glob": "react-configuration.js",
-            "input": "apps/navigator/src/conf",
+            "input": "apps/computing-console/src/conf",
             "output": "conf/react-configuration.js"
-          },
-          {
-            "glob": "*",
-            "input": "apps/navigator/src/assets",
-            "output": "/"
           }
         ],
         "styles": ["apps/computing-console/src/styles/index.less"],
