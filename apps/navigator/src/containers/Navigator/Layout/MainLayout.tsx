@@ -12,7 +12,6 @@ import { Layout } from 'antd';
 import { connect } from 'react-redux';
 import { Row, Col } from 'antd/lib/grid';
 import { NavigatorMenu } from '../../../containers/Menu';
-import { Logo } from '../../../containers/Logo';
 import * as MenuActions from '../../../redux/Menu/actions';
 import { compose } from 'recompose';
 import { MenuMode } from 'rc-menu/lib/interface';
@@ -21,7 +20,7 @@ import { UserProfileResource } from '../../../models/directory/UserProfileResour
 import { InjectedFeaturesProps, injectFeatures } from '../../Features';
 import { AppsMenuSections } from '@mediarithmics-private/mcs-components-library/lib/components/apps-navigation/apps-menu/AppsMenu';
 import { buildAccountsMenu, buildSettingsButton } from './LayoutHelper';
-import { MicsReduxState, TopBar } from '@mediarithmics-private/advanced-components';
+import { MicsReduxState, TopBar, Logo } from '@mediarithmics-private/advanced-components';
 
 const { Content, Sider } = Layout;
 
@@ -177,7 +176,7 @@ class MainLayout extends React.Component<Props, MainLayoutState> {
               collapsed={collapsed}
               trigger={this.renderTrigger()}
             >
-              <Logo mode={mode} />
+              <Logo mode={mode} linkPath={`/v2/o/${organisationId}/campaigns/display`} />
 
               <NavigatorMenu
                 mode={mode}
