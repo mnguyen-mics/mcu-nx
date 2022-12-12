@@ -535,7 +535,9 @@ class DashboardLayout extends React.Component<Props, DashboardLayoutState> {
 
     return (
       <div className={'mcs-dashboardLayout'}>
-        <div className={'mcs-dashboardLayout_filters'}>
+        <div
+          className={`mcs-dashboardLayout_filters ${exportInProgress ? ' mcs-hiddenLoading' : ''}`}
+        >
           {!editable &&
             hasFeature('dashboards-comparisons') &&
             !comparaison &&
