@@ -262,7 +262,7 @@ class OrganisationAccount extends React.Component<Props, State> {
                     showUploadList={false}
                     listType='picture'
                   >
-                    {logoUrl ? (
+                    {logoUrl !== null ? (
                       <Image
                         src={logoUrl}
                         alt={formatMessage(messages.logoNotFound)}

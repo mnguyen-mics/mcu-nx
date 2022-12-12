@@ -76,6 +76,11 @@ const session = (state = defaultSessionState, action: Action<Payload>) => {
         ...state,
         logoUrl: action.payload.logoUrl,
       };
+    case GET_LOGO.FAILURE:
+      return {
+        ...state,
+        logoUrl: null,
+      };
     case PUT_LOGO.REQUEST:
       return {
         ...state,
